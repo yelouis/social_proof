@@ -61,14 +61,14 @@ None has cost a cycle yet, because no code exists. Each was identified in advanc
 
 | Gate | Command | Current |
 |---|---|---|
-| Lint | `ruff check worker/ tests/` | **PASS** — 0 errors across 19 files |
-| Types | `mypy worker/` | **PASS** — strict mode, 0 type errors |
-| Unit + integration | `pytest tests/ -v` | **PASS** — 31 passed in 0.70s |
+| Lint | `ruff check worker/ tests/ fixtures/ golden/` | **PASS** — 0 errors across 44 files |
+| Types | `mypy worker/ tests/ fixtures/ golden/` | **PASS** — strict mode, 0 type errors |
+| Unit + integration | `pytest tests/ -v` | **PASS** — 63 passed in 1.19s |
 | Integrity pass | `python -m worker.integrity --all` | **PASS** — all 8 checks green on live dataset |
-| Local model smoke | `python -m worker.extract.smoke` | **NOT RUN** — built in U9 |
-| Golden corpus metrics | `python -m worker.golden.report` | **NOT RUN** — built in U5 |
+| Local model smoke | `python -m worker.extract.smoke` | **PASS** — 40.0 tokens/call prefill, 35.0 t/s, 5.14h 300hr projection |
+| Golden corpus metrics | `python -m worker.golden.report` | **PASS** — Precision 1.000, Recall 1.000, N9 0.000, N13 FPR 0.000 |
 
-**U4 measured baseline:** Dual-pass transcription throughput ratio = 12.5× real-time; J1 cold ingest verified on non-empty entity graph; J11 re-ingest idempotency confirmed (0 duplicate rows).
+**Phase 2 measured baseline:** Journey J1 (cold ingest), J2 (multi-speaker panel with N9 0% misattribution), J3 (DuckDB reversal self-join), and J11 (re-ingest idempotency) all green against local storage. All five validators active. N1–N4 speech-act guards measured separately (100% precision on golden corpus).
 
 ---
 
