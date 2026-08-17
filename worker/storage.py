@@ -527,6 +527,18 @@ class Storage:
             ],
         )
 
+    def get_proposition(self, proposition_id: str) -> Proposition | None:
+        res = self.con.execute("SELECT * FROM propositions WHERE proposition_id = ?", [proposition_id]).fetchone()
+        if not res:
+            return None
+        return Proposition(
+            proposition_id=res[0],
+            canonical_text=res[1],
+            embedding_ref=res[2],
+            subject_ids=list(res[3]) if res[3] else [],
+            claim_count=res[4],
+        )
+
     def insert_proposition_embedding(self, proposition_id: str, embedding: list[float]) -> None:
         if len(embedding) != 768:
             raise ValueError(f"Vector width must be exactly 768, got {len(embedding)}")
