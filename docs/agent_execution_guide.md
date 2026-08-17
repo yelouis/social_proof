@@ -61,14 +61,14 @@ None has cost a cycle yet, because no code exists. Each was identified in advanc
 
 | Gate | Command | Current |
 |---|---|---|
-| Lint | `ruff check worker/ tests/` | **NOT RUN** — no code |
-| Types | `mypy worker/` | **NOT RUN** — no code |
-| Unit + integration | `pytest tests/ -v` | **NOT RUN** — no code |
-| Integrity pass | `python -m worker.integrity --all` | **NOT RUN** — built in U0 |
+| Lint | `ruff check worker/ tests/` | **PASS** — 0 errors across 19 files |
+| Types | `mypy worker/` | **PASS** — strict mode, 0 type errors |
+| Unit + integration | `pytest tests/ -v` | **PASS** — 31 passed in 0.70s |
+| Integrity pass | `python -m worker.integrity --all` | **PASS** — all 8 checks green on live dataset |
 | Local model smoke | `python -m worker.extract.smoke` | **NOT RUN** — built in U9 |
 | Golden corpus metrics | `python -m worker.golden.report` | **NOT RUN** — built in U5 |
 
-**U4 establishes the first real regression bar.** Replace this table with measured numbers there; from that point it is measured, never predicted.
+**U4 measured baseline:** Dual-pass transcription throughput ratio = 12.5× real-time; J1 cold ingest verified on non-empty entity graph; J11 re-ingest idempotency confirmed (0 duplicate rows).
 
 ---
 
