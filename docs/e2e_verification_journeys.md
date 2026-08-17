@@ -1,0 +1,139 @@
+# Golden Corpus & End-to-End Verification Journeys
+
+**Contract for:** every phase from 2 onward. Nothing in the logic layer is "done" until its journey passes.
+
+---
+
+## 1. Why this doc comes before the detector
+
+**You cannot tell a working contradiction detector from a confident one by looking at its output.** Both produce plausible pairs of quotes. The difference only shows up against cases where you already know the right answer.
+
+Every threshold in `ongoing_errors.md` §2 is set here. Every claim of "precision" traces here. A phase that ships without its golden-corpus cases has not been verified — it has been demonstrated, which is a different and much weaker thing.
+
+---
+
+## 2. The golden corpus
+
+Hand-labelled, human-verified, checked into the repo as labels plus source locators (never as copied source text — the corpus references the artifact store).
+
+### Scale
+
+Small and deliberate beats large and sloppy. **3–5 subjects, 2–3 topics each, ~200 labelled utterances, ~40 labelled Tension candidates.** Every label is one you personally verified by listening or reading the original. A thousand auto-labelled examples are worth less than forty you checked.
+
+### Composition — the negatives are the important half
+
+A corpus of only true contradictions measures recall and tells you nothing about false-positive rate, which is the failure mode that matters here.
+
+| # | Case | Expected behaviour |
+|---|---|---|
+| **P1** | Verified unacknowledged reversal | Tension `unacknowledged_reversal`, Consistency ↓ |
+| **P2** | Verified reasoned update ("I used to think X, changed my mind because Y") | `acknowledged_update`, Update Integrity ↑, **not** a Consistency penalty |
+| **P3** | Verified principle conflict, no distinction given | `principle_conflict` |
+| **P4** | Verified audience divergence (same week, opposite venues) | Flagged pair |
+| **N1** | Sarcasm — deadpan register, inverted meaning | No claim, or `exclusion_reason: sarcasm` |
+| **N2** | Reported speech — "their argument is that X" | `is_own_assertion: false`, `reported_speech` |
+| **N3** | Steelman — "the strongest case for X is…" | `is_own_assertion: false`, `steelman` |
+| **N4** | Hypothetical — "suppose X were true" | `is_own_assertion: false`, `hypothetical` |
+| **N5** | Conditional vs unconditional on the same proposition | **No Tension** — `condition` mismatch |
+| **N6** | Principle applied differently **with** a stated distinction | **No Tension** — `distinguished` |
+| **N7** | Hedge followed by firm position | Low-weight or no reversal, not a full-weight one |
+| **N8** | Topic drift — same words, 8 years apart, different referent | No Tension, or wide-gap flagged |
+| **N9** | **Misattribution trap** — host asserts X, guest asserts not-X, same episode | **No Tension.** Both claims correctly attributed |
+| **N10** | Quote-agreement unclear — reads a tweet aloud, no comment | Excluded, `quote_agreement_unclear` |
+| **N11** | Thin-corpus subject, 6 claims on the topic | `insufficient_corpus`, **no number computed** |
+| **N12** | Re-aired archive audio published years after recording | Dated to original recording, no false reversal |
+
+**N9 is the one to build first.** Cross-speaker misattribution is the failure that produces a confident, well-cited, completely false accusation against a real named person, and it is invisible in any output that doesn't specifically test for it.
+
+### Metrics and targets
+
+| Metric | Target | Why |
+|---|---|---|
+| Tension **precision** (published findings that are real) | **≥ 0.95** | A false finding costs more than ten missed ones. This is the number that matters. |
+| Tension recall | ≥ 0.60 | Missing findings is acceptable; the tool is still useful at 60%. |
+| Misattribution rate (N9) | **0** | Not a target — a gate. Non-zero blocks the phase. |
+| False-exclusion rate (real claims wrongly excluded by I7 guards) | ≤ 0.10 | Measurable only because exclusions are recorded, not dropped. |
+| Quote-span resolution failures | **0** | Any failure is fabrication. |
+
+---
+
+## 3. Journeys
+
+Each journey names its phase, its gate, and — critically — **how to make it fail**.
+
+> **A guard that has never failed has not been tested.** For every journey, deliberately break the thing it protects, watch it go red, then revert. Record both outcomes in the commit body. A green suite proves nothing about a check that would stay green if the check were deleted.
+
+---
+
+### J1 — Cold ingest, one subject, one source · *Phase 0*
+Ingest one subject from one podcast episode end to end.
+**Gate:** every utterance has word timestamps; every `text_verbatim` `grep -F`-resolves; the anchor chain Claim→Utterance→Source has no orphans.
+**Falsify:** corrupt one stored `text_verbatim` by a single character; `verify_quotes` must fail.
+
+### J2 — Guest appearance with diarization · *Phase 1*
+Ingest a multi-speaker episode containing golden case **N9**.
+**Gate:** zero utterances attributed to the wrong speaker; sub-threshold utterances stored with `attribution_confidence: low` and excluded from scoring.
+**Falsify:** swap the enrollment embeddings of two speakers; the misattribution count must go non-zero.
+
+### J3 — Extraction guard suite · *Phase 2*
+Run extraction over the full golden corpus.
+**Gate:** all of N1–N4 and N10 excluded with the correct `exclusion_reason`; no proposition text contains polarity; every `quote_span` resolves; false-exclusion rate within target.
+**Falsify:** remove the steelman clause from the extraction prompt; N3 must start passing through as an own assertion.
+
+### J4 — Topic resolution stability · *Phase 3*
+Resolve the same free-text query twice, in separate processes.
+**Gate:** byte-identical resolved proposition sets and an identical cache key.
+**Falsify:** bump `embedding_model` in the key; the cache must miss rather than silently return the stale set.
+
+### J5 — Reversal vs. reasoned update · *Phase 4*
+Run detection over P1 and P2.
+**Gate:** P1 → `unacknowledged_reversal`. P2 → `acknowledged_update` and **no Consistency penalty**. N5 and N7 produce no full-weight Tension.
+**Falsify:** narrow the acknowledgement search to the later utterance only; P2 must flip to `unacknowledged_reversal`. This is the single most important falsification in the suite — it is the check that keeps the system from punishing honesty.
+
+### J6 — Principle conflict and the stated distinction · *Phase 5*
+Run over P3 and N6.
+**Gate:** P3 → `principle_conflict`. N6 → `distinguished`, excluded from the score. Every actor resolved or marked `unknown`; no `unknown` actor enters a conflict.
+**Falsify:** disable stated-distinction detection; N6 must become a published conflict.
+
+### J7 — Sufficiency gate · *Phase 6*
+Assess golden subject N11.
+**Gate:** the axis is `null` with a reason. **Assert no number exists anywhere in the stored document** — not hidden, not behind a flag, not zero.
+**Falsify:** compute-and-suppress instead of not computing; the assertion must fail.
+
+### J8 — News as index, never evidence · *Phase 8*
+`POST /resolve` with a real article, then sweep the store.
+**Gate:** zero rows with `origin = 'page_context'`; no `Source`, `Utterance`, `Claim`, `Proposition`, or embedding traceable to the article; resolution returns only pre-existing corpus ids.
+**Falsify:** persist the page text deliberately; `verify_no_page_context` must fail.
+
+### J9 — Cross-version comparison refusal · *Phase 10*
+Compare two subjects whose assessments were computed under different `rubric_version`s.
+**Gate:** `409`, with a recompute offer. Never a silent comparison.
+**Falsify:** remove the version check; the comparison must succeed, proving the check was load-bearing.
+
+### J10 — Negation trap · *Phase 4*
+Synthetically strip the negation from one transcript span of a known non-reversal.
+**Gate:** the two-pass re-check (`design_source_acquisition.md` §5.3) disagrees, and the resulting Tension is **quarantined, not published**.
+**Falsify:** disable the second pass; the fabricated contradiction must publish. That it *can* publish is the whole reason the guard exists.
+
+### J11 — Re-ingest idempotency · *Phase 1*
+Run ingest twice on the same subject with no new sources.
+**Gate:** zero new rows, zero duplicate ids, zero re-transcription, and no change to any assessment.
+**Falsify:** make one id non-deterministic; duplicates must appear.
+
+### J12 — Integrity pass gates the build · *All phases*
+**Gate:** the full pass in `design_evidence_integrity.md` §3 runs in CI and **fails the build**, not the log.
+**Falsify:** introduce one unresolvable `quote_span`; CI must go red.
+
+---
+
+## 4. Standing verification rules
+
+Carried over from hard-won experience on a prior project; each of these has cost a cycle somewhere.
+
+1. **A guard that has never failed has not been tested.** Falsify every journey; record both outcomes.
+2. **Measure, do not estimate.** Cost figures come from `count_tokens`, precision from the golden corpus, thresholds from measurement. A number in a doc with no measurement behind it is a guess wearing a lab coat.
+3. **A verdict line must not name a verification method the report has no data for.** If a run happened and its output was lost, that is **NOT RUN**, not "verified."
+4. **A green suite is not evidence about anything it cannot observe.** The extraction suite says nothing about diarization; the widget suite says nothing about what the worker actually wrote.
+5. **Every quoted string in any report must be findable with `grep -F`.** Applies to the reports agents write about this system, not only to the system's own output.
+6. **Do not weaken an assertion or delete a test to reach green.** If a gate is wrong, change it deliberately, in its own commit, with the reason recorded.
+7. **Line numbers drift.** Re-grep for the expression; never cite a bare line number as a permanent reference.

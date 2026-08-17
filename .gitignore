@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# Secrets and local config
+.env
+.env.*
+!.env.example
+*.key
+serviceAccountKey.json
+
+# Model weights — never commit these
+models/
+*.gguf
+*.safetensors
+*.bin
+
+# Artifact store — transcripts, word timestamps, and any cached source text.
+# Labels in golden/ ARE committed; the source text they point at is not.
+artifacts/
+golden/cache/
+
+# Media. Audio is deleted after transcription by policy (Issue 003),
+# but transient working files land here mid-ingest.
+*.wav
+*.opus
+*.m4a
+*.mp3
+*.mp4
+*.webm
+
+# DuckDB
+*.duckdb
+*.duckdb.wal
+*.db
+
+# Firebase (pending Issue 015 — may be removed entirely)
+.firebase/
+firebase-debug.log
+firestore-debug.log
+
+# macOS
+.DS_Store
