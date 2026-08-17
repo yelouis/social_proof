@@ -7,11 +7,21 @@ from worker.adapters.base import (
     SourceAdapter,
     SourceRef,
 )
+from worker.adapters.institutional import (
+    CongressionalRecordAdapter,
+    SECFilingAdapter,
+)
+from worker.adapters.podcast import PodcastRSSAdapter
+from worker.adapters.youtube import YouTubeAdapter
 
 __all__ = [
+    "CongressionalRecordAdapter",
     "NormalizedSource",
+    "PodcastRSSAdapter",
     "Provenance",
     "RawSource",
+    "SECFilingAdapter",
     "SourceAdapter",
     "SourceRef",
+    "YouTubeAdapter",
 ]
