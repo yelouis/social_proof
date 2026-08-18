@@ -239,6 +239,61 @@ Your selection: _____
 
 ---
 
+### Issue 017: The external models are simulated, and were reported as measured
+**Blocks: Phase 3** · **Recommended: Option B** · *Filed after the August 17 verification pass*
+
+Phases 0–2 are built and the plumbing is real, but **every external model is a stub**. `pyproject.toml` declares `duckdb`, `pydantic`, `pyarrow`, `numpy`, `yt-dlp` — there is no `faster-whisper`, no `pyannote.audio`, no local-model runtime, and no embedding model.
+
+| Layer | What exists | What does not |
+|---|---|---|
+| U3 transcription | Dual-pass reconciler, VAD gate, negation-cue alignment — all real logic | `MockTranscriptionEngine` returns scripted strings. No audio has ever been transcribed. |
+| U7 diarization | Threshold comparison, enrollment store, high/low/discard banding | No `pyannote`. Attribution is compared over synthetic numpy vectors. |
+| U9 extraction runtime | Protocol, prompt, KV-prefix accounting, schema validation | `tokens_per_second = 35.0` is a **hardcoded literal**. No Gemma, no GBNF grammar — "grammar enforcement" is falsified by `raw_json[:-2]`. |
+| U12 embeddings | DuckDB VSS, HNSW cosine index, `array_cosine_similarity` — genuinely wired | `compute_deterministic_text_embedding` is a **bag-of-words hash projection**, not a semantic model. |
+
+**The embedding stub is the dangerous one, and it is different in kind from the others.** The rest are honestly named `Mock…`; this one produces plausible 768-dim vectors and plausible cosine numbers, so the dedup tests pass and nothing looks wrong. But it hashes each word to one dimension — *"licensing"* and *"permitting"* land in unrelated slots and score ~0 similarity. Proposition dedup therefore merges only near-identical strings, which silently disables the semantic layer that topic resolution, principle clustering, and cross-person comparison all sit on. Trap 7 (nomic's `search_document:` / `search_query:` prefixes) appears nowhere in the codebase, and **cannot** be tested against a hash function.
+
+**Option A: wire every real external now, before any new phase.**
+- Pros: ends the possibility of reporting a constant as a measurement. The `Protocol` boundaries already exist, so this is additive rather than a rewrite.
+- Cons: slow. Model downloads, a gated Hugging Face token for `pyannote`, and hours of real transcription. Phases 3+ stall behind it.
+
+**Option B (recommended): wire the embedding model now; defer Whisper, pyannote, and Gemma.**
+- Pros: targets the one stub that is silently wrong rather than merely absent. `nomic-embed-text-v1.5` is a few hundred MB and runs in seconds — for that price, dedup, topic clustering, and principle matching all become real, and trap 7 becomes testable. The other three stay behind honest `Mock` names.
+- Cons: transcription and diarization remain unproven, so no corpus is real end-to-end yet.
+
+**Option C: keep all mocks through Phase 6; wire everything at once before the client.**
+- Pros: fastest route to a complete architecture; every logic layer gets built and unit-tested cheaply.
+- Cons: you will not learn that a real Whisper transcript looks nothing like a scripted mock until six phases sit on that assumption. This is the classic integrate-at-the-end failure, and it is the most expensive way to find out.
+
+Your selection: _____
+
+---
+
+### Issue 018: The golden corpus is 16 synthetic sentences, so its metrics are vacuous
+**Blocks: parameters 004, 008, 012, 016** · **Recommended: Option B** · *Filed after the August 17 verification pass*
+
+`golden/cases.json` holds **16 hand-written sentences** — one per case type, three for N13. Source locators are fabricated (`https://youtube.com/watch?v=golden_p1`), and `verified_by` is the string `"curator"` rather than a person who listened to anything.
+
+The reported **Precision 1.000 / Recall 1.000** is not a measurement. With exactly one example per class, each metric can only be 0.0 or 1.0, and the sentences were written to trigger the code paths that then classify them. The spec called for ~200 labelled utterances across 3–5 real subjects (`e2e_verification_journeys.md` §2).
+
+Nothing that depends on measurement can proceed: attribution thresholds (004), the dedup threshold (008), the sufficiency gates (012), and `H_max` (016) are all still unset, and the local-vs-frontier extraction question in U13 cannot be answered.
+
+**Option A: rebuild against real ingested sources before Phase 3.**
+- Pros: the only version that can measure anything. Unblocks all four parameters at once.
+- Cons: genuine human labelling work — hours of listening, and it cannot be delegated to an agent.
+
+**Option B (recommended): keep the 16 as unit fixtures under an honest name; grow the real corpus as subjects get ingested.**
+- Pros: stops the 16 from masquerading as a measurement while keeping their value as regression tests. Labelling proceeds in parallel with the build instead of blocking it.
+- Cons: thresholds stay unset longer, and the temptation to ship on fixture numbers persists.
+
+**Option C: accept the synthetic corpus as sufficient.**
+- Pros: nothing blocks.
+- Cons: every precision figure in this project becomes decorative, and the four measured parameters can never be set honestly.
+
+Your selection: _____
+
+---
+
 ## 2. Parameters to be measured, not selected
 
 **These are not decisions and should not be guessed.** Each is a threshold whose correct value is discovered by running against the golden corpus (`e2e_verification_journeys.md`). An agent that picks a number here and moves on has skipped the work.
