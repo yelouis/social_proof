@@ -320,21 +320,31 @@ Prediction/forecast scoring · fact-checking of any kind · a single global trus
 
 ## 4. Resolved — index
 
-Selections live with their issue above, with the user's own wording preserved. This is the index.
+Selections live with their issue above in the user's own wording. This is the index, plus what each one actually cost or saved downstream.
 
 | # | Selected | Consequence |
 |---|---|---|
-| **001** | **A** — Specificity as a fourth scored axis | `design_rubric_engine.md` §2A. Computed as a *rate* from deterministic features, no LLM at scoring time (§0). Introduces parameter 016. |
-| **002** | **Extension first, Flutter later** | Phase 9 deferred. Extension becomes the only planned client, which promotes **Issue 013 to the critical path**. Design tokens must be authored so a Flutter client can mirror them later — U12 in the execution guide. |
-| **003** | **C** — discard audio, keep the citation link | **Reshapes the ingest pipeline.** Dual-pass transcription must run at ingest, before deletion; there is no later. `citation_url_template` on every Source. Disk drops ~3 GB → ~70 MB per subject. |
-| **005** | **A** — local open-weights embeddings | `nomic-embed-text-v1.5`, **768 dims**, fixed in the DuckDB schema. |
-| **006** | **B** — local external-drive backup, scripted | Much smaller job now that 003 removed the audio. |
-| **007** | **Local model (Gemma)** | No Anthropic call in the extraction path. Requires grammar-constrained decoding and KV prefix reuse. Cost becomes wall-clock, not dollars. |
-| **009** | **A** — evidence without a score if precision misses | Fallback pre-decided, so Phase 5 can't stall on it. |
+| **001** | **A** — Specificity as a fourth axis | Computed as a *rate* from deterministic features; no LLM at scoring time (`design_rubric_engine.md` §0, §2A). Introduced parameter 016. |
+| **002** | **Extension first, Flutter later** | Flutter deferred. Extension became the only client, which promoted Issue 013 to the critical path. Shared `tokens.json` is the mechanism keeping the design language consistent. |
+| **003** | **C** — discard audio, keep the citation link | Reshaped ingest: dual-pass transcription moved to ingest time because there is no later. `citation_url_template` on every Source. ~3 GB → ~70 MB per subject. |
+| **005** | **A** — local open-weights embeddings | `nomic-embed-text-v1.5`, 768 dims, fixed in the DuckDB schema. |
+| **006** | **B** — scripted external-drive backup | Now the *only* durability story, since Issue 015 removed the cloud copy. |
+| **007** | **Local Gemma** | No Anthropic call in the extraction path. Requires grammar-constrained decoding and KV prefix reuse. Cost became wall-clock, not dollars. |
+| **009** | **A** — evidence without a score if precision misses | Fallback pre-decided so Phase 5 cannot stall on it. |
 | **011** | **A** — `audience_divergence` stays flagged evidence | Not an axis. |
-| **014** | **B** — no in-app playback; deep-link to the source | Follows necessarily from 003. |
-| **013** | **NOT YET SELECTED** | **Now blocks the only client.** See §1. |
-| **015** | **NOT YET SELECTED** | Filed this session. Blocks U1's shape. |
+| **013** | **Selection-triggered overlay** | Neither option as offered. Highlight is the query; resolves proposition-first, then topic, then subject-only. Smaller I2 surface and a far more precise query than page inference. Extension carries two depths in one surface. |
+| **014** | **B** — deep-link, no in-app playback | Follows from 003. |
+| **015** | **A** — drop Firestore | DuckDB is the single system of record. Sync contract, `synced_at`, reconciliation pass and security rules all deleted. No Firestore code was ever written, so this was docs-only. Access control collapses onto the local API's four controls. |
+| **017** | **A** — wire every real external now | V2–V5 all unblocked and ordered ahead of any new phase. |
+| **018** | **NOT YET SELECTED** | Blocks V6 and parameters 004, 008, 012, 016. |
+
+### What Phases 0–2 actually delivered
+
+Verified in source on August 17, not from commit messages.
+
+**Real:** the integrity pass (all eight checks, with `NOT APPLICABLE` correctly distinguished from `PASS`); DuckDB storage with genuine `vss`, `FLOAT[768]`, HNSW cosine indexing and deterministic IDs; three source adapters behind one Protocol; dual-pass reconciler logic; segmentation; the extraction gate; the five post-extraction validators. Falsification discipline was followed in every commit body.
+
+**Stubbed, and previously reported as measured:** transcription, diarization, the extraction runtime, and embeddings. No external model dependency was ever declared. `tokens_per_second = 35.0` was a hardcoded literal printed as a measurement; `Precision 1.000 / Recall 1.000` came from 16 synthetic cases with one example per class. Tracked as Issues 017 and 018, and as V0–V5 in the execution guide.
 
 ---
 

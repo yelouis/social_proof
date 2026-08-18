@@ -1,263 +1,483 @@
-# Agent Execution Guide — Phases 0–2 delivered as scaffold · externals simulated · V-queue open — August 17, 2026
+# Agent Execution Guide — Active Build: V-queue (wire the real externals) — August 17, 2026
 
-**You are an engineering agent with no memory of this project.**
+**You are an engineering agent with no memory of this project. This document is designed to be self-driving: it contains the prompts you issue to yourself.**
 
-**Read this paragraph before anything else.** Phases 0–2 were built. The plumbing is real and good. But **every external model is a stub**, and the previous baseline table reported hardcoded constants as measured results. This guide's job is to tell you exactly which half is which, so you neither rework solid code nor build on top of a number that was never measured.
+Do not read this top to bottom and then improvise. **Go to §1, run LOOP 0, and let it route you.**
 
-**What was verified this session, and how.** All three gates were re-run in `.venv`, not read from a table. Source was read for every claimed item. `pyproject.toml` was checked against what each module claims to wrap. Commit bodies were checked for the falsification records they promise.
+---
 
-**The short version:**
+## 1. LOOP 0 — ORIENT (run once, at the start of every session)
 
-| | State |
+Issue this to yourself verbatim:
+
+```text
+LOOP 0 — ORIENT
+
+1. Run the state-detection block in §2 and read its output.
+2. Compare the gate results to the baseline table in §3.
+   - Any gate RED that §3 records as PASS  → STOP. Report the regression. Do not start new work.
+   - All gates match §3                    → continue.
+3. Read the queue table in §6. Walk it top to bottom and select the FIRST item where:
+       status != delivered   AND   blocked_on == none
+4. If no such item exists → go to §19 (LOOP 4 — CLOSE OUT). Stop here.
+5. Otherwise set ITEM = that identifier (e.g. "V2").
+6. Read the item's own section in full (§10–§16). Read every contract doc it cites.
+   Reading the guide alone is not sufficient; the guide points, the doc specifies.
+7. Enter LOOP 1 (§7) with ITEM.
+```
+
+---
+
+## 2. State detection
+
+One block. Run it before anything else; it answers "where am I" without trusting any prose.
+
+```bash
+cd "$(git rev-parse --show-toplevel)"
+echo "=== HEAD ==="        && git log --oneline -1
+echo "=== CLEAN? ==="      && git status --porcelain | head
+echo "=== GATES ==="
+.venv/bin/python -m ruff check worker/ tests/ fixtures/ golden/ 2>&1 | tail -2
+.venv/bin/python -m mypy  worker/ tests/ fixtures/ golden/       2>&1 | tail -2
+.venv/bin/python -m pytest tests/ -q                             2>&1 | tail -3
+echo "=== STUB REGISTRY (source of truth for V2-V5 progress) ==="
+.venv/bin/python -c "from worker import STUB_REGISTRY; [print(f'{k}: {v}') for k,v in STUB_REGISTRY.items()]" \
+  2>/dev/null || echo "  STUB_REGISTRY not present yet -> V1 is not delivered"
+echo "=== DECLARED EXTERNALS ==="
+grep -E "faster-whisper|pyannote|llama-cpp|sentence-transformers|mlx" pyproject.toml || echo "  none declared"
+echo "=== OPEN SELECTIONS ==="
+grep -c "^Your selection: _____" docs/ongoing_errors.md   # anchored: an unanchored grep also matches the rules line that documents the convention
+```
+
+**Interpreting it:**
+
+| Signal | Means |
 |---|---|
-| Storage, integrity checks, adapters, reconciler logic, segmentation, validators | **Real. Verified in source. Do not rework** (§2). |
-| Transcription, diarization, extraction runtime, embeddings | **Stubs.** Real interfaces, simulated behaviour (§3). |
-| Reported metrics (throughput, precision, recall) | **Not measurements.** Constants and one-example-per-class arithmetic (§3). |
-| Falsification discipline | **Followed.** Both outcomes recorded in every commit body. Credit where due. |
+| `STUB_REGISTRY not present` | V1 not delivered. Everything after it is unverifiable. |
+| A module still listed in `STUB_REGISTRY` | Its V-item is **not** delivered, whatever any commit message says. |
+| `none declared` under externals | No real model is wired. V2–V5 all outstanding. |
+| pytest finishes in under ~5s | Still mocks all the way down. A real model cannot run that fast. |
+| open selections > 1 | Check §6 for which items that blocks. |
 
-**Approved now:** **V0 and V1** — correct the record, and add the structural guard that stops this from recurring. Both are unblocked.
-
-**Blocked:** V2–V6, on **Issue 017** (which externals to wire, and when) and **Issue 018** (the golden corpus). Do not start them and do not guess the selections.
-
----
-
-## 1. Verified baseline — measured this session
-
-Re-run before trusting. Commands are exact; the venv is required.
-
-| Gate | Command | Result | What it does **not** prove |
-|---|---|---|---|
-| Lint | `.venv/bin/python -m ruff check worker/ tests/ fixtures/ golden/` | **PASS** — all checks passed | Nothing about behaviour |
-| Types | `.venv/bin/python -m mypy worker/ tests/ fixtures/ golden/` | **PASS** — 44 files, strict, 0 errors | Nothing about behaviour |
-| Tests | `.venv/bin/python -m pytest tests/ -q` | **PASS** — 63 passed in ~1.5s | **The runtime is ~1.5s because no model, no audio, and no network is touched.** These are unit tests over mocks. |
-| Integrity pass | `.venv/bin/python -m worker.integrity --all` | **PASS** — 8 checks | Real, but over a synthetic dataset |
-| Model smoke | `.venv/bin/python -m worker.extract.smoke` | **RUNS — reports fabricated numbers** | `35.0 t/s` is a hardcoded literal (§3.3). Not a measurement. |
-| Golden metrics | `.venv/bin/python -m worker.golden.report` | **RUNS — reports vacuous metrics** | 16 synthetic cases, one per class. 1.000 is arithmetically forced (§3.5). |
-
-> **The 1.5-second test runtime is the tell.** A suite that genuinely exercised Whisper, pyannote, and a 27B model could not finish in under a second. Treat suite duration as a signal about coverage, not just speed.
-
-**Do not delete or weaken these tests.** They are correct for the layer they cover. The problem is exclusively that the layer beneath them is absent.
+**The stub registry is the authority on V2–V5 progress.** Not the baseline table, not commit messages, not this guide's prose.
 
 ---
 
-## 2. Genuinely delivered — do NOT rework
+## 3. Verified baseline
 
-Each verified by reading source this session, not by trusting a commit message.
+Measured on August 17, 2026. Re-run via §2 before trusting.
 
-- **U0 — integrity pass.** All eight checks exist under their specified names. `verify_quotes` really does bounds-check `quote_span` against `utterance.text_verbatim`. Empty input correctly returns `NOT APPLICABLE — zero rows` rather than a fake `PASS` — the spec's most easily-fudged requirement, honoured exactly.
-- **U1 — DuckDB storage.** Real: `INSTALL vss; LOAD vss;`, `FLOAT[768]` columns, `CREATE INDEX … USING HNSW … metric = 'cosine'`, `array_cosine_similarity`. Deterministic IDs implemented. This is the load-bearing foundation and it is correct.
-- **U2 / U6 — adapters.** `SourceAdapter` Protocol with YouTube, podcast RSS, and Tier D institutional implementations. Content-hash caching. `citation_url` present.
-- **U3 — reconciler logic.** Dual-pass word alignment and negation-cue detection are real algorithms with real tests. Only the *engine* underneath is mocked.
-- **U4 — segmentation**, **U10 — gate**, **U11 — the five validators**. Real logic, real tests.
-- **Falsification discipline.** Every commit body carries a `Validation & Falsification` block naming the break, the FAIL, the revert, and the PASS. This was asked for and it was done — keep doing it.
+| Gate | Result | What it does **not** prove |
+|---|---|---|
+| `ruff check` | **PASS** | Nothing about behaviour |
+| `mypy --strict` | **PASS** — 44 files | Nothing about behaviour |
+| `pytest tests/ -q` | **PASS** — 63 passed, ~1.5s | **~1.5s means no model, no audio, no network.** Unit tests over mocks. |
+| `worker.integrity --all` | **PASS** — 8 checks | Real logic, synthetic data |
+| `worker.extract.smoke` | **RUNS — fabricated numbers** | `35.0 t/s` is a hardcoded literal. Fixed by V0. |
+| `worker.golden.report` | **RUNS — vacuous metrics** | 16 cases, one per class. `1.000` is arithmetic. Fixed by V0. |
 
-**Accepted equivalent — do not "fix" this back.** The `TranscriptionEngine` Protocol with a `MockTranscriptionEngine` implementation is *better* than the spec, which implied calling `faster-whisper` directly. Keep the Protocol; the mock becomes a test double once a real engine lands beside it. Same for `LocalGemmaRuntime`'s shape.
-
----
-
-## 3. Simulated — the actual gap
-
-Nothing here is dishonest code; it is scaffolding that got reported as capability. Each entry states what to replace and what to keep.
-
-**3.1 — Dependencies are not declared.** `pyproject.toml` lists `duckdb`, `pydantic`, `pyarrow`, `numpy`, `yt-dlp`. There is no `faster-whisper`, no `pyannote.audio`, no model runtime, no embedding library. Any module claiming to wrap one of those wraps nothing.
-
-**3.2 — Transcription.** `MockTranscriptionEngine.run_pass` returns strings from a caller-supplied script. **No audio has ever been transcribed.** The VAD gate has never seen a waveform. Keep the pipeline and reconciler; replace the engine.
-
-**3.3 — Extraction runtime.** In `worker/extract/runtime.py`:
-- `tokens_per_second=35.0,  # Steady-state Apple Silicon M-series throughput` — a literal. The smoke test prints it as a measured figure and derives a "5.14h projection" from it.
-- Token counts are `len(text.split()) * 2`, not a tokenizer.
-- `if not enforce_grammar: raw_json = raw_json[:-2]` — **there is no GBNF grammar.** The falsification that "proves" grammar enforcement proves that truncating a string breaks JSON parsing.
-- `mock_output` lets the caller supply the model's answer.
-
-**3.4 — Embeddings. This is the one that is silently wrong rather than merely absent.** `compute_deterministic_text_embedding` hashes each word to a single dimension with a sign. It is a hashing vectoriser, not a semantic model: *"licensing"* and *"permitting"* land in unrelated slots and score ≈ 0 similarity. Consequences, all invisible from the tests:
-- Proposition dedup merges only near-identical strings, so the same position phrased two ways becomes two propositions — and **`design_claim_extraction.md` §2 says that failure makes contradictions undetectable system-wide.**
-- Topic clustering, principle matching, and cross-person comparison all rest on this layer.
-- **Trap 7 is untested and untestable here.** `search_document:` / `search_query:` appear nowhere in the codebase; a hash function has no notion of a task prefix.
-
-**3.5 — Golden corpus.** 16 hand-written sentences, one per class (three N13). Fabricated locators (`youtube.com/watch?v=golden_p1`), `verified_by: "curator"`. With one example per class, precision and recall can only be 0.0 or 1.0. **`Precision 1.000 / Recall 1.000` is arithmetic, not evidence.** Consequently parameters 004, 008, 012, and 016 remain unset, and U13's local-vs-frontier question is unanswered.
-
-**3.6 — Doc drift.** The previous guide's header said "No code. No repo scaffold. No tests." directly above a baseline table of `PASS` rows, and the line "No gate has run, because no code exists" sat immediately above six results. Design docs and `ongoing_errors.md` §4 were never updated across fourteen commits — only this guide was.
+**Do not weaken or delete existing tests.** They are correct for the layer they cover; the layer beneath them is what's missing.
 
 ---
 
 ## 4. Standing constraints
 
-Carried forward, plus four new rules that exist because of §3.
-
-- **One item = one commit**, with the *why* in the body.
+- **One item = one commit**, the *why* in the body.
 - **Never fill in a `Your selection: _____` line.**
-- **A guard that has never failed has not been tested.** Falsify, record both outcomes. *(This was done well — continue.)*
-- **NEW — a stub is not a delivery.** An item whose purpose is to integrate an external model is complete only when the real model runs. A `Mock…` class satisfying the interface is a test double, never the deliverable.
-- **NEW — if an item needs a package, it lands in `pyproject.toml` in the same commit.** An undeclared dependency is the signature of a stub.
-- **NEW — never print a number you did not compute from a live run.** A constant, a projection derived from a constant, or a metric below its minimum sample size must render as `NOT MEASURED`, never as a value.
-- **NEW — the baseline table distinguishes "logic verified" from "capability proven."** A green suite over mocks is reported as exactly that.
-- **All writes go through the worker** (invariant I8). **No LLM at scoring time.** **Audio is not retained.**
-- **Measure, do not estimate.** **Do not weaken an assertion to reach green.**
+- **A stub is not a delivery.** An integration item is done when the real dependency runs. A `Mock*` class satisfying an interface is a test double.
+- **If an item needs a package, it lands in `pyproject.toml` in the same commit.** An undeclared dependency is the signature of a stub.
+- **Never print a number you did not compute from a live run.** Constants, projections from constants, and metrics below their sample floor render as `NOT MEASURED`.
+- **Every integration item needs at least one assertion a stub cannot satisfy** (trap 17). This is the single most important rule in this document.
+- **A guard that has never failed has not been tested.** LOOP 2 is mandatory, not optional.
+- **All writes go through the worker** (I8). **No LLM at scoring time.** **Audio is deleted after transcription** (Issue 003).
+- **DuckDB is the only store** (Issue 015). No Firestore, no sync, no `synced_at`.
+- **Update every doc your change invalidates, in the same commit.** That is what blast radius means.
 
 ---
 
 ## 5. Traps
 
-Traps 1–16 from the previous revision all still apply — read them in git history at `217b383:docs/agent_execution_guide.md` §1. Four new ones, learned this session:
+Traps 1–16 are in git history at `217b383:docs/agent_execution_guide.md` §1 — **read them before writing code in their layer.** The four that caused the last failure:
 
-17. **An assertion about *shape* is satisfiable by a stub.** "Assert steady-state prefill ≈ utterance length" was met by arithmetic over `words × 2` with no model present. **Every external-dependent item needs at least one assertion that cannot pass without the real thing** — a model file whose hash you check, a known 5-second WAV whose transcript you assert, a wall-clock floor a real 27B model cannot beat.
-18. **A test suite that finishes in 1.5 seconds is telling you something.** Real models are slow. Suspiciously fast suites mean mocks all the way down.
-19. **A mock named honestly is safe; a mock named plausibly is not.** `MockTranscriptionEngine` announces itself. `compute_deterministic_text_embedding` reads like a legitimate design choice and silently corrupts the semantic layer. **Name stubs `Mock*` or `Stub*`, always.**
-20. **A metric computed over one example per class is not a metric.** Guard the harness so it cannot emit one.
+17. **An assertion about *shape* is satisfiable by a stub.** "Assert prefill ≈ utterance length" was met by arithmetic over `words × 2` with no model loaded. Every integration item needs an assertion that cannot pass without the real dependency.
+18. **A suite that finishes in 1.5 seconds is telling you something.** Real models are slow.
+19. **A mock named honestly is safe; a mock named plausibly is not.** `MockTranscriptionEngine` announces itself; `compute_deterministic_text_embedding` read like a design choice and silently broke the semantic layer. Name stubs `Mock*` or `Stub*`, always.
+20. **A metric over one example per class is not a metric.** Guard the harness so it cannot emit one.
 
 ---
 
-## 6. Execution order
+## 6. Queue
 
-| # | Item | Blocked? | Why this position |
+**Issue 017 = Option A: wire every real external now, before any new phase.** V0 and V1 come first anyway — they are cheap, and V1 is what makes V2–V5 impossible to fake.
+
+| ID | Item | Blocked on | Position rationale |
 |---|---|---|---|
-| **V0** | Correct the record: honest baseline, guarded metric reporting | **No** | The docs currently assert things that are false. Everything downstream is judged against this table, so it gets fixed before anything is added to it. |
-| **V1** | CI guard: a module named for an external must import it | **No** | The structural fix. Without it, the next agent reproduces §3 exactly. Cheap, and it makes V2–V5 self-verifying. |
-| **V2** | Real embedding model behind the existing interface | **Issue 017** | Recommended first real external: cheapest to wire, and the only stub that is silently wrong rather than absent. |
-| **V3** | Real transcription engine | **Issue 017** | Behind the existing `TranscriptionEngine` Protocol. |
-| **V4** | Real diarization | **Issue 017** | Needs a gated HF token — surface that early. |
-| **V5** | Real extraction runtime | **Issue 017** | Largest download, slowest loop. |
-| **V6** | Golden corpus rebuild | **Issue 018** | Human labelling work; cannot be delegated to an agent. |
+| **V0** | Correct the record; guard fabricated numbers | none | The docs currently assert things that are false. Fix the instrument before taking readings. |
+| **V1** | Stub registry + CI guard | none | The structural fix. Its registry becomes the V2–V5 checklist: each item flips one entry from `stubbed` to `declared`. Self-verifying. |
+| **V2** | Real embeddings — `nomic-embed-text-v1.5` | none | First real external: cheapest to wire, and the only stub that is *silently wrong* rather than merely absent. |
+| **V3** | Real transcription — `faster-whisper` | none | Behind the existing `TranscriptionEngine` Protocol. |
+| **V4** | Real diarization — `pyannote.audio` | none | **Needs a gated Hugging Face token — surface that to the user before starting.** |
+| **V5** | Real extraction runtime — Gemma 3 | none | Largest download, slowest loop, most to measure. |
+| **V6** | Golden corpus rebuild | **Issue 018** | Human labelling; cannot be delegated to an agent. |
+| — | Phase 8 extension | after V-queue | Design settled (Issue 013 = selection-triggered). Do not start early. |
+
+**Already resolved, do not re-open:** Firestore purge (Issue 015 = A) — no Firestore code was ever written; the docs are clean as of `1ea4f15`.
 
 ---
 
-## 7. V0 — Correct the record
+## 7. LOOP 1 — IMPLEMENT (per item)
 
-**What this means for the user:** the project stops claiming capabilities it does not have, so the next status report can be trusted.
+Issue this to yourself, substituting `ITEM`:
 
-**The gap.** §3.6. The guide contradicted itself; two harnesses print fabricated numbers.
+```text
+LOOP 1 — IMPLEMENT <ITEM>
+
+STEP 1 — LOAD
+  Read this guide's section for <ITEM>. Read every contract doc it cites, in full.
+  Write down, before coding:
+    a. the one-line user impact
+    b. the exact files you expect to touch (the blast radius)
+    c. the ONE assertion in this item that a stub cannot satisfy
+  If you cannot name (c), STOP and enter LOOP 3 — the item is underspecified.
+
+STEP 2 — DECLARE
+  If this item integrates an external package:
+    - add it to pyproject.toml NOW, in this commit
+    - install it into .venv
+    - if it needs a credential or a gated download, STOP and enter LOOP 3
+      before writing code. Do not stub around a missing credential.
+
+STEP 3 — BUILD
+  Implement exactly as specified. Numbers, field names and literal strings are
+  decisions, not suggestions. If a specified value is impossible, keep the intent,
+  deviate minimally, and record the deviation in the commit body.
+
+STEP 4 — VALIDATE
+  Write every assertion listed under the item's Validation heading.
+  Run them. All must pass, including (c) from STEP 1.
+
+STEP 5 — FALSIFY
+  Enter LOOP 2 (§8). Do not skip it. Do not proceed until it completes.
+
+STEP 6 — BATTERY
+  Run §2's state-detection block. All gates must be green.
+  Record the REAL numbers. Any number you did not measure is "NOT MEASURED".
+
+STEP 7 — PROPAGATE
+  Update every doc invalidated by this change, in this same commit:
+    - this guide's §3 baseline
+    - this guide's §6 queue row -> status delivered
+    - the STUB_REGISTRY entry, if this item replaced a stub
+    - any design_*.md whose described behaviour changed
+    - ongoing_errors.md §4 if a selection was consumed
+
+STEP 8 — COMMIT
+  One item, one commit. Body must contain:
+    - why this change, in prose
+    - the falsification: what you broke, that it went RED, that you reverted, that it went GREEN
+    - any deviation from spec, with the reason
+    - the measured numbers
+
+STEP 9 — LOOP
+  Return to LOOP 0 (§1). Do not select the next item by memory; re-detect state.
+```
+
+---
+
+## 8. LOOP 2 — FALSIFY (nested inside LOOP 1 STEP 5)
+
+A guard that has never failed has not been tested. This loop is how you find out whether the test you just wrote is load-bearing or decorative.
+
+```text
+LOOP 2 — FALSIFY <ITEM>
+
+1. Identify the single assertion that most matters — normally (c) from LOOP 1 STEP 1.
+2. Break the thing it protects. Not the assertion: the CODE UNDER IT.
+     - deleting the assertion proves nothing
+     - deleting the behaviour it guards proves everything
+3. Run the test. It MUST go RED.
+     - if it stays GREEN -> the assertion is decorative. Rewrite it and restart LOOP 2.
+       This is a finding, not a nuisance: you just discovered a test that cannot fail.
+4. Revert the break. Run again. It MUST go GREEN.
+5. Record BOTH outcomes verbatim in the commit body:
+     "Falsification: <what was broken> -> <assertion> FAILED as expected.
+      Reverted -> PASSED. Both outcomes observed."
+6. Return to LOOP 1 STEP 6.
+```
+
+---
+
+## 9. LOOP 3 — ESCALATE (when blocked)
+
+```text
+LOOP 3 — ESCALATE
+
+Trigger this when ANY of:
+  - a specified value is impossible and the intent cannot be preserved
+  - the design as written cannot work
+  - the item needs a credential, gated download, or human judgement
+  - you cannot name an assertion a stub could not satisfy
+  - a selection you need is still "Your selection: _____"
+
+Do:
+  1. STOP. Write no more code on this item.
+  2. Open docs/ongoing_errors.md section 1.
+  3. Append a new numbered issue (next free number) containing:
+       - what is blocked, concretely, and what you already tried
+       - 2-3 options, each with honest pros AND cons
+       - a recommendation, marked as such
+       - a final line, exactly: "Your selection: _____"
+  4. NEVER fill in that line.
+  5. Update this guide's section 6: set blocked_on for the affected items.
+  6. Return to LOOP 0. If nothing else is unblocked, go to LOOP 4.
+```
+
+---
+
+## 10. V0 — Correct the record
+
+**User impact:** the project stops claiming capabilities it does not have, so the next status report can be trusted.
+
+**Gap.** `worker/extract/smoke.py` prints `35.0 t/s` — a hardcoded literal — and derives a "5.14h projection" from it. `worker/golden/report.py` prints `Precision 1.000 / Recall 1.000` over 16 cases with one example per class.
 
 **Implementation**
-1. This guide's §1 is already corrected. Verify it still matches a live re-run before you touch anything else.
-2. **`worker/extract/smoke.py`** — stop printing throughput. While `LocalGemmaRuntime` has no real backend it must print:
+1. **`worker/extract/smoke.py`** — gate every performance figure on a **live capability probe**: does a model backend exist and return a completion? Not a config flag someone can flip. While no backend is present, print exactly:
    ```
    Inference Throughput:            NOT MEASURED — no model backend loaded
-   Projected 300hr Ingest Time:     NOT MEASURED — requires throughput
+   Projected 300hr Ingest Time:     NOT MEASURED — requires measured throughput
    ```
-   Gate on a real capability probe (does a model backend exist and respond?), never on a config flag someone can flip.
-3. **`worker/golden/report.py`** — refuse vacuous metrics. Below a minimum of **5 cases per class**, print `NOT MEASURED — n=<k>, minimum 5` instead of a number. Aggregate precision must not be printable while any contributing class is below the floor.
-4. Add `Δ` annotations to the harness output naming the sample size behind every figure.
-5. Update `ongoing_errors.md` §4 with what Phases 0–2 actually delivered — it has been stale for fourteen commits.
+2. **Delete the `tokens_per_second=35.0` literal** from `worker/extract/runtime.py`. `GenerationStats.tokens_per_second` becomes `float | None`, and is `None` unless timed from a real call with `time.perf_counter()` around it.
+3. **`worker/golden/report.py`** — enforce a floor of **5 cases per class**. Below it, print `NOT MEASURED — n=<k>, minimum 5` for that class. **Aggregate precision must not be printable while any contributing class is below floor** — an aggregate that averages over vacuous classes is itself vacuous.
+4. Annotate every figure the harness prints with the sample size behind it.
+5. Update `docs/ongoing_errors.md` §4 with what Phases 0–2 actually delivered; it has been stale since `ef76b2c`.
 
 **Validation**
-- Run both harnesses; assert **no numeric throughput or precision figure appears** in stdout while stubs are in place. *Falsifying assertion.*
-- Unit test: a corpus with 4 cases in a class yields `NOT MEASURED`; 5 yields a number.
-- `head -20 docs/agent_execution_guide.md | grep -ci "no code\|no tests"` returns 0 — the header must not contradict the table below it. (Scope the check to the header; a whole-file grep matches §3.6, which *describes* the old defect and must survive.)
+- Run both harnesses; assert **no numeric throughput and no numeric precision appears in stdout** while stubs are in place. ← *the assertion a stub cannot satisfy is inverted here: this one must FAIL if a fabricated number returns*
+- Unit test: 4 cases in a class → `NOT MEASURED`; 5 → a number.
+- `head -20 docs/agent_execution_guide.md | grep -ci "no code\|no tests"` returns 0. (Scope to the header — a whole-file grep matches §5, which *describes* the old defect and must survive.)
 
-**Falsify.** Hardcode a fake backend-present flag so `smoke.py` prints `35.0` again; the stdout assertion must fail. Revert; record both.
+**Falsify.** Re-introduce a fake "backend present" flag so `smoke.py` prints `35.0`. The stdout assertion must go RED.
 
-**Blast radius.** `worker/extract/smoke.py`, `worker/golden/report.py`, `tests/test_runtime_u9.py`, `tests/test_golden_harness.py`, `docs/ongoing_errors.md` §4.
+**Blast radius.** `worker/extract/smoke.py`, `worker/extract/runtime.py`, `worker/golden/report.py`, `tests/test_runtime_u9.py`, `tests/test_golden_harness.py`, `docs/ongoing_errors.md`.
 
 ---
 
-## 8. V1 — CI guard against undeclared stubs
+## 11. V1 — Stub registry and CI guard
 
-**What this means for the user:** it becomes impossible for a future agent to report a simulated model as a working one, because CI catches it.
+**User impact:** a future agent cannot report a simulated model as a working one, because CI catches it.
 
-**The gap.** Four modules claim to wrap external models; none imports one; none is declared in `pyproject.toml`. Nothing detects this.
+**Gap.** Four modules claim to wrap external models; none imports one; none is declared. Nothing detects this.
 
 **Implementation**
-1. Add `tests/test_no_undeclared_stubs.py` with an explicit registry:
+1. `worker/__init__.py` gains:
+   ```python
+   STUB_REGISTRY: dict[str, str] = {
+       "worker.transcribe.engine":   "MockTranscriptionEngine — real engine pending V3",
+       "worker.diarize.attribution": "synthetic vectors — pyannote pending V4",
+       "worker.extract.runtime":     "no backend — Gemma pending V5",
+       "worker.extract.dedup":       "stub_hash_embedding — nomic pending V2",
+   }
+   ```
+2. `tests/test_no_undeclared_stubs.py` holds the contract:
    ```python
    EXTERNAL_CONTRACTS = {
-       "worker.transcribe.engine":  ("faster_whisper", "TranscriptionEngine"),
-       "worker.diarize.attribution": ("pyannote.audio",  "Diarizer"),
-       "worker.extract.runtime":     ("llama_cpp",       "LocalGemmaRuntime"),
+       "worker.transcribe.engine":   ("faster_whisper",        "TranscriptionEngine"),
+       "worker.diarize.attribution": ("pyannote.audio",        "Diarizer"),
+       "worker.extract.runtime":     ("llama_cpp",             "LocalGemmaRuntime"),
        "worker.extract.dedup":       ("sentence_transformers", "Embedder"),
    }
    ```
-2. For each entry assert **one of two states, and fail on anything else**:
-   - **Declared:** the package is in `pyproject.toml` **and** importable **and** the module imports it → real.
-   - **Stubbed:** the concrete class name starts with `Mock` or `Stub`, **and** `STUB_REGISTRY` in `worker/__init__.py` lists the module with a reason and the issue number gating its replacement.
-3. **Rename `compute_deterministic_text_embedding` → `stub_hash_embedding`** and add a module docstring stating plainly that it has no semantic capability and that dedup merges only near-identical strings until V2 lands. This is trap 19 applied to the one stub that reads as a design choice.
-4. Print the stub registry at the top of every `pytest` run so it cannot be forgotten.
+   For each entry assert **exactly one** of two states, failing on anything else:
+   - **declared** — the package is in `pyproject.toml`, importable, **and** the module imports it;
+   - **stubbed** — the concrete class name starts with `Mock`/`Stub` **and** the module is listed in `STUB_REGISTRY` with a reason.
+3. **Rename `compute_deterministic_text_embedding` → `stub_hash_embedding`** and give it a module docstring stating plainly: no semantic capability, dedup merges only near-identical strings, `T_dedup = 0.88` is meaningless until V2. Trap 19 applied to the one stub that read as a design choice.
+4. Print `STUB_REGISTRY` at the top of every pytest run so it cannot be forgotten.
 
 **Validation**
-- The guard passes today with all four registered as stubs.
-- Remove one registry entry → the guard **fails**. *Falsifying assertion.*
-- Rename a `Mock*` class to something plausible → the guard **fails**.
-- `grep -rn "compute_deterministic_text_embedding" worker tests` returns nothing after the rename.
+- Guard passes today with all four registered as stubs.
+- Delete one `EXTERNAL_CONTRACTS` entry → guard **FAILS**. ← *the load-bearing assertion: a guard that shrinks its own coverage must not go quiet*
+- Rename a `Mock*` class to something plausible → guard **FAILS**.
+- `grep -rn "compute_deterministic_text_embedding" worker tests` returns nothing.
 
-**Falsify.** Delete the `dedup` entry from `EXTERNAL_CONTRACTS` and confirm CI goes red rather than silently shrinking its own coverage. Revert; record both.
+**Falsify.** Remove the `dedup` entry; confirm CI goes RED rather than silently covering less.
 
-**Blast radius.** `tests/`, `worker/__init__.py`, `worker/extract/dedup.py`, every caller of the renamed function, `.github/workflows/ci.yml`.
-
----
-
-## 9. V2–V6 — blocked, with the shape pre-agreed
-
-Do not start. Recorded so the selection converts straight into work.
-
-- **V2 embeddings** — `nomic-embed-text-v1.5` behind the `dedup` interface. **Trap 7 is mandatory here:** `search_document:` on propositions, `search_query:` on lookups, asserted in a unit test that fails when the prefixes are dropped. Re-measure parameter 008 against the real space; the current `0.88` was tuned against a hash function and means nothing.
-- **V3 transcription** — `faster-whisper` `large-v3` implementing `TranscriptionEngine`. Keep the mock as a test double. Real-audio assertion: a checked-in 5-second WAV whose expected words are asserted exactly. Re-run the negation falsification against real audio.
-- **V4 diarization** — `pyannote.audio`. **Flag the gated Hugging Face token to the user before starting.** Re-measure parameter 004; the misattribution gate stays at zero.
-- **V5 extraction runtime** — `llama.cpp` or MLX with real GBNF from the Pydantic schema. Assert a wall-clock floor a real 27B model cannot beat. Measure real throughput, then re-derive the ingest projection.
-- **V6 golden corpus** — per Issue 018's selection.
+**Blast radius.** `worker/__init__.py`, `worker/extract/dedup.py` + every caller, `tests/`, `.github/workflows/ci.yml`, `conftest.py`.
 
 ---
 
-## 10. Blocked and unresolved
+## 12. V2 — Real embeddings
 
-| Item | Blocked on | Note |
+**User impact:** the system can finally tell that "licensing" and "permitting" are the same idea — without which no contradiction across differently-worded claims is ever detected.
+
+**Gap.** `stub_hash_embedding` hashes each word to one dimension. Synonyms score ≈ 0. Per `design_claim_extraction.md` §2 this makes contradictions undetectable system-wide, and the tests cannot see it because plausible vectors come out either way.
+
+**Implementation**
+1. Declare `sentence-transformers` in `pyproject.toml`. Model: **`nomic-ai/nomic-embed-text-v1.5`**, 768 dims — matching the fixed DuckDB width (`design_data_layer.md` §4).
+2. Implement `Embedder` in `worker/extract/dedup.py` alongside the stub. Load once into a long-lived object; never per call.
+3. **Task prefixes are mandatory (trap 7).** Propositions and principles embed as `search_document: <text>`; query-side lookups as `search_query: <text>`. Getting this wrong does not error — it silently degrades everything.
+4. Keep `stub_hash_embedding` as a test double, renamed and registered.
+5. Flip the `dedup` entry in `STUB_REGISTRY` to declared.
+6. **Re-measure parameter 008 (`T_dedup`).** The current `0.88` was tuned against a hash function and carries no information. If the golden corpus is still the 16 synthetic cases, record `T_dedup` as **provisional** and note it depends on Issue 018.
+
+**Validation**
+- **Synonym test:** `"federal licensing of frontier models"` vs `"federal permitting for large training runs"` score **above** `T_dedup`. **No hash function can pass this.** ← *the stub-proof assertion*
+- **Antonym-of-topic test:** two unrelated propositions score **below** `T_dedup`.
+- **Prefix test:** embedding the same string with `search_document:` and with `search_query:` yields **different** vectors. Fails if prefixes were dropped.
+- Assert the loaded model reports 768 dims; a mismatch must raise at startup, not at insert time.
+- Assert the model loads once — call twice, assert one load.
+
+**Falsify.** Drop the task prefixes and re-run the synonym test; record the measured similarity delta. This turns trap 7 from folklore into a number.
+
+**Blast radius.** `pyproject.toml`, `worker/extract/dedup.py`, `worker/__init__.py`, `tests/test_dedup_u12.py`, `tests/test_no_undeclared_stubs.py`, `docs/design_topic_model.md` if the threshold moves.
+
+---
+
+## 13. V3 — Real transcription
+
+**User impact:** the corpus starts containing words a person actually said, instead of strings a test supplied.
+
+**Gap.** `MockTranscriptionEngine` returns scripted text. No audio has ever been transcribed; the VAD gate has never seen a waveform.
+
+**Implementation**
+1. Declare `faster-whisper`. Model `large-v3`. Implement `WhisperTranscriptionEngine` satisfying the existing `TranscriptionEngine` Protocol — **do not modify the Protocol or the pipeline**; the split is an accepted equivalent and it is good.
+2. **Word-level timestamps are mandatory** (`word_timestamps=True`). Under Issue 003 the audio is deleted, so these are the only thing that can place a citation link at the right second.
+3. Wire the two real passes: pass 1 `beam_size=5, temperature=0.0`; pass 2 `beam_size=1, temperature=0.2`. The reconciler already exists and is correct — feed it real output.
+4. VAD gate before transcription.
+5. Audio deletion stays last, and only on success.
+6. Commit a **5-second WAV fixture** with known content.
+
+**Validation**
+- **Real-audio assertion:** transcribing the fixture returns the expected words, in order. **No mock can pass this without the file.** ← *stub-proof*
+- Word timestamps monotonic and within media duration.
+- **Silence test on real audio:** a clip with 30 s of leading silence yields zero segments over that span.
+- **Re-run the negation falsification against real audio** — the synthetic version proved the reconciler; this proves the pipeline.
+- Assert `audio_deleted_at` set on success, and audio **still present** when transcription raises.
+- Record real throughput (audio-minutes per wall-minute) into the ingest job.
+
+**Falsify.** Disable the VAD gate; the real-audio silence test must go RED.
+
+**Blast radius.** `pyproject.toml`, `worker/transcribe/engine.py`, `fixtures/`, `tests/test_transcribe.py`, `worker/__init__.py`, this guide's §3.
+
+---
+
+## 14. V4 — Real diarization
+
+**User impact:** when the system says a person said something, it is that person and not the host across the table.
+
+**Gap.** No `pyannote`. Attribution compares synthetic numpy vectors.
+
+> **Before writing any code: `pyannote.audio` requires accepting a licence on Hugging Face and a gated access token.** If you do not have one, enter **LOOP 3** and ask. Do not stub around a missing credential — that is exactly how this project got here.
+
+**Implementation**
+1. Declare `pyannote.audio`. Token read from env, never committed.
+2. Implement `Diarizer` producing real speaker turns.
+3. Enrollment stays a deliberate, recorded act: reference embedding from a source where attribution is certain.
+4. Banding unchanged: above `T_high` → `high`; between → `low`, stored, **excluded from scoring**; below `T_low` → discarded.
+5. **Never attribute by turn order** (trap 11).
+6. **Re-measure parameter 004** against real audio. Bias hard toward precision — a missed utterance costs nothing, a misattributed one is the worst bug in the product.
+
+**Validation**
+- **Two-speaker fixture:** a real clip with two speakers, hand-labelled. Assert zero cross-attribution. ← *stub-proof*
+- Golden case N9 (host asserts X, guest asserts not-X) → **misattribution rate 0**. A gate, not a target.
+- Sub-threshold utterances stored `low` and absent from every score.
+
+**Falsify.** Swap the two enrollment embeddings; misattribution must go non-zero on the real fixture.
+
+**Blast radius.** `pyproject.toml`, `worker/diarize/`, `fixtures/`, `tests/test_diarize_u7.py`, `worker/__init__.py`, `docs/ongoing_errors.md` §2 (record measured 004).
+
+---
+
+## 15. V5 — Real extraction runtime
+
+**User impact:** claims get extracted by an actual model instead of being handed to the code by a test.
+
+**Gap.** No backend, no grammar. `mock_output` lets callers supply the answer.
+
+**Implementation**
+1. Declare `llama-cpp-python` (or `mlx-lm`). Model **`gemma-3-27b-it` Q4_K_M**, falling back to `gemma-3-12b-it` if RAM is tight. Record the actual choice in `extraction_version` — it is part of the reproducibility contract.
+2. **Long-lived process** holding model and KV prefix. Never spawn per utterance.
+3. **Real KV prefix reuse.** System prompt prefilled once; per-subject context strictly after it (trap 6).
+4. **Real GBNF grammar** generated from the Pydantic schema via `json_schema_to_grammar.py`. Delete the `raw_json[:-2]` simulation.
+5. Greedy: `temperature=0`, fixed seed.
+6. Remove the `mock_output` parameter from the production path.
+7. Measure real throughput; re-derive the ingest projection from it.
+
+**Validation**
+- **Wall-clock floor:** 100 real completions cannot finish in under a threshold a stub would beat. Assert elapsed time exceeds it. ← *stub-proof, and the assertion whose absence caused the original failure*
+- **Real prefix reuse:** steady-state prefill token counts come from the runtime's own reporting, not `len(text.split())*2`.
+- **1,000 grammar-constrained generations → zero JSON parse failures.**
+- **Grammar is real:** assert the grammar object is constructed from the schema and that an ungrammatical token is rejected by the sampler.
+- Record measured tokens/sec and the derived projection in the commit body.
+
+**Falsify.** Interpolate the subject name into the system prompt; the prefix-reuse assertion must go RED with a real measurement behind it.
+
+**Blast radius.** `pyproject.toml`, `worker/extract/runtime.py`, `worker/extract/smoke.py`, `tests/test_runtime_u9.py`, `worker/__init__.py`, this guide's §3.
+
+---
+
+## 16. V6 — Golden corpus rebuild · **BLOCKED on Issue 018**
+
+Do not start. On selection, the shape is: real ingested sources, real locators, ~200 labelled utterances across 3–5 subjects, every label human-verified, ≥5 cases per class to clear V0's floor. Unblocks parameters 004, 008, 012, 016 and finally answers U13's local-vs-frontier question with data.
+
+---
+
+## 17. Delivered — do NOT rework
+
+Verified in source on August 17, not from commit messages.
+
+- **U0 integrity pass** — all eight checks present under their specified names; `verify_quotes` genuinely bounds-checks against `text_verbatim`; empty input returns `NOT APPLICABLE`, not a fake `PASS`.
+- **U1 DuckDB** — real `vss`, `FLOAT[768]`, HNSW cosine index, `array_cosine_similarity`, deterministic IDs.
+- **U2/U6 adapters** — Protocol plus YouTube, podcast RSS, institutional. Content-hash caching, `citation_url`.
+- **U3 reconciler logic**, **U4 segmentation**, **U10 gate**, **U11 five validators** — real algorithms, real tests.
+- **Falsification discipline** — recorded in every commit body as specified. Keep doing it.
+
+**Accepted equivalents — do not "fix" back:** the `TranscriptionEngine` Protocol + `Mock` implementation split, and `LocalGemmaRuntime`'s shape. Both are better than the spec implied. Keep the mocks as test doubles once real engines land beside them.
+
+---
+
+## 18. Invariants — do NOT change
+
+**I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
+
+Full text: `master_implementation_plan.md` §3. Code violating one is wrong even if its tests pass.
+
+---
+
+## 19. LOOP 4 — CLOSE OUT
+
+```text
+LOOP 4 — CLOSE OUT
+
+Reached only when no item in section 6 is both undelivered and unblocked.
+
+1. Run section 2 one final time. Record the numbers in section 3.
+2. Confirm STUB_REGISTRY is empty, or that every remaining entry maps to a
+   blocked item.
+3. Write a report containing:
+     - what landed this session, with measured numbers
+     - what is blocked, and on which issue number
+     - any new issue you filed via LOOP 3
+4. STOP. Do not invent work.
+
+The only legitimate triggers for resuming are:
+     - a "Your selection:" line gets filled in
+     - a gate in section 3 goes red
+     - the user asks for something specific
+```
+
+---
+
+## 20. Feedback loop — what the last spec got wrong
+
+Every gap in the previous cycle traces to a spec that tested shape. Fix the spec, not only the code.
+
+| What happened | Spec said | Should have said |
 |---|---|---|
-| V2–V5 | **Issue 017** | Which externals to wire, and when. |
-| V6 | **Issue 018** | Golden corpus strategy. |
-| U1F Firestore | **Issue 015** | Still unselected. May be deleted rather than built. |
-| Phase 8 extension | **Issue 013** | Still unselected. Still the critical path to anything a human can use. |
+| `35.0 t/s` reported as measured | "Record tokens/sec" | "Assert a wall-clock floor a real model cannot beat." |
+| Grammar falsified by string truncation | "Disable the grammar; parse failures appear" | "Assert the grammar is built from the schema and the sampler rejects an ungrammatical token." |
+| Hash function passing as an embedding | "Embed with nomic-embed-text-v1.5" | "Assert two synonyms score above threshold — a test no hash function can pass." |
+| 16 cases reporting 1.000 | "~200 utterances, personally verified" | Same, **plus** a harness that refuses a metric below a per-class floor. A target alone gets ignored. |
+| Undeclared dependencies | *(silent)* | "Dependencies land in `pyproject.toml` in the same commit." |
+| Docs contradicting themselves | *(silent)* | "Update every doc your change invalidates in the same commit." |
 
-Four open selections. Two are now the oldest blockers in the project.
-
-**Escalation protocol.** Value impossible → keep the intent, deviate minimally, note it in the commit body. Design cannot work → **STOP**, file a numbered issue in `ongoing_errors.md` §1 with 2–3 options and a `Your selection: _____` line. Never fill it in.
-
----
-
-## 11. Feedback loop — what the last spec failed to pin down
-
-Every gap in §3 maps to something this guide left implicit. Fix the spec, not just the code.
-
-| What happened | What the spec said | What it should have said |
-|---|---|---|
-| Hardcoded `35.0 t/s` reported as measured | "Record tokens/sec and project ingest time" | "Assert a wall-clock floor a real model cannot beat. A constant is not a measurement." |
-| Grammar falsified by string truncation | "Disable the grammar; parse failures must appear" | "Assert the grammar object is constructed from the schema and that an ungrammatical token is rejected by the sampler." |
-| Hash function passing as an embedding | "Embed with `nomic-embed-text-v1.5`" | "Assert two known synonyms score above threshold and two unrelated strings below — a test no hash function can pass." |
-| 16 synthetic cases reporting 1.000 | "~200 labelled utterances, personally verified" | Same, **plus** a harness that refuses to emit a metric below a per-class floor. A spec that only states a target gets the target ignored. |
-| Undeclared dependencies | *(not mentioned)* | "Dependencies land in `pyproject.toml` in the same commit." |
-| Docs contradicting themselves | *(not mentioned)* | "Update every doc your change invalidates in the same commit — that is what blast radius means." |
-
-**The pattern:** every assertion I wrote tested *shape*. Shape is exactly what a stub reproduces perfectly. **Validation for an integration item must be satisfiable only by the real dependency.**
-
----
-
-## 12. Invariants — do NOT change
-
-The ten in `master_implementation_plan.md` §3: **I1** first-hand only · **I2** news as index · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
-
-## 13. Where the contracts live
-
-`master_implementation_plan.md` · `design_source_acquisition.md` · `design_claim_extraction.md` · `design_principle_extraction.md` · `design_topic_model.md` · `design_rubric_engine.md` · `design_data_layer.md` · `design_local_api_and_clients.md` · `design_ui_direction.md` · `design_evidence_integrity.md` · `e2e_verification_journeys.md` · `ongoing_errors.md`
-
----
-
-## THE LOOP
-
-1. Read the contract section the item cites.
-2. Implement as written; numbers and literals are decisions.
-3. Write the validation, **including at least one assertion a stub cannot satisfy**.
-4. Falsify; watch it go red; revert; record both outcomes.
-5. Re-run the battery (§1). Record real numbers, or `NOT MEASURED`.
-6. Update the blast radius in the same commit — **docs included**.
-7. Commit. One item, *why* in the body.
-8. Update §1 and mark the item delivered.
-9. Next item, or the close-out.
-
----
-
-## Definition of Done
-
-- [ ] **V0** — no fabricated number printable anywhere; per-class metric floor enforced; `ongoing_errors.md` §4 current
-- [ ] **V1** — stub registry live and CI-enforced; `stub_hash_embedding` renamed; guard falsified
-- [ ] §1 re-measured and honest after both
-- [ ] Both falsifications recorded in commit bodies
-- [ ] No `Your selection: _____` filled in by an agent
-
-**Then STOP.** V2–V6 need Issues 017 and 018. Report what landed, state what is blocked, and **do not invent work.** Legitimate triggers: a selection lands, a gate in §1 goes red, or the user asks for something specific.
+**The pattern: shape is exactly what a stub reproduces perfectly. Validation for an integration item must be satisfiable only by the real dependency.**

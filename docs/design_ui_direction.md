@@ -1,6 +1,6 @@
 # UI Direction — "Show the Receipts"
 
-**Contract for:** Phases 8–10. Covers the Flutter deep-dive client and the extension overlay.
+**Contract for:** Phase 8 onward. The extension is the only client (Issue 002); §2–§5 and §7 describe surfaces it renders in its expanded depth, and that a later Flutter client will render from the same payloads and the same design tokens.
 
 ---
 
@@ -29,7 +29,7 @@ AI REGULATION · 2019–2026 · 84 claims · 11 sources          rubric v1.2
   │ "I've said before that licensing is the wrong      │
   │  tool here, and I still think that."               │
   │                                                     │
-  │  ▸ play 01:42:16   ▸ source   ⚠ in tension with ×1 │
+  │  ▸ cite 01:42:16   ▸ source   ⚠ in tension with ×1 │
   └────────────────────────────────────────────────────┘
 ```
 
@@ -90,13 +90,13 @@ The unit of evidence. Two quotes, side by side, on one shared timeline.
 │                                                            │
 │  Mar 2021 · own podcast · friendly                        │
 │  "Licensing frontier models is the single worst           │
-│   proposal in this debate."                    ▸ play     │
+│   proposal in this debate."                    ▸ cite     │
 │                                                            │
 │  ─────────────── 3 years, 2 months ───────────────         │
 │                                                            │
 │  May 2024 · Senate testimony · adversarial                │
 │  "I support a federal licensing regime for the            │
-│   largest training runs."                      ▸ play     │
+│   largest training runs."                      ▸ cite     │
 │                                                            │
 │  No acknowledgement of the change was found in the        │
 │  corpus between these dates.                              │
@@ -113,15 +113,50 @@ The unit of evidence. Two quotes, side by side, on one shared timeline.
 
 ---
 
-## 6. The extension overlay
+## 6. The extension: selection-triggered, two depths
 
-The reading-moment surface. Different constraints entirely: the user did not come here for this.
+**Issue 013 = selection-triggered.** Nothing appears until the user highlights text. The highlight is the question; the overlay is the answer.
 
-- **Compact, dismissible, corner-anchored.** Never modal, never full-width, never auto-expanding.
-- **Never modifies or annotates the article.** No inline highlights, no injected marks in the page body. The article is an index, not a target (invariant I2).
-- **Shows at most three Tensions**, most recent first, each with one quote. Everything else is "open full timeline."
-- **Renders `insufficient_corpus` as a first-class state**, not as an empty overlay. "We have 6 statements from this person on this topic — not enough to assess" is a useful thing to learn in the reading moment.
-- **No badge, no count, no red dot on the toolbar icon.** A persistent "3 contradictions found!" indicator turns a research tool into an outrage feed and will change what the user does with it.
+### Depth 1 — the overlay
+
+Anchored near the selection, sized to be read in about five seconds.
+
+```
+  +- ON THIS CLAIM ------------------------------+
+  |  Dana Reyes . federal licensing of frontier  |
+  |  models . 41 claims, 2019-2026               |
+  |                                              |
+  |  Mar 2021 . own podcast . friendly           |
+  |  "...the single worst proposal in this       |
+  |   debate."                          > cite   |
+  |                                              |
+  |  !  1 unacknowledged reversal                |
+  |                                              |
+  |  Consistency 0.61   .  Specificity 0.38      |
+  |  Updates     0.83   .  Even-handed  --       |
+  |                                              |
+  |  > Full timeline and evidence                |
+  +----------------------------------------------+
+```
+
+- **Lead with the claim, not the person.** The user highlighted a sentence, not a name. The first line names the resolved proposition, because that is what they asked about.
+- **One quote, chosen for contrast** rather than recency — the point is whether the highlighted claim squares with the record.
+- **All four axes, always, including nulls.** These are the "trust vectors." An axis rendered as an em-dash with its reason available is more informative than one silently omitted.
+- **Never modal, never auto-expanding, never modifying the page.** No highlights injected into the article body, no toolbar badge, no count.
+- **Three states that are not errors and must not look like errors:**
+  - *Proposition matched* — the layout above.
+  - *Topic only* — nothing cleared the proposition threshold; show the topic slice and say which it is.
+  - *Nothing in corpus* — "No first-hand record for this person on this topic." A real answer, rendered plainly.
+
+### Depth 2 — the expanded view
+
+One click. Opens in a side panel or extension tab, not a separate application.
+
+Everything in §2-§5: the full timeline on a time axis, all four axes with their evidence decomposition, tension cards with both quotes and citation deep links. **The same components rendering more of the same payloads** — not a second implementation.
+
+### Design tokens
+
+One `tokens.json` (colour, type scale, spacing, radii) generates the extension's CSS custom properties, and later the Flutter client's Dart constants. Hand-copying values into a second client is how two surfaces drift apart, and the Issue 002 selection asked specifically that they not.
 
 ---
 
@@ -182,8 +217,8 @@ Minimal and functional. Timeline scrubbing and card expansion get motion because
 
 ---
 
-## 12. Open decisions
+## 12. Decisions
 
-- **Issue 002** — Flutter's role given the API-plus-thin-clients shape.
-- **Issue 013** — extension overlay inline on the page vs. popup only.
-- **Issue 014** — whether `play the tape` ships in v1; it depends on the audio retention decision (Issue 003).
+**Resolved:** Issue 002 -> extension first, Flutter deferred, shared tokens. Issue 013 -> selection-triggered overlay with two depths (SS6). Issue 014 -> no in-app playback; `cite` deep-links to the source at its offset.
+
+**Open:** none blocking this contract.
