@@ -10,6 +10,7 @@ from worker.transcribe.engine import (
     AudioSegment,
     MockTranscriptionEngine,
     TranscriptionPipeline,
+    WhisperTranscriptionEngine,
 )
 
 
@@ -187,3 +188,74 @@ def test_falsification_disabled_vad_allows_silence_segments(tmp_path: Path) -> N
     ]
     filtered = pipeline_no_vad.vad_filter(silence_segments)
     assert len(filtered) == 1  # Falsification confirmed: silent segment not dropped!
+
+
+def test_real_whisper_engine_transcribes_audio_fixture_with_word_timestamps() -> None:
+    """Tests faster-whisper on committed 5s WAV fixture."""
+    engine = WhisperTranscriptionEngine(model_size_or_path="tiny")
+    audio_path = Path("fixtures/audio/sample_5s.wav")
+    assert audio_path.exists(), "Sample audio fixture missing"
+
+    seg = AudioSegment(start_ms=0, end_ms=3000, energy=0.8)
+    pass_res = engine.run_pass(audio_path, seg, beam_size=5, temperature=0.0)
+
+    # 1. Non-empty transcript with expected words
+    lower_text = pass_res.text.lower()
+    assert "licensing" in lower_text or "models" in lower_text or "mandatory" in lower_text
+
+    # 2. Word timestamps monotonic and within bounds
+    words = pass_res.words
+    assert len(words) >= 4
+    for i in range(len(words) - 1):
+        assert words[i].start_ms <= words[i].end_ms
+        assert words[i].end_ms <= words[i + 1].start_ms
+        assert words[i].start_ms >= 0
+        assert words[i].end_ms <= 3500
+
+
+def test_real_audio_energy_and_silence_gate() -> None:
+    """Computes RMS energy on real speech vs 30s silence WAV fixtures."""
+    from worker.transcribe.engine import compute_audio_energy
+
+    speech_path = Path("fixtures/audio/sample_5s.wav")
+    silence_path = Path("fixtures/audio/silence_30s.wav")
+
+    speech_energy = compute_audio_energy(speech_path, 0, 3000)
+    silence_energy = compute_audio_energy(silence_path, 0, 30000)
+
+    assert speech_energy > 0.05
+    assert silence_energy == 0.0
+
+
+def test_real_whisper_pipeline_execution_and_audio_disposal(tmp_path: Path) -> None:
+    """Runs full pipeline with real Whisper on a WAV file and verifies Parquet + disposal."""
+    import shutil
+
+    store = Storage(db_path=str(tmp_path / "test.duckdb"), artifact_dir=tmp_path / "artifacts")
+    engine = WhisperTranscriptionEngine(model_size_or_path="tiny")
+    pipeline = TranscriptionPipeline(storage=store, engine=engine)
+
+    # Copy fixture to temp dir
+    test_audio = tmp_path / "test_run.wav"
+    shutil.copy("fixtures/audio/sample_5s.wav", test_audio)
+
+    source = Source(
+        source_id="src_whisper_real",
+        tier="B",
+        title="Real Speech Audio",
+        publisher="Author",
+        canonical_url="https://youtube.com/watch?v=whisperreal",
+        artifact_hash="hash_real_01",
+    )
+    store.insert_source(source)
+
+    seg = AudioSegment(start_ms=0, end_ms=3000, energy=0.8)
+    job = IngestJob(job_id="job_whisper_01", subject_id="subj_01", adapter="YouTube", status="running", stage="transcribe")
+
+    utterances = pipeline.transcribe_source(source, "subj_01", test_audio, [seg], job=job)
+
+    assert len(utterances) == 1
+    utt = utterances[0]
+    assert utt.word_timestamps_ref is not None
+    assert not test_audio.exists(), "Audio must be deleted upon successful transcription"
+    assert job.status == "completed"

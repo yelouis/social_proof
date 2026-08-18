@@ -1,13 +1,12 @@
-"""Transcription engine, VAD gate, and audio disposal pipeline.
-
-Implements design_source_acquisition.md §5.2-§5.3 and agent_execution_guide.md §7 (U3).
-"""
-
 import time
+import wave
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Protocol
+from typing import Any, Protocol
+
+import numpy as np
+from faster_whisper import WhisperModel
 
 from worker.entities import IngestJob, Source, Utterance
 from worker.storage import Storage, compute_utterance_id
@@ -26,6 +25,30 @@ class AudioSegment:
     energy: float  # 0.0 to 1.0; 0.0 means complete silence / no speech activity
 
 
+def compute_audio_energy(audio_path: Path, start_ms: int = 0, end_ms: int = 0) -> float:
+    """Computes normalized RMS audio energy from a 16kHz mono WAV file."""
+    try:
+        with wave.open(str(audio_path), "rb") as w:
+            rate = w.getframerate()
+            total_frames = w.getnframes()
+            start_frame = int((start_ms / 1000.0) * rate) if start_ms > 0 else 0
+            end_frame = int((end_ms / 1000.0) * rate) if end_ms > start_ms else total_frames
+
+            if start_frame >= total_frames:
+                return 0.0
+
+            w.setpos(start_frame)
+            frames_to_read = max(1, min(end_frame - start_frame, total_frames - start_frame))
+            raw = w.readframes(frames_to_read)
+            samples = np.frombuffer(raw, dtype=np.int16).astype(np.float32)
+            if len(samples) == 0:
+                return 0.0
+            rms = float(np.sqrt(np.mean(samples**2)))
+            return float(min(1.0, rms / 10000.0))
+    except Exception:
+        return 0.0
+
+
 class TranscriptionEngine(Protocol):
     def run_pass(
         self,
@@ -35,6 +58,68 @@ class TranscriptionEngine(Protocol):
         temperature: float,
     ) -> TranscriptionPassResult:
         ...
+
+
+class WhisperTranscriptionEngine:
+    """Production transcription engine using faster-whisper.
+
+    Enforces word-level timestamps and supports dual decoding passes.
+    """
+
+    def __init__(
+        self,
+        model_size_or_path: str = "base",
+        device: str = "cpu",
+        compute_type: str = "float32",
+        model_instance: Any | None = None,
+    ) -> None:
+        self.model_size_or_path = model_size_or_path
+        self.device = device
+        self.compute_type = compute_type
+        if model_instance is not None:
+            self.model = model_instance
+        else:
+            self.model = WhisperModel(model_size_or_path, device=device, compute_type=compute_type)
+
+    def run_pass(
+        self,
+        audio_path: Path,
+        segment: AudioSegment,
+        beam_size: int,
+        temperature: float,
+    ) -> TranscriptionPassResult:
+        segments_gen, _ = self.model.transcribe(
+            str(audio_path),
+            beam_size=beam_size,
+            temperature=temperature,
+            word_timestamps=True,
+            vad_filter=False,
+        )
+        words_out: list[WordTimestamp] = []
+        text_chunks: list[str] = []
+
+        for seg in segments_gen:
+            text_chunks.append(seg.text.strip())
+            if seg.words:
+                for w in seg.words:
+                    w_start_ms = segment.start_ms + int(w.start * 1000)
+                    w_end_ms = segment.start_ms + int(w.end * 1000)
+                    words_out.append(
+                        WordTimestamp(
+                            word=w.word.strip(),
+                            start_ms=w_start_ms,
+                            end_ms=w_end_ms,
+                            confidence=float(w.probability),
+                        )
+                    )
+
+        full_text = " ".join(text_chunks).strip()
+        return TranscriptionPassResult(
+            text=full_text,
+            words=words_out,
+            beam_size=beam_size,
+            temperature=temperature,
+        )
 
 
 class MockTranscriptionEngine:
