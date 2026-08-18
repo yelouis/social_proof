@@ -62,7 +62,7 @@ This list is the operational form of invariant **I1**. It is not a filter to be 
 
 The browser extension will send page text to the local API. That text is used **only** to resolve *which subject* and *which topic*, and then discarded.
 
-- Article text lives in a **request-scoped buffer**. It is never written to Firestore or DuckDB.
+- Article text lives in a **request-scoped buffer**. It is never written to DuckDB or the artifact store.
 - No `Source`, `Utterance`, `Claim`, or embedding may be derived from it.
 - **Enforced by test**, not by discipline: after an extension-originated resolution request, assert that no row anywhere in the store has `origin = 'page_context'`. See `e2e_verification_journeys.md`.
 

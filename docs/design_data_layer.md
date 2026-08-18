@@ -1,26 +1,31 @@
-# Data Layer — Storage, Schema & The Sync Contract
+# Data Layer — Storage & Schema
 
 **Contract for:** the store. Read before writing any persistence code.
 
+> **Issue 015 = Option A — Firestore is dropped.** DuckDB is the single system of record. There is no publish path, no `synced_at` bookkeeping, no reconciliation pass, and no security rules to maintain. Firestore's two original justifications — sync, and native client reads for Flutter — were both removed by later decisions: clients read the local HTTP API rather than a database, and Issue 002 deferred Flutter. What remained was a sync contract with no consumer.
+>
+> **The collection paths below are retained as the logical schema.** They document entity nesting and field names, which the DuckDB tables mirror. Read `subjects/{id}/claims/{id}` as "the claims belonging to a subject," not as a Firestore path.
+
 ---
 
-## 1. Three layers, three jobs
+## 1. Two layers, two jobs
 
-There are three places data lives, and confusing them is the most likely source of a hard bug in this system.
+There are two places data lives, and confusing them is the most likely source of a hard bug in this system.
 
 | Layer | Holds | Authority | If you lose it |
 |---|---|---|---|
 | **Artifact store** — local disk, content-addressed | Compressed audio, raw transcripts **with word timestamps**, extraction prompt/response logs | **Irreplaceable without re-fetching the internet.** Back this up. | Re-download and re-transcribe everything. Expensive and sometimes impossible — sources get deleted. |
-| **Firestore** | Structured records clients render: subjects, sources, utterances, claims, propositions, principles, topics, tensions, assessments | **System of record.** "Published" means "in Firestore." | Republish from the mirror. Recoverable. |
-| **DuckDB** — local analytical mirror | Every structured row again, **plus embeddings as vectors**, plus the analytical indices | **Derived.** Fully rebuildable. | Rebuild from Firestore + artifact store. Costs time, not data. |
+| **DuckDB** — one local file | Every structured row, **plus embeddings as vectors**, plus the analytical indices | **System of record.** "Stored" means "in DuckDB." | Rebuild from the artifact store by re-running extraction. Expensive in compute, but no source data is lost. |
 
-**Why word timestamps do not go in Firestore:** a three-hour episode has ~30k words, and word-level timing for it is well over 1 MB — past Firestore's per-document ceiling before you have stored anything else. Word timestamps are a re-verification and anchoring asset, not a rendering asset. They live on disk as Parquet beside the audio, and DuckDB reads them directly.
+**Why word timestamps do not go in DuckDB rows:** a three-hour episode has ~30k words. Word-level timing is a re-verification and anchoring asset read in bulk, not a field rendered on a card. It lives on disk as Parquet, referenced by hash, and DuckDB reads it directly when needed.
 
-**Why the mirror exists at all:** contradiction detection is a self-join over thousands of rows plus vector similarity. Firestore has neither joins nor vector search. Doing it against Firestore means pulling the whole collection to the client and doing it in memory — slow at a thousand claims, unusable at fifty thousand. The mirror is not an optimisation; it is the only place the core algorithm can run.
+**Why DuckDB and not something simpler:** contradiction detection is a self-join over thousands of rows plus vector similarity. That combination is the entire workload, and DuckDB does both in one process against one file with no server. A document store could hold the rows but could not run the query; a plain vector index could run the similarity but not the join.
+
+**Backups matter more now.** With no cloud copy, Issue 006's scripted external-drive backup is the *only* durability story. It covers both the DuckDB file and the artifact store.
 
 ---
 
-## 2. Firestore schema
+## 2. Schema (logical)
 
 ```
 subjects/{subject_id}
@@ -81,7 +86,8 @@ subjects/{subject_id}
   assessments/{assessment_id}   # id = hash(topic_id + rubric_version)
     topic_id, rubric_version, extraction_model_set
     sufficiency{passed, claim_count, source_count, span_days, threshold_set}
-    axes{consistency, update_integrity, even_handedness}   # each: score | null
+    axes{consistency, specificity, update_integrity,       # each: score | null
+         even_handedness}                                  # + reason when null
     axis_evidence{axis: [tension_id]}
     computed_at
 
@@ -124,21 +130,22 @@ Consequences worth stating plainly, because they remove whole categories of bug:
 
 ---
 
-## 4. DuckDB mirror
+## 4. DuckDB tables
 
 ```sql
--- Structured mirror: same shape as Firestore, plus what Firestore cannot hold.
+-- The store itself. Field names mirror the logical schema in §2.
 CREATE TABLE utterances (
   utterance_id VARCHAR PRIMARY KEY, subject_id VARCHAR, source_id VARCHAR,
   text_verbatim VARCHAR, start_ms BIGINT, end_ms BIGINT,
-  attribution_confidence DOUBLE, recorded_at TIMESTAMPTZ, synced_at TIMESTAMPTZ
+  attribution_confidence DOUBLE, recorded_at TIMESTAMPTZ,
+  dual_pass_agreement BOOLEAN, negation_uncertain BOOLEAN
 );
 
 CREATE TABLE claims (
   claim_id VARCHAR PRIMARY KEY, subject_id VARCHAR, utterance_id VARCHAR,
   proposition_id VARCHAR, stance VARCHAR, hedging_level DOUBLE,
   is_own_assertion BOOLEAN, exclusion_reason VARCHAR,
-  recorded_at TIMESTAMPTZ, synced_at TIMESTAMPTZ
+  recorded_at TIMESTAMPTZ
 );
 
 -- 768 dims: nomic-embed-text-v1.5, run locally (Issue 005, Option A).
@@ -156,7 +163,7 @@ CREATE INDEX prop_hnsw ON proposition_embeddings
 `recorded_at` is denormalised onto `claims` specifically so reversal detection is a single self-join with no source lookup:
 
 ```sql
--- The core detector, in full. This is why the mirror exists.
+-- The core detector, in full. This query is why the store is DuckDB.
 SELECT a.claim_id, b.claim_id, a.proposition_id
 FROM claims a JOIN claims b
   ON a.proposition_id = b.proposition_id
@@ -167,29 +174,27 @@ WHERE a.is_own_assertion AND b.is_own_assertion
   AND a.stance IN ('support','oppose') AND b.stance IN ('support','oppose');
 ```
 
-Anything resembling that query being written against Firestore is a design error — escalate rather than implement it.
+That query is a self-join plus a vector lookup. Any store that cannot serve both is the wrong store — if you find yourself pulling the whole claims table into Python to run it, escalate rather than implement it.
 
 ---
 
-## 5. The sync contract
+## 5. Write and read paths
 
-**Write path — worker only (invariant I8):**
+**One store, one writer, no sync.**
 
 ```
-1. Worker writes rows to DuckDB in one transaction, synced_at = NULL
-2. Worker batch-publishes to Firestore
-3. On ack, worker sets synced_at = now() on the published rows
-4. Job marked complete only when zero rows remain with synced_at IS NULL
+Worker  ──write──▶  DuckDB  ◀──read──  Analysis engine
+                      │
+                      └────read────▶  Local API  ──▶  clients
 ```
 
-**Read paths are disjoint and must stay that way:**
+- **The ingestion worker is the only writer** (invariant I8). It writes in a single transaction per unit of work; DuckDB's transactional guarantee is the whole durability story, and a crash mid-write rolls back cleanly.
+- **The analysis engine reads DuckDB directly**, in-process.
+- **Clients never open DuckDB.** They read the local HTTP API, which is the only thing that ever renders a row to a client (`design_local_api_and_clients.md`).
 
-- **Clients read Firestore only.** No client ever opens DuckDB.
-- **The analysis engine reads DuckDB only.** It never queries Firestore for analysis input.
+**Resumability** comes from deterministic IDs (§3) rather than from bookkeeping: re-running an interrupted job re-derives the same IDs, so every write is an idempotent upsert and the job simply picks up where it stopped. There is nothing to reconcile.
 
-**Resumability.** A crash between steps 2 and 3 leaves rows with `synced_at IS NULL`. The reconciliation pass re-publishes exactly those; because IDs are deterministic (§3), re-publishing an already-written row is a harmless idempotent upsert. There is no distributed-transaction problem here, only a retry loop.
-
-**Recovery is bidirectional.** Mirror lost → rebuild from Firestore plus the artifact store. Firestore lost → republish from the mirror. Both are supported; neither is routine.
+**Concurrency.** DuckDB permits one writer. Run ingest as a single worker process; if parallel adapters are ever added, they fan out on *fetch and transcribe* and funnel through one writer at the end.
 
 ---
 
@@ -210,23 +215,13 @@ This is what stops the system from silently drifting into "scores went up last m
 
 ---
 
-## 7. Firestore security rules
+## 7. Access control
 
-Single-user and local-first, but the rules still carry weight: they are where **invariant I8 is enforced rather than merely intended.**
+There are no database security rules to write, because there is no database server — the store is a file on your disk, protected by filesystem permissions.
 
-```
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{db}/documents {
-    match /{document=**} {
-      allow read:  if request.auth != null && request.auth.uid == OWNER_UID;
-      allow write: if false;          // I8 — only the worker's Admin SDK writes
-    }
-  }
-}
-```
+That moves the entire access-control surface to **one place: the local HTTP API.** A `127.0.0.1` server is reachable by any web page the user has open, so `design_local_api_and_clients.md` §2 is now the *only* thing standing between a hostile page and the corpus. Its four controls — loopback bind, bearer token, strict CORS, and read-only endpoints — are load-bearing rather than defence-in-depth.
 
-The worker uses the Admin SDK and bypasses rules by design. Any client-side write path is a bug regardless of what it writes.
+Invariant I8 is likewise enforced structurally rather than declaratively: the API exposes no write endpoints, and only the worker process opens the DuckDB file for writing.
 
 ---
 

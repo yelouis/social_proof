@@ -197,7 +197,7 @@ Your selection: Proceed with Option A.
 - Pros: zero page interference, much simpler.
 - Cons: requires a click, so it only helps when you're already suspicious — losing the main advantage over passive lookup. A toolbar indicator also edges toward the notification-badge non-goal (`design_ui_direction.md` §8).
 
-Your selection: _____
+Your selection: How about if the user highlights text, we look at the context of what fact they are trying to check against and we then pull up the context as an overlay along with an expandable view for the full timeline and trust vectors.
 
 ---
 
@@ -235,7 +235,7 @@ DuckDB already holds every row and is the only store that can run the core contr
 - Pros: costs almost nothing now and keeps both doors open.
 - Cons: an interface designed with no second implementation usually fits the second one badly. This tends to be the choice that feels safe and buys little.
 
-Your selection: _____
+Your selection: Proceed with Option A.
 
 ---
 
@@ -265,7 +265,7 @@ Phases 0–2 are built and the plumbing is real, but **every external model is a
 - Pros: fastest route to a complete architecture; every logic layer gets built and unit-tested cheaply.
 - Cons: you will not learn that a real Whisper transcript looks nothing like a scripted mock until six phases sit on that assumption. This is the classic integrate-at-the-end failure, and it is the most expensive way to find out.
 
-Your selection: _____
+Your selection: Proceed with Option A.
 
 ---
 

@@ -66,44 +66,77 @@ GET  /ingest/{job_id}/stream                    → SSE progress (ingest runs fo
 
 ---
 
-## 4. `POST /resolve` — the news-as-index boundary
+## 4. `POST /resolve` — selection-triggered, and the news-as-index boundary
 
-The one endpoint that accepts untrusted content, and therefore the one that enforces invariant I2 in code.
+**Issue 013 = selection-triggered.** The extension does not scan pages on load. It fires when the user **highlights text**, and the highlighted span *is* the query.
+
+That is a better shape than page-load inference on four counts, and each is worth keeping in mind while implementing:
+
+1. **Explicit intent.** Nothing runs until the user asks. No ambient scanning, no auto-trigger, no toolbar badge counting things they never asked about.
+2. **A far more precise query.** "What is this article about" is a guess. "This specific sentence" is a claim the user is actively questioning, and it usually resolves to a **single proposition** rather than a broad topic — so the answer can be *their history on this exact claim* instead of *their views on AI regulation*.
+3. **A much smaller I2 surface.** A bounded span plus bounded context leaves the machine, not the whole article.
+4. **It works anywhere.** Nothing about it is news-specific — a forum post, a PDF, a transcript, an email all behave identically.
 
 ```
 POST /resolve
-{ "page_text": "...", "page_url": "...", "page_title": "..." }
+{
+  "selected_text":  "...",      // the highlighted span — this is the query
+  "context_before": "...",      // ≤ 500 chars, for pronoun and subject resolution
+  "context_after":  "...",      // ≤ 500 chars
+  "page_url":       "...",      // provenance only, never a source
+  "page_title":     "..."
+}
       ↓
-{ "subjects": [{id, display_name, confidence}],
-  "topics":   [{query_string, confidence}] }
+{
+  "subjects":    [{id, display_name, confidence}],
+  "proposition": {id, canonical_text, confidence} | null,   // the precise hit
+  "topics":      [{query_string, confidence}]               // the fallback slice
+}
 ```
+
+**Resolution order, and it matters.** Try the precise answer first and fall back only when it is not available:
+
+1. **Proposition** — embed `selected_text`, search the subject's proposition space. Above threshold, return it. This powers the most useful overlay: *here is everything they have said about this exact claim.*
+2. **Topic** — if no proposition clears the bar, resolve to a topic slice as in `design_topic_model.md` §3.
+3. **Subject only** — if neither resolves, return the subject with `proposition: null, topics: []`. The overlay then says the corpus has nothing on this, which is a useful answer and must not be rendered as an error.
+
+**Context is for disambiguation only.** `context_before` / `context_after` exist so that *"he said it was the only workable path"* can resolve `he`. They are **never** part of the corpus and never part of the quote.
 
 **Contract, enforced by test rather than by discipline:**
 
-- `page_text` lives in a **request-scoped buffer**. It is never written to Firestore, DuckDB, or the artifact store.
-- No `Source`, `Utterance`, `Claim`, `Proposition`, or embedding may be derived from it.
+- Selected text and context live in a **request-scoped buffer**. Neither is ever written to DuckDB or the artifact store.
+- No `Source`, `Utterance`, `Claim`, `Proposition`, or embedding may be derived from them. **In particular: a proposition is *matched*, never *created*, by this endpoint.**
 - The response contains **only** identifiers already in the corpus. Resolution can return zero subjects; it can never invent one.
-- After any `/resolve` call, the integrity suite asserts that no row anywhere has `origin = 'page_context'` (`e2e_verification_journeys.md`).
+- After any `/resolve` call, the integrity suite asserts no row anywhere has `origin = 'page_context'`.
 
-**Treat page text as hostile input.** It is attacker-controlled: a page can contain text engineered to make resolution return the wrong subject, or instructions aimed at the resolving model. Resolution output is constrained to existing corpus ids, and page content is never interpreted as instructions.
+**Treat the selection and its context as hostile input.** Both are attacker-controlled: a page can contain text engineered to make resolution return the wrong subject, or instructions aimed at the resolving model. Output is constrained to existing corpus ids, and page content is never interpreted as instructions.
 
 ---
 
 ## 5. Clients
 
-### Browser extension (Phase 8) — the primary surface
+### Browser extension — the only client (Issue 002)
 
-The reason the product exists at the reading moment rather than the researching moment.
+Flutter is deferred, so the extension carries the whole product. It must therefore support **two depths in one surface**, which is what Issue 013's selection asks for.
 
-- Content script extracts page text → `POST /resolve` → renders a compact, dismissible overlay.
-- Overlay shows: subject, resolved topic, the three axis values (or their null reasons), and the two or three most recent Tensions with quotes.
-- "Open full timeline" hands off to the Flutter client.
-- **Non-blocking and opt-in per page.** It never modifies the page, never auto-expands, and never editorialises the article it is sitting on.
+**Depth 1 — the overlay.** Appears on highlight, anchored near the selection.
+- What the corpus holds on *this specific claim*: the resolved proposition, and the two or three most relevant dated quotes.
+- The four axis values, or their null reasons — the "trust vectors."
+- Compact, dismissible, never modal, never modifying the page.
+
+**Depth 2 — the expanded view.** One click from the overlay, opening in a panel or extension tab rather than a separate app.
+- The full timeline for `(subject, topic)`.
+- Every axis with its evidence decomposition.
+- Tension cards with both quotes and citation deep links.
+
+**Both depths read the same API.** The expanded view is not a second client; it is the same code rendering more of the same payloads.
+
 - Holds the bearer token in extension storage, unreadable by page scripts.
+- **Design tokens live in one `tokens.json`** that generates the extension's CSS custom properties — and, when Flutter arrives, its Dart constants. This is the concrete form of the Issue 002 requirement that the design language stay consistent.
 
-### Flutter macOS app (Phase 9) — the deep-dive surface
+### Flutter app — deferred, not cancelled
 
-Full timelines, evidence browsing, corpus management, the ingest queue, head-to-head. Reads the API over localhost like any other client. See `design_ui_direction.md`.
+When it arrives it renders the same payloads from the same endpoints, using constants generated from the same `tokens.json`. See `design_ui_direction.md`.
 
 ### Ambient client — deferred, designed for
 
@@ -127,5 +160,6 @@ Would consume the same `assessment` endpoint. Constrained by invariant I10 (stat
 
 ## 7. Open decisions
 
-- **Issue 002** — Flutter as one client among several vs. the primary app vs. dropping it for a web client.
-- **Issue 013** — whether the extension ships the overlay inline on the page or in the extension popup only.
+**Resolved:** Issue 002 → extension first, Flutter deferred, shared design tokens. Issue 013 → selection-triggered overlay with an expandable full view (§4). Issue 015 → DuckDB is the only store, so §2's four controls are the entire access-control surface.
+
+**Open:** none blocking this contract.

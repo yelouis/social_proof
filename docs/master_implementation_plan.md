@@ -2,7 +2,7 @@
 
 **What this is:** the big picture. Phases, invariants, and the shape of the system. Every detail lives in a `design_*.md` contract; this file exists so a reader knows what is being built and why, in under fifteen minutes.
 
-**Status:** pre-implementation. No code exists yet. Open design decisions awaiting a selection are in `ongoing_errors.md`.
+**Status:** Phases 0–2 built as scaffold; external models being wired (Issue 017 = A). See `agent_execution_guide.md` for what is real versus stubbed. Open decisions are in `ongoing_errors.md`.
 
 ---
 
@@ -10,7 +10,7 @@
 
 **Social Proof builds a dated timeline of what a person has actually said about a topic — from first-hand sources only — and scores how well their own record holds together.**
 
-It never tells you whether someone is *right*. It tells you whether they have been *consistent*, whether they *owned* their changes of mind, and whether they apply their stated principles *evenly*. Those are three things you can determine without appealing to any outside authority, and that is the entire design thesis.
+It never tells you whether someone is *right*. It tells you whether they have been *consistent*, whether they say anything *checkable* in the first place, whether they *owned* their changes of mind, and whether they apply their stated principles *evenly*. Those are four things you can determine without appealing to any outside authority, and that is the entire design thesis.
 
 ---
 
@@ -55,8 +55,8 @@ Social Proof is **not an app**. It is a local analysis engine with a stable API 
 ┌──────────────────────────────────────────────────────────────┐
 │  CLIENTS  (thin, read-only, all speak one contract)          │
 │                                                              │
-│   Browser extension        Flutter macOS app     [future]    │
-│   overlay on any page      deep-dive timelines   ambient     │
+│   Browser extension        Flutter app           [future]    │
+│   selection-triggered      deep-dive (deferred)  ambient     │
 └──────────────────────────┬───────────────────────────────────┘
                            │  localhost HTTP  (design_local_api_and_clients.md)
 ┌──────────────────────────┴───────────────────────────────────┐
@@ -67,8 +67,8 @@ Social Proof is **not an app**. It is a local analysis engine with a stable API 
                            │
 ┌──────────────────────────┴───────────────────────────────────┐
 │  STORE            (design_data_layer.md)                     │
-│  Firestore  = system of record, canonical, client-readable   │
-│  DuckDB     = local analytical mirror, vector search, joins  │
+│  DuckDB  = single system of record: rows, vectors, joins     │
+│  artifact store = transcripts + word timestamps on disk      │
 └──────────────────────────┬───────────────────────────────────┘
                            │
 ┌──────────────────────────┴───────────────────────────────────┐
@@ -78,7 +78,7 @@ Social Proof is **not an app**. It is a local analysis engine with a stable API 
 └──────────────────────────────────────────────────────────────┘
 ```
 
-**Why Python owns the bottom half:** transcription (Whisper), diarization (pyannote), embeddings, and structured extraction are all Python-ecosystem problems. **Why Firestore is in the middle:** it is the system of record, it syncs, and it is what a Flutter client reads natively. **Why DuckDB sits beside it:** contradiction detection is a self-join over thousands of rows plus vector similarity, and Firestore has neither joins nor vector search. See `design_data_layer.md` for the sync contract and why the mirror is derived rather than authoritative.
+**Why Python owns the bottom half:** transcription (Whisper), diarization (pyannote), embeddings, and structured extraction are all Python-ecosystem problems. **Why DuckDB is the only store** (Issue 015): contradiction detection is a self-join over thousands of rows *plus* vector similarity, and DuckDB serves both in one process against one file with no server. An earlier design put Firestore in front of it for sync and native Flutter reads; the API-plus-thin-clients shape removed the first need and Issue 002 removed the second. See `design_data_layer.md`.
 
 ---
 
@@ -209,7 +209,7 @@ These are not rejected. The data model and adapter interface must accommodate th
 | How is even-handedness actually computed? | `design_principle_extraction.md` |
 | How is a "topic" defined and resolved? | `design_topic_model.md` |
 | What are the axis formulas and tension types? | `design_rubric_engine.md` |
-| Firestore schema, DuckDB mirror, sync | `design_data_layer.md` |
+| Schema, DuckDB tables, deterministic IDs, versioning | `design_data_layer.md` |
 | The API contract and the clients | `design_local_api_and_clients.md` |
 | Timelines, head-to-head, citation rendering | `design_ui_direction.md` |
 | The anti-defamation contract | `design_evidence_integrity.md` |
