@@ -290,6 +290,46 @@ Nothing that depends on measurement can proceed: attribution thresholds (004), t
 - Pros: nothing blocks.
 - Cons: every precision figure in this project becomes decorative, and the four measured parameters can never be set honestly.
 
+Your selection: Proceed with Option B.
+
+---
+
+### Issue 019: Should a model pre-label the golden corpus?
+**Blocks: V6 scope** · **Recommended: Option B** · *Filed in response to "why can't we use a model to label the videos? We just need the transcript, right?"*
+
+Mostly yes — but with two constraints that decide the shape.
+
+**Constraint 1 — never label with the model you are testing.** The corpus exists to measure the extractor. Label with Gemma and test Gemma and you measure self-agreement, which is 1.0 by construction. Label with Opus and test Gemma and you measure *"does Gemma agree with Opus"* — a real question, but a different one, and it can never validate Opus itself.
+
+**Constraint 2 — the hard classes fail in *correlated* ways.** N1–N4 (sarcasm, reported speech, steelman, hypothetical) are in the corpus precisely because they are hard **for language models**. Two models trained on similar data make similar mistakes on deadpan sarcasm. So an LLM labeller silently agrees with the extractor on exactly the cases the corpus was built to catch. The corpus goes blind where you most need it to see, and nothing in the metrics reveals it.
+
+**And a wrinkle in the premise: not every class is transcript-decidable.**
+
+| Class | Transcript enough? |
+|---|---|
+| **N1 sarcasm** | **No.** Deadpan sarcasm often lives entirely in prosody. A transcript is the one representation that strips it. |
+| **N9 misattribution** | **No.** The question *is* whether the speaker label is right; a transcript that already carries speaker labels assumes the answer. |
+| N5 conditional, N7 hedge, N12 re-aired archive | Yes — syntactic or metadata, mechanically checkable. |
+| N2 reported speech, N3 steelman, N4 hypothetical | Usually — these have lexical markers, but adversarial cases do not. |
+| P1 vs P2 (unacknowledged reversal vs reasoned update) | Usually — turns on whether a stated reason exists, which is findable in text. |
+
+**Option A: full human labelling.**
+- Pros: no circularity anywhere; the corpus is unimpeachable.
+- Cons: hours of listening per subject. Realistically it is the thing that never happens, and a corpus that does not exist measures nothing.
+
+**Option B (recommended): model pre-labels, human adjudicates; class-dependent rigour.**
+- A model (**not** the extractor under test) proposes `label + confidence + the span it relied on`. A human confirms or corrects from a review queue.
+- **Mechanical classes** (N5, N7, N12, quote-span resolution) may be auto-accepted above a confidence threshold, spot-checked at ~10%.
+- **Judgment classes** (N1–N4, N10, P1/P2) require explicit human sign-off. `verified_by` names a person or the case does not count.
+- **N1 and N9 additionally require the audio**, not just the transcript.
+- **Disagreements are kept as high-value cases** — where the pre-labeller and the human differ is exactly what the corpus should contain.
+- Pros: collapses human effort from "listen to 300 hours" to "adjudicate a queue," which is the difference between happening and not. Preserves independence where it matters.
+- Cons: a review queue to build; the ~10% spot-check is a real ongoing discipline; still needs a second model available for pre-labelling.
+
+**Option C: model labels everything, no human in the loop.**
+- Pros: free and immediate; hundreds of cases overnight.
+- Cons: every precision figure becomes "agreement with the labelling model." Correlated failure on N1–N4 makes the number *look* good precisely when the system is worst. This is the failure mode this project has already hit once, in a different costume.
+
 Your selection: _____
 
 ---

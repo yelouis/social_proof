@@ -8,17 +8,39 @@
 
 **You cannot tell a working contradiction detector from a confident one by looking at its output.** Both produce plausible pairs of quotes. The difference only shows up against cases where you already know the right answer.
 
-Every threshold in `ongoing_errors.md` §2 is set here. Every claim of "precision" traces here. A phase that ships without its golden-corpus cases has not been verified — it has been demonstrated, which is a different and much weaker thing.
+Every threshold in `ongoing_errors.md` §2 is set here. Every claim of "precision" traces here. A phase that ships without its cases has not been verified — it has been demonstrated, which is a different and much weaker thing.
+
+**Since Issue 018 = Option B, be precise about which of the two bodies (§2) any given claim rests on.** A green fixture suite says a code path still fires. It says nothing whatsoever about quality, and a report that implies otherwise is the defect this section exists to prevent.
 
 ---
 
-## 2. The golden corpus
+## 2. Two corpora, and they must never be blended
 
-Hand-labelled, human-verified, checked into the repo as labels plus source locators (never as copied source text — the corpus references the artifact store).
+**Issue 018 = Option B.** There are two distinct bodies of labelled data with two distinct jobs. Reporting them through one number is exactly how `Precision 1.000` came to be printed over sixteen invented sentences.
 
-### Scale
+| | **Behaviour fixtures** | **Golden corpus** |
+|---|---|---|
+| Lives in | `fixtures/behaviour/` | `golden/` |
+| Content | Hand-written sentences, one or more per case class | Labelled utterances from **real ingested sources** |
+| Locators | Synthetic, and openly so | Real `source_id` + span into the artifact store |
+| Answers | *"Does this code path still fire?"* | *"How good is this system?"* |
+| Output | **PASS / FAIL only.** Never a rate. | Measured precision, recall, per-class rates |
+| Grows by | Adding a case when a bug is found | Labelling as subjects get ingested |
+| Verified by | The author of the case | A human who listened to or read the original |
 
-Small and deliberate beats large and sloppy. **3–5 subjects, 2–3 topics each, ~200 labelled utterances, ~40 labelled Tension candidates.** Every label is one you personally verified by listening or reading the original. A thousand auto-labelled examples are worth less than forty you checked.
+**The rule that makes this work: a fixture may never contribute to a metric, and a corpus case may never be hand-written.** The harness loads them separately and reports them in separate blocks. If a single number ever spans both, the split has failed.
+
+The sixteen existing cases become **behaviour fixtures**. They keep all of their regression value and lose their claim to measure anything.
+
+### Scale — the golden corpus
+
+Small and deliberate beats large and sloppy. Target **3–5 subjects, 2–3 topics each, ~200 labelled utterances, ~40 labelled Tension candidates**, every one personally verified against the original. A thousand auto-labelled examples are worth less than forty you checked.
+
+Under Option B this accumulates **as subjects are ingested** rather than blocking the build. The consequence to plan around: **parameters 004, 008, 012 and 016 stay provisional until their relevant class crosses the floor of 5 cases.** Anything tuned before then is a placeholder and must be labelled as one in the code and in the commit body.
+
+### Scale — the behaviour fixtures
+
+At least one per class, more when a bug is found. **A fixture is added every time a regression is fixed** — that is the mechanism by which this set stays useful rather than ossifying.
 
 ### Composition — the negatives are the important half
 
@@ -45,7 +67,9 @@ A corpus of only true contradictions measures recall and tells you nothing about
 
 **N9 is the one to build first.** Cross-speaker misattribution is the failure that produces a confident, well-cited, completely false accusation against a real named person, and it is invisible in any output that doesn't specifically test for it.
 
-### Metrics and targets
+### Metrics and targets — golden corpus only
+
+**These are computed over the golden corpus and nothing else.** Each is suppressed as `NOT MEASURED — n=<k>, minimum 5` until its class clears the floor.
 
 | Metric | Target | Why |
 |---|---|---|
@@ -76,9 +100,10 @@ Ingest a multi-speaker episode containing golden case **N9**.
 **Falsify:** swap the enrollment embeddings of two speakers; the misattribution count must go non-zero.
 
 ### J3 — Extraction guard suite · *Phase 2*
-Run extraction over the full golden corpus.
-**Gate:** all of N1–N4 and N10 excluded with the correct `exclusion_reason`; no proposition text contains polarity; every `quote_span` resolves; false-exclusion rate within target.
-**Falsify:** remove the steelman clause from the extraction prompt; N3 must start passing through as an own assertion.
+Two halves, reported separately (§2).
+**Fixture gate (PASS/FAIL, no rates):** run extraction over `fixtures/behaviour/`. All of N1–N4 and N10 excluded with the correct `exclusion_reason`; no proposition text contains polarity; every `quote_text` resolves.
+**Corpus metrics (suppressed until each class clears 5):** false-exclusion rate and precision over `golden/`, with **N1–N4 reported as their own line** — a good aggregate will hide a bad number on the four speech-act guards, which is exactly where a local model is weakest.
+**Falsify:** remove the steelman clause from the extraction prompt; the N3 fixture must go RED.
 
 ### J4 — Topic resolution stability · *Phase 3*
 Resolve the same free-text query twice, in separate processes.

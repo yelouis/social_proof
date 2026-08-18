@@ -1,4 +1,4 @@
-# Agent Execution Guide — Active Build: V-queue (wire the real externals) — August 17, 2026
+# Agent Execution Guide — Active Build: V-queue · all selections in · zero blockers — August 17, 2026
 
 **You are an engineering agent with no memory of this project. This document is designed to be self-driving: it contains the prompts you issue to yourself.**
 
@@ -45,6 +45,8 @@ echo "=== STUB REGISTRY (source of truth for V2-V5 progress) ==="
   2>/dev/null || echo "  STUB_REGISTRY not present yet -> V1 is not delivered"
 echo "=== DECLARED EXTERNALS ==="
 grep -E "faster-whisper|pyannote|llama-cpp|sentence-transformers|mlx" pyproject.toml || echo "  none declared"
+echo "=== CORPUS SPLIT (V6 delivered?) ==="
+[ -d fixtures/behaviour ] && echo "  fixtures/behaviour present -> V6 delivered" || echo "  no fixtures/behaviour -> V6 NOT delivered"
 echo "=== OPEN SELECTIONS ==="
 grep -c "^Your selection: _____" docs/ongoing_errors.md   # anchored: an unanchored grep also matches the rules line that documents the convention
 ```
@@ -57,7 +59,7 @@ grep -c "^Your selection: _____" docs/ongoing_errors.md   # anchored: an unancho
 | A module still listed in `STUB_REGISTRY` | Its V-item is **not** delivered, whatever any commit message says. |
 | `none declared` under externals | No real model is wired. V2–V5 all outstanding. |
 | pytest finishes in under ~5s | Still mocks all the way down. A real model cannot run that fast. |
-| open selections > 1 | Check §6 for which items that blocks. |
+| open selections > 0 | A new blocker appeared. Check §6 before starting anything. |
 
 **The stub registry is the authority on V2–V5 progress.** Not the baseline table, not commit messages, not this guide's prose.
 
@@ -110,18 +112,21 @@ Traps 1–16 are in git history at `217b383:docs/agent_execution_guide.md` §1 �
 
 **Issue 017 = Option A: wire every real external now, before any new phase.** V0 and V1 come first anyway — they are cheap, and V1 is what makes V2–V5 impossible to fake.
 
-| ID | Item | Blocked on | Position rationale |
-|---|---|---|---|
-| **V0** | Correct the record; guard fabricated numbers | none | The docs currently assert things that are false. Fix the instrument before taking readings. |
-| **V1** | Stub registry + CI guard | none | The structural fix. Its registry becomes the V2–V5 checklist: each item flips one entry from `stubbed` to `declared`. Self-verifying. |
-| **V2** | Real embeddings — `nomic-embed-text-v1.5` | none | First real external: cheapest to wire, and the only stub that is *silently wrong* rather than merely absent. |
-| **V3** | Real transcription — `faster-whisper` | none | Behind the existing `TranscriptionEngine` Protocol. |
-| **V4** | Real diarization — `pyannote.audio` | none | **Needs a gated Hugging Face token — surface that to the user before starting.** |
-| **V5** | Real extraction runtime — Gemma 3 | none | Largest download, slowest loop, most to measure. |
-| **V6** | Golden corpus rebuild | **Issue 018** | Human labelling; cannot be delegated to an agent. |
-| — | Phase 8 extension | after V-queue | Design settled (Issue 013 = selection-triggered). Do not start early. |
+| Order | ID | Item | Blocked on | Position rationale |
+|---|---|---|---|---|
+| 1 | **V0** | Stop reporting fabricated throughput | none | The runtime prints a hardcoded constant as a measurement. Fix the instrument before taking any reading. |
+| 2 | **V1** | Stub registry + CI guard | none | The structural fix. Its registry becomes the V2–V5 checklist: each later item flips one entry from `stubbed` to `declared`, so the queue verifies itself. |
+| 3 | **V6** | Split behaviour fixtures from the golden corpus | none | **Moved ahead of V2–V5 by the Issue 018 selection.** Every measurement V2–V5 report flows through this harness; splitting afterwards means re-doing their numbers. Also carries the metric floor, since that is the same file and the same concern. |
+| 4 | **V2** | Real embeddings — `nomic-embed-text-v1.5` | none | First real external: cheapest to wire, and the only stub that is *silently wrong* rather than merely absent. |
+| 5 | **V3** | Real transcription — `faster-whisper` | none | Behind the existing `TranscriptionEngine` Protocol. First item that produces real corpus material. |
+| 6 | **V4** | Real diarization — `pyannote.audio` | none | **Needs a gated Hugging Face token — raise it with the user via LOOP 3 before writing code.** |
+| 7 | **V5** | Real extraction runtime — Gemma 3 | none | Largest download, slowest loop, most to measure. |
 
-**Already resolved, do not re-open:** Firestore purge (Issue 015 = A) — no Firestore code was ever written; the docs are clean as of `1ea4f15`.
+> **IDs are labels, not sequence numbers.** `V6` runs third. Do not renumber to "tidy" this — commit messages and `ongoing_errors.md` reference these IDs, and renaming them breaks every inbound pointer. Follow the **Order** column.
+
+**No queued item is blocked.** Issue 019 is open but gates only the *population* of the golden corpus, not V6's structural work — see §16's scope boundary. `grep -c "^Your selection: _____"` returns 1.
+
+**Already resolved, do not re-open:** Firestore purge (Issue 015 = A) — no Firestore code was ever written; docs cleaned in `1dee614`. Selection-triggered overlay (Issue 013) — designed in `design_local_api_and_clients.md` §4 and `design_ui_direction.md` §6; **do not start building it until the V-queue is empty** (Issue 017 = A).
 
 ---
 
@@ -234,31 +239,33 @@ Do:
 
 ---
 
-## 10. V0 — Correct the record
+## 10. V0 — Stop reporting fabricated throughput
 
-**User impact:** the project stops claiming capabilities it does not have, so the next status report can be trusted.
+**User impact:** the project stops claiming performance it has never measured, so the next status report can be trusted.
 
-**Gap.** `worker/extract/smoke.py` prints `35.0 t/s` — a hardcoded literal — and derives a "5.14h projection" from it. `worker/golden/report.py` prints `Precision 1.000 / Recall 1.000` over 16 cases with one example per class.
+**Gap.** `worker/extract/runtime.py` contains `tokens_per_second=35.0,  # Steady-state Apple Silicon M-series throughput` — a literal. `worker/extract/smoke.py` prints it as a measurement and derives a "5.14h 300hr projection" from it. No model backend exists.
+
+> **Scope note:** the golden-report metric floor used to live here. It moved to **V6**, because it is the same file and the same concern as the fixture/corpus split and doing it twice is waste.
 
 **Implementation**
-1. **`worker/extract/smoke.py`** — gate every performance figure on a **live capability probe**: does a model backend exist and return a completion? Not a config flag someone can flip. While no backend is present, print exactly:
+1. **Delete the `35.0` literal.** `GenerationStats.tokens_per_second` becomes `float | None`, populated only from a real timing — `time.perf_counter()` around an actual generation call — and `None` otherwise.
+2. **Gate every performance figure on a live capability probe**, not a config flag someone can flip: does a model backend exist and return a completion? While it does not, `smoke.py` prints exactly:
    ```
    Inference Throughput:            NOT MEASURED — no model backend loaded
    Projected 300hr Ingest Time:     NOT MEASURED — requires measured throughput
    ```
-2. **Delete the `tokens_per_second=35.0` literal** from `worker/extract/runtime.py`. `GenerationStats.tokens_per_second` becomes `float | None`, and is `None` unless timed from a real call with `time.perf_counter()` around it.
-3. **`worker/golden/report.py`** — enforce a floor of **5 cases per class**. Below it, print `NOT MEASURED — n=<k>, minimum 5` for that class. **Aggregate precision must not be printable while any contributing class is below floor** — an aggregate that averages over vacuous classes is itself vacuous.
-4. Annotate every figure the harness prints with the sample size behind it.
-5. Update `docs/ongoing_errors.md` §4 with what Phases 0–2 actually delivered; it has been stale since `ef76b2c`.
+3. Any derived figure inherits its weakest input: a projection built on `NOT MEASURED` is itself `NOT MEASURED`, never a number.
+4. Keep `prefill_tokens` reporting, but label it `approx (word-count heuristic)` until V5 replaces it with the runtime's own counter. **An approximation that says so is fine; one that doesn't is the bug.**
 
 **Validation**
-- Run both harnesses; assert **no numeric throughput and no numeric precision appears in stdout** while stubs are in place. ← *the assertion a stub cannot satisfy is inverted here: this one must FAIL if a fabricated number returns*
-- Unit test: 4 cases in a class → `NOT MEASURED`; 5 → a number.
-- `head -20 docs/agent_execution_guide.md | grep -ci "no code\|no tests"` returns 0. (Scope to the header — a whole-file grep matches §5, which *describes* the old defect and must survive.)
+- Run `worker.extract.smoke`; assert **no numeric throughput and no numeric projection appears in stdout** while no backend is loaded.
+- Assert `GenerationStats.tokens_per_second is None` on every call from the stub path.
+- `grep -rn "35\.0" worker/` returns nothing.
+- ← *the assertion that matters is inverted here: it must go RED the moment a fabricated number returns.*
 
-**Falsify.** Re-introduce a fake "backend present" flag so `smoke.py` prints `35.0`. The stdout assertion must go RED.
+**Falsify.** Re-introduce a fake `backend_present = True` so `smoke.py` prints `35.0`. The stdout assertion must go RED. Revert; record both.
 
-**Blast radius.** `worker/extract/smoke.py`, `worker/extract/runtime.py`, `worker/golden/report.py`, `tests/test_runtime_u9.py`, `tests/test_golden_harness.py`, `docs/ongoing_errors.md`.
+**Blast radius.** `worker/extract/runtime.py`, `worker/extract/smoke.py`, `tests/test_runtime_u9.py`, this guide's §3.
 
 ---
 
@@ -317,7 +324,7 @@ Do:
 3. **Task prefixes are mandatory (trap 7).** Propositions and principles embed as `search_document: <text>`; query-side lookups as `search_query: <text>`. Getting this wrong does not error — it silently degrades everything.
 4. Keep `stub_hash_embedding` as a test double, renamed and registered.
 5. Flip the `dedup` entry in `STUB_REGISTRY` to declared.
-6. **Re-measure parameter 008 (`T_dedup`).** The current `0.88` was tuned against a hash function and carries no information. If the golden corpus is still the 16 synthetic cases, record `T_dedup` as **provisional** and note it depends on Issue 018.
+6. **Re-measure parameter 008 (`T_dedup`).** The current `0.88` was tuned against a hash function and carries no information. The golden corpus will still be empty at this point (Issue 018 = B grows it during ingest), so set `T_dedup` from the synonym/antonym pairs in V2's own validation, mark it **`[provisional]`**, and confirm V6's readiness report shows `008 NOT MEASURABLE`. Firm it up when the corpus crosses 5 dedup pairs.
 
 **Validation**
 - **Synonym test:** `"federal licensing of frontier models"` vs `"federal permitting for large training runs"` score **above** `T_dedup`. **No hash function can pass this.** ← *the stub-proof assertion*
@@ -415,9 +422,71 @@ Do:
 
 ---
 
-## 16. V6 — Golden corpus rebuild · **BLOCKED on Issue 018**
+## 16. V6 — Split behaviour fixtures from the golden corpus · *runs THIRD*
 
-Do not start. On selection, the shape is: real ingested sources, real locators, ~200 labelled utterances across 3–5 subjects, every label human-verified, ≥5 cases per class to clear V0's floor. Unblocks parameters 004, 008, 012, 016 and finally answers U13's local-vs-frontier question with data.
+**Issue 018 = Option B.** This is no longer a blocked labelling job. It is an unblocked structural fix, and it runs before V2–V5 because every number they report flows through this harness.
+
+**User impact:** a precision figure starts meaning something. Right now `1.000` is printed over sixteen invented sentences, and there is no way for a reader to tell.
+
+**Gap.** One body of data serves two incompatible purposes. `golden/cases.json` holds 16 hand-written sentences with fabricated locators, and the harness reports rates over them as if they measured quality.
+
+### The distinction to implement
+
+Read `e2e_verification_journeys.md` §2 in full first. The contract in one line: **a fixture may never contribute to a metric, and a corpus case may never be hand-written.**
+
+| | Behaviour fixtures | Golden corpus |
+|---|---|---|
+| Path | `fixtures/behaviour/` | `golden/` |
+| Locator | synthetic, openly so | real `source_id` + span |
+| Output | **PASS / FAIL only** | measured rates |
+| Grows by | a case per fixed regression | labelling as subjects ingest |
+
+**Implementation**
+1. **Move the 16 cases** to `fixtures/behaviour/cases.json`. Add `"locator_kind": "synthetic"` to every one, and **drop `verified_by: "curator"`** — a fixture has an author, not a verifier, and the field was misleading.
+2. **Give `golden/` a real schema**: `case_id`, `class`, `subject_id`, `source_id`, `utterance_id`, `span`, `expected_behaviour`, `verified_by`, `verified_at`, `locator_kind: "real"`, plus two fields that exist because of **Issue 019**:
+   - `label_source` — `human` | `model_assisted` | `model_only`
+   - `labeller_model` — the model that pre-labelled, or null
+
+   **A schema-level rule, enforced in the loader: `labeller_model` may never equal the extractor under test.** That is the circularity guard, and it belongs in code rather than in a reviewer's memory. The corpus starts **empty**, and an empty corpus is a correct state, not an error.
+3. **Split the loaders.** `fixtures/behaviour/loader.py` and `golden/loader.py` are separate modules with separate types. **A single function must not be able to return both** — that is what makes the blend structurally impossible rather than merely discouraged.
+4. **Rewrite `worker/golden/report.py` into two reporting blocks that cannot be summed:**
+   ```
+   BEHAVIOUR FIXTURES (regression only — never a quality measure)
+     P1 unacknowledged_reversal ......... PASS
+     N3 steelman ........................ PASS
+     ...                                  16/16 PASS
+
+   GOLDEN CORPUS METRICS
+     Precision .......... NOT MEASURED — n=0, minimum 5
+     Recall ............. NOT MEASURED — n=0, minimum 5
+     N1–N4 guards ....... NOT MEASURED — n=0, minimum 5
+     Misattribution (N9)  NOT MEASURED — n=0, minimum 5
+   ```
+5. **Enforce the per-class floor of 5.** Below it a class prints `NOT MEASURED — n=<k>, minimum 5`. **Aggregate precision is unprintable while any contributing class is below floor** — an aggregate over vacuous classes is itself vacuous.
+6. **Add the parameter readiness report.** This is what converts Option B's "grow it over time" from an intention into a work queue:
+   ```
+   PARAMETER READINESS
+     004 T_high / T_low  NOT MEASURABLE — need 5 N9 cases, have 0
+     008 T_dedup         NOT MEASURABLE — need 5 dedup pairs, have 0   [provisional 0.88]
+     012 sufficiency     NOT MEASURABLE — need 5 N11 cases, have 0
+     016 H_max           NOT MEASURABLE — need 5 hedge-boundary cases, have 0
+   ```
+   Each line names **exactly what to label next** to unblock that parameter. Any parameter with a value while `NOT MEASURABLE` renders it as `[provisional]`, in the report and in the commit body of whatever set it.
+
+**Validation**
+- Fixture block prints **PASS/FAIL and no rate whatsoever**. Assert no `%`, no decimal, no ratio appears in that block. ← *load-bearing: this is the assertion that keeps the two bodies apart*
+- Corpus block with an empty corpus prints `NOT MEASURED — n=0`, **not** `0.0` and **not** `1.0`.
+- Add 4 synthetic cases to `golden/` → still `NOT MEASURED`. Add a 5th → a number appears.
+- Assert `golden/loader.py` **rejects** a case with `locator_kind: "synthetic"`, and the fixture loader rejects `"real"`. Type-level separation, not convention.
+- Readiness report names a concrete next action per parameter.
+- **Circularity guard:** a case whose `labeller_model` equals the configured extractor is **rejected by the loader**. Assert it raises.
+- Metrics are reported **split by `label_source`**, so a run can never blend human-verified and model-only cases into one figure.
+
+**Falsify.** Point `golden/loader.py` at `fixtures/behaviour/cases.json`. The `locator_kind` rejection must go RED — proving the separation is enforced rather than merely documented. Revert; record both.
+
+**Blast radius.** `golden/`, `fixtures/`, `worker/golden/report.py`, `tests/test_golden_harness.py`, `tests/test_phase2_gate_u13.py`, `docs/e2e_verification_journeys.md` §2 and J3, `docs/ongoing_errors.md` §2.
+
+> **Scope boundary.** V6 builds the *structure*: the split, the floor, the readiness report, and the schema fields above. **How the corpus then gets populated is Issue 019 and is not part of V6.** Build the schema so either answer fits; do not build a labelling pipeline until that selection lands.
 
 ---
 
@@ -476,7 +545,7 @@ Every gap in the previous cycle traces to a spec that tested shape. Fix the spec
 | `35.0 t/s` reported as measured | "Record tokens/sec" | "Assert a wall-clock floor a real model cannot beat." |
 | Grammar falsified by string truncation | "Disable the grammar; parse failures appear" | "Assert the grammar is built from the schema and the sampler rejects an ungrammatical token." |
 | Hash function passing as an embedding | "Embed with nomic-embed-text-v1.5" | "Assert two synonyms score above threshold — a test no hash function can pass." |
-| 16 cases reporting 1.000 | "~200 utterances, personally verified" | Same, **plus** a harness that refuses a metric below a per-class floor. A target alone gets ignored. |
+| 16 cases reporting 1.000 | "~200 utterances, personally verified" | Same, **plus** a harness that refuses a metric below a per-class floor, **plus** separate loaders so fixtures and corpus cannot be summed. A target alone gets ignored; a structure that makes the mistake impossible does not. |
 | Undeclared dependencies | *(silent)* | "Dependencies land in `pyproject.toml` in the same commit." |
 | Docs contradicting themselves | *(silent)* | "Update every doc your change invalidates in the same commit." |
 
