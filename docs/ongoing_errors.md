@@ -334,6 +334,27 @@ Your selection: Proceed with Option C.
 
 ---
 
+### Issue 020: Diarization engine backend and Hugging Face gated access for pyannote.audio
+**Blocks: V4** · **Recommended: Option A** · *Filed under LOOP 3 escalation*
+
+`pyannote.audio` pipelines (`pyannote/speaker-diarization-3.1` and `pyannote/embedding`) require accepting user terms on Hugging Face and supplying an authentication token (`HF_TOKEN`). No `HF_TOKEN` is currently set in the local environment.
+
+**Option A (recommended): Provide Hugging Face User Access Token (`HF_TOKEN`) for `pyannote.audio`.**
+- Pros: Uses the exact reference diarization architecture specified in `design_source_acquisition.md` §5.1 and produces 512-dim speaker embeddings.
+- Cons: Requires accepting model conditions on `hf.co/pyannote/speaker-diarization-3.1` and `hf.co/pyannote/segmentation-3.0` and exporting `HF_TOKEN`.
+
+**Option B: Use an un-gated open-weights speaker embedding extractor (e.g. SpeechBrain `speechbrain/spkrec-ecapa-voxceleb`).**
+- Pros: 100% open weights with zero gated credentials, tokens, or sign-up requirements. Runs fully offline immediately.
+- Cons: Uses SpeechBrain's ECAPA-TDNN embedding architecture (192-dim normalized vectors) instead of Pyannote's 512-dim embedding architecture.
+
+**Option C: Skip/defer V4 for now and proceed directly to V5 (Real extraction runtime — Gemma 3).**
+- Pros: Unblocks immediate execution of V5 without waiting on token configuration.
+- Cons: Diarization remains in the stub registry until resolved.
+
+Your selection: _____
+
+---
+
 ## 2. Parameters to be measured, not selected
 
 **These are not decisions and should not be guessed.** Each is a threshold whose correct value is discovered by running against the golden corpus (`e2e_verification_journeys.md`). An agent that picks a number here and moves on has skipped the work.

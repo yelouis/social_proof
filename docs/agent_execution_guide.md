@@ -119,12 +119,12 @@ Traps 1–16 are in git history at `217b383:docs/agent_execution_guide.md` §1 �
 | 3 | **V6** | Split behaviour fixtures from the golden corpus | none | **delivered** | **Moved ahead of V2–V5 by the Issue 018 selection.** Every measurement V2–V5 report flows through this harness; splitting afterwards means re-doing their numbers. Also carries the metric floor, since that is the same file and the same concern. |
 | 4 | **V2** | Real embeddings — `nomic-embed-text-v1.5` | none | **delivered** | First real external: cheapest to wire, and the only stub that is *silently wrong* rather than merely absent. |
 | 5 | **V3** | Real transcription — `faster-whisper` | none | **delivered** | Behind the existing `TranscriptionEngine` Protocol. First item that produces real corpus material. |
-| 6 | **V4** | Real diarization — `pyannote.audio` | none | open | **Needs a gated Hugging Face token — raise it with the user via LOOP 3 before writing code.** |
+| 6 | **V4** | Real diarization — `pyannote.audio` | Issue 020 | open | **Needs a gated Hugging Face token — escalated via LOOP 3 in Issue 020.** |
 | 7 | **V5** | Real extraction runtime — Gemma 3 | none | open | Largest download, slowest loop, most to measure. |
 
 > **IDs are labels, not sequence numbers.** `V6` runs third. Do not renumber to "tidy" this — commit messages and `ongoing_errors.md` reference these IDs, and renaming them breaks every inbound pointer. Follow the **Order** column.
 
-**No queued item is blocked.** Issue 019 is open but gates only the *population* of the golden corpus, not V6's structural work — see §16's scope boundary. `grep -c "^Your selection: _____"` returns 1.
+**Issue 020 is open awaiting selection on V4.** `grep -c "^Your selection: _____"` returns 1.
 
 **Already resolved, do not re-open:** Firestore purge (Issue 015 = A) — no Firestore code was ever written; docs cleaned in `1dee614`. Selection-triggered overlay (Issue 013) — designed in `design_local_api_and_clients.md` §4 and `design_ui_direction.md` §6; **do not start building it until the V-queue is empty** (Issue 017 = A).
 
