@@ -115,7 +115,7 @@ Traps 1–16 are in git history at `217b383:docs/agent_execution_guide.md` §1 �
 | Order | ID | Item | Blocked on | Status | Position rationale |
 |---|---|---|---|---|---|
 | 1 | **V0** | Stop reporting fabricated throughput | none | **delivered** | The runtime prints a hardcoded constant as a measurement. Fix the instrument before taking any reading. |
-| 2 | **V1** | Stub registry + CI guard | none | open | The structural fix. Its registry becomes the V2–V5 checklist: each later item flips one entry from `stubbed` to `declared`, so the queue verifies itself. |
+| 2 | **V1** | Stub registry + CI guard | none | **delivered** | The structural fix. Its registry becomes the V2–V5 checklist: each later item flips one entry from `stubbed` to `declared`, so the queue verifies itself. |
 | 3 | **V6** | Split behaviour fixtures from the golden corpus | none | open | **Moved ahead of V2–V5 by the Issue 018 selection.** Every measurement V2–V5 report flows through this harness; splitting afterwards means re-doing their numbers. Also carries the metric floor, since that is the same file and the same concern. |
 | 4 | **V2** | Real embeddings — `nomic-embed-text-v1.5` | none | open | First real external: cheapest to wire, and the only stub that is *silently wrong* rather than merely absent. |
 | 5 | **V3** | Real transcription — `faster-whisper` | none | open | Behind the existing `TranscriptionEngine` Protocol. First item that produces real corpus material. |

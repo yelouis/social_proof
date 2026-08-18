@@ -1,6 +1,13 @@
 """Proposition canonicalisation, embedding generation, and semantic deduplication.
 
 Implements Parameter 002 (T_dedup) and design_claim_extraction.md §1 & §4.
+
+WARNING / STUB NOTICE:
+`stub_hash_embedding` is a bag-of-words hash vectoriser stub for 768-dim embeddings.
+It has NO semantic capability: 'licensing' and 'permitting' hash to unrelated slots and
+score ~0 similarity. Dedup merges only near-identical strings until real semantic model
+(nomic-embed-text-v1.5) lands in V2. T_dedup = 0.88 is provisional and carries no semantic
+information until V2.
 """
 
 import hashlib
@@ -19,10 +26,10 @@ class DedupDecision(NamedTuple):
     canonical_text: str
 
 
-def compute_deterministic_text_embedding(text: str, dim: int = 768) -> list[float]:
-    """Generates a reproducible 768-dim embedding for testing/offline embedding matching
+def stub_hash_embedding(text: str, dim: int = 768) -> list[float]:
+    """Generates a reproducible 768-dim hash vector for testing/offline mock embedding matching.
 
-    simulating nomic-embed-text-v1.5 using semantic token-hash projections.
+    WARNING: Has NO semantic capability. Do not use as a real embedding model.
     """
     words = text.lower().split()
     vec = np.zeros(dim, dtype=np.float32)
@@ -65,7 +72,7 @@ class PropositionCanonicalizer:
         Otherwise: creates a new proposition.
         """
         canonical_text = raw_proposition_text.strip().lower()
-        emb = embedding if embedding is not None else compute_deterministic_text_embedding(canonical_text)
+        emb = embedding if embedding is not None else stub_hash_embedding(canonical_text)
 
         # Query nearest existing propositions
         nearest = self.storage.query_nearest_propositions(emb, limit=1)

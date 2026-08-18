@@ -109,3 +109,8 @@ class LocalGemmaRuntime:
             raw_output=raw_json,
             parsed_result=parsed,
         )
+
+
+class MockLocalGemmaRuntime(LocalGemmaRuntime):
+    """Explicit Mock/Stub runtime for Gemma 3 pending V5 integration."""
+    pass

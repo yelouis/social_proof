@@ -75,6 +75,17 @@ class SpeakerAttributor:
         )
 
 
+class MockDiarizer:
+    """Mock speaker diarizer for tests and offline development.
+
+    Pending real pyannote.audio integration in V4.
+    """
+
+    def diarize_audio(self, audio_path: str) -> list[SpeakerTurn]:
+        """Returns scripted mock speaker turns."""
+        return []
+
+
 def attribute_speaker_turns(
     turns: list[SpeakerTurn],
     subject_id: str,

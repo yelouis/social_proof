@@ -4,7 +4,7 @@ from pathlib import Path
 
 from golden.loader import load_golden_cases
 from worker.entities import Claim, Proposition, Source, Subject, Utterance
-from worker.extract.dedup import compute_deterministic_text_embedding
+from worker.extract.dedup import stub_hash_embedding
 from worker.golden.report import (
     VerifiedRuleDetector,
     evaluate_detector_on_golden,
@@ -32,7 +32,7 @@ def test_phase_2_gate_journey_j3_reversal_detector_on_live_claims(tmp_path: Path
         claim_count=2,
     )
     store.insert_proposition(prop)
-    store.insert_proposition_embedding(prop_id, compute_deterministic_text_embedding(prop_text))
+    store.insert_proposition_embedding(prop_id, stub_hash_embedding(prop_text))
 
     # Source 1 (2022)
     src1 = Source(

@@ -2,12 +2,12 @@
 
 from pathlib import Path
 
-from worker.extract.dedup import PropositionCanonicalizer, compute_deterministic_text_embedding
+from worker.extract.dedup import PropositionCanonicalizer, stub_hash_embedding
 from worker.storage import Storage
 
 
 def test_proposition_embedding_generates_768_dim_normalized_vector() -> None:
-    emb = compute_deterministic_text_embedding("federal licensing requirement for frontier AI")
+    emb = stub_hash_embedding("federal licensing requirement for frontier AI")
     assert len(emb) == 768
 
 
