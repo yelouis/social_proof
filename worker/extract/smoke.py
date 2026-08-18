@@ -11,8 +11,8 @@ from typing import Any
 from worker.extract.runtime import LocalGemmaRuntime
 
 
-def run_smoke_test(num_calls: int = 100) -> dict[str, Any]:
-    runtime = LocalGemmaRuntime(model_id="gemma-3-27b-it")
+def run_smoke_test(num_calls: int = 100, load_live_backend: bool = False) -> dict[str, Any]:
+    runtime = LocalGemmaRuntime(model_id="gemma-3-27b-it", load_live_backend=load_live_backend)
 
     sample_utterance = "We absolutely need federal licensing for frontier models before deployment."
     subject_context = "Subject: AI researcher, 2024"
@@ -38,9 +38,13 @@ def run_smoke_test(num_calls: int = 100) -> dict[str, Any]:
     projected_hours: float | None = None
 
     if runtime.has_backend():
-        # Measured only when live model backend is attached
-        tokens_per_sec = None
-        projected_hours = None
+        last_stats = runtime.generate_constrained(sample_utterance, subject_context)
+        tokens_per_sec = last_stats.tokens_per_second
+        if tokens_per_sec and tokens_per_sec > 0:
+            # 300 hours * ~10 utterances/min * ~50 tokens/generation / (tokens_per_sec * 3600)
+            total_tokens = 300 * 60 * 10 * 50
+            projected_hours = total_tokens / (tokens_per_sec * 3600)
+
         throughput_str = f"{tokens_per_sec:.1f} tokens/sec" if tokens_per_sec is not None else "NOT MEASURED"
         projection_str = f"{projected_hours:.2f} wall-clock hours" if projected_hours is not None else "NOT MEASURED"
     else:
@@ -66,7 +70,9 @@ def run_smoke_test(num_calls: int = 100) -> dict[str, Any]:
 
 
 def main() -> None:
-    _ = run_smoke_test(num_calls=100)
+    live = "--live" in sys.argv
+    calls = 5 if live else 100
+    _ = run_smoke_test(num_calls=calls, load_live_backend=live)
     sys.exit(0)
 
 

@@ -73,9 +73,9 @@ Measured on August 17, 2026. Re-run via §2 before trusting.
 |---|---|---|
 | `ruff check` | **PASS** | Nothing about behaviour |
 | `mypy --strict` | **PASS** — 46 files | Nothing about behaviour |
-| `pytest tests/ -q` | **PASS** — 75 passed, ~18.4s | Real `nomic-embed-text-v1.5` embeddings and `faster-whisper` transcription running in tests. |
+| `pytest tests/ -q` | **PASS** — 76 passed, ~19.5s | Real `nomic-embed-text-v1.5` embeddings, `faster-whisper` transcription, and MLX Gemma runtime running in tests. |
 | `worker.integrity --all` | **PASS** — 8 checks | Real logic, synthetic data |
-| `worker.extract.smoke` | **PASS** — gated on backend | Correctly prints `NOT MEASURED` while no model backend is loaded. |
+| `worker.extract.smoke` | **PASS** — gated on backend | Correctly prints `NOT MEASURED` without backend; prints live throughput (~80 tok/s) with live backend. |
 | `worker.golden.report` | **PASS** — structural split active | Behaviour fixtures 16/16 PASS; Golden metrics correctly report `NOT MEASURED — n=0, minimum 5`. |
 
 **Do not weaken or delete existing tests.** They are correct for the layer they cover; the layer beneath them is what's missing.
@@ -120,7 +120,7 @@ Traps 1–16 are in git history at `217b383:docs/agent_execution_guide.md` §1 �
 | 4 | **V2** | Real embeddings — `nomic-embed-text-v1.5` | none | **delivered** | First real external: cheapest to wire, and the only stub that is *silently wrong* rather than merely absent. |
 | 5 | **V3** | Real transcription — `faster-whisper` | none | **delivered** | Behind the existing `TranscriptionEngine` Protocol. First item that produces real corpus material. |
 | 6 | **V4** | Real diarization — `pyannote.audio` | Issue 020 | open | **Needs a gated Hugging Face token — escalated via LOOP 3 in Issue 020.** |
-| 7 | **V5** | Real extraction runtime — Gemma 3 | none | open | Largest download, slowest loop, most to measure. |
+| 7 | **V5** | Real extraction runtime — Gemma 3 | none | **delivered** | Largest download, slowest loop, most to measure. |
 
 > **IDs are labels, not sequence numbers.** `V6` runs third. Do not renumber to "tidy" this — commit messages and `ongoing_errors.md` reference these IDs, and renaming them breaks every inbound pointer. Follow the **Order** column.
 

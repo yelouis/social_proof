@@ -17,7 +17,7 @@ from worker import STUB_REGISTRY
 EXTERNAL_CONTRACTS: dict[str, tuple[str, str]] = {
     "worker.transcribe.engine": ("faster_whisper", "TranscriptionEngine"),
     "worker.diarize.attribution": ("pyannote.audio", "Diarizer"),
-    "worker.extract.runtime": ("llama_cpp", "LocalGemmaRuntime"),
+    "worker.extract.runtime": ("mlx_lm", "LocalGemmaRuntime"),
     "worker.extract.dedup": ("sentence_transformers", "Embedder"),
 }
 

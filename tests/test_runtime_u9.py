@@ -29,6 +29,22 @@ def test_stub_runtime_tokens_per_second_is_none() -> None:
     assert stats.tokens_per_second is None
 
 
+def test_live_mlx_backend_execution_and_throughput() -> None:
+    """Tests live local Gemma runtime via MLX backend."""
+    runtime = LocalGemmaRuntime(load_live_backend=True)
+    assert runtime.has_backend() is True
+
+    stats = runtime.generate_constrained(
+        utterance_text="We must mandate federal licensing for frontier models before deployment.",
+        subject_context="Subject: AI researcher, 2024",
+    )
+    assert stats.tokens_per_second is not None
+    assert stats.tokens_per_second > 0.0
+    assert stats.parsed_result is not None
+    assert stats.prefill_tokens > 0
+    assert stats.generation_tokens > 0
+
+
 def test_thousand_constrained_generations_produce_zero_parse_failures() -> None:
     """1,000 grammar-constrained generations produce zero JSON parse failures."""
     runtime = LocalGemmaRuntime()
