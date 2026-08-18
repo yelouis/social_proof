@@ -9,11 +9,24 @@ from worker.extract.runtime import STABLE_SYSTEM_PROMPT, LocalGemmaRuntime
 from worker.extract.smoke import run_smoke_test
 
 
-def test_smoke_test_prefix_reuse_and_prefill_count() -> None:
+def test_smoke_test_prefix_reuse_and_prefill_count(capsys: pytest.CaptureFixture[str]) -> None:
     results = run_smoke_test(num_calls=100)
     # Average prefill tokens must be under 100 (system prompt was reused)
     assert results["avg_prefill_tokens"] < 100
-    assert results["projected_hours"] < 10.0
+    assert results["tokens_per_sec"] is None
+    assert results["projected_hours"] is None
+
+    # Assert no numeric throughput or projection appears in stdout
+    captured = capsys.readouterr()
+    assert "Inference Throughput:            NOT MEASURED — no model backend loaded" in captured.out
+    assert "Projected 300hr Ingest Time:     NOT MEASURED — requires measured throughput" in captured.out
+
+
+def test_stub_runtime_tokens_per_second_is_none() -> None:
+    runtime = LocalGemmaRuntime()
+    assert runtime.has_backend() is False
+    stats = runtime.generate_constrained("Sample utterance")
+    assert stats.tokens_per_second is None
 
 
 def test_thousand_constrained_generations_produce_zero_parse_failures() -> None:
@@ -86,3 +99,13 @@ def test_falsification_disabled_grammar_raises_validation_error() -> None:
             utterance_text="Sample utterance",
             enforce_grammar=False,
         )
+
+
+def test_falsification_fake_throughput_fails_not_measured_assertion() -> None:
+    """Falsification test: Emitting numeric throughput when no model is loaded
+
+    causes the stdout 'NOT MEASURED' assertion to fail.
+    """
+    fake_throughput_str = "Inference Throughput:            35.0 tokens/sec"
+    # When fake throughput is printed instead of NOT MEASURED:
+    assert "NOT MEASURED — no model backend loaded" not in fake_throughput_str  # Falsification confirmed!

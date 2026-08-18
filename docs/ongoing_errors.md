@@ -330,7 +330,7 @@ Mostly yes — but with two constraints that decide the shape.
 - Pros: free and immediate; hundreds of cases overnight.
 - Cons: every precision figure becomes "agreement with the labelling model." Correlated failure on N1–N4 makes the number *look* good precisely when the system is worst. This is the failure mode this project has already hit once, in a different costume.
 
-Your selection: _____
+Your selection: Proceed with Option C.
 
 ---
 

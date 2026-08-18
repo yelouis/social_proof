@@ -27,7 +27,7 @@ RULES:
 class GenerationStats:
     prefill_tokens: int
     generation_tokens: int
-    tokens_per_second: float
+    tokens_per_second: float | None
     raw_output: str
     parsed_result: ExtractionResult
 
@@ -44,17 +44,23 @@ class LocalGemmaRuntime:
         prompt_version: str = "v1.0",
         schema_version: str = "s1",
         system_prompt: str = STABLE_SYSTEM_PROMPT,
+        backend: Any | None = None,
     ) -> None:
         self.model_id = model_id
         self.prompt_version = prompt_version
         self.schema_version = schema_version
         self.system_prompt = system_prompt
+        self.backend = backend
         self.extraction_version = f"{model_id}:{prompt_version}:{schema_version}"
 
         # Initialize KV prefix cache
         self.prefix_tokens_count = len(system_prompt.split()) * 2  # Approx token count (~200 tokens)
         self.kv_prefix_cached = True
         self.calls_count = 0
+
+    def has_backend(self) -> bool:
+        """Capability probe: returns True if a real local model backend is loaded."""
+        return self.backend is not None
 
     def generate_constrained(
         self,
@@ -91,10 +97,15 @@ class LocalGemmaRuntime:
         parsed = ExtractionResult.model_validate_json(raw_json)
         gen_tokens = len(raw_json.split()) * 2
 
+        tokens_per_sec = None
+        if self.has_backend():
+            # Will be measured from real execution timing in V5
+            tokens_per_sec = None
+
         return GenerationStats(
             prefill_tokens=prefill_tokens,
             generation_tokens=gen_tokens,
-            tokens_per_second=35.0,  # Steady-state Apple Silicon M-series throughput
+            tokens_per_second=tokens_per_sec,
             raw_output=raw_json,
             parsed_result=parsed,
         )

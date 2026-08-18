@@ -6,11 +6,12 @@ Implements agent_execution_guide.md §11 (U9).
 
 import sys
 import time
+from typing import Any
 
 from worker.extract.runtime import LocalGemmaRuntime
 
 
-def run_smoke_test(num_calls: int = 100) -> dict[str, float]:
+def run_smoke_test(num_calls: int = 100) -> dict[str, Any]:
     runtime = LocalGemmaRuntime(model_id="gemma-3-27b-it")
 
     sample_utterance = "We absolutely need federal licensing for frontier models before deployment."
@@ -33,21 +34,27 @@ def run_smoke_test(num_calls: int = 100) -> dict[str, float]:
     # Steady state prefill must be close to utterance tokens (~30-50 tokens), NOT utterance + system prompt (>250 tokens)
     assert avg_prefill < 100, f"Prefix reuse failed: average prefill tokens = {avg_prefill} >= 100"
 
-    # Ingest projection for 300-hour corpus (~36,000 utterances, ~85% skipped by gate, ~5,400 extracted):
-    # 5,400 extractions * ~120 generated tokens / 35 tokens/sec = ~18,500 sec = ~5.14 hours
-    tokens_per_sec = 35.0
-    corpus_extractions = 5400
-    avg_gen_tokens = 120
-    projected_hours = (corpus_extractions * avg_gen_tokens) / (tokens_per_sec * 3600.0)
+    tokens_per_sec: float | None = None
+    projected_hours: float | None = None
+
+    if runtime.has_backend():
+        # Measured only when live model backend is attached
+        tokens_per_sec = None
+        projected_hours = None
+        throughput_str = f"{tokens_per_sec:.1f} tokens/sec" if tokens_per_sec is not None else "NOT MEASURED"
+        projection_str = f"{projected_hours:.2f} wall-clock hours" if projected_hours is not None else "NOT MEASURED"
+    else:
+        throughput_str = "NOT MEASURED — no model backend loaded"
+        projection_str = "NOT MEASURED — requires measured throughput"
 
     print("\n" + "=" * 60)
     print("LOCAL MODEL EXTRACTION RUNTIME SMOKE TEST")
     print("=" * 60)
     print(f"Model ID:                        {runtime.model_id} (Q4_K_M)")
     print(f"Calls Tested:                    {num_calls}")
-    print(f"Steady-State Prefill Tokens:     {avg_prefill:.1f} tokens/call (Prefix Reused)")
-    print(f"Inference Throughput:            {tokens_per_sec:.1f} tokens/sec")
-    print(f"Projected 300hr Ingest Time:     {projected_hours:.2f} wall-clock hours")
+    print(f"Steady-State Prefill Tokens:     {avg_prefill:.1f} tokens/call (approx: word-count heuristic, Prefix Reused)")
+    print(f"Inference Throughput:            {throughput_str}")
+    print(f"Projected 300hr Ingest Time:     {projection_str}")
     print("=" * 60)
 
     return {
