@@ -1,14 +1,14 @@
 """Phase 2 Gate tests (Journey J3, N1-N4 breakdown, and Reversal Detection) (U13)."""
 
 from pathlib import Path
+from typing import Any
 
-from golden.loader import load_golden_cases
+from fixtures.behaviour.loader import BehaviourCase, load_behaviour_cases
 from worker.entities import Claim, Proposition, Source, Subject, Utterance
 from worker.extract.dedup import stub_hash_embedding
 from worker.golden.report import (
     VerifiedRuleDetector,
-    evaluate_detector_on_golden,
-    generate_golden_report,
+    evaluate_behaviour_fixtures,
 )
 from worker.storage import Storage, compute_claim_id, compute_proposition_id, compute_utterance_id
 
@@ -131,46 +131,20 @@ def test_phase_2_gate_journey_j3_reversal_detector_on_live_claims(tmp_path: Path
     assert p_id == prop_id
 
 
-def test_phase_2_gate_golden_metrics_and_n1_to_n4_breakdown() -> None:
-    """Evaluates golden corpus against gate targets."""
-    cases = load_golden_cases()
+def test_phase_2_gate_behaviour_fixtures_regression() -> None:
+    """Evaluates behaviour fixtures against binary regression pass."""
+    cases = load_behaviour_cases()
     detector = VerifiedRuleDetector()
-    metrics = evaluate_detector_on_golden(detector, cases)
+    results = evaluate_behaviour_fixtures(detector, cases)
 
-    # Gate Targets:
-    assert metrics.precision is not None and metrics.precision >= 0.95
-    assert metrics.recall >= 0.60
-    assert metrics.misattribution_rate_n9 == 0.0
-    assert metrics.false_exclusion_rate <= 0.10
-    assert metrics.quote_span_resolution_failures == 0
-    assert metrics.n13_false_positive_rate == 0.0
-
-    # N1-N4 Speech-Act Breakdown:
-    n1 = metrics.n1_to_n4_breakdown["N1_sarcasm"]
-    assert n1["correct_excluded"] == n1["total"] == 1
-    assert n1["leak_as_own"] == 0
-
-    n2 = metrics.n1_to_n4_breakdown["N2_reported_speech"]
-    assert n2["correct_excluded"] == n2["total"] == 1
-    assert n2["leak_as_own"] == 0
-
-    n3 = metrics.n1_to_n4_breakdown["N3_steelman"]
-    assert n3["correct_excluded"] == n3["total"] == 1
-    assert n3["leak_as_own"] == 0
-
-    n4 = metrics.n1_to_n4_breakdown["N4_hypothetical"]
-    assert n4["correct_excluded"] == n4["total"] == 1
-    assert n4["leak_as_own"] == 0
-
-    report = generate_golden_report(metrics)
-    assert "Tension PRECISION (primary):  1.000" in report
-    assert "N1_sarcasm             Accuracy: 100.0%" in report
+    assert len(results) == 16
+    assert all(r.passed for r in results)
 
 
-def test_falsification_dropping_sarcasm_guard_leaks_n1_as_own_claim() -> None:
-    """Falsification test: Dropping sarcasm detection causes N1 case to leak as own assertion."""
+def test_falsification_dropping_sarcasm_guard_fails_n1_fixture() -> None:
+    """Falsification test: Dropping sarcasm detection causes N1 behaviour fixture to fail."""
     class BrokenSarcasmDetector(VerifiedRuleDetector):
-        def evaluate_case(self, case):  # type: ignore[no-untyped-def]
+        def evaluate_behaviour_case(self, case: BehaviourCase) -> dict[str, Any]:
             if case.type == "N1":
                 # Leaking sarcasm as subject's own claim
                 return {
@@ -182,12 +156,12 @@ def test_falsification_dropping_sarcasm_guard_leaks_n1_as_own_claim() -> None:
                     "detected_finding_type": "unacknowledged_reversal",
                     "attributed_correctly": True,
                 }
-            return super().evaluate_case(case)
+            return super().evaluate_behaviour_case(case)
 
     broken_detector = BrokenSarcasmDetector()
-    metrics = evaluate_detector_on_golden(broken_detector)
+    cases = load_behaviour_cases()
+    results = evaluate_behaviour_fixtures(broken_detector, cases)
 
-    # N1 accuracy drops to 0 and leak_as_own is 1
-    n1_stat = metrics.n1_to_n4_breakdown["N1_sarcasm"]
-    assert n1_stat["leak_as_own"] == 1
-    assert n1_stat["correct_excluded"] == 0  # Falsification confirmed!
+    n1_results = [r for r in results if r.case_type == "N1"]
+    assert len(n1_results) == 1
+    assert n1_results[0].passed is False  # Falsification confirmed!

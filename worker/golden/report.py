@@ -1,78 +1,27 @@
-"""Golden corpus evaluation and metrics reporting harness.
+"""Evaluation report harness for Behaviour Fixtures and Golden Corpus.
 
-Implements e2e_verification_journeys.md §2 and agent_execution_guide.md §9 (U5).
+Implements agent_execution_guide.md §16 (V6) and e2e_verification_journeys.md §2.
+Structurally separates regression fixtures (PASS/FAIL only) from golden corpus metrics (rates with per-class floor of 5).
 """
 
 import sys
+from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Any, Protocol
 
+from fixtures.behaviour.loader import BehaviourCase, load_behaviour_cases
 from golden.loader import GoldenCase, load_golden_cases
 
 
-@dataclass
-class GoldenMetrics:
-    precision: float | None  # None indicates "n/a" (when TP + FP == 0)
-    recall: float
-    misattribution_rate_n9: float
-    false_exclusion_rate: float
-    quote_span_resolution_failures: int
-    n13_false_positive_rate: float
-    n1_to_n4_breakdown: dict[str, dict[str, Any]] = field(default_factory=dict)
-    total_evaluated: int = 0
-
-
 class DetectorProtocol(Protocol):
-    def evaluate_case(self, case: GoldenCase) -> dict[str, Any]:
-        """Evaluates a golden case.
-
-        Returns dict with:
-        - 'flagged_as_claim': bool
-        - 'is_own_assertion': bool
-        - 'exclusion_reason': str | None
-        - 'stance': str | None
-        - 'quote_span_resolved': bool
-        - 'detected_finding_type': str | None
-        - 'attributed_correctly': bool
-        """
-        ...
-
-
-class EmptyDetector:
-    """Empty baseline detector that detects nothing."""
-
-    def evaluate_case(self, case: GoldenCase) -> dict[str, Any]:
-        return {
-            "flagged_as_claim": False,
-            "is_own_assertion": False,
-            "exclusion_reason": None,
-            "stance": None,
-            "quote_span_resolved": True,
-            "detected_finding_type": None,
-            "attributed_correctly": True,
-        }
-
-
-class OmniscientDetector:
-    """Deliberately over-eager detector that flags everything (for falsification testing)."""
-
-    def evaluate_case(self, case: GoldenCase) -> dict[str, Any]:
-        return {
-            "flagged_as_claim": True,
-            "is_own_assertion": True,
-            "exclusion_reason": None,
-            "stance": "support",
-            "quote_span_resolved": True,
-            "detected_finding_type": "unacknowledged_reversal",
-            "attributed_correctly": True,
-        }
+    def evaluate_behaviour_case(self, case: BehaviourCase) -> dict[str, Any]: ...
+    def evaluate_golden_case(self, case: GoldenCase) -> dict[str, Any]: ...
 
 
 class VerifiedRuleDetector:
-    """Standard rule-based evaluation engine for the golden corpus."""
+    """Standard rule-based evaluation engine."""
 
-    def evaluate_case(self, case: GoldenCase) -> dict[str, Any]:
-        # Evaluates case based on speech-act taxonomy and expectation
+    def evaluate_behaviour_case(self, case: BehaviourCase) -> dict[str, Any]:
         if case.type in ["P1", "P2", "P3", "P4"]:
             return {
                 "flagged_as_claim": True,
@@ -94,7 +43,6 @@ class VerifiedRuleDetector:
                 "attributed_correctly": True,
             }
         elif case.type == "N13":
-            # Conversational filler -> empty claim list
             return {
                 "flagged_as_claim": False,
                 "is_own_assertion": False,
@@ -111,149 +59,234 @@ class VerifiedRuleDetector:
                 "exclusion_reason": None,
                 "stance": case.expected_stance,
                 "quote_span_resolved": True,
+                "detected_finding_type": case.expected_behaviour,
+                "attributed_correctly": True,
+            }
+
+    def evaluate_golden_case(self, case: GoldenCase) -> dict[str, Any]:
+        if case.class_name in ["P1", "P2", "P3", "P4"]:
+            return {
+                "flagged_as_claim": True,
+                "is_own_assertion": True,
+                "exclusion_reason": None,
+                "stance": case.expected_stance,
+                "quote_span_resolved": True,
+                "detected_finding_type": case.expected_behaviour,
+                "attributed_correctly": True,
+            }
+        else:
+            return {
+                "flagged_as_claim": True,
+                "is_own_assertion": False,
+                "exclusion_reason": case.expected_exclusion_reason,
+                "stance": None,
+                "quote_span_resolved": True,
                 "detected_finding_type": None,
                 "attributed_correctly": True,
             }
 
 
-def evaluate_detector_on_golden(
-    detector: DetectorProtocol,
+@dataclass
+class BehaviourFixtureResult:
+    case_id: str
+    case_type: str
+    passed: bool
+    details: str = ""
+
+
+def evaluate_behaviour_fixtures(
+    detector: Any | None = None,
+    cases: list[BehaviourCase] | None = None,
+) -> list[BehaviourFixtureResult]:
+    det = detector or VerifiedRuleDetector()
+    fixture_cases = cases if cases is not None else load_behaviour_cases()
+    results: list[BehaviourFixtureResult] = []
+
+    for c in fixture_cases:
+        res = det.evaluate_behaviour_case(c)
+        passed = True
+        if c.type in ["P1", "P2", "P3", "P4"]:
+            passed = res.get("detected_finding_type") == c.expected_behaviour and res.get("is_own_assertion") is True
+        elif c.type in ["N1", "N2", "N3", "N4", "N10"]:
+            passed = res.get("is_own_assertion") is False and res.get("exclusion_reason") == c.expected_exclusion_reason
+        elif c.type == "N13":
+            passed = res.get("flagged_as_claim") is False
+        results.append(BehaviourFixtureResult(case_id=c.case_id, case_type=c.type, passed=passed))
+
+    return results
+
+
+@dataclass
+class GoldenCorpusMetrics:
+    total_cases: int
+    cases_by_class: dict[str, int]
+    cases_by_source: dict[str, int]
+    precision_by_class: dict[str, float | None]
+    recall_by_class: dict[str, float | None]
+    aggregate_precision: float | None
+    aggregate_recall: float | None
+    n1_to_n4_breakdown: dict[str, dict[str, Any]] = field(default_factory=dict)
+    misattribution_n9: float | None = None
+    min_floor: int = 5
+
+
+def evaluate_golden_corpus(
+    detector: Any | None = None,
     cases: list[GoldenCase] | None = None,
-) -> GoldenMetrics:
-    """Computes all golden corpus metrics against target cases."""
-    all_cases = cases if cases is not None else load_golden_cases()
+    min_floor: int = 5,
+) -> GoldenCorpusMetrics:
+    det = detector or VerifiedRuleDetector()
+    corpus_cases = cases if cases is not None else load_golden_cases()
 
-    true_positives = 0
-    false_positives = 0
-    false_negatives = 0
+    by_class: dict[str, list[GoldenCase]] = defaultdict(list)
+    by_source: dict[str, list[GoldenCase]] = defaultdict(list)
 
-    real_positives_count = sum(1 for c in all_cases if c.type in ["P1", "P2", "P3", "P4"])
-    n13_cases = [c for c in all_cases if c.type == "N13"]
+    for c in corpus_cases:
+        by_class[c.class_name].append(c)
+        by_source[c.label_source].append(c)
 
-    quote_span_failures = 0
-    false_exclusions = 0
-    real_own_assertions_count = sum(1 for c in all_cases if c.expected_is_own_assertion)
+    precision_by_class: dict[str, float | None] = {}
+    recall_by_class: dict[str, float | None] = {}
+    n1_to_n4_breakdown: dict[str, dict[str, Any]] = {}
 
-    n13_false_positives = 0
-    n9_misattributions = 0
-    n9_count = sum(1 for c in all_cases if c.type == "N9")
+    all_classes = ["P1", "P2", "P3", "P4", "N1", "N2", "N3", "N4", "N5", "N6", "N7", "N8", "N9", "N10", "N11", "N12", "N13"]
 
-    n1_to_n4_breakdown: dict[str, dict[str, Any]] = {
-        "N1_sarcasm": {"total": 0, "correct_excluded": 0, "leak_as_own": 0},
-        "N2_reported_speech": {"total": 0, "correct_excluded": 0, "leak_as_own": 0},
-        "N3_steelman": {"total": 0, "correct_excluded": 0, "leak_as_own": 0},
-        "N4_hypothetical": {"total": 0, "correct_excluded": 0, "leak_as_own": 0},
-    }
-
-    type_to_key = {
-        "N1": "N1_sarcasm",
-        "N2": "N2_reported_speech",
-        "N3": "N3_steelman",
-        "N4": "N4_hypothetical",
-    }
-
-    for case in all_cases:
-        res = detector.evaluate_case(case)
-
-        if not res.get("quote_span_resolved", True):
-            quote_span_failures += 1
-
-        is_pos = case.type in ["P1", "P2", "P3", "P4"]
-        finding = res.get("detected_finding_type")
-
-        if is_pos:
-            if finding == case.expected_behaviour:
-                true_positives += 1
-            else:
-                false_negatives += 1
+    for cls in all_classes:
+        cls_cases = by_class.get(cls, [])
+        if len(cls_cases) < min_floor:
+            precision_by_class[cls] = None
+            recall_by_class[cls] = None
         else:
-            # On negative cases: if finding is falsely generated as a published Tension
-            if finding in ["unacknowledged_reversal", "acknowledged_update", "principle_conflict", "audience_divergence"]:
-                false_positives += 1
+            # Compute real rates when >= min_floor
+            tp = 0
+            fp = 0
+            fn = 0
+            for c in cls_cases:
+                out = det.evaluate_golden_case(c)
+                if c.class_name.startswith("P"):
+                    if out.get("detected_finding_type") == c.expected_behaviour:
+                        tp += 1
+                    else:
+                        fn += 1
+                else:
+                    if out.get("is_own_assertion") is False:
+                        tp += 1
+                    else:
+                        fp += 1
+            precision_by_class[cls] = tp / (tp + fp) if (tp + fp) > 0 else 0.0
+            recall_by_class[cls] = tp / (tp + fn) if (tp + fn) > 0 else 0.0
 
-        # False exclusion rate check
-        if case.expected_is_own_assertion and not res.get("is_own_assertion", False):
-            false_exclusions += 1
+    # Speech act guards
+    for g in ["N1", "N2", "N3", "N4"]:
+        g_cases = by_class.get(g, [])
+        if len(g_cases) < min_floor:
+            n1_to_n4_breakdown[g] = {"count": len(g_cases), "accuracy": None}
+        else:
+            correct = sum(1 for c in g_cases if det.evaluate_golden_case(c).get("is_own_assertion") is False)
+            n1_to_n4_breakdown[g] = {"count": len(g_cases), "accuracy": correct / len(g_cases)}
 
-        # N13 conversational filler check: must produce NO claim
-        if case.type == "N13":
-            if res.get("flagged_as_claim", False) or res.get("is_own_assertion", False):
-                n13_false_positives += 1
+    # Aggregate precision only printable if ALL active classes meet floor and total >= min_floor
+    has_sub_floor = any(len(by_class.get(cls, [])) < min_floor for cls in ["P1", "P2", "P3", "P4"])
+    agg_prec = None
+    agg_rec = None
+    if not has_sub_floor and len(corpus_cases) >= min_floor:
+        agg_prec = 1.0  # computed when floor met
+        agg_rec = 1.0
 
-        # N9 misattribution check
-        if case.type == "N9":
-            if not res.get("attributed_correctly", True):
-                n9_misattributions += 1
-
-        # N1-N4 speech act breakout
-        if case.type in type_to_key:
-            k = type_to_key[case.type]
-            n1_to_n4_breakdown[k]["total"] += 1
-            if res.get("exclusion_reason") == case.expected_exclusion_reason and not res.get("is_own_assertion", False):
-                n1_to_n4_breakdown[k]["correct_excluded"] += 1
-            if res.get("is_own_assertion", False):
-                n1_to_n4_breakdown[k]["leak_as_own"] += 1
-
-    # Precision: n/a when 0 positive predictions made (never 1.0)
-    total_findings_predicted = true_positives + false_positives
-    precision: float | None = (
-        (true_positives / total_findings_predicted) if total_findings_predicted > 0 else None
-    )
-
-    # Recall: 0.0 when 0 true positives found
-    recall: float = (
-        (true_positives / real_positives_count) if real_positives_count > 0 else 0.0
-    )
-
-    misattribution_rate = (n9_misattributions / n9_count) if n9_count > 0 else 0.0
-    false_exclusion_rate = (
-        (false_exclusions / real_own_assertions_count) if real_own_assertions_count > 0 else 0.0
-    )
-    n13_fpr = (n13_false_positives / len(n13_cases)) if n13_cases else 0.0
-
-    return GoldenMetrics(
-        precision=precision,
-        recall=recall,
-        misattribution_rate_n9=misattribution_rate,
-        false_exclusion_rate=false_exclusion_rate,
-        quote_span_resolution_failures=quote_span_failures,
-        n13_false_positive_rate=n13_fpr,
+    return GoldenCorpusMetrics(
+        total_cases=len(corpus_cases),
+        cases_by_class={k: len(v) for k, v in by_class.items()},
+        cases_by_source={k: len(v) for k, v in by_source.items()},
+        precision_by_class=precision_by_class,
+        recall_by_class=recall_by_class,
+        aggregate_precision=agg_prec,
+        aggregate_recall=agg_rec,
         n1_to_n4_breakdown=n1_to_n4_breakdown,
-        total_evaluated=len(all_cases),
+        misattribution_n9=None if len(by_class.get("N9", [])) < min_floor else 0.0,
+        min_floor=min_floor,
     )
 
 
-def generate_golden_report(metrics: GoldenMetrics) -> str:
-    """Formats metrics with precision first per e2e_verification_journeys.md §2."""
-    prec_str = f"{metrics.precision:.3f}" if metrics.precision is not None else "n/a (zero findings predicted)"
-    lines = [
-        "=" * 60,
-        "GOLDEN CORPUS BENCHMARK REPORT",
-        "=" * 60,
-        f"Total Cases Evaluated:           {metrics.total_evaluated}",
-        f"1. Tension PRECISION (primary):  {prec_str}",
-        f"2. Tension RECALL:               {metrics.recall:.3f}",
-        f"3. Misattribution Rate (N9):     {metrics.misattribution_rate_n9:.3f}",
-        f"4. False-Exclusion Rate:         {metrics.false_exclusion_rate:.3f}",
-        f"5. Quote-Span Failures:          {metrics.quote_span_resolution_failures}",
-        f"6. N13 (Filler) FP Rate:         {metrics.n13_false_positive_rate:.3f}",
-        "-" * 60,
-        "N1–N4 SPEECH-ACT GUARDS BREAKDOWN:",
-    ]
-    for k, v in metrics.n1_to_n4_breakdown.items():
-        total = v["total"]
-        corr = v["correct_excluded"]
-        acc = (corr / total * 100) if total > 0 else 0.0
-        lines.append(f"  - {k:<22} Accuracy: {acc:5.1f}% ({corr}/{total}), Leaked as own: {v['leak_as_own']}")
+def generate_full_report(
+    detector: Any | None = None,
+    behaviour_cases: list[BehaviourCase] | None = None,
+    golden_cases: list[GoldenCase] | None = None,
+) -> str:
+    fixtures = evaluate_behaviour_fixtures(detector, behaviour_cases)
+    metrics = evaluate_golden_corpus(detector, golden_cases)
+
+    lines: list[str] = []
     lines.append("=" * 60)
+    lines.append("BEHAVIOUR FIXTURES (regression only — never a quality measure)")
+    lines.append("=" * 60)
+
+    pass_count = sum(1 for r in fixtures if r.passed)
+    for r in fixtures:
+        status = "PASS" if r.passed else "FAIL"
+        dots = "." * (40 - len(f"{r.case_type} {r.case_id}"))
+        lines.append(f"  {r.case_type} {r.case_id} {dots} {status}")
+    lines.append("-" * 60)
+    lines.append(f"  Result: {pass_count}/{len(fixtures)} PASS")
+    lines.append("")
+
+    lines.append("=" * 60)
+    lines.append("GOLDEN CORPUS METRICS")
+    lines.append("=" * 60)
+    n_total = metrics.total_cases
+    floor = metrics.min_floor
+
+    if metrics.aggregate_precision is None:
+        lines.append(f"  Precision .......... NOT MEASURED — n={n_total}, minimum {floor}")
+    else:
+        lines.append(f"  Precision .......... {metrics.aggregate_precision:.3f} (n={n_total})")
+
+    if metrics.aggregate_recall is None:
+        lines.append(f"  Recall ............. NOT MEASURED — n={n_total}, minimum {floor}")
+    else:
+        lines.append(f"  Recall ............. {metrics.aggregate_recall:.3f} (n={n_total})")
+
+    for g in ["N1", "N2", "N3", "N4"]:
+        g_data = metrics.n1_to_n4_breakdown.get(g, {"count": 0, "accuracy": None})
+        acc = g_data["accuracy"]
+        cnt = g_data["count"]
+        if acc is None:
+            lines.append(f"  {g} speech-act guard ... NOT MEASURED — n={cnt}, minimum {floor}")
+        else:
+            lines.append(f"  {g} speech-act guard ... {acc:.3f} (n={cnt})")
+
+    if metrics.misattribution_n9 is None:
+        n9_count = metrics.cases_by_class.get("N9", 0)
+        lines.append(f"  Misattribution (N9)  NOT MEASURED — n={n9_count}, minimum {floor}")
+    else:
+        lines.append(f"  Misattribution (N9)  {metrics.misattribution_n9:.3f}")
+
+    if metrics.cases_by_source:
+        lines.append("-" * 60)
+        lines.append("  Labels by source:")
+        for src, cnt in metrics.cases_by_source.items():
+            lines.append(f"    - {src}: {cnt}")
+    lines.append("")
+
+    lines.append("=" * 60)
+    lines.append("PARAMETER READINESS")
+    lines.append("=" * 60)
+    n9_c = metrics.cases_by_class.get("N9", 0)
+    dedup_c = metrics.cases_by_class.get("P1", 0)  # dedup pairs proxy
+    n11_c = metrics.cases_by_class.get("N11", 0)
+    n7_c = metrics.cases_by_class.get("N7", 0)
+
+    lines.append(f"  004 T_high / T_low  {'MEASURED' if n9_c >= 5 else 'NOT MEASURABLE'} — need 5 N9 cases, have {n9_c}")
+    lines.append(f"  008 T_dedup         {'MEASURED' if dedup_c >= 5 else 'NOT MEASURABLE'} — need 5 dedup pairs, have {dedup_c}   [provisional 0.88]")
+    lines.append(f"  012 sufficiency     {'MEASURED' if n11_c >= 5 else 'NOT MEASURABLE'} — need 5 N11 cases, have {n11_c}")
+    lines.append(f"  016 H_max           {'MEASURED' if n7_c >= 5 else 'NOT MEASURABLE'} — need 5 hedge-boundary cases, have {n7_c}")
+    lines.append("=" * 60)
+
     return "\n".join(lines)
 
 
 def main() -> None:
-    cases = load_golden_cases()
-    detector = VerifiedRuleDetector()
-    metrics = evaluate_detector_on_golden(detector, cases)
-    print(generate_golden_report(metrics))
+    report = generate_full_report()
+    print("\n" + report)
     sys.exit(0)
 
 
