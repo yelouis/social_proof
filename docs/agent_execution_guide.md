@@ -73,7 +73,7 @@ Measured on August 17, 2026. Re-run via §2 before trusting.
 |---|---|---|
 | `ruff check` | **PASS** | Nothing about behaviour |
 | `mypy --strict` | **PASS** — 46 files | Nothing about behaviour |
-| `pytest tests/ -q` | **PASS** — 70 passed, ~1.2s | **~1.2s means no model, no audio, no network.** Unit tests over mocks. |
+| `pytest tests/ -q` | **PASS** — 72 passed, ~18.1s | Real `nomic-embed-text-v1.5` embeddings running in tests. |
 | `worker.integrity --all` | **PASS** — 8 checks | Real logic, synthetic data |
 | `worker.extract.smoke` | **PASS** — gated on backend | Correctly prints `NOT MEASURED` while no model backend is loaded. |
 | `worker.golden.report` | **PASS** — structural split active | Behaviour fixtures 16/16 PASS; Golden metrics correctly report `NOT MEASURED — n=0, minimum 5`. |
@@ -117,7 +117,7 @@ Traps 1–16 are in git history at `217b383:docs/agent_execution_guide.md` §1 �
 | 1 | **V0** | Stop reporting fabricated throughput | none | **delivered** | The runtime prints a hardcoded constant as a measurement. Fix the instrument before taking any reading. |
 | 2 | **V1** | Stub registry + CI guard | none | **delivered** | The structural fix. Its registry becomes the V2–V5 checklist: each later item flips one entry from `stubbed` to `declared`, so the queue verifies itself. |
 | 3 | **V6** | Split behaviour fixtures from the golden corpus | none | **delivered** | **Moved ahead of V2–V5 by the Issue 018 selection.** Every measurement V2–V5 report flows through this harness; splitting afterwards means re-doing their numbers. Also carries the metric floor, since that is the same file and the same concern. |
-| 4 | **V2** | Real embeddings — `nomic-embed-text-v1.5` | none | open | First real external: cheapest to wire, and the only stub that is *silently wrong* rather than merely absent. |
+| 4 | **V2** | Real embeddings — `nomic-embed-text-v1.5` | none | **delivered** | First real external: cheapest to wire, and the only stub that is *silently wrong* rather than merely absent. |
 | 5 | **V3** | Real transcription — `faster-whisper` | none | open | Behind the existing `TranscriptionEngine` Protocol. First item that produces real corpus material. |
 | 6 | **V4** | Real diarization — `pyannote.audio` | none | open | **Needs a gated Hugging Face token — raise it with the user via LOOP 3 before writing code.** |
 | 7 | **V5** | Real extraction runtime — Gemma 3 | none | open | Largest download, slowest loop, most to measure. |

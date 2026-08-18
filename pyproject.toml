@@ -14,6 +14,8 @@ dependencies = [
     "pyarrow>=14.0.0",
     "numpy>=1.26.0",
     "yt-dlp>=2024.0.0",
+    "sentence-transformers>=3.0.0",
+    "einops>=0.8.0",
 ]
 
 [project.optional-dependencies]
@@ -43,7 +45,7 @@ no_implicit_optional = true
 show_error_codes = true
 
 [[tool.mypy.overrides]]
-module = ["pyarrow", "pyarrow.*", "yt_dlp", "yt_dlp.*"]
+module = ["pyarrow", "pyarrow.*", "yt_dlp", "yt_dlp.*", "sentence_transformers", "sentence_transformers.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

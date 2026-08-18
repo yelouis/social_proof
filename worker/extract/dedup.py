@@ -11,9 +11,10 @@ information until V2.
 """
 
 import hashlib
-from typing import NamedTuple
+from typing import Any, NamedTuple
 
 import numpy as np
+from sentence_transformers import SentenceTransformer
 
 from worker.entities import Proposition
 from worker.storage import Storage, compute_proposition_id
@@ -24,6 +25,47 @@ class DedupDecision(NamedTuple):
     is_new: bool
     similarity: float
     canonical_text: str
+
+
+class Embedder:
+    """Production embedding model wrapper for nomic-embed-text-v1.5.
+
+    Implements task prefix enforcement (Trap 7) and strict 768-dim output.
+    """
+
+    def __init__(
+        self,
+        model_name: str = "nomic-ai/nomic-embed-text-v1.5",
+        expected_dim: int = 768,
+        model_instance: Any | None = None,
+    ) -> None:
+        self.model_name = model_name
+        self.expected_dim = expected_dim
+        if model_instance is not None:
+            self.model = model_instance
+        else:
+            self.model = SentenceTransformer(model_name, trust_remote_code=True)
+
+        dim_func = getattr(self.model, "get_embedding_dimension", None) or getattr(
+            self.model, "get_sentence_embedding_dimension", None
+        )
+        actual_dim = dim_func() if dim_func else 768
+        if actual_dim != expected_dim:
+            raise ValueError(
+                f"Embedding dimension mismatch: expected {expected_dim}, got {actual_dim}"
+            )
+
+    def embed_document(self, text: str) -> list[float]:
+        """Embeds document/proposition with 'search_document: ' prefix."""
+        return self._embed(f"search_document: {text}")
+
+    def embed_query(self, text: str) -> list[float]:
+        """Embeds search query with 'search_query: ' prefix."""
+        return self._embed(f"search_query: {text}")
+
+    def _embed(self, prefixed_text: str) -> list[float]:
+        vec = self.model.encode(prefixed_text, normalize_embeddings=True)
+        return [float(x) for x in vec.tolist()]
 
 
 def stub_hash_embedding(text: str, dim: int = 768) -> list[float]:
@@ -56,8 +98,14 @@ class PropositionCanonicalizer:
     Parameter 002: T_dedup (default 0.88).
     """
 
-    def __init__(self, storage: Storage, t_dedup: float = 0.88) -> None:
+    def __init__(
+        self,
+        storage: Storage,
+        embedder: Embedder | None = None,
+        t_dedup: float = 0.88,
+    ) -> None:
         self.storage = storage
+        self.embedder = embedder
         self.t_dedup = t_dedup
 
     def canonicalise_and_dedup(
@@ -72,7 +120,12 @@ class PropositionCanonicalizer:
         Otherwise: creates a new proposition.
         """
         canonical_text = raw_proposition_text.strip().lower()
-        emb = embedding if embedding is not None else stub_hash_embedding(canonical_text)
+        if embedding is not None:
+            emb = embedding
+        elif self.embedder is not None:
+            emb = self.embedder.embed_document(canonical_text)
+        else:
+            emb = stub_hash_embedding(canonical_text)
 
         # Query nearest existing propositions
         nearest = self.storage.query_nearest_propositions(emb, limit=1)
@@ -110,9 +163,10 @@ class PropositionCanonicalizer:
         self.storage.insert_proposition(prop)
         self.storage.insert_proposition_embedding(prop_id, emb)
 
+        best_sim = nearest[0][1] if nearest else 0.0
         return DedupDecision(
             proposition_id=prop_id,
             is_new=True,
-            similarity=1.0,
+            similarity=best_sim,
             canonical_text=canonical_text,
         )
