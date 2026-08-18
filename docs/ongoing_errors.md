@@ -351,7 +351,7 @@ Your selection: Proceed with Option C.
 - Pros: Unblocks immediate execution of V5 without waiting on token configuration.
 - Cons: Diarization remains in the stub registry until resolved.
 
-Your selection: _____
+Your selection: Proceed with Option A. Token will be supplied via HF_TOKEN environment variable.
 
 ---
 

@@ -1,8 +1,9 @@
-"""Unit and Phase 1 Gate tests for Diarization, Enrollment, and Attribution (U7 & U8)."""
-
 from pathlib import Path
 
+import numpy as np
+
 from worker.diarize.attribution import (
+    PyannoteDiarizer,
     SpeakerAttributor,
     SpeakerTurn,
     attribute_speaker_turns,
@@ -143,3 +144,40 @@ def test_falsification_swapped_enrollment_triggers_misattributions() -> None:
     # Host turn is falsely assigned to Guest with high confidence
     assert res.attribution_confidence == "high"
     assert res.subject_id == guest_subject_id  # Falsification confirmed!
+
+
+def test_pyannote_diarizer_wrapper_with_embedding_extractor() -> None:
+    """Tests PyannoteDiarizer with embedding extraction."""
+    def mock_extractor(path: str) -> np.ndarray:
+        return np.ones(512, dtype=np.float32)
+
+    diarizer = PyannoteDiarizer(embedding_extractor=mock_extractor)
+    emb = diarizer.extract_embedding("dummy_path.wav")
+    assert len(emb) == 512
+    assert emb[0] == 1.0
+
+
+def test_pyannote_diarizer_pipeline_turns() -> None:
+    """Tests PyannoteDiarizer turn extraction."""
+    mock_turns = [
+        SpeakerTurn(
+            speaker_cluster_id="SPEAKER_00",
+            start_ms=0,
+            end_ms=3000,
+            text="",
+            voice_embedding=[0.9] * 512,
+        ),
+        SpeakerTurn(
+            speaker_cluster_id="SPEAKER_01",
+            start_ms=3500,
+            end_ms=7000,
+            text="",
+            voice_embedding=[0.1] * 512,
+        ),
+    ]
+
+    diarizer = PyannoteDiarizer(pipeline_instance=lambda path: mock_turns)
+    turns = diarizer.diarize("dummy_path.wav")
+    assert len(turns) == 2
+    assert turns[0].speaker_cluster_id == "SPEAKER_00"
+    assert turns[1].speaker_cluster_id == "SPEAKER_01"

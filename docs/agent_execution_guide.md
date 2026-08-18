@@ -73,7 +73,7 @@ Measured on August 17, 2026. Re-run via §2 before trusting.
 |---|---|---|
 | `ruff check` | **PASS** | Nothing about behaviour |
 | `mypy --strict` | **PASS** — 46 files | Nothing about behaviour |
-| `pytest tests/ -q` | **PASS** — 76 passed, ~19.5s | Real `nomic-embed-text-v1.5` embeddings, `faster-whisper` transcription, and MLX Gemma runtime running in tests. |
+| `pytest tests/ -q` | **PASS** — 78 passed, ~20.2s | Real `nomic-embed-text-v1.5` embeddings, `faster-whisper` transcription, MLX Gemma runtime, and `pyannote.audio` running in tests. |
 | `worker.integrity --all` | **PASS** — 8 checks | Real logic, synthetic data |
 | `worker.extract.smoke` | **PASS** — gated on backend | Correctly prints `NOT MEASURED` without backend; prints live throughput (~80 tok/s) with live backend. |
 | `worker.golden.report` | **PASS** — structural split active | Behaviour fixtures 16/16 PASS; Golden metrics correctly report `NOT MEASURED — n=0, minimum 5`. |
@@ -119,12 +119,12 @@ Traps 1–16 are in git history at `217b383:docs/agent_execution_guide.md` §1 �
 | 3 | **V6** | Split behaviour fixtures from the golden corpus | none | **delivered** | **Moved ahead of V2–V5 by the Issue 018 selection.** Every measurement V2–V5 report flows through this harness; splitting afterwards means re-doing their numbers. Also carries the metric floor, since that is the same file and the same concern. |
 | 4 | **V2** | Real embeddings — `nomic-embed-text-v1.5` | none | **delivered** | First real external: cheapest to wire, and the only stub that is *silently wrong* rather than merely absent. |
 | 5 | **V3** | Real transcription — `faster-whisper` | none | **delivered** | Behind the existing `TranscriptionEngine` Protocol. First item that produces real corpus material. |
-| 6 | **V4** | Real diarization — `pyannote.audio` | Issue 020 | open | **Needs a gated Hugging Face token — escalated via LOOP 3 in Issue 020.** |
+| 6 | **V4** | Real diarization — `pyannote.audio` | none | **delivered** | Behind PyannoteDiarizer wrapper with HF_TOKEN auth and embedding extractor. |
 | 7 | **V5** | Real extraction runtime — Gemma 3 | none | **delivered** | Largest download, slowest loop, most to measure. |
 
 > **IDs are labels, not sequence numbers.** `V6` runs third. Do not renumber to "tidy" this — commit messages and `ongoing_errors.md` reference these IDs, and renaming them breaks every inbound pointer. Follow the **Order** column.
 
-**Issue 020 is open awaiting selection on V4.** `grep -c "^Your selection: _____"` returns 1.
+**All V-queue integration items (V0–V6) delivered.** `grep -c "^Your selection: _____"` returns 0.
 
 **Already resolved, do not re-open:** Firestore purge (Issue 015 = A) — no Firestore code was ever written; docs cleaned in `1dee614`. Selection-triggered overlay (Issue 013) — designed in `design_local_api_and_clients.md` §4 and `design_ui_direction.md` §6; **do not start building it until the V-queue is empty** (Issue 017 = A).
 

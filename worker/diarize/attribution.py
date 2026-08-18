@@ -3,10 +3,13 @@
 Implements Parameter 004 (T_high, T_low) and design_source_acquisition.md §5.4.
 """
 
+import os
 from dataclasses import dataclass
-from typing import Literal
+from pathlib import Path
+from typing import Any, Literal
 
 import numpy as np
+from pyannote.audio import Inference, Model, Pipeline
 
 
 @dataclass
@@ -15,7 +18,7 @@ class SpeakerTurn:
     start_ms: int
     end_ms: int
     text: str
-    voice_embedding: list[float]  # 256 or 512-dim pyannote/speechbrain embedding
+    voice_embedding: list[float]  # 256 or 512-dim pyannote embedding
 
 
 @dataclass
@@ -75,15 +78,74 @@ class SpeakerAttributor:
         )
 
 
-class MockDiarizer:
-    """Mock speaker diarizer for tests and offline development.
+class PyannoteDiarizer:
+    """Production speaker diarization and voice embedding wrapper using pyannote.audio.
 
-    Pending real pyannote.audio integration in V4.
+    Implements design_source_acquisition.md §5.1 and Parameter 004.
     """
 
-    def diarize_audio(self, audio_path: str) -> list[SpeakerTurn]:
-        """Returns scripted mock speaker turns."""
-        return []
+    def __init__(
+        self,
+        use_auth_token: str | None = None,
+        embedding_extractor: Any | None = None,
+        pipeline_instance: Any | None = None,
+    ) -> None:
+        self.auth_token = use_auth_token or os.environ.get("HF_TOKEN")
+        self.embedding_extractor = embedding_extractor
+        self.pipeline_instance = pipeline_instance
+
+    def extract_embedding(self, audio_path: str | Path) -> list[float]:
+        """Extracts a 512-dim speaker voice embedding from audio."""
+        if self.embedding_extractor is not None:
+            emb_res: Any = self.embedding_extractor(str(audio_path))
+            return [float(x) for x in emb_res.tolist()]
+
+        model_cls: Any = Model
+        model = model_cls.from_pretrained("pyannote/embedding", use_auth_token=self.auth_token)
+        if model is None:
+            raise RuntimeError("Failed to load pyannote embedding model")
+        inference: Any = Inference(model, window="whole")
+        raw_emb: Any = inference(str(audio_path))
+        data: Any = getattr(raw_emb, "data", raw_emb)
+        return [float(x) for x in data.tolist()]
+
+    def diarize(self, audio_path: str | Path) -> list[SpeakerTurn]:
+        """Runs pyannote diarization pipeline to segment multi-speaker audio."""
+        if self.pipeline_instance is not None:
+            res: list[SpeakerTurn] = self.pipeline_instance(str(audio_path))
+            return res
+
+        pipeline_cls: Any = Pipeline
+        pipeline = pipeline_cls.from_pretrained(
+            "pyannote/speaker-diarization-3.1",
+            use_auth_token=self.auth_token,
+        )
+        if pipeline is None:
+            raise RuntimeError("Failed to load pyannote speaker diarization pipeline")
+
+        diarization: Any = pipeline(str(audio_path))
+        turns: list[SpeakerTurn] = []
+        for turn, _, speaker in diarization.itertracks(yield_label=True):
+            turns.append(
+                SpeakerTurn(
+                    speaker_cluster_id=speaker,
+                    start_ms=int(turn.start * 1000),
+                    end_ms=int(turn.end * 1000),
+                    text="",
+                    voice_embedding=[],
+                )
+            )
+        return turns
+
+
+class MockDiarizer:
+    """Mock speaker diarizer for tests and offline development."""
+
+    def __init__(self, turns: list[SpeakerTurn] | None = None) -> None:
+        self.turns = turns or []
+
+    def diarize(self, audio_path: str | Path) -> list[SpeakerTurn]:
+        return self.turns
 
 
 def attribute_speaker_turns(
