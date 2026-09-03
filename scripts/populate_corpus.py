@@ -11,6 +11,7 @@ from worker.adapters.podcast import PodcastRSSAdapter
 from worker.diarize.attribution import SpeakerAttributor
 from worker.diarize.enrollment import VoiceEnrollmentStore, extract_voice_embedding
 from worker.entities import Subject
+from worker.extract.dedup import Embedder
 from worker.ingest import IngestionEngine
 from worker.storage import Storage
 from worker.transcribe.engine import AudioSegment
@@ -20,7 +21,8 @@ def populate_corpus() -> None:
     store = Storage("social_proof.duckdb", artifact_dir="artifacts")
     enroll_store = VoiceEnrollmentStore()
     attributor = SpeakerAttributor(t_high=0.70, t_low=0.50)
-    engine = IngestionEngine(storage=store, enrollment_store=enroll_store, attributor=attributor)
+    embedder = Embedder()
+    engine = IngestionEngine(storage=store, enrollment_store=enroll_store, attributor=attributor, embedder=embedder)
     adapter = PodcastRSSAdapter()
 
     # 1. Enroll the four All-In hosts

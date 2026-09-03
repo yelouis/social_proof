@@ -150,6 +150,9 @@ class Storage:
     def artifact_store(self) -> ArtifactStore:
         return self.artifacts
 
+    def close(self) -> None:
+        self.con.close()
+
     def _init_schema(self) -> None:
         # Load VSS extension for vector search
         self.con.execute("INSTALL vss; LOAD vss;")
@@ -260,6 +263,17 @@ class Storage:
                 proposition_ids VARCHAR[],
                 global_topic_id VARCHAR
             );
+
+            CREATE TABLE IF NOT EXISTS topic_resolutions (
+                resolution_key VARCHAR PRIMARY KEY,
+                subject_id VARCHAR,
+                normalized_query VARCHAR,
+                embedding_model VARCHAR,
+                cluster_version VARCHAR,
+                proposition_ids VARCHAR[],
+                resolved_at VARCHAR
+            );
+            CREATE INDEX IF NOT EXISTS idx_topic_resolutions_lookup ON topic_resolutions(subject_id, normalized_query);
 
             CREATE TABLE IF NOT EXISTS tensions (
                 tension_id VARCHAR PRIMARY KEY,
@@ -701,6 +715,68 @@ class Storage:
                 t.global_topic_id,
             ],
         )
+
+    def get_topic(self, topic_id: str) -> Topic | None:
+        res = self.con.execute("SELECT * FROM topics WHERE topic_id = ?", [topic_id]).fetchone()
+        if not res:
+            return None
+        return Topic(
+            topic_id=res[0],
+            subject_id=res[1],
+            label=res[2],
+            proposition_ids=res[3] if res[3] is not None else [],
+            global_topic_id=res[4],
+        )
+
+    def get_topics_for_subject(self, subject_id: str) -> list[Topic]:
+        rows = self.con.execute("SELECT * FROM topics WHERE subject_id = ?", [subject_id]).fetchall()
+        return [
+            Topic(
+                topic_id=r[0],
+                subject_id=r[1],
+                label=r[2],
+                proposition_ids=r[3] if r[3] is not None else [],
+                global_topic_id=r[4],
+            )
+            for r in rows
+        ]
+
+    def insert_topic_resolution(
+        self,
+        resolution_key: str,
+        subject_id: str,
+        normalized_query: str,
+        embedding_model: str,
+        cluster_version: str,
+        proposition_ids: list[str],
+        resolved_at: str,
+    ) -> None:
+        self.con.execute(
+            """
+            INSERT INTO topic_resolutions VALUES (?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT (resolution_key) DO UPDATE SET
+                proposition_ids = excluded.proposition_ids,
+                resolved_at = excluded.resolved_at
+            """,
+            [
+                resolution_key,
+                subject_id,
+                normalized_query,
+                embedding_model,
+                cluster_version,
+                proposition_ids,
+                resolved_at,
+            ],
+        )
+
+    def get_topic_resolution(self, resolution_key: str) -> list[str] | None:
+        res = self.con.execute(
+            "SELECT proposition_ids FROM topic_resolutions WHERE resolution_key = ?",
+            [resolution_key],
+        ).fetchone()
+        if not res:
+            return None
+        return list(res[0]) if res[0] is not None else []
 
     def insert_tension(self, t: Tension) -> None:
         self.con.execute(

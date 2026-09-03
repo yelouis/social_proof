@@ -118,6 +118,7 @@ Two halves, reported separately (§2).
 **Falsify:** remove the steelman clause from the extraction prompt; the N3 fixture must go RED.
 
 ### J4 — Topic resolution stability · *Phase 3*
+**Status:** PASSING (September 2, 2026 — delivered in P3)
 Resolve the same free-text query twice, in separate processes.
 **Gate:** byte-identical resolved proposition sets and an identical cache key.
 **Falsify:** bump `embedding_model` in the key; the cache must miss rather than silently return the stale set.
