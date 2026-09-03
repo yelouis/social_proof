@@ -71,6 +71,18 @@ def verify_quotes(
                 examined_count=len(claims),
             )
         quote_text = utt.text_verbatim[start:end]
+        expected_quote = getattr(claim, "quote_text", None)
+        if expected_quote is not None and expected_quote != quote_text:
+            return CheckResult(
+                name="verify_quotes",
+                passed=False,
+                status="FAIL",
+                message=(
+                    f"Claim {claim.claim_id} expected quote '{expected_quote}' did not match "
+                    f"verbatim slice '{quote_text}'"
+                ),
+                examined_count=len(claims),
+            )
         # Invariant I9: verify quote_text matches text_verbatim exactly
         if quote_text not in utt.text_verbatim:
             return CheckResult(

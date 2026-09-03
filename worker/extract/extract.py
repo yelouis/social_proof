@@ -102,6 +102,7 @@ class ClaimExtractionPipeline:
                 prompt_version=self.runtime.prompt_version,
                 extraction_version=self.runtime.extraction_version,
                 recorded_at=source_recorded_at,
+                quote_text=ec.quote_text,
             )
 
             self.storage.insert_claim(claim)

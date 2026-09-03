@@ -146,6 +146,10 @@ class Storage:
         self.artifacts = ArtifactStore(artifact_dir)
         self._init_schema()
 
+    @property
+    def artifact_store(self) -> ArtifactStore:
+        return self.artifacts
+
     def _init_schema(self) -> None:
         # Load VSS extension for vector search
         self.con.execute("INSTALL vss; LOAD vss;")
@@ -228,7 +232,8 @@ class Storage:
                 extraction_model VARCHAR,
                 prompt_version VARCHAR,
                 extraction_version VARCHAR,
-                recorded_at VARCHAR
+                recorded_at VARCHAR,
+                quote_text VARCHAR
             );
 
             CREATE TABLE IF NOT EXISTS propositions (
@@ -467,8 +472,10 @@ class Storage:
             """
             INSERT INTO utterances VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT (utterance_id) DO UPDATE SET
-                text_verbatim = excluded.text_verbatim,
+                speaker_label = excluded.speaker_label,
                 attribution_confidence = excluded.attribution_confidence,
+                attribution_method = excluded.attribution_method,
+                text_verbatim = excluded.text_verbatim,
                 word_timestamps_ref = excluded.word_timestamps_ref,
                 dual_pass_agreement = excluded.dual_pass_agreement,
                 negation_uncertain = excluded.negation_uncertain
@@ -512,18 +519,31 @@ class Storage:
             negation_uncertain=res[13],
         )
 
+    def get_utterances_for_source(self, source_id: str) -> list[Utterance]:
+        rows = self.con.execute(
+            "SELECT utterance_id FROM utterances WHERE source_id = ? ORDER BY start_ms ASC",
+            [source_id],
+        ).fetchall()
+        utts: list[Utterance] = []
+        for r in rows:
+            u = self.get_utterance(r[0])
+            if u is not None:
+                utts.append(u)
+        return utts
+
     def insert_claim(self, c: Claim) -> None:
         import json
         self.con.execute(
             """
-            INSERT INTO claims VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO claims VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT (claim_id) DO UPDATE SET
                 stance = excluded.stance,
                 hedging_level = excluded.hedging_level,
                 is_own_assertion = excluded.is_own_assertion,
                 exclusion_reason = excluded.exclusion_reason,
                 confidence = excluded.confidence,
-                recorded_at = excluded.recorded_at
+                recorded_at = excluded.recorded_at,
+                quote_text = excluded.quote_text
             """,
             [
                 c.claim_id,
@@ -544,6 +564,7 @@ class Storage:
                 c.prompt_version,
                 c.extraction_version,
                 c.recorded_at,
+                c.quote_text,
             ],
         )
 
@@ -570,6 +591,7 @@ class Storage:
             prompt_version=res[15],
             extraction_version=res[16],
             recorded_at=res[17],
+            quote_text=res[18] if len(res) > 18 else None,
         )
 
     def insert_proposition(self, p: Proposition) -> None:

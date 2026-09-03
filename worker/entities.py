@@ -94,6 +94,7 @@ class Claim:
     prompt_version: str = ""
     extraction_version: str = ""
     recorded_at: str = ""
+    quote_text: str | None = None
 
 
 @dataclass
@@ -168,5 +169,6 @@ class IngestJob:
     stage: str
     counts: dict[str, int] = field(default_factory=dict)
     errors: list[str] = field(default_factory=list)
+    metrics: dict[str, float] = field(default_factory=dict)
     started_at: str = ""
     finished_at: str | None = None

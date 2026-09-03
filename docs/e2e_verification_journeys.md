@@ -100,6 +100,7 @@ Each journey names its phase, its gate, and — critically — **how to make it 
 ---
 
 ### J1 — Cold ingest, one subject, one source · *Phase 0*
+**Status:** PASSING (September 2, 2026 — delivered in I0.2)
 Ingest one subject from one podcast episode end to end.
 **Gate:** every utterance has word timestamps; every `text_verbatim` `grep -F`-resolves; the anchor chain Claim→Utterance→Source has no orphans.
 **Falsify:** corrupt one stored `text_verbatim` by a single character; `verify_quotes` must fail.
@@ -151,6 +152,7 @@ Synthetically strip the negation from one transcript span of a known non-reversa
 **Falsify:** disable the second pass; the fabricated contradiction must publish. That it *can* publish is the whole reason the guard exists.
 
 ### J11 — Re-ingest idempotency · *Phase 1*
+**Status:** PASSING (September 2, 2026 — delivered in I0.2)
 Run ingest twice on the same subject with no new sources.
 **Gate:** zero new rows, zero duplicate ids, zero re-transcription, and no change to any assessment.
 **Falsify:** make one id non-deterministic; duplicates must appear.

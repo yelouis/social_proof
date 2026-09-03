@@ -117,6 +117,7 @@ def load_valid_fixtures() -> tuple[list[Source], list[Utterance], list[Claim], l
         prompt_version="v1.0",
         extraction_version="gemma-3-27b-it:v1.0:s1",
         recorded_at="2024-01-15T10:00:00Z",
+        quote_text=q1,
     )
 
     claim_2 = Claim(
@@ -134,6 +135,7 @@ def load_valid_fixtures() -> tuple[list[Source], list[Utterance], list[Claim], l
         prompt_version="v1.0",
         extraction_version="gemma-3-27b-it:v1.0:s1",
         recorded_at="2024-05-10T14:00:00Z",
+        quote_text=q2,
     )
 
     tension_1 = Tension(
