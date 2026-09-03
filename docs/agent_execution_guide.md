@@ -148,6 +148,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 21. **Green gates over an empty corpus prove nothing about the product.** Everything currently passes with zero real rows. `verify_quotes` on zero claims is `NOT APPLICABLE`, not success. **I0 exists because of this.**
 22. **A fixture can be structurally incapable of testing what it is labelled as.** Eight pair-type fixtures were single undated sentences carrying two-utterance expected outcomes, and three classes were missing outright — while the harness reported 16/16 PASS. **A green fixture suite says the cases that exist pass, never that the cases you need exist.** F0 exists because of this. Assert class-completeness against the contract table, not against whatever happens to be on disk.
 23. **A source's tier and venue can differ per subject.** All-In is Tier B for its four hosts and Tier C for a guest, in the same episode. `venue_type` and `audience_stance` are properties of a (source, subject) pair, not of the source — and `audience_stance` feeds audience-divergence detection, so getting it wrong produces a wrong *finding*. Issue 022.
+24. **A corpus can be skewed without being thin, and nothing catches that.** Invariant I5 gates on *volume* — too few claims, no score. It says nothing about *composition*. A subject whose primary medium is excluded (Musk without X) yields plenty of claims, passes the gate, and renders a confident score over a systematically unrepresentative slice. Issue 023.
 
 ---
 
@@ -437,7 +438,9 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ## 16. I0 — First real ingest · **subjects selected (Issue 021 = B)**
 
-**Subjects:** Elon Musk, Chamath Palihapitiya, David Sacks, Jason Calacanis, David Friedberg. **Primary source:** the All-In Podcast.
+**Subjects:** Chamath Palihapitiya, David Sacks, Jason Calacanis, David Friedberg — the four All-In hosts. **Primary source:** the All-In Podcast.
+
+> **Elon Musk is held back pending Issue 023.** He was named in the Issue 021 selection, but he is a *guest* where the others are hosts, and — the larger problem — his primary medium is X, which is deferred (`master_implementation_plan.md` §9). A Musk corpus drawn only from long-form would pass the sufficiency gate while measuring a systematically unrepresentative slice of him. **Do not ingest him until 023 is selected.** The four hosts are unaffected and are the better first corpus regardless.
 
 **User impact:** the system processes real human beings for the first time. Until now every green gate has been green over nothing.
 
@@ -452,10 +455,10 @@ That is not a reason to push back on the choice. It is an excellent corpus for t
 ### Sub-items (LOOP 5 checklist — tick in the same commit)
 
 ```
-I0.1  Enrollment for all five subjects        [ ]
+I0.1  Enrollment for the four hosts           [ ]
 I0.2  Single-speaker ingest, one subject      [ ]
 I0.3  Multi-speaker panel, 3-4 episodes       [ ]
-I0.4  Elon as guest on All-In                 [ ]  BLOCKED on Issue 022
+I0.4  Elon Musk                               [ ]  BLOCKED on Issues 022 + 023
 ```
 
 ---
@@ -465,11 +468,11 @@ I0.4  Elon as guest on All-In                 [ ]  BLOCKED on Issue 022
 **Why first.** With five speakers who all appear in the same episodes, voice enrollment is not a detail — it is the precondition for any attribution at all. Enrollment must come from sources where attribution is **certain**: a solo interview, a monologue, or their own single-host show. Calacanis's *This Week in Startups* is a natural fit; each of the others has solo interview material.
 
 **Implementation**
-1. For each of the five, take a clean single-speaker sample and build a reference voice embedding. **Enrollment is a deliberate, recorded act** — never a by-product of ingest (`design_source_acquisition.md` §5.4).
+1. For each of the four, take a clean single-speaker sample and build a reference voice embedding. **Enrollment is a deliberate, recorded act** — never a by-product of ingest (`design_source_acquisition.md` §5.4).
 2. Record, per subject: the source, the exact span used, and its duration.
 
 **Validation**
-- **Mutual distinguishability — run this before ingesting anything.** Compute pairwise cosine similarity across all five enrollment embeddings. **Assert every cross-subject pair sits well below `T_low`.** ← **(c)**
+- **Mutual distinguishability — run this before ingesting anything.** Compute pairwise cosine similarity across all four enrollment embeddings. **Assert every cross-subject pair sits well below `T_low`.** ← **(c)**
   If two subjects' enrollments are close, diarization *will* confuse them on the panel, and you will discover it as silently misattributed claims rather than as a failing test. **Finding that here costs an afternoon; finding it after ingest costs a corpus.**
 - Assert each enrollment sample is genuinely single-speaker — run diarization over the sample itself and assert one cluster.
 
@@ -506,18 +509,22 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 **Validation**
 - **Hand-label a 5-minute segment** with speaker turns, then assert the pipeline's attribution matches it exactly. **Zero cross-attribution.** ← **(c)** This is the real-world N9, and it is a gate at zero, not a target.
 - Sub-threshold utterances stored `attribution_confidence: low` and **excluded from every score**, visible in review.
-- All five subjects resolvable; claims distributed across hosts rather than collapsing onto one.
+- All four subjects resolvable; claims distributed across hosts rather than collapsing onto one.
 - Record the measured attribution confidence distribution. **Parameter 004 gets set here** — from this measurement, marked provisional until the golden corpus grows.
 
 **Falsify.** Swap two hosts' enrollment embeddings. Cross-attribution must go non-zero against the hand-labelled segment.
 
 ---
 
-### I0.4 — Elon as guest · **BLOCKED on Issue 022**
+### I0.4 — Elon Musk · **BLOCKED on Issues 022 and 023**
 
-Elon has appeared on All-In as a guest. That single source is **Tier B for the four hosts and Tier C for him**, with `venue_type` and `audience_stance` differing per subject — and the current schema stores those on `Source`, one value per source. **Do not start this until Issue 022 is selected**, and do not work around it by stamping one tier and moving on: `audience_stance` feeds audience-divergence detection, so a wrong value is a wrong finding rather than a cosmetic flaw.
+Two independent blockers, and the second is the one that matters.
 
-I0.1–I0.3 are unaffected: on their own show all four hosts share the same tier and venue.
+**Issue 022 — schema.** He is a guest where the others are hosts, so one episode is Tier B / `own_channel` / `friendly` for the four and Tier C / `guest` for him. One `Source` row cannot hold both. Do not work around it by stamping a single tier: `audience_stance` feeds audience-divergence detection, so a wrong value is a wrong *finding*.
+
+**Issue 023 — corpus representativeness.** His primary medium is X, which is deferred. A long-form-only corpus would clear the sufficiency gate while measuring the medium where he is most rehearsed and excluding the one where he is most spontaneous — and reversals are most visible in the latter. **Invariant I5 defends against a thin corpus, not a skewed one**, so nothing would flag it. This is the more serious of the two.
+
+**I0.1–I0.3 are unaffected.** With no guests in scope, all four hosts share the same tier and venue on their own show, and Issue 022 stops blocking anything.
 
 **Blast radius (whole item).** `worker/` wherever real data breaks it, `fixtures/behaviour/`, §3, `docs/ongoing_errors.md` §2 (parameter 004), `docs/e2e_verification_journeys.md` (mark J1/J11 passing, with the date).
 

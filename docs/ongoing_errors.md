@@ -408,6 +408,38 @@ Your selection: _____
 
 ---
 
+### Issue 023: Elon Musk is a poor first subject, for a reason unrelated to the schema
+**Blocks: I0 scope** · **Recommended: Option A** · *Raised while planning I0 under Issue 021 = B*
+
+Three things separate Musk from the four All-In hosts. Only the first is already filed.
+
+**1. Schema (Issue 022).** He is a guest where they are hosts, so one episode carries two tiers. Filed separately; a real defect but a bounded one.
+
+**2. He is not a host, so All-In alone cannot clear the sufficiency gate for him.** The four hosts have ~200 episodes of recurring material on the same topics — exactly the shape P4 needs. Musk has a handful of appearances. Ingesting "Musk via All-In" would yield `insufficient_corpus` on essentially every topic, which is the *correct* output and also a wasted ingest. Covering him properly means a different source strategy entirely: solo interviews, earnings calls, keynote Q&A.
+
+**3. The one that actually matters — his primary medium is deferred.** X/Twitter ingest is deferred behind the adapter interface (`master_implementation_plan.md` §9). For most subjects that removes a supplementary channel. For Musk it removes **the** channel: it is where he states most positions, fastest, and where reversals are most visible.
+
+That produces a failure mode the design does not currently defend against. Invariant I5 protects against a corpus that is **thin** — too few claims, so no score. It does nothing about a corpus that is **skewed** — plenty of claims, all drawn from the one medium where he is most rehearsed, none from the medium where he is most spontaneous. The sufficiency gate passes, a confident four-axis score renders, and it is measuring a systematically unrepresentative slice of the person.
+
+**A skewed corpus is more dangerous than a thin one, because nothing on screen says so.**
+
+**Option A (recommended): defer Musk until X ingest exists; ingest the four hosts now.**
+- Pros: I0 becomes fully unblocked — no guests means Issue 022 stops blocking anything, and the four hosts on their own show are uniform Tier B. Avoids shipping a skewed corpus on the highest-profile subject. The four hosts are a better test corpus anyway: more episodes, more topical overlap, more genuine cross-person comparison.
+- Cons: the subject you named first is not in the first ingest. X ingest has no date.
+
+**Option B: include Musk from long-form only, with an explicit medium-skew flag.**
+Add `corpus_composition` to the sufficiency block — which media the claims came from — and surface a warning when one expected medium is absent entirely.
+- Pros: keeps him in, and the flag is a genuinely good idea for every subject rather than a patch for one. It closes the thin-versus-skewed gap in I5.
+- Cons: real work in the rubric and the UI before I0 can finish, and a warning label is weaker than not making the claim. Readers discount warnings.
+
+**Option C: include Musk and pull X ingest forward out of deferral.**
+- Pros: covers him properly, and X is valuable for the other four too.
+- Cons: X ingest was deferred for good reasons — paid API tiers, ToS-brittle scraping, historical-depth costs (`master_implementation_plan.md` §9). Putting the project's most fragile dependency on the critical path of its first real ingest is the wrong order.
+
+Your selection: Proceed with Option A.
+
+---
+
 ## 2. Parameters to be measured, not selected
 
 **These are not decisions and should not be guessed.** Each is a threshold whose correct value is discovered by running against the golden corpus (`e2e_verification_journeys.md`). An agent that picks a number here and moves on has skipped the work.
