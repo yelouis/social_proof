@@ -1,510 +1,607 @@
-# Agent Execution Guide — Active Build: V-queue · all selections in · zero blockers — August 17, 2026
+# Agent Execution Guide — Active Build: first real ingest, then Phases 3–8 — August 17, 2026
 
-**You are an engineering agent with no memory of this project. This document is designed to be self-driving: it contains the prompts you issue to yourself.**
+**You are an engineering agent with no memory of this project. This document is self-driving: it contains the prompts you issue to yourself.**
 
-Do not read this top to bottom and then improvise. **Go to §1, run LOOP 0, and let it route you.**
+Do not read this end to end and improvise. **Go to §1, run LOOP 0, let it route you.**
+
+**Where the project is.** The V-queue is complete — every external model is real and wired (`STUB_REGISTRY` is empty). But **nothing has ever been ingested.** There is no `.duckdb` file, no artifact store, and the golden corpus holds zero cases. Every model works in a test and none has processed a real human being.
+
+**What that means for you.** The next item is **I0 — the first real ingest.** Everything after it (Phases 3–8: topics, tensions, principles, rubric, API, extension) is unbuilt and specced in §15–§21.
+
+**Every number, threshold, field name and literal string in the design docs is deliberate. Implement as written.** Where a doc says a value must be *measured* (`ongoing_errors.md` §2), measure it.
 
 ---
 
-## 1. LOOP 0 — ORIENT (run once, at the start of every session)
+## The loops
 
-Issue this to yourself verbatim:
+| Loop | When | §
+|---|---|---|
+| **LOOP 0 — ORIENT** | Start of every session | §1 |
+| **LOOP 1 — IMPLEMENT** | Per work item | §7 |
+| **LOOP 2 — FALSIFY** | Inside LOOP 1, mandatory | §8 |
+| **LOOP 3 — ESCALATE** | Blocked, or a decision is the user's | §9 |
+| **LOOP 4 — CLOSE OUT** | Queue empty | §10 |
+| **LOOP 5 — DECOMPOSE** | Item too big for one commit | §11 |
+| **LOOP 6 — RESUME** | Context reset mid-item | §12 |
+| **LOOP 7 — REPAIR** | A gate went red | §13 |
+
+---
+
+## 1. LOOP 0 — ORIENT
 
 ```text
 LOOP 0 — ORIENT
 
-1. Run the state-detection block in §2 and read its output.
-2. Compare the gate results to the baseline table in §3.
-   - Any gate RED that §3 records as PASS  → STOP. Report the regression. Do not start new work.
-   - All gates match §3                    → continue.
-3. Read the queue table in §6. Walk it top to bottom and select the FIRST item where:
-       status != delivered   AND   blocked_on == none
-4. If no such item exists → go to §19 (LOOP 4 — CLOSE OUT). Stop here.
-5. Otherwise set ITEM = that identifier (e.g. "V2").
-6. Read the item's own section in full (§10–§16). Read every contract doc it cites.
-   Reading the guide alone is not sufficient; the guide points, the doc specifies.
-7. Enter LOOP 1 (§7) with ITEM.
+1. Run the state-detection block in §2. Read its output.
+
+2. Is the working tree dirty (uncommitted changes)?
+     YES -> enter LOOP 6 (RESUME, §12). Someone stopped mid-item. Do not
+            start new work on top of half-finished work.
+     NO  -> continue.
+
+3. Compare gate results to the baseline in §3.
+     Any gate RED that §3 records PASS -> enter LOOP 7 (REPAIR, §13).
+     All match                          -> continue.
+
+4. Read the queue in §6. Walk it top to bottom. Select the FIRST row where
+   status != delivered AND blocked_on == none. Set ITEM.
+
+5. No such row -> LOOP 4 (CLOSE OUT, §10). Stop.
+
+6. Read ITEM's own section in full. Read every contract doc it cites.
+   The guide points; the doc specifies. Reading only the guide is not enough.
+
+7. Estimate: can ITEM land as ONE commit with one coherent message?
+     NO  -> enter LOOP 5 (DECOMPOSE, §11). It returns a sub-item; use that.
+     YES -> enter LOOP 1 (IMPLEMENT, §7) with ITEM.
 ```
 
 ---
 
 ## 2. State detection
 
-One block. Run it before anything else; it answers "where am I" without trusting any prose.
-
 ```bash
+#!/usr/bin/env bash          # run under bash: compgen is a bash builtin
 cd "$(git rev-parse --show-toplevel)"
-echo "=== HEAD ==="        && git log --oneline -1
-echo "=== CLEAN? ==="      && git status --porcelain | head
+echo "=== HEAD ==="   && git log --oneline -1
+echo "=== DIRTY? ===" && git status --porcelain | head
 echo "=== GATES ==="
-.venv/bin/python -m ruff check worker/ tests/ fixtures/ golden/ 2>&1 | tail -2
-.venv/bin/python -m mypy  worker/ tests/ fixtures/ golden/       2>&1 | tail -2
+.venv/bin/python -m ruff  check worker/ tests/ fixtures/ golden/ 2>&1 | tail -2
+.venv/bin/python -m mypy        worker/ tests/ fixtures/ golden/ 2>&1 | tail -2
 .venv/bin/python -m pytest tests/ -q                             2>&1 | tail -3
-echo "=== STUB REGISTRY (source of truth for V2-V5 progress) ==="
-.venv/bin/python -c "from worker import STUB_REGISTRY; [print(f'{k}: {v}') for k,v in STUB_REGISTRY.items()]" \
-  2>/dev/null || echo "  STUB_REGISTRY not present yet -> V1 is not delivered"
-echo "=== DECLARED EXTERNALS ==="
-grep -E "faster-whisper|pyannote|llama-cpp|sentence-transformers|mlx" pyproject.toml || echo "  none declared"
-echo "=== CORPUS SPLIT (V6 delivered?) ==="
-[ -d fixtures/behaviour ] && echo "  fixtures/behaviour present -> V6 delivered" || echo "  no fixtures/behaviour -> V6 NOT delivered"
+echo "=== STUBS (must be EMPTY) ==="
+.venv/bin/python -c "from worker import STUB_REGISTRY; print(STUB_REGISTRY or 'EMPTY')"
+echo "=== CORPUS: has anything real been ingested? ==="
+# NB: use [ -e ] tests, not `ls ... | head || echo` — the || binds to head,
+# which always succeeds, so the negative branch would never fire.
+compgen -G "*.duckdb" >/dev/null && ls -1 *.duckdb || echo "  NO DATABASE — I0 not delivered"
+[ -d artifacts ] && ls -1 artifacts | head -3      || echo "  NO ARTIFACTS — I0 not delivered"
+echo "=== PHASE MODULES ==="
+for m in topics tension principles rubric api; do
+  { [ -e "worker/$m" ] || [ -e "worker/$m.py" ]; } && echo "  $m: built" || echo "  $m: MISSING"
+done
+echo "=== GOLDEN CORPUS SIZE (drives every metric floor) ==="
+.venv/bin/python -c "
+import json,os
+for p in ['golden/cases.json','fixtures/behaviour/cases.json']:
+    d=json.load(open(p)) if os.path.exists(p) else []
+    c=d if isinstance(d,list) else d.get('cases',[])
+    print(f'  {p}: {len(c)}')"
 echo "=== OPEN SELECTIONS ==="
-grep -c "^Your selection: _____" docs/ongoing_errors.md   # anchored: an unanchored grep also matches the rules line that documents the convention
+grep -c "^Your selection: _____" docs/ongoing_errors.md   # anchored — an unanchored grep also matches the rules line
 ```
 
 **Interpreting it:**
 
 | Signal | Means |
 |---|---|
-| `STUB_REGISTRY not present` | V1 not delivered. Everything after it is unverifiable. |
-| A module still listed in `STUB_REGISTRY` | Its V-item is **not** delivered, whatever any commit message says. |
-| `none declared` under externals | No real model is wired. V2–V5 all outstanding. |
-| pytest finishes in under ~5s | Still mocks all the way down. A real model cannot run that fast. |
-| open selections > 0 | A new blocker appeared. Check §6 before starting anything. |
+| dirty tree | Someone stopped mid-item → LOOP 6 |
+| `STUB_REGISTRY` non-empty | A V-item regressed. Should be `EMPTY`. |
+| `NO DATABASE` | **I0 not delivered.** Nothing real has been processed. |
+| a phase module `MISSING` | Its P-item is outstanding, whatever any commit says. |
+| `golden/cases.json: 0` | Every corpus metric is `NOT MEASURED`. Expected until subjects are ingested. |
+| pytest under ~5s | Impossible now — real models are loaded. Under 5s means something got mocked out. |
+| open selections > 0 | A blocker appeared. Check §6 first. |
 
-**The stub registry is the authority on V2–V5 progress.** Not the baseline table, not commit messages, not this guide's prose.
+**The filesystem and `STUB_REGISTRY` are the authority.** Not this guide's prose, not commit messages, not the baseline table.
 
 ---
 
 ## 3. Verified baseline
 
-Measured on August 17, 2026. Re-run via §2 before trusting.
+Measured August 17, 2026. Re-run via §2 before trusting.
 
-| Gate | Result | What it does **not** prove |
+| Gate | Result | Note |
 |---|---|---|
-| `ruff check` | **PASS** | Nothing about behaviour |
-| `mypy --strict` | **PASS** — 46 files | Nothing about behaviour |
-| `pytest tests/ -q` | **PASS** — 78 passed, ~20.2s | Real `nomic-embed-text-v1.5` embeddings, `faster-whisper` transcription, MLX Gemma runtime, and `pyannote.audio` running in tests. |
-| `worker.integrity --all` | **PASS** — 8 checks | Real logic, synthetic data |
-| `worker.extract.smoke` | **PASS** — gated on backend | Correctly prints `NOT MEASURED` without backend; prints live throughput (~80 tok/s) with live backend. |
-| `worker.golden.report` | **PASS** — structural split active | Behaviour fixtures 16/16 PASS; Golden metrics correctly report `NOT MEASURED — n=0, minimum 5`. |
-
-**Do not weaken or delete existing tests.** They are correct for the layer they cover; the layer beneath them is what's missing.
+| `ruff check` | **PASS** | |
+| `mypy --strict` | **PASS** — 46 files | |
+| `pytest tests/ -q` | **PASS** — 78 passed, **~35s** | The runtime is the evidence: real models load. A sub-5s run means mocks crept back. |
+| `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
+| `worker.integrity --all` | **PASS** — 8 checks | Correct logic. **Zero real rows to check.** |
+| `worker.golden.report` | **PASS** | Fixtures 16/16. Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
+| **Corpus** | **EMPTY** | No database, no artifacts. This is what I0 fixes. |
 
 ---
 
 ## 4. Standing constraints
 
-- **One item = one commit**, the *why* in the body.
+- **One item = one commit**, the *why* in the body. Too big → LOOP 5.
 - **Never fill in a `Your selection: _____` line.**
-- **A stub is not a delivery.** An integration item is done when the real dependency runs. A `Mock*` class satisfying an interface is a test double.
-- **If an item needs a package, it lands in `pyproject.toml` in the same commit.** An undeclared dependency is the signature of a stub.
-- **Never print a number you did not compute from a live run.** Constants, projections from constants, and metrics below their sample floor render as `NOT MEASURED`.
-- **Every integration item needs at least one assertion a stub cannot satisfy** (trap 17). This is the single most important rule in this document.
-- **A guard that has never failed has not been tested.** LOOP 2 is mandatory, not optional.
-- **All writes go through the worker** (I8). **No LLM at scoring time.** **Audio is deleted after transcription** (Issue 003).
-- **DuckDB is the only store** (Issue 015). No Firestore, no sync, no `synced_at`.
-- **Update every doc your change invalidates, in the same commit.** That is what blast radius means.
+- **A stub is not a delivery.** Real dependency runs, or it isn't done.
+- **Dependencies land in `pyproject.toml` in the same commit.**
+- **Never print a number you did not measure.** Constants, projections from constants, and metrics below their floor render `NOT MEASURED`.
+- **Every integration item needs one assertion a stub cannot satisfy** (trap 17). The single most important rule here.
+- **A guard that has never failed has not been tested.** LOOP 2 is mandatory.
+- **All writes go through the worker** (I8). **No LLM at scoring time.** **Audio deleted after transcription** (Issue 003). **DuckDB is the only store** (Issue 015).
+- **Update every doc your change invalidates, in the same commit.**
 
 ---
 
 ## 5. Traps
 
-Traps 1–16 are in git history at `217b383:docs/agent_execution_guide.md` §1 — **read them before writing code in their layer.** The four that caused the last failure:
+Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writing in their layer. The ones that have already bitten:
 
-17. **An assertion about *shape* is satisfiable by a stub.** "Assert prefill ≈ utterance length" was met by arithmetic over `words × 2` with no model loaded. Every integration item needs an assertion that cannot pass without the real dependency.
-18. **A suite that finishes in 1.5 seconds is telling you something.** Real models are slow.
-19. **A mock named honestly is safe; a mock named plausibly is not.** `MockTranscriptionEngine` announces itself; `compute_deterministic_text_embedding` read like a design choice and silently broke the semantic layer. Name stubs `Mock*` or `Stub*`, always.
-20. **A metric over one example per class is not a metric.** Guard the harness so it cannot emit one.
+17. **An assertion about *shape* is satisfiable by a stub.** Every integration item needs one that cannot pass without the real dependency.
+18. **A suite that finishes too fast is telling you something.** Real models are slow; ~35s is the current floor.
+19. **A mock named honestly is safe; a mock named plausibly is not.** Name stubs `Mock*`/`Stub*`.
+20. **A metric over one example per class is not a metric.**
+21. **NEW — green gates over an empty corpus prove nothing about the product.** Everything currently passes with zero real rows. `verify_quotes` on zero claims is `NOT APPLICABLE`, not success. **I0 exists because of this.**
 
 ---
 
 ## 6. Queue
 
-**Issue 017 = Option A: wire every real external now, before any new phase.** V0 and V1 come first anyway — they are cheap, and V1 is what makes V2–V5 impossible to fake.
-
-| Order | ID | Item | Blocked on | Status | Position rationale |
+| Order | ID | Item | Blocked | Status | Why here |
 |---|---|---|---|---|---|
-| 1 | **V0** | Stop reporting fabricated throughput | none | **delivered** | The runtime prints a hardcoded constant as a measurement. Fix the instrument before taking any reading. |
-| 2 | **V1** | Stub registry + CI guard | none | **delivered** | The structural fix. Its registry becomes the V2–V5 checklist: each later item flips one entry from `stubbed` to `declared`, so the queue verifies itself. |
-| 3 | **V6** | Split behaviour fixtures from the golden corpus | none | **delivered** | **Moved ahead of V2–V5 by the Issue 018 selection.** Every measurement V2–V5 report flows through this harness; splitting afterwards means re-doing their numbers. Also carries the metric floor, since that is the same file and the same concern. |
-| 4 | **V2** | Real embeddings — `nomic-embed-text-v1.5` | none | **delivered** | First real external: cheapest to wire, and the only stub that is *silently wrong* rather than merely absent. |
-| 5 | **V3** | Real transcription — `faster-whisper` | none | **delivered** | Behind the existing `TranscriptionEngine` Protocol. First item that produces real corpus material. |
-| 6 | **V4** | Real diarization — `pyannote.audio` | none | **delivered** | Behind PyannoteDiarizer wrapper with HF_TOKEN auth and embedding extractor. |
-| 7 | **V5** | Real extraction runtime — Gemma 3 | none | **delivered** | Largest download, slowest loop, most to measure. |
+| 1 | **I0** | First real ingest, end to end | none | **outstanding** | Every model is wired and none has touched a real source. Until this lands, every gate is green over nothing. |
+| 2 | **P4** | Tension detection | I0 | outstanding | **The thesis.** If contradiction detection doesn't work on real data, everything above it is moot. De-risk first. Needs claims, not topics. |
+| 3 | **P3** | Topic model | I0 | outstanding | Slices the corpus for the rubric and backs `/resolve`'s topic fallback. |
+| 4 | **P5** | Principle extraction | P4 | outstanding | Highest-risk component. Reuses P4's pair-detection shape. |
+| 5 | **P6** | Rubric engine | P3, P4, P5 | outstanding | Aggregates everything below into four axes. |
+| 6 | **P7** | Local API | P6 | outstanding | One contract, all clients. |
+| 7 | **P8** | Browser extension | P7 | outstanding | The only client (Issue 002). Selection-triggered (Issue 013). |
 
-> **IDs are labels, not sequence numbers.** `V6` runs third. Do not renumber to "tidy" this — commit messages and `ongoing_errors.md` reference these IDs, and renaming them breaks every inbound pointer. Follow the **Order** column.
+**Delivered — do NOT rework:** V0–V6 (all externals real, `STUB_REGISTRY` empty), U0–U13 (storage, integrity, adapters, reconciler, segmentation, gate, validators). Detail in git history; §14 has the short list.
 
-**All V-queue integration items (V0–V6) delivered.** `grep -c "^Your selection: _____"` returns 0.
-
-**Already resolved, do not re-open:** Firestore purge (Issue 015 = A) — no Firestore code was ever written; docs cleaned in `1dee614`. Selection-triggered overlay (Issue 013) — designed in `design_local_api_and_clients.md` §4 and `design_ui_direction.md` §6; **do not start building it until the V-queue is empty** (Issue 017 = A).
+**IDs are labels, not sequence numbers.** Follow the **Order** column.
 
 ---
 
-## 7. LOOP 1 — IMPLEMENT (per item)
-
-Issue this to yourself, substituting `ITEM`:
+## 7. LOOP 1 — IMPLEMENT
 
 ```text
 LOOP 1 — IMPLEMENT <ITEM>
 
 STEP 1 — LOAD
-  Read this guide's section for <ITEM>. Read every contract doc it cites, in full.
-  Write down, before coding:
-    a. the one-line user impact
-    b. the exact files you expect to touch (the blast radius)
-    c. the ONE assertion in this item that a stub cannot satisfy
-  If you cannot name (c), STOP and enter LOOP 3 — the item is underspecified.
+  Read <ITEM>'s section. Read every contract doc it cites, in full.
+  Write down BEFORE coding:
+    a. one-line user impact
+    b. exact files you expect to touch (blast radius)
+    c. THE ONE assertion that cannot pass unless the thing genuinely works
+  Cannot name (c)? -> LOOP 3. The item is underspecified.
 
 STEP 2 — DECLARE
-  If this item integrates an external package:
-    - add it to pyproject.toml NOW, in this commit
-    - install it into .venv
-    - if it needs a credential or a gated download, STOP and enter LOOP 3
-      before writing code. Do not stub around a missing credential.
+  Needs a package? Add to pyproject.toml NOW and install.
+  Needs a credential, gated download, or a human judgement? -> LOOP 3
+  BEFORE writing code. Never stub around a missing credential.
 
 STEP 3 — BUILD
-  Implement exactly as specified. Numbers, field names and literal strings are
-  decisions, not suggestions. If a specified value is impossible, keep the intent,
-  deviate minimally, and record the deviation in the commit body.
+  Implement as specified. Numbers and literal strings are decisions.
+  Impossible value? Keep the intent, deviate minimally, record it in the
+  commit body.
 
 STEP 4 — VALIDATE
-  Write every assertion listed under the item's Validation heading.
-  Run them. All must pass, including (c) from STEP 1.
+  Write every assertion under the item's Validation heading. Run them.
+  All pass, including (c).
 
 STEP 5 — FALSIFY
-  Enter LOOP 2 (§8). Do not skip it. Do not proceed until it completes.
+  Enter LOOP 2. Mandatory. Do not proceed until it completes.
 
 STEP 6 — BATTERY
-  Run §2's state-detection block. All gates must be green.
-  Record the REAL numbers. Any number you did not measure is "NOT MEASURED".
+  Run §2. All gates green. Record REAL numbers. Anything unmeasured is
+  "NOT MEASURED".
 
-STEP 7 — PROPAGATE
-  Update every doc invalidated by this change, in this same commit:
-    - this guide's §3 baseline
-    - this guide's §6 queue row -> status delivered
-    - the STUB_REGISTRY entry, if this item replaced a stub
-    - any design_*.md whose described behaviour changed
-    - ongoing_errors.md §4 if a selection was consumed
+STEP 7 — PROPAGATE (same commit)
+  - §3 baseline numbers
+  - §6 queue row -> delivered
+  - any design_*.md whose described behaviour changed
+  - ongoing_errors.md §2 if you measured a parameter
+  - ongoing_errors.md §4 if a selection was consumed
 
 STEP 8 — COMMIT
-  One item, one commit. Body must contain:
-    - why this change, in prose
-    - the falsification: what you broke, that it went RED, that you reverted, that it went GREEN
-    - any deviation from spec, with the reason
-    - the measured numbers
+  One item, one commit. Body contains:
+    - why, in prose
+    - the falsification: what broke, that it went RED, revert, GREEN
+    - deviations, with reasons
+    - measured numbers
 
 STEP 9 — LOOP
-  Return to LOOP 0 (§1). Do not select the next item by memory; re-detect state.
+  Return to LOOP 0. Re-detect state; never pick the next item from memory.
 ```
 
 ---
 
-## 8. LOOP 2 — FALSIFY (nested inside LOOP 1 STEP 5)
-
-A guard that has never failed has not been tested. This loop is how you find out whether the test you just wrote is load-bearing or decorative.
+## 8. LOOP 2 — FALSIFY
 
 ```text
 LOOP 2 — FALSIFY <ITEM>
 
-1. Identify the single assertion that most matters — normally (c) from LOOP 1 STEP 1.
-2. Break the thing it protects. Not the assertion: the CODE UNDER IT.
-     - deleting the assertion proves nothing
-     - deleting the behaviour it guards proves everything
-3. Run the test. It MUST go RED.
-     - if it stays GREEN -> the assertion is decorative. Rewrite it and restart LOOP 2.
-       This is a finding, not a nuisance: you just discovered a test that cannot fail.
-4. Revert the break. Run again. It MUST go GREEN.
+1. Take the assertion from LOOP 1 STEP 1(c).
+2. Break the CODE UNDER IT — not the assertion.
+     deleting the assertion proves nothing
+     deleting the behaviour it guards proves everything
+3. Run it. It MUST go RED.
+     Still GREEN -> the assertion is decorative. Rewrite it, restart LOOP 2.
+     This is a finding: you found a test that cannot fail.
+4. Revert. Run again. MUST go GREEN.
 5. Record BOTH outcomes verbatim in the commit body:
-     "Falsification: <what was broken> -> <assertion> FAILED as expected.
+     "Falsification: <break> -> <assertion> FAILED as expected.
       Reverted -> PASSED. Both outcomes observed."
 6. Return to LOOP 1 STEP 6.
 ```
 
 ---
 
-## 9. LOOP 3 — ESCALATE (when blocked)
+## 9. LOOP 3 — ESCALATE
 
 ```text
 LOOP 3 — ESCALATE
 
-Trigger this when ANY of:
-  - a specified value is impossible and the intent cannot be preserved
+Trigger on ANY of:
+  - a specified value is impossible and intent cannot be preserved
   - the design as written cannot work
-  - the item needs a credential, gated download, or human judgement
-  - you cannot name an assertion a stub could not satisfy
-  - a selection you need is still "Your selection: _____"
+  - a credential, gated download, or human judgement is required
+  - you cannot name an assertion that proves the thing works
+  - a needed selection is still "Your selection: _____"
 
 Do:
-  1. STOP. Write no more code on this item.
+  1. STOP. No more code on this item.
   2. Open docs/ongoing_errors.md section 1.
-  3. Append a new numbered issue (next free number) containing:
+  3. Append a new numbered issue (next free number):
        - what is blocked, concretely, and what you already tried
        - 2-3 options, each with honest pros AND cons
        - a recommendation, marked as such
-       - a final line, exactly: "Your selection: _____"
+       - final line, exactly: "Your selection: _____"
   4. NEVER fill in that line.
-  5. Update this guide's section 6: set blocked_on for the affected items.
-  6. Return to LOOP 0. If nothing else is unblocked, go to LOOP 4.
+  5. Update section 6: set blocked_on for affected rows.
+  6. Return to LOOP 0. Nothing unblocked -> LOOP 4.
 ```
 
 ---
 
-## 10. V0 — Stop reporting fabricated throughput
+## 10. LOOP 4 — CLOSE OUT
 
-**User impact:** the project stops claiming performance it has never measured, so the next status report can be trusted.
+```text
+LOOP 4 — CLOSE OUT
 
-**Gap.** `worker/extract/runtime.py` contains `tokens_per_second=35.0,  # Steady-state Apple Silicon M-series throughput` — a literal. `worker/extract/smoke.py` prints it as a measurement and derives a "5.14h 300hr projection" from it. No model backend exists.
+Reached only when no row in section 6 is both undelivered and unblocked.
 
-> **Scope note:** the golden-report metric floor used to live here. It moved to **V6**, because it is the same file and the same concern as the fixture/corpus split and doing it twice is waste.
+1. Run section 2. Record numbers in section 3.
+2. Confirm STUB_REGISTRY is EMPTY.
+3. Report:
+     - what landed, with measured numbers
+     - what is blocked, and on which issue
+     - any issue filed via LOOP 3
+4. STOP. Do not invent work.
+
+Legitimate resume triggers only:
+     - a "Your selection:" line gets filled
+     - a gate in section 3 goes red
+     - the user asks for something specific
+```
+
+---
+
+## 11. LOOP 5 — DECOMPOSE
+
+Phase items (P3–P8) are subsystems, not commits. This loop turns one into a queue.
+
+```text
+LOOP 5 — DECOMPOSE <ITEM>
+
+1. Read <ITEM>'s section and its contract doc in full.
+2. Split into sub-items that each satisfy ALL of:
+     - lands as ONE commit with one coherent message
+     - has its own falsifiable assertion
+     - leaves the repo GREEN when committed alone
+   If a split leaves gates red, it is not a valid split. Merge it back.
+3. Order them so each builds only on what is already committed.
+4. Write the list into this guide under <ITEM>'s section as a checklist:
+       <ITEM>.1  <name>   [ ]
+       <ITEM>.2  <name>   [ ]
+   Commit that plan BY ITSELF, before writing code. The plan is the
+   contract for the rest of the item and must survive a context reset.
+5. Set ITEM = the first unchecked sub-item. Enter LOOP 1.
+6. After each sub-item commits, tick its box in the same commit and
+   return to LOOP 0.
+
+Rule of thumb: a sub-item is too big if its commit message needs more
+than one "and". Three to six sub-items per phase is typical.
+```
+
+---
+
+## 12. LOOP 6 — RESUME
+
+A long build will outlive a context window. This is how the next agent picks up without redoing or half-doing work.
+
+```text
+LOOP 6 — RESUME
+
+Entered when LOOP 0 finds a dirty working tree.
+
+1. git diff --stat  and  git status --porcelain
+2. git log --oneline -3   ->  which item was in flight?
+3. Find that item's section. Find its sub-item checklist (LOOP 5 STEP 4)
+   if it has one. The last ticked box tells you where work stopped.
+4. Run the gates (section 2). Classify:
+
+   GREEN and the change looks complete
+     -> finish LOOP 1 from STEP 5 (FALSIFY). Do NOT skip falsification
+        just because someone else wrote the code.
+
+   GREEN but the change looks partial
+     -> finish it. Re-derive intent from the item's spec, NOT from the
+        half-written code. Partial code is a guess; the spec is the contract.
+
+   RED
+     -> enter LOOP 7 (REPAIR).
+
+   Cannot tell what was intended
+     -> git stash the changes, re-read the item spec, restart LOOP 1
+        from STEP 1. Discarding half an unclear implementation costs less
+        than shipping a misunderstanding.
+
+5. Never commit someone else's uncommitted work without running its
+   falsification yourself. An unfalsified guard is not a guard.
+```
+
+---
+
+## 13. LOOP 7 — REPAIR
+
+```text
+LOOP 7 — REPAIR
+
+Entered when a gate that section 3 records PASS comes back RED.
+
+1. STOP all feature work. A red gate outranks the queue.
+2. Identify the gate and read its failure output in full. Do not skim.
+3. git log --oneline -5 and bisect if needed: which commit turned it red?
+4. Classify:
+     the code is wrong    -> fix the code
+     the test is wrong    -> fix the test, and say so explicitly in the
+                             commit body. This is the ONLY circumstance in
+                             which a test may change to reach green.
+     the baseline is stale -> section 3 was never re-measured. Correct
+                             section 3, and note the drift.
+5. NEVER weaken an assertion, delete a test, or narrow a scope to reach
+   green. If that seems like the answer, it is a LOOP 3 escalation.
+6. Falsify the fix (LOOP 2). A repair with no falsification is a guess.
+7. Commit the repair ALONE, then return to LOOP 0.
+```
+
+---
+
+## 14. Delivered — do NOT rework
+
+**V0–V6:** fabricated-throughput removal; stub registry + CI guard; fixture/corpus split with metric floor and parameter-readiness report; real `nomic-embed-text-v1.5` embeddings with task prefixes; real `faster-whisper` dual-pass transcription with audio disposal; real `pyannote.audio` diarization; real Gemma runtime on MLX. `STUB_REGISTRY` is empty.
+
+**U0–U13:** integrity pass (eight checks, `NOT APPLICABLE` correctly distinguished from `PASS`); DuckDB with `vss`, `FLOAT[768]`, HNSW cosine, deterministic IDs; three source adapters behind one Protocol; dual-pass reconciler; segmentation; extraction gate; five post-extraction validators.
+
+**Accepted equivalents — do not "fix" back:** the `TranscriptionEngine` Protocol + `Mock` test-double split; `LocalGemmaRuntime`'s shape. Both better than the spec implied.
+
+---
+
+## 15. I0 — First real ingest, end to end
+
+**User impact:** the system processes a real human being for the first time. Until now every green gate has been green over nothing.
+
+**Gap.** No `.duckdb`. No `artifacts/`. Golden corpus zero cases. Every model is wired and tested in isolation; the pipeline has never run start to finish on real material. **Trap 21.**
 
 **Implementation**
-1. **Delete the `35.0` literal.** `GenerationStats.tokens_per_second` becomes `float | None`, populated only from a real timing — `time.perf_counter()` around an actual generation call — and `None` otherwise.
-2. **Gate every performance figure on a live capability probe**, not a config flag someone can flip: does a model backend exist and return a completion? While it does not, `smoke.py` prints exactly:
-   ```
-   Inference Throughput:            NOT MEASURED — no model backend loaded
-   Projected 300hr Ingest Time:     NOT MEASURED — requires measured throughput
-   ```
-3. Any derived figure inherits its weakest input: a projection built on `NOT MEASURED` is itself `NOT MEASURED`, never a number.
-4. Keep `prefill_tokens` reporting, but label it `approx (word-count heuristic)` until V5 replaces it with the runtime's own counter. **An approximation that says so is fine; one that doesn't is the bug.**
+1. Pick **one subject** with a clean **Tier B** source — their own podcast or channel, ideally single-speaker for the first run so diarization is not also on trial.
+2. Run the full pipeline: `discover → fetch → normalize → transcribe (dual pass) → diarize → attribute → segment → gate → extract → embed → persist`.
+3. Record **real wall-clock throughput at every stage** into the ingest job record: audio-minutes per wall-minute for transcription, utterances/sec for the gate, extractions/sec. Nobody will collect these later.
+4. Expect failures that mocks never surfaced: encoding, unusual sample rates, VAD edge cases, very long files, empty transcript segments. **Each one you fix gets a `fixtures/behaviour/` case added in the same commit** — that is the mechanism keeping the fixture set alive.
+5. Do **not** tune thresholds to make results look good. Record what happens.
 
-**Validation**
-- Run `worker.extract.smoke`; assert **no numeric throughput and no numeric projection appears in stdout** while no backend is loaded.
-- Assert `GenerationStats.tokens_per_second is None` on every call from the stub path.
-- `grep -rn "35\.0" worker/` returns nothing.
-- ← *the assertion that matters is inverted here: it must go RED the moment a fabricated number returns.*
+**Validation — journeys J1 and J11, on real data**
+- Every `text_verbatim` `grep -F`-resolves against the stored transcript. ← **(c)**
+- Anchor chain Utterance → Source has zero orphans.
+- `verify_quotes` and `verify_anchor_chain` report **PASS on a non-empty set** — not `NOT APPLICABLE`.
+- **Open one citation URL by hand.** It must land within a couple of seconds of the quote. Record the URL and the timestamp in the commit body.
+- Word timestamps monotonic and inside media duration.
+- `audio_deleted_at` set; audio gone. Audio **still present** if any stage raised.
+- Re-run ingest: zero new rows, zero re-transcription (J11).
+- Replace §3's `Corpus: EMPTY` row with real counts.
 
-**Falsify.** Re-introduce a fake `backend_present = True` so `smoke.py` prints `35.0`. The stdout assertion must go RED. Revert; record both.
+**Falsify.** Corrupt one stored `text_verbatim` by a single character. `verify_quotes` must go RED **on real data**, not just fixtures.
 
-**Blast radius.** `worker/extract/runtime.py`, `worker/extract/smoke.py`, `tests/test_runtime_u9.py`, this guide's §3.
+**Blast radius.** `worker/` wherever real data breaks it, `fixtures/behaviour/`, §3, `docs/e2e_verification_journeys.md` (mark J1/J11 passing, with the date).
 
 ---
 
-## 11. V1 — Stub registry and CI guard
+## 16. P4 — Tension detection
 
-**User impact:** a future agent cannot report a simulated model as a working one, because CI catches it.
+**User impact:** the product's core claim starts working — *here are two things you said that cannot both be your view.*
 
-**Gap.** Four modules claim to wrap external models; none imports one; none is declared. Nothing detects this.
+**Contract:** `design_rubric_engine.md` §1. Read it fully; this section does not repeat the tension-type table.
+
+**Likely LOOP 5 split:** (1) the reversal self-join, (2) the acknowledgement window, (3) the six preconditions + quarantine, (4) audience divergence.
 
 **Implementation**
-1. `worker/__init__.py` gains:
-   ```python
-   STUB_REGISTRY: dict[str, str] = {
-       "worker.transcribe.engine":   "MockTranscriptionEngine — real engine pending V3",
-       "worker.diarize.attribution": "synthetic vectors — pyannote pending V4",
-       "worker.extract.runtime":     "no backend — Gemma pending V5",
-       "worker.extract.dedup":       "stub_hash_embedding — nomic pending V2",
-   }
-   ```
-2. `tests/test_no_undeclared_stubs.py` holds the contract:
-   ```python
-   EXTERNAL_CONTRACTS = {
-       "worker.transcribe.engine":   ("faster_whisper",        "TranscriptionEngine"),
-       "worker.diarize.attribution": ("pyannote.audio",        "Diarizer"),
-       "worker.extract.runtime":     ("llama_cpp",             "LocalGemmaRuntime"),
-       "worker.extract.dedup":       ("sentence_transformers", "Embedder"),
-   }
-   ```
-   For each entry assert **exactly one** of two states, failing on anything else:
-   - **declared** — the package is in `pyproject.toml`, importable, **and** the module imports it;
-   - **stubbed** — the concrete class name starts with `Mock`/`Stub` **and** the module is listed in `STUB_REGISTRY` with a reason.
-3. **Rename `compute_deterministic_text_embedding` → `stub_hash_embedding`** and give it a module docstring stating plainly: no semantic capability, dedup merges only near-identical strings, `T_dedup = 0.88` is meaningless until V2. Trap 19 applied to the one stub that read as a design choice.
-4. Print `STUB_REGISTRY` at the top of every pytest run so it cannot be forgotten.
+1. `worker/tension/detect.py`. The core detector is the self-join in `design_data_layer.md` §4 — **in DuckDB, not in Python.** Pulling the claims table into memory to loop over it is the design error that store was chosen to prevent.
+2. Implement all four types: `unacknowledged_reversal`, `acknowledged_update`, `principle_conflict` (stub until P5), `audience_divergence`.
+3. **All six preconditions, every type**, or no Tension is created: both `is_own_assertion`; both `attribution_confidence = high`; both stances in `{support, oppose}`; **matching `condition`**; both `quote_span` resolve; both `negation_uncertain = false`.
+4. **The acknowledgement window — trap 2, and the thing most likely to be got wrong.** A reversal becomes an `acknowledged_update` if **any** claim on the same proposition, at **any** point in the interval between the two dates, carries a `change_marker`. **Search the whole interval, not just the later utterance.** Getting this wrong converts every honest updater into a flip-flopper and inverts invariant I6.
+5. Failing a precondition writes `status: quarantined` with a reason. **Never silently drop** — the quarantine rate is the health metric for the pipeline.
+6. Deterministic `tension_id` from the sorted claim pair (`design_data_layer.md` §3), so the same tension cannot appear twice under a different ordering.
 
-**Validation**
-- Guard passes today with all four registered as stubs.
-- Delete one `EXTERNAL_CONTRACTS` entry → guard **FAILS**. ← *the load-bearing assertion: a guard that shrinks its own coverage must not go quiet*
-- Rename a `Mock*` class to something plausible → guard **FAILS**.
-- `grep -rn "compute_deterministic_text_embedding" worker tests` returns nothing.
+**Validation** — fixtures give PASS/FAIL; corpus metrics stay `NOT MEASURED` while `golden/` is empty.
+- Fixture **P1** → `unacknowledged_reversal`.
+- Fixture **P2** → `acknowledged_update`, **and no Consistency penalty**. ← **(c)**
+- **N5** conditional vs unconditional → **no Tension**.
+- **N7** hedge then firm → low-weight, not full-weight.
+- A claim with `negation_uncertain = true` → quarantined, reason `negation_uncertain`.
+- The detector runs as SQL: assert the query plan touches the index, and that no code path materialises the full claims table.
 
-**Falsify.** Remove the `dedup` entry; confirm CI goes RED rather than silently covering less.
+**Falsify.** Narrow the acknowledgement search to the later utterance only. **P2 must flip to `unacknowledged_reversal`.** This is the most important falsification in the project — it is the check that stops the system punishing honesty.
 
-**Blast radius.** `worker/__init__.py`, `worker/extract/dedup.py` + every caller, `tests/`, `.github/workflows/ci.yml`, `conftest.py`.
+**Blast radius.** `worker/tension/`, `tests/`, `docs/e2e_verification_journeys.md` J5, §3, §6.
 
 ---
 
-## 12. V2 — Real embeddings
+## 17. P3 — Topic model
 
-**User impact:** the system can finally tell that "licensing" and "permitting" are the same idea — without which no contradiction across differently-worded claims is ever detected.
+**User impact:** you can ask about any topic in your own words and get that person's record on it.
 
-**Gap.** `stub_hash_embedding` hashes each word to one dimension. Synonyms score ≈ 0. Per `design_claim_extraction.md` §2 this makes contradictions undetectable system-wide, and the tests cannot see it because plausible vectors come out either way.
+**Contract:** `design_topic_model.md`.
+
+**Likely split:** (1) clustering + labels, (2) free-text resolution + cache, (3) drift guards.
 
 **Implementation**
-1. Declare `sentence-transformers` in `pyproject.toml`. Model: **`nomic-ai/nomic-embed-text-v1.5`**, 768 dims — matching the fixed DuckDB width (`design_data_layer.md` §4).
-2. Implement `Embedder` in `worker/extract/dedup.py` alongside the stub. Load once into a long-lived object; never per call.
-3. **Task prefixes are mandatory (trap 7).** Propositions and principles embed as `search_document: <text>`; query-side lookups as `search_query: <text>`. Getting this wrong does not error — it silently degrades everything.
-4. Keep `stub_hash_embedding` as a test double, renamed and registered.
-5. Flip the `dedup` entry in `STUB_REGISTRY` to declared.
-6. **Re-measure parameter 008 (`T_dedup`).** The current `0.88` was tuned against a hash function and carries no information. The golden corpus will still be empty at this point (Issue 018 = B grows it during ingest), so set `T_dedup` from the synonym/antonym pairs in V2's own validation, mark it **`[provisional]`**, and confirm V6's readiness report shows `008 NOT MEASURABLE`. Firm it up when the corpus crosses 5 dedup pairs.
+1. Cluster **propositions**, never raw utterances — they are already stance-neutral and deduplicated. Clustering raw text splits every issue into a pro cloud and an anti cloud, which is precisely backwards.
+2. HDBSCAN over proposition embeddings. **Keep noise points** — unclustered residue is the subject's idiosyncratic positions, often the interesting ones, and they stay individually queryable.
+3. Label clusters with the local model. **Labels are cosmetic**; retrieval never goes through the label string, so a bad label is a UI annoyance, not a correctness bug.
+4. Free-text resolution: normalise → embed with **`search_query:`** prefix (trap 7) → k-NN over propositions embedded with `search_document:` → **expand to full clusters** where a seed proposition is a member. Expansion is what stops a narrow query scoring against three cherry-picked propositions.
+5. Cache key **must** include `embedding_model` and `cluster_version` (`design_topic_model.md` §3). Omit them and an embedding upgrade silently rewrites history while every cached number keeps its old timestamp.
+6. Drift guard: flag reversal pairs spanning more than the configured window and route them to Update Integrity before Consistency.
 
 **Validation**
-- **Synonym test:** `"federal licensing of frontier models"` vs `"federal permitting for large training runs"` score **above** `T_dedup`. **No hash function can pass this.** ← *the stub-proof assertion*
-- **Antonym-of-topic test:** two unrelated propositions score **below** `T_dedup`.
-- **Prefix test:** embedding the same string with `search_document:` and with `search_query:` yields **different** vectors. Fails if prefixes were dropped.
-- Assert the loaded model reports 768 dims; a mismatch must raise at startup, not at insert time.
-- Assert the model loads once — call twice, assert one load.
+- Same query, twice, **in separate processes** → byte-identical proposition set and identical cache key. ← **(c)**
+- Query resolving below threshold → `no_coverage`, rendered distinctly from a low score.
+- Assert the two task prefixes are actually applied — a unit test that fails if either is dropped.
 
-**Falsify.** Drop the task prefixes and re-run the synonym test; record the measured similarity delta. This turns trap 7 from folklore into a number.
+**Falsify.** Bump `embedding_model` in the cache key. The cache must **miss**, not silently return the stale set.
 
-**Blast radius.** `pyproject.toml`, `worker/extract/dedup.py`, `worker/__init__.py`, `tests/test_dedup_u12.py`, `tests/test_no_undeclared_stubs.py`, `docs/design_topic_model.md` if the threshold moves.
+**Blast radius.** `worker/topics/`, `tests/`, J4, §3, §6.
 
 ---
 
-## 13. V3 — Real transcription
+## 18. P5 — Principle extraction
 
-**User impact:** the corpus starts containing words a person actually said, instead of strings a test supplied.
+**User impact:** the system can spot a double standard — the same principle applied to one person and not another.
 
-**Gap.** `MockTranscriptionEngine` returns scripted text. No audio has ever been transcribed; the VAD gate has never seen a waveform.
+**Contract:** `design_principle_extraction.md`. **Read it fully. This is the highest-risk component in the project.**
+
+**Likely split:** (1) principle extraction with actor slot, (2) actor resolution, (3) stated-distinction detection, (4) conflict detection + significance test.
 
 **Implementation**
-1. Declare `faster-whisper`. Model `large-v3`. Implement `WhisperTranscriptionEngine` satisfying the existing `TranscriptionEngine` Protocol — **do not modify the Protocol or the pipeline**; the split is an accepted equivalent and it is good.
-2. **Word-level timestamps are mandatory** (`word_timestamps=True`). Under Issue 003 the audio is deleted, so these are the only thing that can place a citation link at the right second.
-3. Wire the two real passes: pass 1 `beam_size=5, temperature=0.0`; pass 2 `beam_size=1, temperature=0.2`. The reconciler already exists and is correct — feed it real output.
-4. VAD gate before transcription.
-5. Audio deletion stays last, and only on success.
-6. Commit a **5-second WAV fixture** with known content.
+1. Extract the **general rule a judgment implies**, actor left as a slot. Prompt asks one question: *"What general rule would have to be true for this specific judgment to follow?"* — and **"return nothing" is the common correct answer.** Most claims imply no principle.
+2. `canonical_text` carries **no actor and no verdict** — same discipline as stance-neutral propositions, same failure if violated.
+3. **Generality calibration.** Too specific and nothing clusters; too general and everything collides. Measure cluster-size distribution: many small clusters, few giant ones. **A cluster with hundreds of members is too abstract to mean anything** — split or discard.
+4. **Actor resolution.** Coreference within the source, plus a per-subject alias map. **Unresolved → `actor: unknown` → excluded from conflict detection. Never guess** — a misattributed actor is a false hypocrisy accusation with a real name on it.
+5. **Stated distinction — build this BEFORE the conflict detector.** If the speaker says why two cases differ, the pair is `distinguished`, recorded with its verbatim quote, and excluded from the score. A system that flags principled reasoning as hypocrisy discredits itself.
+6. Conflict = same principle, different actor, opposite verdict, no stated distinction, both actors resolved.
+7. **Score the pattern, never the instance.** Derive `actor_affinity` from the subject's own corpus only — never an external political map (invariant I2).
 
 **Validation**
-- **Real-audio assertion:** transcribing the fixture returns the expected words, in order. **No mock can pass this without the file.** ← *stub-proof*
-- Word timestamps monotonic and within media duration.
-- **Silence test on real audio:** a clip with 30 s of leading silence yields zero segments over that span.
-- **Re-run the negation falsification against real audio** — the synthetic version proved the reconciler; this proves the pipeline.
-- Assert `audio_deleted_at` set on success, and audio **still present** when transcription raises.
-- Record real throughput (audio-minutes per wall-minute) into the ingest job.
+- Fixture **P3** → `principle_conflict`.
+- Fixture **N6** (stated distinction present) → `distinguished`, **excluded from scoring**. ← **(c)**
+- A principle application with unresolved actor never enters a conflict.
+- Cluster-size ceiling enforced; assert an over-general principle is rejected.
 
-**Falsify.** Disable the VAD gate; the real-audio silence test must go RED.
+**Falsify.** Disable stated-distinction detection. **N6 must become a published conflict.**
 
-**Blast radius.** `pyproject.toml`, `worker/transcribe/engine.py`, `fixtures/`, `tests/test_transcribe.py`, `worker/__init__.py`, this guide's §3.
+**Blast radius.** `worker/principles/`, `worker/tension/` (the `principle_conflict` type), `tests/`, J6, §3, §6.
 
 ---
 
-## 14. V4 — Real diarization
+## 19. P6 — Rubric engine
 
-**User impact:** when the system says a person said something, it is that person and not the host across the table.
+**User impact:** the four numbers appear — and, just as importantly, correctly refuse to appear when the evidence is thin.
 
-**Gap.** No `pyannote`. Attribution compares synthetic numpy vectors.
+**Contract:** `design_rubric_engine.md` §0 and §2–§7.
 
-> **Before writing any code: `pyannote.audio` requires accepting a licence on Hugging Face and a gated access token.** If you do not have one, enter **LOOP 3** and ask. Do not stub around a missing credential — that is exactly how this project got here.
+**Likely split:** (1) Consistency + Specificity, (2) Update Integrity, (3) Even-handedness + significance test, (4) sufficiency gates + Assessment materialisation.
 
 **Implementation**
-1. Declare `pyannote.audio`. Token read from env, never committed.
-2. Implement `Diarizer` producing real speaker turns.
-3. Enrollment stays a deliberate, recorded act: reference embedding from a source where attribution is certain.
-4. Banding unchanged: above `T_high` → `high`; between → `low`, stored, **excluded from scoring**; below `T_low` → discarded.
-5. **Never attribute by turn order** (trap 11).
-6. **Re-measure parameter 004** against real audio. Bias hard toward precision — a missed utterance costs nothing, a misattributed one is the worst bug in the product.
+1. **No LLM runs here** (`design_rubric_engine.md` §0). Every axis is arithmetic and SQL over existing rows. If you are writing *"ask the model whether this is consistent"*, stop.
+2. **Consistency** — hedging-weighted unacknowledged reversals over eligible propositions.
+3. **Specificity** — a **rate**, not a weighted index: `checkable / own-assertion claims`, where checkable means `hedging_level ≤ H_max` AND stance in `{support, oppose}` AND (named entity OR numeric OR temporal anchor). Features from a **pinned NER tagger** + regex, recorded as `nlp_version`. `H_max` is parameter 016 — **measured, and provisional while the corpus is thin.**
+4. **Update Integrity** — `(1.0·acked_with_reason + 0.5·acked_without) / total_changes`. **Zero changes yields `null`, never 1.0.** A person who never changed their mind has demonstrated nothing.
+5. **Even-handedness** — directional alignment over principle conflicts, **then a two-sided binomial test at p=0.5**. Not significant → `null`, reason `pattern_not_significant`, **and show the conflicts as evidence anyway.**
+6. **Per-axis gates**, not one global gate. An Assessment routinely has some axes scored and others null.
+7. **Below a gate, do not compute the number.** Not computed-and-hidden — some future client will render it.
+8. **No composite. Anywhere.** No average, no letter grade. It rebuilds the trust score the project rejected.
+9. Every Assessment records `rubric_version`, `extraction_version`, `detector_version`, `embedding_model`, `nlp_version`.
 
 **Validation**
-- **Two-speaker fixture:** a real clip with two speakers, hand-labelled. Assert zero cross-attribution. ← *stub-proof*
-- Golden case N9 (host asserts X, guest asserts not-X) → **misattribution rate 0**. A gate, not a target.
-- Sub-threshold utterances stored `low` and absent from every score.
+- Axis below gate: assert the stored document contains `null` and **no numeric value anywhere in the record**. ← **(c)**
+- Zero position changes → Update Integrity `null`, not `1.0`.
+- Three same-direction conflicts → `pattern_not_significant`, conflicts still returned as evidence.
+- Grep the whole codebase for a composite/average across axes → zero hits.
+- Every axis score decomposes to the tension ids that produced it.
 
-**Falsify.** Swap the two enrollment embeddings; misattribution must go non-zero on the real fixture.
+**Falsify.** Compute a below-gate score and store it behind a suppression flag. The "no numeric value anywhere" assertion must go RED.
 
-**Blast radius.** `pyproject.toml`, `worker/diarize/`, `fixtures/`, `tests/test_diarize_u7.py`, `worker/__init__.py`, `docs/ongoing_errors.md` §2 (record measured 004).
+**Blast radius.** `worker/rubric/`, `tests/`, `docs/ongoing_errors.md` §2 (record 012/016 as provisional), §3, §6.
 
 ---
 
-## 15. V5 — Real extraction runtime
+## 20. P7 — Local API
 
-**User impact:** claims get extracted by an actual model instead of being handed to the code by a test.
+**User impact:** something outside Python can finally read the corpus.
 
-**Gap.** No backend, no grammar. `mock_output` lets callers supply the answer.
+**Contract:** `design_local_api_and_clients.md`. **§2 (security) is not optional and is now the entire access-control surface** — Issue 015 removed database rules, so there is nothing behind this.
+
+**Likely split:** (1) server + security controls, (2) read endpoints, (3) `POST /resolve`, (4) ingest job endpoints + SSE.
 
 **Implementation**
-1. Declare `llama-cpp-python` (or `mlx-lm`). Model **`gemma-3-27b-it` Q4_K_M**, falling back to `gemma-3-12b-it` if RAM is tight. Record the actual choice in `extraction_version` — it is part of the reproducibility contract.
-2. **Long-lived process** holding model and KV prefix. Never spawn per utterance.
-3. **Real KV prefix reuse.** System prompt prefilled once; per-subject context strictly after it (trap 6).
-4. **Real GBNF grammar** generated from the Pydantic schema via `json_schema_to_grammar.py`. Delete the `raw_json[:-2]` simulation.
-5. Greedy: `temperature=0`, fixed seed.
-6. Remove the `mock_output` parameter from the production path.
-7. Measure real throughput; re-derive the ingest projection from it.
+1. FastAPI. **Bind `127.0.0.1` only** — assert at startup, never `0.0.0.0`.
+2. **Bearer token** generated on first run, stored in the OS keychain.
+3. **Strict CORS** — the extension origin only. **Reject `*` unconditionally**, including in development, where "temporarily" becomes permanent.
+4. Bad token and unknown route return the **same** response, so the API is not a discovery surface.
+5. **No write endpoints** (I8). `POST /ingest` enqueues; it does not write to the claim store.
+6. Endpoints per §3 of the contract. **Every response carrying a score carries its versions.**
+7. **`POST /resolve` — selection-triggered** (Issue 013). Takes `selected_text` + bounded context. Resolves **proposition first**, then topic, then subject-only. Context is for pronoun disambiguation only.
+8. **The I2 boundary, enforced by test:** selected text and context live in a request-scoped buffer, are never written anywhere, and **a proposition is matched, never created.** Treat both as hostile input.
 
 **Validation**
-- **Wall-clock floor:** 100 real completions cannot finish in under a threshold a stub would beat. Assert elapsed time exceeds it. ← *stub-proof, and the assertion whose absence caused the original failure*
-- **Real prefix reuse:** steady-state prefill token counts come from the runtime's own reporting, not `len(text.split())*2`.
-- **1,000 grammar-constrained generations → zero JSON parse failures.**
-- **Grammar is real:** assert the grammar object is constructed from the schema and that an ungrammatical token is rejected by the sampler.
-- Record measured tokens/sec and the derived projection in the commit body.
+- Startup binds loopback; assert a non-loopback bind raises.
+- A request from a disallowed origin is rejected; `*` is never accepted.
+- **After a `/resolve` call, assert zero rows anywhere with `origin = 'page_context'`.** ← **(c)**
+- No route mutates the store — enumerate routes, assert all read-only except the ingest enqueue.
+- A score response without its versions fails schema validation.
 
-**Falsify.** Interpolate the subject name into the system prompt; the prefix-reuse assertion must go RED with a real measurement behind it.
+**Falsify.** Persist the selection text deliberately. The `page_context` assertion must go RED.
 
-**Blast radius.** `pyproject.toml`, `worker/extract/runtime.py`, `worker/extract/smoke.py`, `tests/test_runtime_u9.py`, `worker/__init__.py`, this guide's §3.
+**Blast radius.** `worker/api/`, `pyproject.toml`, `tests/`, J8, §3, §6.
 
 ---
 
-## 16. V6 — Split behaviour fixtures from the golden corpus · *runs THIRD*
+## 21. P8 — Browser extension
 
-**Issue 018 = Option B.** This is no longer a blocked labelling job. It is an unblocked structural fix, and it runs before V2–V5 because every number they report flows through this harness.
+**User impact:** the product exists where you actually read.
 
-**User impact:** a precision figure starts meaning something. Right now `1.000` is printed over sixteen invented sentences, and there is no way for a reader to tell.
+**Contract:** `design_ui_direction.md` §6 (two depths) and §1–§5 (rendering rules); `design_local_api_and_clients.md` §5.
 
-**Gap.** One body of data serves two incompatible purposes. `golden/cases.json` holds 16 hand-written sentences with fabricated locators, and the harness reports rates over them as if they measured quality.
-
-### The distinction to implement
-
-Read `e2e_verification_journeys.md` §2 in full first. The contract in one line: **a fixture may never contribute to a metric, and a corpus case may never be hand-written.**
-
-| | Behaviour fixtures | Golden corpus |
-|---|---|---|
-| Path | `fixtures/behaviour/` | `golden/` |
-| Locator | synthetic, openly so | real `source_id` + span |
-| Output | **PASS / FAIL only** | measured rates |
-| Grows by | a case per fixed regression | labelling as subjects ingest |
+**Likely split:** (1) `tokens.json` + build, (2) selection trigger + `/resolve`, (3) Depth 1 overlay, (4) Depth 2 expanded view.
 
 **Implementation**
-1. **Move the 16 cases** to `fixtures/behaviour/cases.json`. Add `"locator_kind": "synthetic"` to every one, and **drop `verified_by: "curator"`** — a fixture has an author, not a verifier, and the field was misleading.
-2. **Give `golden/` a real schema**: `case_id`, `class`, `subject_id`, `source_id`, `utterance_id`, `span`, `expected_behaviour`, `verified_by`, `verified_at`, `locator_kind: "real"`, plus two fields that exist because of **Issue 019**:
-   - `label_source` — `human` | `model_assisted` | `model_only`
-   - `labeller_model` — the model that pre-labelled, or null
-
-   **A schema-level rule, enforced in the loader: `labeller_model` may never equal the extractor under test.** That is the circularity guard, and it belongs in code rather than in a reviewer's memory. The corpus starts **empty**, and an empty corpus is a correct state, not an error.
-3. **Split the loaders.** `fixtures/behaviour/loader.py` and `golden/loader.py` are separate modules with separate types. **A single function must not be able to return both** — that is what makes the blend structurally impossible rather than merely discouraged.
-4. **Rewrite `worker/golden/report.py` into two reporting blocks that cannot be summed:**
-   ```
-   BEHAVIOUR FIXTURES (regression only — never a quality measure)
-     P1 unacknowledged_reversal ......... PASS
-     N3 steelman ........................ PASS
-     ...                                  16/16 PASS
-
-   GOLDEN CORPUS METRICS
-     Precision .......... NOT MEASURED — n=0, minimum 5
-     Recall ............. NOT MEASURED — n=0, minimum 5
-     N1–N4 guards ....... NOT MEASURED — n=0, minimum 5
-     Misattribution (N9)  NOT MEASURED — n=0, minimum 5
-   ```
-5. **Enforce the per-class floor of 5.** Below it a class prints `NOT MEASURED — n=<k>, minimum 5`. **Aggregate precision is unprintable while any contributing class is below floor** — an aggregate over vacuous classes is itself vacuous.
-6. **Add the parameter readiness report.** This is what converts Option B's "grow it over time" from an intention into a work queue:
-   ```
-   PARAMETER READINESS
-     004 T_high / T_low  NOT MEASURABLE — need 5 N9 cases, have 0
-     008 T_dedup         NOT MEASURABLE — need 5 dedup pairs, have 0   [provisional 0.88]
-     012 sufficiency     NOT MEASURABLE — need 5 N11 cases, have 0
-     016 H_max           NOT MEASURABLE — need 5 hedge-boundary cases, have 0
-   ```
-   Each line names **exactly what to label next** to unblock that parameter. Any parameter with a value while `NOT MEASURABLE` renders it as `[provisional]`, in the report and in the commit body of whatever set it.
+1. **`tokens.json` first** — colour, type scale, spacing, radii — generating the extension's CSS custom properties, and later Dart constants. This is the concrete form of the Issue 002 requirement that the design language stay consistent.
+2. **Selection-triggered.** Fires on highlight. **Never scans on page load.** No toolbar badge, no count — that turns a research tool into an outrage feed.
+3. **Depth 1 overlay:** resolved proposition first (not the person), one quote chosen for contrast, all four axes including nulls, `cite` deep link. Anchored near the selection, dismissible, **never modifies the page.**
+4. **Three non-error states**, visually distinct from failures: proposition matched · topic only · nothing in corpus.
+5. **Depth 2:** full timeline, all axes with evidence, tension cards. Same components, more of the same payloads — **not a second implementation.**
+6. Bearer token in extension storage, unreadable by page scripts.
 
 **Validation**
-- Fixture block prints **PASS/FAIL and no rate whatsoever**. Assert no `%`, no decimal, no ratio appears in that block. ← *load-bearing: this is the assertion that keeps the two bodies apart*
-- Corpus block with an empty corpus prints `NOT MEASURED — n=0`, **not** `0.0` and **not** `1.0`.
-- Add 4 synthetic cases to `golden/` → still `NOT MEASURED`. Add a 5th → a number appears.
-- Assert `golden/loader.py` **rejects** a case with `locator_kind: "synthetic"`, and the fixture loader rejects `"real"`. Type-level separation, not convention.
-- Readiness report names a concrete next action per parameter.
-- **Circularity guard:** a case whose `labeller_model` equals the configured extractor is **rejected by the loader**. Assert it raises.
-- Metrics are reported **split by `label_source`**, so a run can never blend human-verified and model-only cases into one figure.
+- **A `null` axis renders as its reason, never as `0` or an empty bar.** ← **(c)**
+- Every rendered claim shows quote + date + resolvable link (I3).
+- Every score shows its `rubric_version`.
+- No composite score renders anywhere.
+- Page DOM is unmodified after the overlay opens and closes — assert a before/after snapshot.
+- Token is not reachable from page context.
 
-**Falsify.** Point `golden/loader.py` at `fixtures/behaviour/cases.json`. The `locator_kind` rejection must go RED — proving the separation is enforced rather than merely documented. Revert; record both.
+**Falsify.** Render a `null` axis through the numeric path. The null-rendering assertion must go RED.
 
-**Blast radius.** `golden/`, `fixtures/`, `worker/golden/report.py`, `tests/test_golden_harness.py`, `tests/test_phase2_gate_u13.py`, `docs/e2e_verification_journeys.md` §2 and J3, `docs/ongoing_errors.md` §2.
-
-> **Scope boundary.** V6 builds the *structure*: the split, the floor, the readiness report, and the schema fields above. **How the corpus then gets populated is Issue 019 and is not part of V6.** Build the schema so either answer fits; do not build a labelling pipeline until that selection lands.
+**Blast radius.** `extension/`, `tokens.json`, `tests/`, §3, §6, `docs/design_ui_direction.md` if any rendering rule changes.
 
 ---
 
-## 17. Delivered — do NOT rework
-
-Verified in source on August 17, not from commit messages.
-
-- **U0 integrity pass** — all eight checks present under their specified names; `verify_quotes` genuinely bounds-checks against `text_verbatim`; empty input returns `NOT APPLICABLE`, not a fake `PASS`.
-- **U1 DuckDB** — real `vss`, `FLOAT[768]`, HNSW cosine index, `array_cosine_similarity`, deterministic IDs.
-- **U2/U6 adapters** — Protocol plus YouTube, podcast RSS, institutional. Content-hash caching, `citation_url`.
-- **U3 reconciler logic**, **U4 segmentation**, **U10 gate**, **U11 five validators** — real algorithms, real tests.
-- **Falsification discipline** — recorded in every commit body as specified. Keep doing it.
-
-**Accepted equivalents — do not "fix" back:** the `TranscriptionEngine` Protocol + `Mock` implementation split, and `LocalGemmaRuntime`'s shape. Both are better than the spec implied. Keep the mocks as test doubles once real engines land beside them.
-
----
-
-## 18. Invariants — do NOT change
+## 22. Invariants — do NOT change
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -512,41 +609,20 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 
 ---
 
-## 19. LOOP 4 — CLOSE OUT
+## 23. Contracts
 
-```text
-LOOP 4 — CLOSE OUT
-
-Reached only when no item in section 6 is both undelivered and unblocked.
-
-1. Run section 2 one final time. Record the numbers in section 3.
-2. Confirm STUB_REGISTRY is empty, or that every remaining entry maps to a
-   blocked item.
-3. Write a report containing:
-     - what landed this session, with measured numbers
-     - what is blocked, and on which issue number
-     - any new issue you filed via LOOP 3
-4. STOP. Do not invent work.
-
-The only legitimate triggers for resuming are:
-     - a "Your selection:" line gets filled in
-     - a gate in section 3 goes red
-     - the user asks for something specific
-```
+`master_implementation_plan.md` · `design_source_acquisition.md` · `design_claim_extraction.md` · `design_principle_extraction.md` · `design_topic_model.md` · `design_rubric_engine.md` · `design_data_layer.md` · `design_local_api_and_clients.md` · `design_ui_direction.md` · `design_evidence_integrity.md` · `e2e_verification_journeys.md` · `ongoing_errors.md`
 
 ---
 
-## 20. Feedback loop — what the last spec got wrong
-
-Every gap in the previous cycle traces to a spec that tested shape. Fix the spec, not only the code.
+## 24. Feedback loop — what specs here have got wrong
 
 | What happened | Spec said | Should have said |
 |---|---|---|
-| `35.0 t/s` reported as measured | "Record tokens/sec" | "Assert a wall-clock floor a real model cannot beat." |
-| Grammar falsified by string truncation | "Disable the grammar; parse failures appear" | "Assert the grammar is built from the schema and the sampler rejects an ungrammatical token." |
-| Hash function passing as an embedding | "Embed with nomic-embed-text-v1.5" | "Assert two synonyms score above threshold — a test no hash function can pass." |
-| 16 cases reporting 1.000 | "~200 utterances, personally verified" | Same, **plus** a harness that refuses a metric below a per-class floor, **plus** separate loaders so fixtures and corpus cannot be summed. A target alone gets ignored; a structure that makes the mistake impossible does not. |
+| Hardcoded throughput reported as measured | "Record tokens/sec" | "Assert a wall-clock floor a real model cannot beat." |
+| Hash function passed as an embedding | "Embed with nomic-embed" | "Assert two synonyms score above threshold — a test no hash function can pass." |
+| 16 cases reporting `1.000` | "~200 utterances, verified" | Same, **plus** a harness that refuses a metric below a per-class floor. |
 | Undeclared dependencies | *(silent)* | "Dependencies land in `pyproject.toml` in the same commit." |
-| Docs contradicting themselves | *(silent)* | "Update every doc your change invalidates in the same commit." |
+| **Every gate green over an empty corpus** | "J1 green" | **"J1 green *on real ingested data*, with `verify_quotes` PASS on a non-empty set."** A journey signed off against mocks is not signed off. |
 
-**The pattern: shape is exactly what a stub reproduces perfectly. Validation for an integration item must be satisfiable only by the real dependency.**
+**The pattern: shape is what a stub reproduces perfectly, and a green gate over zero rows is the emptiest shape of all.** Validation must be satisfiable only by the real thing, operating on real data.
