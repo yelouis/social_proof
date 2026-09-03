@@ -29,6 +29,7 @@ def test_stub_runtime_tokens_per_second_is_none() -> None:
     assert stats.tokens_per_second is None
 
 
+@pytest.mark.requires_models
 def test_live_mlx_backend_execution_and_throughput() -> None:
     """Tests live local Gemma runtime via MLX backend."""
     runtime = LocalGemmaRuntime(load_live_backend=True)

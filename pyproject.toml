@@ -17,7 +17,6 @@ dependencies = [
     "sentence-transformers>=3.0.0",
     "einops>=0.8.0",
     "faster-whisper>=1.0.0",
-    "mlx-lm>=0.20.0",
     "pyannote.audio>=3.1.0",
     "speechbrain>=1.0.0",
     "fastapi>=0.110.0",
@@ -26,6 +25,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+apple = [
+    "mlx-lm>=0.20.0",
+]
 dev = [
     "pytest>=8.0.0",
     "ruff>=0.5.0",
@@ -70,3 +72,6 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
+markers = [
+    "requires_models: loads a real model; cannot run on a hosted CI runner",
+]

@@ -23,6 +23,8 @@ from worker.ingest import IngestionEngine
 from worker.integrity import verify_anchor_chain, verify_quotes
 from worker.storage import Storage
 
+pytestmark = pytest.mark.requires_models
+
 
 @pytest.fixture
 def clean_ingest_env(tmp_path: Path) -> tuple[Storage, IngestionEngine, PodcastRSSAdapter]:

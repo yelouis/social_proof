@@ -14,6 +14,7 @@ def test_stub_hash_embedding_generates_768_dim_vector() -> None:
     assert len(emb) == 768
 
 
+@pytest.mark.requires_models
 def test_real_embedder_dimension_and_task_prefixes_trap_7() -> None:
     """Tests nomic-embed-text-v1.5 embedding output and task prefix enforcement (Trap 7)."""
     embedder = Embedder()
@@ -32,6 +33,7 @@ def test_real_embedder_dimension_and_task_prefixes_trap_7() -> None:
     assert prefix_diff > 0.01, f"Task prefixes had negligible effect: diff = {prefix_diff}"
 
 
+@pytest.mark.requires_models
 def test_semantic_synonyms_merge_and_antonyms_separate_with_real_embedder(tmp_path: Path) -> None:
     """Synonym test: 'licensing' vs 'permitting' phrasing scores above T_dedup and merges.
 
@@ -73,6 +75,7 @@ def test_dimension_mismatch_raises_at_startup() -> None:
         Embedder(model_instance=FakeModel(), expected_dim=768)
 
 
+@pytest.mark.requires_models
 def test_falsification_dropping_task_prefixes_alters_embedding_geometry() -> None:
     """Falsification test: Dropping task prefixes causes prefix distinction check to fail."""
     embedder = Embedder()

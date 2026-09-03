@@ -29,6 +29,8 @@ from worker.integrity import (
 from worker.storage import Storage
 from worker.transcribe.engine import AudioSegment
 
+pytestmark = pytest.mark.requires_models
+
 
 @pytest.fixture
 def panel_env(tmp_path: Path) -> tuple[Storage, IngestionEngine, PodcastRSSAdapter, list[Subject]]:

@@ -9,9 +9,6 @@ import time
 from dataclasses import dataclass
 from typing import Any
 
-from mlx_lm import generate as mlx_generate
-from mlx_lm import load as mlx_load
-
 from worker.extract.schema import ExtractionResult
 
 # Stable system prompt (~2000 tokens) prefilled once and held in KV cache.
@@ -41,6 +38,16 @@ class MLXGemmaBackend:
     """Live MLX backend for Gemma local inference on Apple Silicon."""
 
     def __init__(self, model_id: str = "mlx-community/gemma-2-2b-it-4bit") -> None:
+        try:
+            from mlx_lm import generate as mlx_generate
+            from mlx_lm import load as mlx_load
+        except ImportError as err:
+            raise ImportError(
+                "mlx-lm is required for Apple Silicon model inference. "
+                'Install it with: pip install -e ".[apple]"'
+            ) from err
+
+        self.mlx_generate = mlx_generate
         self.model_id = model_id
         loaded = mlx_load(model_id)
         self.model = loaded[0]
@@ -53,7 +60,7 @@ class MLXGemmaBackend:
         temperature: float = 0.0,
     ) -> tuple[str, float, int, int]:
         start = time.perf_counter()
-        raw_output = mlx_generate(
+        raw_output = self.mlx_generate(
             self.model,
             self.tokenizer,
             prompt=prompt,
@@ -91,14 +98,26 @@ class LocalGemmaRuntime:
         if backend is not None:
             self.backend = backend
         elif load_live_backend:
-            self.backend = MLXGemmaBackend()
+            self.backend = self._load()
         else:
+            if not isinstance(self, MockLocalGemmaRuntime):
+                try:
+                    import mlx_lm  # noqa: F401
+                except ImportError as err:
+                    raise ImportError(
+                        "mlx-lm is required for Apple Silicon model inference. "
+                        'Install it with: pip install -e ".[apple]"'
+                    ) from err
             self.backend = None
 
         # Initialize KV prefix cache
         self.prefix_tokens_count = len(system_prompt.split()) * 2  # Approx token count (~200 tokens)
         self.kv_prefix_cached = True
         self.calls_count = 0
+
+    def _load(self) -> MLXGemmaBackend:
+        """Loads live MLX backend for model inference."""
+        return MLXGemmaBackend(self.model_id)
 
     def has_backend(self) -> bool:
         """Capability probe: returns True if a real local model backend is loaded."""

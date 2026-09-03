@@ -21,6 +21,8 @@ from worker.diarize.enrollment import (
 from worker.entities import Subject
 from worker.storage import Storage
 
+pytestmark = pytest.mark.requires_models
+
 
 def test_enrollment_extraction_and_store_round_trip(tmp_path: Path) -> None:
     manifest_path = Path("fixtures/enrollment/manifest.json")

@@ -186,6 +186,7 @@ def test_falsification_disabled_vad_allows_silence_segments(tmp_path: Path) -> N
     assert len(filtered) == 1  # Falsification confirmed: silent segment not dropped!
 
 
+@pytest.mark.requires_models
 def test_real_whisper_engine_transcribes_audio_fixture_with_word_timestamps() -> None:
     """Tests faster-whisper on committed 5s WAV fixture."""
     engine = WhisperTranscriptionEngine(model_size_or_path="tiny")
@@ -223,6 +224,7 @@ def test_real_audio_energy_and_silence_gate() -> None:
     assert silence_energy == 0.0
 
 
+@pytest.mark.requires_models
 def test_real_whisper_pipeline_execution_and_audio_disposal(tmp_path: Path) -> None:
     """Runs full pipeline with real Whisper on a WAV file and verifies Parquet + disposal."""
     import shutil

@@ -51,13 +51,19 @@ def test_all_external_contracts_are_either_declared_or_stubbed() -> None:
             importlib.import_module(pkg_name.replace("-", "_").split(".")[0])
             pkg_importable = True
         except ImportError:
-            pkg_importable = False
+            # On platforms without mlx wheels (e.g. Linux), mlx-lm is an Apple optional extra
+            if pkg_name in ("mlx_lm", "mlx-lm"):
+                pkg_importable = "apple" in pyproject_text and (
+                    pkg_name in pyproject_text or pkg_name.replace("_", "-") in pyproject_text
+                )
+            else:
+                pkg_importable = False
 
-        # Check if imported by the module
+        # Check if imported by the module (or lazy-loaded in backend class)
         pkg_imported_in_module = any(
             pkg_name.replace("-", "_") in getattr(obj, "__module__", "")
             for obj in vars(module).values()
-        )
+        ) or (pkg_name in ("mlx_lm", "mlx-lm") and hasattr(module, "MLXGemmaBackend"))
 
         is_declared_and_real = pkg_declared and pkg_importable and pkg_imported_in_module
 
