@@ -484,7 +484,7 @@ Mark model-dependent tests `@pytest.mark.requires_models`.
 - Pros: the real suite, in CI, including models.
 - Cons: your laptop becomes build infrastructure; a 10-minute suite on every push; secrets and a runner daemon to maintain. Heavy for a single-user project.
 
-Your selection: _____
+Your selection: Proceed with Option B.
 
 ---
 
@@ -550,6 +550,8 @@ Selections live with their issue above in the user's own wording. This is the in
 | **021** | **B**, refined to the four All-In hosts | Subjects for I0. Musk named but subsequently deferred by 023. |
 | **022** | **A** — `SourceSubjectRole` join | `tier`/`venue_type`/`audience_stance`/`is_adversarial` move off `Source` onto a per-(source, subject) row. Adapter `tier` class attribute becomes `role(ref, subject)`. New integrity check `verify_role_coverage`. Scheduled as **S0, ahead of I0**, because the corpus is empty and this is the cheapest the migration will ever be. |
 | **023** | **A** — defer Musk | Out of the queue until X ingest exists. His primary medium is deferred, and a long-form-only corpus would pass the sufficiency gate while measuring a skewed slice — I5 gates on volume, not composition. Side effect: with no guests in scope, 022 stops blocking I0. |
+
+| **024** | **B** — portability workflow | `mlx-lm` becomes an optional `apple` extra with a lazy import; workflow renamed `portability` and scoped to install + lint + types + non-model tests. The rename is the honest part: a badge reading CI implies coverage it cannot have. Queued as **C0**. Also unblocks the roadmap's rented-Linux-GPU ingest step, which a hard `mlx-lm` dependency made impossible. |
 
 ### What Phases 0–2 actually delivered
 

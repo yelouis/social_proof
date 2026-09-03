@@ -4,9 +4,9 @@
 
 Do not read this end to end and improvise. **Go to §1, run LOOP 0, let it route you.**
 
-**Where the project is.** The V-queue is complete — every external model is real and wired (`STUB_REGISTRY` is empty). But **nothing has ever been ingested.** There is no `.duckdb` file, no artifact store, and the golden corpus holds zero cases. Every model works in a test and none has processed a real human being.
+**Where the project is.** Every external model is real and wired (`STUB_REGISTRY` empty). F0, S0, I0.1–I0.2 and P3–P7 have landed. **But the ingest silently failed on 3 of 4 sources and deleted their audio**, and the golden corpus is still empty — so every detector above the corpus is unproven. Verified against the live database on September 2, 2026, not read from a status table.
 
-**What that means for you.** The next item is **I0 — the first real ingest.** Before it sits **F0**, a fixture repair without which P4 and P5 cannot be validated at all. Everything after (Phases 3–8) is unbuilt and specced in §15–§22.
+**What that means for you.** Read §3 before anything else: **CI is red and the corpus is broken.** Three of four ingested sources produced zero utterances and had their audio deleted anyway, so no proposition in the store carries opposing stances at different dates — meaning **P3–P7 are delivered as code and have never met data capable of contradicting itself.** The next item is **R0** (§17), which repairs that and adds the guard that would have caught it. Then **C0** (§18).
 
 **Every number, threshold, field name and literal string in the design docs is deliberate. Implement as written.** Where a doc says a value must be *measured* (`ongoing_errors.md` §2), measure it.
 
@@ -119,6 +119,7 @@ Measured September 2, 2026. Re-run via §2 before trusting.
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
 | `worker.integrity --all` | **PASS** — 9 checks | Genuine, but note what it does *not* check: a source that produced nothing is not an orphan, so the pass stays green over a failed ingest. R0 adds the missing check. |
 | `worker.golden.report` | **PASS** | Fixtures 19/19 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
+| **CI** | **RED** | `mlx` has no Linux wheels; install dies in 9s. Issue 024 = B selected; fixed by **C0**. |
 | **Corpus** | **POPULATED BUT BROKEN** | `social_proof.duckdb` exists, but **3 of 4 sources yielded zero utterances while being marked `ingested_at` AND `audio_deleted_at`** — a silent failure with data loss. The 4th covers 5 min of a ~90 min episode. All 15 claims are from one day with one stance each, so **no tension is structurally possible.** See R0 (§16). |
 
 ---
@@ -163,12 +164,13 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 | 2 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | **Do it now, while the corpus is empty.** Zero rows to migrate today; after I0 it is real data. Cheapest moment this schema change will ever have. |
 | 3 | **I0** | First real ingest — the four All-In hosts | none | **PARTIAL — I0.3 regressed** | I0.1/I0.2 hold. **I0.3 did not deliver**: 3 of 4 episodes produced zero utterances and had their audio deleted anyway. Superseded by R0. |
 | 4 | **R0** | Repair the ingest; add the productivity guard | none | **outstanding** | **Next.** Data loss is already done and bounded; the guard stops it recurring, and the re-ingest is what finally gives P4 something a tension could live in. |
-| 5 | **P4** | Tension detection | none | **delivered, UNVALIDATED** | **The thesis.** Core contradiction and update detection in DuckDB SQL with full-interval acknowledgement search (trap 2). |
-| 6 | **P3** | Topic model | none | **delivered, UNVALIDATED** | HDBSCAN clustering, free-text resolution with search_query: prefix, cluster expansion, and cache provenance. |
-| 7 | **P5** | Principle extraction | none | **delivered, UNVALIDATED** | Mechanical join over shared principles with opposing verdicts, stated distinction escape hatch, and actor resolution floor. |
-| 8 | **P6** | Rubric engine | none | **delivered, UNVALIDATED** | Deterministic arithmetic over four axes, per-axis sufficiency gating, no composite trust score, and binomial significance. |
-| 9 | **P7** | Local API | none | **delivered** | Loopback binding (127.0.0.1), Bearer token, strict CORS, selection-triggered /resolve with zero page-context storage, 409 comparison guard. |
-| 10 | **P8** | Browser extension | none | outstanding | The only client (Issue 002). Selection-triggered (Issue 013). |
+| 5 | **C0** | Portability workflow; `mlx-lm` as an optional extra (Issue 024 = B) | none | **outstanding** | Independent of R0 — either order works, R0 first on impact. Unblocks the rented-Linux-GPU path in the roadmap, which a hard `mlx-lm` dependency currently makes impossible. |
+| 6 | **P4** | Tension detection | none | **delivered, UNVALIDATED** | **The thesis.** Core contradiction and update detection in DuckDB SQL with full-interval acknowledgement search (trap 2). |
+| 7 | **P3** | Topic model | none | **delivered, UNVALIDATED** | HDBSCAN clustering, free-text resolution with search_query: prefix, cluster expansion, and cache provenance. |
+| 8 | **P5** | Principle extraction | none | **delivered, UNVALIDATED** | Mechanical join over shared principles with opposing verdicts, stated distinction escape hatch, and actor resolution floor. |
+| 9 | **P6** | Rubric engine | none | **delivered, UNVALIDATED** | Deterministic arithmetic over four axes, per-axis sufficiency gating, no composite trust score, and binomial significance. |
+| 10 | **P7** | Local API | none | **delivered** | Loopback binding (127.0.0.1), Bearer token, strict CORS, selection-triggered /resolve with zero page-context storage, 409 comparison guard. |
+| 11 | **P8** | Browser extension | none | outstanding | The only client (Issue 002). Selection-triggered (Issue 013). |
 
 > **P3–P7 are delivered as code and unvalidated as behaviour.** They run, they pass their fixture tests, and they produce **zero** tensions, principles and assessments over the live corpus — because that corpus cannot contain one (§17). Do not read their green status as evidence the detectors work. R0 is what makes that question answerable.
 
@@ -517,7 +519,55 @@ The consequence for everything above it: all 15 claims share one date and one st
 
 ---
 
-## 18. I0 — First real ingest · **subjects selected (Issue 021 = B)**
+## 18. C0 — Portability workflow; `mlx-lm` as an optional extra · *Issue 024 = B*
+
+**User impact:** the project can be installed on a machine that is not your Mac — which is what the roadmap's rented-GPU ingest step requires, and what it currently cannot do.
+
+**Gap.** `mlx-lm>=0.20.0` is a hard dependency in `pyproject.toml`, and `mlx` publishes **no Linux wheels at all**:
+
+```
+$ pip download mlx --platform manylinux2014_x86_64 --only-binary=:all:
+ERROR: Could not find a version that satisfies the requirement mlx (from versions: none)
+```
+
+So `pip install -e ".[dev]"` fails during resolution on any non-Apple machine — the 9-second CI failure. Two consequences, and the second is the one that matters: the workflow is red, **and the package cannot be installed on the Linux/CUDA boxes the scaling path depends on.**
+
+**Implementation**
+1. **Move `mlx-lm` to an optional extra:**
+   ```toml
+   [project.optional-dependencies]
+   apple = ["mlx-lm>=0.20.0"]
+   ```
+   Base install becomes portable; `pip install -e ".[apple]"` is what you run on the Mac.
+2. **Lazy-import mlx inside the runtime.** `worker/extract/runtime.py` must import cleanly with mlx absent — the import moves inside `LocalGemmaRuntime.__init__` or a `_load()`. Missing mlx raises a message naming the fix verbatim: `pip install -e ".[apple]"`. **Do not fall back to a stub** (trap 19); the correct behaviour is a clear failure.
+3. **Register and apply a pytest marker.** In `[tool.pytest.ini_options]`:
+   ```toml
+   markers = ["requires_models: loads a real model; cannot run on a hosted CI runner"]
+   ```
+   Then mark **every** test that loads MLX, faster-whisper, ECAPA-TDNN or `sentence-transformers`.
+4. **Rename the workflow `ci.yml` → `portability.yml`, and its `name:` to `portability`.** This is not cosmetic. A badge reading **CI** implies everything passed; one reading **portability** claims exactly what it verified — the same discipline the fixture/corpus split applies to metrics. A partial green badge is only honest when it is named for its scope.
+5. Workflow steps, and nothing more:
+   ```yaml
+   - pip install -e ".[dev]"          # the real check: does it install off-Mac?
+   - ruff check worker/ tests/
+   - mypy worker/
+   - pytest -m "not requires_models"
+   ```
+
+**Validation**
+- **The `portability` workflow goes green on GitHub.** ← **(c)** *This one is unusual and worth naming: it cannot be verified locally, because the thing being tested is behaviour on a machine you do not have. Push it and read the result. A local pass proves nothing here — that is the entire point of the item.*
+- `pytest -m requires_models` selects a **non-empty** set. *Registering the marker and never applying it would leave the fast suite silently running everything;* this assertion catches that.
+- `pytest -m "not requires_models"` completes in **well under a minute** — the runtime is the evidence no model loaded (trap 18, inverted).
+- `python -c "import worker.extract.runtime"` succeeds with mlx uninstalled; instantiating `LocalGemmaRuntime` then raises an error whose text contains `.[apple]`.
+- `grep -c "mlx" pyproject.toml` shows it only under `optional-dependencies`.
+
+**Falsify.** Move `mlx-lm` back to hard dependencies and push. The workflow must go RED again. Then strip the `requires_models` mark from one model test and confirm the fast suite's runtime jumps — proving the marks are load-bearing rather than decorative. Revert both; record all four outcomes.
+
+**Blast radius.** `pyproject.toml`, `.github/workflows/` (rename), `worker/extract/runtime.py`, every model-loading test, `README.md` if it carries a badge, §3 baseline (add a CI row), §6 queue.
+
+---
+
+## 19. I0 — First real ingest · **subjects selected (Issue 021 = B)**
 
 **Subjects:** Chamath Palihapitiya, David Sacks, Jason Calacanis, David Friedberg — the four All-In hosts. **Primary source:** the All-In Podcast.
 
@@ -602,7 +652,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 19. P4 — Tension detection
+## 20. P4 — Tension detection
 
 **User impact:** the product's core claim starts working — *here are two things you said that cannot both be your view.*
 
@@ -632,7 +682,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 20. P3 — Topic model
+## 21. P3 — Topic model
 
 **User impact:** you can ask about any topic in your own words and get that person's record on it.
 
@@ -659,7 +709,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 21. P5 — Principle extraction
+## 22. P5 — Principle extraction
 
 **User impact:** the system can spot a double standard — the same principle applied to one person and not another.
 
@@ -688,7 +738,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 22. P6 — Rubric engine
+## 23. P6 — Rubric engine
 
 **User impact:** the four numbers appear — and, just as importantly, correctly refuse to appear when the evidence is thin.
 
@@ -720,7 +770,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 23. P7 — Local API
+## 24. P7 — Local API
 
 **User impact:** something outside Python can finally read the corpus.
 
@@ -751,7 +801,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 24. P8 — Browser extension
+## 25. P8 — Browser extension
 
 **User impact:** the product exists where you actually read.
 
@@ -781,7 +831,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 25. Deferred — designed for, not queued
+## 26. Deferred — designed for, not queued
 
 **Elon Musk (Issue 023 = A).** Out of scope until X/Twitter ingest exists. **Trigger:** an `XAPIAdapter` or `XArchiveImportAdapter` lands behind the `SourceAdapter` Protocol and a Musk corpus can be assembled that includes his primary medium. Until then, ingesting him would produce a confident score over a systematically skewed slice, and **invariant I5 would not catch it** — it gates on volume, not composition (trap 24).
 
@@ -791,7 +841,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 26. Invariants — do NOT change
+## 27. Invariants — do NOT change
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -799,13 +849,13 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 
 ---
 
-## 27. Contracts
+## 28. Contracts
 
 `master_implementation_plan.md` · `design_source_acquisition.md` · `design_claim_extraction.md` · `design_principle_extraction.md` · `design_topic_model.md` · `design_rubric_engine.md` · `design_data_layer.md` · `design_local_api_and_clients.md` · `design_ui_direction.md` · `design_evidence_integrity.md` · `e2e_verification_journeys.md` · `ongoing_errors.md`
 
 ---
 
-## 28. Feedback loop — what specs here have got wrong
+## 29. Feedback loop — what specs here have got wrong
 
 | What happened | Spec said | Should have said |
 |---|---|---|
