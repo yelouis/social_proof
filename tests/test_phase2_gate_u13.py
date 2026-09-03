@@ -137,7 +137,8 @@ def test_phase_2_gate_behaviour_fixtures_regression() -> None:
     detector = VerifiedRuleDetector()
     results = evaluate_behaviour_fixtures(detector, cases)
 
-    assert len(results) == 16
+    assert len(results) == len(cases)
+    assert len(results) == 19
     assert all(r.passed for r in results)
 
 

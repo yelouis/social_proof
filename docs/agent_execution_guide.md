@@ -115,10 +115,10 @@ Measured August 17, 2026. Re-run via §2 before trusting.
 |---|---|---|
 | `ruff check` | **PASS** | |
 | `mypy --strict` | **PASS** — 46 files | |
-| `pytest tests/ -q` | **PASS** — 78 passed, **~35s** | The runtime is the evidence: real models load. A sub-5s run means mocks crept back. |
+| `pytest tests/ -q` | **PASS** — 83 passed, **~22s** | The runtime is the evidence: real models load. A sub-5s run means mocks crept back. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
 | `worker.integrity --all` | **PASS** — 8 checks | Correct logic. **Zero real rows to check.** |
-| `worker.golden.report` | **PASS** | Fixtures 16/16. Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
+| `worker.golden.report` | **PASS** | Fixtures 19/19 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
 | **Corpus** | **EMPTY** | No database, no artifacts. This is what I0 fixes. |
 
 ---
@@ -154,11 +154,11 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 | Order | ID | Item | Blocked | Status | Why here |
 |---|---|---|---|---|---|
-| 1 | **F0** | Repair the behaviour fixture set | none | **outstanding** | **P4 and P5 cannot be validated without this.** 8 pair-type fixtures are single undated sentences; N6, N9 and N11 do not exist. Cheap, and doing it later means P4 starts and immediately stalls. |
+| 1 | **F0** | Repair the behaviour fixture set | none | **delivered** | **P4 and P5 cannot be validated without this.** 8 pair-type fixtures are single undated sentences; N6, N9 and N11 do not exist. Cheap, and doing it later means P4 starts and immediately stalls. |
 | 2 | **I0** | First real ingest, end to end | none | **outstanding** | Every model is wired and none has touched a real source. Until this lands, every gate is green over nothing. |
-| 3 | **P4** | Tension detection | F0, I0 | outstanding | **The thesis.** If contradiction detection doesn't work on real data, everything above it is moot. De-risk first. Needs claims, not topics. |
+| 3 | **P4** | Tension detection | I0 | outstanding | **The thesis.** If contradiction detection doesn't work on real data, everything above it is moot. De-risk first. Needs claims, not topics. |
 | 4 | **P3** | Topic model | I0 | outstanding | Slices the corpus for the rubric and backs `/resolve`'s topic fallback. |
-| 5 | **P5** | Principle extraction | F0, P4 | outstanding | Highest-risk component. Reuses P4's pair-detection shape. |
+| 5 | **P5** | Principle extraction | P4 | outstanding | Highest-risk component. Reuses P4's pair-detection shape. |
 | 6 | **P6** | Rubric engine | P3, P4, P5 | outstanding | Aggregates everything below into four axes. |
 | 7 | **P7** | Local API | P6 | outstanding | One contract, all clients. |
 | 8 | **P8** | Browser extension | P7 | outstanding | The only client (Issue 002). Selection-triggered (Issue 013). |

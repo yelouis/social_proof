@@ -42,6 +42,16 @@ Under Option B this accumulates **as subjects are ingested** rather than blockin
 
 At least one per class, more when a bug is found. **A fixture is added every time a regression is fixed** — that is the mechanism by which this set stays useful rather than ossifying.
 
+### Schema — behaviour fixtures
+
+Every behaviour fixture case carries `utterances: [...]`, with uniform shape across both single- and multi-utterance cases:
+- `text`: verbatim utterance text
+- `recorded_at`: ISO 8601 timestamp string (e.g. `2024-03-02T18:00:00Z`). Loader enforces presence and ISO 8601 validity on every utterance.
+- `span`: character offsets `[start, end]`
+- Optional utterance metadata: `speaker`, `venue_type` (`friendly` / `adversarial`), `audience_stance`, `hedging_level`, `condition`, `stated_distinction`, `published_at`, `change_marker`.
+
+Single-utterance classes (`N1–N4`, `N10`, `N13`) carry a one-element list. Pair and sequence classes (`P1–P4`, `N5–N9`, `N11–N12`) carry two or more utterances (`N11` requires at least 6). The loader rejects any pair-type fixture with fewer than 2 utterances.
+
 ### Composition — the negatives are the important half
 
 A corpus of only true contradictions measures recall and tells you nothing about false-positive rate, which is the failure mode that matters here.

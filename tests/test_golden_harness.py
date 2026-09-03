@@ -1,10 +1,11 @@
 import json
 import re
+from datetime import datetime
 from pathlib import Path
 
 import pytest
 
-from fixtures.behaviour.loader import load_behaviour_cases
+from fixtures.behaviour.loader import ALL_BEHAVIOUR_CLASSES, PAIR_TYPE_CLASSES, load_behaviour_cases
 from golden.loader import GoldenCase, load_golden_cases
 from worker.golden.report import (
     VerifiedRuleDetector,
@@ -17,13 +18,13 @@ from worker.golden.report import (
 def test_behaviour_fixtures_load_and_run_binary_regression() -> None:
     """Behaviour fixtures evaluate binary PASS/FAIL regression with zero quality percentages."""
     cases = load_behaviour_cases()
-    assert len(cases) == 16
+    assert len(cases) == 19
     for c in cases:
         assert c.locator_kind == "synthetic"
 
     detector = VerifiedRuleDetector()
     results = evaluate_behaviour_fixtures(detector, cases)
-    assert len(results) == 16
+    assert len(results) == 19
     assert all(r.passed for r in results)
 
     # Full report verification
@@ -34,6 +35,110 @@ def test_behaviour_fixtures_load_and_run_binary_regression() -> None:
     assert "%" not in fixture_section
     assert not re.search(r"\b0\.\d+\b", fixture_section)
     assert not re.search(r"\b1\.\d+\b", fixture_section)
+    assert "Result: 19/19 PASS" in fixture_section
+
+
+def test_all_17_classes_present_in_behaviour_fixtures() -> None:
+    """All 17 case classes must be present in behaviour fixtures per e2e_verification_journeys.md §2."""
+    cases = load_behaviour_cases()
+    present_classes = {c.type for c in cases}
+    assert present_classes == ALL_BEHAVIOUR_CLASSES
+    assert len(ALL_BEHAVIOUR_CLASSES) == 17
+
+
+def test_loader_rejects_missing_recorded_at(tmp_path: Path) -> None:
+    """Loader rejects any case whose utterances lack recorded_at."""
+    bad_data = [
+        {
+            "case_id": "bad_case",
+            "type": "N1",
+            "subject_id": "subj_01",
+            "source_locator": "https://example.com/s",
+            "utterances": [
+                {
+                    "text": "Some text",
+                    "span": [0, 9],
+                }
+            ],
+            "expected_behaviour": "excluded",
+            "locator_kind": "synthetic",
+        }
+    ]
+    bad_file = tmp_path / "bad_cases.json"
+    bad_file.write_text(json.dumps(bad_data), encoding="utf-8")
+    with pytest.raises(ValueError, match="lacks required 'recorded_at'"):
+        load_behaviour_cases(bad_file)
+
+
+def test_loader_rejects_pair_case_with_fewer_than_two_utterances(tmp_path: Path) -> None:
+    """Loader rejects any pair-type case carrying fewer than two utterances."""
+    for pair_type in ["P1", "P2", "P3", "P4", "N5", "N7", "N8", "N12"]:
+        assert pair_type in PAIR_TYPE_CLASSES
+        bad_data = [
+            {
+                "case_id": f"bad_{pair_type}",
+                "type": pair_type,
+                "subject_id": "subj_01",
+                "source_locator": "https://example.com/s",
+                "utterances": [
+                    {
+                        "text": "Single utterance only",
+                        "recorded_at": "2024-01-01T10:00:00Z",
+                        "span": [0, 21],
+                    }
+                ],
+                "expected_behaviour": "unacknowledged_reversal",
+                "locator_kind": "synthetic",
+            }
+        ]
+        bad_file = tmp_path / f"bad_{pair_type}.json"
+        bad_file.write_text(json.dumps(bad_data), encoding="utf-8")
+        with pytest.raises(ValueError, match="requires at least 2 utterances"):
+            load_behaviour_cases(bad_file)
+
+
+def test_loader_rejects_thin_corpus_case_with_fewer_than_six_utterances(tmp_path: Path) -> None:
+    """Loader rejects any N11 thin-corpus case carrying fewer than six utterances."""
+    bad_data = [
+        {
+            "case_id": "bad_n11",
+            "type": "N11",
+            "subject_id": "subj_01",
+            "source_locator": "https://example.com/s",
+            "utterances": [
+                {
+                    "text": f"Claim number {i}",
+                    "recorded_at": f"2024-0{i+1}-01T10:00:00Z",
+                    "span": [0, 14],
+                }
+                for i in range(5)
+            ],
+            "expected_behaviour": "insufficient_corpus",
+            "locator_kind": "synthetic",
+        }
+    ]
+    bad_file = tmp_path / "bad_n11.json"
+    bad_file.write_text(json.dumps(bad_data), encoding="utf-8")
+    with pytest.raises(ValueError, match="requires at least 6 utterances"):
+        load_behaviour_cases(bad_file)
+
+
+def test_utterances_orderable_and_p2_marker_in_interval() -> None:
+    """Utterances within every case are orderable by recorded_at, and P2's marker is in the interval."""
+    cases = load_behaviour_cases()
+    for c in cases:
+        for u in c.utterances:
+            dt = datetime.fromisoformat(u.recorded_at.replace("Z", "+00:00"))
+            assert dt is not None
+
+    p2 = next(c for c in cases if c.type == "P2")
+    assert len(p2.utterances) >= 3
+    t1 = datetime.fromisoformat(p2.utterances[0].recorded_at.replace("Z", "+00:00"))
+    marker_utts = [u for u in p2.utterances if u.change_marker]
+    assert len(marker_utts) == 1
+    t_marker = datetime.fromisoformat(marker_utts[0].recorded_at.replace("Z", "+00:00"))
+    t2 = datetime.fromisoformat(p2.utterances[-1].recorded_at.replace("Z", "+00:00"))
+    assert t1 < t_marker < t2
 
 
 def test_golden_corpus_empty_reports_not_measured_never_zero_or_one() -> None:

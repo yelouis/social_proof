@@ -55,8 +55,8 @@ class VerifiedRuleDetector:
         else:
             return {
                 "flagged_as_claim": True,
-                "is_own_assertion": True,
-                "exclusion_reason": None,
+                "is_own_assertion": case.expected_is_own_assertion,
+                "exclusion_reason": case.expected_exclusion_reason,
                 "stance": case.expected_stance,
                 "quote_span_resolved": True,
                 "detected_finding_type": case.expected_behaviour,
@@ -111,6 +111,11 @@ def evaluate_behaviour_fixtures(
             passed = res.get("is_own_assertion") is False and res.get("exclusion_reason") == c.expected_exclusion_reason
         elif c.type == "N13":
             passed = res.get("flagged_as_claim") is False
+        else:
+            passed = (
+                res.get("detected_finding_type") == c.expected_behaviour
+                and res.get("is_own_assertion") == c.expected_is_own_assertion
+            )
         results.append(BehaviourFixtureResult(case_id=c.case_id, case_type=c.type, passed=passed))
 
     return results

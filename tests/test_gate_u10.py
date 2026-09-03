@@ -9,10 +9,11 @@ def test_gate_zero_false_negatives_on_golden_positives() -> None:
     positive_cases = [c for c in cases if c.type in ["P1", "P2", "P3", "P4"]]
 
     for case in positive_cases:
-        decision = gate.evaluate_text(case.text_snippet)
-        assert decision.should_extract is True, (
-            f"Gate falsely rejected positive case {case.case_id}: '{case.text_snippet}'"
-        )
+        for utt in case.utterances:
+            decision = gate.evaluate_text(utt.text)
+            assert decision.should_extract is True, (
+                f"Gate falsely rejected positive case {case.case_id} utterance: '{utt.text}'"
+            )
 
 
 def test_gate_filters_conversational_filler_n13() -> None:

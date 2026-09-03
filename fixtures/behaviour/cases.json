@@ -4,8 +4,34 @@
     "type": "P1",
     "subject_id": "subj_golden_01",
     "source_locator": "https://youtube.com/watch?v=golden_p1",
-    "text_snippet": "We must mandate federal licensing for all large frontier models.",
-    "span": [0, 62],
+    "utterances": [
+      {
+        "text": "Federal licensing for frontier compute models is unnecessary and harmful government overreach.",
+        "recorded_at": "2022-03-10T14:00:00Z",
+        "span": [0, 95],
+        "speaker": "subj_golden_01",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2022-03-11T10:00:00Z",
+        "change_marker": false
+      },
+      {
+        "text": "We must mandate federal licensing for all large frontier models immediately.",
+        "recorded_at": "2024-06-20T10:00:00Z",
+        "span": [0, 75],
+        "speaker": "subj_golden_01",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-06-20T12:00:00Z",
+        "change_marker": false
+      }
+    ],
     "expected_behaviour": "unacknowledged_reversal",
     "expected_exclusion_reason": null,
     "expected_stance": "support",
@@ -18,8 +44,47 @@
     "type": "P2",
     "subject_id": "subj_golden_01",
     "source_locator": "https://youtube.com/watch?v=golden_p2",
-    "text_snippet": "I used to think open weights were reckless, but watching the last two years changed my mind because diffusion won.",
-    "span": [0, 114],
+    "utterances": [
+      {
+        "text": "Releasing open weights for large models is reckless and endangers public safety.",
+        "recorded_at": "2021-05-12T09:00:00Z",
+        "span": [0, 79],
+        "speaker": "subj_golden_01",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2021-05-12T12:00:00Z",
+        "change_marker": false
+      },
+      {
+        "text": "I used to think open weights were reckless, but watching the last two years changed my mind because diffusion won.",
+        "recorded_at": "2023-02-14T11:30:00Z",
+        "span": [0, 114],
+        "speaker": "subj_golden_01",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.10,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2023-02-15T09:00:00Z",
+        "change_marker": true
+      },
+      {
+        "text": "Open weight foundation models are essential infrastructure for scientific progress.",
+        "recorded_at": "2024-08-10T16:00:00Z",
+        "span": [0, 83],
+        "speaker": "subj_golden_01",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-08-10T18:00:00Z",
+        "change_marker": false
+      }
+    ],
     "expected_behaviour": "acknowledged_update",
     "expected_exclusion_reason": null,
     "expected_stance": "support",
@@ -32,8 +97,42 @@
     "type": "P3",
     "subject_id": "subj_golden_02",
     "source_locator": "https://youtube.com/watch?v=golden_p3",
-    "text_snippet": "Senator Alvarez knowingly misled the oversight committee and should resign immediately.",
-    "span": [0, 87],
+    "utterances": [
+      {
+        "text": "Senator Alvarez knowingly misled the oversight committee and should resign immediately.",
+        "recorded_at": "2023-04-10T10:00:00Z",
+        "span": [0, 87],
+        "speaker": "subj_golden_02",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2023-04-10T11:00:00Z",
+        "change_marker": false,
+        "extra": {
+          "actor": "Senator Alvarez",
+          "verdict": "condemn"
+        }
+      },
+      {
+        "text": "Director Hayes made misleading statements to oversight, but that is standard administrative politics and resignation is completely out of the question.",
+        "recorded_at": "2023-09-15T15:00:00Z",
+        "span": [0, 151],
+        "speaker": "subj_golden_02",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2023-09-15T16:00:00Z",
+        "change_marker": false,
+        "extra": {
+          "actor": "Director Hayes",
+          "verdict": "exonerate"
+        }
+      }
+    ],
     "expected_behaviour": "principle_conflict",
     "expected_exclusion_reason": null,
     "expected_stance": "support",
@@ -46,8 +145,34 @@
     "type": "P4",
     "subject_id": "subj_golden_01",
     "source_locator": "https://youtube.com/watch?v=golden_p4",
-    "text_snippet": "Under hostile questioning: I have never supported federal licensing of compute.",
-    "span": [27, 79],
+    "utterances": [
+      {
+        "text": "Mandatory federal registration of high-capacity compute clusters is a sensible safeguard we should pass.",
+        "recorded_at": "2024-03-02T18:00:00Z",
+        "span": [0, 104],
+        "speaker": "subj_golden_01",
+        "venue_type": "friendly",
+        "audience_stance": "support",
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-03-02T20:00:00Z",
+        "change_marker": false
+      },
+      {
+        "text": "Under hostile questioning: I have never supported federal licensing or registration of compute.",
+        "recorded_at": "2024-03-06T14:00:00Z",
+        "span": [27, 95],
+        "speaker": "subj_golden_01",
+        "venue_type": "adversarial",
+        "audience_stance": "oppose",
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-03-06T15:00:00Z",
+        "change_marker": false
+      }
+    ],
     "expected_behaviour": "audience_divergence",
     "expected_exclusion_reason": null,
     "expected_stance": "oppose",
@@ -60,8 +185,21 @@
     "type": "N1",
     "subject_id": "subj_golden_01",
     "source_locator": "https://youtube.com/watch?v=golden_n1",
-    "text_snippet": "Oh sure, mandatory licensing for every open source Python script, brilliant idea.",
-    "span": [0, 81],
+    "utterances": [
+      {
+        "text": "Oh sure, mandatory licensing for every open source Python script, brilliant idea.",
+        "recorded_at": "2024-01-10T12:00:00Z",
+        "span": [0, 81],
+        "speaker": "subj_golden_01",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.0,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-01-10T14:00:00Z",
+        "change_marker": false
+      }
+    ],
     "expected_behaviour": "excluded",
     "expected_exclusion_reason": "sarcasm",
     "expected_stance": null,
@@ -74,8 +212,21 @@
     "type": "N2",
     "subject_id": "subj_golden_01",
     "source_locator": "https://youtube.com/watch?v=golden_n2",
-    "text_snippet": "The argument from the other side is that AI will cause catastrophic unemployment next year.",
-    "span": [0, 91],
+    "utterances": [
+      {
+        "text": "The argument from the other side is that AI will cause catastrophic unemployment next year.",
+        "recorded_at": "2024-02-11T14:00:00Z",
+        "span": [0, 91],
+        "speaker": "subj_golden_01",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.0,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-02-11T16:00:00Z",
+        "change_marker": false
+      }
+    ],
     "expected_behaviour": "excluded",
     "expected_exclusion_reason": "reported_speech",
     "expected_stance": null,
@@ -88,8 +239,21 @@
     "type": "N3",
     "subject_id": "subj_golden_01",
     "source_locator": "https://youtube.com/watch?v=golden_n3",
-    "text_snippet": "The strongest case for licensing is that it provides a choke point on rogue actors.",
-    "span": [0, 83],
+    "utterances": [
+      {
+        "text": "The strongest case for licensing is that it provides a choke point on rogue actors.",
+        "recorded_at": "2024-02-20T10:00:00Z",
+        "span": [0, 83],
+        "speaker": "subj_golden_01",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.0,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-02-20T11:00:00Z",
+        "change_marker": false
+      }
+    ],
     "expected_behaviour": "excluded",
     "expected_exclusion_reason": "steelman",
     "expected_stance": null,
@@ -102,8 +266,21 @@
     "type": "N4",
     "subject_id": "subj_golden_01",
     "source_locator": "https://youtube.com/watch?v=golden_n4",
-    "text_snippet": "Suppose frontier models were capable of autonomous replication, then strict containment would follow.",
-    "span": [0, 101],
+    "utterances": [
+      {
+        "text": "Suppose frontier models were capable of autonomous replication, then strict containment would follow.",
+        "recorded_at": "2024-03-01T16:00:00Z",
+        "span": [0, 101],
+        "speaker": "subj_golden_01",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.0,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-03-01T17:00:00Z",
+        "change_marker": false
+      }
+    ],
     "expected_behaviour": "excluded",
     "expected_exclusion_reason": "hypothetical",
     "expected_stance": null,
@@ -116,10 +293,95 @@
     "type": "N5",
     "subject_id": "subj_golden_03",
     "source_locator": "https://youtube.com/watch?v=golden_n5",
-    "text_snippet": "If inflation stays above four percent through December, we must raise interest rates.",
-    "span": [0, 85],
+    "utterances": [
+      {
+        "text": "If inflation stays above four percent through December, we must raise interest rates.",
+        "recorded_at": "2023-06-01T10:00:00Z",
+        "span": [0, 85],
+        "speaker": "subj_golden_03",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": "inflation stays above four percent through December",
+        "stated_distinction": null,
+        "published_at": "2023-06-01T12:00:00Z",
+        "change_marker": false
+      },
+      {
+        "text": "We should keep interest rates unchanged to protect employment.",
+        "recorded_at": "2023-11-15T14:00:00Z",
+        "span": [0, 62],
+        "speaker": "subj_golden_03",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2023-11-15T15:00:00Z",
+        "change_marker": false
+      }
+    ],
     "expected_behaviour": "no_tension_condition_mismatch",
     "expected_exclusion_reason": null,
+    "expected_stance": "support",
+    "expected_is_own_assertion": true,
+    "locator_kind": "synthetic",
+    "extra": null
+  },
+  {
+    "case_id": "case_n6_distinction",
+    "type": "N6",
+    "subject_id": "subj_golden_02",
+    "source_locator": "https://youtube.com/watch?v=golden_n6",
+    "utterances": [
+      {
+        "text": "Senator Alvarez knowingly misled the oversight committee and should resign immediately.",
+        "recorded_at": "2023-04-10T10:00:00Z",
+        "span": [0, 87],
+        "speaker": "subj_golden_02",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2023-04-10T11:00:00Z",
+        "change_marker": false,
+        "extra": {
+          "actor": "Senator Alvarez"
+        }
+      },
+      {
+        "text": "Director Hayes made misleading statements to oversight, but that is standard administrative politics and resignation is completely out of the question.",
+        "recorded_at": "2023-09-15T15:00:00Z",
+        "span": [0, 151],
+        "speaker": "subj_golden_02",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2023-09-15T16:00:00Z",
+        "change_marker": false,
+        "extra": {
+          "actor": "Director Hayes"
+        }
+      },
+      {
+        "text": "The difference between Alvarez and Hayes is that Alvarez was under sworn subpoena in an active criminal inquiry whereas Hayes was speaking informally.",
+        "recorded_at": "2023-09-15T15:05:00Z",
+        "span": [0, 149],
+        "speaker": "subj_golden_02",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": "Alvarez was under sworn subpoena in an active criminal inquiry whereas Hayes was speaking informally.",
+        "published_at": "2023-09-15T16:00:00Z",
+        "change_marker": false
+      }
+    ],
+    "expected_behaviour": "distinguished",
+    "expected_exclusion_reason": "stated_distinction",
     "expected_stance": "support",
     "expected_is_own_assertion": true,
     "locator_kind": "synthetic",
@@ -130,8 +392,34 @@
     "type": "N7",
     "subject_id": "subj_golden_03",
     "source_locator": "https://youtube.com/watch?v=golden_n7",
-    "text_snippet": "I could maybe see rates moving slightly either way depending on seasonal data.",
-    "span": [0, 78],
+    "utterances": [
+      {
+        "text": "I could maybe see rates moving slightly either way depending on seasonal data.",
+        "recorded_at": "2023-05-10T10:00:00Z",
+        "span": [0, 78],
+        "speaker": "subj_golden_03",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.85,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2023-05-10T12:00:00Z",
+        "change_marker": false
+      },
+      {
+        "text": "We must unequivocally hold interest rates constant at the next meeting.",
+        "recorded_at": "2023-10-12T14:00:00Z",
+        "span": [0, 71],
+        "speaker": "subj_golden_03",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2023-10-12T15:00:00Z",
+        "change_marker": false
+      }
+    ],
     "expected_behaviour": "hedge_low_weight",
     "expected_exclusion_reason": null,
     "expected_stance": "hedge",
@@ -144,11 +432,77 @@
     "type": "N8",
     "subject_id": "subj_golden_03",
     "source_locator": "https://youtube.com/watch?v=golden_n8",
-    "text_snippet": "In 2014: Neural networks are useless for production machine translation.",
-    "span": [9, 72],
+    "utterances": [
+      {
+        "text": "In 2014: Neural networks are useless for production machine translation.",
+        "recorded_at": "2014-04-01T10:00:00Z",
+        "span": [9, 72],
+        "speaker": "subj_golden_03",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2014-04-01T12:00:00Z",
+        "change_marker": false
+      },
+      {
+        "text": "Neural networks are essential for production machine translation.",
+        "recorded_at": "2024-05-15T10:00:00Z",
+        "span": [0, 65],
+        "speaker": "subj_golden_03",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-05-15T11:00:00Z",
+        "change_marker": false
+      }
+    ],
     "expected_behaviour": "era_boundary_wide_gap",
     "expected_exclusion_reason": null,
     "expected_stance": "oppose",
+    "expected_is_own_assertion": true,
+    "locator_kind": "synthetic",
+    "extra": null
+  },
+  {
+    "case_id": "case_n9_misattribution",
+    "type": "N9",
+    "subject_id": "subj_golden_01",
+    "source_locator": "https://youtube.com/watch?v=golden_n9",
+    "utterances": [
+      {
+        "text": "Nuclear energy expansion is our most reliable zero-carbon base load power.",
+        "recorded_at": "2024-04-18T10:15:00Z",
+        "span": [0, 74],
+        "speaker": "host_speaker",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-04-18T12:00:00Z",
+        "change_marker": false
+      },
+      {
+        "text": "Nuclear energy is far too slow and expensive to deploy compared to solar and storage.",
+        "recorded_at": "2024-04-18T10:16:30Z",
+        "span": [0, 85],
+        "speaker": "guest_speaker",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-04-18T12:00:00Z",
+        "change_marker": false
+      }
+    ],
+    "expected_behaviour": "zero_cross_attribution",
+    "expected_exclusion_reason": null,
+    "expected_stance": "support",
     "expected_is_own_assertion": true,
     "locator_kind": "synthetic",
     "extra": null
@@ -158,8 +512,21 @@
     "type": "N10",
     "subject_id": "subj_golden_01",
     "source_locator": "https://youtube.com/watch?v=golden_n10",
-    "text_snippet": "Let me read this tweet: 'All software patents should be abolished by executive order.'",
-    "span": [24, 86],
+    "utterances": [
+      {
+        "text": "Let me read this tweet: 'All software patents should be abolished by executive order.'",
+        "recorded_at": "2024-04-05T11:00:00Z",
+        "span": [24, 86],
+        "speaker": "subj_golden_01",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.0,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-04-05T13:00:00Z",
+        "change_marker": false
+      }
+    ],
     "expected_behaviour": "excluded",
     "expected_exclusion_reason": "quote_agreement_unclear",
     "expected_stance": null,
@@ -168,12 +535,130 @@
     "extra": null
   },
   {
+    "case_id": "case_n11_thin_corpus",
+    "type": "N11",
+    "subject_id": "subj_golden_thin",
+    "source_locator": "https://youtube.com/watch?v=golden_n11",
+    "utterances": [
+      {
+        "text": "Quantum computing hardware might show practical advantage before 2030.",
+        "recorded_at": "2024-01-05T10:00:00Z",
+        "span": [0, 70],
+        "speaker": "subj_golden_thin",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.40,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-01-05T12:00:00Z",
+        "change_marker": false
+      },
+      {
+        "text": "Error mitigation in NISQ quantum devices is progressing steadily.",
+        "recorded_at": "2024-02-12T14:00:00Z",
+        "span": [0, 65],
+        "speaker": "subj_golden_thin",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.20,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-02-12T15:00:00Z",
+        "change_marker": false
+      },
+      {
+        "text": "Neutral atom quantum processors present promising scaling characteristics.",
+        "recorded_at": "2024-03-20T09:00:00Z",
+        "span": [0, 74],
+        "speaker": "subj_golden_thin",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.20,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-03-20T11:00:00Z",
+        "change_marker": false
+      },
+      {
+        "text": "Topological qubits remain an unproven hardware architecture.",
+        "recorded_at": "2024-04-15T16:00:00Z",
+        "span": [0, 61],
+        "speaker": "subj_golden_thin",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.10,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-04-15T17:00:00Z",
+        "change_marker": false
+      },
+      {
+        "text": "Superconducting qubit coherence times have improved an order of magnitude.",
+        "recorded_at": "2024-05-22T11:00:00Z",
+        "span": [0, 74],
+        "speaker": "subj_golden_thin",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-05-22T13:00:00Z",
+        "change_marker": false
+      },
+      {
+        "text": "Quantum annealing systems solve specific optimization problems well.",
+        "recorded_at": "2024-06-30T15:00:00Z",
+        "span": [0, 68],
+        "speaker": "subj_golden_thin",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.15,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-06-30T16:00:00Z",
+        "change_marker": false
+      }
+    ],
+    "expected_behaviour": "insufficient_corpus",
+    "expected_exclusion_reason": null,
+    "expected_stance": "support",
+    "expected_is_own_assertion": true,
+    "locator_kind": "synthetic",
+    "extra": null
+  },
+  {
     "case_id": "case_n12_re_aired_archive",
     "type": "N12",
     "subject_id": "subj_golden_02",
     "source_locator": "https://youtube.com/watch?v=golden_n12",
-    "text_snippet": "Archive rebroadcast of 2018 interview: We should not subsidize commercial space flight.",
-    "span": [40, 87],
+    "utterances": [
+      {
+        "text": "Archive rebroadcast: We should not subsidize commercial space flight.",
+        "recorded_at": "2018-05-14T10:00:00Z",
+        "span": [21, 68],
+        "speaker": "subj_golden_02",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-01-20T08:00:00Z",
+        "change_marker": false
+      },
+      {
+        "text": "We must heavily subsidize commercial space transportation systems.",
+        "recorded_at": "2024-02-01T15:00:00Z",
+        "span": [0, 66],
+        "speaker": "subj_golden_02",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.05,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-02-01T15:00:00Z",
+        "change_marker": false
+      }
+    ],
     "expected_behaviour": "original_recording_dated",
     "expected_exclusion_reason": null,
     "expected_stance": "oppose",
@@ -186,8 +671,21 @@
     "type": "N13",
     "subject_id": "subj_golden_01",
     "source_locator": "https://youtube.com/watch?v=golden_n13_1",
-    "text_snippet": "Yeah, absolutely, thanks so much for having me on the show today.",
-    "span": [0, 65],
+    "utterances": [
+      {
+        "text": "Yeah, absolutely, thanks so much for having me on the show today.",
+        "recorded_at": "2024-01-02T10:00:00Z",
+        "span": [0, 65],
+        "speaker": "subj_golden_01",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.0,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-01-02T12:00:00Z",
+        "change_marker": false
+      }
+    ],
     "expected_behaviour": "empty_claim_list",
     "expected_exclusion_reason": null,
     "expected_stance": null,
@@ -200,8 +698,21 @@
     "type": "N13",
     "subject_id": "subj_golden_02",
     "source_locator": "https://youtube.com/watch?v=golden_n13_2",
-    "text_snippet": "Let me check my calendar for next Tuesday afternoon, I think that works.",
-    "span": [0, 72],
+    "utterances": [
+      {
+        "text": "Let me check my calendar for next Tuesday afternoon, I think that works.",
+        "recorded_at": "2024-01-03T11:00:00Z",
+        "span": [0, 72],
+        "speaker": "subj_golden_02",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.0,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-01-03T13:00:00Z",
+        "change_marker": false
+      }
+    ],
     "expected_behaviour": "empty_claim_list",
     "expected_exclusion_reason": null,
     "expected_stance": null,
@@ -214,8 +725,21 @@
     "type": "N13",
     "subject_id": "subj_golden_03",
     "source_locator": "https://youtube.com/watch?v=golden_n13_3",
-    "text_snippet": "Right, exactly, mm-hmm, totally agree with that logistical point.",
-    "span": [0, 65],
+    "utterances": [
+      {
+        "text": "Right, exactly, mm-hmm, totally agree with that logistical point.",
+        "recorded_at": "2024-01-04T12:00:00Z",
+        "span": [0, 65],
+        "speaker": "subj_golden_03",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.0,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-01-04T14:00:00Z",
+        "change_marker": false
+      }
+    ],
     "expected_behaviour": "empty_claim_list",
     "expected_exclusion_reason": null,
     "expected_stance": null,
