@@ -6,7 +6,7 @@ Do not read this end to end and improvise. **Go to §1, run LOOP 0, let it route
 
 **Where the project is.** The V-queue is complete — every external model is real and wired (`STUB_REGISTRY` is empty). But **nothing has ever been ingested.** There is no `.duckdb` file, no artifact store, and the golden corpus holds zero cases. Every model works in a test and none has processed a real human being.
 
-**What that means for you.** The next item is **I0 — the first real ingest.** Everything after it (Phases 3–8: topics, tensions, principles, rubric, API, extension) is unbuilt and specced in §15–§21.
+**What that means for you.** The next item is **I0 — the first real ingest.** Before it sits **F0**, a fixture repair without which P4 and P5 cannot be validated at all. Everything after (Phases 3–8) is unbuilt and specced in §15–§22.
 
 **Every number, threshold, field name and literal string in the design docs is deliberate. Implement as written.** Where a doc says a value must be *measured* (`ongoing_errors.md` §2), measure it.
 
@@ -145,7 +145,8 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 18. **A suite that finishes too fast is telling you something.** Real models are slow; ~35s is the current floor.
 19. **A mock named honestly is safe; a mock named plausibly is not.** Name stubs `Mock*`/`Stub*`.
 20. **A metric over one example per class is not a metric.**
-21. **NEW — green gates over an empty corpus prove nothing about the product.** Everything currently passes with zero real rows. `verify_quotes` on zero claims is `NOT APPLICABLE`, not success. **I0 exists because of this.**
+21. **Green gates over an empty corpus prove nothing about the product.** Everything currently passes with zero real rows. `verify_quotes` on zero claims is `NOT APPLICABLE`, not success. **I0 exists because of this.**
+22. **A fixture can be structurally incapable of testing what it is labelled as.** Eight pair-type fixtures were single undated sentences carrying two-utterance expected outcomes, and three classes were missing outright — while the harness reported 16/16 PASS. **A green fixture suite says the cases that exist pass, never that the cases you need exist.** F0 exists because of this. Assert class-completeness against the contract table, not against whatever happens to be on disk.
 
 ---
 
@@ -153,13 +154,14 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 | Order | ID | Item | Blocked | Status | Why here |
 |---|---|---|---|---|---|
-| 1 | **I0** | First real ingest, end to end | none | **outstanding** | Every model is wired and none has touched a real source. Until this lands, every gate is green over nothing. |
-| 2 | **P4** | Tension detection | I0 | outstanding | **The thesis.** If contradiction detection doesn't work on real data, everything above it is moot. De-risk first. Needs claims, not topics. |
-| 3 | **P3** | Topic model | I0 | outstanding | Slices the corpus for the rubric and backs `/resolve`'s topic fallback. |
-| 4 | **P5** | Principle extraction | P4 | outstanding | Highest-risk component. Reuses P4's pair-detection shape. |
-| 5 | **P6** | Rubric engine | P3, P4, P5 | outstanding | Aggregates everything below into four axes. |
-| 6 | **P7** | Local API | P6 | outstanding | One contract, all clients. |
-| 7 | **P8** | Browser extension | P7 | outstanding | The only client (Issue 002). Selection-triggered (Issue 013). |
+| 1 | **F0** | Repair the behaviour fixture set | none | **outstanding** | **P4 and P5 cannot be validated without this.** 8 pair-type fixtures are single undated sentences; N6, N9 and N11 do not exist. Cheap, and doing it later means P4 starts and immediately stalls. |
+| 2 | **I0** | First real ingest, end to end | none | **outstanding** | Every model is wired and none has touched a real source. Until this lands, every gate is green over nothing. |
+| 3 | **P4** | Tension detection | F0, I0 | outstanding | **The thesis.** If contradiction detection doesn't work on real data, everything above it is moot. De-risk first. Needs claims, not topics. |
+| 4 | **P3** | Topic model | I0 | outstanding | Slices the corpus for the rubric and backs `/resolve`'s topic fallback. |
+| 5 | **P5** | Principle extraction | F0, P4 | outstanding | Highest-risk component. Reuses P4's pair-detection shape. |
+| 6 | **P6** | Rubric engine | P3, P4, P5 | outstanding | Aggregates everything below into four axes. |
+| 7 | **P7** | Local API | P6 | outstanding | One contract, all clients. |
+| 8 | **P8** | Browser extension | P7 | outstanding | The only client (Issue 002). Selection-triggered (Issue 013). |
 
 **Delivered — do NOT rework:** V0–V6 (all externals real, `STUB_REGISTRY` empty), U0–U13 (storage, integrity, adapters, reconciler, segmentation, gate, validators). Detail in git history; §14 has the short list.
 
@@ -393,18 +395,61 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 15. I0 — First real ingest, end to end
+## 15. F0 — Repair the behaviour fixture set
+
+**User impact:** the tests that are supposed to prove contradiction detection works become capable of proving it.
+
+**Gap — verified on disk, not inferred.** `fixtures/behaviour/cases.json` holds 16 cases. Two defects:
+
+1. **Eight pair-type classes are single, undated sentences.** `P1, P2, P3, P4, N5, N7, N8, N12` each describe an outcome that requires **two** utterances separated in time, and each is stored as one snippet. There is no date field in the schema at all. A reversal cannot be expressed, so it cannot be tested.
+2. **`N6`, `N9` and `N11` do not exist.** N6 (principle applied differently **with** a stated distinction) is P5's most important guard — it is the fairness escape hatch. N9 (misattribution trap) is the zero-tolerance gate. N11 (thin corpus) proves the sufficiency gate.
+
+**Implementation**
+1. **Extend the schema.** A case carries `utterances: [...]`, each with `text`, `recorded_at` (ISO 8601), `span`, and where relevant `speaker`, `venue_type`, `audience_stance`. Single-utterance classes (`N1–N4`, `N10`, `N13`) carry a one-element list — **uniform shape, no special case.**
+2. **Rebuild the eight pair cases as genuine pairs**, each with dates that make the outcome derivable rather than asserted:
+   - **P1** — oppose at T1, support at T2, **no acknowledgement anywhere between.**
+   - **P2** — oppose at T1, support at T2, **plus a third utterance in the interval carrying the change marker.** This is what makes the acknowledgement-window falsification meaningful.
+   - **P3** — same principle, two different actors, opposite verdicts, no distinction.
+   - **P4** — same proposition, opposite stances, **within one week**, one `friendly` venue and one `adversarial`.
+   - **N5** — one conditional (with `condition` text) and one unconditional on the same proposition.
+   - **N7** — `hedging_level` high at T1, low at T2.
+   - **N8** — same wording, dates ≥ 8 years apart, different referent.
+   - **N12** — `recorded_at` 2018, `published_at` 2024, paired with a genuine 2024 claim.
+3. **Add the three missing classes.**
+   - **N6** — P3's pair plus a `stated_distinction` utterance giving a real reason. Expected: `distinguished`, excluded from scoring.
+   - **N9** — one source, **two speakers**, host asserts X and guest asserts not-X, with speaker labels. Expected: **zero** cross-attribution.
+   - **N11** — a subject with 6 claims on a topic. Expected: `insufficient_corpus`, **no number computed**.
+4. Update `fixtures/behaviour/loader.py` and the report block. **Fixtures stay PASS/FAIL** — this changes their shape, never their status as non-metrics (`e2e_verification_journeys.md` §2).
+5. Keep `locator_kind: "synthetic"` on every case.
+
+**Validation**
+- Loader **rejects** a pair-type case carrying fewer than two utterances, and any case whose utterances lack `recorded_at`. ← **(c)** *This is the assertion that makes the defect unrepeatable.*
+- All 17 classes present; assert the set of `type` values equals the table in `e2e_verification_journeys.md` §2 — so a class can never go missing silently again.
+- Utterances within a case are orderable by `recorded_at`; P2's marker utterance falls strictly between its pair.
+- Fixture report still prints **PASS/FAIL only** — no rate, no decimal, no ratio.
+
+**Falsify.** Strip `recorded_at` from one P1 utterance. The loader must go RED. Then delete the N6 case; the class-completeness assertion must go RED. Revert both; record all four outcomes.
+
+**Blast radius.** `fixtures/behaviour/`, `worker/golden/report.py`, `tests/test_golden_harness.py`, `docs/e2e_verification_journeys.md` §2 (document the utterance-list schema).
+
+---
+
+## 16. I0 — First real ingest, end to end
 
 **User impact:** the system processes a real human being for the first time. Until now every green gate has been green over nothing.
 
 **Gap.** No `.duckdb`. No `artifacts/`. Golden corpus zero cases. Every model is wired and tested in isolation; the pipeline has never run start to finish on real material. **Trap 21.**
 
 **Implementation**
-1. Pick **one subject** with a clean **Tier B** source — their own podcast or channel, ideally single-speaker for the first run so diarization is not also on trial.
-2. Run the full pipeline: `discover → fetch → normalize → transcribe (dual pass) → diarize → attribute → segment → gate → extract → embed → persist`.
-3. Record **real wall-clock throughput at every stage** into the ingest job record: audio-minutes per wall-minute for transcription, utterances/sec for the gate, extractions/sec. Nobody will collect these later.
-4. Expect failures that mocks never surfaced: encoding, unusual sample rates, VAD edge cases, very long files, empty transcript segments. **Each one you fix gets a `fixtures/behaviour/` case added in the same commit** — that is the mechanism keeping the fixture set alive.
-5. Do **not** tune thresholds to make results look good. Record what happens.
+1. **Choosing the subject is the user's call, not yours.** This is their research tool and the corpus is about real people. If no subject has been named, **enter LOOP 3** and ask — do not pick one.
+2. Ingest **enough that a contradiction is even possible.** One source cannot produce a reversal: a reversal is two claims on the same proposition at different times. Target **at least 3–4 sources spanning 2+ years**, on a topic the subject has actually returned to.
+   - Start with a **single-speaker Tier B** source (their own podcast or channel) so diarization is not on trial in the same run.
+   - Add a **multi-speaker Tier C** guest appearance only once the single-speaker path is green end to end.
+   - **If P4 later finds zero tensions, that may be a true negative, not a bug** — but you cannot distinguish the two on a one-source corpus, which is why the span matters here.
+3. Run the full pipeline per source: `discover → fetch → normalize → transcribe (dual pass) → diarize → attribute → segment → gate → extract → embed → persist`.
+4. Record **real wall-clock throughput at every stage** into the ingest job record: audio-minutes per wall-minute for transcription, utterances/sec for the gate, extractions/sec. Nobody will collect these later.
+5. Expect failures that mocks never surfaced: encoding, unusual sample rates, VAD edge cases, very long files, empty transcript segments. **Each one you fix gets a `fixtures/behaviour/` case added in the same commit** — that is the mechanism keeping the fixture set alive.
+6. Do **not** tune thresholds to make results look good. Record what happens.
 
 **Validation — journeys J1 and J11, on real data**
 - Every `text_verbatim` `grep -F`-resolves against the stored transcript. ← **(c)**
@@ -422,7 +467,7 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 16. P4 — Tension detection
+## 17. P4 — Tension detection
 
 **User impact:** the product's core claim starts working — *here are two things you said that cannot both be your view.*
 
@@ -452,7 +497,7 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 17. P3 — Topic model
+## 18. P3 — Topic model
 
 **User impact:** you can ask about any topic in your own words and get that person's record on it.
 
@@ -479,7 +524,7 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 18. P5 — Principle extraction
+## 19. P5 — Principle extraction
 
 **User impact:** the system can spot a double standard — the same principle applied to one person and not another.
 
@@ -508,7 +553,7 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 19. P6 — Rubric engine
+## 20. P6 — Rubric engine
 
 **User impact:** the four numbers appear — and, just as importantly, correctly refuse to appear when the evidence is thin.
 
@@ -540,7 +585,7 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 20. P7 — Local API
+## 21. P7 — Local API
 
 **User impact:** something outside Python can finally read the corpus.
 
@@ -571,7 +616,7 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 21. P8 — Browser extension
+## 22. P8 — Browser extension
 
 **User impact:** the product exists where you actually read.
 
@@ -601,7 +646,7 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 22. Invariants — do NOT change
+## 23. Invariants — do NOT change
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -609,13 +654,13 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 
 ---
 
-## 23. Contracts
+## 24. Contracts
 
 `master_implementation_plan.md` · `design_source_acquisition.md` · `design_claim_extraction.md` · `design_principle_extraction.md` · `design_topic_model.md` · `design_rubric_engine.md` · `design_data_layer.md` · `design_local_api_and_clients.md` · `design_ui_direction.md` · `design_evidence_integrity.md` · `e2e_verification_journeys.md` · `ongoing_errors.md`
 
 ---
 
-## 24. Feedback loop — what specs here have got wrong
+## 25. Feedback loop — what specs here have got wrong
 
 | What happened | Spec said | Should have said |
 |---|---|---|
@@ -624,5 +669,6 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 | 16 cases reporting `1.000` | "~200 utterances, verified" | Same, **plus** a harness that refuses a metric below a per-class floor. |
 | Undeclared dependencies | *(silent)* | "Dependencies land in `pyproject.toml` in the same commit." |
 | **Every gate green over an empty corpus** | "J1 green" | **"J1 green *on real ingested data*, with `verify_quotes` PASS on a non-empty set."** A journey signed off against mocks is not signed off. |
+| **Validation steps citing fixtures that cannot work, and three that did not exist** | "Fixture P1 → unacknowledged_reversal" | **Check the fixture on disk before writing the assertion that depends on it.** A pair-type outcome needs a pair; a cited class needs to exist. I wrote those steps from the design doc's case table without opening the file — validating shape, not reality, which is the exact error this guide warns about. |
 
 **The pattern: shape is what a stub reproduces perfectly, and a green gate over zero rows is the emptiest shape of all.** Validation must be satisfiable only by the real thing, operating on real data.
