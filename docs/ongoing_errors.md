@@ -462,9 +462,23 @@ Two separable problems.
 - Pros: honest, zero maintenance, no red badge lying about a project that is fine.
 - Cons: nothing catches a lint or type regression before it is pushed, and there is no signal at all if the project ever gains a second contributor.
 
-**Option B (recommended): narrow CI to what a Linux runner can genuinely do.** Make `mlx-lm` optional per (a), mark model-dependent tests `@pytest.mark.requires_models`, and have CI run `ruff`, `mypy`, and `pytest -m "not requires_models"`.
-- Pros: keeps the fast, genuinely useful checks — lint, types, and every piece of pure logic (reconciler, detector SQL, rubric arithmetic, validators), which is most of the codebase. Forces the model-dependent boundary to be explicit, which is good hygiene on its own.
-- Cons: a green CI badge that does not cover the model layer. **That is only safe if the split is stated on the badge's own terms** — otherwise it recreates the "green gate proves nothing" failure at a new level.
+**Option B (recommended): give CI one job — portability — and rename it to say so.**
+
+The standard reasons for CI do not apply here: LOOP 0 already runs the full battery before every commit, there are no other contributors, and the deploy target is the developer's own Mac. But there is exactly one question CI can answer that **no local run ever can**: *does this project still install and typecheck on a machine that is not yours?*
+
+That is not hypothetical — it is what this failure caught. And it matters beyond tidiness: the scaling path in the roadmap rents **Linux/CUDA GPUs** for bulk ingest, and a hard `mlx-lm` dependency makes `pip install` fail on every one of them.
+
+So: rename the workflow **`portability`**, make `mlx-lm` optional per (a), and have it do only:
+```yaml
+- pip install -e ".[dev]"     # the real check: does it install off-Mac?
+- ruff check worker/ tests/
+- mypy worker/
+- pytest -m "not requires_models"   # pure-logic tests only
+```
+Mark model-dependent tests `@pytest.mark.requires_models`.
+
+- Pros: ~60 seconds, and every second of it answers a question local runs cannot. Forces the Apple-only boundary to be explicit in the packaging, which unblocks the rented-GPU path. The pure-logic tests it *can* run — reconciler, detector SQL, rubric arithmetic, validators — are most of the codebase.
+- Cons: a green badge that does not cover the model layer. **Only safe because the workflow is named for what it checks.** A badge labelled `CI` implies everything passed; one labelled `portability` claims exactly what it verified — which is the same discipline the golden-corpus split applies to metrics.
 
 **Option C: self-hosted runner on your Mac.**
 - Pros: the real suite, in CI, including models.
