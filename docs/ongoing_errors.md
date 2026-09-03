@@ -370,6 +370,40 @@ To make tension/reversal detection meaningful on the ingested data, the corpus r
 - Pros: Concrete and immediately actionable; has well-documented public statements spanning 2+ years on a specific proposition topic (open foundation model weights/licensing) suitable for testing P4 tension detection.
 - Cons: Assumes subject selection without explicit user direction.
 
+Your selection: Proceed with Option B. Lets do Elon Musk and the people from the All In Podcast: Chamath Palihapitiya, David Sacks, Jason Calacanis, and David Friedberg since the All In Podcast has a lot of episodes.
+
+---
+
+### Issue 022: `tier` and `venue_type` are per-source, but they are properties of a (source, subject) pair
+**Blocks: I0.4** · **Recommended: Option A** · *Surfaced by the Issue 021 subject selection*
+
+`worker/entities.py` puts `tier`, `venue_type`, `audience_stance` and `is_adversarial` on `Source` — one value per source. The All-In selection breaks that.
+
+Take one episode where Elon Musk guests:
+
+| Subject | What that source is to them |
+|---|---|
+| Palihapitiya, Sacks, Calacanis, Friedberg | **their own show** — Tier B, `own_channel`, `friendly` |
+| Musk | **someone else's show** — Tier C, `guest` |
+
+One `Source` row cannot hold both. And this is not cosmetic: **`audience_stance` feeds audience-divergence detection** (`design_rubric_engine.md` §6). Stamping the episode `friendly` because that is how the hosts experience it makes every divergence judgement about Musk wrong — a wrong finding, not a wrong label.
+
+The four hosts on their own show are unaffected, which is why I0.1–I0.3 can proceed and only I0.4 is blocked.
+
+**Option A (recommended): add a `SourceSubjectRole` join.**
+`Source` keeps what is true of the artifact — title, publisher, url, hashes, `recorded_at`, `published_at`, `citation_url_template`, `transcription_model`. A new row per (source, subject) carries `tier`, `venue_type`, `audience_stance`, `is_adversarial`.
+- Pros: models the thing correctly — venue *is* a relationship, not a property of either side alone. Every multi-subject source works, now and later. One artifact, one transcription, many roles.
+- Cons: a schema migration on delivered code (U1), and every reader of venue metadata gains a join.
+
+**Option B: one `Source` row per subject.**
+Ingest the same episode N times, once per subject, each with its own tier.
+- Pros: no join; existing readers unchanged.
+- Cons: `source_id = sha256(canonical_locator)` collides, so subject has to enter the hash — which breaks "one source, one row" and duplicates artifact references, transcription bookkeeping and `audio_deleted_at` across rows that describe the same recording. Storage is fine; the bookkeeping is where this rots.
+
+**Option C: keep venue on `Source`, add per-subject overrides on `Utterance`.**
+- Pros: smallest diff.
+- Cons: puts the same fact in two places with no rule about which wins, and `Utterance` is already the hottest table. This is the option that looks cheapest today and is worst in a year.
+
 Your selection: _____
 
 ---

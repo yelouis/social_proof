@@ -147,6 +147,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 20. **A metric over one example per class is not a metric.**
 21. **Green gates over an empty corpus prove nothing about the product.** Everything currently passes with zero real rows. `verify_quotes` on zero claims is `NOT APPLICABLE`, not success. **I0 exists because of this.**
 22. **A fixture can be structurally incapable of testing what it is labelled as.** Eight pair-type fixtures were single undated sentences carrying two-utterance expected outcomes, and three classes were missing outright — while the harness reported 16/16 PASS. **A green fixture suite says the cases that exist pass, never that the cases you need exist.** F0 exists because of this. Assert class-completeness against the contract table, not against whatever happens to be on disk.
+23. **A source's tier and venue can differ per subject.** All-In is Tier B for its four hosts and Tier C for a guest, in the same episode. `venue_type` and `audience_stance` are properties of a (source, subject) pair, not of the source — and `audience_stance` feeds audience-divergence detection, so getting it wrong produces a wrong *finding*. Issue 022.
 
 ---
 
@@ -434,36 +435,91 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 16. I0 — First real ingest, end to end
+## 16. I0 — First real ingest · **subjects selected (Issue 021 = B)**
 
-**User impact:** the system processes a real human being for the first time. Until now every green gate has been green over nothing.
+**Subjects:** Elon Musk, Chamath Palihapitiya, David Sacks, Jason Calacanis, David Friedberg. **Primary source:** the All-In Podcast.
 
-**Gap.** No `.duckdb`. No `artifacts/`. Golden corpus zero cases. Every model is wired and tested in isolation; the pipeline has never run start to finish on real material. **Trap 21.**
+**User impact:** the system processes real human beings for the first time. Until now every green gate has been green over nothing.
+
+### Read this before planning — the selection changed I0's shape
+
+This guide previously said *"start single-speaker so diarization is not also on trial."* **That instruction cannot hold as written.** All-In is a four-host panel with interruptions and crosstalk — by `design_source_acquisition.md` §5.4 it is the single hardest attribution case in the design, and trap 11 exists because panels break every positional heuristic *silently*.
+
+That is not a reason to push back on the choice. It is an excellent corpus for this product: five people, the same room, the same recurring topics across years, high-quality audio, hundreds of episodes, and public figures with enough material to clear the sufficiency gate. It also exercises cross-person comparison — which nothing else in the plan would have done this early.
+
+**But the de-risking intent must be preserved by decomposition rather than abandoned.** The split below is the LOOP 5 output; it is already done, so use it rather than re-deriving one.
+
+### Sub-items (LOOP 5 checklist — tick in the same commit)
+
+```
+I0.1  Enrollment for all five subjects        [ ]
+I0.2  Single-speaker ingest, one subject      [ ]
+I0.3  Multi-speaker panel, 3-4 episodes       [ ]
+I0.4  Elon as guest on All-In                 [ ]  BLOCKED on Issue 022
+```
+
+---
+
+### I0.1 — Enrollment, and the pre-flight nobody thinks to run
+
+**Why first.** With five speakers who all appear in the same episodes, voice enrollment is not a detail — it is the precondition for any attribution at all. Enrollment must come from sources where attribution is **certain**: a solo interview, a monologue, or their own single-host show. Calacanis's *This Week in Startups* is a natural fit; each of the others has solo interview material.
 
 **Implementation**
-1. **Choosing the subject is the user's call, not yours.** This is their research tool and the corpus is about real people. If no subject has been named, **enter LOOP 3** and ask — do not pick one.
-2. Ingest **enough that a contradiction is even possible.** One source cannot produce a reversal: a reversal is two claims on the same proposition at different times. Target **at least 3–4 sources spanning 2+ years**, on a topic the subject has actually returned to.
-   - Start with a **single-speaker Tier B** source (their own podcast or channel) so diarization is not on trial in the same run.
-   - Add a **multi-speaker Tier C** guest appearance only once the single-speaker path is green end to end.
-   - **If P4 later finds zero tensions, that may be a true negative, not a bug** — but you cannot distinguish the two on a one-source corpus, which is why the span matters here.
-3. Run the full pipeline per source: `discover → fetch → normalize → transcribe (dual pass) → diarize → attribute → segment → gate → extract → embed → persist`.
-4. Record **real wall-clock throughput at every stage** into the ingest job record: audio-minutes per wall-minute for transcription, utterances/sec for the gate, extractions/sec. Nobody will collect these later.
-5. Expect failures that mocks never surfaced: encoding, unusual sample rates, VAD edge cases, very long files, empty transcript segments. **Each one you fix gets a `fixtures/behaviour/` case added in the same commit** — that is the mechanism keeping the fixture set alive.
-6. Do **not** tune thresholds to make results look good. Record what happens.
+1. For each of the five, take a clean single-speaker sample and build a reference voice embedding. **Enrollment is a deliberate, recorded act** — never a by-product of ingest (`design_source_acquisition.md` §5.4).
+2. Record, per subject: the source, the exact span used, and its duration.
 
-**Validation — journeys J1 and J11, on real data**
+**Validation**
+- **Mutual distinguishability — run this before ingesting anything.** Compute pairwise cosine similarity across all five enrollment embeddings. **Assert every cross-subject pair sits well below `T_low`.** ← **(c)**
+  If two subjects' enrollments are close, diarization *will* confuse them on the panel, and you will discover it as silently misattributed claims rather than as a failing test. **Finding that here costs an afternoon; finding it after ingest costs a corpus.**
+- Assert each enrollment sample is genuinely single-speaker — run diarization over the sample itself and assert one cluster.
+
+**Falsify.** Enroll the same person twice under two subject ids. The distinguishability assertion must go RED — proving it can detect closeness rather than always passing.
+
+---
+
+### I0.2 — Single-speaker ingest
+
+Preserves the original de-risking intent: prove transcription, gating, extraction and persistence work on real audio **before** diarization is also on trial.
+
+**Implementation.** Take one enrollment-grade single-speaker source and run the whole pipeline: `discover → fetch → normalize → transcribe (dual pass) → diarize → attribute → segment → gate → extract → embed → persist`. Record real wall-clock throughput per stage into the ingest job — nobody collects these later.
+
+**Validation — journeys J1 and J11 on real data**
 - Every `text_verbatim` `grep -F`-resolves against the stored transcript. ← **(c)**
-- Anchor chain Utterance → Source has zero orphans.
-- `verify_quotes` and `verify_anchor_chain` report **PASS on a non-empty set** — not `NOT APPLICABLE`.
-- **Open one citation URL by hand.** It must land within a couple of seconds of the quote. Record the URL and the timestamp in the commit body.
+- `verify_quotes` and `verify_anchor_chain` report **PASS on a non-empty set**, not `NOT APPLICABLE`.
+- **Open one citation URL by hand.** It must land within a couple of seconds of the quote. Record the URL and timestamp in the commit body.
 - Word timestamps monotonic and inside media duration.
-- `audio_deleted_at` set; audio gone. Audio **still present** if any stage raised.
+- `audio_deleted_at` set and audio gone; audio **still present** if any stage raised.
 - Re-run ingest: zero new rows, zero re-transcription (J11).
-- Replace §3's `Corpus: EMPTY` row with real counts.
 
-**Falsify.** Corrupt one stored `text_verbatim` by a single character. `verify_quotes` must go RED **on real data**, not just fixtures.
+**Falsify.** Corrupt one stored `text_verbatim` by a character. `verify_quotes` must go RED **on real data**.
 
-**Blast radius.** `worker/` wherever real data breaks it, `fixtures/behaviour/`, §3, `docs/e2e_verification_journeys.md` (mark J1/J11 passing, with the date).
+---
+
+### I0.3 — The panel
+
+**Implementation**
+1. **3–4 All-In episodes spanning 2+ years**, chosen on a topic the hosts genuinely return to — AI regulation, open-source models, interest rates, or remote work all qualify. **A reversal needs two claims on the same proposition at different times; episodes chosen for variety rather than topical overlap will produce nothing for P4 to find.**
+2. **Do not ingest the archive.** Four episodes, not two hundred. Prove the path first.
+3. All four hosts are Tier B on their own show: `venue_type: own_channel`, `audience_stance: friendly`.
+4. Expect the failures mocks never surfaced — crosstalk, interruptions, laughter, music stings, three people talking at once. **Each one you fix adds a `fixtures/behaviour/` case in the same commit.**
+
+**Validation**
+- **Hand-label a 5-minute segment** with speaker turns, then assert the pipeline's attribution matches it exactly. **Zero cross-attribution.** ← **(c)** This is the real-world N9, and it is a gate at zero, not a target.
+- Sub-threshold utterances stored `attribution_confidence: low` and **excluded from every score**, visible in review.
+- All five subjects resolvable; claims distributed across hosts rather than collapsing onto one.
+- Record the measured attribution confidence distribution. **Parameter 004 gets set here** — from this measurement, marked provisional until the golden corpus grows.
+
+**Falsify.** Swap two hosts' enrollment embeddings. Cross-attribution must go non-zero against the hand-labelled segment.
+
+---
+
+### I0.4 — Elon as guest · **BLOCKED on Issue 022**
+
+Elon has appeared on All-In as a guest. That single source is **Tier B for the four hosts and Tier C for him**, with `venue_type` and `audience_stance` differing per subject — and the current schema stores those on `Source`, one value per source. **Do not start this until Issue 022 is selected**, and do not work around it by stamping one tier and moving on: `audience_stance` feeds audience-divergence detection, so a wrong value is a wrong finding rather than a cosmetic flaw.
+
+I0.1–I0.3 are unaffected: on their own show all four hosts share the same tier and venue.
+
+**Blast radius (whole item).** `worker/` wherever real data breaks it, `fixtures/behaviour/`, §3, `docs/ongoing_errors.md` §2 (parameter 004), `docs/e2e_verification_journeys.md` (mark J1/J11 passing, with the date).
 
 ---
 
