@@ -404,7 +404,7 @@ Ingest the same episode N times, once per subject, each with its own tier.
 - Pros: smallest diff.
 - Cons: puts the same fact in two places with no rule about which wins, and `Utterance` is already the hottest table. This is the option that looks cheapest today and is worst in a year.
 
-Your selection: _____
+Your selection: Proceed with Option A.
 
 ---
 
@@ -482,7 +482,11 @@ Selections live with their issue above in the user's own wording. This is the in
 | **014** | **B** — deep-link, no in-app playback | Follows from 003. |
 | **015** | **A** — drop Firestore | DuckDB is the single system of record. Sync contract, `synced_at`, reconciliation pass and security rules all deleted. No Firestore code was ever written, so this was docs-only. Access control collapses onto the local API's four controls. |
 | **017** | **A** — wire every real external now | V2–V5 all unblocked and ordered ahead of any new phase. |
-| **018** | **NOT YET SELECTED** | Blocks V6 and parameters 004, 008, 012, 016. |
+| **018** | **B** — fixtures split from corpus | V6 became a structural fix and moved ahead of V2–V5. Delivered. |
+| **019** | *(open)* | Model pre-labelling of the golden corpus. Gates corpus *population*, not V6's structure. |
+| **021** | **B**, refined to the four All-In hosts | Subjects for I0. Musk named but subsequently deferred by 023. |
+| **022** | **A** — `SourceSubjectRole` join | `tier`/`venue_type`/`audience_stance`/`is_adversarial` move off `Source` onto a per-(source, subject) row. Adapter `tier` class attribute becomes `role(ref, subject)`. New integrity check `verify_role_coverage`. Scheduled as **S0, ahead of I0**, because the corpus is empty and this is the cheapest the migration will ever be. |
+| **023** | **A** — defer Musk | Out of the queue until X ingest exists. His primary medium is deferred, and a long-form-only corpus would pass the sufficiency gate while measuring a skewed slice — I5 gates on volume, not composition. Side effect: with no guests in scope, 022 stops blocking I0. |
 
 ### What Phases 0–2 actually delivered
 

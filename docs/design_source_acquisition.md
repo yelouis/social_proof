@@ -30,15 +30,26 @@ All four tiers are in bounds. They differ in attribution difficulty and in how m
 | **D** | **Institutional records** — congressional testimony, depositions, earnings calls, regulatory filings, official statements under their name | Official transcript, speaker-labelled | Highest-value contradiction fodder: on the record, adversarial, and already transcribed. |
 | **E** | **Long-form authored** — books, papers, whitepapers, published letters | Byline, with a caveat | Ghostwriting and co-authorship are real. Requires `authorship_confidence`; a co-authored paper is not a personal assertion. |
 
-### Venue metadata (required on every Source)
+### Venue metadata — per (source, subject), not per source
+
+**Issue 022 = A.** Venue is a property of the *relationship* between a subject and a source, not of either alone. A four-host podcast is `own_channel` for its hosts and `guest` for whoever visits — in the same episode. These live on a `SourceSubjectRole` row (`design_data_layer.md` §2), one per subject present in the source:
 
 ```
+tier            : A | B | C | D | E
 venue_type      : own_channel | guest | institutional | authored | self_published_text
 audience_stance : friendly | neutral | adversarial | unknown
-interlocutor    : subject id or free text, null for solo
-is_adversarial  : bool     # was the subject being challenged?
-recorded_at     : ISO 8601, timezone-explicit
+is_adversarial  : bool     # was THIS subject being challenged?
 ```
+
+These stay on the Source, because they describe the artifact:
+
+```
+interlocutor    : free text, null for solo
+recorded_at     : ISO 8601, timezone-explicit — the ORIGINAL recording date
+published_at    : ISO 8601
+```
+
+**Ingest writes one role row per subject it finds in a source.** An utterance attributed to a subject with no role row for that source is an orphan, and the integrity pass fails on it.
 
 `audience_stance` and `is_adversarial` are what make "says one thing on a friendly show, another under hostile questioning, same week" detectable. Without them that signal is invisible.
 
@@ -74,7 +85,11 @@ Every source type implements one interface. X/Twitter is deferred (`master_imple
 
 ```python
 class SourceAdapter(Protocol):
-    tier: Literal["A", "B", "C", "D", "E"]
+
+    def role(self, ref: SourceRef, subject: Subject) -> SourceSubjectRole:
+        """Tier and venue for THIS subject in THIS source (Issue 022 = A).
+        The same episode is Tier B / own_channel for a host and
+        Tier C / guest for a visitor. An adapter has no single tier."""
 
     def discover(self, subject: Subject, since: datetime | None) -> Iterable[SourceRef]:
         """Find candidate sources. Cheap, metadata only, no media fetched."""

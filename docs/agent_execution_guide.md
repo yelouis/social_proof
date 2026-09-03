@@ -157,13 +157,14 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 | Order | ID | Item | Blocked | Status | Why here |
 |---|---|---|---|---|---|
 | 1 | **F0** | Repair the behaviour fixture set | none | **delivered** | **P4 and P5 cannot be validated without this.** 8 pair-type fixtures are single undated sentences; N6, N9 and N11 do not exist. Cheap, and doing it later means P4 starts and immediately stalls. |
-| 2 | **I0** | First real ingest, end to end | Issue 021 | **outstanding** | Every model is wired and none has touched a real source. Until this lands, every gate is green over nothing. |
-| 3 | **P4** | Tension detection | I0 | outstanding | **The thesis.** If contradiction detection doesn't work on real data, everything above it is moot. De-risk first. Needs claims, not topics. |
-| 4 | **P3** | Topic model | I0 | outstanding | Slices the corpus for the rubric and backs `/resolve`'s topic fallback. |
-| 5 | **P5** | Principle extraction | P4 | outstanding | Highest-risk component. Reuses P4's pair-detection shape. |
-| 6 | **P6** | Rubric engine | P3, P4, P5 | outstanding | Aggregates everything below into four axes. |
-| 7 | **P7** | Local API | P6 | outstanding | One contract, all clients. |
-| 8 | **P8** | Browser extension | P7 | outstanding | The only client (Issue 002). Selection-triggered (Issue 013). |
+| 2 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **outstanding** | **Do it now, while the corpus is empty.** Zero rows to migrate today; after I0 it is real data. Cheapest moment this schema change will ever have. |
+| 3 | **I0** | First real ingest, end to end | Issue 021 | **outstanding** | Every model is wired and none has touched a real source. Until this lands, every gate is green over nothing. |
+| 4 | **P4** | Tension detection | I0 | outstanding | **The thesis.** If contradiction detection doesn't work on real data, everything above it is moot. De-risk first. Needs claims, not topics. |
+| 5 | **P3** | Topic model | I0 | outstanding | Slices the corpus for the rubric and backs `/resolve`'s topic fallback. |
+| 6 | **P5** | Principle extraction | P4 | outstanding | Highest-risk component. Reuses P4's pair-detection shape. |
+| 7 | **P6** | Rubric engine | P3, P4, P5 | outstanding | Aggregates everything below into four axes. |
+| 8 | **P7** | Local API | P6 | outstanding | One contract, all clients. |
+| 9 | **P8** | Browser extension | P7 | outstanding | The only client (Issue 002). Selection-triggered (Issue 013). |
 
 **Delivered — do NOT rework:** V0–V6 (all externals real, `STUB_REGISTRY` empty), U0–U13 (storage, integrity, adapters, reconciler, segmentation, gate, validators). Detail in git history; §14 has the short list.
 
@@ -436,11 +437,43 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 16. I0 — First real ingest · **subjects selected (Issue 021 = B)**
+## 16. S0 — `SourceSubjectRole` migration · *Issue 022 = A*
+
+**User impact:** the system can hold the truth that one recording means different things to different people in it — which is what a four-host podcast with an occasional guest actually is.
+
+**Why now, before I0.** The corpus is **empty**. Zero sources, zero utterances, zero claims. A schema change that today is a pure code edit becomes a data migration the moment I0.3 writes its first episode. **This is the cheapest this change will ever be**, and it is the only reason S0 sits ahead of the ingest that motivated it.
+
+**Gap.** `worker/entities.py` puts `tier`, `venue_type`, `audience_stance` and `is_adversarial` on `Source` — one value per source. They are properties of a **(source, subject) pair**. One All-In episode is Tier B / `own_channel` / `friendly` for its four hosts and Tier C / `guest` for a visitor, simultaneously. And `audience_stance` feeds audience-divergence detection (`design_rubric_engine.md` §6), so a single stamped value yields a wrong **finding**, not a cosmetic mislabel.
+
+**Contract:** `design_data_layer.md` §2 and §3 (already updated); `design_source_acquisition.md` §2 and §4.
+
+**Implementation**
+1. New entity `SourceSubjectRole`: `role_id`, `source_id`, `subject_id`, `tier`, `venue_type`, `audience_stance`, `is_adversarial`. Deterministic id `sha256(source_id | subject_id)[:16]` — so re-ingest upserts rather than duplicates, same as every other id.
+2. **Remove those four fields from `Source`.** It keeps only what is true of the artifact: title, publisher, url, hashes, `citation_url_template`, `interlocutor`, `recorded_at`, `published_at`, `authorship_confidence`, and the ingest bookkeeping.
+3. DuckDB table with a foreign key to both sides, plus an index on `(source_id, subject_id)`.
+4. **`SourceAdapter.tier` stops being a class attribute.** It becomes `role(ref, subject) -> SourceSubjectRole`, because an adapter has no single tier — YouTube yields Tier B or C depending on whose channel it is. Update all three existing adapters.
+5. Ingest writes **one role row per subject found in a source.**
+6. **Add a ninth integrity check, `verify_role_coverage`:** every utterance's `(source_id, subject_id)` pair resolves to a role row. An utterance attributed to a subject with no role for that source is an orphan and fails the pass.
+7. Update every reader of venue metadata to join through the new table. The one that matters most is the `audience_divergence` detector — it must read the role's `audience_stance`, never the source's.
+
+**Validation**
+- **Persist one source with two subjects at different tiers — Tier B for one, Tier C for the other — and assert both round-trip intact, neither overwriting the other.** ← **(c)** *This assertion is impossible to satisfy under the old schema, which is exactly why it is the one that matters.*
+- `Source` no longer exposes `tier`; assert `mypy` rejects an access to it.
+- Deterministic id: writing the same `(source, subject)` pair twice yields one row.
+- `verify_role_coverage` fails on an utterance whose pair has no role row, and reports `NOT APPLICABLE — zero rows` on an empty store rather than `PASS`.
+- All three adapters implement `role()`; assert the Protocol is satisfied.
+
+**Falsify.** Restore `tier` on `Source` and have the writer use it. The two-tier round-trip must go RED. Then delete a role row for an ingested utterance; `verify_role_coverage` must go RED. Revert both; record all four outcomes.
+
+**Blast radius.** `worker/entities.py`, `worker/storage.py`, `worker/adapters/*` (all three), `worker/integrity.py` (new check), `tests/`, `docs/design_data_layer.md` §2–§3 and `docs/design_source_acquisition.md` §2, §4 (both already updated — verify the code matches).
+
+---
+
+## 17. I0 — First real ingest · **subjects selected (Issue 021 = B)**
 
 **Subjects:** Chamath Palihapitiya, David Sacks, Jason Calacanis, David Friedberg — the four All-In hosts. **Primary source:** the All-In Podcast.
 
-> **Elon Musk is held back pending Issue 023.** He was named in the Issue 021 selection, but he is a *guest* where the others are hosts, and — the larger problem — his primary medium is X, which is deferred (`master_implementation_plan.md` §9). A Musk corpus drawn only from long-form would pass the sufficiency gate while measuring a systematically unrepresentative slice of him. **Do not ingest him until 023 is selected.** The four hosts are unaffected and are the better first corpus regardless.
+> **Elon Musk is deferred — Issue 023 = A.** He is out of I0 entirely and out of the queue; see §24 for the trigger. He was named in the Issue 021 selection, but his primary medium is X, which is deferred (`master_implementation_plan.md` §9), and a long-form-only corpus would clear the sufficiency gate while measuring a systematically unrepresentative slice of him. **Do not ingest him.** The four hosts are the better first corpus regardless.
 
 **User impact:** the system processes real human beings for the first time. Until now every green gate has been green over nothing.
 
@@ -458,7 +491,6 @@ That is not a reason to push back on the choice. It is an excellent corpus for t
 I0.1  Enrollment for the four hosts           [ ]
 I0.2  Single-speaker ingest, one subject      [ ]
 I0.3  Multi-speaker panel, 3-4 episodes       [ ]
-I0.4  Elon Musk                               [ ]  BLOCKED on Issues 022 + 023
 ```
 
 ---
@@ -516,21 +548,13 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-### I0.4 — Elon Musk · **BLOCKED on Issues 022 and 023**
-
-Two independent blockers, and the second is the one that matters.
-
-**Issue 022 — schema.** He is a guest where the others are hosts, so one episode is Tier B / `own_channel` / `friendly` for the four and Tier C / `guest` for him. One `Source` row cannot hold both. Do not work around it by stamping a single tier: `audience_stance` feeds audience-divergence detection, so a wrong value is a wrong *finding*.
-
-**Issue 023 — corpus representativeness.** His primary medium is X, which is deferred. A long-form-only corpus would clear the sufficiency gate while measuring the medium where he is most rehearsed and excluding the one where he is most spontaneous — and reversals are most visible in the latter. **Invariant I5 defends against a thin corpus, not a skewed one**, so nothing would flag it. This is the more serious of the two.
-
-**I0.1–I0.3 are unaffected.** With no guests in scope, all four hosts share the same tier and venue on their own show, and Issue 022 stops blocking anything.
+**Prerequisite:** S0. With Musk deferred every host shares the same tier on their own show, so the `SourceSubjectRole` join is not strictly *needed* for I0 — but it lands first anyway, because migrating an empty store costs nothing and migrating a populated one does not.
 
 **Blast radius (whole item).** `worker/` wherever real data breaks it, `fixtures/behaviour/`, §3, `docs/ongoing_errors.md` §2 (parameter 004), `docs/e2e_verification_journeys.md` (mark J1/J11 passing, with the date).
 
 ---
 
-## 17. P4 — Tension detection
+## 18. P4 — Tension detection
 
 **User impact:** the product's core claim starts working — *here are two things you said that cannot both be your view.*
 
@@ -560,7 +584,7 @@ Two independent blockers, and the second is the one that matters.
 
 ---
 
-## 18. P3 — Topic model
+## 19. P3 — Topic model
 
 **User impact:** you can ask about any topic in your own words and get that person's record on it.
 
@@ -587,7 +611,7 @@ Two independent blockers, and the second is the one that matters.
 
 ---
 
-## 19. P5 — Principle extraction
+## 20. P5 — Principle extraction
 
 **User impact:** the system can spot a double standard — the same principle applied to one person and not another.
 
@@ -616,7 +640,7 @@ Two independent blockers, and the second is the one that matters.
 
 ---
 
-## 20. P6 — Rubric engine
+## 21. P6 — Rubric engine
 
 **User impact:** the four numbers appear — and, just as importantly, correctly refuse to appear when the evidence is thin.
 
@@ -648,7 +672,7 @@ Two independent blockers, and the second is the one that matters.
 
 ---
 
-## 21. P7 — Local API
+## 22. P7 — Local API
 
 **User impact:** something outside Python can finally read the corpus.
 
@@ -679,7 +703,7 @@ Two independent blockers, and the second is the one that matters.
 
 ---
 
-## 22. P8 — Browser extension
+## 23. P8 — Browser extension
 
 **User impact:** the product exists where you actually read.
 
@@ -709,7 +733,17 @@ Two independent blockers, and the second is the one that matters.
 
 ---
 
-## 23. Invariants — do NOT change
+## 24. Deferred — designed for, not queued
+
+**Elon Musk (Issue 023 = A).** Out of scope until X/Twitter ingest exists. **Trigger:** an `XAPIAdapter` or `XArchiveImportAdapter` lands behind the `SourceAdapter` Protocol and a Musk corpus can be assembled that includes his primary medium. Until then, ingesting him would produce a confident score over a systematically skewed slice, and **invariant I5 would not catch it** — it gates on volume, not composition (trap 24).
+
+**Corpus-composition reporting.** Issue 023's Option B was not selected, so `corpus_composition` is not being built now. It remains the right long-term answer to trap 24 and applies to every subject, not just Musk. Revisit when X ingest arrives or when any subject's corpus draws from a single medium.
+
+**X/Twitter ingest.** Deferred by decision, not difficulty (`master_implementation_plan.md` §9). The adapter Protocol must keep accepting it as a drop-in.
+
+---
+
+## 25. Invariants — do NOT change
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -717,13 +751,13 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 
 ---
 
-## 24. Contracts
+## 26. Contracts
 
 `master_implementation_plan.md` · `design_source_acquisition.md` · `design_claim_extraction.md` · `design_principle_extraction.md` · `design_topic_model.md` · `design_rubric_engine.md` · `design_data_layer.md` · `design_local_api_and_clients.md` · `design_ui_direction.md` · `design_evidence_integrity.md` · `e2e_verification_journeys.md` · `ongoing_errors.md`
 
 ---
 
-## 25. Feedback loop — what specs here have got wrong
+## 27. Feedback loop — what specs here have got wrong
 
 | What happened | Spec said | Should have said |
 |---|---|---|

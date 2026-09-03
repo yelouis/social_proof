@@ -34,18 +34,24 @@ subjects/{subject_id}
   corpus_stats{source_count, utterance_count, claim_count, earliest, latest}
   created_at, updated_at
 
-  sources/{source_id}
-    tier                    # A|B|C|D|E
+  sources/{source_id}          # facts about the ARTIFACT only
     title, publisher, canonical_url, artifact_hash
     citation_url_template   # e.g. "https://youtu.be/ID?t={seconds}" — null if the
                             # platform has no deep link. NEVER a bare URL that
                             # lands the reader at 00:00. (Issue 003 Option C)
-    venue_type, audience_stance, interlocutor, is_adversarial
+    interlocutor
     recorded_at             # the ORIGINAL recording date, not publication
     published_at
     authorship_confidence   # Tier E only
     ingest_job_id, transcription_model, ingested_at
     audio_deleted_at        # audio is not retained; this records when it went
+
+  source_roles/{role_id}       # id = sha256(source_id | subject_id)[:16]
+    source_id, subject_id      # Issue 022 = A: tier and venue are properties
+    tier                       # of the (source, subject) PAIR, not of either
+    venue_type                 # side alone. One All-In episode is Tier B /
+    audience_stance            # own_channel / friendly for its four hosts and
+    is_adversarial             # Tier C / guest for a guest, simultaneously.
 
   utterances/{utterance_id}
     source_id
@@ -102,6 +108,8 @@ ingest_jobs/{job_id}
   subject_id, adapter, status, stage, counts{}, errors[], started_at, finished_at
 ```
 
+**Why `source_roles` exists.** `tier`, `venue_type`, `audience_stance` and `is_adversarial` used to sit on `Source`, one value per source. That is wrong for any source with more than one subject in it — and `audience_stance` feeds audience-divergence detection (`design_rubric_engine.md` §6), so a single stamped value produces a wrong *finding* rather than a cosmetic mislabel. Every reader of venue metadata joins through this table.
+
 **Propositions and principles are global, not nested under a subject.** That is deliberate and it is what makes Phase 10 head-to-head comparison possible: two people can only be compared on a topic if they are being measured against *the same propositions*. Nesting them per subject would forfeit that permanently.
 
 ---
@@ -116,6 +124,7 @@ utterance_id   = sha256(source_id | start_ms | text_verbatim)[:16]
 proposition_id = sha256(canonical_text_normalized)[:16]
 claim_id       = sha256(utterance_id | proposition_id | stance | extraction_version)[:16]
 principle_id   = sha256(canonical_text_normalized)[:16]
+role_id        = sha256(source_id | subject_id)[:16]
 tension_id     = sha256(sorted(claim_a_id, claim_b_id) | type)[:16]
 assessment_id  = sha256(subject_id | topic_id | rubric_version)[:16]
 ```
