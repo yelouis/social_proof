@@ -36,12 +36,14 @@ def test_youtube_adapter_discovery_and_fetch(tmp_path: Path) -> None:
 
     normalized = adapter.normalize(raw)
     source = normalized.source
+    role = adapter.role(ref, subject)
 
-    # Assert full venue block is populated with no nulls in required fields
+    # Assert source fields and role fields
     assert source.source_id != ""
-    assert source.tier == "B"
-    assert source.venue_type == "own_channel"
-    assert source.audience_stance in ["friendly", "neutral", "adversarial", "unknown"]
+    assert not hasattr(source, "tier")
+    assert role.tier == "B"
+    assert role.venue_type == "own_channel"
+    assert role.audience_stance in ["friendly", "neutral", "adversarial", "unknown"]
     assert source.recorded_at != ""
     assert source.published_at != ""
     assert source.citation_url_template == "https://youtu.be/abcdef12345?t={seconds}"
@@ -51,7 +53,6 @@ def test_citation_url_exact_second_offset() -> None:
     adapter = YouTubeAdapter()
     source = Source(
         source_id="src_yt_01",
-        tier="B",
         title="Episode",
         publisher="Host",
         canonical_url="https://www.youtube.com/watch?v=abcdef12345",
@@ -73,7 +74,6 @@ def test_citation_url_exact_second_offset() -> None:
     # Source without deep-link capability returns None, NEVER bare URL
     no_link_source = Source(
         source_id="src_nolink",
-        tier="E",
         title="Book",
         publisher="Press",
         canonical_url="https://books.example.com/123",
@@ -115,7 +115,6 @@ def test_falsification_bare_url_fallback_fails_deep_link_test() -> None:
     broken = BrokenAdapter()
     source = Source(
         source_id="src_yt_01",
-        tier="B",
         title="Episode",
         publisher="Host",
         canonical_url="https://www.youtube.com/watch?v=abcdef12345",

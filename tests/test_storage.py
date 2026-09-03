@@ -9,6 +9,7 @@ from fixtures.fixture_loader import load_valid_fixtures
 from worker.entities import (
     Proposition,
     Source,
+    SourceSubjectRole,
     Subject,
     Utterance,
 )
@@ -19,6 +20,7 @@ from worker.storage import (
     compute_claim_id,
     compute_principle_id,
     compute_proposition_id,
+    compute_role_id,
     compute_source_id,
     compute_tension_id,
     compute_utterance_id,
@@ -57,7 +59,7 @@ def test_deterministic_ids_are_reproducible_and_content_derived() -> None:
 
 def test_entity_round_trip(tmp_path: Path) -> None:
     store = Storage(db_path=str(tmp_path / "test.duckdb"), artifact_dir=tmp_path / "artifacts")
-    sources, utterances, claims, tensions, assessments = load_valid_fixtures()
+    sources, utterances, claims, tensions, assessments, roles = load_valid_fixtures()
 
     subject = Subject(
         subject_id="subj_test_01",
@@ -81,6 +83,17 @@ def test_entity_round_trip(tmp_path: Path) -> None:
     assert fetched_src.canonical_url == source.canonical_url
     assert fetched_src.citation_url_template == source.citation_url_template
 
+    # Insert subject before role for foreign key constraint
+    store.insert_subject(Subject(subject_id=roles[0].subject_id, display_name="Role Subject"))
+    role = roles[0]
+    store.insert_source_role(role)
+    fetched_role = store.get_source_role(role.source_id, role.subject_id)
+    assert fetched_role is not None
+    assert fetched_role.tier == role.tier
+    assert fetched_role.venue_type == role.venue_type
+    assert fetched_role.audience_stance == role.audience_stance
+    assert fetched_role.is_adversarial == role.is_adversarial
+
     utt = utterances[0]
     store.insert_utterance(utt)
     fetched_utt = store.get_utterance(utt.utterance_id)
@@ -99,13 +112,20 @@ def test_entity_round_trip(tmp_path: Path) -> None:
 
 def test_idempotent_duplicate_writes_produce_one_row(tmp_path: Path) -> None:
     store = Storage(db_path=str(tmp_path / "test.duckdb"), artifact_dir=tmp_path / "artifacts")
-    sources, utterances, claims, _, _ = load_valid_fixtures()
+    sources, utterances, claims, _, _, roles = load_valid_fixtures()
 
     # Insert same source twice
     store.insert_source(sources[0])
     store.insert_source(sources[0])
     cnt_sources = store.con.execute("SELECT count(*) FROM sources WHERE source_id = ?", [sources[0].source_id]).fetchone()
     assert cnt_sources is not None and cnt_sources[0] == 1
+
+    # Insert subject and insert same role twice
+    store.insert_subject(Subject(subject_id=roles[0].subject_id, display_name="Role Subject"))
+    store.insert_source_role(roles[0])
+    store.insert_source_role(roles[0])
+    cnt_role = store.con.execute("SELECT count(*) FROM source_roles WHERE role_id = ?", [roles[0].role_id]).fetchone()
+    assert cnt_role is not None and cnt_role[0] == 1
 
     # Insert same utterance twice
     store.insert_utterance(utterances[0])
@@ -219,7 +239,7 @@ def test_three_hour_episode_word_timestamps_parquet_in_artifact_store(tmp_path: 
 def test_core_reversal_detector_self_join(tmp_path: Path) -> None:
     """Tests the exact core reversal detector query from design_data_layer.md §4."""
     store = Storage(db_path=str(tmp_path / "test.duckdb"), artifact_dir=tmp_path / "artifacts")
-    sources, utterances, claims, _, _ = load_valid_fixtures()
+    sources, utterances, claims, _, _, _ = load_valid_fixtures()
 
     for s in sources:
         store.insert_source(s)
@@ -236,6 +256,75 @@ def test_core_reversal_detector_self_join(tmp_path: Path) -> None:
     assert prop_id == "prop_licensing_01"
 
 
+def test_multi_subject_source_different_tiers_round_trip(tmp_path: Path) -> None:
+    """Persist one source with two subjects at different tiers — Tier B for one, Tier C for the other —
+
+    and assert both round-trip intact, neither overwriting the other. (c)
+    """
+    store = Storage(db_path=str(tmp_path / "test.duckdb"), artifact_dir=tmp_path / "artifacts")
+
+    # Create 2 subjects
+    host = Subject(subject_id="subj_host", display_name="Host")
+    guest = Subject(subject_id="subj_guest", display_name="Guest")
+    store.insert_subject(host)
+    store.insert_subject(guest)
+
+    # Create 1 source (e.g. podcast episode)
+    source = Source(
+        source_id="src_ep_200",
+        title="Episode 200 with Guest",
+        publisher="The Show",
+        canonical_url="https://youtube.com/watch?v=ep200",
+        artifact_hash="hash_ep200",
+    )
+    store.insert_source(source)
+
+    # Role 1: Host has Tier B / own_channel / friendly
+    role_host = SourceSubjectRole(
+        role_id=compute_role_id(source.source_id, host.subject_id),
+        source_id=source.source_id,
+        subject_id=host.subject_id,
+        tier="B",
+        venue_type="own_channel",
+        audience_stance="friendly",
+        is_adversarial=False,
+    )
+
+    # Role 2: Guest has Tier C / guest / neutral
+    role_guest = SourceSubjectRole(
+        role_id=compute_role_id(source.source_id, guest.subject_id),
+        source_id=source.source_id,
+        subject_id=guest.subject_id,
+        tier="C",
+        venue_type="guest",
+        audience_stance="neutral",
+        is_adversarial=False,
+    )
+
+    store.insert_source_role(role_host)
+    store.insert_source_role(role_guest)
+
+    # Assert both round-trip intact, neither overwriting the other
+    fetched_host_role = store.get_source_role(source.source_id, host.subject_id)
+    fetched_guest_role = store.get_source_role(source.source_id, guest.subject_id)
+
+    assert fetched_host_role is not None
+    assert fetched_guest_role is not None
+
+    assert fetched_host_role.tier == "B"
+    assert fetched_host_role.venue_type == "own_channel"
+    assert fetched_host_role.audience_stance == "friendly"
+
+    assert fetched_guest_role.tier == "C"
+    assert fetched_guest_role.venue_type == "guest"
+    assert fetched_guest_role.audience_stance == "neutral"
+
+    all_roles = store.get_source_roles_for_source(source.source_id)
+    assert len(all_roles) == 2
+    tiers = {r.tier for r in all_roles}
+    assert tiers == {"B", "C"}
+
+
 def test_falsification_non_deterministic_uuid_breaks_idempotency(tmp_path: Path) -> None:
     """Falsification test: Replacing deterministic ID with random UUID breaks duplicate test."""
     store = Storage(db_path=str(tmp_path / "test.duckdb"), artifact_dir=tmp_path / "artifacts")
@@ -245,7 +334,6 @@ def test_falsification_non_deterministic_uuid_breaks_idempotency(tmp_path: Path)
         random_id = str(uuid.uuid4())[:16]
         src = Source(
             source_id=random_id,
-            tier="B",
             title="Video",
             publisher="Pub",
             canonical_url=canonical_url,

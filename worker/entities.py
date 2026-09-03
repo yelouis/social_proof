@@ -19,16 +19,12 @@ class Subject:
 @dataclass
 class Source:
     source_id: str
-    tier: Literal["A", "B", "C", "D", "E"]
     title: str
     publisher: str
     canonical_url: str
     artifact_hash: str
     citation_url_template: str | None = None
-    venue_type: Literal["own_channel", "guest", "institutional", "authored", "self_published_text"] = "own_channel"
-    audience_stance: Literal["friendly", "neutral", "adversarial", "unknown"] = "unknown"
     interlocutor: str | None = None
-    is_adversarial: bool = False
     recorded_at: str = ""
     published_at: str = ""
     authorship_confidence: float | None = None
@@ -36,6 +32,17 @@ class Source:
     transcription_model: str | None = None
     ingested_at: str | None = None
     audio_deleted_at: str | None = None
+
+
+@dataclass
+class SourceSubjectRole:
+    role_id: str
+    source_id: str
+    subject_id: str
+    tier: Literal["A", "B", "C", "D", "E"]
+    venue_type: Literal["own_channel", "guest", "institutional", "authored", "self_published_text"] = "own_channel"
+    audience_stance: Literal["friendly", "neutral", "adversarial", "unknown"] = "unknown"
+    is_adversarial: bool = False
 
 
 @dataclass

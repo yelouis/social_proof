@@ -7,9 +7,9 @@ from collections.abc import Iterable
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Literal, Protocol
+from typing import Any, Literal, Protocol, runtime_checkable
 
-from worker.entities import Source, Subject
+from worker.entities import Source, SourceSubjectRole, Subject
 
 
 @dataclass
@@ -45,8 +45,15 @@ class Provenance:
     details: dict[str, Any] = field(default_factory=dict)
 
 
+@runtime_checkable
 class SourceAdapter(Protocol):
-    tier: Literal["A", "B", "C", "D", "E"]
+    def role(self, ref: SourceRef, subject: Subject) -> SourceSubjectRole:
+        """Tier and venue for THIS subject in THIS source (Issue 022 = A).
+
+        The same episode is Tier B / own_channel for a host and
+        Tier C / guest for a visitor. An adapter has no single tier.
+        """
+        ...
 
     def discover(self, subject: Subject, since: datetime | None = None) -> Iterable[SourceRef]:
         """Find candidate sources. Cheap, metadata only, no media fetched."""

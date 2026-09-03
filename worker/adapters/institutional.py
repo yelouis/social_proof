@@ -16,12 +16,31 @@ from worker.adapters.base import (
     SourceAdapter,
     SourceRef,
 )
-from worker.entities import Source, Subject, Utterance
-from worker.storage import compute_source_id, compute_utterance_id
+from worker.entities import Source, SourceSubjectRole, Subject, Utterance
+from worker.storage import compute_role_id, compute_source_id, compute_utterance_id
 
 
 class CongressionalRecordAdapter(SourceAdapter):
-    tier: Literal["A", "B", "C", "D", "E"] = "D"
+    def role(self, ref: SourceRef, subject: Subject) -> SourceSubjectRole:
+        source_id = compute_source_id(ref.locator)
+        role_id = compute_role_id(source_id, subject.subject_id)
+        venue_type: Literal["own_channel", "guest", "institutional", "authored", "self_published_text"] = (
+            ref.extra.get("venue_type") or "institutional"
+        )
+        tier: Literal["A", "B", "C", "D", "E"] = ref.extra.get("tier") or "D"
+        audience_stance: Literal["friendly", "neutral", "adversarial", "unknown"] = (
+            ref.extra.get("audience_stance") or "adversarial"
+        )
+        is_adversarial = bool(ref.extra.get("is_adversarial", True))
+        return SourceSubjectRole(
+            role_id=role_id,
+            source_id=source_id,
+            subject_id=subject.subject_id,
+            tier=tier,
+            venue_type=venue_type,
+            audience_stance=audience_stance,
+            is_adversarial=is_adversarial,
+        )
 
     def discover(self, subject: Subject, since: datetime | None = None) -> Iterable[SourceRef]:
         member_id = subject.handles.get("congress_gov_id")
@@ -31,7 +50,7 @@ class CongressionalRecordAdapter(SourceAdapter):
         return [
             SourceRef(
                 locator=locator,
-                tier=self.tier,
+                tier="D",
                 title=f"Congressional Record: {subject.display_name}",
                 discovered_at=datetime.now(UTC).isoformat(),
             )
@@ -65,16 +84,12 @@ class CongressionalRecordAdapter(SourceAdapter):
 
         source = Source(
             source_id=source_id,
-            tier=self.tier,
             title=raw.metadata.get("title", raw.ref.title),
             publisher=raw.metadata.get("publisher", "U.S. Congress"),
             canonical_url=canonical_url,
             artifact_hash=raw.content_hash,
             citation_url_template=citation_template,
-            venue_type="institutional",
-            audience_stance="adversarial",
             interlocutor=raw.metadata.get("interlocutor"),
-            is_adversarial=True,
             recorded_at=raw.metadata.get("recorded_at", datetime.now(UTC).isoformat()),
             published_at=raw.metadata.get("published_at", datetime.now(UTC).isoformat()),
             authorship_confidence=1.0,
@@ -136,7 +151,26 @@ class CongressionalRecordAdapter(SourceAdapter):
 
 
 class SECFilingAdapter(SourceAdapter):
-    tier: Literal["A", "B", "C", "D", "E"] = "D"
+    def role(self, ref: SourceRef, subject: Subject) -> SourceSubjectRole:
+        source_id = compute_source_id(ref.locator)
+        role_id = compute_role_id(source_id, subject.subject_id)
+        venue_type: Literal["own_channel", "guest", "institutional", "authored", "self_published_text"] = (
+            ref.extra.get("venue_type") or "institutional"
+        )
+        tier: Literal["A", "B", "C", "D", "E"] = ref.extra.get("tier") or "D"
+        audience_stance: Literal["friendly", "neutral", "adversarial", "unknown"] = (
+            ref.extra.get("audience_stance") or "neutral"
+        )
+        is_adversarial = bool(ref.extra.get("is_adversarial", False))
+        return SourceSubjectRole(
+            role_id=role_id,
+            source_id=source_id,
+            subject_id=subject.subject_id,
+            tier=tier,
+            venue_type=venue_type,
+            audience_stance=audience_stance,
+            is_adversarial=is_adversarial,
+        )
 
     def discover(self, subject: Subject, since: datetime | None = None) -> Iterable[SourceRef]:
         cik = subject.handles.get("sec_cik")
@@ -146,7 +180,7 @@ class SECFilingAdapter(SourceAdapter):
         return [
             SourceRef(
                 locator=locator,
-                tier=self.tier,
+                tier="D",
                 title=f"SEC Filing: {subject.display_name}",
                 discovered_at=datetime.now(UTC).isoformat(),
             )
@@ -180,16 +214,12 @@ class SECFilingAdapter(SourceAdapter):
 
         source = Source(
             source_id=source_id,
-            tier=self.tier,
             title=raw.metadata.get("title", raw.ref.title),
             publisher=raw.metadata.get("publisher", "U.S. SEC"),
             canonical_url=canonical_url,
             artifact_hash=raw.content_hash,
             citation_url_template=citation_template,
-            venue_type="institutional",
-            audience_stance="neutral",
             interlocutor=None,
-            is_adversarial=False,
             recorded_at=raw.metadata.get("recorded_at", datetime.now(UTC).isoformat()),
             published_at=raw.metadata.get("published_at", datetime.now(UTC).isoformat()),
             authorship_confidence=1.0,

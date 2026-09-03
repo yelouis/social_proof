@@ -17,6 +17,7 @@ from worker.entities import (
     Principle,
     Proposition,
     Source,
+    SourceSubjectRole,
     Subject,
     Tension,
     Topic,
@@ -62,6 +63,12 @@ def compute_tension_id(claim_a_id: str, claim_b_id: str, tension_type: str) -> s
 
 def compute_assessment_id(subject_id: str, topic_id: str, rubric_version: str) -> str:
     key = f"{subject_id}|{topic_id}|{rubric_version}"
+    return hashlib.sha256(key.encode("utf-8")).hexdigest()[:16]
+
+
+def compute_role_id(source_id: str, subject_id: str) -> str:
+    """Computes deterministic role_id = sha256(source_id | subject_id)[:16]."""
+    key = f"{source_id}|{subject_id}"
     return hashlib.sha256(key.encode("utf-8")).hexdigest()[:16]
 
 
@@ -158,16 +165,12 @@ class Storage:
 
             CREATE TABLE IF NOT EXISTS sources (
                 source_id VARCHAR PRIMARY KEY,
-                tier VARCHAR,
                 title VARCHAR,
                 publisher VARCHAR,
                 canonical_url VARCHAR,
                 artifact_hash VARCHAR,
                 citation_url_template VARCHAR,
-                venue_type VARCHAR,
-                audience_stance VARCHAR,
                 interlocutor VARCHAR,
-                is_adversarial BOOLEAN,
                 recorded_at VARCHAR,
                 published_at VARCHAR,
                 authorship_confidence DOUBLE,
@@ -176,6 +179,19 @@ class Storage:
                 ingested_at VARCHAR,
                 audio_deleted_at VARCHAR
             );
+
+            CREATE TABLE IF NOT EXISTS source_roles (
+                role_id VARCHAR PRIMARY KEY,
+                source_id VARCHAR,
+                subject_id VARCHAR,
+                tier VARCHAR,
+                venue_type VARCHAR,
+                audience_stance VARCHAR,
+                is_adversarial BOOLEAN,
+                FOREIGN KEY (source_id) REFERENCES sources(source_id),
+                FOREIGN KEY (subject_id) REFERENCES subjects(subject_id)
+            );
+            CREATE INDEX IF NOT EXISTS idx_source_roles_pair ON source_roles(source_id, subject_id);
 
             CREATE TABLE IF NOT EXISTS utterances (
                 utterance_id VARCHAR PRIMARY KEY,
@@ -344,7 +360,7 @@ class Storage:
     def insert_source(self, s: Source) -> None:
         self.con.execute(
             """
-            INSERT INTO sources VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO sources VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT (source_id) DO UPDATE SET
                 title = excluded.title,
                 publisher = excluded.publisher,
@@ -353,16 +369,12 @@ class Storage:
             """,
             [
                 s.source_id,
-                s.tier,
                 s.title,
                 s.publisher,
                 s.canonical_url,
                 s.artifact_hash,
                 s.citation_url_template,
-                s.venue_type,
-                s.audience_stance,
                 s.interlocutor,
-                s.is_adversarial,
                 s.recorded_at,
                 s.published_at,
                 s.authorship_confidence,
@@ -379,24 +391,76 @@ class Storage:
             return None
         return Source(
             source_id=res[0],
-            tier=res[1],
-            title=res[2],
-            publisher=res[3],
-            canonical_url=res[4],
-            artifact_hash=res[5],
-            citation_url_template=res[6],
-            venue_type=res[7],
-            audience_stance=res[8],
-            interlocutor=res[9],
-            is_adversarial=res[10],
-            recorded_at=res[11],
-            published_at=res[12],
-            authorship_confidence=res[13],
-            ingest_job_id=res[14],
-            transcription_model=res[15],
-            ingested_at=res[16],
-            audio_deleted_at=res[17],
+            title=res[1],
+            publisher=res[2],
+            canonical_url=res[3],
+            artifact_hash=res[4],
+            citation_url_template=res[5],
+            interlocutor=res[6],
+            recorded_at=res[7],
+            published_at=res[8],
+            authorship_confidence=res[9],
+            ingest_job_id=res[10],
+            transcription_model=res[11],
+            ingested_at=res[12],
+            audio_deleted_at=res[13],
         )
+
+    def insert_source_role(self, r: SourceSubjectRole) -> None:
+        self.con.execute(
+            """
+            INSERT INTO source_roles VALUES (?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT (role_id) DO UPDATE SET
+                tier = excluded.tier,
+                venue_type = excluded.venue_type,
+                audience_stance = excluded.audience_stance,
+                is_adversarial = excluded.is_adversarial
+            """,
+            [
+                r.role_id,
+                r.source_id,
+                r.subject_id,
+                r.tier,
+                r.venue_type,
+                r.audience_stance,
+                r.is_adversarial,
+            ],
+        )
+
+    def get_source_role(self, source_id: str, subject_id: str) -> SourceSubjectRole | None:
+        res = self.con.execute(
+            "SELECT role_id, source_id, subject_id, tier, venue_type, audience_stance, is_adversarial FROM source_roles WHERE source_id = ? AND subject_id = ?",
+            [source_id, subject_id],
+        ).fetchone()
+        if not res:
+            return None
+        return SourceSubjectRole(
+            role_id=res[0],
+            source_id=res[1],
+            subject_id=res[2],
+            tier=res[3],
+            venue_type=res[4],
+            audience_stance=res[5],
+            is_adversarial=bool(res[6]),
+        )
+
+    def get_source_roles_for_source(self, source_id: str) -> list[SourceSubjectRole]:
+        rows = self.con.execute(
+            "SELECT role_id, source_id, subject_id, tier, venue_type, audience_stance, is_adversarial FROM source_roles WHERE source_id = ?",
+            [source_id],
+        ).fetchall()
+        return [
+            SourceSubjectRole(
+                role_id=row[0],
+                source_id=row[1],
+                subject_id=row[2],
+                tier=row[3],
+                venue_type=row[4],
+                audience_stance=row[5],
+                is_adversarial=bool(row[6]),
+            )
+            for row in rows
+        ]
 
     def insert_utterance(self, u: Utterance) -> None:
         self.con.execute(

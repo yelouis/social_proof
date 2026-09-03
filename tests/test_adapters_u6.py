@@ -33,7 +33,13 @@ def test_podcast_rss_adapter_feed_and_citation(tmp_path: Path) -> None:
     norm = adapter.normalize(raw)
     source = norm.source
 
-    assert source.tier == "B"
+    subject = Subject(subject_id="subj_pod_01", display_name="Podcaster", handles={"podcast_rss": "https://cdn.podcasts.example.com/feed.xml"})
+    role = adapter.role(ref, subject)
+
+    assert not hasattr(source, "tier")
+    assert role.tier == "B"
+    assert role.venue_type == "own_channel"
+    assert role.audience_stance == "friendly"
     assert source.citation_url_template == "https://cdn.podcasts.example.com/ep101.mp3#t={seconds}"
 
     # Test deep link offset: 45,000 ms = 45 seconds
@@ -58,11 +64,17 @@ def test_congressional_record_adapter_tier_d(tmp_path: Path) -> None:
     raw = adapter.fetch(ref, mocked_text=transcript_text)
     norm = adapter.normalize(raw)
     source = norm.source
+    store.insert_subject(subject)
     store.insert_source(source)
 
-    assert source.tier == "D"
-    assert source.is_adversarial is True
-    assert source.venue_type == "institutional"
+    role = adapter.role(ref, subject)
+    store.insert_source_role(role)
+
+    assert not hasattr(source, "tier")
+    assert role.tier == "D"
+    assert role.is_adversarial is True
+    assert role.venue_type == "institutional"
+    assert role.audience_stance == "adversarial"
     assert source.transcription_model == "official_transcript"
 
     # Citation by paragraph
@@ -97,9 +109,12 @@ def test_sec_filing_adapter_tier_d() -> None:
     raw = adapter.fetch(ref, mocked_text="Item 1A Risk Factors. Regulatory risk.")
     norm = adapter.normalize(raw)
     source = norm.source
+    role = adapter.role(ref, subject)
 
-    assert source.tier == "D"
-    assert source.venue_type == "institutional"
+    assert not hasattr(source, "tier")
+    assert role.tier == "D"
+    assert role.venue_type == "institutional"
+    assert role.audience_stance == "neutral"
     assert source.citation_url_template == f"{source.canonical_url}#item{{seconds}}"
     assert adapter.citation_url(source, 2000) == f"{source.canonical_url}#item2"
 
@@ -109,7 +124,6 @@ def test_falsification_tier_d_defaulting_fields_triggers_assertion() -> None:
     # Simulating a broken Tier D generator where fields were left None / unset
     broken_source = Source(
         source_id="src_broken_tier_d",
-        tier="D",
         title="Congressional Hearing",
         publisher="Congress",
         canonical_url="https://congress.gov/1",
@@ -118,3 +132,20 @@ def test_falsification_tier_d_defaulting_fields_triggers_assertion() -> None:
     )
     # Check that test catches unset/defaulted attribution or model
     assert broken_source.transcription_model is None  # Falsification confirmed!
+
+
+def test_all_adapters_satisfy_source_adapter_protocol() -> None:
+    from worker.adapters.base import SourceAdapter
+    from worker.adapters.institutional import CongressionalRecordAdapter, SECFilingAdapter
+    from worker.adapters.podcast import PodcastRSSAdapter
+    from worker.adapters.youtube import YouTubeAdapter
+
+    yt = YouTubeAdapter()
+    pod = PodcastRSSAdapter()
+    cong = CongressionalRecordAdapter()
+    sec = SECFilingAdapter()
+
+    assert isinstance(yt, SourceAdapter)
+    assert isinstance(pod, SourceAdapter)
+    assert isinstance(cong, SourceAdapter)
+    assert isinstance(sec, SourceAdapter)

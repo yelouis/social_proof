@@ -15,12 +15,13 @@ from worker.integrity import (
     verify_no_suppressed_scores,
     verify_quarantine_not_rendered,
     verify_quotes,
+    verify_role_coverage,
     verify_versions_present,
 )
 
 
 def test_valid_fixtures_pass_all_checks() -> None:
-    sources, utterances, claims, tensions, assessments = load_valid_fixtures()
+    sources, utterances, claims, tensions, assessments, roles = load_valid_fixtures()
     sample_records = [{"id": "r1", "origin": "youtube"}]
     results = run_all_checks(
         claims=claims,
@@ -29,6 +30,7 @@ def test_valid_fixtures_pass_all_checks() -> None:
         tensions=tensions,
         assessments=assessments,
         records=sample_records,
+        roles=roles,
     )
     for r in results:
         assert r.passed is True, f"Check {r.name} unexpectedly failed: {r.message}"
@@ -133,7 +135,7 @@ def test_verify_quarantine_not_rendered() -> None:
 
 
 def test_verify_attribution_floor_rejects_low_confidence() -> None:
-    sources, utterances, claims, tensions, assessments = load_valid_fixtures()
+    sources, utterances, claims, tensions, assessments, roles = load_valid_fixtures()
     # Change one utterance attribution_confidence to "low"
     utterances[0].attribution_confidence = "low"
     res = verify_attribution_floor(claims, utterances, tensions)
@@ -143,7 +145,7 @@ def test_verify_attribution_floor_rejects_low_confidence() -> None:
 
 
 def test_verify_negation_recheck_rejects_uncertain_negation() -> None:
-    sources, utterances, claims, tensions, assessments = load_valid_fixtures()
+    sources, utterances, claims, tensions, assessments, roles = load_valid_fixtures()
     # Flag one utterance as negation_uncertain
     utterances[0].negation_uncertain = True
     res = verify_negation_recheck(tensions, claims, utterances)
@@ -165,3 +167,20 @@ def test_verify_versions_present_rejects_missing_versions() -> None:
     assert res.passed is False
     assert res.status == "FAIL"
     assert "rubric_version" in res.message
+
+
+def test_verify_role_coverage_fails_on_missing_role() -> None:
+    _, utterances, _, _, _, roles = load_valid_fixtures()
+    # Delete the role corresponding to the first utterance
+    filtered_roles = [r for r in roles if not (r.source_id == utterances[0].source_id and r.subject_id == utterances[0].subject_id)]
+    res = verify_role_coverage(utterances, filtered_roles)
+    assert res.passed is False
+    assert res.status == "FAIL"
+    assert "no matching SourceSubjectRole row" in res.message
+
+
+def test_verify_role_coverage_empty_set_emits_not_applicable() -> None:
+    res = verify_role_coverage([], [])
+    assert res.passed is True
+    assert res.status == "NOT APPLICABLE — zero rows"
+    assert res.status != "PASS"

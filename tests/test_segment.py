@@ -14,7 +14,6 @@ def test_segmentation_splits_on_long_pause_and_max_length(tmp_path: Path) -> Non
     store = Storage(db_path=str(tmp_path / "test.duckdb"), artifact_dir=tmp_path / "artifacts")
     source = Source(
         source_id="src_seg_01",
-        tier="B",
         title="Podcast with pauses",
         publisher="Channel",
         canonical_url="https://youtube.com/watch?v=seg01",
@@ -153,7 +152,6 @@ def test_falsification_corrupt_text_verbatim_fails_verify_quotes_on_real_data(tm
     store = Storage(db_path=str(tmp_path / "test.duckdb"), artifact_dir=tmp_path / "artifacts")
     source = Source(
         source_id="src_falsify_01",
-        tier="B",
         title="Episode",
         publisher="Host",
         canonical_url="https://youtube.com/watch?v=falsify01",

@@ -1,6 +1,6 @@
 """Evidence Integrity Automated Pass — design_evidence_integrity.md §3.
 
-Implements the eight mandatory checks:
+Implements the nine mandatory checks:
 1. verify_quotes
 2. verify_anchor_chain
 3. verify_no_page_context
@@ -9,6 +9,7 @@ Implements the eight mandatory checks:
 6. verify_attribution_floor
 7. verify_negation_recheck
 8. verify_versions_present
+9. verify_role_coverage
 """
 
 import argparse
@@ -16,7 +17,7 @@ import sys
 from dataclasses import dataclass
 from typing import Any
 
-from worker.entities import Assessment, Claim, Source, Tension, Utterance
+from worker.entities import Assessment, Claim, Source, SourceSubjectRole, Tension, Utterance
 
 
 @dataclass
@@ -450,6 +451,52 @@ def verify_versions_present(
     )
 
 
+def verify_role_coverage(
+    utterances: list[Utterance],
+    roles: list[SourceSubjectRole] | dict[tuple[str, str], SourceSubjectRole],
+) -> CheckResult:
+    """Every Utterance's (source_id, subject_id) pair resolves to a SourceSubjectRole row.
+
+    An utterance attributed to a subject with no role for that source is an orphan
+    and fails the pass. Issue 022 = A.
+    """
+    if not utterances:
+        return CheckResult(
+            name="verify_role_coverage",
+            passed=True,
+            status="NOT APPLICABLE — zero rows",
+            message="No utterances to verify role coverage",
+            examined_count=0,
+        )
+
+    if isinstance(roles, dict):
+        role_map = roles
+    else:
+        role_map = {(r.source_id, r.subject_id): r for r in roles}
+
+    for utt in utterances:
+        pair = (utt.source_id, utt.subject_id)
+        if pair not in role_map:
+            return CheckResult(
+                name="verify_role_coverage",
+                passed=False,
+                status="FAIL",
+                message=(
+                    f"Utterance {utt.utterance_id} has pair (source_id={utt.source_id}, "
+                    f"subject_id={utt.subject_id}) with no matching SourceSubjectRole row"
+                ),
+                examined_count=len(utterances),
+            )
+
+    return CheckResult(
+        name="verify_role_coverage",
+        passed=True,
+        status="PASS",
+        message=f"All {len(utterances)} utterances resolve to matching SourceSubjectRole rows",
+        examined_count=len(utterances),
+    )
+
+
 def run_all_checks(
     claims: list[Claim] | None = None,
     utterances: list[Utterance] | None = None,
@@ -457,14 +504,16 @@ def run_all_checks(
     tensions: list[Tension] | None = None,
     assessments: list[Assessment] | None = None,
     records: list[dict[str, Any]] | None = None,
+    roles: list[SourceSubjectRole] | None = None,
 ) -> list[CheckResult]:
-    """Execute all 8 integrity checks."""
+    """Execute all 9 integrity checks."""
     c_list = claims or []
     u_list = utterances or []
     s_list = sources or []
     t_list = tensions or []
     a_list = assessments or []
     r_list = records or []
+    rol_list = roles or []
 
     results = [
         verify_quotes(c_list, u_list),
@@ -475,25 +524,27 @@ def run_all_checks(
         verify_attribution_floor(c_list, u_list, t_list),
         verify_negation_recheck(t_list, c_list, u_list),
         verify_versions_present(a_list),
+        verify_role_coverage(u_list, rol_list),
     ]
     return results
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run evidence integrity verification suite")
-    parser.add_argument("--all", action="store_true", help="Run all 8 integrity checks")
+    parser.add_argument("--all", action="store_true", help="Run all 9 integrity checks")
     _ = parser.parse_args()
 
     # When run as CLI with --all, if no active DB connection is provided, run on fixtures
     from fixtures.fixture_loader import load_valid_fixtures
 
-    sources, utterances, claims, tensions, assessments = load_valid_fixtures()
+    sources, utterances, claims, tensions, assessments, roles = load_valid_fixtures()
     results = run_all_checks(
         claims=claims,
         utterances=utterances,
         sources=sources,
         tensions=tensions,
         assessments=assessments,
+        roles=roles,
     )
 
     failed = False

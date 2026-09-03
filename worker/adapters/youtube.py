@@ -19,8 +19,8 @@ from worker.adapters.base import (
     SourceAdapter,
     SourceRef,
 )
-from worker.entities import Source, Subject
-from worker.storage import compute_source_id
+from worker.entities import Source, SourceSubjectRole, Subject
+from worker.storage import compute_role_id, compute_source_id
 
 
 def extract_youtube_video_id(url: str) -> str | None:
@@ -41,11 +41,37 @@ def extract_youtube_video_id(url: str) -> str | None:
 
 
 class YouTubeAdapter(SourceAdapter):
-    tier: Literal["A", "B", "C", "D", "E"] = "B"
-
     def __init__(self, cache_dir: str | Path = ".cache/media") -> None:
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
+
+    def role(self, ref: SourceRef, subject: Subject) -> SourceSubjectRole:
+        video_id = extract_youtube_video_id(ref.locator) or ""
+        canonical_url = f"https://www.youtube.com/watch?v={video_id}" if video_id else ref.locator
+        source_id = compute_source_id(canonical_url)
+        role_id = compute_role_id(source_id, subject.subject_id)
+
+        channel_handle = subject.handles.get("youtube", "")
+        is_own = bool(channel_handle and (channel_handle in ref.locator or ref.extra.get("channel_owner") == subject.subject_id))
+
+        venue_type: Literal["own_channel", "guest", "institutional", "authored", "self_published_text"] = (
+            ref.extra.get("venue_type") or ("own_channel" if is_own else "guest")
+        )
+        tier: Literal["A", "B", "C", "D", "E"] = ref.extra.get("tier") or ("B" if venue_type == "own_channel" else "C")
+        audience_stance: Literal["friendly", "neutral", "adversarial", "unknown"] = (
+            ref.extra.get("audience_stance") or ("friendly" if venue_type == "own_channel" else "neutral")
+        )
+        is_adversarial = bool(ref.extra.get("is_adversarial", False))
+
+        return SourceSubjectRole(
+            role_id=role_id,
+            source_id=source_id,
+            subject_id=subject.subject_id,
+            tier=tier,
+            venue_type=venue_type,
+            audience_stance=audience_stance,
+            is_adversarial=is_adversarial,
+        )
 
     def discover(self, subject: Subject, since: datetime | None = None) -> Iterable[SourceRef]:
         """Discovers video references for the subject from handles or channels."""
@@ -56,7 +82,7 @@ class YouTubeAdapter(SourceAdapter):
         # Return structured SourceRefs (cheap metadata lookup)
         ref = SourceRef(
             locator=channel_url,
-            tier=self.tier,
+            tier="B",
             title=f"Channel {subject.display_name}",
             discovered_at=datetime.now(UTC).isoformat(),
         )
@@ -164,16 +190,12 @@ class YouTubeAdapter(SourceAdapter):
 
         source = Source(
             source_id=source_id,
-            tier=self.tier,
             title=raw.metadata.get("title", raw.ref.title),
             publisher=raw.metadata.get("uploader", "YouTube"),
             canonical_url=canonical_url,
             artifact_hash=raw.content_hash,
             citation_url_template=citation_template,
-            venue_type=raw.metadata.get("venue_type", "own_channel"),
-            audience_stance=raw.metadata.get("audience_stance", "friendly"),
             interlocutor=raw.metadata.get("interlocutor"),
-            is_adversarial=raw.metadata.get("is_adversarial", False),
             recorded_at=formatted_date,
             published_at=formatted_date,
             authorship_confidence=1.0,

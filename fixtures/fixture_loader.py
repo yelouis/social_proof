@@ -1,21 +1,19 @@
 """Fixture datasets: hand-written valid and deliberately broken fixtures."""
 
-from worker.entities import Assessment, Claim, Source, Tension, Utterance
+from worker.entities import Assessment, Claim, Source, SourceSubjectRole, Tension, Utterance
+from worker.storage import compute_role_id
 
 
-def load_valid_fixtures() -> tuple[list[Source], list[Utterance], list[Claim], list[Tension], list[Assessment]]:
-    """Loads a fully valid entity graph that satisfies all 8 integrity checks."""
+def load_valid_fixtures() -> tuple[list[Source], list[Utterance], list[Claim], list[Tension], list[Assessment], list[SourceSubjectRole]]:
+    """Loads a fully valid entity graph that satisfies all 9 integrity checks."""
     source_1 = Source(
         source_id="src_valid_01",
-        tier="B",
         title="Episode 101: AI Regulation and the Future",
         publisher="The Tech Pod",
         canonical_url="https://youtube.com/watch?v=valid01",
         artifact_hash="hash_src_valid_01",
         citation_url_template="https://youtu.be/valid01?t={seconds}",
-        venue_type="own_channel",
-        audience_stance="friendly",
-        is_adversarial=False,
+        interlocutor=None,
         recorded_at="2024-01-15T10:00:00Z",
         published_at="2024-01-16T08:00:00Z",
         transcription_model="whisper-large-v3",
@@ -25,20 +23,37 @@ def load_valid_fixtures() -> tuple[list[Source], list[Utterance], list[Claim], l
 
     source_2 = Source(
         source_id="src_valid_02",
-        tier="D",
         title="Senate Judiciary Hearing on Frontier AI",
         publisher="U.S. Senate",
         canonical_url="https://judiciary.senate.gov/hearings/frontier-ai",
         artifact_hash="hash_src_valid_02",
         citation_url_template="https://judiciary.senate.gov/hearings/frontier-ai#p{seconds}",
-        venue_type="institutional",
-        audience_stance="adversarial",
-        is_adversarial=True,
+        interlocutor="Committee Chair",
         recorded_at="2024-05-10T14:00:00Z",
         published_at="2024-05-10T18:00:00Z",
         transcription_model="official_transcript",
         ingested_at="2024-05-11T09:00:00Z",
         audio_deleted_at="2024-05-11T09:01:00Z",
+    )
+
+    role_1 = SourceSubjectRole(
+        role_id=compute_role_id("src_valid_01", "subj_valid_01"),
+        source_id="src_valid_01",
+        subject_id="subj_valid_01",
+        tier="B",
+        venue_type="own_channel",
+        audience_stance="friendly",
+        is_adversarial=False,
+    )
+
+    role_2 = SourceSubjectRole(
+        role_id=compute_role_id("src_valid_02", "subj_valid_01"),
+        source_id="src_valid_02",
+        subject_id="subj_valid_01",
+        tier="D",
+        venue_type="institutional",
+        audience_stance="adversarial",
+        is_adversarial=True,
     )
 
     utt_1 = Utterance(
@@ -158,12 +173,13 @@ def load_valid_fixtures() -> tuple[list[Source], list[Utterance], list[Claim], l
         [claim_1, claim_2],
         [tension_1],
         [assessment_1],
+        [role_1, role_2],
     )
 
 
 def load_broken_quote_fixture() -> tuple[list[Source], list[Utterance], list[Claim]]:
     """Loads a fixture where a Claim's quote_span points at text that is NOT in text_verbatim."""
-    sources, utterances, claims, _, _ = load_valid_fixtures()
+    sources, utterances, claims, _, _, _ = load_valid_fixtures()
     # Deliberately corrupt the quote_span to point outside the utterance
     broken_claim = Claim(
         claim_id="clm_broken_01",
@@ -184,7 +200,7 @@ def load_broken_quote_fixture() -> tuple[list[Source], list[Utterance], list[Cla
 
 def load_broken_anchor_fixture() -> tuple[list[Source], list[Utterance], list[Claim]]:
     """Loads a fixture with an orphan utterance pointing at a non-existent source_id."""
-    _, utterances, claims, _, _ = load_valid_fixtures()
+    _, utterances, claims, _, _, _ = load_valid_fixtures()
     broken_utt = Utterance(
         utterance_id="utt_orphan_01",
         source_id="src_non_existent_999",

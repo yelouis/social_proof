@@ -37,7 +37,6 @@ def test_phase_2_gate_journey_j3_reversal_detector_on_live_claims(tmp_path: Path
     # Source 1 (2022)
     src1 = Source(
         source_id="src_2022",
-        tier="B",
         title="2022 Interview",
         publisher="Host",
         canonical_url="https://youtube.com/watch?v=src2022",
@@ -81,7 +80,6 @@ def test_phase_2_gate_journey_j3_reversal_detector_on_live_claims(tmp_path: Path
     # Source 2 (2024)
     src2 = Source(
         source_id="src_2024",
-        tier="B",
         title="2024 Interview",
         publisher="Host",
         canonical_url="https://youtube.com/watch?v=src2024",

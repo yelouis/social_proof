@@ -50,7 +50,6 @@ def test_synthetic_negation_test_flags_negation_uncertain(tmp_path: Path) -> Non
 
     source = Source(
         source_id="src_neg_01",
-        tier="B",
         title="Podcast with negation",
         publisher="Host",
         canonical_url="https://youtube.com/watch?v=neg01",
@@ -88,7 +87,6 @@ def test_dual_pass_agreement_when_passes_match(tmp_path: Path) -> None:
 
     source = Source(
         source_id="src_agree_01",
-        tier="B",
         title="Agreement podcast",
         publisher="Host",
         canonical_url="https://youtube.com/watch?v=agree01",
@@ -136,7 +134,6 @@ def test_audio_disposal_on_success_and_preservation_on_error(tmp_path: Path) -> 
     # 1. Success case: Audio deleted
     source1 = Source(
         source_id="src_disp_01",
-        tier="B",
         title="Episode 1",
         publisher="Host",
         canonical_url="https://youtube.com/watch?v=disp01",
@@ -157,7 +154,6 @@ def test_audio_disposal_on_success_and_preservation_on_error(tmp_path: Path) -> 
     # 2. Failure case: Audio preserved
     source2 = Source(
         source_id="src_disp_02",
-        tier="B",
         title="Episode 2",
         publisher="Host",
         canonical_url="https://youtube.com/watch?v=disp02",
@@ -241,7 +237,6 @@ def test_real_whisper_pipeline_execution_and_audio_disposal(tmp_path: Path) -> N
 
     source = Source(
         source_id="src_whisper_real",
-        tier="B",
         title="Real Speech Audio",
         publisher="Author",
         canonical_url="https://youtube.com/watch?v=whisperreal",

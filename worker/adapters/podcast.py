@@ -10,6 +10,7 @@ from collections.abc import Iterable
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
+from urllib.parse import urlparse
 
 from worker.adapters.base import (
     NormalizedSource,
@@ -18,16 +19,48 @@ from worker.adapters.base import (
     SourceAdapter,
     SourceRef,
 )
-from worker.entities import Source, Subject
-from worker.storage import compute_source_id
+from worker.entities import Source, SourceSubjectRole, Subject
+from worker.storage import compute_role_id, compute_source_id
 
 
 class PodcastRSSAdapter(SourceAdapter):
-    tier: Literal["A", "B", "C", "D", "E"] = "B"
-
     def __init__(self, cache_dir: str | Path = ".cache/podcasts") -> None:
         self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
+
+    def role(self, ref: SourceRef, subject: Subject) -> SourceSubjectRole:
+        enclosure_url = ref.locator
+        source_id = compute_source_id(enclosure_url)
+        role_id = compute_role_id(source_id, subject.subject_id)
+
+        feed_handle = subject.handles.get("podcast_rss", "")
+        feed_domain = urlparse(feed_handle).netloc if feed_handle else ""
+        ref_domain = urlparse(ref.locator).netloc if ref.locator else ""
+        is_own = bool(
+            (feed_handle and (feed_handle in ref.locator or (feed_domain and feed_domain == ref_domain)))
+            or ref.extra.get("feed_owner") == subject.subject_id
+            or ref.extra.get("is_host")
+            or ref.tier == "B"
+        )
+
+        venue_type: Literal["own_channel", "guest", "institutional", "authored", "self_published_text"] = (
+            ref.extra.get("venue_type") or ("own_channel" if is_own else "guest")
+        )
+        tier: Literal["A", "B", "C", "D", "E"] = ref.extra.get("tier") or ("B" if venue_type == "own_channel" else "C")
+        audience_stance: Literal["friendly", "neutral", "adversarial", "unknown"] = (
+            ref.extra.get("audience_stance") or ("friendly" if venue_type == "own_channel" else "neutral")
+        )
+        is_adversarial = bool(ref.extra.get("is_adversarial", False))
+
+        return SourceSubjectRole(
+            role_id=role_id,
+            source_id=source_id,
+            subject_id=subject.subject_id,
+            tier=tier,
+            venue_type=venue_type,
+            audience_stance=audience_stance,
+            is_adversarial=is_adversarial,
+        )
 
     def discover(self, subject: Subject, since: datetime | None = None) -> Iterable[SourceRef]:
         """Discovers episode references from subject's RSS feed handle."""
@@ -37,7 +70,7 @@ class PodcastRSSAdapter(SourceAdapter):
 
         ref = SourceRef(
             locator=feed_url,
-            tier=self.tier,
+            tier="B",
             title=f"Podcast Feed: {subject.display_name}",
             discovered_at=datetime.now(UTC).isoformat(),
         )
@@ -94,16 +127,12 @@ class PodcastRSSAdapter(SourceAdapter):
 
         source = Source(
             source_id=source_id,
-            tier=self.tier,
             title=raw.metadata.get("title", raw.ref.title),
             publisher=raw.metadata.get("publisher", "Podcast"),
             canonical_url=enclosure_url,
             artifact_hash=raw.content_hash,
             citation_url_template=citation_template,
-            venue_type=raw.metadata.get("venue_type", "own_channel"),
-            audience_stance=raw.metadata.get("audience_stance", "friendly"),
             interlocutor=raw.metadata.get("interlocutor"),
-            is_adversarial=raw.metadata.get("is_adversarial", False),
             recorded_at=raw.metadata.get("published_at", datetime.now(UTC).isoformat()),
             published_at=raw.metadata.get("published_at", datetime.now(UTC).isoformat()),
             authorship_confidence=1.0,
