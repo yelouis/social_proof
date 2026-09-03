@@ -117,7 +117,9 @@ class LocalGemmaRuntime:
 
     def _load(self) -> MLXGemmaBackend:
         """Loads live MLX backend for model inference."""
-        return MLXGemmaBackend(self.model_id)
+        if self.model_id and self.model_id.startswith("mlx-"):
+            return MLXGemmaBackend(self.model_id)
+        return MLXGemmaBackend()
 
     def has_backend(self) -> bool:
         """Capability probe: returns True if a real local model backend is loaded."""
