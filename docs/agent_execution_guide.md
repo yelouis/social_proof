@@ -114,8 +114,8 @@ Measured August 17, 2026. Re-run via §2 before trusting.
 | Gate | Result | Note |
 |---|---|---|
 | `ruff check` | **PASS** | |
-| `mypy --strict` | **PASS** — 46 files | |
-| `pytest tests/ -q` | **PASS** — 87 passed, **~24s** | The runtime is the evidence: real models load. A sub-5s run means mocks crept back. |
+| `mypy --strict` | **PASS** — 47 files | |
+| `pytest tests/ -q` | **PASS** — 92 passed, **~26s** | The runtime is the evidence: real models load. A sub-5s run means mocks crept back. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
 | `worker.integrity --all` | **PASS** — 9 checks | Correct logic. **Zero real rows to check.** |
 | `worker.golden.report` | **PASS** | Fixtures 19/19 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
@@ -488,7 +488,7 @@ That is not a reason to push back on the choice. It is an excellent corpus for t
 ### Sub-items (LOOP 5 checklist — tick in the same commit)
 
 ```
-I0.1  Enrollment for the four hosts           [ ]
+I0.1  Enrollment for the four hosts           [x]
 I0.2  Single-speaker ingest, one subject      [ ]
 I0.3  Multi-speaker panel, 3-4 episodes       [ ]
 ```

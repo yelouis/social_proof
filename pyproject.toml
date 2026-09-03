@@ -19,6 +19,7 @@ dependencies = [
     "faster-whisper>=1.0.0",
     "mlx-lm>=0.20.0",
     "pyannote.audio>=3.1.0",
+    "speechbrain>=1.0.0",
 ]
 
 [project.optional-dependencies]
@@ -48,7 +49,19 @@ no_implicit_optional = true
 show_error_codes = true
 
 [[tool.mypy.overrides]]
-module = ["pyarrow", "pyarrow.*", "yt_dlp", "yt_dlp.*", "sentence_transformers", "sentence_transformers.*", "faster_whisper", "faster_whisper.*", "mlx", "mlx.*", "mlx_lm", "mlx_lm.*", "pyannote", "pyannote.*", "pyannote.audio", "pyannote.audio.*"]
+module = [
+    "pyarrow", "pyarrow.*",
+    "yt_dlp", "yt_dlp.*",
+    "sentence_transformers", "sentence_transformers.*",
+    "faster_whisper", "faster_whisper.*",
+    "mlx", "mlx.*",
+    "mlx_lm", "mlx_lm.*",
+    "pyannote", "pyannote.*",
+    "pyannote.audio", "pyannote.audio.*",
+    "torchaudio", "torchaudio.*",
+    "sklearn", "sklearn.*",
+    "speechbrain", "speechbrain.*",
+]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

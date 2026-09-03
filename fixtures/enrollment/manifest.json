@@ -1,0 +1,52 @@
+{
+  "enrollments": [
+    {
+      "subject_id": "subj_chamath_palihapitiya",
+      "display_name": "Chamath Palihapitiya",
+      "audio_file": "fixtures/enrollment/chamath_palihapitiya.wav",
+      "source_url": "https://traffic.libsyn.com/secure/allinchamathjason/ALLIN-E287_Ch.mp3",
+      "episode_title": "All-In E287: Nvidia's Historic Quarter, SaaS Comeback, Bessent vs Druck",
+      "span_start_ms": 680000,
+      "span_end_ms": 695000,
+      "duration_ms": 15000,
+      "verified_by": "curator_human_review",
+      "description": "Solo monologue analyzing SaaS market consolidation, monolith safety, and software enterprise re-rating."
+    },
+    {
+      "subject_id": "subj_david_sacks",
+      "display_name": "David Sacks",
+      "audio_file": "fixtures/enrollment/david_sacks.wav",
+      "source_url": "https://traffic.libsyn.com/secure/allinchamathjason/ALLIN-E287_Ch.mp3",
+      "episode_title": "All-In E287: Nvidia's Historic Quarter, SaaS Comeback, Bessent vs Druck",
+      "span_start_ms": 1180000,
+      "span_end_ms": 1195000,
+      "duration_ms": 15000,
+      "verified_by": "curator_human_review",
+      "description": "Solo monologue on enterprise software architecture, AI agent ecosystems, and durable systems of record."
+    },
+    {
+      "subject_id": "subj_jason_calacanis",
+      "display_name": "Jason Calacanis",
+      "audio_file": "fixtures/enrollment/jason_calacanis.wav",
+      "source_url": "https://traffic.libsyn.com/secure/allinchamathjason/ALLIN-E287_Ch.mp3",
+      "episode_title": "All-In E287: Nvidia's Historic Quarter, SaaS Comeback, Bessent vs Druck",
+      "span_start_ms": 10000,
+      "span_end_ms": 22000,
+      "duration_ms": 12000,
+      "verified_by": "curator_human_review",
+      "description": "Solo monologue opening All-In episode 287 introducing the besties and quartet."
+    },
+    {
+      "subject_id": "subj_david_friedberg",
+      "display_name": "David Friedberg",
+      "audio_file": "fixtures/enrollment/david_friedberg.wav",
+      "source_url": "https://traffic.libsyn.com/secure/allinchamathjason/ALLIN-E287_Ch.mp3",
+      "episode_title": "All-In E287: Nvidia's Historic Quarter, SaaS Comeback, Bessent vs Druck",
+      "span_start_ms": 4980000,
+      "span_end_ms": 4995000,
+      "duration_ms": 15000,
+      "verified_by": "curator_human_review",
+      "description": "Science Corner solo presentation on Moderna mRNA cancer vaccine biology and clinical readouts."
+    }
+  ]
+}
