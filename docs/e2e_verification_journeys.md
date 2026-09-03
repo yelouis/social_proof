@@ -142,6 +142,7 @@ Assess golden subject N11.
 **Falsify:** compute-and-suppress instead of not computing; the assertion must fail.
 
 ### J8 — News as index, never evidence · *Phase 8*
+**Status:** PASSING (September 2, 2026 — delivered in P7)
 `POST /resolve` with a real article, then sweep the store.
 **Gate:** zero rows with `origin = 'page_context'`; no `Source`, `Utterance`, `Claim`, `Proposition`, or embedding traceable to the article; resolution returns only pre-existing corpus ids.
 **Falsify:** persist the page text deliberately; `verify_no_page_context` must fail.

@@ -14,6 +14,7 @@ import pyarrow.parquet as pq
 from worker.entities import (
     Assessment,
     Claim,
+    IngestJob,
     Principle,
     PrincipleApplication,
     Proposition,
@@ -1073,3 +1074,45 @@ class Storage:
         """
         res = self.con.execute(query, [subject_id]).fetchall()
         return [(r[0], r[1], r[2]) for r in res]
+
+    def insert_ingest_job(self, j: IngestJob) -> None:
+        import json
+        self.con.execute(
+            """
+            INSERT INTO ingest_jobs VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT (job_id) DO UPDATE SET
+                status = excluded.status,
+                stage = excluded.stage,
+                counts = excluded.counts,
+                errors = excluded.errors,
+                finished_at = excluded.finished_at
+            """,
+            [
+                j.job_id,
+                j.subject_id,
+                j.adapter,
+                j.status,
+                j.stage,
+                json.dumps(j.counts),
+                j.errors,
+                j.started_at,
+                j.finished_at,
+            ],
+        )
+
+    def get_ingest_job(self, job_id: str) -> IngestJob | None:
+        import json
+        res = self.con.execute("SELECT * FROM ingest_jobs WHERE job_id = ?", [job_id]).fetchone()
+        if not res:
+            return None
+        return IngestJob(
+            job_id=res[0],
+            subject_id=res[1],
+            adapter=res[2],
+            status=res[3],
+            stage=res[4],
+            counts=json.loads(res[5]) if res[5] else {},
+            errors=res[6] if res[6] is not None else [],
+            started_at=res[7] or "",
+            finished_at=res[8],
+        )

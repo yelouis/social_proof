@@ -114,8 +114,8 @@ Measured September 2, 2026. Re-run via §2 before trusting.
 | Gate | Result | Note |
 |---|---|---|
 | `ruff check` | **PASS** | |
-| `mypy --strict` | **PASS** — 69 files | |
-| `pytest tests/ -q` | **PASS** — 132 passed, **~10m** | The runtime is the evidence: real MLX, whisper, and ECAPA-TDNN models load. |
+| `mypy --strict` | **PASS** — 74 files | |
+| `pytest tests/ -q` | **PASS** — 140 passed, **~10m** | The runtime is the evidence: real MLX, whisper, and ECAPA-TDNN models load. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
 | `worker.integrity --all` | **PASS** — 9 checks | All 17 real claim quotes & anchor chain verified on live `social_proof.duckdb`. |
 | `worker.golden.report` | **PASS** | Fixtures 19/19 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
@@ -163,8 +163,8 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 | 5 | **P3** | Topic model | none | **delivered** | HDBSCAN clustering, free-text resolution with search_query: prefix, cluster expansion, and cache provenance. |
 | 6 | **P5** | Principle extraction | none | **delivered** | Mechanical join over shared principles with opposing verdicts, stated distinction escape hatch, and actor resolution floor. |
 | 7 | **P6** | Rubric engine | none | **delivered** | Deterministic arithmetic over four axes, per-axis sufficiency gating, no composite trust score, and binomial significance. |
-| 8 | **P7** | Local API | none | outstanding | One contract, all clients. |
-| 9 | **P8** | Browser extension | P7 | outstanding | The only client (Issue 002). Selection-triggered (Issue 013). |
+| 8 | **P7** | Local API | none | **delivered** | Loopback binding (127.0.0.1), Bearer token, strict CORS, selection-triggered /resolve with zero page-context storage, 409 comparison guard. |
+| 9 | **P8** | Browser extension | none | outstanding | The only client (Issue 002). Selection-triggered (Issue 013). |
 
 **Delivered — do NOT rework:** V0–V6 (all externals real, `STUB_REGISTRY` empty), U0–U13 (storage, integrity, adapters, reconciler, segmentation, gate, validators). Detail in git history; §14 has the short list.
 
