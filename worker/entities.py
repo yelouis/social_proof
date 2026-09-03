@@ -117,6 +117,20 @@ class Principle:
 
 
 @dataclass
+class PrincipleApplication:
+    application_id: str
+    principle_id: str
+    claim_id: str
+    subject_id: str
+    actor: str
+    actor_affinity: Literal["ally", "opponent", "neutral", "self", "unknown"] = "unknown"
+    verdict: Literal["applies", "does_not_apply", "applies_partially"] = "applies"
+    stated_distinction: str | None = None
+    confidence: float = 1.0
+    recorded_at: str = ""
+
+
+@dataclass
 class Topic:
     topic_id: str
     subject_id: str

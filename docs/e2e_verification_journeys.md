@@ -130,6 +130,7 @@ Run detection over P1 and P2.
 **Falsify:** narrow the acknowledgement search to the later utterance only; P2 must flip to `unacknowledged_reversal`. This is the single most important falsification in the suite — it is the check that keeps the system from punishing honesty.
 
 ### J6 — Principle conflict and the stated distinction · *Phase 5*
+**Status:** PASSING (September 2, 2026 — delivered in P5)
 Run over P3 and N6.
 **Gate:** P3 → `principle_conflict`. N6 → `distinguished`, excluded from the score. Every actor resolved or marked `unknown`; no `unknown` actor enters a conflict.
 **Falsify:** disable stated-distinction detection; N6 must become a published conflict.

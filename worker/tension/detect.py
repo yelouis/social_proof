@@ -305,11 +305,23 @@ class TensionDetector:
 
         return tensions
 
+    def detect_principle_conflicts_for_subject(self, subject_id: str) -> list[Tension]:
+        """Detects principle conflicts using PrincipleConflictDetector."""
+        from worker.principles.conflict import PrincipleConflictDetector
+
+        detector = PrincipleConflictDetector(
+            storage=self.storage,
+            detector_version=self.detector_version,
+        )
+        conflicts, _ = detector.detect_conflicts_for_subject(subject_id)
+        return conflicts
+
     def detect_all_tensions_for_subject(self, subject_id: str) -> list[Tension]:
-        """Runs reversal, update, and audience divergence detection for a subject."""
+        """Runs reversal, update, audience divergence, and principle conflict detection for a subject."""
         reversals_and_updates = self.detect_tensions_for_subject(subject_id)
         audience_divs = self.detect_audience_divergence_for_subject(subject_id)
-        return reversals_and_updates + audience_divs
+        principle_conflicts = self.detect_principle_conflicts_for_subject(subject_id)
+        return reversals_and_updates + audience_divs + principle_conflicts
 
     def detect_all_tensions(self) -> list[Tension]:
         """Sweeps all subjects in storage and returns all detected tensions."""

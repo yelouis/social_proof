@@ -15,6 +15,7 @@ from worker.entities import (
     Assessment,
     Claim,
     Principle,
+    PrincipleApplication,
     Proposition,
     Source,
     SourceSubjectRole,
@@ -52,6 +53,12 @@ def compute_claim_id(
 def compute_principle_id(canonical_text: str) -> str:
     normalized = " ".join(canonical_text.strip().lower().split())
     return hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
+
+
+def compute_application_id(claim_id: str, principle_id: str, actor: str, verdict: str) -> str:
+    normalized_actor = " ".join(actor.strip().lower().split())
+    key = f"{claim_id}|{principle_id}|{normalized_actor}|{verdict}"
+    return hashlib.sha256(key.encode("utf-8")).hexdigest()[:16]
 
 
 def compute_tension_id(claim_a_id: str, claim_b_id: str, tension_type: str) -> str:
@@ -255,6 +262,20 @@ class Storage:
                 embedding_ref VARCHAR,
                 subject_ids VARCHAR[]
             );
+
+            CREATE TABLE IF NOT EXISTS principle_applications (
+                application_id VARCHAR PRIMARY KEY,
+                principle_id VARCHAR,
+                claim_id VARCHAR,
+                subject_id VARCHAR,
+                actor VARCHAR,
+                actor_affinity VARCHAR,
+                verdict VARCHAR,
+                stated_distinction VARCHAR,
+                confidence DOUBLE,
+                recorded_at VARCHAR
+            );
+            CREATE INDEX IF NOT EXISTS idx_principle_apps ON principle_applications(subject_id, principle_id);
 
             CREATE TABLE IF NOT EXISTS topics (
                 topic_id VARCHAR PRIMARY KEY,
@@ -697,6 +718,88 @@ class Storage:
             """,
             [principle_id, embedding],
         )
+
+    def get_principle(self, principle_id: str) -> Principle | None:
+        res = self.con.execute("SELECT * FROM principles WHERE principle_id = ?", [principle_id]).fetchone()
+        if not res:
+            return None
+        return Principle(
+            principle_id=res[0],
+            canonical_text=res[1],
+            actor_role=res[2] or "",
+            actor_slot_examples=res[3] if res[3] is not None else [],
+            embedding_ref=res[4],
+            subject_ids=res[5] if res[5] is not None else [],
+        )
+
+    def insert_principle_application(self, pa: PrincipleApplication) -> None:
+        self.con.execute(
+            """
+            INSERT INTO principle_applications VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT (application_id) DO UPDATE SET
+                verdict = excluded.verdict,
+                stated_distinction = excluded.stated_distinction,
+                confidence = excluded.confidence
+            """,
+            [
+                pa.application_id,
+                pa.principle_id,
+                pa.claim_id,
+                pa.subject_id,
+                pa.actor,
+                pa.actor_affinity,
+                pa.verdict,
+                pa.stated_distinction,
+                pa.confidence,
+                pa.recorded_at,
+            ],
+        )
+
+    def get_principle_application(self, application_id: str) -> PrincipleApplication | None:
+        res = self.con.execute(
+            "SELECT * FROM principle_applications WHERE application_id = ?",
+            [application_id],
+        ).fetchone()
+        if not res:
+            return None
+        return PrincipleApplication(
+            application_id=res[0],
+            principle_id=res[1],
+            claim_id=res[2],
+            subject_id=res[3],
+            actor=res[4],
+            actor_affinity=res[5],
+            verdict=res[6],
+            stated_distinction=res[7],
+            confidence=float(res[8]) if res[8] is not None else 1.0,
+            recorded_at=res[9] or "",
+        )
+
+    def get_principle_applications_for_subject(
+        self, subject_id: str, principle_id: str | None = None
+    ) -> list[PrincipleApplication]:
+        query = "SELECT * FROM principle_applications WHERE subject_id = ?"
+        params: list[Any] = [subject_id]
+        if principle_id is not None:
+            query += " AND principle_id = ?"
+            params.append(principle_id)
+        query += " ORDER BY recorded_at"
+        rows = self.con.execute(query, params).fetchall()
+        return [
+            PrincipleApplication(
+                application_id=r[0],
+                principle_id=r[1],
+                claim_id=r[2],
+                subject_id=r[3],
+                actor=r[4],
+                actor_affinity=r[5],
+                verdict=r[6],
+                stated_distinction=r[7],
+                confidence=float(r[8]) if r[8] is not None else 1.0,
+                recorded_at=r[9] or "",
+            )
+            for r in rows
+        ]
 
     def insert_topic(self, t: Topic) -> None:
         self.con.execute(
