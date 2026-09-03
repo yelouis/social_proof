@@ -123,6 +123,7 @@ Resolve the same free-text query twice, in separate processes.
 **Falsify:** bump `embedding_model` in the key; the cache must miss rather than silently return the stale set.
 
 ### J5 — Reversal vs. reasoned update · *Phase 4*
+**Status:** PASSING (September 2, 2026 — delivered in P4)
 Run detection over P1 and P2.
 **Gate:** P1 → `unacknowledged_reversal`. P2 → `acknowledged_update` and **no Consistency penalty**. N5 and N7 produce no full-weight Tension.
 **Falsify:** narrow the acknowledgement search to the later utterance only; P2 must flip to `unacknowledged_reversal`. This is the single most important falsification in the suite — it is the check that keeps the system from punishing honesty.

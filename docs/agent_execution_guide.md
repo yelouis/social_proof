@@ -114,8 +114,8 @@ Measured September 2, 2026. Re-run via §2 before trusting.
 | Gate | Result | Note |
 |---|---|---|
 | `ruff check` | **PASS** | |
-| `mypy --strict` | **PASS** — 51 files | |
-| `pytest tests/ -q` | **PASS** — 100 passed, **~10m** | The runtime is the evidence: real MLX, whisper, and ECAPA-TDNN models load. |
+| `mypy --strict` | **PASS** — 53 files | |
+| `pytest tests/ -q` | **PASS** — 109 passed, **~10m** | The runtime is the evidence: real MLX, whisper, and ECAPA-TDNN models load. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
 | `worker.integrity --all` | **PASS** — 9 checks | All 17 real claim quotes & anchor chain verified on live `social_proof.duckdb`. |
 | `worker.golden.report` | **PASS** | Fixtures 19/19 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
@@ -159,9 +159,9 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 | 1 | **F0** | Repair the behaviour fixture set | none | **delivered** | **P4 and P5 cannot be validated without this.** 8 pair-type fixtures are single undated sentences; N6, N9 and N11 do not exist. Cheap, and doing it later means P4 starts and immediately stalls. |
 | 2 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | **Do it now, while the corpus is empty.** Zero rows to migrate today; after I0 it is real data. Cheapest moment this schema change will ever have. |
 | 3 | **I0** | First real ingest, end to end | none | **delivered** | Every model is wired and real sources ingested. Claims verified on real DuckDB and Parquet artifacts. |
-| 4 | **P4** | Tension detection | none | outstanding | **The thesis.** If contradiction detection doesn't work on real data, everything above it is moot. De-risk first. Needs claims, not topics. |
+| 4 | **P4** | Tension detection | none | **delivered** | **The thesis.** Core contradiction and update detection in DuckDB SQL with full-interval acknowledgement search (trap 2). |
 | 5 | **P3** | Topic model | I0 | outstanding | Slices the corpus for the rubric and backs `/resolve`'s topic fallback. |
-| 6 | **P5** | Principle extraction | P4 | outstanding | Highest-risk component. Reuses P4's pair-detection shape. |
+| 6 | **P5** | Principle extraction | none | outstanding | Highest-risk component. Reuses P4's pair-detection shape. |
 | 7 | **P6** | Rubric engine | P3, P4, P5 | outstanding | Aggregates everything below into four axes. |
 | 8 | **P7** | Local API | P6 | outstanding | One contract, all clients. |
 | 9 | **P8** | Browser extension | P7 | outstanding | The only client (Issue 002). Selection-triggered (Issue 013). |

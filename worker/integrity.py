@@ -562,10 +562,12 @@ def main() -> None:
             db_utts = [u for r in store.con.execute("SELECT utterance_id FROM utterances").fetchall() if (u := store.get_utterance(r[0])) is not None]
             db_sources = [s for r in store.con.execute("SELECT source_id FROM sources").fetchall() if (s := store.get_source(r[0])) is not None]
             db_roles = [role for row in store.con.execute("SELECT source_id, subject_id FROM source_roles").fetchall() if (role := store.get_source_role(row[0], row[1])) is not None]
+            db_tensions = [t for r in store.con.execute("SELECT tension_id FROM tensions").fetchall() if (t := store.get_tension(r[0])) is not None]
             sources.extend(db_sources)
             utterances.extend(db_utts)
             claims.extend(db_claims)
             roles.extend(db_roles)
+            tensions.extend(db_tensions)
 
     results = run_all_checks(
         claims=claims,

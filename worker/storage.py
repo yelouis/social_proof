@@ -728,6 +728,50 @@ class Storage:
             ],
         )
 
+    def get_tension(self, tension_id: str) -> Tension | None:
+        res = self.con.execute("SELECT * FROM tensions WHERE tension_id = ?", [tension_id]).fetchone()
+        if not res:
+            return None
+        return Tension(
+            tension_id=res[0],
+            type=res[1],
+            claim_a_id=res[2],
+            claim_b_id=res[3],
+            proposition_id=res[4],
+            principle_id=res[5],
+            severity=float(res[6]),
+            detector_version=res[7],
+            status=res[8],
+            quarantine_reason=res[9],
+        )
+
+    def get_tensions_for_subject(self, subject_id: str, status: str | None = None) -> list[Tension]:
+        query = """
+            SELECT t.* FROM tensions t
+            JOIN claims c ON t.claim_a_id = c.claim_id
+            WHERE c.subject_id = ?
+        """
+        params: list[Any] = [subject_id]
+        if status is not None:
+            query += " AND t.status = ?"
+            params.append(status)
+        rows = self.con.execute(query, params).fetchall()
+        return [
+            Tension(
+                tension_id=r[0],
+                type=r[1],
+                claim_a_id=r[2],
+                claim_b_id=r[3],
+                proposition_id=r[4],
+                principle_id=r[5],
+                severity=float(r[6]),
+                detector_version=r[7],
+                status=r[8],
+                quarantine_reason=r[9],
+            )
+            for r in rows
+        ]
+
     def insert_assessment(self, a: Assessment) -> None:
         import json
         self.con.execute(
