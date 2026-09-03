@@ -355,6 +355,25 @@ Your selection: Proceed with Option A. Token will be supplied via HF_TOKEN envir
 
 ---
 
+### Issue 021: First real ingest subject selection and candidate sources
+**Blocks: I0** · **Recommended: Option A** · *Filed under LOOP 3 escalation*
+
+I0 requires ingesting the first real human subject end-to-end to validate the full pipeline (discover → fetch → normalize → transcribe → diarize → attribute → segment → gate → extract → embed → persist) on real material rather than empty stores. Per `agent_execution_guide.md` §16, selecting the subject is strictly the user's call because this is their research tool and the corpus is about real people.
+
+To make tension/reversal detection meaningful on the ingested data, the corpus requires at least 3–4 sources spanning 2+ years on a topic the subject has returned to, beginning with single-speaker Tier B sources (own channel or podcast) before multi-speaker Tier C guest appearances.
+
+**Option A (recommended): User specifies the subject and provides 3–4 URLs (or channel/podcast names) spanning 2+ years on an evolving topic.**
+- Pros: Aligns directly with user research intent and ensures the subject has real positions on issues of interest to the user.
+- Cons: Requires user selection and input before I0 can proceed.
+
+**Option B: Ingest a canonical public tech/policy figure (e.g. Marc Andreessen or Sam Altman) across 3–4 public YouTube/podcast interviews spanning 2022–2024 on open source AI / licensing.**
+- Pros: Concrete and immediately actionable; has well-documented public statements spanning 2+ years on a specific proposition topic (open foundation model weights/licensing) suitable for testing P4 tension detection.
+- Cons: Assumes subject selection without explicit user direction.
+
+Your selection: _____
+
+---
+
 ## 2. Parameters to be measured, not selected
 
 **These are not decisions and should not be guessed.** Each is a threshold whose correct value is discovered by running against the golden corpus (`e2e_verification_journeys.md`). An agent that picks a number here and moves on has skipped the work.
