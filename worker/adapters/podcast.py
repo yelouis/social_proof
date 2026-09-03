@@ -37,19 +37,24 @@ class PodcastRSSAdapter(SourceAdapter):
         feed_domain = urlparse(feed_handle).netloc if feed_handle else ""
         ref_domain = urlparse(ref.locator).netloc if ref.locator else ""
         is_own = bool(
-            (feed_handle and (feed_handle in ref.locator or (feed_domain and feed_domain == ref_domain)))
+            (
+                feed_handle
+                and (feed_handle in ref.locator or (feed_domain and feed_domain == ref_domain))
+            )
             or ref.extra.get("feed_owner") == subject.subject_id
             or ref.extra.get("is_host")
             or ref.tier == "B"
         )
 
-        venue_type: Literal["own_channel", "guest", "institutional", "authored", "self_published_text"] = (
-            ref.extra.get("venue_type") or ("own_channel" if is_own else "guest")
+        venue_type: Literal[
+            "own_channel", "guest", "institutional", "authored", "self_published_text"
+        ] = ref.extra.get("venue_type") or ("own_channel" if is_own else "guest")
+        tier: Literal["A", "B", "C", "D", "E"] = ref.extra.get("tier") or (
+            "B" if venue_type == "own_channel" else "C"
         )
-        tier: Literal["A", "B", "C", "D", "E"] = ref.extra.get("tier") or ("B" if venue_type == "own_channel" else "C")
-        audience_stance: Literal["friendly", "neutral", "adversarial", "unknown"] = (
-            ref.extra.get("audience_stance") or ("friendly" if venue_type == "own_channel" else "neutral")
-        )
+        audience_stance: Literal["friendly", "neutral", "adversarial", "unknown"] = ref.extra.get(
+            "audience_stance"
+        ) or ("friendly" if venue_type == "own_channel" else "neutral")
         is_adversarial = bool(ref.extra.get("is_adversarial", False))
 
         return SourceSubjectRole(
@@ -86,16 +91,32 @@ class PodcastRSSAdapter(SourceAdapter):
             enclosure = item.find("enclosure")
             url = enclosure.get("url") if enclosure is not None else ""
             if url:
-                episodes.append({
-                    "title": title,
-                    "pub_date": pub_date,
-                    "enclosure_url": url,
-                })
+                episodes.append(
+                    {
+                        "title": title,
+                        "pub_date": pub_date,
+                        "enclosure_url": url,
+                    }
+                )
         return episodes
 
     def fetch(self, ref: SourceRef, mocked_bytes: bytes | None = None) -> RawSource:
         """Fetches podcast audio enclosure and caches by content hash."""
-        data = mocked_bytes if mocked_bytes is not None else b"MOCK_PODCAST_ENCLOSURE_BYTES"
+        if mocked_bytes is not None:
+            data = mocked_bytes
+        elif ref.locator.startswith(("http://", "https://")):
+            import urllib.request
+
+            headers = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
+            max_bytes = ref.extra.get("max_bytes")
+            if max_bytes:
+                headers["Range"] = f"bytes=0-{max_bytes}"
+            req = urllib.request.Request(ref.locator, headers=headers)
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                data = resp.read()
+        else:
+            data = b"MOCK_PODCAST_ENCLOSURE_BYTES"
+
         content_hash = hashlib.sha256(data).hexdigest()
         cached_path = self.cache_dir / f"{content_hash}.mp3"
         if not cached_path.exists():

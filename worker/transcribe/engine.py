@@ -56,8 +56,7 @@ class TranscriptionEngine(Protocol):
         segment: AudioSegment,
         beam_size: int,
         temperature: float,
-    ) -> TranscriptionPassResult:
-        ...
+    ) -> TranscriptionPassResult: ...
 
 
 class WhisperTranscriptionEngine:
@@ -88,8 +87,30 @@ class WhisperTranscriptionEngine:
         beam_size: int,
         temperature: float,
     ) -> TranscriptionPassResult:
+        import torchaudio
+
+        wav, sr = torchaudio.load(str(audio_path))
+        if wav.shape[0] > 1:
+            wav = wav.mean(dim=0, keepdim=True)
+        if sr != 16000:
+            resampler = torchaudio.transforms.Resample(sr, 16000)
+            wav = resampler(wav)
+            sr = 16000
+
+        start_sample = int((segment.start_ms / 1000.0) * sr)
+        end_sample = int((segment.end_ms / 1000.0) * sr)
+        if end_sample > wav.shape[1]:
+            end_sample = wav.shape[1]
+
+        if start_sample >= end_sample:
+            return TranscriptionPassResult(
+                text="", words=[], beam_size=beam_size, temperature=temperature
+            )
+
+        slice_arr = wav[0, start_sample:end_sample].detach().cpu().numpy()
+
         segments_gen, _ = self.model.transcribe(
-            str(audio_path),
+            slice_arr,
             beam_size=beam_size,
             temperature=temperature,
             word_timestamps=True,
@@ -158,7 +179,9 @@ class MockTranscriptionEngine:
             for i, w in enumerate(words_raw):
                 w_start = segment.start_ms + i * duration_per_word
                 w_end = min(segment.end_ms, w_start + duration_per_word)
-                word_objs.append(WordTimestamp(word=w, start_ms=w_start, end_ms=w_end, confidence=0.98))
+                word_objs.append(
+                    WordTimestamp(word=w, start_ms=w_start, end_ms=w_end, confidence=0.98)
+                )
 
         return TranscriptionPassResult(
             text=matched_text,
@@ -235,7 +258,9 @@ class TranscriptionPipeline:
                 parquet_hash = self.storage.artifacts.put_word_timestamps(words_dict)
 
                 # 4. Create Utterance
-                utt_id = compute_utterance_id(source.source_id, seg.start_ms, reconciliation.text_verbatim)
+                utt_id = compute_utterance_id(
+                    source.source_id, seg.start_ms, reconciliation.text_verbatim
+                )
                 utt = Utterance(
                     utterance_id=utt_id,
                     source_id=source.source_id,

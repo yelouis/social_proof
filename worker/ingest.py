@@ -116,9 +116,13 @@ class IngestionEngine:
 
         # Ensure working copy of audio exists for transcription
         assert raw.media_path is not None and raw.media_path.exists(), "Audio file must exist"
-        audio_working_copy = raw.media_path.with_suffix(".working.wav")
+        audio_working_copy = raw.media_path.with_name(
+            f"{raw.media_path.stem}.working{raw.media_path.suffix}"
+        )
         shutil.copy(raw.media_path, audio_working_copy)
-        audio_attr_copy = raw.media_path.with_suffix(".attr.wav")
+        audio_attr_copy = raw.media_path.with_name(
+            f"{raw.media_path.stem}.attr{raw.media_path.suffix}"
+        )
         shutil.copy(raw.media_path, audio_attr_copy)
 
         try:
@@ -193,6 +197,20 @@ class IngestionEngine:
             job.metrics["extract_sec"] = time.perf_counter() - t0_ext
             job.metrics["extracted_claims_count"] = float(total_claims)
 
+            # Gate audio deletion on productivity: only delete raw audio if >=1 utterance produced
+            if len(utterances) > 0:
+                source.ingested_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+                source.audio_deleted_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+                self.storage.insert_source(source)
+                if raw.media_path.exists():
+                    raw.media_path.unlink(missing_ok=True)
+            else:
+                job.status = "failed"
+                job.errors.append(
+                    "Productivity gate failed: zero utterances produced from source. Audio preserved."
+                )
+                return job
+
             job.status = "completed"
             job.stage = "persisted"
             job.finished_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
@@ -217,7 +235,11 @@ class IngestionEngine:
         ref: SourceRef,
         subjects: list[Subject],
         media_file_override: Path | None = None,
-        mock_claims_by_subject: dict[str, list[dict[str, Any]]] | None = None,
+        mock_claims_by_subject: (
+            dict[str, list[dict[str, Any]]]
+            | Any
+            | None
+        ) = None,
         panel_segments: list[AudioSegment] | None = None,
     ) -> IngestJob:
         """Runs the full ingest pipeline for a multi-speaker panel source across multiple subjects."""
@@ -267,9 +289,13 @@ class IngestionEngine:
             self.storage.insert_source_role(role)
 
         assert raw.media_path is not None and raw.media_path.exists(), "Audio file must exist"
-        audio_working_copy = raw.media_path.with_suffix(".working_panel.wav")
+        audio_working_copy = raw.media_path.with_name(
+            f"{raw.media_path.stem}.working_panel{raw.media_path.suffix}"
+        )
         shutil.copy(raw.media_path, audio_working_copy)
-        audio_attr_copy = raw.media_path.with_suffix(".attr_panel.wav")
+        audio_attr_copy = raw.media_path.with_name(
+            f"{raw.media_path.stem}.attr_panel{raw.media_path.suffix}"
+        )
         shutil.copy(raw.media_path, audio_attr_copy)
 
         try:
@@ -288,7 +314,9 @@ class IngestionEngine:
                 segments = []
                 chunk_ms = 20000
                 for t in range(0, duration_ms, chunk_ms):
-                    segments.append(AudioSegment(start_ms=t, end_ms=min(duration_ms, t + chunk_ms), energy=0.8))
+                    segments.append(
+                        AudioSegment(start_ms=t, end_ms=min(duration_ms, t + chunk_ms), energy=0.8)
+                    )
 
             utterances = self.transcription_pipeline.transcribe_source(
                 source=source,
@@ -299,11 +327,20 @@ class IngestionEngine:
             )
             job.metrics["transcribe_sec"] = time.perf_counter() - t0_tx
 
+            # Gate audio deletion on productivity: only delete raw audio if >= 1 utterance produced
+            if len(utterances) == 0:
+                job.status = "failed"
+                job.errors.append(
+                    "Productivity gate failed: zero utterances produced from source. Audio preserved."
+                )
+                return job
+
             # Mark source audio deleted in DB and delete raw audio to honor retention contract
+            source.ingested_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
             source.audio_deleted_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
             self.storage.insert_source(source)
             if raw.media_path.exists():
-                raw.media_path.unlink()
+                raw.media_path.unlink(missing_ok=True)
 
             # 4. Multi-Speaker Diarization & Attribution
             job.stage = "attribute"
@@ -321,7 +358,9 @@ class IngestionEngine:
                 for utt in utterances:
                     start_s = utt.start_ms / 1000.0
                     dur_s = max(0.5, (utt.end_ms - utt.start_ms) / 1000.0)
-                    turn_emb = extract_voice_embedding(audio_attr_copy, start_s=start_s, dur_s=dur_s)
+                    turn_emb = extract_voice_embedding(
+                        audio_attr_copy, start_s=start_s, dur_s=dur_s
+                    )
                     turn = SpeakerTurn(
                         speaker_cluster_id=utt.utterance_id,
                         start_ms=utt.start_ms,
@@ -333,9 +372,13 @@ class IngestionEngine:
                     utt.attribution_method = att.attribution_method
                     utt.attribution_confidence = att.attribution_confidence
                     if att.subject_id is not None:
-                        matched_subj = next((s for s in subjects if s.subject_id == att.subject_id), None)
+                        matched_subj = next(
+                            (s for s in subjects if s.subject_id == att.subject_id), None
+                        )
                         utt.subject_id = att.subject_id
-                        utt.speaker_label = matched_subj.display_name if matched_subj else att.subject_id
+                        utt.speaker_label = (
+                            matched_subj.display_name if matched_subj else att.subject_id
+                        )
                     else:
                         utt.subject_id = "unknown"
                         utt.speaker_label = "unknown"
@@ -351,11 +394,23 @@ class IngestionEngine:
 
             for utt in utterances:
                 # Find matching subject for this utterance
-                matched_subj = next((s for s in subjects if s.display_name == utt.speaker_label or s.subject_id == utt.speaker_label), None)
+                matched_subj = next(
+                    (
+                        s
+                        for s in subjects
+                        if s.display_name == utt.speaker_label or s.subject_id == utt.speaker_label
+                    ),
+                    None,
+                )
                 if matched_subj is None:
                     continue
 
-                mock_claims = mock_claims_by_subject.get(matched_subj.subject_id) if mock_claims_by_subject else None
+                if callable(mock_claims_by_subject):
+                    mock_claims = mock_claims_by_subject(matched_subj.subject_id, utt)
+                elif mock_claims_by_subject:
+                    mock_claims = mock_claims_by_subject.get(matched_subj.subject_id)
+                else:
+                    mock_claims = None
 
                 claims = self.extraction_pipeline.extract_from_utterance(
                     utterance=utt,

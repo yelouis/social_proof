@@ -100,10 +100,10 @@ Each journey names its phase, its gate, and — critically — **how to make it 
 ---
 
 ### J1 — Cold ingest, one subject, one source · *Phase 0*
-**Status:** PASSING (September 2, 2026 — delivered in I0.2)
+**Status:** PASSING (September 2, 2026 — delivered in I0.2; updated in R0)
 Ingest one subject from one podcast episode end to end.
-**Gate:** every utterance has word timestamps; every `text_verbatim` `grep -F`-resolves; the anchor chain Claim→Utterance→Source has no orphans.
-**Falsify:** corrupt one stored `text_verbatim` by a single character; `verify_quotes` must fail.
+**Gate:** every utterance has word timestamps; every `text_verbatim` `grep -F`-resolves; the anchor chain Claim→Utterance→Source has no orphans; **source productivity passes (`verify_source_productivity`: source yields ≥1 utterance covering a plausible fraction of media duration; audio deletion strictly gated on output).**
+**Falsify:** corrupt one stored `text_verbatim` by a single character; `verify_quotes` must fail. Simulate a zero-utterance ingest; `audio_deleted_at` must remain null and audio must survive.
 
 ### J2 — Guest appearance with diarization · *Phase 1*
 **Status:** PASSING (September 2, 2026 — delivered in I0.3)

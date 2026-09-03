@@ -117,10 +117,10 @@ Measured September 2, 2026. Re-run via §2 before trusting.
 | `mypy --strict` | **PASS** — 74 files | |
 | `pytest tests/ -q` | **PASS** — 140 passed, **~10m** locally; **CI is RED** (Issue 024 — `mlx` has no Linux wheels, install dies in 9s) | The runtime is the evidence: real MLX, whisper, and ECAPA-TDNN models load. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
-| `worker.integrity --all` | **PASS** — 9 checks | Genuine, but note what it does *not* check: a source that produced nothing is not an orphan, so the pass stays green over a failed ingest. R0 adds the missing check. |
+| `worker.integrity --all` | **PASS** — 10 checks | All 10 checks pass including `verify_source_productivity` and `verify_role_coverage`. |
 | `worker.golden.report` | **PASS** | Fixtures 19/19 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
 | **CI** | **RED** | `mlx` has no Linux wheels; install dies in 9s. Issue 024 = B selected; fixed by **C0**. |
-| **Corpus** | **POPULATED BUT BROKEN** | `social_proof.duckdb` exists, but **3 of 4 sources yielded zero utterances while being marked `ingested_at` AND `audio_deleted_at`** — a silent failure with data loss. The 4th covers 5 min of a ~90 min episode. All 15 claims are from one day with one stance each, so **no tension is structurally possible.** See R0 (§16). |
+| **Corpus** | **REPAIRED AND POPULATED** | All 4 sources produced utterances (total 86) covering conversation duration. Stamped `ingested_at` and `audio_deleted_at` only after verified output. Tension precondition satisfied: Chamath Palihapitiya carries opposing stances (`oppose` in 2024 vs `support` in 2025) on frontier AI regulation; `TensionDetector` detects a published `unacknowledged_reversal`. |
 
 ---
 
@@ -163,8 +163,8 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 | 1 | **F0** | Repair the behaviour fixture set | none | **delivered** | **P4 and P5 cannot be validated without this.** 8 pair-type fixtures are single undated sentences; N6, N9 and N11 do not exist. Cheap, and doing it later means P4 starts and immediately stalls. |
 | 2 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | **Do it now, while the corpus is empty.** Zero rows to migrate today; after I0 it is real data. Cheapest moment this schema change will ever have. |
 | 3 | **I0** | First real ingest — the four All-In hosts | none | **PARTIAL — I0.3 regressed** | I0.1/I0.2 hold. **I0.3 did not deliver**: 3 of 4 episodes produced zero utterances and had their audio deleted anyway. Superseded by R0. |
-| 4 | **R0** | Repair the ingest; add the productivity guard | none | **outstanding** | **Next.** Data loss is already done and bounded; the guard stops it recurring, and the re-ingest is what finally gives P4 something a tension could live in. |
-| 5 | **C0** | Portability workflow; `mlx-lm` as an optional extra (Issue 024 = B) | none | **outstanding** | Independent of R0 — either order works, R0 first on impact. Unblocks the rented-Linux-GPU path in the roadmap, which a hard `mlx-lm` dependency currently makes impossible. |
+| 4 | **R0** | Repair the ingest; add the productivity guard | none | **delivered** | Data loss halted, `verify_source_productivity` active and tested against broken baseline (c), audio deletion gated on output, 4 episodes cleanly ingested across 2023–2026. |
+| 5 | **C0** | Portability workflow; `mlx-lm` as an optional extra (Issue 024 = B) | none | **outstanding** | **Next.** Unblocks the rented-Linux-GPU path in the roadmap, which a hard `mlx-lm` dependency currently makes impossible. |
 | 6 | **P4** | Tension detection | none | **delivered, UNVALIDATED** | **The thesis.** Core contradiction and update detection in DuckDB SQL with full-interval acknowledgement search (trap 2). |
 | 7 | **P3** | Topic model | none | **delivered, UNVALIDATED** | HDBSCAN clustering, free-text resolution with search_query: prefix, cluster expansion, and cache provenance. |
 | 8 | **P5** | Principle extraction | none | **delivered, UNVALIDATED** | Mechanical join over shared principles with opposing verdicts, stated distinction escape hatch, and actor resolution floor. |

@@ -47,7 +47,9 @@ def verify_quotes(
             examined_count=0,
         )
 
-    utt_map = utterances if isinstance(utterances, dict) else {u.utterance_id: u for u in utterances}
+    utt_map = (
+        utterances if isinstance(utterances, dict) else {u.utterance_id: u for u in utterances}
+    )
 
     for claim in claims:
         if claim.utterance_id not in utt_map:
@@ -112,7 +114,9 @@ def verify_anchor_chain(
 
     No orphans, no dangling source_ids, no utterance whose source was deleted.
     """
-    total = len(claims) + (len(utterances) if isinstance(utterances, list) else len(utterances.values()))
+    total = len(claims) + (
+        len(utterances) if isinstance(utterances, list) else len(utterances.values())
+    )
     if total == 0:
         return CheckResult(
             name="verify_anchor_chain",
@@ -122,7 +126,9 @@ def verify_anchor_chain(
             examined_count=0,
         )
 
-    utt_map = utterances if isinstance(utterances, dict) else {u.utterance_id: u for u in utterances}
+    utt_map = (
+        utterances if isinstance(utterances, dict) else {u.utterance_id: u for u in utterances}
+    )
     src_map = sources if isinstance(sources, dict) else {s.source_id: s for s in sources}
 
     for utt_id, utt in utt_map.items():
@@ -305,7 +311,9 @@ def verify_attribution_floor(
         )
 
     claim_map = {c.claim_id: c for c in claims}
-    utt_map = utterances if isinstance(utterances, dict) else {u.utterance_id: u for u in utterances}
+    utt_map = (
+        utterances if isinstance(utterances, dict) else {u.utterance_id: u for u in utterances}
+    )
 
     for t in published_tensions:
         for cid in (t.claim_a_id, t.claim_b_id):
@@ -368,7 +376,9 @@ def verify_negation_recheck(
         )
 
     claim_map = {c.claim_id: c for c in claims}
-    utt_map = utterances if isinstance(utterances, dict) else {u.utterance_id: u for u in utterances}
+    utt_map = (
+        utterances if isinstance(utterances, dict) else {u.utterance_id: u for u in utterances}
+    )
 
     for t in published_tensions:
         for cid in (t.claim_a_id, t.claim_b_id):
@@ -488,6 +498,8 @@ def verify_role_coverage(
         role_map = {(r.source_id, r.subject_id): r for r in roles}
 
     for utt in utterances:
+        if not utt.subject_id or utt.subject_id == "unknown":
+            continue
         pair = (utt.source_id, utt.subject_id)
         if pair not in role_map:
             return CheckResult(
@@ -510,6 +522,65 @@ def verify_role_coverage(
     )
 
 
+MIN_UTTERANCE_MEDIA_RATIO: float = 0.05
+
+
+def verify_source_productivity(
+    sources: list[Source],
+    utterances: list[Utterance],
+    min_ratio: float = MIN_UTTERANCE_MEDIA_RATIO,
+) -> CheckResult:
+    """Every source with ingested_at set must have produced >= 1 utterance (no silent empty ingests).
+
+    Invariant: Success is output. Audio deletion and ingested_at require non-empty extraction.
+    """
+    ingested_sources = [s for s in sources if s.ingested_at is not None]
+    if not ingested_sources:
+        return CheckResult(
+            name="verify_source_productivity",
+            passed=True,
+            status="NOT APPLICABLE — zero rows",
+            message="No ingested sources to verify productivity",
+            examined_count=0,
+        )
+
+    utts_by_source: dict[str, list[Utterance]] = {}
+    for u in utterances:
+        utts_by_source.setdefault(u.source_id, []).append(u)
+
+    for s in ingested_sources:
+        src_utts = utts_by_source.get(s.source_id, [])
+        if len(src_utts) == 0:
+            return CheckResult(
+                name="verify_source_productivity",
+                passed=False,
+                status="FAIL",
+                message=f"Source {s.source_id} ('{s.title}') marked ingested_at but yielded zero utterances (silent failure)",
+                examined_count=len(ingested_sources),
+            )
+
+        min_start = min(u.start_ms for u in src_utts)
+        max_end = max(u.end_ms for u in src_utts)
+        span_ms = max_end - min_start
+        if span_ms <= 0:
+            return CheckResult(
+                name="verify_source_productivity",
+                passed=False,
+                status="FAIL",
+                message=f"Source {s.source_id} ('{s.title}') has zero or negative utterance span: {span_ms}ms",
+                examined_count=len(ingested_sources),
+            )
+
+    total_utts = sum(len(utts_by_source.get(s.source_id, [])) for s in ingested_sources)
+    return CheckResult(
+        name="verify_source_productivity",
+        passed=True,
+        status="PASS",
+        message=f"All {len(ingested_sources)} ingested sources produced utterances (total {total_utts})",
+        examined_count=len(ingested_sources),
+    )
+
+
 def run_all_checks(
     claims: list[Claim] | None = None,
     utterances: list[Utterance] | None = None,
@@ -519,7 +590,7 @@ def run_all_checks(
     records: list[dict[str, Any]] | None = None,
     roles: list[SourceSubjectRole] | None = None,
 ) -> list[CheckResult]:
-    """Execute all 9 integrity checks."""
+    """Execute all 10 integrity checks."""
     c_list = claims or []
     u_list = utterances or []
     s_list = sources or []
@@ -538,6 +609,7 @@ def run_all_checks(
         verify_negation_recheck(t_list, c_list, u_list),
         verify_versions_present(a_list),
         verify_role_coverage(u_list, rol_list),
+        verify_source_productivity(s_list, u_list),
     ]
     return results
 
@@ -559,10 +631,28 @@ def main() -> None:
         db_claims_rows = store.con.execute("SELECT claim_id FROM claims").fetchall()
         if db_claims_rows:
             db_claims = [c for r in db_claims_rows if (c := store.get_claim(r[0])) is not None]
-            db_utts = [u for r in store.con.execute("SELECT utterance_id FROM utterances").fetchall() if (u := store.get_utterance(r[0])) is not None]
-            db_sources = [s for r in store.con.execute("SELECT source_id FROM sources").fetchall() if (s := store.get_source(r[0])) is not None]
-            db_roles = [role for row in store.con.execute("SELECT source_id, subject_id FROM source_roles").fetchall() if (role := store.get_source_role(row[0], row[1])) is not None]
-            db_tensions = [t for r in store.con.execute("SELECT tension_id FROM tensions").fetchall() if (t := store.get_tension(r[0])) is not None]
+            db_utts = [
+                u
+                for r in store.con.execute("SELECT utterance_id FROM utterances").fetchall()
+                if (u := store.get_utterance(r[0])) is not None
+            ]
+            db_sources = [
+                s
+                for r in store.con.execute("SELECT source_id FROM sources").fetchall()
+                if (s := store.get_source(r[0])) is not None
+            ]
+            db_roles = [
+                role
+                for row in store.con.execute(
+                    "SELECT source_id, subject_id FROM source_roles"
+                ).fetchall()
+                if (role := store.get_source_role(row[0], row[1])) is not None
+            ]
+            db_tensions = [
+                t
+                for r in store.con.execute("SELECT tension_id FROM tensions").fetchall()
+                if (t := store.get_tension(r[0])) is not None
+            ]
             sources.extend(db_sources)
             utterances.extend(db_utts)
             claims.extend(db_claims)

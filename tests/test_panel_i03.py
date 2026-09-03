@@ -162,15 +162,29 @@ def test_parameter_004_confidence_distribution(
 
     # Measured distribution floors:
     assert min(true_sims) >= 0.64, f"Min true turn similarity {min(true_sims):.3f} below floor 0.64"
-    assert np.mean(true_sims) >= 0.78, f"Mean true turn similarity {np.mean(true_sims):.3f} below 0.78"
-    assert np.mean(distractor_sims) <= 0.32, f"Mean distractor similarity {np.mean(distractor_sims):.3f} exceeded 0.32"
+    assert np.mean(true_sims) >= 0.78, (
+        f"Mean true turn similarity {np.mean(true_sims):.3f} below 0.78"
+    )
+    assert np.mean(distractor_sims) <= 0.32, (
+        f"Mean distractor similarity {np.mean(distractor_sims):.3f} exceeded 0.32"
+    )
 
     # Parameter 004 guard: Crosstalk turn_08 has runner-up margin < 0.10, triggering attribution_confidence='low'
     t8 = next(t for t in gt["turns"] if t["turn_id"] == "turn_08")
-    t8_emb = extract_voice_embedding(audio_path, start_s=t8["start_ms"] / 1000.0, dur_s=(t8["end_ms"] - t8["start_ms"]) / 1000.0)
-    t8_turn = SpeakerTurn(speaker_cluster_id="turn_08", start_ms=t8["start_ms"], end_ms=t8["end_ms"], text=t8["text"], voice_embedding=t8_emb)
+    t8_emb = extract_voice_embedding(
+        audio_path, start_s=t8["start_ms"] / 1000.0, dur_s=(t8["end_ms"] - t8["start_ms"]) / 1000.0
+    )
+    t8_turn = SpeakerTurn(
+        speaker_cluster_id="turn_08",
+        start_ms=t8["start_ms"],
+        end_ms=t8["end_ms"],
+        text=t8["text"],
+        voice_embedding=t8_emb,
+    )
     t8_att = engine.attributor.attribute_panel_turn(t8_turn, subject_embeddings)
-    assert t8_att.attribution_confidence == "low", "Crosstalk turn must be flagged low confidence and excluded from scoring"
+    assert t8_att.attribution_confidence == "low", (
+        "Crosstalk turn must be flagged low confidence and excluded from scoring"
+    )
 
 
 def test_falsification_swapped_enrollment_triggers_cross_attribution(
@@ -263,7 +277,7 @@ def test_panel_ingest_end_to_end_and_integrity(
             {
                 "proposition_text": "The Chinese Communist Party is effective at public relations regarding artificial intelligence and robotics.",
                 "stance": "support",
-                "quote_text": "the CCP is brilliant at PR",
+                "quote_text": "brilliant at PR",
                 "hedging_level": 0.05,
                 "is_own_assertion": True,
                 "exclusion_reason": None,
@@ -274,7 +288,7 @@ def test_panel_ingest_end_to_end_and_integrity(
             {
                 "proposition_text": "Mainstream scientific institutional consensus stifles heterodox theory and alternative physics models.",
                 "stance": "support",
-                "quote_text": "you have to follow the mainstream in science or your outcasts",
+                "quote_text": "stagnation in science in America",
                 "hedging_level": 0.1,
                 "is_own_assertion": True,
                 "exclusion_reason": None,
@@ -285,7 +299,7 @@ def test_panel_ingest_end_to_end_and_integrity(
             {
                 "proposition_text": "String theory remains unproved until verified empirically.",
                 "stance": "support",
-                "quote_text": "until string theory is proved, it's unproved",
+                "quote_text": "until string theory is proved",
                 "hedging_level": 0.05,
                 "is_own_assertion": True,
                 "exclusion_reason": None,
@@ -308,8 +322,7 @@ def test_panel_ingest_end_to_end_and_integrity(
     gt_path = Path("fixtures/panel/allin_e287_5min_ground_truth.json")
     gt = json.loads(gt_path.read_text())
     panel_segments = [
-        AudioSegment(start_ms=t["start_ms"], end_ms=t["end_ms"], energy=0.8)
-        for t in gt["turns"]
+        AudioSegment(start_ms=t["start_ms"], end_ms=t["end_ms"], energy=0.8) for t in gt["turns"]
     ]
 
     # Run panel ingest
@@ -327,12 +340,16 @@ def test_panel_ingest_end_to_end_and_integrity(
     assert job.metrics["extracted_claims_count"] >= 3.0
 
     # 1. Source and Audio Disposal
-    src_row = store.con.execute("SELECT source_id FROM sources WHERE canonical_url = ?", [enclosure_url]).fetchone()
+    src_row = store.con.execute(
+        "SELECT source_id FROM sources WHERE canonical_url = ?", [enclosure_url]
+    ).fetchone()
     assert src_row is not None
     source_id = str(src_row[0])
     stored_source = store.get_source(source_id)
     assert stored_source is not None
-    assert stored_source.audio_deleted_at is not None, "audio_deleted_at must be set upon panel ingest"
+    assert stored_source.audio_deleted_at is not None, (
+        "audio_deleted_at must be set upon panel ingest"
+    )
 
     # 2. SourceSubjectRole Join Rows (Issue 022 = Option A)
     for subj in subjects:
@@ -364,7 +381,9 @@ def test_panel_ingest_end_to_end_and_integrity(
     assert len(claim_rows) >= 3
 
     claimed_subjects = {r[1] for r in claim_rows}
-    assert len(claimed_subjects) >= 3, "Claims must be distributed across hosts rather than collapsing onto one"
+    assert len(claimed_subjects) >= 3, (
+        "Claims must be distributed across hosts rather than collapsing onto one"
+    )
 
     all_claims: list[Claim] = []
     for r in claim_rows:
@@ -392,7 +411,11 @@ def test_panel_ingest_end_to_end_and_integrity(
     vaf_res = verify_attribution_floor(all_claims, all_utts, tensions=[])
     assert vaf_res.passed is True
 
-    all_roles = [role for s in subjects if (role := store.get_source_role(source_id, s.subject_id)) is not None]
+    all_roles = [
+        role
+        for s in subjects
+        if (role := store.get_source_role(source_id, s.subject_id)) is not None
+    ]
     vrc_res = verify_role_coverage(all_utts, all_roles)
     assert vrc_res.passed is True
 

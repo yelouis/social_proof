@@ -40,6 +40,13 @@ def extract_voice_embedding(
         raise FileNotFoundError(f"Audio file not found: {path}")
 
     wav, sr = torchaudio.load(str(path))
+    if wav.shape[0] > 1:
+        wav = wav.mean(dim=0, keepdim=True)
+    if sr != 16000:
+        resampler = torchaudio.transforms.Resample(sr, 16000)
+        wav = resampler(wav)
+        sr = 16000
+
     start_sample = int(start_s * sr)
     if dur_s is not None:
         num_samples = int(dur_s * sr)
@@ -52,9 +59,9 @@ def extract_voice_embedding(
     else:
         classifier = get_default_speaker_classifier()
         emb_tensor = classifier.encode_batch(slice_wav)
-        vec = emb_tensor.squeeze().detach().cpu().numpy()
+        vec = emb_tensor.detach().cpu().numpy().flatten()
 
-    vec = np.array(vec, dtype=np.float32)
+    vec = np.array(vec, dtype=np.float32).flatten()
     norm = float(np.linalg.norm(vec))
     if norm > 0:
         vec = vec / norm
