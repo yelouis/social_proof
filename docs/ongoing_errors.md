@@ -440,6 +440,40 @@ Your selection: Proceed with Option A.
 
 ---
 
+### Issue 024: CI cannot work as written — `mlx` has no Linux wheels
+**Blocks: nothing (CI is advisory today)** · **Recommended: Option B** · *Filed after the CI failure notification*
+
+`.github/workflows/ci.yml` runs on `ubuntu-latest` and does `pip install -e ".[dev]"`. `pyproject.toml` lists **`mlx-lm>=0.20.0` as a hard dependency**. `mlx-lm` is a pure-Python wheel, but it depends on `mlx`, and:
+
+```
+$ pip download mlx --platform manylinux2014_x86_64 --only-binary=:all:
+ERROR: Could not find a version that satisfies the requirement mlx (from versions: none)
+```
+
+**MLX is Apple-Silicon only. There is no Linux build.** Install fails during dependency resolution — which is why the job dies in **9 seconds**, well before any test runs. CI has been red since V5 landed the MLX runtime, and nothing surfaced it because the local battery is green and **LOOP 0 checks local gates only**.
+
+Two separable problems.
+
+**(a) `mlx-lm` should not be a hard dependency, whatever happens to CI.** It makes the package uninstallable on any non-Apple machine — including the rented Linux/CUDA GPUs that are step 2 of the scaling path. Move it to `[project.optional-dependencies] apple = [...]`, import it lazily behind the existing runtime Protocol, and the package installs everywhere while still running Gemma locally on your Mac. **This is a fix regardless of the CI decision.**
+
+**(b) What CI should actually do.** The full suite now takes ~10 minutes and loads MLX, faster-whisper and ECAPA-TDNN. A GitHub-hosted Linux runner cannot run it at any price: wrong architecture, no HF token, no model cache.
+
+**Option A: delete CI.** Local-first, single-user project; the local battery is the real gate.
+- Pros: honest, zero maintenance, no red badge lying about a project that is fine.
+- Cons: nothing catches a lint or type regression before it is pushed, and there is no signal at all if the project ever gains a second contributor.
+
+**Option B (recommended): narrow CI to what a Linux runner can genuinely do.** Make `mlx-lm` optional per (a), mark model-dependent tests `@pytest.mark.requires_models`, and have CI run `ruff`, `mypy`, and `pytest -m "not requires_models"`.
+- Pros: keeps the fast, genuinely useful checks — lint, types, and every piece of pure logic (reconciler, detector SQL, rubric arithmetic, validators), which is most of the codebase. Forces the model-dependent boundary to be explicit, which is good hygiene on its own.
+- Cons: a green CI badge that does not cover the model layer. **That is only safe if the split is stated on the badge's own terms** — otherwise it recreates the "green gate proves nothing" failure at a new level.
+
+**Option C: self-hosted runner on your Mac.**
+- Pros: the real suite, in CI, including models.
+- Cons: your laptop becomes build infrastructure; a 10-minute suite on every push; secrets and a runner daemon to maintain. Heavy for a single-user project.
+
+Your selection: _____
+
+---
+
 ## 2. Parameters to be measured, not selected
 
 **These are not decisions and should not be guessed.** Each is a threshold whose correct value is discovered by running against the golden corpus (`e2e_verification_journeys.md`). An agent that picks a number here and moves on has skipped the work.

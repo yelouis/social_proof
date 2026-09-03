@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Social Proof",
+  "version": "0.1.0",
+  "description": "Closed-corpus self-consistency and citation checker.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:8787/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "render.js",
+        "tokens.css",
+        "overlay.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

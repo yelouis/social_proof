@@ -1,0 +1,48 @@
+/* Generated automatically from tokens.json. Do NOT edit manually. */
+:host, :root {
+  --sp-color-background: #121316;
+  --sp-color-surface: #1a1b20;
+  --sp-color-surfaceHover: #22242b;
+  --sp-color-card: #22242a;
+  --sp-color-border: #2e313a;
+  --sp-color-borderSubtle: #252730;
+  --sp-color-textPrimary: #f0f1f4;
+  --sp-color-textSecondary: #9ea3b0;
+  --sp-color-textMuted: #686d7c;
+  --sp-color-accentFinding: #e5a93c;
+  --sp-color-accentCite: #5b8bf7;
+  --sp-color-accentCiteHover: #7aa4fc;
+  --sp-color-tagBackground: #262933;
+  --sp-color-tagText: #b8bdcb;
+  --sp-font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --sp-font-quote: 'Newsreader', 'Georgia', 'Times New Roman', serif;
+  --sp-font-mono: ui-monospace, 'SF Mono', Menlo, Monaco, monospace;
+  --sp-font-size-xs: 11px;
+  --sp-font-size-sm: 12px;
+  --sp-font-size-base: 13px;
+  --sp-font-size-md: 14px;
+  --sp-font-size-lg: 16px;
+  --sp-font-size-xl: 18px;
+  --sp-font-size-2xl: 22px;
+  --sp-font-weight-normal: 400;
+  --sp-font-weight-medium: 500;
+  --sp-font-weight-semibold: 600;
+  --sp-font-weight-bold: 700;
+  --sp-line-height-tight: 1.2;
+  --sp-line-height-normal: 1.45;
+  --sp-line-height-relaxed: 1.6;
+  --sp-spacing-2xs: 2px;
+  --sp-spacing-xs: 4px;
+  --sp-spacing-sm: 8px;
+  --sp-spacing-md: 12px;
+  --sp-spacing-lg: 16px;
+  --sp-spacing-xl: 20px;
+  --sp-spacing-2xl: 24px;
+  --sp-spacing-3xl: 32px;
+  --sp-radius-xs: 2px;
+  --sp-radius-sm: 4px;
+  --sp-radius-md: 6px;
+  --sp-radius-lg: 8px;
+  --sp-radius-full: 9999px;
+  --sp-shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.3);
+}

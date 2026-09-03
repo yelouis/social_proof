@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Social Proof - Timeline & Evidence</title>
+  <link rel="stylesheet" href="tokens.css">
+  <style>
+    body {
+      margin: 0;
+      padding: var(--sp-spacing-lg, 16px);
+      background: var(--sp-color-background, #121316);
+      color: var(--sp-color-textPrimary, #f0f1f4);
+      font-family: var(--sp-font-sans, system-ui, sans-serif);
+      font-size: var(--sp-font-size-base, 13px);
+      line-height: var(--sp-line-height-normal, 1.45);
+    }
+    .sp-panel-header {
+      border-bottom: 1px solid var(--sp-color-border, #2e313a);
+      padding-bottom: var(--sp-spacing-md, 12px);
+      margin-bottom: var(--sp-spacing-lg, 16px);
+    }
+    .sp-panel-title {
+      font-size: var(--sp-font-size-lg, 16px);
+      font-weight: var(--sp-font-weight-bold, 700);
+      color: var(--sp-color-textPrimary, #f0f1f4);
+    }
+    .sp-panel-sub {
+      font-size: var(--sp-font-size-sm, 12px);
+      color: var(--sp-color-textSecondary, #9ea3b0);
+      margin-top: var(--sp-spacing-2xs, 2px);
+    }
+    .sp-section-heading {
+      font-family: var(--sp-font-mono, monospace);
+      font-size: var(--sp-font-size-xs, 11px);
+      letter-spacing: 0.08em;
+      color: var(--sp-color-textMuted, #686d7c);
+      text-transform: uppercase;
+      margin: var(--sp-spacing-xl, 20px) 0 var(--sp-spacing-sm, 8px) 0;
+    }
+    .sp-timeline-container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-spacing-md, 12px);
+    }
+    .sp-claim-card {
+      background: var(--sp-color-card, #22242a);
+      border: 1px solid var(--sp-color-border, #2e313a);
+      border-radius: var(--sp-radius-md, 6px);
+      padding: var(--sp-spacing-md, 12px);
+    }
+    .sp-claim-meta {
+      font-size: var(--sp-font-size-xs, 11px);
+      color: var(--sp-color-textSecondary, #9ea3b0);
+      margin-bottom: var(--sp-spacing-xs, 4px);
+    }
+    .sp-claim-quote {
+      font-family: var(--sp-font-quote, serif);
+      font-size: var(--sp-font-size-base, 13px);
+      font-style: italic;
+      color: var(--sp-color-textPrimary, #f0f1f4);
+      margin: var(--sp-spacing-xs, 4px) 0;
+      line-height: var(--sp-line-height-relaxed, 1.6);
+    }
+    .sp-cite-link {
+      color: var(--sp-color-accentCite, #5b8bf7);
+      text-decoration: none;
+      font-size: var(--sp-font-size-xs, 11px);
+    }
+    .sp-cite-link:hover {
+      text-decoration: underline;
+    }
+    .sp-tension-card {
+      background: var(--sp-color-surface, #1a1b20);
+      border: 1px solid var(--sp-color-border, #2e313a);
+      border-radius: var(--sp-radius-md, 6px);
+      padding: var(--sp-spacing-md, 12px);
+      margin-bottom: var(--sp-spacing-md, 12px);
+    }
+    .sp-tension-header {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--sp-font-mono, monospace);
+      font-size: var(--sp-font-size-xs, 11px);
+      color: var(--sp-color-accentFinding, #e5a93c);
+      margin-bottom: var(--sp-spacing-sm, 8px);
+    }
+    .sp-tension-gap {
+      font-family: var(--sp-font-mono, monospace);
+      font-size: 10px;
+      color: var(--sp-color-textMuted, #686d7c);
+      text-align: center;
+      margin: var(--sp-spacing-sm, 8px) 0;
+    }
+    .sp-distinction-block {
+      background: rgba(91, 139, 247, 0.08);
+      border-left: 2px solid var(--sp-color-accentCite, #5b8bf7);
+      padding: var(--sp-spacing-xs, 4px) var(--sp-spacing-sm, 8px);
+      margin: var(--sp-spacing-sm, 8px) 0;
+      font-size: var(--sp-font-size-xs, 11px);
+    }
+    .sp-distinction-label {
+      color: var(--sp-color-accentCite, #5b8bf7);
+      font-weight: var(--sp-font-weight-semibold, 600);
+      margin-right: var(--sp-spacing-xs, 4px);
+    }
+    .sp-distinction-text {
+      font-style: italic;
+      color: var(--sp-color-textPrimary, #f0f1f4);
+    }
+    .sp-tension-notice {
+      font-size: var(--sp-font-size-xs, 11px);
+      color: var(--sp-color-textMuted, #686d7c);
+      margin-top: var(--sp-spacing-xs, 4px);
+    }
+    .sp-axis-row {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--sp-spacing-xs, 4px) 0;
+      border-bottom: 1px solid var(--sp-color-borderSubtle, #252730);
+    }
+    .sp-axis-label {
+      color: var(--sp-color-textSecondary, #9ea3b0);
+    }
+    .sp-axis-score-val {
+      font-family: var(--sp-font-mono, monospace);
+      color: var(--sp-color-textPrimary, #f0f1f4);
+    }
+    .sp-axis-null-indicator {
+      font-family: var(--sp-font-mono, monospace);
+      color: var(--sp-color-textMuted, #686d7c);
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sp-panel-header">
+    <div class="sp-panel-title" id="panel-subject-name">Subject Analysis</div>
+    <div class="sp-panel-sub" id="panel-topic-info">Topic & Corpus Evidence</div>
+  </div>
+
+  <div class="sp-section-heading">Four Trust Vectors (Rubric Engine)</div>
+  <div id="panel-axes-container"></div>
+
+  <div class="sp-section-heading">Detected Tensions (Evidence Pairs)</div>
+  <div id="panel-tensions-container"></div>
+
+  <div class="sp-section-heading">Timeline of Verbatim Claims</div>
+  <div class="sp-timeline-container" id="panel-timeline-container"></div>
+
+  <script type="module" src="sidepanel.js"></script>
+</body>
+</html>

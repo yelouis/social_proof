@@ -115,11 +115,11 @@ Measured September 2, 2026. Re-run via §2 before trusting.
 |---|---|---|
 | `ruff check` | **PASS** | |
 | `mypy --strict` | **PASS** — 74 files | |
-| `pytest tests/ -q` | **PASS** — 140 passed, **~10m** | The runtime is the evidence: real MLX, whisper, and ECAPA-TDNN models load. |
+| `pytest tests/ -q` | **PASS** — 140 passed, **~10m** locally; **CI is RED** (Issue 024 — `mlx` has no Linux wheels, install dies in 9s) | The runtime is the evidence: real MLX, whisper, and ECAPA-TDNN models load. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
-| `worker.integrity --all` | **PASS** — 9 checks | All 17 real claim quotes & anchor chain verified on live `social_proof.duckdb`. |
+| `worker.integrity --all` | **PASS** — 9 checks | Genuine, but note what it does *not* check: a source that produced nothing is not an orphan, so the pass stays green over a failed ingest. R0 adds the missing check. |
 | `worker.golden.report` | **PASS** | Fixtures 19/19 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
-| **Corpus** | **POPULATED** | `social_proof.duckdb` (5.8MB), `artifacts/` (Parquet word timestamps & transcripts). I0 delivered. |
+| **Corpus** | **POPULATED BUT BROKEN** | `social_proof.duckdb` exists, but **3 of 4 sources yielded zero utterances while being marked `ingested_at` AND `audio_deleted_at`** — a silent failure with data loss. The 4th covers 5 min of a ~90 min episode. All 15 claims are from one day with one stance each, so **no tension is structurally possible.** See R0 (§16). |
 
 ---
 
@@ -149,6 +149,9 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 22. **A fixture can be structurally incapable of testing what it is labelled as.** Eight pair-type fixtures were single undated sentences carrying two-utterance expected outcomes, and three classes were missing outright — while the harness reported 16/16 PASS. **A green fixture suite says the cases that exist pass, never that the cases you need exist.** F0 exists because of this. Assert class-completeness against the contract table, not against whatever happens to be on disk.
 23. **A source's tier and venue can differ per subject.** All-In is Tier B for its four hosts and Tier C for a guest, in the same episode. `venue_type` and `audience_stance` are properties of a (source, subject) pair, not of the source — and `audience_stance` feeds audience-divergence detection, so getting it wrong produces a wrong *finding*. Issue 022.
 24. **A corpus can be skewed without being thin, and nothing catches that.** Invariant I5 gates on *volume* — too few claims, no score. It says nothing about *composition*. A subject whose primary medium is excluded (Musk without X) yields plenty of claims, passes the gate, and renders a confident score over a systematically unrepresentative slice. Issue 023.
+25. **"Ingested" is not the same as "produced anything."** Three sources were stamped `ingested_at` *and* `audio_deleted_at` while yielding zero utterances. Every integrity check verifies that pointers *resolve* — none verified that the pipeline *emitted* anything. **Success must be defined as output, not as absence of exception**, and any irreversible step (audio deletion) must be gated on that definition.
+26. **A detector finding nothing over a corpus that cannot contain the thing is not a true negative — it is an untested detector.** Every claim in the store is from one day with one stance, so a reversal is impossible by construction. P4/P5/P6 report zero and are green; they have never met data capable of contradicting itself.
+27. **Local green does not mean CI green.** LOOP 0 checks the local battery and has no CI signal at all, so CI stayed red across several commits unnoticed (Issue 024).
 
 ---
 
@@ -158,13 +161,16 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 |---|---|---|---|---|---|
 | 1 | **F0** | Repair the behaviour fixture set | none | **delivered** | **P4 and P5 cannot be validated without this.** 8 pair-type fixtures are single undated sentences; N6, N9 and N11 do not exist. Cheap, and doing it later means P4 starts and immediately stalls. |
 | 2 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | **Do it now, while the corpus is empty.** Zero rows to migrate today; after I0 it is real data. Cheapest moment this schema change will ever have. |
-| 3 | **I0** | First real ingest, end to end | none | **delivered** | Every model is wired and real sources ingested. Claims verified on real DuckDB and Parquet artifacts. |
-| 4 | **P4** | Tension detection | none | **delivered** | **The thesis.** Core contradiction and update detection in DuckDB SQL with full-interval acknowledgement search (trap 2). |
-| 5 | **P3** | Topic model | none | **delivered** | HDBSCAN clustering, free-text resolution with search_query: prefix, cluster expansion, and cache provenance. |
-| 6 | **P5** | Principle extraction | none | **delivered** | Mechanical join over shared principles with opposing verdicts, stated distinction escape hatch, and actor resolution floor. |
-| 7 | **P6** | Rubric engine | none | **delivered** | Deterministic arithmetic over four axes, per-axis sufficiency gating, no composite trust score, and binomial significance. |
-| 8 | **P7** | Local API | none | **delivered** | Loopback binding (127.0.0.1), Bearer token, strict CORS, selection-triggered /resolve with zero page-context storage, 409 comparison guard. |
-| 9 | **P8** | Browser extension | none | outstanding | The only client (Issue 002). Selection-triggered (Issue 013). |
+| 3 | **I0** | First real ingest — the four All-In hosts | none | **PARTIAL — I0.3 regressed** | I0.1/I0.2 hold. **I0.3 did not deliver**: 3 of 4 episodes produced zero utterances and had their audio deleted anyway. Superseded by R0. |
+| 4 | **R0** | Repair the ingest; add the productivity guard | none | **outstanding** | **Next.** Data loss is already done and bounded; the guard stops it recurring, and the re-ingest is what finally gives P4 something a tension could live in. |
+| 5 | **P4** | Tension detection | none | **delivered, UNVALIDATED** | **The thesis.** Core contradiction and update detection in DuckDB SQL with full-interval acknowledgement search (trap 2). |
+| 6 | **P3** | Topic model | none | **delivered, UNVALIDATED** | HDBSCAN clustering, free-text resolution with search_query: prefix, cluster expansion, and cache provenance. |
+| 7 | **P5** | Principle extraction | none | **delivered, UNVALIDATED** | Mechanical join over shared principles with opposing verdicts, stated distinction escape hatch, and actor resolution floor. |
+| 8 | **P6** | Rubric engine | none | **delivered, UNVALIDATED** | Deterministic arithmetic over four axes, per-axis sufficiency gating, no composite trust score, and binomial significance. |
+| 9 | **P7** | Local API | none | **delivered** | Loopback binding (127.0.0.1), Bearer token, strict CORS, selection-triggered /resolve with zero page-context storage, 409 comparison guard. |
+| 10 | **P8** | Browser extension | none | outstanding | The only client (Issue 002). Selection-triggered (Issue 013). |
+
+> **P3–P7 are delivered as code and unvalidated as behaviour.** They run, they pass their fixture tests, and they produce **zero** tensions, principles and assessments over the live corpus — because that corpus cannot contain one (§17). Do not read their green status as evidence the detectors work. R0 is what makes that question answerable.
 
 **Delivered — do NOT rework:** V0–V6 (all externals real, `STUB_REGISTRY` empty), U0–U13 (storage, integrity, adapters, reconciler, segmentation, gate, validators). Detail in git history; §14 has the short list.
 
@@ -469,7 +475,49 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 17. I0 — First real ingest · **subjects selected (Issue 021 = B)**
+## 17. R0 — Repair the ingest; add the productivity guard
+
+**User impact:** the corpus stops containing three episodes' worth of nothing, and the pipeline stops reporting success when it produced no output.
+
+**Gap — measured against the live database, not inferred.**
+
+```
+utt=  0  ingested_at=True  audio_deleted=True  All-In E124 (2023-04-14)
+utt=  0  ingested_at=True  audio_deleted=True  All-In E165 (2024-02-09)
+utt=  0  ingested_at=True  audio_deleted=True  All-In E245 (2025-10-03)
+utt= 15  ingested_at=True  audio_deleted=True  All-In E287 (2026-09-03)  ← 0s–300s only
+```
+
+Three failures compounding:
+
+1. **Silent ingest failure.** Three sources produced zero utterances, were stamped `ingested_at`, and **had their audio deleted anyway.** Under Issue 003 = C the audio is gone, so these cannot be re-transcribed — only re-fetched.
+2. **Truncation.** The one source that produced anything covers **0s–300s** — five minutes of a roughly ninety-minute episode. 15 utterances, not the hundreds an episode yields.
+3. **Nothing caught either.** `verify_anchor_chain` asks whether pointers *resolve*. A source with no utterances has no dangling pointers — it is simply empty, and every check stayed green. **Success was defined as "no exception raised," never as "output exists."**
+
+The consequence for everything above it: all 15 claims share one date and one stance per proposition, so **a reversal is structurally impossible.** P4, P5 and P6 report zero and pass. They have never met data capable of contradicting itself (trap 26).
+
+**Implementation**
+1. **Add `verify_source_productivity` — the tenth integrity check.** A source with `ingested_at` set and zero utterances is a **FAIL**, not a pass. Same for a source whose utterance span covers implausibly little of its media duration; make the ratio a named constant and record it.
+2. **Gate audio deletion on productivity.** `audio_deleted_at` may only be set for a source that produced ≥1 utterance. `design_source_acquisition.md` §5.2 says deletion is "the last step, after everything above has succeeded" — **success was never defined, so an empty run qualified.** Define it: success is output.
+3. **Find the root cause before re-running.** Three sources failing identically is a systematic fault, not three coincidences — a fetch returning HTML, a VAD gate rejecting everything, an adapter yielding an empty media path. Read the ingest job records. **Do not re-run and hope.**
+4. **Investigate the 5-minute truncation separately.** It may share a root cause or may not. Check whether the fetch downloaded a preview, whether a duration cap exists, or whether transcription stopped early.
+5. **Re-fetch and re-ingest all four sources.** The audio is unrecoverable locally; re-download from source.
+6. **Then re-run P4, P5 and P6 against the repaired corpus** and record what they find. If P4 still reports zero across four episodes spanning 2023–2026 on overlapping topics, that is a finding worth reporting — but it is only meaningful once the corpus can hold a tension.
+
+**Validation**
+- **`verify_source_productivity` FAILS against the database as it stands today** — three sources, zero utterances. ← **(c)** *An integrity check that passes on a known-broken store is not a check. This one must go red before it earns its place.*
+- After repair, every source has ≥1 utterance and the check passes on a non-empty set.
+- **Audio-deletion gate:** simulate a source that transcribes to zero utterances; assert `audio_deleted_at` stays **null** and the audio file survives.
+- Utterance span covers a plausible fraction of media duration for all four sources.
+- At least one proposition carries **≥2 claims with opposing stances at different dates** — the structural precondition for P4 to be testable at all. If the repaired corpus still cannot produce one, say so explicitly rather than reporting P4 as validated.
+
+**Falsify.** Restore the ungated deletion and re-run the zero-utterance simulation; the audio-survival assertion must go RED. Then re-point `verify_source_productivity` at a healthy store and confirm it passes, so it is discriminating rather than always-failing.
+
+**Blast radius.** `worker/integrity.py` (new check), `worker/transcribe/` or wherever deletion is triggered, the ingest job records, `tests/`, `docs/design_source_acquisition.md` §5.2 (define success as output), §3 baseline, §6 queue, `docs/e2e_verification_journeys.md` (J1's gate did not catch this — add the productivity assertion).
+
+---
+
+## 18. I0 — First real ingest · **subjects selected (Issue 021 = B)**
 
 **Subjects:** Chamath Palihapitiya, David Sacks, Jason Calacanis, David Friedberg — the four All-In hosts. **Primary source:** the All-In Podcast.
 
@@ -554,7 +602,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 18. P4 — Tension detection
+## 19. P4 — Tension detection
 
 **User impact:** the product's core claim starts working — *here are two things you said that cannot both be your view.*
 
@@ -584,7 +632,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 19. P3 — Topic model
+## 20. P3 — Topic model
 
 **User impact:** you can ask about any topic in your own words and get that person's record on it.
 
@@ -611,7 +659,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 20. P5 — Principle extraction
+## 21. P5 — Principle extraction
 
 **User impact:** the system can spot a double standard — the same principle applied to one person and not another.
 
@@ -640,7 +688,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 21. P6 — Rubric engine
+## 22. P6 — Rubric engine
 
 **User impact:** the four numbers appear — and, just as importantly, correctly refuse to appear when the evidence is thin.
 
@@ -672,7 +720,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 22. P7 — Local API
+## 23. P7 — Local API
 
 **User impact:** something outside Python can finally read the corpus.
 
@@ -703,7 +751,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 23. P8 — Browser extension
+## 24. P8 — Browser extension
 
 **User impact:** the product exists where you actually read.
 
@@ -733,7 +781,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 24. Deferred — designed for, not queued
+## 25. Deferred — designed for, not queued
 
 **Elon Musk (Issue 023 = A).** Out of scope until X/Twitter ingest exists. **Trigger:** an `XAPIAdapter` or `XArchiveImportAdapter` lands behind the `SourceAdapter` Protocol and a Musk corpus can be assembled that includes his primary medium. Until then, ingesting him would produce a confident score over a systematically skewed slice, and **invariant I5 would not catch it** — it gates on volume, not composition (trap 24).
 
@@ -743,7 +791,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 25. Invariants — do NOT change
+## 26. Invariants — do NOT change
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -751,13 +799,13 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 
 ---
 
-## 26. Contracts
+## 27. Contracts
 
 `master_implementation_plan.md` · `design_source_acquisition.md` · `design_claim_extraction.md` · `design_principle_extraction.md` · `design_topic_model.md` · `design_rubric_engine.md` · `design_data_layer.md` · `design_local_api_and_clients.md` · `design_ui_direction.md` · `design_evidence_integrity.md` · `e2e_verification_journeys.md` · `ongoing_errors.md`
 
 ---
 
-## 27. Feedback loop — what specs here have got wrong
+## 28. Feedback loop — what specs here have got wrong
 
 | What happened | Spec said | Should have said |
 |---|---|---|
