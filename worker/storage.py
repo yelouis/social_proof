@@ -630,6 +630,36 @@ class Storage:
             quote_text=res[18] if len(res) > 18 else None,
         )
 
+    def get_claims_for_subject(self, subject_id: str) -> list[Claim]:
+        import json
+        rows = self.con.execute(
+            "SELECT * FROM claims WHERE subject_id = ? ORDER BY recorded_at",
+            [subject_id],
+        ).fetchall()
+        return [
+            Claim(
+                claim_id=r[0],
+                subject_id=r[1],
+                utterance_id=r[2],
+                proposition_id=r[3],
+                stance=r[4],
+                hedging_level=r[5],
+                is_own_assertion=r[6],
+                exclusion_reason=r[7],
+                confidence=r[8],
+                quote_span=(r[9], r[10]),
+                condition=r[11],
+                prior_stance_reported=r[12],
+                change_marker=json.loads(r[13]) if r[13] else None,
+                extraction_model=r[14],
+                prompt_version=r[15],
+                extraction_version=r[16],
+                recorded_at=r[17],
+                quote_text=r[18] if len(r) > 18 else None,
+            )
+            for r in rows
+        ]
+
     def insert_proposition(self, p: Proposition) -> None:
         self.con.execute(
             """
@@ -977,6 +1007,53 @@ class Storage:
                 a.computed_at,
             ],
         )
+
+    def get_assessment(self, assessment_id: str) -> Assessment | None:
+        import json
+        res = self.con.execute(
+            "SELECT * FROM assessments WHERE assessment_id = ?",
+            [assessment_id],
+        ).fetchone()
+        if not res:
+            return None
+        return Assessment(
+            assessment_id=res[0],
+            subject_id=res[1],
+            topic_id=res[2],
+            rubric_version=res[3],
+            extraction_model_set=res[4] if res[4] is not None else [],
+            detector_version=res[5] or "",
+            embedding_model=res[6] or "",
+            nlp_version=res[7] or "",
+            sufficiency=json.loads(res[8]) if res[8] else {},
+            axes=json.loads(res[9]) if res[9] else {},
+            axis_evidence=json.loads(res[10]) if res[10] else {},
+            computed_at=res[11] or "",
+        )
+
+    def get_assessments_for_subject(self, subject_id: str) -> list[Assessment]:
+        import json
+        rows = self.con.execute(
+            "SELECT * FROM assessments WHERE subject_id = ? ORDER BY computed_at DESC",
+            [subject_id],
+        ).fetchall()
+        return [
+            Assessment(
+                assessment_id=r[0],
+                subject_id=r[1],
+                topic_id=r[2],
+                rubric_version=r[3],
+                extraction_model_set=r[4] if r[4] is not None else [],
+                detector_version=r[5] or "",
+                embedding_model=r[6] or "",
+                nlp_version=r[7] or "",
+                sufficiency=json.loads(r[8]) if r[8] else {},
+                axes=json.loads(r[9]) if r[9] else {},
+                axis_evidence=json.loads(r[10]) if r[10] else {},
+                computed_at=r[11] or "",
+            )
+            for r in rows
+        ]
 
     def detect_unacknowledged_reversals(self, subject_id: str) -> list[tuple[str, str, str]]:
         """Core detector query from design_data_layer.md §4.

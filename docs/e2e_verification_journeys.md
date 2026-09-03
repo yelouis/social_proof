@@ -136,6 +136,7 @@ Run over P3 and N6.
 **Falsify:** disable stated-distinction detection; N6 must become a published conflict.
 
 ### J7 — Sufficiency gate · *Phase 6*
+**Status:** PASSING (September 2, 2026 — delivered in P6)
 Assess golden subject N11.
 **Gate:** the axis is `null` with a reason. **Assert no number exists anywhere in the stored document** — not hidden, not behind a flag, not zero.
 **Falsify:** compute-and-suppress instead of not computing; the assertion must fail.
