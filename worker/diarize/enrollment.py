@@ -197,3 +197,11 @@ class VoiceEnrollmentStore:
             return None
         data = json.loads(file_path.read_text(encoding="utf-8"))
         return data  # type: ignore[no-any-return]
+
+    def get_embedding(self, enrollment_ref: str) -> list[float] | None:
+        """Convenience method returning the normalized embedding vector for an enrollment ref."""
+        data = self.get_enrollment(enrollment_ref)
+        if data and "embedding" in data:
+            emb: list[float] = data["embedding"]
+            return emb
+        return None

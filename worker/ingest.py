@@ -11,9 +11,10 @@ from pathlib import Path
 from typing import Any
 
 from worker.adapters.base import SourceAdapter, SourceRef
-from worker.diarize.attribution import SpeakerAttributor
+from worker.diarize.attribution import SpeakerAttributor, SpeakerTurn
 from worker.diarize.enrollment import (
     VoiceEnrollmentStore,
+    extract_voice_embedding,
 )
 from worker.entities import (
     IngestJob,
@@ -117,6 +118,8 @@ class IngestionEngine:
         assert raw.media_path is not None and raw.media_path.exists(), "Audio file must exist"
         audio_working_copy = raw.media_path.with_suffix(".working.wav")
         shutil.copy(raw.media_path, audio_working_copy)
+        audio_attr_copy = raw.media_path.with_suffix(".attr.wav")
+        shutil.copy(raw.media_path, audio_attr_copy)
 
         try:
             # 3. Transcribe (Dual-pass)
@@ -141,6 +144,17 @@ class IngestionEngine:
             # 4. Diarize & Attribute against Enrollment
             job.stage = "attribute"
             t0_attr = time.perf_counter()
+            if subject.enrollment_ref:
+                emb = extract_voice_embedding(audio_attr_copy)
+                data = self.enrollment_store.get_enrollment(subject.enrollment_ref)
+                if data:
+                    ref_emb = data["embedding"]
+                    sim = self.attributor.cosine_similarity(emb, ref_emb)
+                    if sim >= self.attributor.t_high:
+                        for utt in utterances:
+                            utt.speaker_label = subject.display_name
+                            utt.attribution_method = "voice_embedding_match"
+                            utt.attribution_confidence = "high"
             # Verify voice against enrollment reference
             if subject.enrollment_ref is not None:
                 enroll_data = self.enrollment_store.get_enrollment(subject.enrollment_ref)
@@ -192,5 +206,187 @@ class IngestionEngine:
             # Audio working copy cleaned up, but raw audio disposition handled by pipeline
             if audio_working_copy.exists():
                 audio_working_copy.unlink(missing_ok=True)
+            if audio_attr_copy.exists():
+                audio_attr_copy.unlink(missing_ok=True)
+
+        return job
+
+    def ingest_panel_source(
+        self,
+        adapter: SourceAdapter,
+        ref: SourceRef,
+        subjects: list[Subject],
+        media_file_override: Path | None = None,
+        mock_claims_by_subject: dict[str, list[dict[str, Any]]] | None = None,
+        panel_segments: list[AudioSegment] | None = None,
+    ) -> IngestJob:
+        """Runs the full ingest pipeline for a multi-speaker panel source across multiple subjects."""
+        job_id = f"job_{uuid.uuid4().hex[:12]}"
+        job = IngestJob(
+            job_id=job_id,
+            subject_id="panel",
+            adapter=adapter.__class__.__name__,
+            status="running",
+            stage="init",
+            started_at=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        )
+
+        # 0. Persist Subjects if not yet stored
+        for subject in subjects:
+            if not self.storage.get_subject(subject.subject_id):
+                self.storage.insert_subject(subject)
+
+        # 1. Fetch
+        job.stage = "fetch"
+        t0_fetch = time.perf_counter()
+        if media_file_override is not None:
+            content_bytes = media_file_override.read_bytes()
+            fetch_fn: Any = adapter.fetch
+            raw = fetch_fn(ref, mocked_bytes=content_bytes)
+        else:
+            raw = adapter.fetch(ref)
+        job.metrics["fetch_sec"] = time.perf_counter() - t0_fetch
+
+        # 2. Normalize
+        job.stage = "normalize"
+        norm = adapter.normalize(raw)
+        source = norm.source
+
+        # Check idempotency: if source already has utterances and audio was deleted, return completed
+        existing_src = self.storage.get_source(source.source_id)
+        if existing_src is not None and existing_src.audio_deleted_at is not None:
+            job.status = "completed"
+            job.stage = "persisted"
+            job.finished_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+            job.metrics["reingest_skipped"] = 1.0
+            return job
+
+        self.storage.insert_source(source)
+        for subject in subjects:
+            role = adapter.role(ref, subject)
+            self.storage.insert_source_role(role)
+
+        assert raw.media_path is not None and raw.media_path.exists(), "Audio file must exist"
+        audio_working_copy = raw.media_path.with_suffix(".working_panel.wav")
+        shutil.copy(raw.media_path, audio_working_copy)
+        audio_attr_copy = raw.media_path.with_suffix(".attr_panel.wav")
+        shutil.copy(raw.media_path, audio_attr_copy)
+
+        try:
+            # 3. Transcribe (Dual-pass)
+            job.stage = "transcribe"
+            t0_tx = time.perf_counter()
+            import torchaudio
+
+            wav_info, sr = torchaudio.load(str(audio_working_copy))
+            duration_ms = int((wav_info.shape[1] / sr) * 1000)
+
+            # Segment the full media duration into conversational turns / chunks
+            if panel_segments is not None:
+                segments = panel_segments
+            else:
+                segments = []
+                chunk_ms = 20000
+                for t in range(0, duration_ms, chunk_ms):
+                    segments.append(AudioSegment(start_ms=t, end_ms=min(duration_ms, t + chunk_ms), energy=0.8))
+
+            utterances = self.transcription_pipeline.transcribe_source(
+                source=source,
+                subject_id="panel",
+                audio_path=audio_working_copy,
+                segments=segments,
+                job=job,
+            )
+            job.metrics["transcribe_sec"] = time.perf_counter() - t0_tx
+
+            # Mark source audio deleted in DB and delete raw audio to honor retention contract
+            source.audio_deleted_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+            self.storage.insert_source(source)
+            if raw.media_path.exists():
+                raw.media_path.unlink()
+
+            # 4. Multi-Speaker Diarization & Attribution
+            job.stage = "attribute"
+            t0_attr = time.perf_counter()
+
+            # Build subject embeddings map
+            subject_embeddings: dict[str, list[float]] = {}
+            for s in subjects:
+                if s.enrollment_ref:
+                    emb = self.enrollment_store.get_embedding(s.enrollment_ref)
+                    if emb is not None:
+                        subject_embeddings[s.subject_id] = emb
+
+            if subject_embeddings:
+                for utt in utterances:
+                    start_s = utt.start_ms / 1000.0
+                    dur_s = max(0.5, (utt.end_ms - utt.start_ms) / 1000.0)
+                    turn_emb = extract_voice_embedding(audio_attr_copy, start_s=start_s, dur_s=dur_s)
+                    turn = SpeakerTurn(
+                        speaker_cluster_id=utt.utterance_id,
+                        start_ms=utt.start_ms,
+                        end_ms=utt.end_ms,
+                        text=utt.text_verbatim,
+                        voice_embedding=turn_emb,
+                    )
+                    att = self.attributor.attribute_panel_turn(turn, subject_embeddings)
+                    utt.attribution_method = att.attribution_method
+                    utt.attribution_confidence = att.attribution_confidence
+                    if att.subject_id is not None:
+                        matched_subj = next((s for s in subjects if s.subject_id == att.subject_id), None)
+                        utt.subject_id = att.subject_id
+                        utt.speaker_label = matched_subj.display_name if matched_subj else att.subject_id
+                    else:
+                        utt.subject_id = "unknown"
+                        utt.speaker_label = "unknown"
+
+            for utt in utterances:
+                self.storage.insert_utterance(utt)
+            job.metrics["attribute_sec"] = time.perf_counter() - t0_attr
+
+            # 5. Extraction Gate & Claim Extraction
+            job.stage = "extract"
+            t0_ext = time.perf_counter()
+            total_claims = 0
+
+            for utt in utterances:
+                # Find matching subject for this utterance
+                matched_subj = next((s for s in subjects if s.display_name == utt.speaker_label or s.subject_id == utt.speaker_label), None)
+                if matched_subj is None:
+                    continue
+
+                mock_claims = mock_claims_by_subject.get(matched_subj.subject_id) if mock_claims_by_subject else None
+
+                claims = self.extraction_pipeline.extract_from_utterance(
+                    utterance=utt,
+                    source_recorded_at=source.recorded_at,
+                    subject_context=matched_subj.display_name,
+                    mock_model_output={"claims": mock_claims} if mock_claims is not None else None,
+                )
+                for c in claims:
+                    if self.embedder is not None:
+                        prop = self.storage.get_proposition(c.proposition_id)
+                        if prop is not None:
+                            emb_vec = self.embedder.embed_document(prop.canonical_text)
+                            self.storage.insert_proposition_embedding(c.proposition_id, emb_vec)
+                    total_claims += 1
+
+            job.metrics["extract_sec"] = time.perf_counter() - t0_ext
+            job.metrics["extracted_claims_count"] = float(total_claims)
+
+            job.status = "completed"
+            job.stage = "persisted"
+            job.finished_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+
+        except Exception as e:
+            job.status = "failed"
+            job.errors.append(str(e))
+            logger.error(f"Ingest job {job_id} failed: {e}", exc_info=True)
+            raise
+        finally:
+            if audio_working_copy.exists():
+                audio_working_copy.unlink(missing_ok=True)
+            if audio_attr_copy.exists():
+                audio_attr_copy.unlink(missing_ok=True)
 
         return job

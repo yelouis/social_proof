@@ -109,17 +109,17 @@ grep -c "^Your selection: _____" docs/ongoing_errors.md   # anchored — an unan
 
 ## 3. Verified baseline
 
-Measured August 17, 2026. Re-run via §2 before trusting.
+Measured September 2, 2026. Re-run via §2 before trusting.
 
 | Gate | Result | Note |
 |---|---|---|
 | `ruff check` | **PASS** | |
-| `mypy --strict` | **PASS** — 49 files | |
-| `pytest tests/ -q` | **PASS** — 95 passed, **~31s** | The runtime is the evidence: real models load. A sub-5s run means mocks crept back. |
+| `mypy --strict` | **PASS** — 51 files | |
+| `pytest tests/ -q` | **PASS** — 100 passed, **~10m** | The runtime is the evidence: real MLX, whisper, and ECAPA-TDNN models load. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
-| `worker.integrity --all` | **PASS** — 9 checks | Correct logic. **Zero real rows to check.** |
+| `worker.integrity --all` | **PASS** — 9 checks | All 17 real claim quotes & anchor chain verified on live `social_proof.duckdb`. |
 | `worker.golden.report` | **PASS** | Fixtures 19/19 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
-| **Corpus** | **EMPTY** | No database, no artifacts. This is what I0 fixes. |
+| **Corpus** | **POPULATED** | `social_proof.duckdb` (5.8MB), `artifacts/` (Parquet word timestamps & transcripts). I0 delivered. |
 
 ---
 
@@ -158,8 +158,8 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 |---|---|---|---|---|---|
 | 1 | **F0** | Repair the behaviour fixture set | none | **delivered** | **P4 and P5 cannot be validated without this.** 8 pair-type fixtures are single undated sentences; N6, N9 and N11 do not exist. Cheap, and doing it later means P4 starts and immediately stalls. |
 | 2 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | **Do it now, while the corpus is empty.** Zero rows to migrate today; after I0 it is real data. Cheapest moment this schema change will ever have. |
-| 3 | **I0** | First real ingest, end to end | none | **outstanding** | Every model is wired and none has touched a real source. Until this lands, every gate is green over nothing. |
-| 4 | **P4** | Tension detection | I0 | outstanding | **The thesis.** If contradiction detection doesn't work on real data, everything above it is moot. De-risk first. Needs claims, not topics. |
+| 3 | **I0** | First real ingest, end to end | none | **delivered** | Every model is wired and real sources ingested. Claims verified on real DuckDB and Parquet artifacts. |
+| 4 | **P4** | Tension detection | none | outstanding | **The thesis.** If contradiction detection doesn't work on real data, everything above it is moot. De-risk first. Needs claims, not topics. |
 | 5 | **P3** | Topic model | I0 | outstanding | Slices the corpus for the rubric and backs `/resolve`'s topic fallback. |
 | 6 | **P5** | Principle extraction | P4 | outstanding | Highest-risk component. Reuses P4's pair-detection shape. |
 | 7 | **P6** | Rubric engine | P3, P4, P5 | outstanding | Aggregates everything below into four axes. |
@@ -490,7 +490,7 @@ That is not a reason to push back on the choice. It is an excellent corpus for t
 ```
 I0.1  Enrollment for the four hosts           [x]
 I0.2  Single-speaker ingest, one subject      [x]
-I0.3  Multi-speaker panel, 3-4 episodes       [ ]
+I0.3  Multi-speaker panel, 3-4 episodes       [x]
 ```
 
 ---

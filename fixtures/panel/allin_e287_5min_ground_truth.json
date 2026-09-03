@@ -1,0 +1,129 @@
+{
+  "media_file": "fixtures/panel/allin_e287_5min.wav",
+  "duration_ms": 300000,
+  "source_url": "https://traffic.libsyn.com/secure/allinchamathjason/ALLIN-E287_Ch.mp3",
+  "episode_title": "All-In E287: Nvidia's Historic Quarter, SaaS Comeback, Bessent vs Druck",
+  "hand_labeled_by": "curator_human_review",
+  "turns": [
+    {
+      "turn_id": "turn_01",
+      "start_ms": 0,
+      "end_ms": 22000,
+      "subject_id": "subj_jason_calacanis",
+      "speaker_name": "Jason Calacanis",
+      "text": "All right, everybody, welcome back to the number one podcast in the world, your favorite podcast... David Friedberg hot off of his deep state conspiracy interview with Eric Weinstein. Amazing."
+    },
+    {
+      "turn_id": "turn_02",
+      "start_ms": 23000,
+      "end_ms": 34000,
+      "subject_id": "subj_david_friedberg",
+      "speaker_name": "David Friedberg",
+      "text": "It was fun. Eric is one of a kind. I saw Kratsios too, kind of two sides of the coin of science in America."
+    },
+    {
+      "turn_id": "turn_03",
+      "start_ms": 35100,
+      "end_ms": 43100,
+      "subject_id": "subj_jason_calacanis",
+      "speaker_name": "Jason Calacanis",
+      "text": "He's a scientist who works with Peter Thiel from Harvard. He has done some really... he is a heterodox thinker in science."
+    },
+    {
+      "turn_id": "turn_04",
+      "start_ms": 50000,
+      "end_ms": 62000,
+      "subject_id": "subj_david_friedberg",
+      "speaker_name": "David Friedberg",
+      "text": "There's all these things that everyone takes as fundamental premises in modern physics, like string theory as an example. And he thought it was bullshit and called it out as bullshit."
+    },
+    {
+      "turn_id": "turn_05",
+      "start_ms": 64500,
+      "end_ms": 84500,
+      "subject_id": "subj_david_friedberg",
+      "speaker_name": "David Friedberg",
+      "text": "Right. And so he's made this case and he's proposed alternative theories that kind of created grand unification theory of physics. And then he's been outcasted by the scientific community."
+    },
+    {
+      "turn_id": "turn_06",
+      "start_ms": 109000,
+      "end_ms": 124000,
+      "subject_id": "subj_chamath_palihapitiya",
+      "speaker_name": "Chamath Palihapitiya",
+      "text": "Yeah, I know, but it's very rational to say, until string theory is proved, it's unproved. And so if you want to use the adjective bullshit, that's fine. It'll probably offend some people. But he's more right on the substance of what he's saying than he is wrong."
+    },
+    {
+      "turn_id": "turn_07",
+      "start_ms": 125000,
+      "end_ms": 140000,
+      "subject_id": "subj_david_friedberg",
+      "speaker_name": "David Friedberg",
+      "text": "Right. It's like Jay Bhattacharya being like, hey, you know, COVID may have come from a lab leak... When there is no misinformation, if there's no absolute truth that you're talking about, it's theory."
+    },
+    {
+      "turn_id": "turn_08",
+      "start_ms": 147500,
+      "end_ms": 160000,
+      "subject_id": "subj_david_friedberg",
+      "speaker_name": "David Friedberg",
+      "text": "You're talking about a level of corruption in a very narrow specific realm of science, which is the funding and grant approval apparatus... and getting tenure and getting professorships."
+    },
+    {
+      "turn_id": "turn_09",
+      "start_ms": 161000,
+      "end_ms": 179000,
+      "subject_id": "subj_david_friedberg",
+      "speaker_name": "David Friedberg",
+      "text": "By the way, I buy that. What has led to stagnation in science in America, because if you're not part of the mainstream, you get excluded. And because everyone has to now think in the same way, you don't have heterodox thinking."
+    },
+    {
+      "turn_id": "turn_10",
+      "start_ms": 183500,
+      "end_ms": 190000,
+      "subject_id": "subj_chamath_palihapitiya",
+      "speaker_name": "Chamath Palihapitiya",
+      "text": "Said differently, there's probably a lot of incrementalism in 2026 that didn't exist in 1926."
+    },
+    {
+      "turn_id": "turn_11",
+      "start_ms": 191000,
+      "end_ms": 206000,
+      "subject_id": "subj_david_friedberg",
+      "speaker_name": "David Friedberg",
+      "text": "When you think about the general theory of relativity being published, it was completely outlandish, but people still studied it, assessed it... Whereas if you say stuff that's too far outside of the realm of the standard approach to things, you're chastised, you're outcast, you're excluded."
+    },
+    {
+      "turn_id": "turn_12",
+      "start_ms": 211500,
+      "end_ms": 222500,
+      "subject_id": "subj_jason_calacanis",
+      "speaker_name": "Jason Calacanis",
+      "text": "Did you guys see the Robot Olympics? Did you see the Robot Olympics, Sacks? Check this out. This is pretty crazy. They had these Olympics in China."
+    },
+    {
+      "turn_id": "turn_13",
+      "start_ms": 252000,
+      "end_ms": 267000,
+      "subject_id": "subj_jason_calacanis",
+      "speaker_name": "Jason Calacanis",
+      "text": "You know, I was thinking about this, Sacks. You know what I realized? I think you're a hundred percent right about the PR... The CCP is brilliant at PR. Look what they did: they got a bunch of Chinese people to fill a stadium and cheer for AI and robots."
+    },
+    {
+      "turn_id": "turn_14",
+      "start_ms": 283200,
+      "end_ms": 291700,
+      "subject_id": "subj_chamath_palihapitiya",
+      "speaker_name": "Chamath Palihapitiya",
+      "text": "Your grand unifying theory is that in a country of a billion people they couldn't find 4,000 to show up to watch a bunch of robots run around a track? Are you really, bro, is that your grand unifying theory?"
+    },
+    {
+      "turn_id": "turn_15",
+      "start_ms": 293000,
+      "end_ms": 299500,
+      "subject_id": "subj_david_sacks",
+      "speaker_name": "David Sacks",
+      "text": "It is true that China is much more optimistic about AI than we are."
+    }
+  ]
+}

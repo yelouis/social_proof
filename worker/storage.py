@@ -472,6 +472,7 @@ class Storage:
             """
             INSERT INTO utterances VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT (utterance_id) DO UPDATE SET
+                subject_id = excluded.subject_id,
                 speaker_label = excluded.speaker_label,
                 attribution_confidence = excluded.attribution_confidence,
                 attribution_method = excluded.attribution_method,

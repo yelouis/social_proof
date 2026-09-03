@@ -39,7 +39,7 @@ class SpeakerAttributor:
     - Below T_low: Discarded from subject's corpus.
     """
 
-    def __init__(self, t_high: float = 0.75, t_low: float = 0.50) -> None:
+    def __init__(self, t_high: float = 0.70, t_low: float = 0.50) -> None:
         self.t_high = t_high
         self.t_low = t_low
 
@@ -75,6 +75,53 @@ class SpeakerAttributor:
             subject_id=assigned_subject,
             attribution_confidence=confidence,
             similarity_score=sim,
+        )
+
+    def attribute_panel_turn(
+        self,
+        turn: SpeakerTurn,
+        subject_embeddings: dict[str, list[float]],
+        min_margin: float = 0.10,
+    ) -> AttributedTurn:
+        """Attributes a turn in a multi-speaker panel across multiple candidates.
+
+        Parameter 004:
+        - T_high (0.70): High confidence, included in scoring if separation from runner-up >= min_margin.
+        - T_low (0.50): Low confidence, stored for review, EXCLUDED from scoring.
+        - Below T_low: Discarded (no subject attributed).
+        """
+        if not subject_embeddings:
+            return AttributedTurn(
+                turn=turn,
+                subject_id=None,
+                attribution_confidence="discard",
+                similarity_score=0.0,
+            )
+
+        sims = {
+            s_id: self.cosine_similarity(turn.voice_embedding, emb)
+            for s_id, emb in subject_embeddings.items()
+        }
+        sorted_candidates = sorted(sims.items(), key=lambda x: x[1], reverse=True)
+        best_subj, best_sim = sorted_candidates[0]
+        runner_up_sim = sorted_candidates[1][1] if len(sorted_candidates) > 1 else -1.0
+        margin = best_sim - runner_up_sim
+
+        if best_sim >= self.t_high and margin >= min_margin:
+            confidence: Literal["high", "low", "discard"] = "high"
+            assigned_subject: str | None = best_subj
+        elif best_sim >= self.t_low:
+            confidence = "low"
+            assigned_subject = best_subj
+        else:
+            confidence = "discard"
+            assigned_subject = None
+
+        return AttributedTurn(
+            turn=turn,
+            subject_id=assigned_subject,
+            attribution_confidence=confidence,
+            similarity_score=best_sim,
         )
 
 

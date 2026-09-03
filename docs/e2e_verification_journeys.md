@@ -106,6 +106,7 @@ Ingest one subject from one podcast episode end to end.
 **Falsify:** corrupt one stored `text_verbatim` by a single character; `verify_quotes` must fail.
 
 ### J2 — Guest appearance with diarization · *Phase 1*
+**Status:** PASSING (September 2, 2026 — delivered in I0.3)
 Ingest a multi-speaker episode containing golden case **N9**.
 **Gate:** zero utterances attributed to the wrong speaker; sub-threshold utterances stored with `attribution_confidence: low` and excluded from scoring.
 **Falsify:** swap the enrollment embeddings of two speakers; the misattribution count must go non-zero.

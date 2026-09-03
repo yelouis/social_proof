@@ -26,6 +26,8 @@ models/
 artifacts/
 golden/cache/
 
+.cache/
+
 # Media. Audio is deleted after transcription by policy (Issue 003),
 # but transient working files land here mid-ingest.
 *.wav
@@ -34,6 +36,8 @@ golden/cache/
 *.mp3
 *.mp4
 *.webm
+!fixtures/enrollment/*.wav
+!fixtures/panel/*.wav
 
 # DuckDB
 *.duckdb

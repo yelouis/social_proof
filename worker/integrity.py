@@ -15,6 +15,7 @@ Implements the nine mandatory checks:
 import argparse
 import sys
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 from worker.entities import Assessment, Claim, Source, SourceSubjectRole, Tension, Utterance
@@ -546,10 +547,26 @@ def main() -> None:
     parser.add_argument("--all", action="store_true", help="Run all 9 integrity checks")
     _ = parser.parse_args()
 
-    # When run as CLI with --all, if no active DB connection is provided, run on fixtures
     from fixtures.fixture_loader import load_valid_fixtures
 
     sources, utterances, claims, tensions, assessments, roles = load_valid_fixtures()
+
+    db_file = Path("social_proof.duckdb")
+    if db_file.exists():
+        from worker.storage import Storage
+
+        store = Storage(str(db_file))
+        db_claims_rows = store.con.execute("SELECT claim_id FROM claims").fetchall()
+        if db_claims_rows:
+            db_claims = [c for r in db_claims_rows if (c := store.get_claim(r[0])) is not None]
+            db_utts = [u for r in store.con.execute("SELECT utterance_id FROM utterances").fetchall() if (u := store.get_utterance(r[0])) is not None]
+            db_sources = [s for r in store.con.execute("SELECT source_id FROM sources").fetchall() if (s := store.get_source(r[0])) is not None]
+            db_roles = [role for row in store.con.execute("SELECT source_id, subject_id FROM source_roles").fetchall() if (role := store.get_source_role(row[0], row[1])) is not None]
+            sources.extend(db_sources)
+            utterances.extend(db_utts)
+            claims.extend(db_claims)
+            roles.extend(db_roles)
+
     results = run_all_checks(
         claims=claims,
         utterances=utterances,

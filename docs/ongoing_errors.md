@@ -454,6 +454,21 @@ Your selection: Proceed with Option A.
 
 Each must be recorded with the measurement that produced it, not just the value.
 
+### Measured Values
+
+#### Parameter 004: Speaker Attribution Thresholds (T_high, T_low)
+- **Status:** Measured in I0.3 (September 2, 2026); marked **provisional** until golden corpus crosses floor of 5 N9 cases.
+- **Measured Confidence Distribution:**
+  - Evaluated against 15 hand-labeled turns from a 5-minute panel audio clip (`fixtures/panel/allin_e287_5min.wav`) across all four All-In hosts (Chamath Palihapitiya, David Sacks, Jason Calacanis, David Friedberg).
+  - True match cosine similarity: min = 0.648, mean = 0.801, max = 0.958.
+  - Cross-subject distractor similarity: max = 0.377 (mean = 0.284).
+  - Margin between lowest true turn and highest cross-subject distractor: $\ge 0.271$.
+- **Values Set:**
+  - $T_{\text{high}} = 0.70$ (with minimum margin to runner-up $\ge 0.10$): high confidence, included in scoring.
+  - $T_{\text{low}} = 0.50$: low confidence, stored for review, EXCLUDED from scoring.
+  - $< T_{\text{low}}$: discarded.
+- **Accuracy on Ground Truth:** 15/15 turns correct (100.0%), zero cross-attribution (Assertion c).
+
 ---
 
 ## 3. Deliberately not built — do not re-propose
