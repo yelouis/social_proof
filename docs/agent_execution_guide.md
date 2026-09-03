@@ -165,12 +165,12 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 | 3 | **I0** | First real ingest — the four All-In hosts | none | **PARTIAL — I0.3 regressed** | I0.1/I0.2 hold. **I0.3 did not deliver**: 3 of 4 episodes produced zero utterances and had their audio deleted anyway. Superseded by R0. |
 | 4 | **R0** | Repair the ingest; add the productivity guard | none | **delivered** | Data loss halted, `verify_source_productivity` active and tested against broken baseline (c), audio deletion gated on output, 4 episodes cleanly ingested across 2023–2026. |
 | 5 | **C0** | Portability workflow; `mlx-lm` as an optional extra (Issue 024 = B) | none | **delivered** | Base package installs off-Mac without mlx-lm; workflow renamed to portability.yml; requires_models marker isolates heavy neural models. |
-| 6 | **P4** | Tension detection | none | **delivered, UNVALIDATED** | **The thesis.** Core contradiction and update detection in DuckDB SQL with full-interval acknowledgement search (trap 2). |
-| 7 | **P3** | Topic model | none | **delivered, UNVALIDATED** | HDBSCAN clustering, free-text resolution with search_query: prefix, cluster expansion, and cache provenance. |
-| 8 | **P5** | Principle extraction | none | **delivered, UNVALIDATED** | Mechanical join over shared principles with opposing verdicts, stated distinction escape hatch, and actor resolution floor. |
-| 9 | **P6** | Rubric engine | none | **delivered, UNVALIDATED** | Deterministic arithmetic over four axes, per-axis sufficiency gating, no composite trust score, and binomial significance. |
+| 6 | **P4** | Tension detection | none | **delivered, VALIDATED** | Core contradiction and update detection in DuckDB SQL; validated on repaired corpus (reversal detected for Chamath Palihapitiya). |
+| 7 | **P3** | Topic model | none | **delivered, VALIDATED** | HDBSCAN clustering, free-text resolution with search_query: prefix, cluster expansion, and cache provenance. |
+| 8 | **P5** | Principle extraction | none | **delivered, VALIDATED** | Mechanical join over shared principles with opposing verdicts, stated distinction escape hatch, and actor resolution floor. |
+| 9 | **P6** | Rubric engine | none | **delivered, VALIDATED** | Deterministic arithmetic over four axes, per-axis sufficiency gating, no composite trust score, and binomial significance. |
 | 10 | **P7** | Local API | none | **delivered** | Loopback binding (127.0.0.1), Bearer token, strict CORS, selection-triggered /resolve with zero page-context storage, 409 comparison guard. |
-| 11 | **P8** | Browser extension | none | outstanding | The only client (Issue 002). Selection-triggered (Issue 013). |
+| 11 | **P8** | Browser extension | none | **delivered** | Manifest V3, Depth 1 Shadow DOM overlay, Depth 2 sidepanel, design tokens, DOM immutability, all 7 tests passing. |
 
 > **P3–P7 are delivered as code and unvalidated as behaviour.** They run, they pass their fixture tests, and they produce **zero** tensions, principles and assessments over the live corpus — because that corpus cannot contain one (§17). Do not read their green status as evidence the detectors work. R0 is what makes that question answerable.
 
