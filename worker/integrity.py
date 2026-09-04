@@ -614,69 +614,106 @@ def run_all_checks(
     return results
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Run evidence integrity verification suite")
-    parser.add_argument("--all", action="store_true", help="Run all 9 integrity checks")
-    _ = parser.parse_args()
-
+def run_integrity_fixtures() -> list[CheckResult]:
+    """Execute all integrity checks over test fixtures."""
     from fixtures.fixture_loader import load_valid_fixtures
 
     sources, utterances, claims, tensions, assessments, roles = load_valid_fixtures()
-
-    db_file = Path("social_proof.duckdb")
-    if db_file.exists():
-        from worker.storage import Storage
-
-        store = Storage(str(db_file))
-        db_claims_rows = store.con.execute("SELECT claim_id FROM claims").fetchall()
-        if db_claims_rows:
-            db_claims = [c for r in db_claims_rows if (c := store.get_claim(r[0])) is not None]
-            db_utts = [
-                u
-                for r in store.con.execute("SELECT utterance_id FROM utterances").fetchall()
-                if (u := store.get_utterance(r[0])) is not None
-            ]
-            db_sources = [
-                s
-                for r in store.con.execute("SELECT source_id FROM sources").fetchall()
-                if (s := store.get_source(r[0])) is not None
-            ]
-            db_roles = [
-                role
-                for row in store.con.execute(
-                    "SELECT source_id, subject_id FROM source_roles"
-                ).fetchall()
-                if (role := store.get_source_role(row[0], row[1])) is not None
-            ]
-            db_tensions = [
-                t
-                for r in store.con.execute("SELECT tension_id FROM tensions").fetchall()
-                if (t := store.get_tension(r[0])) is not None
-            ]
-            sources.extend(db_sources)
-            utterances.extend(db_utts)
-            claims.extend(db_claims)
-            roles.extend(db_roles)
-            tensions.extend(db_tensions)
-
-    results = run_all_checks(
+    return run_all_checks(
         claims=claims,
         utterances=utterances,
         sources=sources,
         tensions=tensions,
         assessments=assessments,
+        records=[],
         roles=roles,
     )
 
+
+def run_integrity_corpus(db_path: Path | str = "social_proof.duckdb") -> list[CheckResult]:
+    """Execute all integrity checks over the live corpus database without unioning fixtures."""
+    db_file = Path(db_path)
+    if not db_file.exists():
+        return run_all_checks(
+            claims=[],
+            utterances=[],
+            sources=[],
+            tensions=[],
+            assessments=[],
+            records=[],
+            roles=[],
+        )
+
+    from worker.storage import Storage
+
+    store = Storage(str(db_file))
+    claims = [
+        c
+        for r in store.con.execute("SELECT claim_id FROM claims").fetchall()
+        if (c := store.get_claim(r[0])) is not None
+    ]
+    utts = [
+        u
+        for r in store.con.execute("SELECT utterance_id FROM utterances").fetchall()
+        if (u := store.get_utterance(r[0])) is not None
+    ]
+    sources = [
+        s
+        for r in store.con.execute("SELECT source_id FROM sources").fetchall()
+        if (s := store.get_source(r[0])) is not None
+    ]
+    roles = [
+        role
+        for r in store.con.execute("SELECT source_id, subject_id FROM source_roles").fetchall()
+        if (role := store.get_source_role(r[0], r[1])) is not None
+    ]
+    tensions = [
+        t
+        for r in store.con.execute("SELECT tension_id FROM tensions").fetchall()
+        if (t := store.get_tension(r[0])) is not None
+    ]
+    assessments = [
+        a
+        for r in store.con.execute("SELECT assessment_id FROM assessments").fetchall()
+        if (a := store.get_assessment(r[0])) is not None
+    ]
+
+    return run_all_checks(
+        claims=claims,
+        utterances=utts,
+        sources=sources,
+        tensions=tensions,
+        assessments=assessments,
+        records=[],
+        roles=roles,
+    )
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Run evidence integrity verification suite")
+    parser.add_argument("--all", action="store_true", help="Run all integrity checks")
+    parser.add_argument("--db", type=str, default="social_proof.duckdb", help="Path to DuckDB database")
+    args = parser.parse_args()
+
+    fixtures_results = run_integrity_fixtures()
+    corpus_results = run_integrity_corpus(args.db)
+
     failed = False
-    print("\n" + "=" * 60)
-    print("EVIDENCE INTEGRITY PASS")
-    print("=" * 60)
-    for r in results:
-        status_str = f"[{r.status}]"
-        print(f"{r.name:<32} {status_str:<30} {r.message}")
-        if not r.passed:
-            failed = True
+
+    def print_section(section_name: str, results: list[CheckResult]) -> None:
+        nonlocal failed
+        print("\n" + "=" * 60)
+        print(f"EVIDENCE INTEGRITY PASS — {section_name}")
+        print("=" * 60)
+        for r in results:
+            status_str = f"[{r.status}]"
+            count_str = f"(examined: {r.examined_count})"
+            print(f"{r.name:<32} {status_str:<30} {count_str:<16} {r.message}")
+            if not r.passed:
+                failed = True
+
+    print_section("FIXTURES", fixtures_results)
+    print_section("CORPUS", corpus_results)
     print("=" * 60)
 
     if failed:

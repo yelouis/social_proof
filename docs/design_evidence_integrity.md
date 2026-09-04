@@ -39,6 +39,8 @@ Collected here because they are enforced together by one pass.
 
 Runs on every ingest completion and in CI. **A failure is a build failure, not a warning.** Findings are the product; a warning in a log is a finding nobody reads.
 
+Evaluates two independent populations — `FIXTURES` and `CORPUS` — reporting each separately and never unioning them. Each check prints its examined count. If the corpus database is absent or empty, the corpus run reports `NOT APPLICABLE — zero rows`. Exit is non-zero if either population fails.
+
 ```
 verify_quotes
     For every Claim: grep -F the quote_span substring against

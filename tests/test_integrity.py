@@ -1,13 +1,15 @@
-"""Unit and falsification tests for Evidence Integrity Pass (U0)."""
+from pathlib import Path
 
 from fixtures.fixture_loader import (
     load_broken_anchor_fixture,
     load_broken_quote_fixture,
     load_valid_fixtures,
 )
-from worker.entities import Assessment, Tension
+from worker.entities import Assessment, Claim, Tension
 from worker.integrity import (
     run_all_checks,
+    run_integrity_corpus,
+    run_integrity_fixtures,
     verify_anchor_chain,
     verify_attribution_floor,
     verify_negation_recheck,
@@ -18,6 +20,7 @@ from worker.integrity import (
     verify_role_coverage,
     verify_versions_present,
 )
+from worker.storage import Storage
 
 
 def test_valid_fixtures_pass_all_checks() -> None:
@@ -184,3 +187,89 @@ def test_verify_role_coverage_empty_set_emits_not_applicable() -> None:
     assert res.passed is True
     assert res.status == "NOT APPLICABLE — zero rows"
     assert res.status != "PASS"
+
+
+def test_integrity_pass_corpus_examined_counts_match_db_assertion_c() -> None:
+    """Assertion (c) for E0: examined_count for every check in CORPUS matches SELECT count(*)."""
+    store = Storage("social_proof.duckdb")
+
+    def count_query(query: str) -> int:
+        res = store.con.execute(query).fetchone()
+        assert res is not None
+        return int(res[0])
+
+    expected_counts = {
+        "verify_quotes": count_query("SELECT count(*) FROM claims"),
+        "verify_anchor_chain": (
+            count_query("SELECT count(*) FROM claims")
+            + count_query("SELECT count(*) FROM utterances")
+        ),
+        "verify_no_page_context": 0,
+        "verify_no_suppressed_scores": count_query("SELECT count(*) FROM assessments"),
+        "verify_quarantine_not_rendered": count_query("SELECT count(*) FROM tensions WHERE status = 'quarantined'"),
+        "verify_attribution_floor": count_query("SELECT count(*) FROM tensions WHERE status = 'published'"),
+        "verify_negation_recheck": count_query("SELECT count(*) FROM tensions WHERE status = 'published'"),
+        "verify_versions_present": count_query("SELECT count(*) FROM assessments"),
+        "verify_role_coverage": count_query("SELECT count(*) FROM utterances"),
+        "verify_source_productivity": count_query("SELECT count(*) FROM sources WHERE ingested_at IS NOT NULL"),
+    }
+
+    corpus_results = run_integrity_corpus("social_proof.duckdb")
+    assert len(corpus_results) == 10
+    for r in corpus_results:
+        assert r.examined_count == expected_counts[r.name], (
+            f"Check {r.name}: examined_count {r.examined_count} != expected {expected_counts[r.name]}"
+        )
+
+
+def test_integrity_pass_both_directions_independent_verdict(tmp_path: Path) -> None:
+    """Both directions: Corrupted corpus fails CORPUS run while FIXTURES still passes.
+
+    Also asserts that running main() exits non-zero (code 1) on corrupted corpus.
+    """
+    import shutil
+    import subprocess
+    import sys
+
+    # Copy DB to scratch
+    corrupt_db = tmp_path / "corrupt.duckdb"
+    shutil.copy("social_proof.duckdb", corrupt_db)
+
+    # Insert a claim whose quote does not appear in its utterance
+    corrupt_store = Storage(str(corrupt_db))
+    first_utt = corrupt_store.con.execute("SELECT utterance_id, subject_id FROM utterances LIMIT 1").fetchone()
+    assert first_utt is not None
+    bad_claim = Claim(
+        claim_id="c_bad_quote",
+        subject_id=first_utt[1],
+        utterance_id=first_utt[0],
+        proposition_id="p_corrupt",
+        stance="support",
+        hedging_level=0.1,
+        is_own_assertion=True,
+        quote_span=(0, 20),
+        quote_text="NONEXISTENT QUOTE TEXT IN UTTERANCE",
+    )
+    corrupt_store.insert_claim(bad_claim)
+
+    fixtures_results = run_integrity_fixtures()
+    corpus_results = run_integrity_corpus(str(corrupt_db))
+
+    assert all(r.passed for r in fixtures_results), "Fixtures unexpectedly failed"
+    assert any(not r.passed for r in corpus_results), "Corpus unexpectedly passed on corrupted DB"
+    quotes_res = next(r for r in corpus_results if r.name == "verify_quotes")
+    assert not quotes_res.passed
+    assert quotes_res.status == "FAIL"
+
+    # Close connection so subprocess can open the database file without lock conflict
+    corrupt_store.con.close()
+
+    # Assert subprocess exit code is 1
+    proc = subprocess.run(
+        [sys.executable, "-m", "worker.integrity", "--all", "--db", str(corrupt_db)],
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 1, f"Expected returncode 1, got {proc.returncode}"
+    assert "FAIL: One or more integrity checks failed." in proc.stdout
+
