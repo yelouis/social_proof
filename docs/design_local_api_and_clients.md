@@ -108,7 +108,7 @@ POST /resolve
 
 **Resolution order, and it matters.** Try the precise answer first and fall back only when it is not available:
 
-1. **Proposition** — embed `selected_text`, search the subject's proposition space. Above threshold, return it. This powers the most useful overlay: *here is everything they have said about this exact claim.*
+1. **Proposition** — embed `selected_text`, search the subject's proposition space filtering structurally for `status = 'active'` and `EXISTS (SELECT 1 FROM claims c WHERE c.proposition_id = p.proposition_id)`. Quarantined propositions (e.g. fabrications) and propositions without live claims are unreachable and never returned. Above threshold, return it. This powers the most useful overlay: *here is everything they have said about this exact claim.*
 2. **Topic** — if no proposition clears the bar, resolve to a topic slice as in `design_topic_model.md` §3.
 3. **Subject only** — if neither resolves, return the subject with `proposition: null, topics: []`. The overlay then says the corpus has nothing on this, which is a useful answer and must not be rendered as an error.
 

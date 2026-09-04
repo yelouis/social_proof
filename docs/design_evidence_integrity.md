@@ -75,6 +75,14 @@ verify_versions_present
     Every Assessment carries rubric_version, extraction_version,
     detector_version, embedding_model. A score without provenance
     cannot be reproduced or retired.
+
+verify_canonical_ids
+    For every proposition and principle, stored_id == compute_*_id(canonical_text).
+    Also asserts claim_count matches the real count from claims table.
+
+verify_quarantined_propositions_unreachable
+    For every quarantined Proposition, no live claim references it, and it cannot
+    be returned by the /resolve query shape (active status and live claims required).
 ```
 
 ---

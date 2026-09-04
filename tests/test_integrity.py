@@ -5,17 +5,19 @@ from fixtures.fixture_loader import (
     load_broken_quote_fixture,
     load_valid_fixtures,
 )
-from worker.entities import Assessment, Claim, Tension
+from worker.entities import Assessment, Claim, Proposition, Tension
 from worker.integrity import (
     run_all_checks,
     run_integrity_corpus,
     run_integrity_fixtures,
     verify_anchor_chain,
     verify_attribution_floor,
+    verify_canonical_ids,
     verify_negation_recheck,
     verify_no_page_context,
     verify_no_suppressed_scores,
     verify_quarantine_not_rendered,
+    verify_quarantined_propositions_unreachable,
     verify_quotes,
     verify_role_coverage,
     verify_versions_present,
@@ -37,7 +39,11 @@ def test_valid_fixtures_pass_all_checks() -> None:
     )
     for r in results:
         assert r.passed is True, f"Check {r.name} unexpectedly failed: {r.message}"
-        if r.name != "verify_quarantine_not_rendered":
+        if r.name not in (
+            "verify_quarantine_not_rendered",
+            "verify_canonical_ids",
+            "verify_quarantined_propositions_unreachable",
+        ):
             assert r.status == "PASS", f"Check {r.name} status expected 'PASS', got '{r.status}'"
         else:
             assert r.status == "NOT APPLICABLE — zero rows"
@@ -212,14 +218,97 @@ def test_integrity_pass_corpus_examined_counts_match_db_assertion_c() -> None:
         "verify_versions_present": count_query("SELECT count(*) FROM assessments"),
         "verify_role_coverage": count_query("SELECT count(*) FROM utterances"),
         "verify_source_productivity": count_query("SELECT count(*) FROM sources WHERE ingested_at IS NOT NULL"),
+        "verify_canonical_ids": (
+            count_query("SELECT count(*) FROM propositions")
+            + count_query("SELECT count(*) FROM principles")
+        ),
+        "verify_quarantined_propositions_unreachable": count_query(
+            "SELECT count(*) FROM propositions WHERE status = 'quarantined'"
+        ),
     }
 
     corpus_results = run_integrity_corpus("social_proof.duckdb")
-    assert len(corpus_results) == 10
+    assert len(corpus_results) == 12
     for r in corpus_results:
         assert r.examined_count == expected_counts[r.name], (
             f"Check {r.name}: examined_count {r.examined_count} != expected {expected_counts[r.name]}"
         )
+
+
+def test_verify_canonical_ids_passes_and_fails() -> None:
+    from worker.storage import compute_proposition_id
+
+    text = "Autonomous AI agents interact seamlessly"
+    valid_id = compute_proposition_id(text)
+    p_valid = Proposition(
+        proposition_id=valid_id,
+        canonical_text=text,
+        claim_count=1,
+    )
+    claim = Claim(
+        claim_id="c1",
+        subject_id="s1",
+        utterance_id="u1",
+        proposition_id=valid_id,
+        stance="support",
+        hedging_level=0.1,
+        is_own_assertion=True,
+    )
+    res_pass = verify_canonical_ids([p_valid], [], [claim])
+    assert res_pass.passed is True
+    assert res_pass.status == "PASS"
+
+    # Fails when ID doesn't match normalized canonical text
+    p_bad_id = Proposition(
+        proposition_id="wrong_id_value",
+        canonical_text=text,
+        claim_count=1,
+    )
+    res_fail_id = verify_canonical_ids([p_bad_id], [], [claim])
+    assert res_fail_id.passed is False
+    assert res_fail_id.status == "FAIL"
+    assert "wrong_id_value" in res_fail_id.message
+
+    # Fails when claim_count drifts
+    p_bad_count = Proposition(
+        proposition_id=valid_id,
+        canonical_text=text,
+        claim_count=99,
+    )
+    res_fail_count = verify_canonical_ids([p_bad_count], [], [claim])
+    assert res_fail_count.passed is False
+    assert res_fail_count.status == "FAIL"
+    assert "claim_count mismatch" in res_fail_count.message
+
+
+def test_verify_quarantined_propositions_unreachable() -> None:
+    p_quarantined = Proposition(
+        proposition_id="prop_quarantined_01",
+        canonical_text="Fabricated proposition",
+        status="quarantined",
+        quarantine_reason="fabricated_proposition",
+        claim_count=0,
+    )
+    # Passes when quarantined proposition has 0 claims
+    res_pass = verify_quarantined_propositions_unreachable([p_quarantined], [])
+    assert res_pass.passed is True
+    assert res_pass.status == "PASS"
+
+    # Fails when live claim points at quarantined proposition
+    claim_bad = Claim(
+        claim_id="c_bad",
+        subject_id="s1",
+        utterance_id="u1",
+        proposition_id="prop_quarantined_01",
+        stance="support",
+        hedging_level=0.1,
+        is_own_assertion=True,
+    )
+    res_fail = verify_quarantined_propositions_unreachable([p_quarantined], [claim_bad])
+    assert res_fail.passed is False
+    assert res_fail.status == "FAIL"
+    assert "references quarantined proposition" in res_fail.message
+
 
 
 def test_integrity_pass_both_directions_independent_verdict(tmp_path: Path) -> None:

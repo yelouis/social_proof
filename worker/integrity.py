@@ -18,7 +18,17 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from worker.entities import Assessment, Claim, Source, SourceSubjectRole, Tension, Utterance
+from worker.entities import (
+    Assessment,
+    Claim,
+    Principle,
+    Proposition,
+    Source,
+    SourceSubjectRole,
+    Tension,
+    Utterance,
+)
+from worker.storage import compute_principle_id, compute_proposition_id
 
 
 @dataclass
@@ -581,6 +591,130 @@ def verify_source_productivity(
     )
 
 
+def verify_canonical_ids(
+    propositions: list[Proposition],
+    principles: list[Principle],
+    claims: list[Claim] | None = None,
+) -> CheckResult:
+    """For every proposition and principle: assert stored_id == compute_*_id(canonical_text).
+
+    Also assert claim_count matches the real count from claims — as a check, never as a filter.
+    """
+    total = len(propositions) + len(principles)
+    if total == 0:
+        return CheckResult(
+            name="verify_canonical_ids",
+            passed=True,
+            status="NOT APPLICABLE — zero rows",
+            message="No propositions or principles to check",
+            examined_count=0,
+        )
+
+    mismatched_props: list[str] = []
+    for p in propositions:
+        expected_id = compute_proposition_id(p.canonical_text)
+        if p.proposition_id != expected_id:
+            mismatched_props.append(p.proposition_id)
+
+    mismatched_prins: list[str] = []
+    for pr in principles:
+        expected_id = compute_principle_id(pr.canonical_text)
+        if pr.principle_id != expected_id:
+            mismatched_prins.append(pr.principle_id)
+
+    mismatched_counts: list[str] = []
+    if claims is not None:
+        real_counts: dict[str, int] = {}
+        for c in claims:
+            real_counts[c.proposition_id] = real_counts.get(c.proposition_id, 0) + 1
+        for p in propositions:
+            real = real_counts.get(p.proposition_id, 0)
+            if p.claim_count != real:
+                mismatched_counts.append(f"{p.proposition_id} (stored={p.claim_count}, real={real})")
+
+    if mismatched_props or mismatched_prins:
+        details = []
+        if mismatched_props:
+            details.append(f"propositions: {mismatched_props}")
+        if mismatched_prins:
+            details.append(f"principles: {mismatched_prins}")
+        count_detail = f" (also {len(mismatched_counts)} claim_count mismatch(es))" if mismatched_counts else ""
+        return CheckResult(
+            name="verify_canonical_ids",
+            passed=False,
+            status="FAIL",
+            message=f"Canonical ID mismatch for {'; '.join(details)}{count_detail}",
+            examined_count=total,
+        )
+
+    if mismatched_counts:
+        return CheckResult(
+            name="verify_canonical_ids",
+            passed=False,
+            status="FAIL",
+            message=f"claim_count mismatch for {len(mismatched_counts)} proposition(s): {mismatched_counts[:3]}",
+            examined_count=total,
+        )
+
+    return CheckResult(
+        name="verify_canonical_ids",
+        passed=True,
+        status="PASS",
+        message=f"Verified canonical IDs across {len(propositions)} propositions and {len(principles)} principles",
+        examined_count=total,
+    )
+
+
+def verify_quarantined_propositions_unreachable(
+    propositions: list[Proposition],
+    claims: list[Claim] | None = None,
+) -> CheckResult:
+    """For every quarantined Proposition: assert no live claim references it,
+    and it cannot be returned by the /resolve query shape.
+    """
+    quarantined_props = [p for p in propositions if p.status == "quarantined"]
+    if not quarantined_props:
+        return CheckResult(
+            name="verify_quarantined_propositions_unreachable",
+            passed=True,
+            status="NOT APPLICABLE — zero rows",
+            message="No quarantined propositions to verify",
+            examined_count=0,
+        )
+
+    quarantined_ids = {p.proposition_id for p in quarantined_props}
+    c_list = claims or []
+
+    for c in c_list:
+        if c.proposition_id in quarantined_ids:
+            return CheckResult(
+                name="verify_quarantined_propositions_unreachable",
+                passed=False,
+                status="FAIL",
+                message=f"Live claim {c.claim_id} references quarantined proposition {c.proposition_id}",
+                examined_count=len(quarantined_props),
+            )
+
+    for p in quarantined_props:
+        matching_claims = [c for c in c_list if c.proposition_id == p.proposition_id]
+        if matching_claims or p.claim_count > 0:
+            return CheckResult(
+                name="verify_quarantined_propositions_unreachable",
+                passed=False,
+                status="FAIL",
+                message=f"Quarantined proposition {p.proposition_id} has live claims or non-zero claim_count ({p.claim_count})",
+                examined_count=len(quarantined_props),
+            )
+
+    return CheckResult(
+        name="verify_quarantined_propositions_unreachable",
+        passed=True,
+        status="PASS",
+        message=f"Verified {len(quarantined_props)} quarantined proposition(s) have 0 live claims and are unreachable",
+        examined_count=len(quarantined_props),
+    )
+
+
 def run_all_checks(
     claims: list[Claim] | None = None,
     utterances: list[Utterance] | None = None,
@@ -589,8 +723,10 @@ def run_all_checks(
     assessments: list[Assessment] | None = None,
     records: list[dict[str, Any]] | None = None,
     roles: list[SourceSubjectRole] | None = None,
+    propositions: list[Proposition] | None = None,
+    principles: list[Principle] | None = None,
 ) -> list[CheckResult]:
-    """Execute all 10 integrity checks."""
+    """Execute all 12 integrity checks."""
     c_list = claims or []
     u_list = utterances or []
     s_list = sources or []
@@ -598,6 +734,8 @@ def run_all_checks(
     a_list = assessments or []
     r_list = records or []
     rol_list = roles or []
+    p_list = propositions or []
+    pr_list = principles or []
 
     results = [
         verify_quotes(c_list, u_list),
@@ -610,6 +748,8 @@ def run_all_checks(
         verify_versions_present(a_list),
         verify_role_coverage(u_list, rol_list),
         verify_source_productivity(s_list, u_list),
+        verify_canonical_ids(p_list, pr_list, c_list),
+        verify_quarantined_propositions_unreachable(p_list, c_list),
     ]
     return results
 
@@ -627,6 +767,8 @@ def run_integrity_fixtures() -> list[CheckResult]:
         assessments=assessments,
         records=[],
         roles=roles,
+        propositions=[],
+        principles=[],
     )
 
 
@@ -642,41 +784,56 @@ def run_integrity_corpus(db_path: Path | str = "social_proof.duckdb") -> list[Ch
             assessments=[],
             records=[],
             roles=[],
+            propositions=[],
+            principles=[],
         )
 
     from worker.storage import Storage
 
     store = Storage(str(db_file))
-    claims = [
-        c
-        for r in store.con.execute("SELECT claim_id FROM claims").fetchall()
-        if (c := store.get_claim(r[0])) is not None
-    ]
-    utts = [
-        u
-        for r in store.con.execute("SELECT utterance_id FROM utterances").fetchall()
-        if (u := store.get_utterance(r[0])) is not None
-    ]
-    sources = [
-        s
-        for r in store.con.execute("SELECT source_id FROM sources").fetchall()
-        if (s := store.get_source(r[0])) is not None
-    ]
-    roles = [
-        role
-        for r in store.con.execute("SELECT source_id, subject_id FROM source_roles").fetchall()
-        if (role := store.get_source_role(r[0], r[1])) is not None
-    ]
-    tensions = [
-        t
-        for r in store.con.execute("SELECT tension_id FROM tensions").fetchall()
-        if (t := store.get_tension(r[0])) is not None
-    ]
-    assessments = [
-        a
-        for r in store.con.execute("SELECT assessment_id FROM assessments").fetchall()
-        if (a := store.get_assessment(r[0])) is not None
-    ]
+    try:
+        claims = [
+            c
+            for r in store.con.execute("SELECT claim_id FROM claims").fetchall()
+            if (c := store.get_claim(r[0])) is not None
+        ]
+        utts = [
+            u
+            for r in store.con.execute("SELECT utterance_id FROM utterances").fetchall()
+            if (u := store.get_utterance(r[0])) is not None
+        ]
+        sources = [
+            s
+            for r in store.con.execute("SELECT source_id FROM sources").fetchall()
+            if (s := store.get_source(r[0])) is not None
+        ]
+        roles = [
+            role
+            for r in store.con.execute("SELECT source_id, subject_id FROM source_roles").fetchall()
+            if (role := store.get_source_role(r[0], r[1])) is not None
+        ]
+        tensions = [
+            t
+            for r in store.con.execute("SELECT tension_id FROM tensions").fetchall()
+            if (t := store.get_tension(r[0])) is not None
+        ]
+        assessments = [
+            a
+            for r in store.con.execute("SELECT assessment_id FROM assessments").fetchall()
+            if (a := store.get_assessment(r[0])) is not None
+        ]
+        propositions = [
+            p
+            for r in store.con.execute("SELECT proposition_id FROM propositions").fetchall()
+            if (p := store.get_proposition(r[0])) is not None
+        ]
+        principles = [
+            pr
+            for r in store.con.execute("SELECT principle_id FROM principles").fetchall()
+            if (pr := store.get_principle(r[0])) is not None
+        ]
+    finally:
+        store.con.close()
 
     return run_all_checks(
         claims=claims,
@@ -686,6 +843,8 @@ def run_integrity_corpus(db_path: Path | str = "social_proof.duckdb") -> list[Ch
         assessments=assessments,
         records=[],
         roles=roles,
+        propositions=propositions,
+        principles=principles,
     )
 
 

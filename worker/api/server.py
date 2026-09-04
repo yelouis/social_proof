@@ -170,7 +170,9 @@ def create_app(
                        array_cosine_similarity(pe.embedding, ?::FLOAT[768]) as sim
                 FROM propositions p
                 JOIN proposition_embeddings pe ON p.proposition_id = pe.proposition_id
-                WHERE list_contains(p.subject_ids, ?)
+                WHERE p.status = 'active'
+                  AND EXISTS (SELECT 1 FROM claims c WHERE c.proposition_id = p.proposition_id)
+                  AND list_contains(p.subject_ids, ?)
                 ORDER BY sim DESC
                 LIMIT 1;
                 """,

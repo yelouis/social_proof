@@ -7,6 +7,7 @@ import pytest
 
 from fixtures.fixture_loader import load_valid_fixtures
 from worker.entities import (
+    Claim,
     Proposition,
     Source,
     SourceSubjectRole,
@@ -24,6 +25,7 @@ from worker.storage import (
     compute_source_id,
     compute_tension_id,
     compute_utterance_id,
+    normalize_canonical_text,
 )
 
 
@@ -346,3 +348,180 @@ def test_falsification_non_deterministic_uuid_breaks_idempotency(tmp_path: Path)
     insert_random_source("https://youtube.com/watch?v=same_url")
     cnt = store.con.execute("SELECT count(*) FROM sources WHERE canonical_url = 'https://youtube.com/watch?v=same_url'").fetchone()
     assert cnt is not None and cnt[0] == 2  # Falsification confirmed: duplicate rows created!
+
+
+def test_normalize_canonical_text() -> None:
+    """Canonical form for content-derived IDs strips terminal punctuation and whitespace only."""
+    # Terminal punctuation stripped
+    assert normalize_canonical_text("China is optimistic about AI.") == "china is optimistic about ai"
+    assert normalize_canonical_text("China is optimistic about AI!") == "china is optimistic about ai"
+    assert normalize_canonical_text("China is optimistic about AI?") == "china is optimistic about ai"
+    assert normalize_canonical_text("China is optimistic about AI…") == "china is optimistic about ai"
+    assert normalize_canonical_text('China is optimistic about AI"') == "china is optimistic about ai"
+    assert normalize_canonical_text("China is optimistic about AI'") == "china is optimistic about ai"
+    assert normalize_canonical_text("China is optimistic about AI.”") == "china is optimistic about ai"
+
+    # Whitespace collapsed and lowercased
+    assert normalize_canonical_text("  China   has   optimism.  ") == "china has optimism"
+
+    # Idempotent
+    t = "String theory remains unproved until verified empirically."
+    assert normalize_canonical_text(normalize_canonical_text(t)) == normalize_canonical_text(t)
+
+    # Identical IDs computed with or without trailing period
+    id1 = compute_proposition_id("China has greater societal optimism.")
+    id2 = compute_proposition_id("China has greater societal optimism")
+    assert id1 == id2
+
+
+def test_migration_guard_fires_when_live_claim_proposition_moves(tmp_path: Path) -> None:
+    """Guard in step 2.2 (§17e): If any proposition whose new_id != proposition_id
+
+    has >= 1 live claim, migration refuses to cascade and raises loudly.
+    """
+    import hashlib
+
+    db_path = tmp_path / "guard_test.duckdb"
+    store = Storage(db_path=str(db_path), artifact_dir=tmp_path / "artifacts")
+
+    # Construct proposition whose stored_id differs from compute_proposition_id
+    raw_text = "Federal licensing prevents catastrophic rogue deployments."
+    # Legacy un-stripped hash
+    legacy_id = hashlib.sha256(raw_text.strip().lower().encode("utf-8")).hexdigest()[:16]
+    normalized_id = compute_proposition_id(raw_text)
+    assert legacy_id != normalized_id
+
+    # Insert proposition with legacy ID
+    store.con.execute(
+        "INSERT INTO propositions VALUES (?, ?, NULL, ?, 1, 'active', NULL)",
+        [legacy_id, raw_text, ["subj_01"]],
+    )
+
+    # Insert a source, utterance, and LIVE claim pointing to this legacy ID
+    source = Source(
+        source_id="src_g01",
+        title="Podcast",
+        publisher="Host",
+        artifact_hash="hash_g01",
+        canonical_url="https://example.com/g01",
+    )
+    store.insert_source(source)
+    utt = Utterance(
+        utterance_id="utt_g01",
+        source_id="src_g01",
+        subject_id="subj_01",
+        text_verbatim=raw_text,
+        start_ms=0,
+        end_ms=1000,
+        speaker_label="speaker_0",
+        attribution_confidence="high",
+        attribution_method="manual",
+    )
+    store.insert_utterance(utt)
+    claim = Claim(
+        claim_id="clm_g01",
+        subject_id="subj_01",
+        utterance_id="utt_g01",
+        proposition_id=legacy_id,
+        stance="support",
+        hedging_level=0.1,
+        is_own_assertion=True,
+    )
+    store.insert_claim(claim)
+
+    # Assert migration refuses to proceed and raises RuntimeError
+    with pytest.raises(RuntimeError, match="Refusing to cascade migration"):
+        store.migrate_propositions()
+
+
+def test_migration_idempotence_and_zero_changes(tmp_path: Path) -> None:
+    """Idempotence (§17e): Running migration twice reports zero changes on second run,
+
+    and database file hash is unchanged.
+    """
+    import hashlib
+
+    class MockEmbedder:
+        def embed_document(self, text: str) -> list[float]:
+            h = hashlib.sha256(text.encode("utf-8")).digest()
+            return [float(b) / 255.0 for b in (h * 24)[:768]]
+
+    db_path = tmp_path / "idempotent_test.duckdb"
+    store = Storage(db_path=str(db_path), artifact_dir=tmp_path / "artifacts")
+    embedder = MockEmbedder()
+
+    # Insert live proposition with 1 claim
+    p_live_id = compute_proposition_id("Autonomous AI agents operate effectively")
+    store.insert_proposition(
+        Proposition(
+            proposition_id=p_live_id,
+            canonical_text="Autonomous AI agents operate effectively",
+            subject_ids=["subj_01"],
+            claim_count=0,  # drifted count
+        )
+    )
+    source = Source(
+        source_id="src_i01",
+        title="Test",
+        publisher="Test",
+        artifact_hash="hash_i01",
+        canonical_url="https://example.com/i01",
+    )
+    store.insert_source(source)
+    utt = Utterance(
+        utterance_id="utt_i01",
+        source_id="src_i01",
+        subject_id="subj_01",
+        text_verbatim="Autonomous AI agents operate effectively",
+        start_ms=0,
+        end_ms=1000,
+        speaker_label="speaker_0",
+        attribution_confidence="high",
+        attribution_method="manual",
+    )
+    store.insert_utterance(utt)
+    store.insert_claim(
+        Claim(
+            claim_id="clm_i01",
+            subject_id="subj_01",
+            utterance_id="utt_i01",
+            proposition_id=p_live_id,
+            stance="support",
+            hedging_level=0.1,
+            is_own_assertion=True,
+        )
+    )
+
+    # Insert fabricated proposition
+    store.insert_proposition(
+        Proposition(
+            proposition_id="db3ec63d33cf6f0a",
+            canonical_text="Mandatory state and federal licensing regimes for frontier artificial intelligence models",
+            claim_count=1,
+            status="active",
+        )
+    )
+
+    # Run migration 1
+    report1 = store.migrate_propositions(embedder=embedder)
+    assert report1["claim_counts_updated"] >= 1
+    assert report1["embedded_count"] == 1
+    assert report1["status_updated"] >= 1
+
+    # Take hash after first run
+    store.con.execute("CHECKPOINT")
+    hash1 = hashlib.sha256(open(db_path, "rb").read()).hexdigest()
+
+    # Run migration 2
+    report2 = store.migrate_propositions(embedder=embedder)
+    assert report2["merged_count"] == 0
+    assert report2["updated_count"] == 0
+    assert report2["claim_counts_updated"] == 0
+    assert report2["status_updated"] == 0
+    assert report2["embedded_count"] == 0
+
+    store.con.execute("CHECKPOINT")
+    hash2 = hashlib.sha256(open(db_path, "rb").read()).hexdigest()
+
+    assert hash1 == hash2, "DB hash changed on idempotent second run!"
+

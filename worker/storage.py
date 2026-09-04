@@ -36,8 +36,17 @@ def compute_utterance_id(source_id: str, start_ms: int, text_verbatim: str) -> s
     return hashlib.sha256(key.encode("utf-8")).hexdigest()[:16]
 
 
+_TERMINAL = ".!?…\"'”’"
+
+
+def normalize_canonical_text(text: str) -> str:
+    """Canonical form for content-derived IDs. See design_data_layer.md §3."""
+    collapsed = " ".join(text.strip().lower().split())
+    return collapsed.rstrip(_TERMINAL).rstrip()
+
+
 def compute_proposition_id(canonical_text: str) -> str:
-    normalized = " ".join(canonical_text.strip().lower().split())
+    normalized = normalize_canonical_text(canonical_text)
     return hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
 
 
@@ -52,7 +61,7 @@ def compute_claim_id(
 
 
 def compute_principle_id(canonical_text: str) -> str:
-    normalized = " ".join(canonical_text.strip().lower().split())
+    normalized = normalize_canonical_text(canonical_text)
     return hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
 
 
@@ -252,8 +261,12 @@ class Storage:
                 canonical_text VARCHAR,
                 embedding_ref VARCHAR,
                 subject_ids VARCHAR[],
-                claim_count INTEGER
+                claim_count INTEGER,
+                status VARCHAR DEFAULT 'active',
+                quarantine_reason VARCHAR
             );
+            ALTER TABLE propositions ADD COLUMN IF NOT EXISTS status VARCHAR DEFAULT 'active';
+            ALTER TABLE propositions ADD COLUMN IF NOT EXISTS quarantine_reason VARCHAR;
 
             CREATE TABLE IF NOT EXISTS principles (
                 principle_id VARCHAR PRIMARY KEY,
@@ -664,12 +677,14 @@ class Storage:
     def insert_proposition(self, p: Proposition) -> None:
         self.con.execute(
             """
-            INSERT INTO propositions VALUES (?, ?, ?, ?, ?)
+            INSERT INTO propositions VALUES (?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT (proposition_id) DO UPDATE SET
                 canonical_text = excluded.canonical_text,
                 embedding_ref = excluded.embedding_ref,
                 subject_ids = excluded.subject_ids,
-                claim_count = excluded.claim_count
+                claim_count = excluded.claim_count,
+                status = excluded.status,
+                quarantine_reason = excluded.quarantine_reason
             """,
             [
                 p.proposition_id,
@@ -677,11 +692,16 @@ class Storage:
                 p.embedding_ref,
                 p.subject_ids,
                 p.claim_count,
+                p.status,
+                p.quarantine_reason,
             ],
         )
 
     def get_proposition(self, proposition_id: str) -> Proposition | None:
-        res = self.con.execute("SELECT * FROM propositions WHERE proposition_id = ?", [proposition_id]).fetchone()
+        res = self.con.execute(
+            "SELECT proposition_id, canonical_text, embedding_ref, subject_ids, claim_count, status, quarantine_reason FROM propositions WHERE proposition_id = ?",
+            [proposition_id],
+        ).fetchone()
         if not res:
             return None
         return Proposition(
@@ -690,6 +710,8 @@ class Storage:
             embedding_ref=res[2],
             subject_ids=list(res[3]) if res[3] else [],
             claim_count=res[4],
+            status=res[5] if len(res) > 5 and res[5] else "active",
+            quarantine_reason=res[6] if len(res) > 6 else None,
         )
 
     def insert_proposition_embedding(self, proposition_id: str, embedding: list[float]) -> None:
@@ -717,6 +739,163 @@ class Storage:
             [query_embedding, limit],
         ).fetchall()
         return [(r[0], float(r[1])) for r in res]
+
+    def migrate_propositions(
+        self,
+        embedder: Any | None = None,
+        force_reembed: bool = False,
+    ) -> dict[str, Any]:
+        """Migrate propositions table to enforce normalized canonical IDs, recomputed claim counts,
+
+        status quarantine on fabrications, and backfill embeddings for live propositions.
+        See agent_execution_guide.md §17e (D0).
+        """
+        # 1 & 2. Guard: identify moving IDs and verify none carry live claims
+        rows = self.con.execute(
+            "SELECT proposition_id, canonical_text, subject_ids, claim_count FROM propositions"
+        ).fetchall()
+
+        moving_rows: list[tuple[str, str, list[str], int, str]] = []
+        for pid, ctext, sids, count in rows:
+            new_id = compute_proposition_id(ctext)
+            if new_id != pid:
+                moving_rows.append((pid, ctext, sids or [], count, new_id))
+
+        if moving_rows:
+            invalid_moving: list[str] = []
+            for pid, _, _, _, new_id in moving_rows:
+                lc_row = self.con.execute(
+                    "SELECT count(*) FROM claims WHERE proposition_id = ?", [pid]
+                ).fetchone()
+                live_claims = int(lc_row[0]) if lc_row else 0
+                if live_claims > 0:
+                    invalid_moving.append(f"{pid} -> {new_id} ({live_claims} claims)")
+            if invalid_moving:
+                raise RuntimeError(
+                    f"Refusing to cascade migration: proposition(s) with live claims would move: {invalid_moving}"
+                )
+
+        existing_ids = {r[0] for r in rows}
+        merged_count = 0
+        updated_count = 0
+
+        # 3. For each moving row where target id already exists: target is survivor
+        for pid, _ctext, sids, _count, new_id in moving_rows:
+            if new_id in existing_ids:
+                target_sids_row = self.con.execute(
+                    "SELECT subject_ids FROM propositions WHERE proposition_id = ?", [new_id]
+                ).fetchone()
+                target_sids = list(target_sids_row[0]) if target_sids_row and target_sids_row[0] else []
+                merged_sids = sorted(list(set(target_sids) | set(sids)))
+                self.con.execute(
+                    "UPDATE propositions SET subject_ids = ? WHERE proposition_id = ?",
+                    [merged_sids, new_id],
+                )
+
+                # Do not inherit embedding across merge. Delete source row's embedding if present.
+                self.con.execute("DELETE FROM proposition_embeddings WHERE proposition_id = ?", [pid])
+                self.con.execute("DELETE FROM propositions WHERE proposition_id = ?", [pid])
+                merged_count += 1
+
+        # 4. For each moving row where target does not exist: update id in place
+        for pid, _ctext, _sids, _count, new_id in moving_rows:
+            if new_id not in existing_ids:
+                self.con.execute(
+                    "UPDATE propositions SET proposition_id = ? WHERE proposition_id = ?",
+                    [new_id, pid],
+                )
+                self.con.execute(
+                    "UPDATE proposition_embeddings SET proposition_id = ? WHERE proposition_id = ?",
+                    [new_id, pid],
+                )
+                existing_ids.remove(pid)
+                existing_ids.add(new_id)
+                updated_count += 1
+
+        # 5. Recompute claim_count for every row
+        claim_counts_updated = 0
+        all_props = self.con.execute("SELECT proposition_id, claim_count FROM propositions").fetchall()
+        for cur_id, cur_count in all_props:
+            rc_row = self.con.execute(
+                "SELECT count(*) FROM claims WHERE proposition_id = ?", [cur_id]
+            ).fetchone()
+            real_count = int(rc_row[0]) if rc_row else 0
+            if cur_count != real_count:
+                self.con.execute(
+                    "UPDATE propositions SET claim_count = ? WHERE proposition_id = ?",
+                    [real_count, cur_id],
+                )
+                claim_counts_updated += 1
+
+        # 6. Status and quarantine
+        status_updated = 0
+        q_row = self.con.execute(
+            "SELECT status, quarantine_reason FROM propositions WHERE proposition_id = 'db3ec63d33cf6f0a'"
+        ).fetchone()
+        if q_row and (q_row[0] != "quarantined" or q_row[1] != "fabricated_proposition"):
+            self.con.execute(
+                "UPDATE propositions SET status = 'quarantined', quarantine_reason = 'fabricated_proposition' WHERE proposition_id = 'db3ec63d33cf6f0a'"
+            )
+            status_updated += 1
+
+        unactive_rows = self.con.execute(
+            "SELECT proposition_id FROM propositions WHERE proposition_id != 'db3ec63d33cf6f0a' AND (status != 'active' OR status IS NULL)"
+        ).fetchall()
+        if unactive_rows:
+            self.con.execute(
+                "UPDATE propositions SET status = 'active' WHERE proposition_id != 'db3ec63d33cf6f0a' AND (status != 'active' OR status IS NULL)"
+            )
+            status_updated += len(unactive_rows)
+
+        # 7. Embed every live proposition (>= 1 live claim)
+        live_props = self.con.execute(
+            """
+            SELECT p.proposition_id, p.canonical_text
+            FROM propositions p
+            WHERE EXISTS (SELECT 1 FROM claims c WHERE c.proposition_id = p.proposition_id)
+            """
+        ).fetchall()
+
+        embedded_count = 0
+        props_to_embed = []
+        for prop_id, ctext in live_props:
+            has_emb = self.con.execute(
+                "SELECT 1 FROM proposition_embeddings WHERE proposition_id = ?", [prop_id]
+            ).fetchone()
+            if not has_emb or force_reembed:
+                props_to_embed.append((prop_id, ctext))
+
+        if props_to_embed:
+            if embedder is None:
+                from worker.extract.dedup import NomicEmbedder
+
+                embedder = NomicEmbedder()
+            for prop_id, ctext in props_to_embed:
+                vec = embedder.embed_document(ctext)
+                self.insert_proposition_embedding(prop_id, vec)
+                embedded_count += 1
+
+        total_writes = (
+            merged_count
+            + updated_count
+            + claim_counts_updated
+            + status_updated
+            + embedded_count
+        )
+        if total_writes > 0:
+            self.con.execute("CHECKPOINT")
+
+        final_props = self.con.execute("SELECT proposition_id FROM propositions").fetchall()
+
+        return {
+            "merged_count": merged_count,
+            "updated_count": updated_count,
+            "claim_counts_updated": claim_counts_updated,
+            "status_updated": status_updated,
+            "embedded_count": embedded_count,
+            "total_propositions": len(final_props),
+            "live_propositions": len(live_props),
+        }
 
     def insert_principle(self, p: Principle) -> None:
         self.con.execute(

@@ -68,6 +68,9 @@ class Embedder:
         return [float(x) for x in vec.tolist()]
 
 
+NomicEmbedder = Embedder
+
+
 def stub_hash_embedding(text: str, dim: int = 768) -> list[float]:
     """Generates a reproducible 768-dim hash vector for testing/offline mock embedding matching.
 

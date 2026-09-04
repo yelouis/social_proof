@@ -20,7 +20,7 @@ from fastapi.testclient import TestClient
 
 from worker.api.security import CORSPolicy, validate_host
 from worker.api.server import create_app
-from worker.entities import Proposition, Subject
+from worker.entities import Claim, Proposition, Source, Subject, Utterance
 from worker.extract.dedup import stub_hash_embedding
 from worker.integrity import verify_no_page_context
 from worker.storage import Storage, compute_proposition_id
@@ -132,6 +132,38 @@ def test_post_resolve_selection_triggered_journey_j8_assertion_c(
     prop = Proposition(proposition_id=prop_id, canonical_text=prop_text, subject_ids=[subject.subject_id])
     test_store.insert_proposition(prop)
     test_store.insert_proposition_embedding(prop_id, stub_hash_embedding(f"search_document: {prop_text}"))
+
+    # Insert backing claim so proposition satisfies EXISTS (SELECT 1 FROM claims ...)
+    source = Source(
+        source_id="src_test_01",
+        title="Interview",
+        publisher="Test Pub",
+        artifact_hash="hash_test_01",
+        canonical_url="https://example.com",
+    )
+    test_store.insert_source(source)
+    utt = Utterance(
+        utterance_id="utt_test_01",
+        source_id="src_test_01",
+        subject_id=subject.subject_id,
+        text_verbatim=prop_text,
+        start_ms=0,
+        end_ms=5000,
+        speaker_label="speaker_0",
+        attribution_confidence="high",
+        attribution_method="manual",
+    )
+    test_store.insert_utterance(utt)
+    claim = Claim(
+        claim_id="clm_test_01",
+        subject_id=subject.subject_id,
+        utterance_id="utt_test_01",
+        proposition_id=prop_id,
+        stance="support",
+        hedging_level=0.1,
+        is_own_assertion=True,
+    )
+    test_store.insert_claim(claim)
 
     headers = {
         "Authorization": f"Bearer {token}",
@@ -289,3 +321,72 @@ def test_assessment_returns_version_provenance(
     assert data["nlp_version"] == "v1.0-regex-ner"
     assert "axes" in data
     assert "sufficiency" in data
+
+
+def test_d0_resolve_assertion_c_returns_live_merged_proposition() -> None:
+    """Assertion c (§17e): /resolve on 'China is much more optimistic about AI than we are'
+
+    returns proposition '86ad084395852d91' carrying 2 live claims from two named subjects.
+    Requires backfilled embedding, merged id, and EXISTS filter all correct at once.
+    """
+    from worker.extract.dedup import NomicEmbedder
+
+    store = Storage("social_proof.duckdb")
+    embedder = NomicEmbedder()
+    app = create_app(storage=store, token="test_token", embedder=embedder, host="127.0.0.1")
+    client = TestClient(app)
+
+    try:
+        res = client.post(
+            "/resolve",
+            headers={"Authorization": "Bearer test_token", "Content-Type": "application/json"},
+            json={
+                "selected_text": "China is much more optimistic about AI than we are",
+                "context_before": "",
+                "context_after": "",
+            },
+        )
+        assert res.status_code == 200
+        data = res.json()
+        assert data["proposition"] is not None
+        assert data["proposition"]["id"] == "86ad084395852d91"
+
+        # Assert proposition carries 2 live claims from two distinct subjects
+        claims = store.con.execute(
+            "SELECT claim_id, subject_id FROM claims WHERE proposition_id = '86ad084395852d91'"
+        ).fetchall()
+        assert len(claims) == 2
+        subjects = {c[1] for c in claims}
+        assert len(subjects) == 2
+    finally:
+        store.con.close()
+
+
+def test_d0_resolve_both_directions_quarantined_fabrication_unreachable() -> None:
+    """Both directions (§17e): /resolve on text matching fabricated licensing proposition
+
+    returns no proposition (falling through to topic path or no match) and never returns db3ec63d33cf6f0a.
+    """
+    from worker.extract.dedup import NomicEmbedder
+
+    store = Storage("social_proof.duckdb")
+    embedder = NomicEmbedder()
+    app = create_app(storage=store, token="test_token", embedder=embedder, host="127.0.0.1")
+    client = TestClient(app)
+
+    try:
+        res = client.post(
+            "/resolve",
+            headers={"Authorization": "Bearer test_token", "Content-Type": "application/json"},
+            json={
+                "selected_text": "Mandatory state and federal licensing regimes for frontier model training runs",
+                "context_before": "",
+                "context_after": "",
+            },
+        )
+        assert res.status_code == 200
+        data = res.json()
+        assert data["proposition"] is None
+    finally:
+        store.con.close()
+

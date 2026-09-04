@@ -98,7 +98,7 @@ subjects/{subject_id}
     computed_at
 
 propositions/{proposition_id}      # GLOBAL, not per-subject
-  canonical_text, embedding_ref, subject_ids[], claim_count
+  canonical_text, embedding_ref, subject_ids[], claim_count, status, quarantine_reason
 
 principles/{principle_id}          # GLOBAL
   canonical_text                   # actor left as a slot

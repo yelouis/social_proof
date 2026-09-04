@@ -104,6 +104,8 @@ class Proposition:
     embedding_ref: str | None = None
     subject_ids: list[str] = field(default_factory=list)
     claim_count: int = 0
+    status: Literal["active", "quarantined"] = "active"
+    quarantine_reason: str | None = None
 
 
 @dataclass
