@@ -79,6 +79,19 @@ A corpus of only true contradictions measures recall and tells you nothing about
 
 ### Metrics and targets — golden corpus only
 
+### How the corpus is labelled — Issue 019 = Option C
+
+The golden corpus is **labelled by a model, with no human in the loop.** That choice buys scale, and it costs something specific that must be visible in every number it produces:
+
+> **A metric computed over model-labelled cases measures *agreement with the labeller*, not accuracy.**
+
+Two consequences, both mandatory:
+
+1. **Name the metrics for what they are.** The harness prints `agreement_with_labeller`, never `precision`, for any class whose cases are `label_source: model_only`. A number called "precision" over an answer key the machine wrote is the same category of error as `Precision 1.000` over sixteen invented sentences — it claims more than it verified.
+2. **Never label with the model under test.** Enforced in the loader: a case whose `labeller_model` equals the configured extractor is rejected. Otherwise the system grades itself and scores perfectly by construction.
+
+**The known blind spot, recorded so it is not rediscovered as a surprise.** N1–N4 (sarcasm, reported speech, steelman, hypothetical) are hard *for language models*, and models trained on similar data fail on them in correlated ways. A model labeller will therefore tend to agree with the extractor on exactly the cases the corpus exists to catch. **N1–N4 agreement figures are the least informative numbers in the report and must never be read as the most reassuring.** If any class is later hand-verified, mark it `label_source: human` and report it separately — a mixed figure hides which half is load-bearing.
+
 **These are computed over the golden corpus and nothing else.** Each is suppressed as `NOT MEASURED — n=<k>, minimum 5` until its class clears the floor.
 
 | Metric | Target | Why |

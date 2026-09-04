@@ -195,7 +195,27 @@ There is no `output_config.format` here. A local model asked politely for JSON w
    ```
    The quote resolves. It carries no polarity. Ranges and enums are valid. **And the proposition is pure invention.** Validator 1 asks *"are these words real?"*; nothing asked *"do these words say that?"* — which is the question that separates a citation from an accusation.
 
-   Reject when the quote does not support the proposition, and reject any quote below a minimum token count — both fabrications above were six-word fragments. Mechanism per Issue 025's selection; whatever it is, it must stay deterministic so §0's "no LLM at scoring time" rule survives.
+   **Mechanism — Issue 025 = Option C.** Two deterministic tests, both cheap because the embedder is already loaded:
+
+   ```python
+   # 1. Length floor. Both fabrications above were six-word fragments.
+   if token_count(quote_text) < MIN_QUOTE_TOKENS:
+       reject(reason="quote_too_short")
+
+   # 2. Entailment by embedding similarity, nomic-embed, pinned.
+   sim = cosine(embed("search_document: " + quote_text),
+                embed("search_document: " + proposition_text))
+   if sim < T_ENTAIL_LOW:   reject(reason="quote_does_not_support_proposition")
+   elif sim < T_ENTAIL_HIGH: quarantine(reason="entailment_ambiguous")
+   ```
+
+   **Both prefixes are `search_document:`** — this is a document-to-document comparison, not a query lookup. Using `search_query:` on either side puts them in different regions of the space and the similarity becomes meaningless (trap 7).
+
+   **The middle band quarantines rather than rejects.** A borderline claim is exactly where a hard rule is least trustworthy, and `design_evidence_integrity.md` §6 requires uncertainty be shown rather than silently resolved in either direction.
+
+   `MIN_QUOTE_TOKENS`, `T_ENTAIL_LOW` and `T_ENTAIL_HIGH` are **measured, not chosen** — `ongoing_errors.md` §2, parameter 026. Provisional until the golden corpus grows, and labelled as such wherever they appear.
+
+   This stays deterministic, so §0's "no LLM at scoring time" rule survives and the same corpus always yields the same rejections.
 
 **Segmentation is a precondition for all six.** Utterances split on length rather than sentence boundaries produce fragments that begin and end mid-word (`"...as it is bullsh-sh-"`). Asking a model to find a *position* in a fragment that cannot hold one is what invites fabrication in the first place. **Segment on sentence and pause boundaries; a validator is defence in depth, not a substitute for coherent input.**
 

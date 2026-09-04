@@ -158,6 +158,8 @@ Mitigations, all required:
 
 This is the highest-risk step in the system. Misattributing the host's words to the guest generates a false contradiction against a real named person.
 
+**Runtime — Issue 020 = Option A.** Diarization runs on `pyannote.audio`, whose pretrained pipelines are gated on Hugging Face. **The token is read from the `HF_TOKEN` environment variable and never committed.** A missing token must fail loudly at pipeline construction with a message naming the variable and the model card to accept — never fall back to a heuristic diarizer, because a silent downgrade here produces misattributed speech, which is the worst bug in the product (§5.4).
+
 **Enrollment.** Each subject has a reference voice embedding, built from a source where attribution is certain — their own solo podcast, or a hand-verified clip. Enrollment is a deliberate, recorded act, never a by-product of ingest.
 
 **Attribution rules:**

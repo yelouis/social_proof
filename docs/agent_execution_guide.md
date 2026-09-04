@@ -88,7 +88,8 @@ for p in ['golden/cases.json','fixtures/behaviour/cases.json']:
     c=d if isinstance(d,list) else d.get('cases',[])
     print(f'  {p}: {len(c)}')"
 echo "=== OPEN SELECTIONS ==="
-grep -c "^Your selection: _____" docs/ongoing_errors.md   # anchored — an unanchored grep also matches the rules line
+# Open issues live at the TOP of ongoing_errors.md section 1, newest first.
+grep -c "^Your selection: _____" docs/ongoing_errors.md   # anchored — unanchored also matches the rules line
 ```
 
 **Interpreting it:**
@@ -101,7 +102,7 @@ grep -c "^Your selection: _____" docs/ongoing_errors.md   # anchored — an unan
 | a phase module `MISSING` | Its P-item is outstanding, whatever any commit says. |
 | `golden/cases.json: 0` | Every corpus metric is `NOT MEASURED`. Expected until subjects are ingested. |
 | pytest under ~5s | Impossible now — real models are loaded. Under 5s means something got mocked out. |
-| open selections > 0 | A blocker appeared. Check §6 first. |
+| open selections > 0 | A blocker appeared. It is at the **top** of `ongoing_errors.md` §1 — read it there, then check §6 for which rows it blocks. |
 
 **The filesystem and `STUB_REGISTRY` are the authority.** Not this guide's prose, not commit messages, not the baseline table.
 
@@ -136,6 +137,7 @@ Measured September 2, 2026. Re-run via §2 before trusting.
 - **A guard that has never failed has not been tested.** LOOP 2 is mandatory.
 - **All writes go through the worker** (I8). **No LLM at scoring time.** **Audio deleted after transcription** (Issue 003). **DuckDB is the only store** (Issue 015).
 - **Update every doc your change invalidates, in the same commit.**
+- **`ongoing_errors.md` is a queue, not an archive.** File new issues at the **top** of §1. When one is selected, move it out: write the consequence into the design doc that owns it, add a row to §4, delete the option text. Git history keeps the reasoning.
 
 ---
 
@@ -169,7 +171,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 | 3 | **I0** | First real ingest — the four All-In hosts | none | **PARTIAL — I0.3 regressed** | I0.1/I0.2 hold. **I0.3 did not deliver**: 3 of 4 episodes produced zero utterances and had their audio deleted anyway. Superseded by R0. |
 | 4 | **R0** | Repair the ingest; add the productivity guard | none | **PARTIAL** | Empty-source bug fixed and deletion gated — real progress. But the coverage half was not implemented: dead `min_ratio`, no duration field, truncation unfixed. Remainder is R1. |
 | 5 | **X0** | Quarantine the fabricated tension; fix segmentation | none | **outstanding** | **NEXT.** A false accusation is sitting in the database marked `published`. Segmentation cutting mid-word is what invited it. |
-| 6 | **X1** | Entailment validator | **Issue 025** | blocked | Defence in depth once X0 removes the cause. |
+| 6 | **X1** | Entailment validator (Issue 025 = C) | X0 | outstanding | Defence in depth once X0 removes the cause. Mechanism settled: embedding similarity + length floor, ambiguous band quarantines. |
 | 7 | **R1** | Media duration + real coverage check; fix truncation | none | outstanding | The unfinished half of R0. |
 | 8 | **C0** | Portability workflow; `mlx-lm` as an optional extra (Issue 024 = B) | none | **delivered** | Base package installs off-Mac without mlx-lm; workflow renamed to portability.yml; requires_models marker isolates heavy neural models. |
 | 9 | **P4** | Tension detection | none | **delivered · fixtures only** | Core contradiction and update detection in DuckDB SQL; validated on repaired corpus (reversal detected for Chamath Palihapitiya). |
@@ -277,13 +279,21 @@ Trigger on ANY of:
 Do:
   1. STOP. No more code on this item.
   2. Open docs/ongoing_errors.md section 1.
-  3. Append a new numbered issue (next free number):
+  3. INSERT a new numbered issue at the TOP of section 1 — newest first, so
+     the user never scrolls to find what is blocking. Use the next free
+     number (highest existing + 1; numbers stay ascending, ORDER is
+     descending). Include:
        - what is blocked, concretely, and what you already tried
        - 2-3 options, each with honest pros AND cons
        - a recommendation, marked as such
        - final line, exactly: "Your selection: _____"
   4. NEVER fill in that line.
   5. Update section 6: set blocked_on for affected rows.
+  5b. When that issue is later SELECTED: move it OUT of ongoing_errors
+      section 1. Write its consequence into the design doc that owns it,
+      add one row to section 4's decision record naming that doc, and
+      delete the option text. That file is a queue, not an archive —
+      git history keeps the reasoning.
   6. Return to LOOP 0. Nothing unblocked -> LOOP 4.
 ```
 
@@ -561,11 +571,38 @@ Neither quote is about licensing. The extractor invented the proposition, two in
 
 ---
 
-## 18. X1 — Entailment validator · **BLOCKED on Issue 025**
+## 18. X1 — Entailment validator · *Issue 025 = C*
 
-Do not start until Issue 025 is selected — it decides the mechanism, and the options differ in cost and in whether they reintroduce the Issue 019 circularity. The contract is already written: `design_claim_extraction.md` §8 validator 6, and `design_evidence_integrity.md` §2 rule E2b.
+**User impact:** a quote can no longer carry a claim it does not support. This is the guard that would have stopped the fabricated tension from ever being written.
 
-**When unblocked**, its `(c)` is: the two fabricated claims from X0 must be **rejected** by the validator, and a hand-verified true claim must **pass** it. A validator that rejects everything is as useless as one that rejects nothing, so both directions are required.
+**Contract:** `design_claim_extraction.md` §8 validator 6 (mechanism, verbatim) · `design_evidence_integrity.md` §2 rule E2b.
+
+**Gap.** Five extraction validators all passed on a claim whose proposition was invented. They check that the quote *resolves*, that the proposition carries no polarity, that ranges and enums are valid, and that fields are internally consistent. **None asks whether the quote says what the proposition claims** (trap 28).
+
+**Implementation**
+1. Add validator 6 to the chain in `worker/extract/validators.py`, running **after** the quote-resolution check — there is no point testing entailment against a quote that does not exist.
+2. **Length floor first**, because it is free: reject when the quote is shorter than `MIN_QUOTE_TOKENS`. Both known fabrications were 6-token fragments, so this alone catches them.
+3. **Then embedding similarity.** Embed quote and proposition with the already-loaded `nomic-embed`, **both with the `search_document:` prefix** — this is document-to-document, not a query lookup. Mixing prefixes puts the two in different regions of the space and the similarity stops meaning anything (trap 7).
+4. **Three outcomes, not two:**
+   - `sim < T_ENTAIL_LOW` → **reject**, `quote_does_not_support_proposition`
+   - `T_ENTAIL_LOW ≤ sim < T_ENTAIL_HIGH` → **quarantine**, `entailment_ambiguous`
+   - `sim ≥ T_ENTAIL_HIGH` → pass
+   The middle band must quarantine rather than publish. A borderline claim is precisely where a hard threshold is least trustworthy, and `design_evidence_integrity.md` §6 requires uncertainty be surfaced rather than silently resolved either way.
+5. **Thresholds are parameter 026 — measured, not chosen.** Derive initial values from the corpus you have: the two known fabrications must fall below `T_ENTAIL_LOW`, and every hand-verified true claim from X0 must clear `T_ENTAIL_HIGH`. Record them as **provisional** in code and in the commit body.
+6. Log every rejection with its reason and keep the counters. **The rejection rate is the early-warning signal for a prompt or model regression** — if entailment rejections climb after a prompt edit, the prompt got worse, and the counter is how you find out.
+
+**Validation**
+- **Both directions, or the validator is untested in one of them:**
+  - the two fabricated claims from X0 are **rejected** ← **(c)**
+  - every hand-verified true claim from X0 **passes**
+  A validator that rejects everything is exactly as useless as one that rejects nothing, and only checking rejection would hide that.
+- Prefix test: embedding a pair with mismatched prefixes yields a materially different similarity. Assert it — this is trap 7 made falsifiable rather than folklore.
+- A claim scoring inside the ambiguous band is written `quarantined`, never `published`, and appears in no assessment's `axis_evidence`.
+- No LLM call anywhere in the validator (`design_rubric_engine.md` §0 stays true).
+
+**Falsify.** Set `T_ENTAIL_LOW = 0.0`. The two fabricated claims must pass, and the (c) assertion must go RED — proving the threshold does the work rather than the surrounding code. Revert; record both.
+
+**Blast radius.** `worker/extract/validators.py`, `worker/extract/dedup.py` (embedder reuse), `tests/`, `fixtures/behaviour/` (add a fabricated-proposition case), `docs/ongoing_errors.md` §2 (record 026 as provisional), §3 baseline, §6 queue.
 
 ---
 
