@@ -57,6 +57,7 @@ class IngestionEngine:
         )
         self.extraction_pipeline = extraction_pipeline or ClaimExtractionPipeline(
             storage=storage,
+            embedder=embedder,
         )
         self.embedder = embedder
         self.attributor = attributor or SpeakerAttributor()

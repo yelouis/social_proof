@@ -180,8 +180,8 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 | 2 | **M0** | `source_count` is a constant, not a measurement | none | **delivered** | Resolved through utterance anchor chain without `hasattr`; Sacks/Friedberg 2, Jason/Chamath 1, zero claims 0, unresolvable raises. |
 | 3 | **E0** | Integrity pass must check the corpus, not a union | none | **delivered** | FIXTURES and CORPUS evaluated and reported independently; assessments loaded from DB; examined counts reported. |
 | 4 | **D0** | Proposition table repair (**Issue 027 = A**) | none | **delivered** | Normalized canonical IDs, merged three forked rows, backfilled embeddings for all 8 live propositions, quarantined fabricated db3ec63d33cf6f0a, and added structural read filters. |
-| 5 | **X1** | Entailment validator (Issue 025 = C) | none | outstanding | Mechanism settled. Unblocked by D0. |
-| 6 | **R1** | Media duration + real coverage check; fix truncation | **X1** | outstanding | Cause of the truncation is **found** (§19) — do not re-hunt it. The re-ingest is the largest extraction run yet and must not precede the entailment guard. |
+| 5 | **X1** | Entailment validator (Issue 025 = C) | none | **delivered** | Validator 6 added after quote resolution; MIN_QUOTE_TOKENS=7, T_ENTAIL_LOW=0.60, T_ENTAIL_HIGH=0.70; fabrications rejected, 9 live claims pass, prefix sensitivity verified, ambiguous band quarantined and excluded from axis_evidence. |
+| 6 | **R1** | Media duration + real coverage check; fix truncation | none | outstanding | Unblocked by X1. Cause of the truncation is **found** (§19) — do not re-hunt it. |
 | 7 | **F0** | Repair the behaviour fixture set | none | **delivered** | 20/20 across all 17 classes. |
 | 8 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | Landed while the corpus was empty, as intended. |
 | 9 | **I0** | First real ingest — the four All-In hosts | none | **superseded → R1** | I0.1/I0.2 hold. I0.3's remaining work is the truncation, tracked in R1. **Not a to-do; do not open it.** |

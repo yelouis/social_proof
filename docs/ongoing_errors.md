@@ -31,7 +31,7 @@
 | **010** | Topic retrieval similarity + cluster-expansion policy | Phase 3 | **Precision on retrieval, generosity on expansion.** Small slices produce confident wrong scores. |
 | **012** | Per-axis sufficiency gates | Phase 6 | **Conservative.** `insufficient_corpus` is always safe; a number on thin evidence never is. |
 | **016** | `H_max` — hedging ceiling in Specificity's checkability test | Phase 6 | **Toward generosity.** Only pure evasion should fail; too strict and the axis punishes ordinary caution. |
-| **026** | `MIN_QUOTE_TOKENS`, `T_ENTAIL_LOW`, `T_ENTAIL_HIGH` — the entailment guard (Issue 025 = C) | X1 | **Reject boldly, quarantine the middle.** Both known fabrications were 6-token fragments — and the X0 test's floor is `>= 6`, which they would pass, while a live claim sits at 7. Measure against both; do not inherit the test's number. The ambiguous band must quarantine rather than publish. |
+| **026** | `MIN_QUOTE_TOKENS = 7`, `T_ENTAIL_LOW = 0.60`, `T_ENTAIL_HIGH = 0.70` — the entailment guard (Issue 025 = C) | X1 | **Reject boldly, quarantine the middle.** Measured provisional values against live corpus and X0 fabrications. Both known fabrications were 6-token fragments (sims 0.5296, 0.5337 < 0.60). Shortest live claim is 7 tokens (tautological string theory claim, sim 0.9311 >= 0.70); lowest live claim sim is 0.7091 >= 0.70. Ambiguous band `[0.60, 0.70)` quarantines as `entailment_ambiguous`. |
 
 ---
 

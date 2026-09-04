@@ -81,6 +81,7 @@ class Claim:
             "joke",
             "question",
             "quote_agreement_unclear",
+            "entailment_ambiguous",
         ]
         | str
         | None
@@ -95,6 +96,16 @@ class Claim:
     extraction_version: str = ""
     recorded_at: str = ""
     quote_text: str | None = None
+
+    @property
+    def status(self) -> str:
+        """Surfaces quarantine vs active/published status under Invariant I7 and Validator 6."""
+        if (
+            self.exclusion_reason in ("entailment_ambiguous", "quote_agreement_unclear")
+            or not self.is_own_assertion
+        ):
+            return "quarantined"
+        return "published"
 
 
 @dataclass

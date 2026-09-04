@@ -21,11 +21,13 @@ class ClaimExtractionPipeline:
         runtime: LocalGemmaRuntime | None = None,
         gate: ExtractionGate | None = None,
         confidence_floor: float = 0.70,
+        embedder: Any | None = None,
     ) -> None:
         self.storage = storage
         self.runtime = runtime or LocalGemmaRuntime()
         self.gate = gate or ExtractionGate()
         self.confidence_floor = confidence_floor
+        self.embedder = embedder
 
     def extract_from_utterance(
         self,
@@ -51,33 +53,40 @@ class ClaimExtractionPipeline:
         extracted_claims = stats.parsed_result.claims
         valid_claims: list[Claim] = []
 
-        # 3. Apply Five Validators sequentially
+        # 3. Apply Validators sequentially (1 to 6)
         for ec in extracted_claims:
-            is_valid, rejection_reason, span = validate_extracted_claim(
+            outcome = validate_extracted_claim(
                 claim=ec,
                 utterance=utterance,
                 confidence_floor=self.confidence_floor,
+                embedder=self.embedder,
             )
 
-            if not is_valid or span is None:
-                # Discard or quarantine invalid extraction
+            if not outcome.is_valid or outcome.resolved_quote_span is None:
+                # Discard rejected extraction
                 continue
+
+            span = outcome.resolved_quote_span
+            is_quarantined = outcome.status == "quarantined"
 
             # 4. Resolve or create Proposition entity
             prop_id = compute_proposition_id(ec.proposition_text)
             existing_prop = self.storage.get_proposition(prop_id)
             if not existing_prop:
-                # Generate deterministic 768-dim embedding placeholder if not yet present
-                placeholder_embedding = [0.0] * 768
                 prop = Proposition(
                     proposition_id=prop_id,
                     canonical_text=ec.proposition_text,
                     subject_ids=[utterance.subject_id],
                     claim_count=1,
+                    status="quarantined" if is_quarantined else "active",
+                    quarantine_reason=outcome.rejection_reason if is_quarantined else None,
                 )
                 self.storage.insert_proposition(prop)
-                placeholder_embedding = [0.0] * 768
-                self.storage.insert_proposition_embedding(prop_id, placeholder_embedding)
+                if self.embedder is not None:
+                    emb = self.embedder.embed_document(prop.canonical_text)
+                else:
+                    emb = [0.0] * 768
+                self.storage.insert_proposition_embedding(prop_id, emb)
 
             # 5. Build deterministic Claim record
             claim_id = compute_claim_id(
@@ -94,8 +103,8 @@ class ClaimExtractionPipeline:
                 proposition_id=prop_id,
                 stance=ec.stance,
                 hedging_level=ec.hedging_level,
-                is_own_assertion=ec.is_own_assertion,
-                exclusion_reason=ec.exclusion_reason,
+                is_own_assertion=False if is_quarantined else ec.is_own_assertion,
+                exclusion_reason=outcome.rejection_reason if is_quarantined else ec.exclusion_reason,
                 confidence=ec.confidence,
                 quote_span=span,
                 extraction_model=self.runtime.model_id,

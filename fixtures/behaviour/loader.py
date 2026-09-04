@@ -10,7 +10,7 @@ import json
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, Literal, cast
 
 PAIR_TYPE_CLASSES: frozenset[str] = frozenset({
     "P1", "P2", "P3", "P4",
@@ -143,3 +143,13 @@ def load_behaviour_cases(fixture_file: Path | str = "fixtures/behaviour/cases.js
         cases.append(BehaviourCase(**item_copy))
 
     return cases
+
+
+def load_fabricated_proposition_fixtures(
+    fixture_file: Path | str = "fixtures/behaviour/fabricated_proposition.json",
+) -> list[dict[str, Any]]:
+    """Loads reconstructed fabricated-proposition claims from X0 for entailment regression."""
+    path = Path(fixture_file)
+    if not path.exists():
+        return []
+    return cast(list[dict[str, Any]], json.loads(path.read_text(encoding="utf-8")))

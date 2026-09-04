@@ -1,0 +1,24 @@
+[
+  {
+    "case_id": "fabricated_claim_01",
+    "subject_id": "subj_chamath_palihapitiya",
+    "source_locator": "https://youtube.com/watch?v=all_in_e165",
+    "proposition_text": "Mandatory state and federal licensing regimes for frontier artificial intelligence models",
+    "quote_text": "collection like robots or robots having",
+    "token_count": 6,
+    "measured_similarity_doc_doc": 0.5337,
+    "expected_behaviour": "rejected",
+    "expected_rejection_reasons": ["quote_too_short", "quote_does_not_support_proposition"]
+  },
+  {
+    "case_id": "fabricated_claim_02",
+    "subject_id": "subj_chamath_palihapitiya",
+    "source_locator": "https://youtube.com/watch?v=all_in_e165",
+    "proposition_text": "Mandatory state and federal licensing regimes for frontier artificial intelligence models",
+    "quote_text": "steal happening right now. I really",
+    "token_count": 6,
+    "measured_similarity_doc_doc": 0.5296,
+    "expected_behaviour": "rejected",
+    "expected_rejection_reasons": ["quote_too_short", "quote_does_not_support_proposition"]
+  }
+]

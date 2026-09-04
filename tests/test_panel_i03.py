@@ -279,7 +279,7 @@ def test_panel_ingest_end_to_end_and_integrity(
             {
                 "proposition_text": "The Chinese Communist Party is effective at public relations regarding artificial intelligence and robotics.",
                 "stance": "support",
-                "quote_text": "brilliant at PR",
+                "quote_text": "the CCP, is f***ing brilliant at PR",
                 "hedging_level": 0.05,
                 "is_own_assertion": True,
                 "exclusion_reason": None,
@@ -290,7 +290,7 @@ def test_panel_ingest_end_to_end_and_integrity(
             {
                 "proposition_text": "Mainstream scientific institutional consensus stifles heterodox theory and alternative physics models.",
                 "stance": "support",
-                "quote_text": "stagnation in science in America",
+                "quote_text": "stagnation in science in America because if you do not part of the mainstream You get excluded",
                 "hedging_level": 0.1,
                 "is_own_assertion": True,
                 "exclusion_reason": None,
@@ -301,7 +301,7 @@ def test_panel_ingest_end_to_end_and_integrity(
             {
                 "proposition_text": "String theory remains unproved until verified empirically.",
                 "stance": "support",
-                "quote_text": "until string theory is proved",
+                "quote_text": "until string theory is proved, it's unproved",
                 "hedging_level": 0.05,
                 "is_own_assertion": True,
                 "exclusion_reason": None,

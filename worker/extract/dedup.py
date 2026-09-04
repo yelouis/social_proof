@@ -63,12 +63,38 @@ class Embedder:
         """Embeds search query with 'search_query: ' prefix."""
         return self._embed(f"search_query: {text}")
 
+    def similarity(self, doc_text_a: str, doc_text_b: str) -> float:
+        """Computes document-to-document similarity using search_document: prefix on both sides (Trap 7)."""
+        vec_a = self.embed_document(doc_text_a)
+        vec_b = self.embed_document(doc_text_b)
+        return cosine_similarity(vec_a, vec_b)
+
     def _embed(self, prefixed_text: str) -> list[float]:
         vec = self.model.encode(prefixed_text, normalize_embeddings=True)
         return [float(x) for x in vec.tolist()]
 
 
 NomicEmbedder = Embedder
+
+_DEFAULT_EMBEDDER: Embedder | None = None
+
+
+def get_embedder() -> Embedder:
+    """Returns a module-level cached Embedder instance to avoid redundant model loads."""
+    global _DEFAULT_EMBEDDER
+    if _DEFAULT_EMBEDDER is None:
+        _DEFAULT_EMBEDDER = Embedder()
+    return _DEFAULT_EMBEDDER
+
+
+def cosine_similarity(vec_a: list[float], vec_b: list[float]) -> float:
+    """Computes cosine similarity between two vector representations."""
+    a = np.asarray(vec_a, dtype=np.float32)
+    b = np.asarray(vec_b, dtype=np.float32)
+    denom = float(np.linalg.norm(a) * np.linalg.norm(b))
+    if denom == 0.0:
+        return 0.0
+    return float(np.dot(a, b) / denom)
 
 
 def stub_hash_embedding(text: str, dim: int = 768) -> list[float]:
