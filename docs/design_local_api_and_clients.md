@@ -74,6 +74,18 @@ That is a better shape than page-load inference on four counts, and each is wort
 
 1. **Explicit intent.** Nothing runs until the user asks. No ambient scanning, no auto-trigger, no toolbar badge counting things they never asked about.
 2. **A far more precise query.** "What is this article about" is a guess. "This specific sentence" is a claim the user is actively questioning, and it usually resolves to a **single proposition** rather than a broad topic — so the answer can be *their history on this exact claim* instead of *their views on AI regulation*.
+
+**What `/resolve` is allowed to return** (Issue 027 = A). Proposition matching runs over embeddings, and an embedding's presence is not evidence that the proposition means anything. Two filters are mandatory, and both are structural:
+
+```sql
+WHERE p.status = 'active'
+  AND EXISTS (SELECT 1 FROM claims c WHERE c.proposition_id = p.proposition_id)
+```
+
+- **`status = 'active'`** — never surface a quarantined proposition (`design_evidence_integrity.md` §4).
+- **`EXISTS` against `claims`, not `claim_count`** — a proposition nobody is on record as having asserted is not an answer to "what has this person said about this." Use the existence test, **never the denormalized counter**: `claim_count` has already drifted silently across every row in the table once, and a counter that gates a read is a second copy of the truth waiting to disagree with the first. Keep it for reporting; check it in the integrity pass; do not branch on it.
+
+This is not defence in depth over an unlikely case. Before these filters existed, six of the seven propositions `/resolve` could reach had **zero** live claims, and one of them was fabricated.
 3. **A much smaller I2 surface.** A bounded span plus bounded context leaves the machine, not the whole article.
 4. **It works anywhere.** Nothing about it is news-specific — a forum post, a PDF, a transcript, an email all behave identically.
 

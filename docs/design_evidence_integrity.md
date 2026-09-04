@@ -85,6 +85,16 @@ Dropping hides the failure rate. Quarantining makes it a measurable number: how 
 
 Quarantined Tensions are visible in a review surface. **They never enter a score and never render as findings.**
 
+### Propositions quarantine too (Issue 027 = A)
+
+Quarantine was originally a Tension-only mechanism, and that was too narrow. The fabricated licensing proposition survived X0's cleanup precisely because **the tension was quarantined and the proposition it carried was not** — leaving the invented text in the store, still embedded, and still the most reachable row `/resolve` could return.
+
+A Proposition therefore carries `status` and `quarantine_reason` as well. The vocabulary is **`active` / `quarantined`**, not the Tension's `published` / `quarantined` / `dismissed`: a proposition is never itself rendered — it is a join key — so "published" would assert something untrue about it.
+
+**A quarantined Proposition is unreachable, not merely unrendered.** No read path returns it, `/resolve` included, and no new claim may be attached to one. `verify_quarantined_propositions_unreachable` enforces this in the integrity pass.
+
+**The rule this generalises to: when a finding is quarantined, quarantine what it was made of.** A false finding assembled from a fabricated part leaves that part behind, and the part is what gets reused.
+
 ---
 
 ## 5. Correction path

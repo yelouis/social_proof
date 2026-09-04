@@ -4,9 +4,9 @@
 
 Do not read this end to end and improvise. **Go to §1, run LOOP 0, let it route you.**
 
-**Where the project is.** C0 is genuinely delivered. R0 is **partially** delivered. And the corpus now contains **one published tension that is a fabrication** — two real quotes carrying an invented proposition. Verified against the live database on September 3, 2026.
+**Where the project is.** X0 is delivered and its work holds — the fabricated tension is quarantined and the 9 surviving claims are verbatim and genuinely supported. But a verification pass on **September 4, 2026** found a red gate and five defects the docs did not know about, and **`mypy` is RED at HEAD**.
 
-**What that means for you.** The next item is **X0** (§17): quarantine that false finding and fix the segmentation that caused it. Read §3 and §5 traps 28–30 before anything else. **Do not treat P4–P7's green status as evidence they work** — the one tension they have ever produced is wrong.
+**What that means for you.** Start at **G0** (§17b): the gate repair. Nothing else begins until it is green. Then M0 and E0 — two items about numbers and checks that look like measurements and are not. **X1 and R1 are both blocked on Issue 027**, which is open and needs a selection. Read §3 and §5 traps 28–34 before anything else. **Do not treat P4–P7's green status as evidence they work** — the one tension they have ever produced was wrong, and the integrity pass that certifies them has never examined a real assessment (§17d).
 
 **Every number, threshold, field name and literal string in the design docs is deliberate. Implement as written.** Where a doc says a value must be *measured* (`ongoing_errors.md` §2), measure it.
 
@@ -44,7 +44,11 @@ LOOP 0 — ORIENT
      All match                          -> continue.
 
 4. Read the queue in §6. Walk it top to bottom. Select the FIRST row where
-   status != delivered AND blocked_on == none. Set ITEM.
+   status is NOT one of {delivered, superseded} AND blocked_on == none.
+   Set ITEM.
+
+   "superseded" means the row's remaining work is tracked under another ID.
+   It is not a to-do. Do not open it; the row names its successor.
 
 5. No such row -> LOOP 4 (CLOSE OUT, §10). Stop.
 
@@ -110,19 +114,21 @@ grep -c "^Your selection: _____" docs/ongoing_errors.md   # anchored — unancho
 
 ## 3. Verified baseline
 
-Measured September 2, 2026. Re-run via §2 before trusting.
+Measured **September 4, 2026** at `5f881ea`. Re-run via §2 before trusting.
 
 | Gate | Result | Note |
 |---|---|---|
 | `ruff check` | **PASS** | |
-| `mypy --strict` | **PASS** — 74 files | |
-| `pytest tests/ -q` | **PASS** — 140 passed, **~10m** locally; **CI is RED** (Issue 024 — `mlx` has no Linux wheels, install dies in 9s) | The runtime is the evidence: real MLX, whisper, and ECAPA-TDNN models load. |
+| `mypy --strict` | **RED** — 11 errors, 78 files | All in `tests/test_segmentation_x0.py`, all one root cause. Arrived with X0. **§3 previously recorded PASS — this is a LOOP 7 entry.** Item G0. |
+| `pytest tests/ -q` | **PASS** — 157 passed in **90s** | `requires_models` tests ran (not skipped, no deselection in `addopts`). The earlier ~10m figure was a cold model cache; 90s is well above trap 18's 35s floor. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
-| `worker.integrity --all` | **PASS** — 10 checks, but one is inert | `verify_source_productivity` accepts a `min_ratio` parameter (`MIN_UTTERANCE_MEDIA_RATIO = 0.05`) and **never references it**. It checks count > 0 and span > 0 only. It cannot check coverage because **no media duration is stored on any entity.** 6.9 min of a 90 min episode passes. |
+| `worker.integrity --all` | **PASS — and it is not checking your corpus** | Two separate problems. (1) `verify_source_productivity` accepts `min_ratio` (`MIN_UTTERANCE_MEDIA_RATIO = 0.05`) and **never references it**; it checks count > 0 and span > 0 only, and cannot do more because **no entity stores media duration**. (2) The pass **unions fixtures with the live DB** and reports 11 claims / 363 utterances / 6 sources against a database holding **9 / 361 / 4** — and **never loads assessments from the DB at all**, so two checks have never seen a real one. Items R1 and E0. |
 | `worker.golden.report` | **PASS** | Fixtures 19/19 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
 | **CI / Portability** | **PASS** | `portability.yml` tests base install without Apple extra; runs lint, mypy, and non-model tests (134 passed in ~12s). |
-| **Corpus** | **POPULATED, PARTIALLY REPAIRED** | All 4 sources now yield utterances (84 total) — the silent-failure bug **is** fixed. But each covers only **6.9 min of a 60–90 min episode**, so ~92% of every episode is unread, and `verify_source_productivity` does not catch it (see below). |
-| **Published tension** | **FABRICATED — quarantine immediately** | The single tension is `published` and wrong. Both claims carry the proposition *"Mandatory state and federal licensing regimes for frontier AI models"*; the quotes are `"collection like robots or robots having"` and `"steal happening right now. I really"`. Neither is about licensing. Issue 025, item X0. |
+| **Corpus** | **POPULATED, PARTIALLY REPAIRED** | 4 sources, **361 utterances**, 9 claims, 14 propositions, 8 assessments. The silent-failure bug **is** fixed. But each source covers only **~416.5s of a 60–90 min episode** (~7.7%), and `verify_source_productivity` does not catch it. **Cause found — `scripts/populate_corpus.py:259` caps the download at 10MB via an HTTP `Range` header.** See §19; do not go hunting for it again. |
+| **Propositions** | **TWO DISJOINT GENERATIONS** | 6 pre-X0 rows with zero live claims hold **all 7** embeddings; the 8 post-X0 rows that carry the live claims have **none**. `/resolve` can therefore only return orphans, one of which is the fabricated proposition `db3ec63d33cf6f0a`. `claim_count` is stale on all 14 rows, and three rows are forked on a trailing period. **Issue 027 = A; item D0 (§17e).** |
+| **`source_count`** | **CONSTANT, NOT MEASURED** | `worker/rubric/engine.py:82` guards on `hasattr(c, "source_id")`; `Claim` has no such field, so the set is always empty and every assessment records `source_count: 1`. Sacks and Friedberg each have 2 real sources. Item M0. |
+| **Published tension** | **QUARANTINED — X0 delivered** | Tension `0068adec4b1501c6` is `status='quarantined'`, `quarantine_reason='fabricated_proposition'`, and its two claims are gone. Verified. The 9 surviving claims were read individually: quotes are verbatim and the propositions are genuinely supported. **The fabricated *proposition* `db3ec63d33cf6f0a` is still in the table and still embedded** — Issue 027. |
 
 ---
 
@@ -159,6 +165,10 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 28. **A real quote does not make a real claim.** `verify_quotes` proves the words were said. It never proves they said *that*. A published tension was traced to two genuine quotes carrying a wholly invented proposition, and all five extraction validators passed. **"Is this citation real?" and "does this citation support this claim?" are different questions, and only the first was ever asked.**
 29. **A parameter that is declared, defaulted, and never referenced is not a check.** `verify_source_productivity(min_ratio=0.05)` never uses `min_ratio` — and could not, since no media duration is stored. The function reads as a coverage check and is a non-emptiness check. Grep for the parameter in the body, not just the signature.
 30. **Fragmentary input invites fabrication.** Utterances split on length rather than sentence boundaries end mid-word. Asking a model to find a *position* in a fragment that cannot hold one is how invented propositions get attached to real words. Fix the segmentation before blaming the extractor.
+31. **`hasattr` on a dataclass field is a silent default, not a check.** `engine.py:82` guards `hasattr(c, "source_id")` on an entity whose source is reachable only through its utterance. The guard is always False, the set stays empty, and a `max(…, 1 …)` fallback supplies a plausible number. Nothing fails and nothing logs. **Use direct attribute access on declared fields so a rename fails loudly**, and treat every fallback that manufactures a value as a place a bug can hide indefinitely.
+32. **A verification pass that unions fixtures with production data cannot tell you which one passed.** `worker.integrity --all` extends fixture lists with live DB rows and checks the union — and silently omits assessments from the DB side entirely. **Report populations separately, and print the examined count for each**, or a green pass means nothing you can act on.
+33. **A deterministic ID is only as canonical as its normalization.** `compute_proposition_id` lowercases and collapses whitespace but does not strip terminal punctuation, so `"…than Western nations"` and `"…than Western nations."` are different propositions. **No similarity threshold can merge them — the split happens before similarity is computed.** Over-splitting hides contradictions silently, which is the exact failure parameter 008's bias is written against.
+34. **Fixing a measurement without fixing where the measurement comes from is self-confirming.** A coverage check whose duration is read from the truncated download computes ~100% and passes on a corpus that is 92% unread. **The denominator must come from outside the artifact being checked.**
 
 ---
 
@@ -166,22 +176,26 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 | Order | ID | Item | Blocked | Status | Why here |
 |---|---|---|---|---|---|
-| 1 | **F0** | Repair the behaviour fixture set | none | **delivered** | **P4 and P5 cannot be validated without this.** 8 pair-type fixtures are single undated sentences; N6, N9 and N11 do not exist. Cheap, and doing it later means P4 starts and immediately stalls. |
-| 2 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | **Do it now, while the corpus is empty.** Zero rows to migrate today; after I0 it is real data. Cheapest moment this schema change will ever have. |
-| 3 | **I0** | First real ingest — the four All-In hosts | none | **PARTIAL — I0.3 regressed** | I0.1/I0.2 hold. **I0.3 did not deliver**: 3 of 4 episodes produced zero utterances and had their audio deleted anyway. Superseded by R0. |
-| 4 | **R0** | Repair the ingest; add the productivity guard | none | **PARTIAL** | Empty-source bug fixed and deletion gated — real progress. But the coverage half was not implemented: dead `min_ratio`, no duration field, truncation unfixed. Remainder is R1. |
-| 5 | **X0** | Quarantine the fabricated tension; fix segmentation | none | **delivered** | Quarantined fabricated tension 0068adec4b1501c6; re-segmented audio on sentence/pause boundaries; bumped extraction version to v1.1:s1 with 9 hand-verified verbatim claims. |
-| 6 | **X1** | Entailment validator (Issue 025 = C) | X0 | outstanding | Defence in depth once X0 removes the cause. Mechanism settled: embedding similarity + length floor, ambiguous band quarantines. |
-| 7 | **R1** | Media duration + real coverage check; fix truncation | none | outstanding | The unfinished half of R0. |
-| 8 | **C0** | Portability workflow; `mlx-lm` as an optional extra (Issue 024 = B) | none | **delivered** | Base package installs off-Mac without mlx-lm; workflow renamed to portability.yml; requires_models marker isolates heavy neural models. |
-| 9 | **P4** | Tension detection | none | **delivered · fixtures only** | Core contradiction and update detection in DuckDB SQL; validated on repaired corpus (reversal detected for Chamath Palihapitiya). |
-| 10 | **P3** | Topic model | none | **delivered · fixtures only** | HDBSCAN clustering, free-text resolution with search_query: prefix, cluster expansion, and cache provenance. |
-| 11 | **P5** | Principle extraction | none | **delivered · fixtures only** | Mechanical join over shared principles with opposing verdicts, stated distinction escape hatch, and actor resolution floor. |
-| 12 | **P6** | Rubric engine | none | **delivered · fixtures only** | Deterministic arithmetic over four axes, per-axis sufficiency gating, no composite trust score, and binomial significance. |
-| 13 | **P7** | Local API | none | **delivered** | Loopback binding (127.0.0.1), Bearer token, strict CORS, selection-triggered /resolve with zero page-context storage, 409 comparison guard. |
-| 14 | **P8** | Browser extension | none | **delivered** | Manifest V3, Depth 1 Shadow DOM overlay, Depth 2 sidepanel, design tokens, DOM immutability, all 7 tests passing. |
+| 1 | **G0** | Repair the `mypy` gate | none | **outstanding** | **A red gate outranks the queue.** 11 errors in `tests/test_segmentation_x0.py`, one root cause, arrived with X0. LOOP 7, not LOOP 1. Nothing below starts until this is green. |
+| 2 | **M0** | `source_count` is a constant, not a measurement | none | **outstanding** | Every assessment records `source_count: 1` because of a `hasattr` guard on a field that does not exist. Harmless today, suppresses real findings after R1. Fix it before the corpus gets big enough to matter. |
+| 3 | **E0** | Integrity pass must check the corpus, not a union | none | **outstanding** | The pass that certifies evidence integrity unions fixtures with live data and never loads real assessments. **It is the instrument R1 and X1 will be judged by — repair it before the runs it has to measure.** |
+| 4 | **D0** | Proposition table repair (**Issue 027 = A**) | none | **outstanding** | Unblocks X1. Normalizes canonical IDs, merges three forked rows, backfills the 8 missing embeddings, quarantines the fabricated proposition, and filters `/resolve` structurally. **Migration is contained — no live proposition's ID moves — but §17e makes the code re-verify that rather than trust it.** |
+| 5 | **X1** | Entailment validator (Issue 025 = C) | **D0** | outstanding | Mechanism settled. Cannot run until D0 embeds the live propositions — both sides of the cosine need one. |
+| 6 | **R1** | Media duration + real coverage check; fix truncation | **X1** | outstanding | Cause of the truncation is **found** (§19) — do not re-hunt it. The re-ingest is the largest extraction run yet and must not precede the entailment guard. |
+| 7 | **F0** | Repair the behaviour fixture set | none | **delivered** | 20/20 across all 17 classes. |
+| 8 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | Landed while the corpus was empty, as intended. |
+| 9 | **I0** | First real ingest — the four All-In hosts | none | **superseded → R1** | I0.1/I0.2 hold. I0.3's remaining work is the truncation, tracked in R1. **Not a to-do; do not open it.** |
+| 10 | **R0** | Repair the ingest; add the productivity guard | none | **superseded → R1** | Empty-source bug fixed and deletion gated. The coverage half is R1. **Not a to-do; do not open it.** |
+| 11 | **X0** | Quarantine the fabricated tension; fix segmentation | none | **delivered** | Verified independently: tension quarantined, claims removed, 9 survivors read one by one and genuinely supported. |
+| 12 | **C0** | Portability workflow; `mlx-lm` optional (Issue 024 = B) | none | **delivered** | |
+| 13 | **P4** | Tension detection | none | **delivered · fixtures only** | |
+| 14 | **P3** | Topic model | none | **delivered · fixtures only** | |
+| 15 | **P5** | Principle extraction | none | **delivered · fixtures only** | |
+| 16 | **P6** | Rubric engine | none | **delivered · fixtures only** | **See M0** — its sufficiency block prints a constant. |
+| 17 | **P7** | Local API | none | **delivered** | **See Issue 027** — `/resolve` currently reaches only orphaned propositions. |
+| 18 | **P8** | Browser extension | none | **delivered** | |
 
-> **P3–P7 are delivered as code and unvalidated as behaviour.** They run, they pass their fixture tests, and they produce **zero** tensions, principles and assessments over the live corpus — because that corpus cannot contain one (§17). Do not read their green status as evidence the detectors work. R0 is what makes that question answerable.
+> **P3–P7 are delivered as code and unvalidated as behaviour.** They run, they pass their fixture tests, and they produce **zero** published tensions and principles over the live corpus — because a corpus drawn from 7.7% of four episodes cannot contain one (trap 26). Do not read their green status as evidence the detectors work. **R1 is what makes that question answerable**, and E0 is what makes the answer trustworthy when it arrives.
 
 **Delivered — do NOT rework:** V0–V6 (all externals real, `STUB_REGISTRY` empty), U0–U13 (storage, integrity, adapters, reconciler, segmentation, gate, validators). Detail in git history; §14 has the short list.
 
@@ -494,7 +508,9 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 16b. R0 — Repair the ingest; add the productivity guard
+## 16b. R0 — Repair the ingest; add the productivity guard · **SUPERSEDED → R1**
+
+> **Do not open this as a work item.** The empty-source bug is fixed and audio deletion is gated; both hold. The coverage half was never implemented and is tracked in **§19 (R1)**, which also names the root cause. This section is kept for the reasoning only.
 
 **User impact:** the corpus stops containing three episodes' worth of nothing, and the pipeline stops reporting success when it produced no output.
 
@@ -571,9 +587,236 @@ Neither quote is about licensing. The extractor invented the proposition, two in
 
 ---
 
+## 17b. G0 — Repair the `mypy` gate · *LOOP 7*
+
+**This is a LOOP 7 repair, not a LOOP 1 item.** A red gate outranks the queue; nothing below it starts until this is green.
+
+**Gap — measured September 4, 2026 at `5f881ea`.** §3 records `mypy --strict` PASS on 74 files. It is now **RED: 11 errors across 78 files**, all in `tests/test_segmentation_x0.py`, all from one line. It arrived with X0, at HEAD.
+
+**Root cause.** Line 52:
+
+```python
+claims = [store.get_claim(cid) for cid in claim_ids if cid]
+```
+
+`get_claim` returns `Claim | None`. The `if cid` filter tests the **id**, not the result, so `claims` is `list[Claim | None]` and all ten subsequent attribute accesses are `union-attr` errors.
+
+**Implementation.** Filter on the result, using the walrus idiom `worker/integrity.py:632` already uses:
+
+```python
+claims = [c for cid in claim_ids if (c := store.get_claim(cid)) is not None]
+```
+
+Then add the assertion the narrowing makes necessary: `assert len(claims) == len(claim_ids)`. Without it, an unresolvable claim id silently shortens the list, and `assert len(claims) >= 9` would pass on a corpus that had lost a claim — the narrowing would have converted a data defect into a quieter test.
+
+**Validation.** `mypy --strict` clean on 78 files. The suite still reports 157 passed.
+
+**Falsify.** Revert the narrowing alone. mypy must return the *same* 11 errors — proving the fix is the narrowing and not something incidental that came with it. Revert back; record both.
+
+**Blast radius.** `tests/test_segmentation_x0.py`, §3 baseline.
+
+---
+
+## 17c. M0 — `source_count` is a constant wearing a measurement's name
+
+**User impact:** the sufficiency gate stops reporting `1` for every subject regardless of how many sources they were read from.
+
+**Contract:** `design_rubric_engine.md` (sufficiency) · invariant **I5** · the standing constraint *never print a number you did not measure*.
+
+**Gap — confirmed at runtime, not read off.** `worker/rubric/engine.py:82`:
+
+```python
+if hasattr(c, "source_id") and c.source_id:
+    sources.add(c.source_id)
+```
+
+`Claim` has no `source_id`. Its fields are `claim_id, subject_id, utterance_id, proposition_id, …` — the source is reachable only *through* the utterance. So `hasattr(c, "source_id")` is **always False**, `sources` is always empty, and line 99's
+
+```python
+"source_count": max(len(sources), 1 if claim_count > 0 else 0),
+```
+
+returns **1** for every assessment that has any claim at all. Verified: `hasattr(c, "source_id") == False` on a real loaded claim.
+
+Measured against the corpus: Sacks and Friedberg each draw on **2** distinct sources. All 8 assessments record `source_count: 1`.
+
+**Why it matters, and why it looks harmless.** `source_count` feeds I5. Today every axis is gated off for other reasons, so the wrong number changes no output — which is exactly why it survived. After R1 it will change output: a subject read from eight sources still reports 1 and is **suppressed as insufficient**. A guard that always returns the most conservative value is not safe; it has stopped being a gate and become an unconditional suppressor, and it fails in the direction that hides real findings.
+
+The general form is worth more than the instance: **`hasattr` on a dataclass field converts a schema error into a silent default.** Nothing fails, nothing logs, and the fallback supplies a plausible number.
+
+**Implementation**
+1. Resolve the source through the anchor chain that already exists:
+   ```python
+   utt = self.storage.get_utterance(c.utterance_id)
+   if utt is not None:
+       sources.add(utt.source_id)
+   ```
+   Direct attribute access, no `hasattr` — a future rename must fail loudly.
+2. **Delete the `max(…, 1 …)` fallback.** If `claim_count > 0` and no source resolves, that is an I3 anchor-chain violation and must raise. Defaulting to 1 is how the bug stayed invisible.
+3. Grep the rest of `worker/` for `hasattr(` on entity fields and fix the same pattern wherever the attribute is a declared field.
+
+**Validation**
+- **(c)** — an assessment for a subject whose claims come from **2 distinct sources records `source_count: 2`.** Checkable against the live corpus today: `subj_david_sacks` and `subj_david_friedberg` both must read 2, and `subj_jason_calacanis` and `subj_chamath_palihapitiya` must read 1. *Neither the `hasattr` code nor any stub returning a constant can produce that spread — it requires a real join over real rows.*
+- A subject with zero claims still records `source_count: 0`, not 1.
+- `mypy --strict` stays clean after `hasattr` is removed; if it now reports an error, that error is the bug this item exists for.
+
+**Falsify.** Restore the `hasattr` guard. The (c) assertion must go RED with `source_count == 1` for Sacks and Friedberg. Revert; record both.
+
+**Blast radius.** `worker/rubric/engine.py`, `tests/`, §3 baseline. **Not** proposition `claim_count` — that column's fate is Issue 027's to decide (A recomputes it, B removes it), so leave it alone here or the two changes collide.
+
+---
+
+## 17d. E0 — The integrity pass must check the corpus, not a union with fixtures
+
+**User impact:** the pass that certifies evidence integrity starts telling you something about your data.
+
+**Contract:** `design_evidence_integrity.md` (the ten checks) · trap 21.
+
+**Gap — measured.** `worker/integrity.py:624-659` calls `load_valid_fixtures()`, then **extends** those lists with rows from `social_proof.duckdb` and runs every check over the union. It reports *"11 claims, 363 utterances, 6 sources"* against a database that holds **9, 361, and 4**.
+
+Two defects, and the second is the serious one:
+
+1. **A PASS is over a union**, so it cannot distinguish "the corpus is sound" from "the fixtures carried it." Several checks `return` on the first failure, so row ordering can mask a bad row as well.
+2. **Assessments are never loaded from the database at all.** The DB block extends sources, utterances, claims, roles and tensions — and not assessments. `verify_no_suppressed_scores` and `verify_versions_present` have therefore **never examined a real assessment**; both report over 1 fixture row while 8 real ones sit unchecked. *I read all 8 by hand: they are correctly gated, so nothing is hidden today.* But the check that would tell you is the one that is not running, and `verify_quarantine_not_rendered` — the guarantee X0 was written to establish — is also evaluated against fixture assessments rather than the real ones.
+
+This is trap 21 in a new location: green over data that is not the product's.
+
+**Implementation**
+1. Run the suite **twice** and report two labelled sections, `FIXTURES` and `CORPUS`. Never union them. Exit non-zero if **either** fails.
+2. Load assessments from the DB in the corpus run, alongside the five entity types already loaded.
+3. When the database is absent or empty, the corpus run reports `NOT APPLICABLE — zero rows` per check. That vocabulary already exists in the pass and is already correct; do not invent a second one.
+4. Print the examined counts per section, so a future reader can see at a glance which population each number came from.
+
+**Validation**
+- **(c)** — for every check in the CORPUS section, `examined_count` equals the count the test computes itself with `SELECT count(*)` against `social_proof.duckdb`, **assessments included**. Compute the expected numbers in the test rather than hardcoding today's; the point is the population, not the size. *A union cannot satisfy this, and neither can a run that never loads assessments.*
+- **Both directions:** copy the DB to a scratch file, insert a claim whose quote does not appear in its utterance, and point the pass at it. CORPUS must FAIL while FIXTURES still PASSes — proving the two report independently rather than sharing a verdict.
+- The exit code is non-zero when the corpus fails and the fixtures pass.
+
+**Falsify.** Re-union the two lists. The (c) assertion must go RED because `examined_count` exceeds the database count. Revert; record both.
+
+**Blast radius.** `worker/integrity.py`, `tests/`, §3 baseline, `docs/design_evidence_integrity.md` (the pass now has two populations; say so).
+
+---
+
+## 17e. D0 — Proposition table repair · *Issue 027 = A*
+
+**User impact:** `/resolve` stops returning propositions nobody ever said, and the entailment guard X1 depends on becomes buildable.
+
+**Contract:** `design_data_layer.md` §3 (normalization, the recompute invariant) and §2/§4 (the two new columns) · `design_evidence_integrity.md` §4 (quarantine extends to propositions) · `design_local_api_and_clients.md` §4 (the read filter).
+
+**Gap.** Full statement in `ongoing_errors.md` §4 row 027 and this guide's §3. In one paragraph: X0 removed the claims of six propositions but left the rows, their `claim_count` values and — critically — **all seven embeddings**, which belong exclusively to that dead generation. The eight propositions carrying today's live claims have **no embedding at all**, so `/resolve`'s join (`worker/api/server.py:172`) reaches only orphans, one of which is the fabricated `db3ec63d33cf6f0a`. Separately, `compute_proposition_id` does not strip terminal punctuation, so three propositions exist twice, differing only by a final period.
+
+---
+
+### The migration is contained — verify that, do not assume it
+
+`proposition_id` feeds `claim_id`, which feeds `tension_id`, which feeds `axis_evidence`. A change to proposition IDs can therefore cascade through the entire store. **On today's data it does not**, and this was measured, not reasoned:
+
+| stored id | recomputes to | live claims | note |
+|---|---|---|---|
+| `932587f9999e7a8e` | `81eb3fb1db151083` | 0 | orphan; no target row exists |
+| `b64d953ec975ceb8` | `86ad084395852d91` | 0 | **merges into a live row** |
+| `a88324f4a7506c06` | `167e87f2d9561d79` | 0 | **merges into a live row** |
+| *all other 11* | unchanged | — | includes **all 8** live propositions |
+
+**Every ID that moves belongs to a proposition with zero live claims.** No `claim_id`, `tension_id`, `assessment_id` or `axis_evidence` entry changes. The migration touches the dead generation only.
+
+**This is a property of today's rows, not of the fix.** After R1's re-ingest, a live proposition may well end in a period, and then the cascade is real. **Step 2 below therefore re-derives this table at runtime and refuses to proceed if a live proposition's ID would move.** Do not port the numbers above into code as an expectation.
+
+---
+
+### Implementation
+
+**1. One shared normalizer.**
+
+`worker/storage.py:39-41` and `:54-55` contain the same normalization inline, for propositions and principles respectively. Extract it once:
+
+```python
+_TERMINAL = ".!?…\"'”’"
+
+def normalize_canonical_text(text: str) -> str:
+    """Canonical form for content-derived IDs. See design_data_layer.md §3."""
+    collapsed = " ".join(text.strip().lower().split())
+    return collapsed.rstrip(_TERMINAL).rstrip()
+```
+
+Both `compute_proposition_id` and `compute_principle_id` call it. **They must not diverge** — principles carry the identical defect today and fixing only one leaves the same bug in the other layer.
+
+Scope it deliberately: **terminal punctuation and nothing else.** Unicode dash folding, quote folding and stopword removal are all defensible and all change every ID again. If one is wanted later it is a fresh decision, not an extension of this one. Say so in the docstring.
+
+Stripping is idempotent and order-independent, and it can only merge two texts that differ *solely* by trailing punctuation — which is the definition of the same proposition. It will also fold a text ending `"…in the U.S."` to `"…in the u.s"`; that is harmless, because both spellings map to one bucket consistently.
+
+**2. Migrate the existing rows, refusing to cascade.**
+
+Write this as a one-shot migration in `worker/storage.py` (or `scripts/`, if that is where migrations live — check before inventing a location). It must be **idempotent**: running it twice changes nothing the second time.
+
+1. For every proposition, compute `new_id = compute_proposition_id(canonical_text)`.
+2. **Guard first, before any write.** If any proposition whose `new_id != proposition_id` has **≥1 live claim**, `raise` with the list. That case is a full cascade migration — claims, tensions and assessments all need rewriting — and it is out of D0's scope. Failing loudly is correct; a partial migration here corrupts the anchor chain.
+3. For each moving row where the target id **already exists**: the target is the survivor. Repoint `proposition_embeddings` only if the target has none, then delete the source row. *(This is the one deletion D0 performs, and it is a duplicate-key merge, not a purge — the surviving row carries the identical text.)*
+4. For each moving row where the target does **not** exist: update the id in place, and in `proposition_embeddings` with it.
+5. Recompute `claim_count` for every row as `SELECT count(*) FROM claims WHERE proposition_id = ?`. It is currently wrong on all 14.
+
+**3. Add `status` and `quarantine_reason` to `propositions`.**
+
+Mirror the columns `tensions` already has (`worker/entities.py:157-158`), with one deliberate difference: the vocabulary is **`active` / `quarantined`**, not `published` / `quarantined` / `dismissed`. A proposition is never itself rendered — it is a join key — so "published" would claim something untrue about it. Default `active`; add both to the `Proposition` dataclass, the DuckDB DDL, and the upsert in `worker/storage.py:669-692`.
+
+Then mark the fabrication:
+
+```
+db3ec63d33cf6f0a  status='quarantined'  quarantine_reason='fabricated_proposition'
+```
+
+matching the reason string already on tension `0068adec4b1501c6`, so the two halves of one incident are greppable together.
+
+**4. Embed every live proposition.**
+
+Backfill `proposition_embeddings` for all propositions with ≥1 live claim — 8 rows today, none of which currently has one. Use the same `embed_document` path as `worker/ingest.py:193`, so prefixes match what X1 will use (`search_document:` on both sides — trap 7).
+
+**Do not inherit an embedding across a merge.** In step 2.3 the surviving row's text differs from the absorbed row's by a period; the vector was computed on the absorbed text. Re-embed from the surviving row's own `canonical_text`. **An embedding must correspond to the exact text of the row it hangs on**, or the provenance chain quietly stops being true — and X1 is about to make decisions from these vectors.
+
+Leave orphan embeddings in place. Louis selected A: nothing is purged. *(Pruning `proposition_embeddings` down to the readable set is a B-time cleanup; noted in §28 so it is not lost.)*
+
+**5. Make the read path filter structurally, not on the counter.**
+
+`worker/api/server.py:169-177` and every other proposition read: exclude `status = 'quarantined'`, and exclude propositions with no live claims using an existence test against `claims` — **not** `claim_count`:
+
+```sql
+WHERE p.status = 'active'
+  AND EXISTS (SELECT 1 FROM claims c WHERE c.proposition_id = p.proposition_id)
+```
+
+`claim_count` stays as a reporting field and never gates behaviour. It has already drifted silently once across all 14 rows; a denormalized counter that gates a read is a second copy of the truth waiting to disagree with the first.
+
+**6. Two new integrity checks** in `worker/integrity.py`, both cheap and both aimed at the class of defect rather than this instance:
+
+- **`verify_canonical_ids`** — for every proposition and every principle, `stored_id == compute_*_id(canonical_text)`. This is the check whose absence let the fork exist, and it will catch any future normalization drift on the commit that introduces it rather than three phases later.
+- **`verify_quarantined_propositions_unreachable`** — no quarantined proposition is returned by the `/resolve` query shape, and no live claim points at one. The tension equivalent (`verify_quarantine_not_rendered`) already exists; propositions had no such guard, which is how the fabrication stayed the most reachable row in the store.
+
+Also assert `claim_count` matches the real count — as a **check**, never as a filter.
+
+---
+
+### Validation
+
+- **(c)** — `/resolve` on the selected text *"China is much more optimistic about AI than we are"* returns proposition `86ad084395852d91`, which carries **2 live claims** from two named subjects. Today the same call can only reach a row with **zero** live claims. *No stub, no fixture and no query rewrite satisfies this: it needs the backfilled embedding, the merged id, and the EXISTS filter all correct at once. If any one of the three is wrong, the call returns an orphan or nothing.*
+- **Both directions, or the filter is untested in one of them:** `/resolve` on text matching the fabricated licensing proposition returns **no proposition** — falling through to the topic path or to no match — and specifically never returns `db3ec63d33cf6f0a`.
+- `verify_canonical_ids` **FAILS on the corpus as it stands today**, before the migration, naming exactly the three forked rows. Run it and see it red first. A check that has only ever been green on repaired data has not been tested.
+- After migration: 12 propositions, 8 with live claims, all 8 with an embedding; `claim_count` matches the real count on every row; no proposition has both `status='quarantined'` and a live claim.
+- Idempotence: run the migration twice; the second run reports zero changes and the DB hash is unchanged.
+- The guard in step 2.2 fires: construct a fixture DB where a proposition **with** a live claim ends in a period, run the migration, and assert it **raises** rather than writing. This is the assertion that keeps D0 safe after R1 changes the data underneath it.
+- `mypy --strict` and `ruff` clean; the full suite still passes.
+
+**Falsify.** Skip step 4 (leave the live propositions unembedded) and re-run the (c) assertion — it must go RED, returning an orphan or nothing, proving the backfill is what does the work and not the filter alone. Then restore step 4 and skip step 5 instead; (c) must go RED again, this time by returning `db3ec63d33cf6f0a` for the licensing text. **Both halves must be shown to be load-bearing**; either one alone leaves the fabrication reachable. Revert; record all three results.
+
+**Blast radius.** `worker/storage.py` (normalizer, DDL, upsert, migration), `worker/entities.py` (`Proposition`), `worker/api/server.py` (`/resolve`), `worker/integrity.py` (two checks), `worker/ingest.py` (embed-on-write for new propositions), `tests/`, the corpus (in-place migration), `docs/design_data_layer.md` §2–§4, `docs/design_evidence_integrity.md` §4, `docs/design_local_api_and_clients.md` §4, §3, §6.
+
+---
+
 ## 18. X1 — Entailment validator · *Issue 025 = C*
 
 **User impact:** a quote can no longer carry a claim it does not support. This is the guard that would have stopped the fabricated tension from ever being written.
+
+**BLOCKED on D0 (§17e) — read it before planning.** Step 3 below embeds the proposition, and **no surviving proposition has an embedding**: all 7 rows in `proposition_embeddings` belong to the pre-X0 generation whose claims X0 removed. Both sides of the cosine are missing, so the (c) assertion cannot be reached. **Issue 027 = A** settles how the table is repaired; D0 does it. When D0 lands, the 8 live propositions are embedded with `embed_document` — the same prefix this validator must use — so do not re-embed them here.
 
 **Contract:** `design_claim_extraction.md` §8 validator 6 (mechanism, verbatim) · `design_evidence_integrity.md` §2 rule E2b.
 
@@ -589,6 +832,8 @@ Neither quote is about licensing. The extractor invented the proposition, two in
    - `sim ≥ T_ENTAIL_HIGH` → pass
    The middle band must quarantine rather than publish. A borderline claim is precisely where a hard threshold is least trustworthy, and `design_evidence_integrity.md` §6 requires uncertainty be surfaced rather than silently resolved either way.
 5. **Thresholds are parameter 026 — measured, not chosen.** Derive initial values from the corpus you have: the two known fabrications must fall below `T_ENTAIL_LOW`, and every hand-verified true claim from X0 must clear `T_ENTAIL_HIGH`. Record them as **provisional** in code and in the commit body.
+   **The two fabricated claims are no longer rows** — X0 deleted them. Their text is in this guide's §3 history and in `4a62c3f`; reconstruct them as a behaviour fixture rather than expecting to query them.
+   **Watch `MIN_QUOTE_TOKENS` in particular.** Both known fabrications were 6-token fragments, and `tests/test_segmentation_x0.py` currently asserts a floor of `>= 6` — which the fabrications would pass. A live claim sits at 7 tokens (`ae322a98ececbe5f`, *"until string theory is proved, it's unproved."*) and is tautological. The floor and the corpus are close enough together that the number must be measured against both, not inherited from the test.
 6. Log every rejection with its reason and keep the counters. **The rejection rate is the early-warning signal for a prompt or model regression** — if entailment rejections climb after a prompt edit, the prompt got worse, and the counter is how you find out.
 
 **Validation**
@@ -610,26 +855,37 @@ Neither quote is about licensing. The extractor invented the proposition, two in
 
 **User impact:** the system reads whole episodes instead of the first seven minutes, and can tell when it hasn't.
 
-**Gap — two halves, both measured.**
+**Blocked on X1** — see the queue. The re-ingest in step 5 is the largest extraction run this project will have done; it must not run before the entailment guard exists. Issue 027 = A preserved that ordering deliberately.
 
-1. **`verify_source_productivity` is inert on coverage.** It takes `min_ratio: float = MIN_UTTERANCE_MEDIA_RATIO` and **never references it in the body**. It checks `len(utts) > 0` and `span_ms > 0`. It cannot do more, because **no entity stores media duration** — `grep -n "duration" worker/entities.py` returns nothing (trap 29).
-2. **Every source is truncated to ~6.9 minutes.** All four episodes yield exactly 21 utterances and 6.9 min of span, against real runtimes of 60–90 minutes. Identical figures across four different recordings means a cap, not a coincidence. **~92% of every episode is unread** — and that is the likeliest reason P4 has almost nothing to work with.
+**The cap is found. Do not go looking for it again.** `scripts/populate_corpus.py:259`:
+
+```python
+extra={"max_bytes": 10_000_000},  # 10MB chunk (~7-8 minutes of real audio)
+```
+
+which `worker/adapters/podcast.py:111` turns into an HTTP `Range: bytes=0-10000000` header. A deliberate development shortcut, commented as such, never removed. It explains the measurement exactly: four different episodes ending at 416.2, 416.5, 416.5 and 416.5 seconds — **a byte cap on a variable-bitrate MP3 gives near-identical but not equal durations**, which is why the figures looked like a cap rather than a coincidence. The pipeline itself is innocent: `worker/ingest.py:307-318` segments the full duration of whatever file it is handed.
+
+**The trap this sets for the fix — read before writing any code.** R1's other half adds `duration_ms` and wires `min_ratio`. **If duration is measured from the downloaded file, the coverage check is self-confirming**: the truncated download *is* the whole file as far as the pipeline can see, the ratio computes to ~100%, and the check passes on a corpus that is 92% unread. Duration must come from **source metadata, not from the artifact** — `<itunes:duration>` in the RSS item. `parse_feed_xml` (`worker/adapters/podcast.py:83-99`) currently extracts title, `pubDate` and the enclosure URL and ignores everything else.
+
+**A third defect, same layer, same commit.** Every source's `published_at` is **ingest wall-clock time** — all four read `2026-09-03T18:3x`, the minute the script ran. `PodcastRSSAdapter.fetch` stamps `datetime.now(UTC)` while `parse_feed_xml` has already parsed the real `pubDate` and discarded it. `recorded_at` is hand-set in the populate script for three sources and defaulted to ingest time for the fourth (E287). **The product's output is a dated timeline**; ordering by `published_at` today is ordering by ingest order.
 
 **Implementation**
-1. Add `duration_ms` to `Source`, populated at fetch from the media metadata. Without it the coverage check cannot exist.
-2. **Wire `min_ratio`**: fail when `span_ms / duration_ms < min_ratio`. Set the floor deliberately — 0.05 would pass today's 7.6% and is useless; the point is to catch truncation, so it must sit near full coverage.
-3. **Find the cap before re-ingesting.** Four sources truncating identically is systematic. Check the fetch (a preview stream?), any duration or max-segment argument passed to `faster-whisper`, and whether the VAD gate is terminating early. **Read the ingest job records; do not re-run and hope.**
-4. Re-ingest all four at full length once found. Record real throughput — a 90-minute episode is the first honest measurement of ingest cost.
+1. Parse `<itunes:duration>` and `pubDate` in `parse_feed_xml`; carry both through `RawSource.metadata`.
+2. Add `duration_ms` to `Source`, populated from that feed metadata. Assert ingest **refuses to persist a source without it** — a nullable duration reintroduces the inert check this item exists to remove.
+3. Set `published_at` from the feed's `pubDate`, never from `now()`. Set `recorded_at` from the feed as well where available; where it genuinely is not, leave it null rather than defaulting to now.
+4. **Wire `min_ratio`**: fail when `span_ms / duration_ms < min_ratio`. `MIN_UTTERANCE_MEDIA_RATIO = 0.05` would pass today's 7.7% and is useless — the floor exists to catch truncation, so it belongs near full coverage. Treat it as provisional and record it as such.
+5. Remove `max_bytes` from `populate_corpus.py`, then re-ingest all four episodes at full length. **Record real throughput** — a 90-minute episode is the first honest measurement of ingest cost this project will have.
 
 **Validation**
-- **`verify_source_productivity` FAILS against the corpus as it stands today** (7.6% coverage). ← **(c)** *A coverage check that passes on a store known to be 92% unread is not a check.*
-- After repair, every source's `span_ms / duration_ms` clears the floor.
-- Unit test: a source with `duration_ms` set and one utterance covering 1% of it → FAIL. Same source at 95% → PASS. **Both directions**, or the check is untested in one of them.
-- `duration_ms` is non-null on every source; assert ingest refuses to persist a source without it.
+- **(c)** — `verify_source_productivity` **FAILS against the corpus exactly as it stands today**, reporting ~7.7% coverage on all four sources, *before* any re-ingest. Run it and see it red. *A coverage check that passes on a store known to be 92% unread is not a check, and this is the assertion no stub and no re-run can fake.*
+- After re-ingest, every source's `span_ms / duration_ms` clears the floor.
+- Unit test, **both directions**: a source with `duration_ms` set and one utterance covering 1% of it → FAIL; the same source at 95% → PASS.
+- `duration_ms` is non-null on every source; ingest raises on a source without it.
+- `published_at` on all four sources is a 2023–2026 episode date drawn from the feed, and **not** within a minute of `ingested_at`. Assert the inequality — it is the cheapest possible test for this class of defect and it would have caught it.
 
-**Falsify.** Set `min_ratio = 0.0` and confirm today's corpus passes — proving the threshold is what does the work, not the surrounding code. Revert; record both.
+**Falsify.** Set `min_ratio = 0.0` and confirm today's truncated corpus passes — proving the threshold does the work rather than the surrounding code. Then restore `max_bytes` on one source and confirm the check catches it. Revert both; record both.
 
-**Blast radius.** `worker/entities.py`, `worker/storage.py`, `worker/integrity.py`, `worker/adapters/*` (duration at fetch), the corpus (re-ingest), `docs/design_data_layer.md` §2, `docs/design_source_acquisition.md` §5.2, §3, §6.
+**Blast radius.** `worker/entities.py`, `worker/storage.py`, `worker/integrity.py`, `worker/adapters/podcast.py`, `scripts/populate_corpus.py`, the corpus (full re-ingest), `docs/design_data_layer.md` §2, `docs/design_source_acquisition.md` §4 and §5.2, §3, §6.
 
 ---
 
@@ -681,7 +937,11 @@ So `pip install -e ".[dev]"` fails during resolution on any non-Apple machine �
 
 ---
 
-## 21. I0 — First real ingest · **subjects selected (Issue 021 = B)**
+## 21. I0 — First real ingest · **SUPERSEDED → R1**
+
+> **Do not open this as a work item.** I0.1 (enrollment) and I0.2 (single-speaker ingest) hold. I0.3's remaining defect is the 10MB download cap, tracked in **§19 (R1)**. This section is kept for the enrollment and panel detail, which R1's re-ingest still depends on.
+
+*Subjects selected: Issue 021 = B.*
 
 **Subjects:** Chamath Palihapitiya, David Sacks, Jason Calacanis, David Friedberg — the four All-In hosts. **Primary source:** the All-In Podcast.
 
@@ -953,6 +1213,8 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 **X/Twitter ingest.** Deferred by decision, not difficulty (`master_implementation_plan.md` §9). The adapter Protocol must keep accepting it as a drop-in.
 
+**Proposition-table purge (Issue 027 Option B, not selected).** A was selected, which keeps the orphaned pre-X0 propositions and their embeddings. The remaining cleanup — deleting the five non-fabricated orphans, pruning `proposition_embeddings` to the readable set, and replacing `claim_count` with a computed view — is right eventually and wrong now, because R1's re-ingest repopulates the table. **Trigger:** R1 has landed and the corpus is final. Doing it before then pays for the same migration twice.
+
 ---
 
 ## 29. Invariants — do NOT change
@@ -980,4 +1242,8 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 | **Every gate green over an empty corpus** | "J1 green" | **"J1 green *on real ingested data*, with `verify_quotes` PASS on a non-empty set."** A journey signed off against mocks is not signed off. |
 | **Validation steps citing fixtures that cannot work, and three that did not exist** | "Fixture P1 → unacknowledged_reversal" | **Check the fixture on disk before writing the assertion that depends on it.** A pair-type outcome needs a pair; a cited class needs to exist. I wrote those steps from the design doc's case table without opening the file — validating shape, not reality, which is the exact error this guide warns about. |
 
-**The pattern: shape is what a stub reproduces perfectly, and a green gate over zero rows is the emptiest shape of all.** Validation must be satisfiable only by the real thing, operating on real data.
+| **`source_count` reported as a measurement for every assessment ever written** | "Compute sufficiency from claims, sources, span" | **"Assert the count *differs* across subjects who genuinely differ."** One subject's number is satisfiable by a constant; a spread is not. The `hasattr` guard made the constant invisible, and every assessment agreed with it. |
+| **The integrity pass green over a union of fixtures and live rows** | "Run the ten checks; `NOT APPLICABLE` is not `PASS`" | Same, **plus** "report each population separately and print what was examined." The vocabulary for honesty was already there; the pass just had nothing to apply it to. |
+| **A cap found only by reading the script that wrote the corpus** | "Find why every source truncates" | **"Read the code that produced the data before reading the code that processes it."** Three sections of pipeline were searched before `populate_corpus.py`, where the cap sits on one commented line. |
+
+**The pattern: shape is what a stub reproduces perfectly, and a green gate over zero rows is the emptiest shape of all.** Validation must be satisfiable only by the real thing, operating on real data. **And a number that never varies is a shape too** — the newest three entries above are all constants that passed for measurements.

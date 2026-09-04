@@ -129,9 +129,26 @@ tension_id     = sha256(sorted(claim_a_id, claim_b_id) | type)[:16]
 assessment_id  = sha256(subject_id | topic_id | rubric_version)[:16]
 ```
 
+**`canonical_text_normalized` is defined, not implied** (Issue 027 = A). One shared function, used by propositions and principles alike:
+
+```
+collapsed  = " ".join(text.strip().lower().split())
+normalized = collapsed.rstrip(TERMINAL).rstrip()
+
+# TERMINAL = the characters  .  !  ?  …  plus straight and curly quotes: " ' ” ’
+
+```
+
+Lowercase, collapse internal whitespace, **strip terminal punctuation.** That last clause is not cosmetic. Without it `"…than Western nations"` and `"…than Western nations."` hash to different IDs and become two propositions — and **no similarity threshold can merge them, because the split happens before similarity is ever computed.** Over-splitting hides contradictions silently, which is the failure the merge threshold's bias (`ongoing_errors.md` §2, parameter 008) is written against.
+
+The normalization is deliberately narrow: terminal punctuation and nothing else. Unicode dash folding, quote folding and stopword removal are each defensible and each would change every ID in the store again. **Any addition to this function is a fresh decision, not an extension of Issue 027.**
+
+**Changing this function is a migration, not a refactor.** `proposition_id` feeds `claim_id`, which feeds `tension_id`, which feeds `axis_evidence`. Before altering it, compute the new IDs for every row and check whether any proposition *with live claims* moves. If none does, the change is contained to dead rows. If one does, the whole chain must be rewritten together — and a migration that discovers this halfway through has already corrupted the anchor chain. **Check first, write second.**
+
 Consequences worth stating plainly, because they remove whole categories of bug:
 
 - **Re-running ingest writes the same IDs**, so every write is an upsert and nothing duplicates.
+- **A stored ID must always equal the ID recomputed from its own canonical text.** This is checkable in one query and is enforced by `verify_canonical_ids` in the integrity pass. It is the check whose absence let three propositions fork on a trailing period and go unnoticed until a live query found them.
 - **A feed that re-issues its URLs cannot produce a duplicate source**, because the locator is canonicalised and the audio is hashed.
 - **The same tension cannot be reported twice** under a different id ordering, because the claim pair is sorted before hashing.
 - **Changing the rubric produces a new assessment id** rather than overwriting the old one. See §6.

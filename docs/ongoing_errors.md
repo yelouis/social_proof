@@ -8,7 +8,7 @@
 - **Once selected, a decision moves out of §1.** Its consequence is written into the design doc that owns it, and it becomes one row in §4. The full option text stays in git history — this file is a queue, not an archive.
 - Recommendations are marked. A recommendation is not a decision.
 
-**Status: 20 decisions made, 0 open.** Live work is queued in `agent_execution_guide.md` §6.
+**Status: 21 decisions made, 0 open.** Live work is queued in `agent_execution_guide.md` §6.
 
 ---
 
@@ -31,7 +31,7 @@
 | **010** | Topic retrieval similarity + cluster-expansion policy | Phase 3 | **Precision on retrieval, generosity on expansion.** Small slices produce confident wrong scores. |
 | **012** | Per-axis sufficiency gates | Phase 6 | **Conservative.** `insufficient_corpus` is always safe; a number on thin evidence never is. |
 | **016** | `H_max` — hedging ceiling in Specificity's checkability test | Phase 6 | **Toward generosity.** Only pure evasion should fail; too strict and the axis punishes ordinary caution. |
-| **026** | `MIN_QUOTE_TOKENS`, `T_ENTAIL_LOW`, `T_ENTAIL_HIGH` — the entailment guard (Issue 025 = C) | X1 | **Reject boldly, quarantine the middle.** Both known fabrications were 6-token fragments. The ambiguous band must quarantine rather than publish. |
+| **026** | `MIN_QUOTE_TOKENS`, `T_ENTAIL_LOW`, `T_ENTAIL_HIGH` — the entailment guard (Issue 025 = C) | X1 | **Reject boldly, quarantine the middle.** Both known fabrications were 6-token fragments — and the X0 test's floor is `>= 6`, which they would pass, while a live claim sits at 7. Measure against both; do not inherit the test's number. The ambiguous band must quarantine rather than publish. |
 
 ---
 
@@ -51,6 +51,7 @@ Newest first. One row each; **the design doc named is where that decision now li
 
 | # | Decision | Now lives in |
 |---|---|---|
+| **027** | **A** — repair the proposition table in place: normalize canonical IDs, merge the forked rows, backfill embeddings for live propositions, quarantine the fabricated proposition. Nothing purged. | `design_data_layer.md` §3–§4 · `design_evidence_integrity.md` §4 · `design_local_api_and_clients.md` §4 · `agent_execution_guide.md` D0 |
 | **025** | **C** — entailment guard: embedding similarity + minimum quote length, ambiguous band quarantines | `design_claim_extraction.md` §8 validator 6 · `design_evidence_integrity.md` E2b |
 | **024** | **B** — CI's one job is portability; `mlx-lm` optional, workflow renamed for its scope | `agent_execution_guide.md` C0 (delivered) |
 | **023** | **A** — defer Musk until X ingest exists; his primary medium is excluded, and I5 gates volume not composition | `agent_execution_guide.md` §Deferred |
