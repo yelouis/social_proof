@@ -4,9 +4,9 @@
 
 Do not read this end to end and improvise. **Go to §1, run LOOP 0, let it route you.**
 
-**Where the project is.** Every external model is real and wired (`STUB_REGISTRY` empty). F0, S0, I0.1–I0.2 and P3–P7 have landed. **But the ingest silently failed on 3 of 4 sources and deleted their audio**, and the golden corpus is still empty — so every detector above the corpus is unproven. Verified against the live database on September 2, 2026, not read from a status table.
+**Where the project is.** C0 is genuinely delivered. R0 is **partially** delivered. And the corpus now contains **one published tension that is a fabrication** — two real quotes carrying an invented proposition. Verified against the live database on September 3, 2026.
 
-**What that means for you.** Read §3 before anything else: **CI is red and the corpus is broken.** Three of four ingested sources produced zero utterances and had their audio deleted anyway, so no proposition in the store carries opposing stances at different dates — meaning **P3–P7 are delivered as code and have never met data capable of contradicting itself.** The next item is **R0** (§17), which repairs that and adds the guard that would have caught it. Then **C0** (§18).
+**What that means for you.** The next item is **X0** (§17): quarantine that false finding and fix the segmentation that caused it. Read §3 and §5 traps 28–30 before anything else. **Do not treat P4–P7's green status as evidence they work** — the one tension they have ever produced is wrong.
 
 **Every number, threshold, field name and literal string in the design docs is deliberate. Implement as written.** Where a doc says a value must be *measured* (`ongoing_errors.md` §2), measure it.
 
@@ -117,10 +117,11 @@ Measured September 2, 2026. Re-run via §2 before trusting.
 | `mypy --strict` | **PASS** — 74 files | |
 | `pytest tests/ -q` | **PASS** — 140 passed, **~10m** locally; **CI is RED** (Issue 024 — `mlx` has no Linux wheels, install dies in 9s) | The runtime is the evidence: real MLX, whisper, and ECAPA-TDNN models load. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
-| `worker.integrity --all` | **PASS** — 10 checks | All 10 checks pass including `verify_source_productivity` and `verify_role_coverage`. |
+| `worker.integrity --all` | **PASS** — 10 checks, but one is inert | `verify_source_productivity` accepts a `min_ratio` parameter (`MIN_UTTERANCE_MEDIA_RATIO = 0.05`) and **never references it**. It checks count > 0 and span > 0 only. It cannot check coverage because **no media duration is stored on any entity.** 6.9 min of a 90 min episode passes. |
 | `worker.golden.report` | **PASS** | Fixtures 19/19 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
 | **CI / Portability** | **PASS** | `portability.yml` tests base install without Apple extra; runs lint, mypy, and non-model tests (134 passed in ~12s). |
-| **Corpus** | **REPAIRED AND POPULATED** | All 4 sources produced utterances (total 86) covering conversation duration. Stamped `ingested_at` and `audio_deleted_at` only after verified output. Tension precondition satisfied: Chamath Palihapitiya carries opposing stances (`oppose` in 2024 vs `support` in 2025) on frontier AI regulation; `TensionDetector` detects a published `unacknowledged_reversal`. |
+| **Corpus** | **POPULATED, PARTIALLY REPAIRED** | All 4 sources now yield utterances (84 total) — the silent-failure bug **is** fixed. But each covers only **6.9 min of a 60–90 min episode**, so ~92% of every episode is unread, and `verify_source_productivity` does not catch it (see below). |
+| **Published tension** | **FABRICATED — quarantine immediately** | The single tension is `published` and wrong. Both claims carry the proposition *"Mandatory state and federal licensing regimes for frontier AI models"*; the quotes are `"collection like robots or robots having"` and `"steal happening right now. I really"`. Neither is about licensing. Issue 025, item X0. |
 
 ---
 
@@ -153,6 +154,9 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 25. **"Ingested" is not the same as "produced anything."** Three sources were stamped `ingested_at` *and* `audio_deleted_at` while yielding zero utterances. Every integrity check verifies that pointers *resolve* — none verified that the pipeline *emitted* anything. **Success must be defined as output, not as absence of exception**, and any irreversible step (audio deletion) must be gated on that definition.
 26. **A detector finding nothing over a corpus that cannot contain the thing is not a true negative — it is an untested detector.** Every claim in the store is from one day with one stance, so a reversal is impossible by construction. P4/P5/P6 report zero and are green; they have never met data capable of contradicting itself.
 27. **Local green does not mean CI green.** LOOP 0 checks the local battery and has no CI signal at all, so CI stayed red across several commits unnoticed (Issue 024).
+28. **A real quote does not make a real claim.** `verify_quotes` proves the words were said. It never proves they said *that*. A published tension was traced to two genuine quotes carrying a wholly invented proposition, and all five extraction validators passed. **"Is this citation real?" and "does this citation support this claim?" are different questions, and only the first was ever asked.**
+29. **A parameter that is declared, defaulted, and never referenced is not a check.** `verify_source_productivity(min_ratio=0.05)` never uses `min_ratio` — and could not, since no media duration is stored. The function reads as a coverage check and is a non-emptiness check. Grep for the parameter in the body, not just the signature.
+30. **Fragmentary input invites fabrication.** Utterances split on length rather than sentence boundaries end mid-word. Asking a model to find a *position* in a fragment that cannot hold one is how invented propositions get attached to real words. Fix the segmentation before blaming the extractor.
 
 ---
 
@@ -163,14 +167,17 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 | 1 | **F0** | Repair the behaviour fixture set | none | **delivered** | **P4 and P5 cannot be validated without this.** 8 pair-type fixtures are single undated sentences; N6, N9 and N11 do not exist. Cheap, and doing it later means P4 starts and immediately stalls. |
 | 2 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | **Do it now, while the corpus is empty.** Zero rows to migrate today; after I0 it is real data. Cheapest moment this schema change will ever have. |
 | 3 | **I0** | First real ingest — the four All-In hosts | none | **PARTIAL — I0.3 regressed** | I0.1/I0.2 hold. **I0.3 did not deliver**: 3 of 4 episodes produced zero utterances and had their audio deleted anyway. Superseded by R0. |
-| 4 | **R0** | Repair the ingest; add the productivity guard | none | **delivered** | Data loss halted, `verify_source_productivity` active and tested against broken baseline (c), audio deletion gated on output, 4 episodes cleanly ingested across 2023–2026. |
-| 5 | **C0** | Portability workflow; `mlx-lm` as an optional extra (Issue 024 = B) | none | **delivered** | Base package installs off-Mac without mlx-lm; workflow renamed to portability.yml; requires_models marker isolates heavy neural models. |
-| 6 | **P4** | Tension detection | none | **delivered, VALIDATED** | Core contradiction and update detection in DuckDB SQL; validated on repaired corpus (reversal detected for Chamath Palihapitiya). |
-| 7 | **P3** | Topic model | none | **delivered, VALIDATED** | HDBSCAN clustering, free-text resolution with search_query: prefix, cluster expansion, and cache provenance. |
-| 8 | **P5** | Principle extraction | none | **delivered, VALIDATED** | Mechanical join over shared principles with opposing verdicts, stated distinction escape hatch, and actor resolution floor. |
-| 9 | **P6** | Rubric engine | none | **delivered, VALIDATED** | Deterministic arithmetic over four axes, per-axis sufficiency gating, no composite trust score, and binomial significance. |
-| 10 | **P7** | Local API | none | **delivered** | Loopback binding (127.0.0.1), Bearer token, strict CORS, selection-triggered /resolve with zero page-context storage, 409 comparison guard. |
-| 11 | **P8** | Browser extension | none | **delivered** | Manifest V3, Depth 1 Shadow DOM overlay, Depth 2 sidepanel, design tokens, DOM immutability, all 7 tests passing. |
+| 4 | **R0** | Repair the ingest; add the productivity guard | none | **PARTIAL** | Empty-source bug fixed and deletion gated — real progress. But the coverage half was not implemented: dead `min_ratio`, no duration field, truncation unfixed. Remainder is R1. |
+| 5 | **X0** | Quarantine the fabricated tension; fix segmentation | none | **outstanding** | **NEXT.** A false accusation is sitting in the database marked `published`. Segmentation cutting mid-word is what invited it. |
+| 6 | **X1** | Entailment validator | **Issue 025** | blocked | Defence in depth once X0 removes the cause. |
+| 7 | **R1** | Media duration + real coverage check; fix truncation | none | outstanding | The unfinished half of R0. |
+| 8 | **C0** | Portability workflow; `mlx-lm` as an optional extra (Issue 024 = B) | none | **delivered** | Base package installs off-Mac without mlx-lm; workflow renamed to portability.yml; requires_models marker isolates heavy neural models. |
+| 9 | **P4** | Tension detection | none | **delivered · fixtures only** | Core contradiction and update detection in DuckDB SQL; validated on repaired corpus (reversal detected for Chamath Palihapitiya). |
+| 10 | **P3** | Topic model | none | **delivered · fixtures only** | HDBSCAN clustering, free-text resolution with search_query: prefix, cluster expansion, and cache provenance. |
+| 11 | **P5** | Principle extraction | none | **delivered · fixtures only** | Mechanical join over shared principles with opposing verdicts, stated distinction escape hatch, and actor resolution floor. |
+| 12 | **P6** | Rubric engine | none | **delivered · fixtures only** | Deterministic arithmetic over four axes, per-axis sufficiency gating, no composite trust score, and binomial significance. |
+| 13 | **P7** | Local API | none | **delivered** | Loopback binding (127.0.0.1), Bearer token, strict CORS, selection-triggered /resolve with zero page-context storage, 409 comparison guard. |
+| 14 | **P8** | Browser extension | none | **delivered** | Manifest V3, Depth 1 Shadow DOM overlay, Depth 2 sidepanel, design tokens, DOM immutability, all 7 tests passing. |
 
 > **P3–P7 are delivered as code and unvalidated as behaviour.** They run, they pass their fixture tests, and they produce **zero** tensions, principles and assessments over the live corpus — because that corpus cannot contain one (§17). Do not read their green status as evidence the detectors work. R0 is what makes that question answerable.
 
@@ -477,7 +484,7 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 17. R0 — Repair the ingest; add the productivity guard
+## 16b. R0 — Repair the ingest; add the productivity guard
 
 **User impact:** the corpus stops containing three episodes' worth of nothing, and the pipeline stops reporting success when it produced no output.
 
@@ -519,7 +526,77 @@ The consequence for everything above it: all 15 claims share one date and one st
 
 ---
 
-## 18. C0 — Portability workflow; `mlx-lm` as an optional extra · *Issue 024 = B*
+## 17. X0 — Quarantine the fabricated tension; fix segmentation
+
+**User impact:** the database stops containing a false accusation, and the pipeline stops manufacturing them.
+
+**Gap.** The live store holds **one tension, status `published`**, and it is wrong:
+
+```
+PROPOSITION (both claims):
+  "Mandatory state and federal licensing regimes for frontier artificial intelligence models"
+CLAIM A  oppose  2024-02-09  quote: "collection like robots or robots having"
+CLAIM B  support 2025-10-03  quote: "steal happening right now. I really"
+```
+
+Neither quote is about licensing. The extractor invented the proposition, two inventions collided, and the detector — working correctly on garbage input — published a reversal.
+
+**Every guard passed.** `verify_quotes` confirms the words are real; the fabrication is in the *proposition*, and nothing checks that (trap 28). And the utterances are cut mid-word — `"...appendages like huma"`, `"...as it is bullsh-sh-"` — because segmentation splits on length, not sentence boundaries. **A fragment cannot hold a position, so asking for one invites invention** (trap 30).
+
+**Implementation**
+1. **Quarantine the existing tension first, before any code change.** `status: quarantined`, reason `fabricated_proposition`. `design_evidence_integrity.md` §5: quarantine first, investigate second. A false finding stops being displayed in the same instant it is suspected.
+2. **Segment on sentence and pause boundaries**, not fixed length. Use the word timestamps already stored: break on terminal punctuation and on pauses above a threshold, with a maximum length as a *fallback* rather than the primary rule.
+3. **Re-segment and re-extract the existing corpus.** Claim ids include `extraction_version`, so bump it — old claims stay inert and auditable rather than colliding (`design_claim_extraction.md` §9).
+4. **Do not tune `T_dedup` to make this go away.** Over-merging is a plausible contributor, but the primary defect is that a proposition was invented for a fragment. Fix the input; measure dedup afterwards.
+
+**Validation**
+- **Zero utterances begin or end mid-word.** Assert every `text_verbatim` starts with a capital or opening quote and ends with terminal punctuation, allowing a named list of exceptions. ← **(c)** *No fixture can satisfy this on the old segmenter; it is only satisfiable by genuinely re-segmenting real audio.*
+- The fabricated tension is `quarantined` and appears in no assessment's `axis_evidence`.
+- After re-extraction, **re-inspect every surviving claim by hand** — there are fewer than 20. For each, read the quote and the proposition and confirm the quote supports it. Record the count checked in the commit body. *At this corpus size manual review is cheap and is the only thing that actually establishes ground truth.*
+- Median utterance length rises materially; record before and after.
+
+**Falsify.** Restore fixed-length segmentation and re-run. The mid-word assertion must go RED. Revert; record both.
+
+**Blast radius.** `worker/segment.py`, `worker/extract/`, the corpus (re-extraction), `tests/`, `fixtures/behaviour/` (add a mid-word-fragment case), §3, §6.
+
+---
+
+## 18. X1 — Entailment validator · **BLOCKED on Issue 025**
+
+Do not start until Issue 025 is selected — it decides the mechanism, and the options differ in cost and in whether they reintroduce the Issue 019 circularity. The contract is already written: `design_claim_extraction.md` §8 validator 6, and `design_evidence_integrity.md` §2 rule E2b.
+
+**When unblocked**, its `(c)` is: the two fabricated claims from X0 must be **rejected** by the validator, and a hand-verified true claim must **pass** it. A validator that rejects everything is as useless as one that rejects nothing, so both directions are required.
+
+---
+
+## 19. R1 — Media duration and a real coverage check; fix the truncation
+
+**User impact:** the system reads whole episodes instead of the first seven minutes, and can tell when it hasn't.
+
+**Gap — two halves, both measured.**
+
+1. **`verify_source_productivity` is inert on coverage.** It takes `min_ratio: float = MIN_UTTERANCE_MEDIA_RATIO` and **never references it in the body**. It checks `len(utts) > 0` and `span_ms > 0`. It cannot do more, because **no entity stores media duration** — `grep -n "duration" worker/entities.py` returns nothing (trap 29).
+2. **Every source is truncated to ~6.9 minutes.** All four episodes yield exactly 21 utterances and 6.9 min of span, against real runtimes of 60–90 minutes. Identical figures across four different recordings means a cap, not a coincidence. **~92% of every episode is unread** — and that is the likeliest reason P4 has almost nothing to work with.
+
+**Implementation**
+1. Add `duration_ms` to `Source`, populated at fetch from the media metadata. Without it the coverage check cannot exist.
+2. **Wire `min_ratio`**: fail when `span_ms / duration_ms < min_ratio`. Set the floor deliberately — 0.05 would pass today's 7.6% and is useless; the point is to catch truncation, so it must sit near full coverage.
+3. **Find the cap before re-ingesting.** Four sources truncating identically is systematic. Check the fetch (a preview stream?), any duration or max-segment argument passed to `faster-whisper`, and whether the VAD gate is terminating early. **Read the ingest job records; do not re-run and hope.**
+4. Re-ingest all four at full length once found. Record real throughput — a 90-minute episode is the first honest measurement of ingest cost.
+
+**Validation**
+- **`verify_source_productivity` FAILS against the corpus as it stands today** (7.6% coverage). ← **(c)** *A coverage check that passes on a store known to be 92% unread is not a check.*
+- After repair, every source's `span_ms / duration_ms` clears the floor.
+- Unit test: a source with `duration_ms` set and one utterance covering 1% of it → FAIL. Same source at 95% → PASS. **Both directions**, or the check is untested in one of them.
+- `duration_ms` is non-null on every source; assert ingest refuses to persist a source without it.
+
+**Falsify.** Set `min_ratio = 0.0` and confirm today's corpus passes — proving the threshold is what does the work, not the surrounding code. Revert; record both.
+
+**Blast radius.** `worker/entities.py`, `worker/storage.py`, `worker/integrity.py`, `worker/adapters/*` (duration at fetch), the corpus (re-ingest), `docs/design_data_layer.md` §2, `docs/design_source_acquisition.md` §5.2, §3, §6.
+
+---
+
+## 20. C0 — Portability workflow; `mlx-lm` as an optional extra · *Issue 024 = B*
 
 **User impact:** the project can be installed on a machine that is not your Mac — which is what the roadmap's rented-GPU ingest step requires, and what it currently cannot do.
 
@@ -567,7 +644,7 @@ So `pip install -e ".[dev]"` fails during resolution on any non-Apple machine �
 
 ---
 
-## 19. I0 — First real ingest · **subjects selected (Issue 021 = B)**
+## 21. I0 — First real ingest · **subjects selected (Issue 021 = B)**
 
 **Subjects:** Chamath Palihapitiya, David Sacks, Jason Calacanis, David Friedberg — the four All-In hosts. **Primary source:** the All-In Podcast.
 
@@ -652,7 +729,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 20. P4 — Tension detection
+## 22. P4 — Tension detection
 
 **User impact:** the product's core claim starts working — *here are two things you said that cannot both be your view.*
 
@@ -682,7 +759,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 21. P3 — Topic model
+## 23. P3 — Topic model
 
 **User impact:** you can ask about any topic in your own words and get that person's record on it.
 
@@ -709,7 +786,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 22. P5 — Principle extraction
+## 24. P5 — Principle extraction
 
 **User impact:** the system can spot a double standard — the same principle applied to one person and not another.
 
@@ -738,7 +815,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 23. P6 — Rubric engine
+## 25. P6 — Rubric engine
 
 **User impact:** the four numbers appear — and, just as importantly, correctly refuse to appear when the evidence is thin.
 
@@ -770,7 +847,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 24. P7 — Local API
+## 26. P7 — Local API
 
 **User impact:** something outside Python can finally read the corpus.
 
@@ -801,7 +878,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 25. P8 — Browser extension
+## 27. P8 — Browser extension
 
 **User impact:** the product exists where you actually read.
 
@@ -831,7 +908,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 26. Deferred — designed for, not queued
+## 28. Deferred — designed for, not queued
 
 **Elon Musk (Issue 023 = A).** Out of scope until X/Twitter ingest exists. **Trigger:** an `XAPIAdapter` or `XArchiveImportAdapter` lands behind the `SourceAdapter` Protocol and a Musk corpus can be assembled that includes his primary medium. Until then, ingesting him would produce a confident score over a systematically skewed slice, and **invariant I5 would not catch it** — it gates on volume, not composition (trap 24).
 
@@ -841,7 +918,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 27. Invariants — do NOT change
+## 29. Invariants — do NOT change
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -849,13 +926,13 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 
 ---
 
-## 28. Contracts
+## 30. Contracts
 
 `master_implementation_plan.md` · `design_source_acquisition.md` · `design_claim_extraction.md` · `design_principle_extraction.md` · `design_topic_model.md` · `design_rubric_engine.md` · `design_data_layer.md` · `design_local_api_and_clients.md` · `design_ui_direction.md` · `design_evidence_integrity.md` · `e2e_verification_journeys.md` · `ongoing_errors.md`
 
 ---
 
-## 29. Feedback loop — what specs here have got wrong
+## 31. Feedback loop — what specs here have got wrong
 
 | What happened | Spec said | Should have said |
 |---|---|---|

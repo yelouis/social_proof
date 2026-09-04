@@ -488,6 +488,49 @@ Your selection: Proceed with Option B.
 
 ---
 
+### Issue 025: A published tension rests on two fabricated propositions — how should entailment be guarded?
+**Blocks: X0** · **Recommended: Option C** · *Found during the September 3 verification pass*
+
+The live database contains **one tension, status `published`**, cited in the guide's baseline as evidence the detector works. Traced to source:
+
+```
+PROPOSITION (both claims):
+  "Mandatory state and federal licensing regimes for frontier artificial intelligence models"
+
+CLAIM A  stance=oppose   2024-02-09
+  quote: "collection like robots or robots having"
+
+CLAIM B  stance=support  2025-10-03
+  quote: "steal happening right now. I really"
+```
+
+**Neither quote mentions licensing, regulation, frontier models, or anything adjacent.** The extractor invented a well-formed, plausible proposition and attached it to unrelated sentence fragments. Two fabrications then collided on the same `proposition_id` with opposite stances, and the detector — working correctly on garbage input — published an `unacknowledged_reversal`.
+
+**This is the exact output the entire project exists to prevent: a confident, well-cited, completely false accusation against a real named person.**
+
+**Why every existing guard passed.** `verify_quotes` checks that the quote span resolves to real text in the utterance. It does — those words really were said. **The fabrication is in the proposition, and nothing anywhere checks that the proposition is supported by the quote.** `design_claim_extraction.md` §8's five validators cover quote resolution, polarity, numeric ranges, enums and field consistency. None covers entailment.
+
+**Contributing cause, being fixed regardless of this selection.** Utterances are segmented on length, not sentence boundaries — they begin and end mid-word (`"...as it is bullsh-sh-"`, `"...appendages like huma"`). Extraction is being asked to find positions in fragments that cannot carry one, which invites exactly this. Fixing segmentation may remove most of the fabrication on its own. **The guard below is defence in depth, not the primary fix.**
+
+**Option A: a second model call per claim — "does this quote support this proposition?"**
+- Pros: targets the failure directly, and handles arbitrary paraphrase.
+- Cons: doubles extraction time on an already ~10-minute local loop. **And it repeats the Issue 019 circularity: the model that fabricated the proposition is the one asked to check it.** A different model would avoid that, at the cost of a second runtime.
+
+**Option B: lexical anchoring — require the proposition's content words to have support in the quote.**
+- Pros: deterministic, free, instant, no circularity. Would have caught both cases outright — "robots having appendages" contains none of *licensing*, *regime*, *frontier*.
+- Cons: brittle under paraphrase. *"We should require permits before training the big ones"* genuinely supports the licensing proposition with almost no lexical overlap, and would be wrongly rejected. Trades fabrication for silent false exclusion — the failure mode `design_claim_extraction.md` §3 already warns is invisible.
+
+**Option C (recommended): embedding similarity between quote and proposition, plus a minimum quote length.**
+Embed both with the pinned `nomic-embed` model; reject the claim when similarity falls below a measured floor. Additionally reject any quote shorter than a minimum token count — both fabricated quotes here are six words, cut mid-sentence.
+- Pros: handles paraphrase where B cannot, deterministic given a pinned model (so it stays inside the "no LLM at scoring time" rule), and effectively free since the embedder is already loaded. The length floor alone would have caught both of these.
+- Cons: one more measured threshold, provisional until the golden corpus grows (Issue 018 = B). A mid-similarity band will be genuinely ambiguous, and those should quarantine rather than publish.
+
+**Related, and worth your attention separately.** `design_claim_extraction.md` §6 says the local-vs-frontier extractor question should be revisited **with data, not on a hunch** — Issue 007's stated trigger. This is data: a 27B local model fabricating propositions on fragmentary input. It is not yet conclusive, because the fragments are a confound and may be the whole story. **Re-run the comparison after segmentation is fixed**, and if fabrication persists, file the extractor decision as its own issue rather than folding it into this one.
+
+Your selection: _____
+
+---
+
 ## 2. Parameters to be measured, not selected
 
 **These are not decisions and should not be guessed.** Each is a threshold whose correct value is discovered by running against the golden corpus (`e2e_verification_journeys.md`). An agent that picks a number here and moves on has skipped the work.

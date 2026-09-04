@@ -186,6 +186,18 @@ There is no `output_config.format` here. A local model asked politely for JSON w
 3. **Numeric ranges** — `hedging_level` and `confidence` in `[0,1]`. JSON Schema cannot express this; check it in code.
 4. **Enum membership** — `stance` and `exclusion_reason` against the allowed sets. Grammar should cover this; verify anyway.
 5. **Consistency** — `is_own_assertion: false` requires a non-null `exclusion_reason`, and vice versa.
+6. **Entailment — the quote must actually support the proposition.** *(Added September 3, 2026 after a published tension was traced to two fabricated propositions — Issue 025.)*
+
+   Validators 1–5 all passed on this claim:
+   ```
+   proposition: "Mandatory state and federal licensing regimes for frontier AI models"
+   quote:       "collection like robots or robots having"
+   ```
+   The quote resolves. It carries no polarity. Ranges and enums are valid. **And the proposition is pure invention.** Validator 1 asks *"are these words real?"*; nothing asked *"do these words say that?"* — which is the question that separates a citation from an accusation.
+
+   Reject when the quote does not support the proposition, and reject any quote below a minimum token count — both fabrications above were six-word fragments. Mechanism per Issue 025's selection; whatever it is, it must stay deterministic so §0's "no LLM at scoring time" rule survives.
+
+**Segmentation is a precondition for all six.** Utterances split on length rather than sentence boundaries produce fragments that begin and end mid-word (`"...as it is bullsh-sh-"`). Asking a model to find a *position* in a fragment that cannot hold one is what invites fabrication in the first place. **Segment on sentence and pause boundaries; a validator is defence in depth, not a substitute for coherent input.**
 
 Log every rejection with its reason. **The rejection rate is a quality signal for the model itself** — if polarity rejections climb after a prompt edit, the prompt got worse, and you will only know because the counter moved.
 

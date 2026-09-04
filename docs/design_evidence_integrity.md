@@ -28,6 +28,7 @@ Collected here because they are enforced together by one pass.
 |---|---|---|
 | **E1** | Every rendered claim carries a verbatim quote, a date, and a resolvable source locator. | Widget tests + integrity pass |
 | **E2** | Every quoted string `grep -F`-matches its stored source text. | `verify_quotes` (§3) |
+| **E2b** | Every quote **supports the proposition attached to it.** E2 alone proved words were said; it never proved they said *that*. A published tension was traced to two real quotes carrying an invented proposition — Issue 025. | Extraction validator 6 (`design_claim_extraction.md` §8) |
 | **E3** | Nothing derived from page context ever persists. | `verify_no_page_context` (§3) |
 | **E4** | Below the per-axis gate, no number is computed — not computed-and-hidden. | `verify_no_suppressed_scores` (§3) |
 | **E5** | Any Tension whose preconditions fail is quarantined, never rendered. | `verify_quarantine_not_rendered` (§3) |
