@@ -271,6 +271,7 @@ def test_panel_ingest_end_to_end_and_integrity(
         locator=enclosure_url,
         tier="B",
         title="All-In E287: Nvidia's Historic Quarter, SaaS Comeback",
+        extra={"duration_ms": 5801000, "published_at": "2026-08-29T01:19:00+00:00"},
     )
 
     # Claims distributed across multiple hosts from the actual conversation
@@ -432,6 +433,7 @@ def test_panel_reingest_idempotency_j11(
         locator="https://traffic.libsyn.com/secure/allinchamathjason/ALLIN-E287_Ch.mp3",
         tier="B",
         title="All-In E287",
+        extra={"duration_ms": 5801000, "published_at": "2026-08-29T01:19:00+00:00"},
     )
 
     # Ingest Pass 1

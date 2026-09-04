@@ -532,7 +532,7 @@ def verify_role_coverage(
     )
 
 
-MIN_UTTERANCE_MEDIA_RATIO: float = 0.05
+MIN_UTTERANCE_MEDIA_RATIO: float = 0.80  # provisional (Parameter 029)
 
 
 def verify_source_productivity(
@@ -540,8 +540,9 @@ def verify_source_productivity(
     utterances: list[Utterance],
     min_ratio: float = MIN_UTTERANCE_MEDIA_RATIO,
 ) -> CheckResult:
-    """Every source with ingested_at set must have produced >= 1 utterance (no silent empty ingests).
+    """Every source with ingested_at set must have produced >= 1 utterance (no silent empty ingests)
 
+    and utterance span must cover at least min_ratio of the source media duration.
     Invariant: Success is output. Audio deletion and ingested_at require non-empty extraction.
     """
     ingested_sources = [s for s in sources if s.ingested_at is not None]
@@ -558,6 +559,7 @@ def verify_source_productivity(
     for u in utterances:
         utts_by_source.setdefault(u.source_id, []).append(u)
 
+    # Pass 1: Empty-source check (R0 invariant: success is output; audio deletion requires >= 1 utterance)
     for s in ingested_sources:
         src_utts = utts_by_source.get(s.source_id, [])
         if len(src_utts) == 0:
@@ -569,6 +571,9 @@ def verify_source_productivity(
                 examined_count=len(ingested_sources),
             )
 
+    # Pass 2: Media duration and coverage check (R1 invariant: coverage >= min_ratio)
+    for s in ingested_sources:
+        src_utts = utts_by_source.get(s.source_id, [])
         min_start = min(u.start_ms for u in src_utts)
         max_end = max(u.end_ms for u in src_utts)
         span_ms = max_end - min_start
@@ -581,12 +586,37 @@ def verify_source_productivity(
                 examined_count=len(ingested_sources),
             )
 
+        if not s.duration_ms or s.duration_ms <= 0:
+            return CheckResult(
+                name="verify_source_productivity",
+                passed=False,
+                status="FAIL",
+                message=f"Source {s.source_id} ('{s.title}') has missing or zero duration_ms: {s.duration_ms}",
+                examined_count=len(ingested_sources),
+            )
+
+        ratio = span_ms / s.duration_ms
+        if ratio < min_ratio:
+            return CheckResult(
+                name="verify_source_productivity",
+                passed=False,
+                status="FAIL",
+                message=(
+                    f"Source {s.source_id} ('{s.title}') utterance coverage {ratio:.1%} "
+                    f"({span_ms}ms / {s.duration_ms}ms) falls below minimum ratio {min_ratio:.1%}"
+                ),
+                examined_count=len(ingested_sources),
+            )
+
     total_utts = sum(len(utts_by_source.get(s.source_id, [])) for s in ingested_sources)
     return CheckResult(
         name="verify_source_productivity",
         passed=True,
         status="PASS",
-        message=f"All {len(ingested_sources)} ingested sources produced utterances (total {total_utts})",
+        message=(
+            f"All {len(ingested_sources)} ingested sources produced utterances with coverage >= {min_ratio:.1%} "
+            f"(total {total_utts} utterances)"
+        ),
         examined_count=len(ingested_sources),
     )
 

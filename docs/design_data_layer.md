@@ -45,6 +45,7 @@ subjects/{subject_id}
     authorship_confidence   # Tier E only
     ingest_job_id, transcription_model, ingested_at
     audio_deleted_at        # audio is not retained; this records when it went
+    duration_ms             # duration in milliseconds, parsed from feed metadata
 
   source_roles/{role_id}       # id = sha256(source_id | subject_id)[:16]
     source_id, subject_id      # Issue 022 = A: tier and venue are properties

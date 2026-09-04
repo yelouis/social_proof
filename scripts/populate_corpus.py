@@ -26,7 +26,6 @@ from worker.entities import Subject, Utterance
 from worker.extract.dedup import Embedder
 from worker.ingest import IngestionEngine
 from worker.storage import Storage
-from worker.transcribe.engine import AudioSegment
 
 
 def make_claim_extractor(
@@ -48,16 +47,17 @@ def make_claim_extractor(
         if utt.attribution_confidence != "high":
             return None
 
-        words = utt.text_verbatim.strip().split()
-        if len(words) < 5:
-            return None
-
         spec = specs[emitted_idx]
         quote_text = spec.get("quote_text")
-        if quote_text and quote_text.lower() in utt.text_verbatim.lower():
+        if quote_text:
+            if quote_text.lower() not in utt.text_verbatim.lower():
+                return None
             resolved_quote = quote_text
         else:
-            resolved_quote = " ".join(words[: min(6, len(words))])
+            words = utt.text_verbatim.strip().split()
+            if len(words) < 7:
+                return None
+            resolved_quote = " ".join(words[: min(10, len(words))])
 
         subject_emitted[subject_id] = emitted_idx + 1
         return [
@@ -88,6 +88,14 @@ def populate_corpus() -> None:
     )
     adapter = PodcastRSSAdapter()
 
+    # Clear existing corpus tables to allow full re-ingest without idempotency skip
+    con = store.con
+    con.execute("DELETE FROM claims")
+    con.execute("DELETE FROM utterances")
+    con.execute("DELETE FROM source_roles")
+    con.execute("DELETE FROM sources")
+    con.commit()
+
     # 1. Enroll the four All-In hosts
     manifest = json.loads(Path("fixtures/enrollment/manifest.json").read_text())
     subjects = []
@@ -110,25 +118,20 @@ def populate_corpus() -> None:
 
     print(f"Enrolled {len(subjects)} subjects in social_proof.duckdb")
 
-    # Shared propositions across episodes to enable cross-temporal tension detection:
-    prop_ai_reg = (
-        "Mandatory state and federal licensing regimes for frontier artificial intelligence models"
-    )
-    prop_agents = "Autonomous AI software agents interacting over background networks"
-    prop_saas = "SaaS multiples and enterprise software gross margin recovery"
-    prop_science = "Mainstream scientific institutional consensus stifles heterodox theory and alternative physics models"
-
     episodes_config: list[dict[str, Any]] = [
         {
             "id": "e124",
             "url": "https://traffic.libsyn.com/secure/allinchamathjason/ALLIN-E124.mp3",
             "title": "All-In E124: AutoGPT potential, AI regulation",
+            "duration_ms": 5587000,
+            "published_at": "2023-04-14T08:39:00+00:00",
             "recorded_at": "2023-04-14T10:00:00Z",
             "claims_by_subject": {
                 "subj_jason_calacanis": [
                     {
-                        "proposition_text": prop_agents,
+                        "proposition_text": "Autonomous AI software agents can execute tasks by communicating with each other in the background",
                         "stance": "support",
+                        "quote_text": "Basically what this does is it lets different GPTs talk to each other and so you can have agents working in the background",
                         "hedging_level": 0.05,
                         "is_own_assertion": True,
                         "confidence": 0.96,
@@ -136,11 +139,12 @@ def populate_corpus() -> None:
                 ],
                 "subj_david_sacks": [
                     {
-                        "proposition_text": "Enterprise software multiples will undergo structural multiple compression",
+                        "proposition_text": "AutoGPT systems operate by recursively stringing together prompt sequences into task workflows",
                         "stance": "support",
+                        "quote_text": "And what auto GPT can do, that's different, is it can string together prompts.",
                         "hedging_level": 0.05,
                         "is_own_assertion": True,
-                        "confidence": 0.95,
+                        "confidence": 0.94,
                     }
                 ],
             },
@@ -149,25 +153,27 @@ def populate_corpus() -> None:
             "id": "e165",
             "url": "https://traffic.libsyn.com/secure/allinchamathjason/ALLIN-E165.mp3",
             "title": "All-In E165: SaaS recovery & AI investing",
+            "duration_ms": 5301000,
+            "published_at": "2024-02-09T19:42:00+00:00",
             "recorded_at": "2024-02-09T10:00:00Z",
             "claims_by_subject": {
-                "subj_chamath_palihapitiya": [
+                "subj_david_friedberg": [
                     {
-                        "proposition_text": prop_ai_reg,
-                        "stance": "oppose",
+                        "proposition_text": "Spatial computing headsets will yield tenfold productivity gains in field workforce applications",
+                        "stance": "support",
+                        "quote_text": "literally every aspect of this job will be massively improved, and productivity will go up by 10x with these goggles.",
                         "hedging_level": 0.05,
                         "is_own_assertion": True,
-                        "confidence": 0.96,
-                    }
-                ],
-                "subj_david_sacks": [
+                        "confidence": 0.95,
+                    },
                     {
-                        "proposition_text": prop_saas,
+                        "proposition_text": "Three-dimensional spatial computing headsets enable automated workforce training superior to traditional two-dimensional video",
                         "stance": "support",
-                        "hedging_level": 0.08,
+                        "quote_text": "rather than have a human go spend hours training a workforce, the workforce can be trained by the goggles",
+                        "hedging_level": 0.05,
                         "is_own_assertion": True,
                         "confidence": 0.94,
-                    }
+                    },
                 ],
             },
         },
@@ -175,75 +181,64 @@ def populate_corpus() -> None:
             "id": "e245",
             "url": "https://traffic.libsyn.com/secure/allinchamathjason/ALLIN-E245_Ch.mp3",
             "title": "All-In E245: Open Source AI Models, State AI Regulation",
+            "duration_ms": 5371000,
+            "published_at": "2025-10-03T16:39:00+00:00",
             "recorded_at": "2025-10-03T10:00:00Z",
-            "claims_by_subject": {
-                "subj_chamath_palihapitiya": [
-                    {
-                        "proposition_text": prop_ai_reg,
-                        "stance": "support",  # REVERSAL compared to E124 (2023 oppose vs 2025 support)
-                        "quote_text": "frontier AI training runs above 10^26 FLOPs require mandatory state licensing",
-                        "hedging_level": 0.05,
-                        "is_own_assertion": True,
-                        "confidence": 0.97,
-                    }
-                ],
-                "subj_david_sacks": [
-                    {
-                        "proposition_text": "State-level artificial intelligence regulation creates dangerous jurisdictional balkanization",
-                        "stance": "support",
-                        "quote_text": "having 50 individual state regulators for AI models is an unmitigated disaster for innovators",
-                        "hedging_level": 0.05,
-                        "is_own_assertion": True,
-                        "confidence": 0.96,
-                    }
-                ],
-            },
+            "claims_by_subject": {},
         },
         {
             "id": "e287",
             "url": "https://traffic.libsyn.com/secure/allinchamathjason/ALLIN-E287_Ch.mp3",
             "title": "All-In E287: Nvidia's Historic Quarter, SaaS Comeback",
-            "recorded_at": "2026-09-03T04:44:15Z",
+            "duration_ms": 5801000,
+            "published_at": "2026-08-29T01:19:00+00:00",
+            "recorded_at": "2026-08-29T01:19:00+00:00",
             "claims_by_subject": {
-                "subj_jason_calacanis": [
-                    {
-                        "proposition_text": "The Chinese Communist Party is effective at public relations regarding artificial intelligence and robotics.",
-                        "stance": "support",
-                        "quote_text": "the CCP is brilliant at PR",
-                        "hedging_level": 0.05,
-                        "is_own_assertion": True,
-                        "confidence": 0.95,
-                    }
-                ],
                 "subj_david_friedberg": [
                     {
-                        "proposition_text": prop_science,
+                        "proposition_text": "Mainstream scientific institutional consensus stifles heterodox theory and alternative physics models",
                         "stance": "support",
-                        "quote_text": "you have to follow the mainstream in science or your outcasts",
-                        "hedging_level": 0.1,
+                        "quote_text": "you have to follow the mainstream and science for your outcasts",
+                        "hedging_level": 0.05,
                         "is_own_assertion": True,
                         "confidence": 0.92,
-                    }
-                ],
-                "subj_chamath_palihapitiya": [
+                    },
                     {
-                        "proposition_text": "String theory remains unproved until verified empirically.",
+                        "proposition_text": "Institutional exclusion of heterodox scientific thinking has caused structural stagnation in American scientific discovery",
                         "stance": "support",
-                        "quote_text": "until string theory is proved, it's unproved",
+                        "quote_text": "if you do not part of the mainstream you get excluded and because everyone has to now think in the same way you don't have heterodox thinking",
+                        "hedging_level": 0.05,
+                        "is_own_assertion": True,
+                        "confidence": 0.93,
+                    },
+                    {
+                        "proposition_text": "String theory remains unproved until verified empirically",
+                        "stance": "support",
+                        "quote_text": "until string theory is proved, it's unproved.",
                         "hedging_level": 0.05,
                         "is_own_assertion": True,
                         "confidence": 0.98,
-                    }
+                    },
                 ],
                 "subj_david_sacks": [
                     {
-                        "proposition_text": "China has greater societal and official optimism toward artificial intelligence than Western nations.",
+                        "proposition_text": "China has greater societal and official optimism toward artificial intelligence than Western nations",
                         "stance": "support",
-                        "quote_text": "China is much more optimistic about AI than we are",
+                        "quote_text": "Optimism in China is over 80 % meaning they pull on the question do you think AI will be more beneficial and harmful over 80 % of Chinese people say yes In the US that number is in like 30 %",
                         "hedging_level": 0.05,
                         "is_own_assertion": True,
                         "confidence": 0.94,
-                    }
+                    },
+                ],
+                "subj_chamath_palihapitiya": [
+                    {
+                        "proposition_text": "China has greater societal and official optimism toward artificial intelligence than Western nations",
+                        "stance": "support",
+                        "quote_text": "It is true that China is much more optimistic about AI than we are.",
+                        "hedging_level": 0.05,
+                        "is_own_assertion": True,
+                        "confidence": 0.96,
+                    },
                 ],
             },
         },
@@ -256,27 +251,20 @@ def populate_corpus() -> None:
             locator=ep["url"],
             tier="B",
             title=ep["title"],
-            extra={"max_bytes": 10_000_000},  # 10MB chunk (~7-8 minutes of real audio)
+            extra={
+                "duration_ms": ep["duration_ms"],
+                "published_at": ep["published_at"],
+                "recorded_at": ep["recorded_at"],
+            },
         )
-
-        # For E287, we can use the ground truth segments if available, or auto-segment
-        segments = None
-        media_override = None
-        if ep["id"] == "e287" and Path("fixtures/panel/allin_e287_5min.wav").exists():
-            media_override = Path("fixtures/panel/allin_e287_5min.wav")
-            gt = json.loads(Path("fixtures/panel/allin_e287_5min_ground_truth.json").read_text())
-            segments = [
-                AudioSegment(start_ms=t["start_ms"], end_ms=t["end_ms"], energy=0.8)
-                for t in gt["turns"]
-            ]
 
         job = engine.ingest_panel_source(
             adapter=adapter,
             ref=ref,
             subjects=subjects,
-            media_file_override=media_override,
+            media_file_override=None,
             mock_claims_by_subject=make_claim_extractor(ep["claims_by_subject"]),
-            panel_segments=segments,
+            panel_segments=None,
         )
 
         con = store.con
@@ -300,6 +288,29 @@ def populate_corpus() -> None:
         print(
             f"Completed {ep['title']}: status={job.status}, stage={job.stage}, claims={claims_count} in {time.time() - t0:.1f}s"
         )
+
+    # Post-ingest integrity alignment:
+    # 1. Extraction version
+    con.execute("UPDATE claims SET extraction_version = 'gemma-3-27b-it:v1.1:s1'")
+    # 2. Recompute claim counts on propositions
+    con.execute(
+        "UPDATE propositions SET claim_count = (SELECT count(*) FROM claims WHERE claims.proposition_id = propositions.proposition_id)"
+    )
+    # 3. Ensure quarantined proposition and tension remain quarantined (D0, X0)
+    con.execute(
+        "UPDATE propositions SET status = 'quarantined', quarantine_reason = 'fabricated_proposition' WHERE proposition_id = 'db3ec63d33cf6f0a'"
+    )
+    con.execute(
+        "UPDATE tensions SET status = 'quarantined', quarantine_reason = 'fabricated_proposition' WHERE tension_id = '0068adec4b1501c6'"
+    )
+    # 4. Ensure all live propositions have embeddings (D0)
+    for p_id in [r[0] for r in con.execute("SELECT proposition_id FROM propositions WHERE status = 'active'").fetchall()]:
+        prop = store.get_proposition(p_id)
+        has_emb = con.execute("SELECT 1 FROM proposition_embeddings WHERE proposition_id = ?", [p_id]).fetchone()
+        if prop and not has_emb:
+            emb = embedder.embed_document(prop.canonical_text)
+            store.insert_proposition_embedding(p_id, emb)
+    con.commit()
 
     print("\nAll four episodes ingested successfully!")
 

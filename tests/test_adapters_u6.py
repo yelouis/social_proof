@@ -12,12 +12,13 @@ from worker.storage import Storage
 def test_podcast_rss_adapter_feed_and_citation(tmp_path: Path) -> None:
     adapter = PodcastRSSAdapter(cache_dir=tmp_path / "podcasts")
     sample_xml = """<?xml version="1.0" encoding="UTF-8"?>
-    <rss version="2.0">
+    <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
       <channel>
         <title>Tech Insights</title>
         <item>
           <title>AI Safety Debate</title>
           <pubDate>Mon, 15 Jan 2024 10:00:00 GMT</pubDate>
+          <itunes:duration>01:36:41</itunes:duration>
           <enclosure url="https://cdn.podcasts.example.com/ep101.mp3" type="audio/mpeg" length="123456"/>
         </item>
       </channel>
@@ -27,11 +28,21 @@ def test_podcast_rss_adapter_feed_and_citation(tmp_path: Path) -> None:
     assert len(episodes) == 1
     assert episodes[0]["title"] == "AI Safety Debate"
     assert episodes[0]["enclosure_url"] == "https://cdn.podcasts.example.com/ep101.mp3"
+    assert episodes[0]["duration_ms"] == 5801000
+    assert episodes[0]["pub_date"] == "2024-01-15T10:00:00+00:00"
 
-    ref = SourceRef(locator="https://cdn.podcasts.example.com/ep101.mp3", tier="B", title="AI Safety Debate")
+    ref = SourceRef(
+        locator="https://cdn.podcasts.example.com/ep101.mp3",
+        tier="B",
+        title="AI Safety Debate",
+        extra={"duration_ms": 5801000, "published_at": "2024-01-15T10:00:00+00:00"},
+    )
     raw = adapter.fetch(ref, mocked_bytes=b"PODCAST_MP3_AUDIO_BYTES")
     norm = adapter.normalize(raw)
     source = norm.source
+
+    assert source.duration_ms == 5801000
+    assert source.published_at == "2024-01-15T10:00:00+00:00"
 
     subject = Subject(subject_id="subj_pod_01", display_name="Podcaster", handles={"podcast_rss": "https://cdn.podcasts.example.com/feed.xml"})
     role = adapter.role(ref, subject)

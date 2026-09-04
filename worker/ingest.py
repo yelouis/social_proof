@@ -103,6 +103,12 @@ class IngestionEngine:
         source = norm.source
         role = adapter.role(ref, subject)
 
+        if not source.duration_ms or source.duration_ms <= 0:
+            raise ValueError(
+                f"Source {source.source_id} ('{source.title}') missing or invalid duration_ms: {source.duration_ms}. "
+                "Ingest refuses to persist a source without duration_ms."
+            )
+
         # Check idempotency: if source already has utterances and audio was deleted, return completed
         existing_src = self.storage.get_source(source.source_id)
         if existing_src is not None and existing_src.audio_deleted_at is not None:
@@ -275,6 +281,12 @@ class IngestionEngine:
         norm = adapter.normalize(raw)
         source = norm.source
 
+        if not source.duration_ms or source.duration_ms <= 0:
+            raise ValueError(
+                f"Source {source.source_id} ('{source.title}') missing or invalid duration_ms: {source.duration_ms}. "
+                "Ingest refuses to persist a source without duration_ms."
+            )
+
         # Check idempotency: if source already has utterances and audio was deleted, return completed
         existing_src = self.storage.get_source(source.source_id)
         if existing_src is not None and existing_src.audio_deleted_at is not None:
@@ -335,6 +347,36 @@ class IngestionEngine:
                     "Productivity gate failed: zero utterances produced from source. Audio preserved."
                 )
                 return job
+
+            if panel_segments is None and len(utterances) > 0:
+                from worker.segment import segment_words_into_utterances
+                from worker.transcribe.reconciler import WordTimestamp
+
+                all_words: list[WordTimestamp] = []
+                for u in utterances:
+                    if u.word_timestamps_ref:
+                        w_list = self.storage.artifacts.get_word_timestamps(u.word_timestamps_ref)
+                        if w_list:
+                            for w in w_list:
+                                all_words.append(
+                                    WordTimestamp(
+                                        word=w["word"],
+                                        start_ms=w["start_ms"],
+                                        end_ms=w["end_ms"],
+                                        confidence=w.get("confidence", 1.0),
+                                    )
+                                )
+                if all_words:
+                    self.storage.con.execute(
+                        "DELETE FROM utterances WHERE source_id = ?", [source.source_id]
+                    )
+                    utterances = segment_words_into_utterances(
+                        source=source,
+                        subject_id="panel",
+                        words=all_words,
+                        storage=self.storage,
+                        enforce_sentence_boundary=True,
+                    )
 
             # Mark source audio deleted in DB and delete raw audio to honor retention contract
             source.ingested_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())

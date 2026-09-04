@@ -75,6 +75,9 @@ class WhisperTranscriptionEngine:
         self.model_size_or_path = model_size_or_path
         self.device = device
         self.compute_type = compute_type
+        self._cached_audio_path: str | None = None
+        self._cached_wav: Any = None
+        self._cached_sr: int = 16000
         if model_instance is not None:
             self.model = model_instance
         else:
@@ -87,15 +90,22 @@ class WhisperTranscriptionEngine:
         beam_size: int,
         temperature: float,
     ) -> TranscriptionPassResult:
-        import torchaudio
+        audio_str = str(audio_path)
+        if self._cached_audio_path == audio_str and self._cached_wav is not None:
+            wav, sr = self._cached_wav, self._cached_sr
+        else:
+            import torchaudio
 
-        wav, sr = torchaudio.load(str(audio_path))
-        if wav.shape[0] > 1:
-            wav = wav.mean(dim=0, keepdim=True)
-        if sr != 16000:
-            resampler = torchaudio.transforms.Resample(sr, 16000)
-            wav = resampler(wav)
-            sr = 16000
+            wav, sr = torchaudio.load(audio_str)
+            if wav.shape[0] > 1:
+                wav = wav.mean(dim=0, keepdim=True)
+            if sr != 16000:
+                resampler = torchaudio.transforms.Resample(sr, 16000)
+                wav = resampler(wav)
+                sr = 16000
+            self._cached_audio_path = audio_str
+            self._cached_wav = wav
+            self._cached_sr = sr
 
         start_sample = int((segment.start_ms / 1000.0) * sr)
         end_sample = int((segment.end_ms / 1000.0) * sr)

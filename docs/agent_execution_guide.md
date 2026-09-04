@@ -119,13 +119,13 @@ Measured **September 4, 2026** at `5f881ea`. Re-run via §2 before trusting.
 | Gate | Result | Note |
 |---|---|---|
 | `ruff check` | **PASS** | |
-| `mypy --strict` | **PASS** — clean on 78 files | Repaired in G0 (narrowed `Claim | None` and `quote_text` in `tests/test_segmentation_x0.py`). |
-| `pytest tests/ -q` | **PASS** — 167 passed in **99s** | `requires_models` tests ran (not skipped, no deselection in `addopts`). ~99s is well above trap 18's 35s floor. |
+| `mypy --strict` | **PASS** — clean on 80 files | Clean across worker/, tests/, fixtures/, golden/. |
+| `pytest tests/ -q` | **PASS** — 180 passed in **101s** | `requires_models` tests ran (not skipped, no deselection in `addopts`). ~101s is well above trap 18's 35s floor. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
 | `worker.integrity --all` | **PASS — independent populations** | 12 checks evaluated. FIXTURES and CORPUS reported separately without unioning. `verify_canonical_ids` and `verify_quarantined_propositions_unreachable` both PASS. Real assessments loaded (9 checked). |
-| `worker.golden.report` | **PASS** | Fixtures 19/19 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
-| **CI / Portability** | **PASS** | `portability.yml` tests base install without Apple extra; runs lint, mypy, and non-model tests (134 passed in ~12s). |
-| **Corpus** | **POPULATED, PARTIALLY REPAIRED** | 4 sources, **361 utterances**, 9 claims, 12 propositions, 9 assessments. The silent-failure bug **is** fixed. But each source covers only **~416.5s of a 60–90 min episode** (~7.7%), and `verify_source_productivity` does not catch it. **Cause found — `scripts/populate_corpus.py:259` caps the download at 10MB via an HTTP `Range` header.** See §19; do not go hunting for it again. |
+| `worker.golden.report` | **PASS** | Fixtures 20/20 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
+| **CI / Portability** | **PASS** | `portability.yml` tests base install without Apple extra; runs lint, mypy, and non-model tests (161 passed in ~31s). |
+| **Corpus** | **POPULATED, FULL COVERAGE (R1 DELIVERED)** | 4 sources, **4,219 utterances**, 9 claims, 12 propositions, 9 assessments. Coverage across all four sources: **99.7%–100.0%** (5,283s–5,800s of 5,301s–5,801s). Feed `<itunes:duration>` and `pubDate` parsed; `published_at` preserved from feed; `MIN_UTTERANCE_MEDIA_RATIO = 0.80` enforced and passing. Truncation bug eliminated. Item R1 delivered. |
 | **Propositions** | **REPAIRED (D0 DELIVERED)** | 12 propositions total, 8 carrying live claims all embedded with `nomic-embed-text-v1.5` via `embed_document`. 4 orphaned/quarantined rows. `claim_count` matches real claims on every row. Three forked rows merged/updated. Fabricated proposition `db3ec63d33cf6f0a` quarantined. `/resolve` filters structurally for `status = 'active'` and live claims existence. Issue 027 = A; item D0 delivered. |
 | **`source_count`** | **MEASURED** | Sacks and Friedberg record 2; Jason and Chamath record 1. Resolved through utterance anchor chain, `hasattr` removed, I3 anchor-chain violation raises if unresolvable. Item M0 delivered. |
 | **Published tension** | **QUARANTINED — X0 delivered** | Tension `0068adec4b1501c6` is `status='quarantined'`, `quarantine_reason='fabricated_proposition'`, and its two claims are gone. Verified. The 9 surviving claims were read individually: quotes are verbatim and the propositions are genuinely supported. The fabricated proposition `db3ec63d33cf6f0a` is quarantined and unreachable from `/resolve`. |
@@ -181,7 +181,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 | 3 | **E0** | Integrity pass must check the corpus, not a union | none | **delivered** | FIXTURES and CORPUS evaluated and reported independently; assessments loaded from DB; examined counts reported. |
 | 4 | **D0** | Proposition table repair (**Issue 027 = A**) | none | **delivered** | Normalized canonical IDs, merged three forked rows, backfilled embeddings for all 8 live propositions, quarantined fabricated db3ec63d33cf6f0a, and added structural read filters. |
 | 5 | **X1** | Entailment validator (Issue 025 = C) | none | **delivered** | Validator 6 added after quote resolution; MIN_QUOTE_TOKENS=7, T_ENTAIL_LOW=0.60, T_ENTAIL_HIGH=0.70; fabrications rejected, 9 live claims pass, prefix sensitivity verified, ambiguous band quarantined and excluded from axis_evidence. |
-| 6 | **R1** | Media duration + real coverage check; fix truncation | none | outstanding | Unblocked by X1. Cause of the truncation is **found** (§19) — do not re-hunt it. |
+| 6 | **R1** | Media duration + real coverage check; fix truncation | none | **delivered** | Feed duration parsed, published_at preserved, MIN_UTTERANCE_MEDIA_RATIO=0.80 enforced, 10MB byte cap removed; full re-ingest yields 4,219 utterances at 99.7%–100.0% coverage across all 4 sources. |
 | 7 | **F0** | Repair the behaviour fixture set | none | **delivered** | 20/20 across all 17 classes. |
 | 8 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | Landed while the corpus was empty, as intended. |
 | 9 | **I0** | First real ingest — the four All-In hosts | none | **superseded → R1** | I0.1/I0.2 hold. I0.3's remaining work is the truncation, tracked in R1. **Not a to-do; do not open it.** |
@@ -851,7 +851,7 @@ Also assert `claim_count` matches the real count — as a **check**, never as a 
 
 ---
 
-## 19. R1 — Media duration and a real coverage check; fix the truncation
+## 19. R1 — Media duration and a real coverage check; fix the truncation · **DELIVERED**
 
 **User impact:** the system reads whole episodes instead of the first seven minutes, and can tell when it hasn't.
 

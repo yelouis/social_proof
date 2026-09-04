@@ -201,8 +201,10 @@ class Storage:
                 ingest_job_id VARCHAR,
                 transcription_model VARCHAR,
                 ingested_at VARCHAR,
-                audio_deleted_at VARCHAR
+                audio_deleted_at VARCHAR,
+                duration_ms BIGINT
             );
+            ALTER TABLE sources ADD COLUMN IF NOT EXISTS duration_ms BIGINT;
 
             CREATE TABLE IF NOT EXISTS source_roles (
                 role_id VARCHAR PRIMARY KEY,
@@ -414,12 +416,16 @@ class Storage:
     def insert_source(self, s: Source) -> None:
         self.con.execute(
             """
-            INSERT INTO sources VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO sources VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT (source_id) DO UPDATE SET
                 title = excluded.title,
                 publisher = excluded.publisher,
                 citation_url_template = excluded.citation_url_template,
-                audio_deleted_at = excluded.audio_deleted_at
+                recorded_at = excluded.recorded_at,
+                published_at = excluded.published_at,
+                ingested_at = excluded.ingested_at,
+                audio_deleted_at = excluded.audio_deleted_at,
+                duration_ms = excluded.duration_ms
             """,
             [
                 s.source_id,
@@ -436,6 +442,7 @@ class Storage:
                 s.transcription_model,
                 s.ingested_at,
                 s.audio_deleted_at,
+                s.duration_ms,
             ],
         )
 
@@ -458,6 +465,7 @@ class Storage:
             transcription_model=res[11],
             ingested_at=res[12],
             audio_deleted_at=res[13],
+            duration_ms=res[14] if len(res) > 14 and res[14] is not None else 0,
         )
 
     def insert_source_role(self, r: SourceSubjectRole) -> None:

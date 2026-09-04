@@ -65,6 +65,7 @@ def test_single_speaker_ingest_end_to_end_and_integrity(clean_ingest_env: tuple[
         locator=enclosure_url,
         tier="B",
         title="All-In E287: Nvidia's Historic Quarter, SaaS Comeback",
+        extra={"duration_ms": 5801000, "published_at": "2026-08-29T01:19:00+00:00"},
     )
 
     # Mock extractable claim matching Chamath's verbatim words in this clip
@@ -175,7 +176,11 @@ def test_reingest_idempotency_zero_new_rows_zero_retranscription(clean_ingest_en
     audio_fixture = Path("fixtures/enrollment/chamath_palihapitiya.wav")
 
     subject = Subject(subject_id="subj_chamath", display_name="Chamath")
-    ref = SourceRef(locator="https://traffic.libsyn.com/secure/allinchamathjason/ALLIN-E287_Ch.mp3", tier="B")
+    ref = SourceRef(
+        locator="https://traffic.libsyn.com/secure/allinchamathjason/ALLIN-E287_Ch.mp3",
+        tier="B",
+        extra={"duration_ms": 5801000, "published_at": "2026-08-29T01:19:00+00:00"},
+    )
 
     # Pass 1: Initial ingest
     job1 = engine.ingest_single_speaker_source(adapter, ref, subject, media_file_override=audio_fixture)
@@ -215,7 +220,11 @@ def test_falsification_corrupt_text_verbatim_fails_verify_quotes_on_real_data(cl
     audio_fixture = Path("fixtures/enrollment/chamath_palihapitiya.wav")
 
     subject = Subject(subject_id="subj_chamath", display_name="Chamath")
-    ref = SourceRef(locator="https://traffic.libsyn.com/secure/allinchamathjason/ALLIN-E287_Ch.mp3", tier="B")
+    ref = SourceRef(
+        locator="https://traffic.libsyn.com/secure/allinchamathjason/ALLIN-E287_Ch.mp3",
+        tier="B",
+        extra={"duration_ms": 5801000, "published_at": "2026-08-29T01:19:00+00:00"},
+    )
 
     mock_claims = [
         {

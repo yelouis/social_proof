@@ -32,6 +32,7 @@ class Source:
     transcription_model: str | None = None
     ingested_at: str | None = None
     audio_deleted_at: str | None = None
+    duration_ms: int = 0
 
 
 @dataclass

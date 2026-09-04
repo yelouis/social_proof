@@ -9,7 +9,7 @@ import xml.etree.ElementTree as ET
 from collections.abc import Iterable
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Literal
+from typing import Any, Literal
 from urllib.parse import urlparse
 
 from worker.adapters.base import (
@@ -21,6 +21,56 @@ from worker.adapters.base import (
 )
 from worker.entities import Source, SourceSubjectRole, Subject
 from worker.storage import compute_role_id, compute_source_id
+
+
+def parse_itunes_duration(dur_str: str | None) -> int:
+    """Parses itunes:duration string (HH:MM:SS, MM:SS, or seconds) into milliseconds."""
+    if not dur_str:
+        return 0
+    s = dur_str.strip()
+    if not s:
+        return 0
+    parts = s.split(":")
+    try:
+        if len(parts) == 3:
+            hours = int(parts[0])
+            minutes = int(parts[1])
+            seconds = float(parts[2])
+            return int((hours * 3600 + minutes * 60 + seconds) * 1000)
+        elif len(parts) == 2:
+            minutes = int(parts[0])
+            seconds = float(parts[1])
+            return int((minutes * 60 + seconds) * 1000)
+        elif len(parts) == 1:
+            seconds = float(parts[0])
+            return int(seconds * 1000)
+    except (ValueError, TypeError):
+        return 0
+    return 0
+
+
+def parse_rfc822_date(date_str: str | None) -> str | None:
+    """Parses RFC 822 / RFC 2822 or ISO pubDate string to ISO 8601 UTC string."""
+    if not date_str:
+        return None
+    s = date_str.strip()
+    if not s:
+        return None
+    import email.utils
+
+    try:
+        dt = email.utils.parsedate_to_datetime(s)
+        return dt.astimezone(UTC).isoformat()
+    except Exception:
+        pass
+    try:
+        dt = datetime.fromisoformat(s)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=UTC)
+        return dt.astimezone(UTC).isoformat()
+    except Exception:
+        pass
+    return None
 
 
 class PodcastRSSAdapter(SourceAdapter):
@@ -81,13 +131,22 @@ class PodcastRSSAdapter(SourceAdapter):
         )
         return [ref]
 
-    def parse_feed_xml(self, xml_content: str | bytes) -> list[dict[str, str]]:
-        """Parses RSS XML for episode enclosures."""
+    def parse_feed_xml(self, xml_content: str | bytes) -> list[dict[str, Any]]:
+        """Parses RSS XML for episode enclosures and metadata."""
         root = ET.fromstring(xml_content)
-        episodes: list[dict[str, str]] = []
+        episodes: list[dict[str, Any]] = []
         for item in root.findall(".//item"):
             title = item.findtext("title") or "Episode"
-            pub_date = item.findtext("pubDate") or datetime.now(UTC).isoformat()
+            pub_date_raw = item.findtext("pubDate")
+            pub_date = parse_rfc822_date(pub_date_raw) or (pub_date_raw if pub_date_raw else "")
+
+            raw_dur = (
+                item.findtext("{http://www.itunes.com/dtds/podcast-1.0.dtd}duration")
+                or item.findtext("itunes:duration")
+                or item.findtext("duration")
+            )
+            duration_ms = parse_itunes_duration(raw_dur)
+
             enclosure = item.find("enclosure")
             url = enclosure.get("url") if enclosure is not None else ""
             if url:
@@ -96,6 +155,7 @@ class PodcastRSSAdapter(SourceAdapter):
                         "title": title,
                         "pub_date": pub_date,
                         "enclosure_url": url,
+                        "duration_ms": duration_ms,
                     }
                 )
         return episodes
@@ -122,11 +182,17 @@ class PodcastRSSAdapter(SourceAdapter):
         if not cached_path.exists():
             cached_path.write_bytes(data)
 
+        duration_ms = ref.extra.get("duration_ms", 0)
+        published_at = ref.extra.get("published_at") or ref.extra.get("pub_date") or ""
+        recorded_at = ref.extra.get("recorded_at") or published_at or ""
+
         metadata = {
             "title": ref.title or "Podcast Episode",
             "enclosure_url": ref.locator,
             "publisher": "Podcast Host",
-            "published_at": datetime.now(UTC).isoformat(),
+            "published_at": published_at,
+            "recorded_at": recorded_at,
+            "duration_ms": duration_ms,
             "venue_type": "own_channel",
             "audience_stance": "friendly",
             "interlocutor": None,
@@ -154,13 +220,14 @@ class PodcastRSSAdapter(SourceAdapter):
             artifact_hash=raw.content_hash,
             citation_url_template=citation_template,
             interlocutor=raw.metadata.get("interlocutor"),
-            recorded_at=raw.metadata.get("published_at", datetime.now(UTC).isoformat()),
-            published_at=raw.metadata.get("published_at", datetime.now(UTC).isoformat()),
+            recorded_at=raw.metadata.get("recorded_at", ""),
+            published_at=raw.metadata.get("published_at", ""),
             authorship_confidence=1.0,
             ingest_job_id=None,
             transcription_model="faster-whisper-large-v3",
-            ingested_at=datetime.now(UTC).isoformat(),
+            ingested_at=None,
             audio_deleted_at=None,
+            duration_ms=raw.metadata.get("duration_ms", 0),
         )
 
         temp_wav = Path(tempfile.gettempdir()) / f"normalized_pod_{source_id}.wav"

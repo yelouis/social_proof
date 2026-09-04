@@ -28,6 +28,9 @@ def get_default_speaker_classifier() -> Any:
     return _DEFAULT_SPEAKER_CLASSIFIER
 
 
+_VOICE_AUDIO_CACHE: dict[str, tuple[float, Any, int]] = {}
+
+
 def extract_voice_embedding(
     audio_path: str | Path,
     start_s: float = 0.0,
@@ -39,13 +42,21 @@ def extract_voice_embedding(
     if not path.exists():
         raise FileNotFoundError(f"Audio file not found: {path}")
 
-    wav, sr = torchaudio.load(str(path))
-    if wav.shape[0] > 1:
-        wav = wav.mean(dim=0, keepdim=True)
-    if sr != 16000:
-        resampler = torchaudio.transforms.Resample(sr, 16000)
-        wav = resampler(wav)
-        sr = 16000
+    path_str = str(path.resolve())
+    mtime = path.stat().st_mtime
+    if path_str in _VOICE_AUDIO_CACHE and _VOICE_AUDIO_CACHE[path_str][0] == mtime:
+        wav, sr = _VOICE_AUDIO_CACHE[path_str][1], _VOICE_AUDIO_CACHE[path_str][2]
+    else:
+        wav, sr = torchaudio.load(str(path))
+        if wav.shape[0] > 1:
+            wav = wav.mean(dim=0, keepdim=True)
+        if sr != 16000:
+            resampler = torchaudio.transforms.Resample(sr, 16000)
+            wav = resampler(wav)
+            sr = 16000
+        if len(_VOICE_AUDIO_CACHE) > 5:
+            _VOICE_AUDIO_CACHE.clear()
+        _VOICE_AUDIO_CACHE[path_str] = (mtime, wav, sr)
 
     start_sample = int(start_s * sr)
     if dur_s is not None:

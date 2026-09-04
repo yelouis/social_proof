@@ -19,6 +19,7 @@ def load_valid_fixtures() -> tuple[list[Source], list[Utterance], list[Claim], l
         transcription_model="whisper-large-v3",
         ingested_at="2024-01-16T12:00:00Z",
         audio_deleted_at="2024-01-16T12:05:00Z",
+        duration_ms=5500,
     )
 
     source_2 = Source(
@@ -34,6 +35,7 @@ def load_valid_fixtures() -> tuple[list[Source], list[Utterance], list[Claim], l
         transcription_model="official_transcript",
         ingested_at="2024-05-11T09:00:00Z",
         audio_deleted_at="2024-05-11T09:01:00Z",
+        duration_ms=8000,
     )
 
     role_1 = SourceSubjectRole(

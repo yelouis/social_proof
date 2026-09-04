@@ -32,6 +32,7 @@
 | **012** | Per-axis sufficiency gates | Phase 6 | **Conservative.** `insufficient_corpus` is always safe; a number on thin evidence never is. |
 | **016** | `H_max` — hedging ceiling in Specificity's checkability test | Phase 6 | **Toward generosity.** Only pure evasion should fail; too strict and the axis punishes ordinary caution. |
 | **026** | `MIN_QUOTE_TOKENS = 7`, `T_ENTAIL_LOW = 0.60`, `T_ENTAIL_HIGH = 0.70` — the entailment guard (Issue 025 = C) | X1 | **Reject boldly, quarantine the middle.** Measured provisional values against live corpus and X0 fabrications. Both known fabrications were 6-token fragments (sims 0.5296, 0.5337 < 0.60). Shortest live claim is 7 tokens (tautological string theory claim, sim 0.9311 >= 0.70); lowest live claim sim is 0.7091 >= 0.70. Ambiguous band `[0.60, 0.70)` quarantines as `entailment_ambiguous`. |
+| **029** | `MIN_UTTERANCE_MEDIA_RATIO = 0.80` — source productivity coverage floor | R1 | **Conservative.** Catches truncation without rejecting ordinary podcast silence/intros/outros. Measured truncated corpus at 7.4%–7.9% (< 0.80 -> FAIL); full episodes clear > 0.90. Provisional until 5-case floor. |
 
 ---
 
