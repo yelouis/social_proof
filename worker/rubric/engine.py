@@ -81,8 +81,9 @@ class RubricEngine:
         sources: set[str] = set()
         dates: list[datetime] = []
         for c in claims:
-            if hasattr(c, "source_id") and c.source_id:
-                sources.add(c.source_id)
+            utt = self.storage.get_utterance(c.utterance_id)
+            if utt is not None and utt.source_id:
+                sources.add(utt.source_id)
             if c.recorded_at:
                 try:
                     dt = datetime.fromisoformat(c.recorded_at.replace("Z", "+00:00"))
@@ -94,9 +95,14 @@ class RubricEngine:
         if len(dates) >= 2:
             span_days = max(0, (max(dates) - min(dates)).days)
 
+        if claim_count > 0 and not sources:
+            raise ValueError(
+                f"I3 anchor-chain violation: subject '{subject_id}' has {claim_count} claims but zero sources resolved"
+            )
+
         sufficiency: dict[str, Any] = {
             "claim_count": claim_count,
-            "source_count": max(len(sources), 1 if claim_count > 0 else 0),
+            "source_count": len(sources),
             "span_days": span_days,
         }
 

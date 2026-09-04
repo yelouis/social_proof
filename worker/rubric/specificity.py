@@ -39,7 +39,7 @@ class SpecificityCalculator:
         if claim.stance not in ("support", "oppose"):
             return False
 
-        text_to_scan = quote_text if quote_text else claim.canonical_text if hasattr(claim, "canonical_text") else ""
+        text_to_scan = quote_text or claim.quote_text or ""
         has_ne = bool(self.NAMED_ENTITY_PATTERN.search(text_to_scan))
         has_num = bool(self.NUMERIC_PATTERN.search(text_to_scan))
         has_temp = bool(self.TEMPORAL_PATTERN.search(text_to_scan))

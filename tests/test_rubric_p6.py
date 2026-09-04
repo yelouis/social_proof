@@ -16,7 +16,7 @@ from pathlib import Path
 import pytest
 
 from fixtures.behaviour.loader import load_behaviour_cases
-from worker.entities import Claim, Subject, Tension
+from worker.entities import Claim, Source, Subject, Tension, Utterance
 from worker.rubric.engine import RubricEngine
 from worker.rubric.even_handedness import EvenHandednessCalculator
 from worker.rubric.specificity import SpecificityCalculator
@@ -42,15 +42,38 @@ def test_sufficiency_gate_n11_assertion_c(test_store: Storage) -> None:
     subject = Subject(subject_id=n11.subject_id, display_name="Thin Subject N11")
     test_store.insert_subject(subject)
 
+    source = Source(
+        source_id="src_golden_thin",
+        title="Thin Corpus Source",
+        publisher="Test",
+        canonical_url="https://example.com/thin",
+        artifact_hash="hash_thin",
+    )
+    test_store.insert_source(source)
+
     # Insert 6 isolated claims (different propositions, single utterance each, no repeat coverage)
     claims: list[Claim] = []
     for i, u in enumerate(n11.utterances):
+        utt_id = f"utt_n11_{i}"
+        utt = Utterance(
+            utterance_id=utt_id,
+            source_id=source.source_id,
+            subject_id=subject.subject_id,
+            start_ms=i * 1000,
+            end_ms=(i + 1) * 1000,
+            text_verbatim=u.text,
+            speaker_label="speaker_0",
+            attribution_confidence="high",
+            attribution_method="test",
+        )
+        test_store.insert_utterance(utt)
+
         pid = compute_proposition_id(u.text)
-        cid = compute_claim_id(f"utt_n11_{i}", pid, "support", "v1")
+        cid = compute_claim_id(utt_id, pid, "support", "v1")
         c = Claim(
             claim_id=cid,
             subject_id=subject.subject_id,
-            utterance_id=f"utt_n11_{i}",
+            utterance_id=utt_id,
             proposition_id=pid,
             stance="support",
             hedging_level=0.1,
@@ -232,3 +255,55 @@ def test_rubric_engine_provenance_versions(test_store: Storage) -> None:
     assert assessment.embedding_model == "nomic-embed-text-v1.5"
     assert assessment.nlp_version == "v1.0-regex-ner"
     assert "google/gemma-3-27b-it" in assessment.extraction_model_set
+
+
+def test_rubric_engine_source_count_measured_assertion_c() -> None:
+    """Assertion (c) for M0: source_count is measured, not a constant.
+
+    - Sacks and Friedberg (2 distinct sources) record source_count: 2.
+    - Jason and Chamath (1 distinct source) record source_count: 1.
+    - A subject with zero claims records source_count: 0.
+    - A subject with claims but no resolvable source raises I3 anchor-chain violation.
+    """
+    live_store = Storage("social_proof.duckdb")
+    engine = RubricEngine(storage=live_store)
+
+    # Check live corpus spread
+    ass_sacks = engine.assess_subject_topic("subj_david_sacks", topic_id="global")
+    assert ass_sacks.sufficiency["source_count"] == 2, (
+        f"Expected 2 sources for Sacks, got {ass_sacks.sufficiency['source_count']}"
+    )
+
+    ass_friedberg = engine.assess_subject_topic("subj_david_friedberg", topic_id="global")
+    assert ass_friedberg.sufficiency["source_count"] == 2, (
+        f"Expected 2 sources for Friedberg, got {ass_friedberg.sufficiency['source_count']}"
+    )
+
+    ass_jason = engine.assess_subject_topic("subj_jason_calacanis", topic_id="global")
+    assert ass_jason.sufficiency["source_count"] == 1, (
+        f"Expected 1 source for Jason, got {ass_jason.sufficiency['source_count']}"
+    )
+
+    ass_chamath = engine.assess_subject_topic("subj_chamath_palihapitiya", topic_id="global")
+    assert ass_chamath.sufficiency["source_count"] == 1, (
+        f"Expected 1 source for Chamath, got {ass_chamath.sufficiency['source_count']}"
+    )
+
+    # Zero claims records 0
+    ass_zero = engine.assess_subject_topic("subj_nonexistent_subject", topic_id="global")
+    assert ass_zero.sufficiency["source_count"] == 0
+    assert ass_zero.sufficiency["claim_count"] == 0
+
+    # I3 anchor-chain violation: claim with no resolvable source raises
+    unresolvable_claim = Claim(
+        claim_id="c_unresolvable",
+        subject_id="subj_orphan",
+        utterance_id="utt_does_not_exist",
+        proposition_id="p_test",
+        stance="support",
+        hedging_level=0.1,
+        is_own_assertion=True,
+    )
+    with pytest.raises(ValueError, match="I3 anchor-chain violation"):
+        engine.assess_subject_topic("subj_orphan", override_claims=[unresolvable_claim])
+
