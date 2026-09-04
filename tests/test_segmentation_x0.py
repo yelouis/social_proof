@@ -50,11 +50,13 @@ def test_surviving_claims_have_verbatim_supporting_quotes() -> None:
     """All surviving claims in social_proof.duckdb have verbatim quotes present in utterances."""
     store = Storage("social_proof.duckdb")
     claim_ids = [r[0] for r in store.con.execute("SELECT claim_id FROM claims").fetchall()]
-    claims = [store.get_claim(cid) for cid in claim_ids if cid]
+    claims = [c for cid in claim_ids if (c := store.get_claim(cid)) is not None]
+    assert len(claims) == len(claim_ids), f"Unresolvable claims: found {len(claims)} of {len(claim_ids)}"
     assert len(claims) >= 9, f"Expected at least 9 verified claims, found {len(claims)}"
 
     for c in claims:
         # Quote must not be empty or a 6-word arbitrary fragment
+        assert c.quote_text is not None, f"Claim {c.claim_id} has no quote_text"
         assert len(c.quote_text.split()) >= 6, f"Claim quote too short: {c.quote_text}"
         assert c.extraction_version == "gemma-3-27b-it:v1.1:s1", (
             f"Claim {c.claim_id} does not have bumped extraction version"

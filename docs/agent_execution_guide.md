@@ -119,7 +119,7 @@ Measured **September 4, 2026** at `5f881ea`. Re-run via §2 before trusting.
 | Gate | Result | Note |
 |---|---|---|
 | `ruff check` | **PASS** | |
-| `mypy --strict` | **RED** — 11 errors, 78 files | All in `tests/test_segmentation_x0.py`, all one root cause. Arrived with X0. **§3 previously recorded PASS — this is a LOOP 7 entry.** Item G0. |
+| `mypy --strict` | **PASS** — clean on 78 files | Repaired in G0 (narrowed `Claim | None` and `quote_text` in `tests/test_segmentation_x0.py`). |
 | `pytest tests/ -q` | **PASS** — 157 passed in **90s** | `requires_models` tests ran (not skipped, no deselection in `addopts`). The earlier ~10m figure was a cold model cache; 90s is well above trap 18's 35s floor. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
 | `worker.integrity --all` | **PASS — and it is not checking your corpus** | Two separate problems. (1) `verify_source_productivity` accepts `min_ratio` (`MIN_UTTERANCE_MEDIA_RATIO = 0.05`) and **never references it**; it checks count > 0 and span > 0 only, and cannot do more because **no entity stores media duration**. (2) The pass **unions fixtures with the live DB** and reports 11 claims / 363 utterances / 6 sources against a database holding **9 / 361 / 4** — and **never loads assessments from the DB at all**, so two checks have never seen a real one. Items R1 and E0. |
@@ -176,7 +176,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 | Order | ID | Item | Blocked | Status | Why here |
 |---|---|---|---|---|---|
-| 1 | **G0** | Repair the `mypy` gate | none | **outstanding** | **A red gate outranks the queue.** 11 errors in `tests/test_segmentation_x0.py`, one root cause, arrived with X0. LOOP 7, not LOOP 1. Nothing below starts until this is green. |
+| 1 | **G0** | Repair the `mypy` gate | none | **delivered** | 11 errors in `tests/test_segmentation_x0.py` repaired; mypy clean on 78 files. |
 | 2 | **M0** | `source_count` is a constant, not a measurement | none | **outstanding** | Every assessment records `source_count: 1` because of a `hasattr` guard on a field that does not exist. Harmless today, suppresses real findings after R1. Fix it before the corpus gets big enough to matter. |
 | 3 | **E0** | Integrity pass must check the corpus, not a union | none | **outstanding** | The pass that certifies evidence integrity unions fixtures with live data and never loads real assessments. **It is the instrument R1 and X1 will be judged by — repair it before the runs it has to measure.** |
 | 4 | **D0** | Proposition table repair (**Issue 027 = A**) | none | **outstanding** | Unblocks X1. Normalizes canonical IDs, merges three forked rows, backfills the 8 missing embeddings, quarantines the fabricated proposition, and filters `/resolve` structurally. **Migration is contained — no live proposition's ID moves — but §17e makes the code re-verify that rather than trust it.** |
