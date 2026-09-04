@@ -70,11 +70,11 @@ class RubricEngine:
             else:
                 claims = all_claims
 
-        # 2. Fetch tensions
+        # 2. Fetch tensions (quarantined tensions must never be rendered or scored)
         if override_tensions is not None:
-            tensions = override_tensions
+            tensions = [t for t in override_tensions if t.status == "published"]
         else:
-            tensions = self.storage.get_tensions_for_subject(subject_id)
+            tensions = self.storage.get_tensions_for_subject(subject_id, status="published")
 
         # 3. Compute sufficiency summary
         claim_count = len(claims)

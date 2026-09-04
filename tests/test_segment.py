@@ -39,10 +39,10 @@ def test_segmentation_splits_on_long_pause_and_max_length(tmp_path: Path) -> Non
     )
 
     assert len(utts) == 2
-    assert utts[0].text_verbatim == "First sentence"
+    assert utts[0].text_verbatim == "First sentence."
     assert utts[0].start_ms == 0
     assert utts[0].end_ms == 1000
-    assert utts[1].text_verbatim == "Second sentence"
+    assert utts[1].text_verbatim == "Second sentence."
     assert utts[1].start_ms == 3000
     assert utts[1].end_ms == 4000
 

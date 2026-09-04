@@ -746,5 +746,32 @@
     "expected_is_own_assertion": false,
     "locator_kind": "synthetic",
     "extra": null
+  },
+  {
+    "case_id": "case_n13_mid_word_fragment",
+    "type": "N13",
+    "subject_id": "subj_chamath_palihapitiya",
+    "source_locator": "https://youtube.com/watch?v=all_in_e165",
+    "utterances": [
+      {
+        "text": "collection like robots or robots having",
+        "recorded_at": "2024-02-09T10:00:00Z",
+        "span": [0, 39],
+        "speaker": "subj_chamath_palihapitiya",
+        "venue_type": null,
+        "audience_stance": null,
+        "hedging_level": 0.0,
+        "condition": null,
+        "stated_distinction": null,
+        "published_at": "2024-02-09T12:00:00Z",
+        "change_marker": false
+      }
+    ],
+    "expected_behaviour": "empty_claim_list",
+    "expected_exclusion_reason": null,
+    "expected_stance": null,
+    "expected_is_own_assertion": false,
+    "locator_kind": "synthetic",
+    "extra": null
   }
 ]

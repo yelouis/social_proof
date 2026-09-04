@@ -83,7 +83,7 @@ class LocalGemmaRuntime:
     def __init__(
         self,
         model_id: str = "gemma-3-27b-it",
-        prompt_version: str = "v1.0",
+        prompt_version: str = "v1.1",
         schema_version: str = "s1",
         system_prompt: str = STABLE_SYSTEM_PROMPT,
         backend: Any | None = None,

@@ -18,13 +18,13 @@ from worker.golden.report import (
 def test_behaviour_fixtures_load_and_run_binary_regression() -> None:
     """Behaviour fixtures evaluate binary PASS/FAIL regression with zero quality percentages."""
     cases = load_behaviour_cases()
-    assert len(cases) == 19
+    assert len(cases) == 20
     for c in cases:
         assert c.locator_kind == "synthetic"
 
     detector = VerifiedRuleDetector()
     results = evaluate_behaviour_fixtures(detector, cases)
-    assert len(results) == 19
+    assert len(results) == 20
     assert all(r.passed for r in results)
 
     # Full report verification
@@ -35,7 +35,7 @@ def test_behaviour_fixtures_load_and_run_binary_regression() -> None:
     assert "%" not in fixture_section
     assert not re.search(r"\b0\.\d+\b", fixture_section)
     assert not re.search(r"\b1\.\d+\b", fixture_section)
-    assert "Result: 19/19 PASS" in fixture_section
+    assert "Result: 20/20 PASS" in fixture_section
 
 
 def test_all_17_classes_present_in_behaviour_fixtures() -> None:
