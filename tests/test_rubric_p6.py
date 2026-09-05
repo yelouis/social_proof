@@ -323,7 +323,7 @@ def test_rubric_engine_sufficiency_verdict_and_integrity_gate() -> None:
         for subj_id in ["subj_david_sacks", "subj_david_friedberg", "subj_jason_calacanis", "subj_chamath_palihapitiya"]:
             ass = engine.assess_subject_topic(subj_id, topic_id="global", persist=False)
             assert ass.sufficiency["passed"] is True
-            assert ass.sufficiency["claim_count"] >= 209
+            assert ass.sufficiency["claim_count"] >= 190
             assert ass.sufficiency["source_count"] == 4
             assert ass.sufficiency["span_days"] >= 1232
             res = verify_no_suppressed_scores([ass])

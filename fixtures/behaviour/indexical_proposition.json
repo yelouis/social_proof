@@ -1,0 +1,68 @@
+[
+  {
+    "case_id": "indexical_speaker_01",
+    "proposition_text": "The speaker believes they created the subject matter.",
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
+  },
+  {
+    "case_id": "indexical_speaker_02",
+    "proposition_text": "The speaker is questioning whether the video content is CGI or real.",
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
+  },
+  {
+    "case_id": "indexical_subject_01",
+    "proposition_text": "The subject makes a large number of copies of the protein.",
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
+  },
+  {
+    "case_id": "indexical_subject_02",
+    "proposition_text": "A double-blind study is conducted to assess the potential benefits or harms of the subject.",
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
+  },
+  {
+    "case_id": "indexical_described_powers_01",
+    "proposition_text": "The speaker believes the subject does not possess the described powers.",
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
+  },
+  {
+    "case_id": "indexical_unbound_pronoun_they",
+    "proposition_text": "They lack the expertise to determine whether a technology should be approved.",
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
+  },
+  {
+    "case_id": "indexical_unbound_pronoun_he",
+    "proposition_text": "He has seen an example of hate speech in his feed.",
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
+  },
+  {
+    "case_id": "indexical_unbound_pronoun_this",
+    "proposition_text": "This will be unregulated in any scenario.",
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
+  },
+  {
+    "case_id": "self_contained_china_open_source",
+    "proposition_text": "China has made a significant push towards open source software.",
+    "expected_behaviour": "passed",
+    "expected_rejection_reason": null
+  },
+  {
+    "case_id": "self_contained_federal_licensing",
+    "proposition_text": "Federal licensing regimes for frontier artificial intelligence models.",
+    "expected_behaviour": "passed",
+    "expected_rejection_reason": null
+  },
+  {
+    "case_id": "self_contained_expletive_it",
+    "proposition_text": "It is possible to insert a DNA sequence into a bacterial cell and have it produce a protein.",
+    "expected_behaviour": "passed",
+    "expected_rejection_reason": null
+  }
+]

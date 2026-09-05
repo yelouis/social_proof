@@ -13,6 +13,8 @@ condition matching, quote span resolution, negation certainty). Precondition fai
 from typing import Any
 
 from worker.entities import Tension
+from worker.extract.schema import ExtractedClaim
+from worker.extract.validators import validate_self_contained
 from worker.storage import Storage, compute_tension_id
 
 
@@ -146,6 +148,23 @@ class TensionDetector:
                 or q_start_b >= q_end_b
             ):
                 quarantine_reason = "quote_span_unresolved"
+            # Precondition 6: Proposition must be active and self-contained (non-indexical)
+            elif prop_id:
+                prop_obj = self.storage.get_proposition(prop_id)
+                if prop_obj and prop_obj.status == "quarantined":
+                    quarantine_reason = prop_obj.quarantine_reason or "fabricated_proposition"
+                elif prop_obj:
+                    dummy_claim = ExtractedClaim(
+                        proposition_text=prop_obj.canonical_text,
+                        stance="support",
+                        hedging_level=0.0,
+                        is_own_assertion=True,
+                        quote_text="dummy quote",
+                        confidence=0.9,
+                    )
+                    outcome_sc = validate_self_contained(dummy_claim)
+                    if not outcome_sc.is_valid:
+                        quarantine_reason = outcome_sc.rejection_reason or "proposition_not_self_contained"
 
             # 3. Acknowledgement Window Search (Trap 2)
             # Check if any claim in the interval carries a change marker
@@ -287,6 +306,22 @@ class TensionDetector:
                 or q_start_b >= q_end_b
             ):
                 quarantine_reason = "quote_span_unresolved"
+            elif prop_id:
+                prop_obj = self.storage.get_proposition(prop_id)
+                if prop_obj and prop_obj.status == "quarantined":
+                    quarantine_reason = prop_obj.quarantine_reason or "fabricated_proposition"
+                elif prop_obj:
+                    dummy_claim = ExtractedClaim(
+                        proposition_text=prop_obj.canonical_text,
+                        stance="support",
+                        hedging_level=0.0,
+                        is_own_assertion=True,
+                        quote_text="dummy quote",
+                        confidence=0.9,
+                    )
+                    outcome_sc = validate_self_contained(dummy_claim)
+                    if not outcome_sc.is_valid:
+                        quarantine_reason = outcome_sc.rejection_reason or "proposition_not_self_contained"
 
             tension_type = "audience_divergence"
             severity = float(max(0.0, min(1.0, (1.0 - hedging_a) * (1.0 - hedging_b))))

@@ -43,6 +43,20 @@ POLARITY_BANNED_PATTERNS: list[re.Pattern[str]] = [
     re.compile(r"\b(?:is bad|is harmful|is evil|is wrong)\b", re.IGNORECASE),
 ]
 
+# Banned indexical patterns in proposition_text (must be self-contained and global, Item W0 / §17m)
+INDEXICAL_BANNED_OPENERS: list[re.Pattern[str]] = [
+    re.compile(r"^\s*the\s+speaker\b", re.IGNORECASE),
+    re.compile(r"^\s*the\s+subject\b", re.IGNORECASE),
+    re.compile(r"^\s*the\s+described\b", re.IGNORECASE),
+    re.compile(r"^\s*(?:they|he|she|this|that|these|those)\b", re.IGNORECASE),
+]
+
+INDEXICAL_BANNED_ANYWHERE: list[re.Pattern[str]] = [
+    re.compile(r"\bthe\s+speaker\b", re.IGNORECASE),
+    re.compile(r"\bthe\s+subject\b", re.IGNORECASE),
+    re.compile(r"\bthe\s+described\s+powers?\b", re.IGNORECASE),
+]
+
 VALID_STANCES: set[str] = {"support", "oppose", "mixed", "hedge"}
 VALID_EXCLUSIONS: set[str] = {
     "reported_speech",
@@ -181,6 +195,33 @@ def validate_entailment(
     )
 
 
+def validate_self_contained(claim: ExtractedClaim) -> ValidationOutcome:
+    """Validator: Proposition text must be self-contained, global, and free of unbound indexicals.
+
+    Implements design_claim_extraction.md §2, design_data_layer.md §2, and Item W0 (§17m).
+    Rejects propositions containing 'the speaker', 'the subject', 'the described',
+    or sentence-initial unbound pronouns ('they', 'he', 'she', 'this', 'that', 'these', 'those').
+    """
+    prop_text = (claim.proposition_text or "").strip()
+    for pat in INDEXICAL_BANNED_OPENERS:
+        if pat.search(prop_text):
+            VALIDATOR_REJECTION_COUNTERS["proposition_not_self_contained"] += 1
+            return ValidationOutcome(
+                is_valid=False,
+                rejection_reason="proposition_not_self_contained",
+                status="rejected",
+            )
+    for pat in INDEXICAL_BANNED_ANYWHERE:
+        if pat.search(prop_text):
+            VALIDATOR_REJECTION_COUNTERS["proposition_not_self_contained"] += 1
+            return ValidationOutcome(
+                is_valid=False,
+                rejection_reason="proposition_not_self_contained",
+                status="rejected",
+            )
+    return ValidationOutcome(True, status="passed")
+
+
 def validate_polarity(claim: ExtractedClaim) -> ValidationOutcome:
     """Validator 2: Proposition text must be stance-neutral and contain no polarity words."""
     prop_text = claim.proposition_text
@@ -237,14 +278,15 @@ def validate_extracted_claim(
     t_low: float = T_ENTAIL_LOW,
     t_high: float = T_ENTAIL_HIGH,
 ) -> ValidationOutcome:
-    """Runs all 6 validators in sequence.
+    """Runs validators in sequence:
 
     1. Quote Verbatim (substring in utterance)
-    2. Entailment (Validator 6: length floor, document-to-document embedding similarity)
-    3. Polarity (neutral proposition text)
-    4. Speech Acts (Invariant I7: exclusions vs own assertions)
-    5. Confidence Floor (confidence >= floor)
-    6. Schema (valid stance, hedging level in [0, 1])
+    2. Self-Contained (Item W0: reject indexicals and unbound pronouns before embedder)
+    3. Entailment (Validator 6: length floor, document-to-document embedding similarity)
+    4. Polarity (neutral proposition text)
+    5. Speech Acts (Invariant I7: exclusions vs own assertions)
+    6. Confidence Floor (confidence >= floor)
+    7. Schema (valid stance, hedging level in [0, 1])
     """
     # 1. Quote Verbatim
     res_quote = validate_quote_verbatim(claim, utterance.text_verbatim)
@@ -252,7 +294,12 @@ def validate_extracted_claim(
         VALIDATOR_REJECTION_COUNTERS[res_quote.rejection_reason or "quote_verbatim_failed"] += 1
         return res_quote
 
-    # 2. Entailment (Validator 6) runs immediately after quote resolution
+    # 2. Self-Contained / Non-Indexical (Item W0 / §17m)
+    res_self_contained = validate_self_contained(claim)
+    if not res_self_contained.is_valid:
+        return res_self_contained
+
+    # 3. Entailment (Validator 6) runs immediately after self-contained check
     res_entail = validate_entailment(
         claim=claim,
         embedder=embedder,

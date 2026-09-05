@@ -72,6 +72,8 @@ Such a string is not a proposition. It names no referent, so it cannot be true o
 
 **Therefore:** a proposition must be a standalone declarative resolvable without knowing who uttered it. No `the speaker`, no bare `the subject`, no sentence-initial unbound pronoun. **Reject at canonicalisation time with reason `proposition_not_self_contained`,** alongside the polarity check. *No downstream merge threshold can compensate for this, because the similarity being thresholded is not measuring the claim.*
 
+**Enforced in Item W0:** `validate_self_contained` runs immediately after quote resolution and before embedding/entailment in `validate_extracted_claim`. Rejection reason is `proposition_not_self_contained`. The extraction prompt was updated to `v1.3` (`gemma-3-27b-it:v1.3:s1`) with Rule 3 explicitly banning indexical and reflexive frames and providing negative/positive few-shot pairs. Tension detection also enforces Precondition 6 (quarantining tensions on indexical propositions). After re-extracting candidate utterances and re-deduplicating, the live corpus has exactly 0 indexical propositions.
+
 ### Deduplication
 
 New proposition text → embed → nearest-neighbour search in DuckDB (`design_data_layer.md` §4). Above the merge threshold, reuse the existing `proposition_id`. Below, create new. **Issue 008 settled the ambiguous band: adjudication does not earn its cost** — the similarity gap between restatements and distinct claims was clean enough that a second model call added latency without precision.
