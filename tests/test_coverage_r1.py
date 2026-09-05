@@ -246,35 +246,38 @@ def test_live_corpus_coverage_and_date_invariants() -> None:
     if not db_path.exists():
         pytest.skip("social_proof.duckdb does not exist")
 
-    store = Storage(str(db_path))
-    sources = [
-        s
-        for r in store.con.execute("SELECT source_id FROM sources").fetchall()
-        if (s := store.get_source(r[0])) is not None
-    ]
-    assert len(sources) >= 4, f"Expected at least 4 sources, found {len(sources)}"
+    store = Storage(str(db_path), read_only=True)
+    try:
+        sources = [
+            s
+            for r in store.con.execute("SELECT source_id FROM sources").fetchall()
+            if (s := store.get_source(r[0])) is not None
+        ]
+        assert len(sources) >= 4, f"Expected at least 4 sources, found {len(sources)}"
 
-    for s in sources:
-        assert s.duration_ms > 0, f"Source {s.source_id} has duration_ms={s.duration_ms}"
-        assert s.published_at is not None, f"Source {s.source_id} has published_at=None"
-        assert s.ingested_at is not None, f"Source {s.source_id} has ingested_at=None"
+        for s in sources:
+            assert s.duration_ms > 0, f"Source {s.source_id} has duration_ms={s.duration_ms}"
+            assert s.published_at is not None, f"Source {s.source_id} has published_at=None"
+            assert s.ingested_at is not None, f"Source {s.source_id} has ingested_at=None"
 
-        dt_pub = datetime.fromisoformat(s.published_at)
-        dt_ing = datetime.fromisoformat(s.ingested_at)
-        assert 2023 <= dt_pub.year <= 2026, f"Source {s.source_id} year {dt_pub.year} not in 2023-2026"
+            dt_pub = datetime.fromisoformat(s.published_at)
+            dt_ing = datetime.fromisoformat(s.ingested_at)
+            assert 2023 <= dt_pub.year <= 2026, f"Source {s.source_id} year {dt_pub.year} not in 2023-2026"
 
-        diff_sec = abs((dt_ing - dt_pub).total_seconds())
-        assert diff_sec > 60, (
-            f"Source {s.source_id} published_at '{s.published_at}' within 1 min of "
-            f"ingested_at '{s.ingested_at}' (diff={diff_sec}s)"
-        )
+            diff_sec = abs((dt_ing - dt_pub).total_seconds())
+            assert diff_sec > 60, (
+                f"Source {s.source_id} published_at '{s.published_at}' within 1 min of "
+                f"ingested_at '{s.ingested_at}' (diff={diff_sec}s)"
+            )
 
-    utterances = [
-        u
-        for r in store.con.execute("SELECT utterance_id FROM utterances").fetchall()
-        if (u := store.get_utterance(r[0])) is not None
-    ]
-    res = verify_source_productivity(sources, utterances, min_ratio=MIN_UTTERANCE_MEDIA_RATIO)
-    assert res.passed is True
-    assert res.status == "PASS"
+        utterances = [
+            u
+            for r in store.con.execute("SELECT utterance_id FROM utterances").fetchall()
+            if (u := store.get_utterance(r[0])) is not None
+        ]
+        res = verify_source_productivity(sources, utterances, min_ratio=MIN_UTTERANCE_MEDIA_RATIO)
+        assert res.passed is True
+        assert res.status == "PASS"
+    finally:
+        store.close()
 

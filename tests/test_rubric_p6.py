@@ -16,7 +16,7 @@ from pathlib import Path
 import pytest
 
 from fixtures.behaviour.loader import load_behaviour_cases
-from worker.entities import Claim, Source, Subject, Tension, Utterance
+from worker.entities import Assessment, Claim, Source, Subject, Tension, Utterance
 from worker.rubric.engine import RubricEngine
 from worker.rubric.even_handedness import EvenHandednessCalculator
 from worker.rubric.specificity import SpecificityCalculator
@@ -265,7 +265,7 @@ def test_rubric_engine_source_count_measured_assertion_c() -> None:
     - A subject with zero claims records source_count: 0.
     - A subject with claims but no resolvable source raises I3 anchor-chain violation.
     """
-    live_store = Storage("social_proof.duckdb")
+    live_store = Storage("social_proof.duckdb", read_only=True)
     engine = RubricEngine(storage=live_store)
 
     # Check live corpus spread
@@ -306,4 +306,56 @@ def test_rubric_engine_source_count_measured_assertion_c() -> None:
     )
     with pytest.raises(ValueError, match="I3 anchor-chain violation"):
         engine.assess_subject_topic("subj_orphan", override_claims=[unresolvable_claim])
+
+    live_store.close()
+
+
+def test_rubric_engine_sufficiency_verdict_and_integrity_gate() -> None:
+    """Assertion for E1: engine persists sufficiency verdict and verify_no_suppressed_scores gates.
+
+    - Friedberg (has specificity score 0.2) gets passed: True.
+    - Sacks/Jason/Chamath (no axis scored) get passed: False, reason: "insufficient_corpus".
+    - Both directions: hand-setting an axis score on a passed: False assessment FAILS verify_no_suppressed_scores.
+    """
+    from worker.integrity import verify_no_suppressed_scores
+
+    live_store = Storage("social_proof.duckdb", read_only=True)
+    try:
+        engine = RubricEngine(storage=live_store)
+
+        # Friedberg has scored axis -> passed: True
+        ass_friedberg = engine.assess_subject_topic("subj_david_friedberg", topic_id="global", persist=False)
+        assert ass_friedberg.sufficiency["passed"] is True
+        assert "reason" not in ass_friedberg.sufficiency or ass_friedberg.sufficiency["reason"] is None
+        assert any(ax["score"] is not None for ax in ass_friedberg.axes.values())
+        res_friedberg = verify_no_suppressed_scores([ass_friedberg])
+        assert res_friedberg.passed is True
+
+        # Sacks has no scored axis -> passed: False, reason: "insufficient_corpus"
+        ass_sacks = engine.assess_subject_topic("subj_david_sacks", topic_id="global", persist=False)
+        assert ass_sacks.sufficiency["passed"] is False
+        assert ass_sacks.sufficiency["reason"] == "insufficient_corpus"
+        assert all(ax["score"] is None for ax in ass_sacks.axes.values())
+        res_sacks = verify_no_suppressed_scores([ass_sacks])
+        assert res_sacks.passed is True
+
+        # Both directions: hand-set an axis score on a passed: False assessment -> FAIL
+        corrupt_ass = Assessment(
+            assessment_id=ass_sacks.assessment_id,
+            subject_id=ass_sacks.subject_id,
+            topic_id=ass_sacks.topic_id,
+            rubric_version=ass_sacks.rubric_version,
+            sufficiency=dict(ass_sacks.sufficiency),
+            axes={
+                **ass_sacks.axes,
+                "consistency": {"score": 0.85, "n": 2},
+            },
+        )
+        res_corrupt = verify_no_suppressed_scores([corrupt_ass])
+        assert res_corrupt.passed is False
+        assert res_corrupt.status == "FAIL"
+        assert "has non-null score: 0.85" in res_corrupt.message
+    finally:
+        live_store.close()
+
 

@@ -160,7 +160,9 @@ There is no single global threshold. Each axis has its own precondition, and an 
 
 ```json
 {
-  "sufficiency": {"claim_count": 84, "source_count": 11, "span_days": 1290},
+  "sufficiency": {"passed": true, "claim_count": 84, "source_count": 11, "span_days": 1290},
+  //  sufficiency["passed"] explicitly records whether any axis achieved sufficiency and scored.
+  //  When false, sufficiency["reason"] = "insufficient_corpus" and all axis scores are literally null.
   //  source_count is resolved through the anchor chain — claim -> utterance -> source —
   //  never from a field on the claim. Claim has no source_id, and a hasattr guard on
   //  one silently yields zero sources and a fallback of 1 for every subject alike

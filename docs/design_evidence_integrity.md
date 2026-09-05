@@ -56,8 +56,10 @@ verify_no_page_context
     origin = 'page_context'. Invariant I2, enforced rather than intended.
 
 verify_no_suppressed_scores
-    For every Assessment where sufficiency failed: assert the axis value
-    is literally null, not a number behind a flag. Invariant I5.
+    For every Assessment: sufficiency must explicitly carry `passed: bool`.
+    If `passed` is missing, the check fails with `sufficiency_verdict_missing`.
+    When `passed` is False: assert every axis score is literally null, not a number
+    behind a flag. Invariant I5.
 
 verify_quarantine_not_rendered
     For every quarantined Tension: assert it appears in no assessment's
@@ -83,6 +85,10 @@ verify_canonical_ids
 verify_quarantined_propositions_unreachable
     For every quarantined Proposition, no live claim references it, and it cannot
     be returned by the /resolve query shape (active status and live claims required).
+
+verify_assessment_subjects_exist
+    For every Assessment: its subject_id resolves in subjects, and its topic_id
+    resolves in topics or is 'global'. Prevents test pollution and unlinked assessments.
 ```
 
 ---

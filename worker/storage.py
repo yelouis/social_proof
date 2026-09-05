@@ -157,11 +157,23 @@ class ArtifactStore:
 class Storage:
     """DuckDB persistence engine and analytical mirror with VSS 768-dim embeddings."""
 
-    def __init__(self, db_path: str = ":memory:", artifact_dir: str | Path = "artifacts") -> None:
+    def __init__(
+        self,
+        db_path: str = ":memory:",
+        artifact_dir: str | Path = "artifacts",
+        read_only: bool = False,
+    ) -> None:
         self.db_path = db_path
-        self.con = duckdb.connect(db_path)
+        self.read_only = read_only
+        self.con = duckdb.connect(db_path, read_only=read_only)
         self.artifacts = ArtifactStore(artifact_dir)
-        self._init_schema()
+        if read_only:
+            try:
+                self.con.execute("LOAD vss;")
+            except Exception:
+                pass
+        else:
+            self._init_schema()
 
     @property
     def artifact_store(self) -> ArtifactStore:

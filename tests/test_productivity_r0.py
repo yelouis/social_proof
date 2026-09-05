@@ -52,22 +52,25 @@ def test_verify_source_productivity_passes_on_repaired_corpus() -> None:
     live_db = Path("social_proof.duckdb")
     assert live_db.exists()
 
-    store = Storage(str(live_db))
-    sources = [
-        s
-        for row in store.con.execute("SELECT source_id FROM sources").fetchall()
-        if (s := store.get_source(row[0])) is not None
-    ]
-    utts = [
-        u
-        for row in store.con.execute("SELECT utterance_id FROM utterances").fetchall()
-        if (u := store.get_utterance(row[0])) is not None
-    ]
+    store = Storage(str(live_db), read_only=True)
+    try:
+        sources = [
+            s
+            for row in store.con.execute("SELECT source_id FROM sources").fetchall()
+            if (s := store.get_source(row[0])) is not None
+        ]
+        utts = [
+            u
+            for row in store.con.execute("SELECT utterance_id FROM utterances").fetchall()
+            if (u := store.get_utterance(row[0])) is not None
+        ]
 
-    res = verify_source_productivity(sources, utts)
-    assert res.passed is True
-    assert res.status == "PASS"
-    assert res.examined_count >= 4
+        res = verify_source_productivity(sources, utts)
+        assert res.passed is True
+        assert res.status == "PASS"
+        assert res.examined_count >= 4
+    finally:
+        store.close()
 
 
 def test_audio_deletion_gated_on_productivity() -> None:
@@ -126,8 +129,11 @@ def test_repaired_corpus_tension_precondition() -> None:
 
     and correctly quarantined under X0 as a fabricated proposition.
     """
-    store = Storage("social_proof.duckdb")
-    t = store.get_tension("0068adec4b1501c6")
-    assert t is not None, "Fabricated tension must be preserved in database for audit"
-    assert t.status == "quarantined"
-    assert t.quarantine_reason == "fabricated_proposition"
+    store = Storage("social_proof.duckdb", read_only=True)
+    try:
+        t = store.get_tension("0068adec4b1501c6")
+        assert t is not None, "Fabricated tension must be preserved in database for audit"
+        assert t.status == "quarantined"
+        assert t.quarantine_reason == "fabricated_proposition"
+    finally:
+        store.close()

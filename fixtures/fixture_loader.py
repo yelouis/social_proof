@@ -1,6 +1,15 @@
 """Fixture datasets: hand-written valid and deliberately broken fixtures."""
 
-from worker.entities import Assessment, Claim, Source, SourceSubjectRole, Tension, Utterance
+from worker.entities import (
+    Assessment,
+    Claim,
+    Source,
+    SourceSubjectRole,
+    Subject,
+    Tension,
+    Topic,
+    Utterance,
+)
 from worker.storage import compute_role_id
 
 
@@ -217,3 +226,27 @@ def load_broken_anchor_fixture() -> tuple[list[Source], list[Utterance], list[Cl
         attribution_method="voice_match",
     )
     return [], [broken_utt], []
+
+
+def load_valid_subjects() -> list[Subject]:
+    """Loads valid Subject fixtures."""
+    return [
+        Subject(
+            subject_id="subj_valid_01",
+            display_name="Valid Subject 01",
+            aliases=["Subject 01"],
+            created_at="2024-01-01T00:00:00Z",
+        )
+    ]
+
+
+def load_valid_topics() -> list[Topic]:
+    """Loads valid Topic fixtures."""
+    return [
+        Topic(
+            topic_id="top_ai_reg_01",
+            subject_id="subj_valid_01",
+            label="AI Regulation",
+            proposition_ids=["prop_licensing_01"],
+        )
+    ]

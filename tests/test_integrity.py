@@ -4,13 +4,16 @@ from fixtures.fixture_loader import (
     load_broken_anchor_fixture,
     load_broken_quote_fixture,
     load_valid_fixtures,
+    load_valid_subjects,
+    load_valid_topics,
 )
-from worker.entities import Assessment, Claim, Proposition, Tension
+from worker.entities import Assessment, Claim, Proposition, Subject, Tension, Topic
 from worker.integrity import (
     run_all_checks,
     run_integrity_corpus,
     run_integrity_fixtures,
     verify_anchor_chain,
+    verify_assessment_subjects_exist,
     verify_attribution_floor,
     verify_canonical_ids,
     verify_negation_recheck,
@@ -27,6 +30,8 @@ from worker.storage import Storage
 
 def test_valid_fixtures_pass_all_checks() -> None:
     sources, utterances, claims, tensions, assessments, roles = load_valid_fixtures()
+    subjects = load_valid_subjects()
+    topics = load_valid_topics()
     sample_records = [{"id": "r1", "origin": "youtube"}]
     results = run_all_checks(
         claims=claims,
@@ -36,6 +41,8 @@ def test_valid_fixtures_pass_all_checks() -> None:
         assessments=assessments,
         records=sample_records,
         roles=roles,
+        subjects=subjects,
+        topics=topics,
     )
     for r in results:
         assert r.passed is True, f"Check {r.name} unexpectedly failed: {r.message}"
@@ -121,6 +128,21 @@ def test_verify_no_suppressed_scores_catches_hidden_numbers() -> None:
     assert "has non-null score: 0.82" in res_invalid.message
 
 
+def test_verify_no_suppressed_scores_missing_passed_key_fails() -> None:
+    asm_missing_passed = Assessment(
+        assessment_id="a_no_passed",
+        subject_id="s1",
+        topic_id="t1",
+        rubric_version="v1.0",
+        sufficiency={"claim_count": 5, "source_count": 2, "span_days": 100},
+        axes={"consistency": {"score": 0.5}},
+    )
+    res = verify_no_suppressed_scores([asm_missing_passed])
+    assert res.passed is False
+    assert res.status == "FAIL"
+    assert "sufficiency_verdict_missing" in res.message
+
+
 def test_verify_quarantine_not_rendered() -> None:
     quarantined_tension = Tension(
         tension_id="tns_q1",
@@ -197,7 +219,7 @@ def test_verify_role_coverage_empty_set_emits_not_applicable() -> None:
 
 def test_integrity_pass_corpus_examined_counts_match_db_assertion_c() -> None:
     """Assertion (c) for E0: examined_count for every check in CORPUS matches SELECT count(*)."""
-    store = Storage("social_proof.duckdb")
+    store = Storage("social_proof.duckdb", read_only=True)
 
     def count_query(query: str) -> int:
         res = store.con.execute(query).fetchone()
@@ -225,14 +247,70 @@ def test_integrity_pass_corpus_examined_counts_match_db_assertion_c() -> None:
         "verify_quarantined_propositions_unreachable": count_query(
             "SELECT count(*) FROM propositions WHERE status = 'quarantined'"
         ),
+        "verify_assessment_subjects_exist": count_query("SELECT count(*) FROM assessments"),
     }
 
-    corpus_results = run_integrity_corpus("social_proof.duckdb")
-    assert len(corpus_results) == 12
-    for r in corpus_results:
-        assert r.examined_count == expected_counts[r.name], (
-            f"Check {r.name}: examined_count {r.examined_count} != expected {expected_counts[r.name]}"
-        )
+    try:
+        corpus_results = run_integrity_corpus("social_proof.duckdb")
+        assert len(corpus_results) == 13
+        for r in corpus_results:
+            assert r.examined_count == expected_counts[r.name], (
+                f"Check {r.name}: examined_count {r.examined_count} != expected {expected_counts[r.name]}"
+            )
+    finally:
+        store.con.close()
+
+
+def test_verify_assessment_subjects_exist() -> None:
+    subj1 = Subject(subject_id="subj_1", display_name="Subject One")
+    top1 = Topic(topic_id="top_1", subject_id="subj_1", label="Topic One")
+
+    # Happy path: subject exists, topic is global
+    asm_global = Assessment(
+        assessment_id="a_global",
+        subject_id="subj_1",
+        topic_id="global",
+        rubric_version="v1.0",
+    )
+    # Happy path: subject exists, topic exists in topics
+    asm_top = Assessment(
+        assessment_id="a_top",
+        subject_id="subj_1",
+        topic_id="top_1",
+        rubric_version="v1.0",
+    )
+    res_ok = verify_assessment_subjects_exist([asm_global, asm_top], [subj1], [top1])
+    assert res_ok.passed is True
+    assert res_ok.status == "PASS"
+
+    # Failure 1: unknown subject
+    asm_bad_subj = Assessment(
+        assessment_id="a_bad_subj",
+        subject_id="subj_unknown",
+        topic_id="global",
+        rubric_version="v1.0",
+    )
+    res_bad_subj = verify_assessment_subjects_exist([asm_bad_subj], [subj1], [top1])
+    assert res_bad_subj.passed is False
+    assert res_bad_subj.status == "FAIL"
+    assert "references non-existent subject_id 'subj_unknown'" in res_bad_subj.message
+
+    # Failure 2: unknown topic
+    asm_bad_top = Assessment(
+        assessment_id="a_bad_top",
+        subject_id="subj_1",
+        topic_id="top_unknown",
+        rubric_version="v1.0",
+    )
+    res_bad_top = verify_assessment_subjects_exist([asm_bad_top], [subj1], [top1])
+    assert res_bad_top.passed is False
+    assert res_bad_top.status == "FAIL"
+    assert "references non-existent topic_id 'top_unknown'" in res_bad_top.message
+
+    # Zero assessments: NOT APPLICABLE
+    res_zero = verify_assessment_subjects_exist([], [subj1], [top1])
+    assert res_zero.passed is True
+    assert res_zero.status == "NOT APPLICABLE — zero rows"
 
 
 def test_verify_canonical_ids_passes_and_fails() -> None:
@@ -340,6 +418,7 @@ def test_integrity_pass_both_directions_independent_verdict(tmp_path: Path) -> N
         quote_text="NONEXISTENT QUOTE TEXT IN UTTERANCE",
     )
     corrupt_store.insert_claim(bad_claim)
+    corrupt_store.close()
 
     fixtures_results = run_integrity_fixtures()
     corpus_results = run_integrity_corpus(str(corrupt_db))
@@ -349,9 +428,6 @@ def test_integrity_pass_both_directions_independent_verdict(tmp_path: Path) -> N
     quotes_res = next(r for r in corpus_results if r.name == "verify_quotes")
     assert not quotes_res.passed
     assert quotes_res.status == "FAIL"
-
-    # Close connection so subprocess can open the database file without lock conflict
-    corrupt_store.con.close()
 
     # Assert subprocess exit code is 1
     proc = subprocess.run(

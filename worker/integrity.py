@@ -25,7 +25,9 @@ from worker.entities import (
     Proposition,
     Source,
     SourceSubjectRole,
+    Subject,
     Tension,
+    Topic,
     Utterance,
 )
 from worker.storage import compute_principle_id, compute_proposition_id
@@ -219,7 +221,18 @@ def verify_no_suppressed_scores(
         )
 
     for a in assessments:
-        passed = a.sufficiency.get("passed", True)
+        if "passed" not in a.sufficiency:
+            return CheckResult(
+                name="verify_no_suppressed_scores",
+                passed=False,
+                status="FAIL",
+                message=(
+                    f"Assessment {a.assessment_id} failed sufficiency check: "
+                    f"sufficiency_verdict_missing ('passed' key missing)"
+                ),
+                examined_count=len(assessments),
+            )
+        passed = a.sufficiency["passed"]
         if not passed:
             for axis_name, axis_val in a.axes.items():
                 if isinstance(axis_val, dict):
@@ -745,6 +758,51 @@ def verify_quarantined_propositions_unreachable(
     )
 
 
+def verify_assessment_subjects_exist(
+    assessments: list[Assessment],
+    subjects: list[Subject],
+    topics: list[Topic],
+) -> CheckResult:
+    """Every assessment's subject_id must resolve in subjects, and its topic_id in topics (or be 'global')."""
+    if not assessments:
+        return CheckResult(
+            name="verify_assessment_subjects_exist",
+            passed=True,
+            status="NOT APPLICABLE — zero rows",
+            message="No assessments to check",
+            examined_count=0,
+        )
+
+    valid_subject_ids = {s.subject_id for s in subjects}
+    valid_topic_ids = {t.topic_id for t in topics}
+
+    for a in assessments:
+        if a.subject_id not in valid_subject_ids:
+            return CheckResult(
+                name="verify_assessment_subjects_exist",
+                passed=False,
+                status="FAIL",
+                message=f"Assessment {a.assessment_id} references non-existent subject_id '{a.subject_id}'",
+                examined_count=len(assessments),
+            )
+        if a.topic_id != "global" and a.topic_id not in valid_topic_ids:
+            return CheckResult(
+                name="verify_assessment_subjects_exist",
+                passed=False,
+                status="FAIL",
+                message=f"Assessment {a.assessment_id} references non-existent topic_id '{a.topic_id}'",
+                examined_count=len(assessments),
+            )
+
+    return CheckResult(
+        name="verify_assessment_subjects_exist",
+        passed=True,
+        status="PASS",
+        message=f"All {len(assessments)} assessments reference valid subjects and topics",
+        examined_count=len(assessments),
+    )
+
+
 def run_all_checks(
     claims: list[Claim] | None = None,
     utterances: list[Utterance] | None = None,
@@ -755,8 +813,10 @@ def run_all_checks(
     roles: list[SourceSubjectRole] | None = None,
     propositions: list[Proposition] | None = None,
     principles: list[Principle] | None = None,
+    subjects: list[Subject] | None = None,
+    topics: list[Topic] | None = None,
 ) -> list[CheckResult]:
-    """Execute all 12 integrity checks."""
+    """Execute all 13 integrity checks."""
     c_list = claims or []
     u_list = utterances or []
     s_list = sources or []
@@ -766,6 +826,8 @@ def run_all_checks(
     rol_list = roles or []
     p_list = propositions or []
     pr_list = principles or []
+    sub_list = subjects or []
+    top_list = topics or []
 
     results = [
         verify_quotes(c_list, u_list),
@@ -780,15 +842,22 @@ def run_all_checks(
         verify_source_productivity(s_list, u_list),
         verify_canonical_ids(p_list, pr_list, c_list),
         verify_quarantined_propositions_unreachable(p_list, c_list),
+        verify_assessment_subjects_exist(a_list, sub_list, top_list),
     ]
     return results
 
 
 def run_integrity_fixtures() -> list[CheckResult]:
     """Execute all integrity checks over test fixtures."""
-    from fixtures.fixture_loader import load_valid_fixtures
+    from fixtures.fixture_loader import (
+        load_valid_fixtures,
+        load_valid_subjects,
+        load_valid_topics,
+    )
 
     sources, utterances, claims, tensions, assessments, roles = load_valid_fixtures()
+    subjects = load_valid_subjects()
+    topics = load_valid_topics()
     return run_all_checks(
         claims=claims,
         utterances=utterances,
@@ -799,6 +868,8 @@ def run_integrity_fixtures() -> list[CheckResult]:
         roles=roles,
         propositions=[],
         principles=[],
+        subjects=subjects,
+        topics=topics,
     )
 
 
@@ -816,11 +887,13 @@ def run_integrity_corpus(db_path: Path | str = "social_proof.duckdb") -> list[Ch
             roles=[],
             propositions=[],
             principles=[],
+            subjects=[],
+            topics=[],
         )
 
     from worker.storage import Storage
 
-    store = Storage(str(db_file))
+    store = Storage(str(db_file), read_only=True)
     try:
         claims = [
             c
@@ -862,6 +935,16 @@ def run_integrity_corpus(db_path: Path | str = "social_proof.duckdb") -> list[Ch
             for r in store.con.execute("SELECT principle_id FROM principles").fetchall()
             if (pr := store.get_principle(r[0])) is not None
         ]
+        subjects = [
+            subj
+            for r in store.con.execute("SELECT subject_id FROM subjects").fetchall()
+            if (subj := store.get_subject(r[0])) is not None
+        ]
+        topics = [
+            top
+            for r in store.con.execute("SELECT topic_id FROM topics").fetchall()
+            if (top := store.get_topic(r[0])) is not None
+        ]
     finally:
         store.con.close()
 
@@ -875,6 +958,8 @@ def run_integrity_corpus(db_path: Path | str = "social_proof.duckdb") -> list[Ch
         roles=roles,
         propositions=propositions,
         principles=principles,
+        subjects=subjects,
+        topics=topics,
     )
 
 

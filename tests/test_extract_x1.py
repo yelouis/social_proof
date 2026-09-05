@@ -89,13 +89,16 @@ def test_x1_all_live_claims_pass() -> None:
     - Doc-to-doc similarity >= T_ENTAIL_HIGH (0.70)
     - Outcome status is 'passed' with no rejection reason
     """
-    store = Storage("social_proof.duckdb")
+    store = Storage("social_proof.duckdb", read_only=True)
     embedder = get_embedder()
 
-    claim_rows = store.con.execute(
-        "SELECT c.claim_id, c.quote_text, p.canonical_text "
-        "FROM claims c JOIN propositions p ON c.proposition_id = p.proposition_id"
-    ).fetchall()
+    try:
+        claim_rows = store.con.execute(
+            "SELECT c.claim_id, c.quote_text, p.canonical_text "
+            "FROM claims c JOIN propositions p ON c.proposition_id = p.proposition_id"
+        ).fetchall()
+    finally:
+        store.close()
     assert len(claim_rows) >= 9, f"Expected >= 9 live claims in DB, got {len(claim_rows)}"
 
     for cid, quote_text, prop_text in claim_rows:

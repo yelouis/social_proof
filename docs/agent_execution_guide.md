@@ -122,14 +122,14 @@ Measured **September 4, 2026** at `99b3347`, and re-verified independently by qu
 | `mypy --strict` | **PASS** — clean on 80 files | Clean across worker/, tests/, fixtures/, golden/. |
 | `pytest tests/ -q` | **PASS** — 180 passed in **101s** | `requires_models` tests ran (not skipped, no deselection in `addopts`). ~101s is well above trap 18's 35s floor. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
-| `worker.integrity --all` | **PASS — independent populations, but one check is inert** | E0 delivered: 12 checks, FIXTURES and CORPUS reported separately with no union, real assessments loaded (9 checked), `verify_canonical_ids` and `verify_quarantined_propositions_unreachable` both PASS. **However `verify_no_suppressed_scores` reads `sufficiency.get("passed", True)` (`integrity.py:222`) against an engine that never writes that key — so its `PASS (examined: 9)` is nine defaults read, not nine assessments verified. Item E1.** |
+| `worker.integrity --all` | **PASS — 13 checks, independent populations, active sufficiency verdicts and referential integrity** | E1 delivered: 13 checks, FIXTURES and CORPUS reported separately with no union; `verify_no_suppressed_scores` strictly requires explicit `passed: bool` (examined: 8 in CORPUS, 1 in FIXTURES); `verify_assessment_subjects_exist` verifies `subject_id` in subjects and `topic_id` in topics or 'global' (examined: 8 in CORPUS, 1 in FIXTURES). Test pollution `subj_nonexistent_subject` removed from corpus. Tests open `social_proof.duckdb` with `read_only=True` ensuring zero writes from test suite. |
 | `worker.golden.report` | **PASS** | Fixtures 20/20 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
 | **CI / Portability** | **PASS** | `portability.yml` tests base install without Apple extra; runs lint, mypy, and non-model tests (161 passed in ~31s). |
-| **Corpus** | **POPULATED, FULL COVERAGE (R1 DELIVERED)** | 4 sources, **4,219 utterances**, 9 claims, 12 propositions, 9 assessments. Coverage across all four sources: **99.7%–100.0%** (5,283s–5,800s of 5,301s–5,801s). Feed `<itunes:duration>` and `pubDate` parsed; `published_at` preserved from feed; `MIN_UTTERANCE_MEDIA_RATIO = 0.80` enforced and passing. Truncation bug eliminated. Item R1 delivered. |
+| **Corpus** | **POPULATED, FULL COVERAGE (R1 DELIVERED)** | 4 sources, **4,219 utterances**, 9 claims, 12 propositions, 8 assessments. Coverage across all four sources: **99.7%–100.0%** (5,283s–5,800s of 5,301s–5,801s). Feed `<itunes:duration>` and `pubDate` parsed; `published_at` preserved from feed; `MIN_UTTERANCE_MEDIA_RATIO = 0.80` enforced and passing. Truncation bug eliminated. Item R1 delivered. |
 | **Propositions** | **REPAIRED (D0 DELIVERED)** | 12 propositions total, 8 carrying live claims all embedded with `nomic-embed-text-v1.5` via `embed_document`. 4 orphaned/quarantined rows. `claim_count` matches real claims on every row. Three forked rows merged/updated. Fabricated proposition `db3ec63d33cf6f0a` quarantined. `/resolve` filters structurally for `status = 'active'` and live claims existence. Issue 027 = A; item D0 delivered. |
 | **`source_count`** | **MEASURED** | Sacks and Friedberg record 2; Jason and Chamath record 1. Resolved through utterance anchor chain, `hasattr` removed, I3 anchor-chain violation raises if unresolvable. Item M0 delivered. **Independently confirmed against ground truth** (`count(DISTINCT source_id)` per subject via the anchor chain). |
 | **Corpus — claims** | **STILL 9. This is the live defect.** | The corpus grew 11.7× and the claim count did not move. Extraction was never re-run: all 9 claims remain at `gemma-3-27b-it:v1.1:s1`, **E245 holds 1015 utterances and zero claims**, and published tensions and principles are still **0**. X1 is wired and correct but has never processed output it did not inherit — its rejection counters are all zero. **Item N0 (§17g).** |
-| **Assessments** | **UNGUARDED** | 9 rows across 2 topics (`top_ai_reg`, `global`) — the pairing is correct, since `assessment_id` hashes the topic. But one row belongs to **`subj_nonexistent_subject`, which has no row in `subjects`**: test pollution in the production corpus that all 12 checks accept, because nothing relates an assessment to a subject. Item E1. |
+| **Assessments** | **GUARDED (E1 DELIVERED)** | 8 rows across 2 topics (`top_ai_reg`, `global`). Sufficiency verdict (`passed: bool` and `reason: "insufficient_corpus"` when False) written by rubric engine. Friedberg records `passed: True` (specificity 0.2); Sacks, Jason, Chamath record `passed: False`. Test pollution `subj_nonexistent_subject` removed. Referential integrity verified. |
 | **Published tension** | **QUARANTINED — X0 delivered** | Tension `0068adec4b1501c6` is `status='quarantined'`, `quarantine_reason='fabricated_proposition'`, and its two claims are gone. Verified. The 9 surviving claims were read individually: quotes are verbatim and the propositions are genuinely supported. The fabricated proposition `db3ec63d33cf6f0a` is quarantined and unreachable from `/resolve`. |
 
 ---
@@ -181,8 +181,8 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 | Order | ID | Item | Blocked | Status | Why here |
 |---|---|---|---|---|---|
-| 1 | **E1** | The assessment layer is unguarded | none | **outstanding** | `verify_no_suppressed_scores` reads a key the engine never writes, so it has never fired on a real assessment; and nothing relates an assessment to a subject, so a test-polluted row sits in the corpus unchallenged. **The instrument N0 will be judged by — repair it before the run.** |
-| 2 | **N0** | Extract over the full corpus | **E1** | **outstanding** | **R1 delivered the audio and not the claims.** 4219 utterances, still 9 claims, E245 contributing zero. The detectors and X1 remain untested against material that could contradict itself. This is the run that makes P4–P6 answerable. |
+| 1 | **E1** | The assessment layer is unguarded | none | **delivered · verified** | `verify_no_suppressed_scores` requires explicit passed verdict; `verify_assessment_subjects_exist` guards referential integrity (13 checks total); test pollution removed; tests open read-only. |
+| 2 | **N0** | Extract over the full corpus | none | **outstanding** | **R1 delivered the audio and not the claims.** 4219 utterances, still 9 claims, E245 contributing zero. The detectors and X1 remain untested against material that could contradict itself. This is the run that makes P4–P6 answerable. |
 | 3 | **G0** | Repair the `mypy` gate | none | **delivered · verified** | Walrus narrowing at `test_segmentation_x0.py:53`; mypy clean on **80** files (re-measured). |
 | 4 | **M0** | `source_count` is a constant, not a measurement | none | **delivered · verified** | Resolved through utterance anchor chain without `hasattr`; Sacks/Friedberg 2, Jason/Chamath 1, zero claims 0, unresolvable raises. |
 | 5 | **E0** | Integrity pass must check the corpus, not a union | none | **delivered · verified** | FIXTURES and CORPUS evaluated and reported independently; assessments loaded from DB; examined counts reported. |
@@ -819,7 +819,7 @@ Also assert `claim_count` matches the real count — as a **check**, never as a 
 
 ---
 
-## 17f. E1 — The assessment layer is unguarded
+## 17f. E1 — The assessment layer is unguarded · **DELIVERED**
 
 **User impact:** the check that exists to stop a score being published over insufficient evidence becomes able to fire at all.
 

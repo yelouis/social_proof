@@ -331,7 +331,7 @@ def test_d0_resolve_assertion_c_returns_live_merged_proposition() -> None:
     """
     from worker.extract.dedup import NomicEmbedder
 
-    store = Storage("social_proof.duckdb")
+    store = Storage("social_proof.duckdb", read_only=True)
     embedder = NomicEmbedder()
     app = create_app(storage=store, token="test_token", embedder=embedder, host="127.0.0.1")
     client = TestClient(app)
@@ -369,7 +369,7 @@ def test_d0_resolve_both_directions_quarantined_fabrication_unreachable() -> Non
     """
     from worker.extract.dedup import NomicEmbedder
 
-    store = Storage("social_proof.duckdb")
+    store = Storage("social_proof.duckdb", read_only=True)
     embedder = NomicEmbedder()
     app = create_app(storage=store, token="test_token", embedder=embedder, host="127.0.0.1")
     client = TestClient(app)

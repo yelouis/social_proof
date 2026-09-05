@@ -53,6 +53,7 @@ class RubricEngine:
         override_tensions: list[Tension] | None = None,
         quote_texts_by_claim_id: dict[str, str] | None = None,
         conflict_directions: list[int] | None = None,
+        persist: bool = True,
     ) -> Assessment:
         """Computes four-axis assessment for a subject within a topic slice.
 
@@ -137,6 +138,11 @@ class RubricEngine:
             },
         }
 
+        any_scored = any(ax["score"] is not None for ax in axes.values())
+        sufficiency["passed"] = any_scored
+        if not any_scored:
+            sufficiency["reason"] = "insufficient_corpus"
+
         axis_evidence: dict[str, list[str]] = {
             "consistency": res_consistency.get("evidence", []),
             "specificity": res_specificity.get("evidence", []),
@@ -162,5 +168,6 @@ class RubricEngine:
             computed_at=computed_at,
         )
 
-        self.storage.insert_assessment(assessment)
+        if persist and not getattr(self.storage, "read_only", False):
+            self.storage.insert_assessment(assessment)
         return assessment
