@@ -62,9 +62,23 @@ Get this wrong and the system silently never works. If the extractor emits `"AI 
 
 Enforce it in the extraction prompt *and* in a validator: reject any proposition text matching `\b(should not|shouldn't|must not|never|oppose|against|no )\b` at canonicalisation time. A rule the model can violate silently is not a rule.
 
+### The actor must be stripped too, and that half was never enforced
+
+The canonical form above strips **the actor as well as the polarity**. Only the polarity half ever got a validator, and the actor half drifted: the v1.2 prompt emitted propositions like **`The speaker believes they created the subject matter`** — 100 of 1,429 propositions (7%) began *"The speaker"*, and 26 more contained a bare *"the subject"*.
+
+Such a string is not a proposition. It names no referent, so it cannot be true or false, and it **breaks the globality guarantee in `design_data_layer.md` §2** — propositions are shared across subjects precisely so two people can be compared on the same matter, and a proposition whose subject is whoever happens to point at it is shared by accident rather than by meaning.
+
+**It is also an embedding attractor.** Similarity between *"The speaker believes X"* and *"The speaker believes Y"* is dominated by the shared frame rather than by X and Y, so deduplication merges them at any plausible threshold. One such proposition absorbed eight unrelated claims — about conspiracy theories, about something taking off, about a third party's powers — and the two tensions that resulted were the second and third fabrications this system has published.
+
+**Therefore:** a proposition must be a standalone declarative resolvable without knowing who uttered it. No `the speaker`, no bare `the subject`, no sentence-initial unbound pronoun. **Reject at canonicalisation time with reason `proposition_not_self_contained`,** alongside the polarity check. *No downstream merge threshold can compensate for this, because the similarity being thresholded is not measuring the claim.*
+
 ### Deduplication
 
-New proposition text → embed → nearest-neighbour search in DuckDB (`design_data_layer.md` §4). Above the merge threshold, reuse the existing `proposition_id`. In the ambiguous band, a second model call adjudicates equivalence explicitly. Below, create new.
+New proposition text → embed → nearest-neighbour search in DuckDB (`design_data_layer.md` §4). Above the merge threshold, reuse the existing `proposition_id`. Below, create new. **Issue 008 settled the ambiguous band: adjudication does not earn its cost** — the similarity gap between restatements and distinct claims was clean enough that a second model call added latency without precision.
+
+**Re-pointing a claim invalidates its entailment check.** Validator 6 certifies that a quote supports *the proposition text it was checked against*. A merge that changes `claim.proposition_id` changes exactly that pair, so **entailment must be re-run against the new text, and the merge refused for any claim that fails it.** This is not defence in depth: a merge that skipped it re-pointed claims validated against *"the subject will eventually take off"* onto *"they created the subject matter"*, and the integrity pass had no equivalent of validator 6 to notice. **An extraction-time validator needs an integrity-pass twin, or it certifies a snapshot rather than the store.**
+
+**Merge propositions, not topics.** *"DNA sequencing involves chopping up DNA"* and *"DNA sequencing is relatively inexpensive"* are two facts about one subject, not one assertion phrased twice. Grouping by subject is `design_topic_model.md`'s job; the proposition layer must stay strictly narrower, or a tension degrades into "these two claims are about the same area" rather than "these two claims cannot both be held".
 
 **Bias toward merging.** An over-split proposition space is the same failure as polarity-in-text: two phrasings of one issue never compare, and every contradiction is invisible. Over-merging produces false positives, which are visible and fixable; under-merging produces false negatives, which are not.
 

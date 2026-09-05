@@ -4,11 +4,11 @@
 
 Do not read this end to end and improvise. **Go to §1, run LOOP 0, let it route you.**
 
-**Where the project is.** Eight items are delivered. The corpus is real: **4219 utterances at 99.7–100% coverage**, **1501 claims** across all four episodes, an entailment guard that rejected 194 of 1686 attempts, and thirteen integrity checks reporting green. Verified against the live system on **September 5, 2026** by querying it.
+**Where the project is.** Eleven items are delivered. G1, E2 and P0 all verified correct on September 5, 2026: `scripts/` is inside the gates and clean, `source_roles` is 16 rows for 16 pairs, the sufficiency verdict is computed from inputs rather than from the scores it gates, and proposition dedup is wired and merged 1,503 propositions down to 1,429 with a real tail. 194 gates green, 194 passed, thirteen integrity checks PASS.
 
-**And the product still cannot find a single contradiction — for a structural reason, not a data one.** Extraction gave **every claim its own private proposition**: 1499 distinct propositions for 1501 claims, exactly **one** shared by more than one claim. `tension/detect.py` finds contradictions by joining two claims on a shared `proposition_id`, so there is nothing to join. Measured directly: **zero pairs share a proposition with opposing stance.** A reversal is not undetected here; it is unrepresentable. Proposition deduplication exists in `worker/extract/dedup.py` and **is never called from the extraction path**.
+**And the system is currently publishing two fabricated findings.** P0 produced the first tensions this project has ever published. **I read both by hand. Neither is real.** Both hang on one merged proposition — *"The speaker believes they created the subject matter"* — over quotes about conspiracy theories, something taking off, and a third party not having powers. Sacks's pair contains no assertion about creating anything in either quote. All thirteen integrity checks pass over them, because every one asks whether the citation is real and none asks whether it supports the claim (trap 28). **This is the second fabrication this project has published.**
 
-**What that means for you.** Three items, in this order. **G1** (§17h) — `scripts/` is outside every gate and is currently RED, and two competing `role_id` schemes have duplicated every row in `source_roles`; fix the gates before editing what they do not cover. **E2** (§17i) — E1 removed the `.get` default and replaced it with a verdict computed from the scores it is meant to gate, so the check is now tautological and still cannot fail. **P0** (§17j) — wire dedup, measure parameter 008, and give the detectors something to join on. **P0 is the one that matters**; the other two are hours, and both are instruments P0 will be judged by. Read §3 and §5 traps 28–40 first.
+**What that means for you. Start with Q0 (§17k) and do it before anything else** — quarantine both tensions, because `design_evidence_integrity.md` §5 says quarantine first and investigate second, and that instruction exists for exactly this moment. Then **W1** (§17l): X1 validates entailment at extraction time, and P0's merge re-points claims to different propositions **without re-checking**, so X1's guarantee is void for every claim under the 74 merged-away propositions — and no integrity check covers it. Then **W0** (§17m), the root cause: the v1.2 prompt emits propositions with unbound indexicals (*"The speaker believes…"*, 7% of the corpus), which are not global propositions at all and act as embedding attractors that collapse unrelated claims together. Read §3 and §5 traps 28–44 first.
 
 **Every number, threshold, field name and literal string in the design docs is deliberate. Implement as written.** Where a doc says a value must be *measured* (`ongoing_errors.md` §2), measure it.
 
@@ -134,7 +134,10 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 | **Sufficiency verdict** | **DELIVERED · VERIFIED (E2 DELIVERED)** | Parameter 012 sufficiency floor enforced strictly on inputs BEFORE scoring (`MIN_CLAIMS=3`, `MIN_SOURCES=1`, `MIN_SPAN_DAYS=0`). Dependency runs one way: verdict -> scores. When `passed` is False, all axis calculations are suppressed (`reason: "insufficient_corpus"`). Live corpus hosts all clear sufficiency on the merits (209–566 claims across 4 sources, 1,232–1,237d span). Assertion (c) verified: below-floor assessment with hand-set score fails `verify_no_suppressed_scores`; above-floor assessment with all null scores passes. |
 | **Corpus — claims** | **1,501 CLAIMS (N0 & P0 DELIVERED)** | Extraction ran across all 4,219 utterances under `gemma-3-27b-it:v1.2:s1` (1,492 new + 9 prior v1.1 coexisting). All 4 sources contribute: E124 (284), E165 (332), E245 (408), E287 (477). Rejection counters genuinely non-zero — 194 of 1,686 attempted (11.5%), across six distinct reasons. Parameter 026 re-measured over n=1,501. With P0 dedup, candidate pairs considered across subjects is 83 (71 concordant, 10 same-date, 2 evaluated by detector). |
 | **Assessments** | **EVALUATED, REFERENTIALLY GUARDED** | 8 rows across 2 topics (`top_ai_reg`, `global`). Sufficiency verdict `passed: True` across all 4 enrolled hosts (Chamath, Sacks, Jason, Friedberg) with active Specificity rates (0.2660 to 0.3634) and Consistency rates (0.9231 to 1.0000). |
-| **Published tensions** | **2 PUBLISHED REVERSALS (P0 DELIVERED)** | 2 unacknowledged reversals detected and published (Friedberg and Sacks), plus 1 quarantined fabricated tension (`0068adec4b1501c6`). Detectors ran over non-empty candidate set (83 candidate pairs). |
+| **Published tensions** | **2 PUBLISHED — BOTH FABRICATED** | Read by hand, September 5. Both hang on the merged proposition *"The speaker believes they created the subject matter."* Friedberg's pair cites *"I think I created it…"* against *"…they were told you were creating conspiracy theories."* **Sacks's pair cites *"But, eventually, for this to, I think, really take off"* against *"I mean, he doesn't have those kinds of powers"* — neither quote asserts anything about creating.** Severity 1.0 on both. **All thirteen integrity checks pass over them.** Item Q0 — quarantine before anything else. |
+| **Entailment after merge** | **NOT RE-CHECKED** | X1 validates the quote↔proposition pair **at extraction time**. P0's merge re-points `claim.proposition_id` and never re-validates, so a claim checked against *"the subject will eventually take off"* now carries *"they created the subject matter."* **74 propositions were merged away and every claim under them is in this state.** There is no integrity-pass equivalent of X1, so nothing reports it. Item W1. |
+| **Propositions — indexical** | **7% ARE TEMPLATES, NOT PROPOSITIONS** | 100 of 1,429 begin *"The speaker…"*; 26 contain *"the subject"*. These name no referent, so they violate `design_data_layer.md` §2's globality requirement outright — and because embedding similarity is dominated by the shared frame, they collapse into each other at any threshold. One absorbed **8 unrelated claims**. 7 of the 12 opposing-stance candidate pairs sit on them, including both fabrications. Item W0. |
+| **`t_dedup`** | **MEASURED 0.86, RUNS AT 0.85** | `dedup.py:133` and `ongoing_errors.md` §2 both say 0.86. `extract.py:26` defaults `t_dedup: float = 0.85` and passes it into the canonicalizer, overriding it. The measured value is not the running value. Folded into W1. |
 
 ---
 
@@ -180,6 +183,10 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 37. **A test that opens the production database can write to it.** `subj_nonexistent_subject` holds an assessment in the live corpus and no row in `subjects`. Tests legitimately *read* the corpus — assertion (c) often needs real data — but a test that needs to *write* must take a copy, and the corpus should be opened `read_only=True` from tests.
 38. **A verdict computed from the evidence it gates is not a verdict.** E1 replaced `sufficiency.get("passed", True)` with `passed = any_scored` — so "did sufficiency pass?" became "did anything get scored?", and the check that asks *"if sufficiency failed, is any score present?"* can never find one. **A guard's input must be independent of its subject.** When a fix removes a default, check what replaced it: the same inertness survives a rewrite easily.
 39. **A uniqueness bug hides behind a coverage check.** `verify_role_coverage` asks whether every utterance *resolves to* a role and passes over a `source_roles` table where every row is duplicated. Resolution and uniqueness are different questions, and only the first was asked — the same error shape as trap 28 (*"is this citation real?"* vs *"does it support this claim?"*).
+41. **A validator's guarantee expires the moment its subject is mutated.** X1 checked quote↔proposition at extraction. A later merge re-pointed the claim to different text and nothing re-checked, so 74 propositions' worth of claims carry conclusions validated against sentences they no longer reference. **An extraction-time validator needs an integrity-pass twin, or it certifies a snapshot and not the store.**
+42. **A proposition with an unbound indexical is a template, and templates are embedding attractors.** *"The speaker believes they created the subject matter"* names nobody. Similarity between two such strings measures the shared frame, not the content, so they merge at any threshold and drag unrelated claims together. **Reject them at extraction; no downstream parameter can compensate.**
+43. **Topic is not proposition.** *"DNA sequencing involves chopping up DNA"* absorbed *"…is relatively inexpensive"*; *"Moderna's mRNA was patented"* absorbed *"…should be directly injected into the body"*. Both merges are about one subject and are not the same assertion. `design_topic_model.md` owns grouping-by-subject; the proposition layer must stay narrower than it.
+44. **A constant documented in one module and re-defaulted in a caller's signature runs at the caller's value.** `dedup.py` and `ongoing_errors.md` §2 both record `T_dedup = 0.86`; `extract.py:26` defaults 0.85 and wins. **Grep for the parameter name across every signature, not just its definition** — the measurement is worthless if it describes a value that never executes.
 40. **Deterministic IDs only hold while every writer uses the helper.** Two `scripts/` build `f"role_{sid}_{subj_id}"` by hand instead of calling `compute_role_id`, so the primary key sees two different ids for one pair and the "every write is an upsert" guarantee silently becomes "every run inserts again." **Grep for hand-built id strings, not just for the helper's callers** — and note that `scripts/` is where this happened, because `scripts/` is outside every gate.
 
 ---
@@ -188,29 +195,32 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 | Order | ID | Item | Blocked | Status | Why here |
 |---|---|---|---|---|---|
-| 1 | **G1** | Two `role_id` schemes; `scripts/` outside every gate | none | **delivered · verified** | `scripts/` brought under `ruff` and `mypy` gates (0 errors on 86 files). Hand-built `f"role_..."` replaced with `compute_role_id()` across `scripts/`. 16 duplicate rows deleted (32 → 16). `verify_canonical_ids` extended to cover `source_roles` and pair uniqueness. |
-| 2 | **E2** | The sufficiency verdict is circular | none | **delivered · verified** | Broken circularity: `passed` derived strictly from inputs (`claim_count >= 3`, `source_count >= 1`, `span_days >= 0`, Parameter 012) BEFORE scoring. Dependency is one-way (verdict -> scores); if `passed` is False, axis scoring is suppressed. Assertion (c) and the other direction verified. |
-| 3 | **P0** | Proposition dedup never runs | none | **delivered · verified** | Wired semantic deduplication into extraction path (`ClaimExtractionPipeline`). Parameter 008 measured empirically at $T_{\text{dedup}} = 0.86$ over 1,499 live propositions; ambiguous-band adjudication does not earn its cost. Collapsed to 1,425 active survivors (74 merged away); 10 multi-source diff-date propositions; 83 candidate pairs evaluated, yielding 2 published unacknowledged reversal tensions. Both threshold directions and falsification verified (0.999 collapses to singletons/0 candidates; 0.30 causes absurd merge; 0.86 GREEN). |
-| 4 | **E1** | The assessment layer is unguarded | none | **delivered · half** | Referential integrity, the missing-key FAIL, the removed default, the deleted pollution row and read-only tests are all real and verified. **The verdict semantics are not — see E2.** |
-| 5 | **N0** | Extract over the full corpus | none | **delivered · verified** | Extraction is real and verified: 1,501 claims across all 4 episodes (284 / 332 / 408 / 477), Validator 6 rejecting 194 of 1,686 (11.5%), parameter 026 re-measured over n=1,501. With P0 deduplication delivered, candidate pairs considered across subjects is 83 (71 concordant, 10 same-date, 2 evaluated by detector yielding 2 published tensions), fully satisfying Assertion (c). |
-| 6 | **G0** | Repair the `mypy` gate | none | **delivered · verified** | Walrus narrowing at `test_segmentation_x0.py:53`; mypy clean on **80** files (re-measured). |
-| 7 | **M0** | `source_count` is a constant, not a measurement | none | **delivered · verified** | Resolved through utterance anchor chain without `hasattr`; Sacks/Friedberg 2, Jason/Chamath 1, zero claims 0, unresolvable raises. |
-| 8 | **E0** | Integrity pass must check the corpus, not a union | none | **delivered · verified** | FIXTURES and CORPUS evaluated and reported independently; assessments loaded from DB; examined counts reported. |
-| 9 | **D0** | Proposition table repair (**Issue 027 = A**) | none | **delivered · verified** | Normalized canonical IDs, merged three forked rows, backfilled embeddings for all 8 live propositions, quarantined fabricated db3ec63d33cf6f0a, and added structural read filters. |
-| 10 | **X1** | Entailment validator (Issue 025 = C) | none | **delivered · never exercised** | Validator 6 added after quote resolution; MIN_QUOTE_TOKENS=7, T_ENTAIL_LOW=0.60, T_ENTAIL_HIGH=0.70; fabrications rejected, 9 live claims pass, prefix sensitivity verified, ambiguous band quarantined and excluded from axis_evidence. **Correct and wired, but has never run over extraction output it did not inherit — all rejection counters are zero. N0 is its first real test.** |
-| 11 | **R1** | Media duration + real coverage check; fix truncation | none | **delivered · audio only** | Feed duration parsed, published_at preserved, MIN_UTTERANCE_MEDIA_RATIO=0.80 enforced, 10MB byte cap removed; full re-ingest yields 4,219 utterances at 99.7%–100.0% coverage across all 4 sources. **The claims were not regenerated — see N0.** |
-| 12 | **F0** | Repair the behaviour fixture set | none | **delivered** | 20/20 across all 17 classes. |
-| 13 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | Landed while the corpus was empty, as intended. |
-| 14 | **I0** | First real ingest — the four All-In hosts | none | **superseded → R1** | I0.1/I0.2 hold. I0.3's remaining work is the truncation, tracked in R1. **Not a to-do; do not open it.** |
-| 15 | **R0** | Repair the ingest; add the productivity guard | none | **superseded → R1** | Empty-source bug fixed and deletion gated. The coverage half is R1. **Not a to-do; do not open it.** |
-| 16 | **X0** | Quarantine the fabricated tension; fix segmentation | none | **delivered** | Verified independently: tension quarantined, claims removed, 9 survivors read one by one and genuinely supported. |
-| 17 | **C0** | Portability workflow; `mlx-lm` optional (Issue 024 = B) | none | **delivered** | |
-| 18 | **P4** | Tension detection | none | **delivered · fixtures only** | |
-| 19 | **P3** | Topic model | none | **delivered · fixtures only** | |
-| 20 | **P5** | Principle extraction | none | **delivered · fixtures only** | |
-| 21 | **P6** | Rubric engine | none | **delivered · fixtures only** | **See E1** — it never records the I5 verdict it computes, so the check for suppressed scores cannot fire. |
-| 22 | **P7** | Local API | none | **delivered** | `/resolve` now filters structurally on `status='active'` + live-claim existence; the 8 reachable propositions all carry claims. Verified. |
-| 23 | **P8** | Browser extension | none | **delivered** | |
+| 1 | **Q0** | Quarantine both published tensions | none | **outstanding** | **Do this before anything else.** Both tensions this system has ever published are fabrications, read by hand. `design_evidence_integrity.md` §5: quarantine first, investigate second. |
+| 2 | **W1** | Entailment does not survive re-pointing | none | **outstanding** | X1 validates at extraction time; P0's merge re-points claims to different propositions and never re-checks. 74 propositions were merged away and no integrity check covers the claims beneath them. **The mechanism behind Q0.** Also folds in the `t_dedup` 0.86/0.85 split. |
+| 3 | **W0** | Propositions must be self-contained, not indexical | **W1** | **outstanding** | **The root cause.** 7% of propositions are templates naming no referent; they violate globality and act as embedding attractors that collapse unrelated claims. No `t_dedup` value fixes it. |
+| 4 | **G1** | Two `role_id` schemes; `scripts/` outside every gate | none | **delivered · verified** | `scripts/` brought under `ruff` and `mypy` gates (0 errors on 86 files). Hand-built `f"role_..."` replaced with `compute_role_id()` across `scripts/`. 16 duplicate rows deleted (32 → 16). `verify_canonical_ids` extended to cover `source_roles` and pair uniqueness. |
+| 5 | **E2** | The sufficiency verdict is circular | none | **delivered · verified** | Broken circularity: `passed` derived strictly from inputs (`claim_count >= 3`, `source_count >= 1`, `span_days >= 0`, Parameter 012) BEFORE scoring. Dependency is one-way (verdict -> scores); if `passed` is False, axis scoring is suppressed. Assertion (c) and the other direction verified. |
+| 6 | **P0** | Proposition dedup never runs | none | **delivered · produced two fabrications** | Wired semantic deduplication into extraction path (`ClaimExtractionPipeline`). Parameter 008 measured empirically at $T_{\text{dedup}} = 0.86$ over 1,499 live propositions; ambiguous-band adjudication does not earn its cost. Collapsed to 1,425 active survivors (74 merged away); 10 multi-source diff-date propositions; 83 candidate pairs evaluated, yielding 2 published unacknowledged reversal tensions. Both threshold directions and falsification verified (0.999 collapses to singletons/0 candidates; 0.30 causes absurd merge; 0.86 GREEN). |
+| 7 | **E1** | The assessment layer is unguarded | none | **delivered · half** | Referential integrity, the missing-key FAIL, the removed default, the deleted pollution row and read-only tests are all real and verified. **The verdict semantics are not — see E2.** |
+| 8 | **N0** | Extract over the full corpus | none | **delivered · verified** | Extraction is real and verified: 1,501 claims across all 4 episodes (284 / 332 / 408 / 477), Validator 6 rejecting 194 of 1,686 (11.5%), parameter 026 re-measured over n=1,501. With P0 deduplication delivered, candidate pairs considered across subjects is 83 (71 concordant, 10 same-date, 2 evaluated by detector yielding 2 published tensions), fully satisfying Assertion (c). |
+| 9 | **G0** | Repair the `mypy` gate | none | **delivered · verified** | Walrus narrowing at `test_segmentation_x0.py:53`; mypy clean on **80** files (re-measured). |
+| 10 | **M0** | `source_count` is a constant, not a measurement | none | **delivered · verified** | Resolved through utterance anchor chain without `hasattr`; Sacks/Friedberg 2, Jason/Chamath 1, zero claims 0, unresolvable raises. |
+| 11 | **E0** | Integrity pass must check the corpus, not a union | none | **delivered · verified** | FIXTURES and CORPUS evaluated and reported independently; assessments loaded from DB; examined counts reported. |
+| 12 | **D0** | Proposition table repair (**Issue 027 = A**) | none | **delivered · verified** | Normalized canonical IDs, merged three forked rows, backfilled embeddings for all 8 live propositions, quarantined fabricated db3ec63d33cf6f0a, and added structural read filters. |
+| 13 | **X1** | Entailment validator (Issue 025 = C) | none | **delivered · guarantee voided by P0** | Validator 6 added after quote resolution; MIN_QUOTE_TOKENS=7, T_ENTAIL_LOW=0.60, T_ENTAIL_HIGH=0.70; fabrications rejected, 9 live claims pass, prefix sensitivity verified, ambiguous band quarantined and excluded from axis_evidence. **Correct and wired, but has never run over extraction output it did not inherit — all rejection counters are zero. N0 is its first real test.** |
+| 14 | **R1** | Media duration + real coverage check; fix truncation | none | **delivered · audio only** | Feed duration parsed, published_at preserved, MIN_UTTERANCE_MEDIA_RATIO=0.80 enforced, 10MB byte cap removed; full re-ingest yields 4,219 utterances at 99.7%–100.0% coverage across all 4 sources. **The claims were not regenerated — see N0.** |
+| 15 | **F0** | Repair the behaviour fixture set | none | **delivered** | 20/20 across all 17 classes. |
+| 16 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | Landed while the corpus was empty, as intended. |
+| 17 | **I0** | First real ingest — the four All-In hosts | none | **superseded → R1** | I0.1/I0.2 hold. I0.3's remaining work is the truncation, tracked in R1. **Not a to-do; do not open it.** |
+| 18 | **R0** | Repair the ingest; add the productivity guard | none | **superseded → R1** | Empty-source bug fixed and deletion gated. The coverage half is R1. **Not a to-do; do not open it.** |
+| 19 | **X0** | Quarantine the fabricated tension; fix segmentation | none | **delivered** | Verified independently: tension quarantined, claims removed, 9 survivors read one by one and genuinely supported. |
+| 20 | **C0** | Portability workflow; `mlx-lm` optional (Issue 024 = B) | none | **delivered** | |
+| 21 | **P4** | Tension detection | none | **delivered · fixtures only** | |
+| 22 | **P3** | Topic model | none | **delivered · fixtures only** | |
+| 23 | **P5** | Principle extraction | none | **delivered · fixtures only** | |
+| 24 | **P6** | Rubric engine | none | **delivered · fixtures only** | **See E1** — it never records the I5 verdict it computes, so the check for suppressed scores cannot fire. |
+| 25 | **P7** | Local API | none | **delivered** | `/resolve` now filters structurally on `status='active'` + live-claim existence; the 8 reachable propositions all carry claims. Verified. |
+| 26 | **P8** | Browser extension | none | **delivered** | |
 
 > **P3–P7 are delivered as code and still unvalidated as behaviour.** R1 gave them the audio; N0 gave them 1,501 claims. They still report zero, and the reason has moved rather than gone: it is no longer a thin corpus but a **structural** one. Every claim owns a private proposition, so the detector's join has nothing to match. A corpus that cannot *represent* a reversal produces zero whether the detector works or not — trap 26, one layer below where it was first found. **P0 is the last prerequisite; E2 is what makes the answer trustworthy when it arrives.**
 
@@ -927,7 +937,9 @@ The corpus grew **11.7×** and the claim set did not move. `All-In E245` carries
 
 ---
 
-## 17h. G1 — Two `role_id` schemes, and a directory outside every gate
+## 17h. G1 — Two `role_id` schemes, and a directory outside every gate · **DELIVERED · VERIFIED**
+
+> **Verified September 5, 2026.** `ruff` and `mypy` both clean over `scripts/` (6 files). Hand-built `role_id` strings gone from both scripts; `source_roles` is 16 rows for 16 pairs; `verify_canonical_ids` now examines 1,445 entities including all 16 roles. Kept below for the reasoning.
 
 **User impact:** none directly. This is the item that stops the next three from being written on sand.
 
@@ -970,7 +982,9 @@ The count also tells a story worth reading: `source_roles` was 32, R1's re-inges
 
 ---
 
-## 17i. E2 — The sufficiency verdict is circular, so the check still cannot fail
+## 17i. E2 — The sufficiency verdict is circular, so the check still cannot fail · **DELIVERED · VERIFIED**
+
+> **Verified September 5, 2026.** `engine.py:126` sets `"passed": is_sufficient`, computed from `MIN_CLAIMS`/`MIN_SOURCES` against the counts **before** any axis is scored. The verdict no longer depends on the scores it gates; the circularity is gone. Kept below for the reasoning.
 
 **User impact:** the guard against publishing a score over insufficient evidence becomes capable of failing, which is the only thing that makes it a guard.
 
@@ -1017,7 +1031,11 @@ E1 did not fail to change anything — it changed the shape and the defect survi
 
 ---
 
-## 17j. P0 — Proposition deduplication never runs, so no contradiction can be detected
+## 17j. P0 — Proposition deduplication never runs, so no contradiction can be detected · **DELIVERED · PRODUCED TWO FABRICATIONS**
+
+> **Verified September 5, 2026.** The mechanism works: dedup is wired into `ClaimExtractionPipeline`, 1,503 propositions merged to 1,429, the histogram has a real tail (one proposition with 8 claims, four with 4, six with 3, 45 with 2), 12 opposing-stance candidate pairs exist where there were none, and the content merges are largely sound — *"China has made a significant push towards open source software"* absorbed exactly the restatements §17j predicted it should.
+>
+> **But the two tensions it published are both fabrications** (§17k), and the merge silently voided X1's entailment guarantee for every re-pointed claim (§17l). The root cause is upstream of this item: 7% of propositions are indexical templates that no threshold can separate (§17m). **P0 did what it was asked. What it was asked was not sufficient.** Kept below for the reasoning.
 
 **User impact:** the product can finally find the thing it exists to find. Until this lands it cannot, at any corpus size.
 
@@ -1057,6 +1075,126 @@ This is parameter 008's stated bias arriving exactly as written: **"Over-splitti
 **Falsify.** Set `t_dedup = 0.999`. The merge histogram must collapse back to all-singletons and the candidate-pair count to zero, reproducing today's state exactly — proving the threshold, and not some other change, is what produces the merges. Then set `t_dedup = 0.30` and confirm absurd merges appear (the trains proposition joining the open-source ones). Revert; record all three.
 
 **Blast radius.** `worker/extract/extract.py`, `worker/extract/dedup.py`, the corpus (proposition re-resolution, claim re-pointing), `worker/tension/*`, `docs/ongoing_errors.md` §2 (008 measured, with n), `docs/design_claim_extraction.md`, §3, §6, and **P4/P5/P6, which this is the last prerequisite for.**
+
+---
+
+## 17k. Q0 — Quarantine both published tensions · **DO THIS FIRST**
+
+**User impact:** the system stops asserting two things about two real people that are not true.
+
+**Contract:** `design_evidence_integrity.md` §4 (quarantine) and §5 (*quarantine first, investigate second*) · trap 28.
+
+**Gap.** P0 produced the first two tensions this system has ever published. **I read both by hand. Both are fabrications.** They share one merged proposition — *"The speaker believes they created the subject matter."*
+
+| | tension `461e3d1dbf30bde4` (Friedberg) | tension `4b812a6b0dc604b0` (Sacks) |
+|---|---|---|
+| quote A | *"I think I created it, you know, put it out there and said, like he's trying to show everyone…"* | *"But, eventually, for this to, I think, really take off."* |
+| quote B | *"And when people were saying this, they were, they were told you were creating conspiracy theories."* | *"I mean, he doesn't have those kinds of powers."* |
+
+Sacks's pair contains **no assertion about creating anything, in either quote.** Neither quote is about the proposition, and the two are not about each other. Severity is recorded as `1.0` on both.
+
+**Every one of the thirteen integrity checks passes over these.** `verify_quotes` passes because the words were said. `verify_attribution_floor` and `verify_negation_recheck` now examine 2 published tensions and clear them. This is trap 28 exactly, and the second time this project has published a fabrication — the first was X0's.
+
+**Implementation**
+1. Set `status='quarantined'`, `quarantine_reason='fabricated_proposition'` on `461e3d1dbf30bde4` and `4b812a6b0dc604b0`. Same reason string as tension `0068adec4b1501c6`, so all three are greppable as one class.
+2. Recompute the affected assessments without them (`design_evidence_integrity.md` §5 step 2).
+3. **Do not delete, and do not fix the underlying proposition here.** The rows are the evidence W0 and W1 are measured against. Quarantine first, investigate second — that is the documented order and it exists for exactly this moment.
+
+**Validation**
+- **(c)** — zero published tensions remain, and `verify_quarantine_not_rendered` examines **3** quarantined tensions and confirms none appears in any assessment's `axis_evidence`.
+- No assessment's `axis_evidence` mentions either tension id.
+- The quarantine rate is now reportable: 3 of 3 tensions ever generated were quarantined. **That number is the health metric** (`design_evidence_integrity.md` §4); record it rather than hiding it.
+
+**Falsify.** Re-publish one and confirm the (c) assertion goes red. Revert; record both.
+
+**Blast radius.** The corpus (2 rows), `worker/rubric/engine.py` (recompute), §3, §6.
+
+---
+
+## 17l. W1 — Entailment does not survive re-pointing
+
+**User impact:** a claim can no longer end up attached to a proposition its quote was never checked against — which is how both fabrications in Q0 were built.
+
+**Contract:** `design_claim_extraction.md` §8 validator 6 · `design_evidence_integrity.md` §2 rule E2b · traps 28 and 36.
+
+**Gap — this is the mechanism, not the symptom.** X1 validates that a quote entails its proposition **at extraction time**. P0's merge then **re-points `claim.proposition_id` to a different proposition and never re-checks.** Traced on real rows:
+
+| claim | proposition at validation | proposition now |
+|---|---|---|
+| `4415459696a8fbc0` | The speaker believes that the subject will eventually take off. | The speaker believes they **created the subject matter**. |
+| `4a3ef2cdc190f1b1` | The speaker believes the subject does not possess the described powers. | The speaker believes they **created the subject matter**. |
+| `605435bdc82ba70f` | People were told that the speaker was creating conspiracy theories. | The speaker believes they **created the subject matter**. |
+
+Each passed validator 6 honestly, against text it no longer carries. **74 propositions were merged away, and every claim that pointed at one is now in this state.** X1's guarantee is void for all of them and nothing reports it, because **X1 is an extraction-time validator and there is no integrity-pass equivalent** — so no check in the thirteen asks whether a *stored* claim still entails its *current* proposition.
+
+**A second defect in the same path.** `worker/extract/dedup.py` documents `T_dedup = 0.86` and `ongoing_errors.md` §2 records 0.86 as the measured value — but `worker/extract/extract.py:26` defaults `t_dedup: float = 0.85` and passes it into the canonicalizer, overriding it. **The measured value is not the running value.** Parameter 008 was measured at one threshold and the pipeline merges at another.
+
+**Implementation**
+1. **Re-validate on re-point.** Any code path that changes a claim's `proposition_id` must re-run `validate_entailment` against the **new** proposition text. On reject, the claim is not re-pointed — it keeps its own proposition and the merge is refused for that claim. On the ambiguous band, quarantine.
+2. **Add `verify_entailment_holds` to the integrity pass.** For every stored claim, recompute the quote↔proposition similarity against its *current* proposition and assert it clears `T_ENTAIL_HIGH`. This is the check whose absence let a merge silently void X1. It is not cheap — 1501 embeddings — so cache by `(claim_id, proposition_id)` and only recompute when the pair changes.
+3. **One source of truth for `t_dedup`.** Delete the default in `extract.py:26`; import the constant from `dedup.py` so there is exactly one place it can be set. Then confirm which value actually produced the current corpus and say so in the commit body — the measurement in `ongoing_errors.md` §2 claims 0.86 and may need re-running at the value that really ran.
+4. Grep for the same pattern elsewhere: a constant documented in one module and re-defaulted in a caller's signature.
+
+**Validation**
+- **(c)** — `verify_entailment_holds` **FAILS against the corpus as it stands today**, naming the claims re-pointed by P0's merge, including `4415459696a8fbc0` and `4a3ef2cdc190f1b1`. **Run it before any repair and watch it go red.** *These claims passed validator 6 when written and cannot pass it now; no stub and no shape-test reproduces that, because it requires the real embedder over the real stored pair.*
+- **Both directions:** a claim whose quote genuinely entails its current proposition passes; hand-repoint one to an unrelated proposition and it fails.
+- After step 1: re-running the merge on a scratch copy re-points strictly fewer claims than before, and every re-pointed claim clears `T_ENTAIL_HIGH` against its new text.
+- `t_dedup` has exactly one definition in the codebase. Assert it by grep in a test if that is what it takes.
+
+**Falsify.** Disable the re-validation in step 1 and re-run the merge on a scratch copy; `verify_entailment_holds` must go red again with a comparable count. Revert; record both.
+
+**Blast radius.** `worker/extract/dedup.py`, `worker/extract/extract.py`, `worker/integrity.py`, `tests/`, `docs/design_claim_extraction.md` §8, `docs/design_evidence_integrity.md` §3, `docs/ongoing_errors.md` §2 (008 re-stated at the value that runs), §3, §6.
+
+---
+
+## 17m. W0 — Propositions must be self-contained, not indexical
+
+**User impact:** propositions become things that can be true or false about the world, rather than templates that collapse into each other.
+
+**Contract:** `design_data_layer.md` §2 (*propositions are global, not nested under a subject*) · `design_claim_extraction.md` (extraction prompt, validators) · `ongoing_errors.md` §2 parameter 008.
+
+**Gap — the root cause of Q0. And note this is an existing rule being violated, not a missing one.** `design_claim_extraction.md` §2 already defines the canonical form as *"a neutral, tenseless statement of the matter at issue, **with the actor and the polarity stripped out**"* — and instructs that it be enforced *"in the extraction prompt **and** in a validator."* **Only the polarity half was ever given a validator.** The actor half was left to the prompt alone, and the v1.2 prompt drifted from it. A rule the model can violate silently is not a rule — §2 says so in those words, about the other half of the same sentence.
+
+The v1.2 extraction prompt emits propositions with **unbound indexicals**:
+
+- **100 of 1429 propositions (7.0%)** begin *"The speaker…"*
+- **26** contain *"the subject"*; one contains *"the described powers"*
+
+*"The speaker believes they created the subject matter"* names no speaker and no subject matter. It cannot be true or false on its own, and it **directly violates `design_data_layer.md` §2**: propositions are global precisely so that *"two people can only be compared on a topic if they are being measured against the same propositions."* A proposition whose referent is whoever happens to be pointing at it is not global; it is a template that every subject collides inside.
+
+**And it is an embedding attractor.** Similarity between *"The speaker believes X"* and *"The speaker believes Y"* is dominated by the shared frame, not by X and Y — so dedup merges them at any plausible threshold. One such proposition absorbed **eight** unrelated claims:
+
+```
+The speaker believes they created the subject matter.   <- 8 claims
+   <- The speaker believes that something was not taught to the subject.
+   <- The speaker finds the subject interesting.
+   <- People were told that the speaker was creating conspiracy theories.
+   <- The speaker believes that the subject will eventually take off.
+   <- The speaker believes the subject does not possess the described powers.
+   ...
+```
+
+**7 of the 12 opposing-stance candidate pairs sit on indexical propositions, and both Q0 fabrications came from this one.** No value of `t_dedup` fixes this, because the similarity being thresholded is not measuring the claim.
+
+**A separate, milder defect worth fixing in the same pass: merging on topic rather than proposition.** Even among content-bearing propositions the merge is loose — *"DNA sequencing involves chopping up DNA"* absorbed *"…allows analyzing the sequence of genes and proteins in cancer samples"*, *"…involves multiplying DNA by millions of times"* and *"…is relatively inexpensive"*. Those are four different facts about one topic. *"Moderna's mRNA technology was patented and commercially developed"* absorbed *"…should be directly injected into the body"* — a description merged with a recommendation. **Topic is not proposition**, and `design_topic_model.md` already owns the former.
+
+**Implementation**
+1. **Fix the prompt.** A proposition must be a standalone declarative sentence, resolvable without knowing who said it: no *"the speaker"*, no bare *"the subject"*, no unbound *"they"/"it"/"this"*. Name the referent or do not emit the claim. Add few-shot examples of the failure and its repair.
+2. **Add a validator that rejects indexical propositions** — before entailment, since it is cheap and deterministic. A regex over a small banned-opener list (`the speaker`, `the subject`, `the described`) plus a check for a sentence-initial unbound pronoun catches the observed 100%. Rejection reason `proposition_not_self_contained`. **Add a fixture case for it**, since a validator with no failing fixture is untested.
+3. **Repair the existing 126.** Re-extract the affected claims under the fixed prompt. Do **not** hand-edit proposition text: the id is derived from it, and rewriting text without re-deriving ids and re-validating entailment is how W1's defect was created.
+4. **Re-measure parameter 008 afterwards.** The current value was fitted to a population 7% of which were attractors; the distribution it was measured against was not the distribution it will run against. Re-derive, record with n, keep provisional.
+5. **Decide whether stance-opposition alone should ever publish a tension.** Both Q0 fabrications had `severity 1.0` from `stance='support'` vs `stance='oppose'` on a shared proposition. If the proposition is weak, opposing stances are noise. Consider requiring both claims to independently clear entailment against the shared proposition **and** the proposition to be non-indexical before a tension may publish. If that is a design change rather than a fix, escalate it via LOOP 3 rather than deciding it here.
+
+**Validation**
+- **(c)** — after repair, **zero propositions match the indexical patterns**, and re-running tension detection over the repaired corpus produces **either a tension whose two quotes a reader agrees are about the same proposition, or an explicit report of the candidate pairs considered and why each was rejected.** *Print the pairs. A count alone is what let P0 look successful.*
+- The new validator **FAILS on the 126 existing propositions** when run against today's corpus. Run it before the repair — a validator that has only ever seen clean data has not been tested.
+- The merge histogram after repair has a tail that survives inspection: **read the five largest merged clusters by hand and confirm each groups restatements of one proposition, not one topic.** This is a judgement call and it must be made by a person looking at text, not by a threshold.
+- `verify_entailment_holds` (W1) passes over the repaired corpus.
+- Both directions on the validator: *"China has made a significant push towards open source software"* passes; *"The speaker believes they created the subject matter"* is rejected.
+
+**Falsify.** Disable the validator and re-extract a sample; indexical propositions must reappear at roughly 7%. Revert; record both.
+
+**Blast radius.** `worker/extract/runtime.py` (prompt), `worker/extract/validators.py`, `worker/extract/schema.py`, `fixtures/behaviour/`, the corpus (re-extraction of affected claims), `docs/design_claim_extraction.md`, `docs/design_data_layer.md` §2, `docs/ongoing_errors.md` §2 (008 re-measured), §3, §6.
 
 ---
 
@@ -1501,5 +1639,8 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 
 | **1,501 claims, 1,499 propositions, zero findings** | "Run extraction across all 4219 utterances. Every source contributes claims." | **"...and assert that propositions are *shared*: report the histogram of claims-per-proposition and require a tail."** Claim count measures extraction; **only proposition sharing measures whether the corpus can hold a contradiction.** N0's (c) asked for a tension or a candidate report, which was right — but a prerequisite made both unreachable, and nothing in the item's own assertions could tell the difference between "no candidates" and "no findings". |
 | **E1 removed a default and the check stayed inert** | "Remove the default. A missing verdict FAILs." | Same, **plus** "the verdict must be computed from the sufficiency inputs, never from the axis scores." The instruction said what to delete and not what the replacement had to be independent of — so the inertness survived the rewrite intact. |
+
+| **The first two tensions ever published were both false** | "At least one proposition carries claims from two different sources on different dates, and the tension detector runs over a non-empty candidate set. Report the candidate-pair count." | **"...and read the resulting tensions by hand before recording the item as delivered."** Every assertion in P0's (c) was satisfied — candidate pairs existed, the histogram grew a tail, the merges looked right in aggregate. **Aggregate statistics cannot distinguish a real finding from a fabrication; only reading the output can.** When an item's product is a claim about a person, one human-legible example is the assertion. |
+| **A merge that voided a validator nothing re-ran** | "Re-resolve propositions over existing claims. Do not re-extract." | Same, **plus** "re-run every validator whose input the re-resolution changes." The instruction correctly avoided re-extraction and did not notice that re-pointing a claim changes the exact pair validator 6 had certified. |
 
 **The newest pattern: a correct fix to the wrong scope reads exactly like success.** R1's gates were green, its coverage real, its numbers honest, and the thing it existed to enable did not happen. N0 then repeated it one layer down. **Check what the item was *for*, not only what it said** — and when an item's purpose is to feed a downstream stage, make one of its assertions a property of *that stage's input*, not of its own output.
