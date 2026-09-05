@@ -65,8 +65,8 @@ def test_surviving_claims_have_verbatim_supporting_quotes() -> None:
             # Quote must not be empty or a 6-word arbitrary fragment
             assert c.quote_text is not None, f"Claim {c.claim_id} has no quote_text"
             assert len(c.quote_text.split()) >= 6, f"Claim quote too short: {c.quote_text}"
-            assert c.extraction_version == "gemma-3-27b-it:v1.1:s1", (
-                f"Claim {c.claim_id} does not have bumped extraction version"
+            assert c.extraction_version in ("gemma-3-27b-it:v1.1:s1", "gemma-3-27b-it:v1.2:s1"), (
+                f"Claim {c.claim_id} does not have bumped extraction version: {c.extraction_version}"
             )
 
             # Quote must resolve verbatim against its utterance

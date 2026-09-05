@@ -78,14 +78,16 @@ class ClaimExtractionPipeline:
                     canonical_text=ec.proposition_text,
                     subject_ids=[utterance.subject_id],
                     claim_count=1,
-                    status="quarantined" if is_quarantined else "active",
-                    quarantine_reason=outcome.rejection_reason if is_quarantined else None,
+                    status="active",
+                    quarantine_reason=None,
                 )
                 self.storage.insert_proposition(prop)
                 if self.embedder is not None:
                     emb = self.embedder.embed_document(prop.canonical_text)
                 else:
-                    emb = [0.0] * 768
+                    from worker.extract.dedup import get_embedder
+
+                    emb = get_embedder().embed_document(prop.canonical_text)
                 self.storage.insert_proposition_embedding(prop_id, emb)
 
             # 5. Build deterministic Claim record
@@ -96,6 +98,7 @@ class ClaimExtractionPipeline:
                 extraction_version=self.runtime.extraction_version,
             )
 
+            verbatim_quote = utterance.text_verbatim[span[0]:span[1]]
             claim = Claim(
                 claim_id=claim_id,
                 subject_id=utterance.subject_id,
@@ -111,7 +114,7 @@ class ClaimExtractionPipeline:
                 prompt_version=self.runtime.prompt_version,
                 extraction_version=self.runtime.extraction_version,
                 recorded_at=source_recorded_at,
-                quote_text=ec.quote_text,
+                quote_text=verbatim_quote,
             )
 
             self.storage.insert_claim(claim)

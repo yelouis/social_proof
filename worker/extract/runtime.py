@@ -17,11 +17,31 @@ STABLE_SYSTEM_PROMPT: str = """
 You are a closed-corpus claim extraction engine. Your task is to extract structured claims from verbatim utterances.
 
 RULES:
-1. MOST UTTERANCES CONTAIN NO CLAIM. Greetings, banter, questions, agreements ("yeah exactly") produce an EMPTY LIST. An empty list is the EXPECTED, CORRECT answer.
-2. PROPOSITIONS MUST BE STANCE-NEUTRAL. Never include polarity (e.g., 'should not', 'never', 'oppose', 'against') in proposition_text. Polarity belongs exclusively in stance.
-3. INVARIANT I7 (SPEECH-ACT GUARDS): Exclude reported speech, hypotheticals, sarcasm, steelmanning, jokes, questions, and ambiguous quote agreements. For excluded utterances, set is_own_assertion=False and specify exclusion_reason.
+1. MOST UTTERANCES CONTAIN NO CLAIM. Greetings, banter, questions, agreements ("yeah exactly") produce an EMPTY LIST. An empty list {"claims": []} is the EXPECTED, CORRECT answer for conversational or non-position speech.
+2. PROPOSITIONS MUST BE STANCE-NEUTRAL. Never include polarity words (e.g., 'should not', 'never', 'oppose', 'against', 'bad', 'harmful', 'cannot') in proposition_text. Polarity belongs exclusively in stance.
+3. INVARIANT I7 (SPEECH-ACT GUARDS): Exclude reported speech, hypotheticals, sarcasm, steelmanning, jokes, questions, and ambiguous quote agreements. If excluded, set is_own_assertion=false and specify exclusion_reason. If is_own_assertion=true, exclusion_reason MUST be null.
 4. QUOTE TEXT: Return the exact verbatim substring from the utterance text as quote_text.
-5. CONSTRAINED SCHEMA: Output must strictly conform to JSON format: {"claims": []}.
+5. CONSTRAINED SCHEMA: Output must strictly conform to JSON format:
+{
+  "claims": [
+    {
+      "proposition_text": "stance-neutral matter at issue",
+      "stance": "support" | "oppose" | "mixed" | "hedge",
+      "hedging_level": 0.0 to 1.0,
+      "is_own_assertion": true | false,
+      "exclusion_reason": null | "reported_speech" | "hypothetical" | "sarcasm" | "steelman" | "joke" | "question",
+      "quote_text": "verbatim substring from utterance",
+      "confidence": 0.0 to 1.0
+    }
+  ]
+}
+
+Examples:
+Utterance: "It is true that China is much more optimistic about AI than we are."
+Result: {"claims": [{"proposition_text": "China has greater societal and official optimism toward artificial intelligence than Western nations", "stance": "support", "hedging_level": 0.05, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "It is true that China is much more optimistic about AI than we are.", "confidence": 0.95}]}
+
+Utterance: "Hey everybody, welcome back to the podcast. How are you doing today?"
+Result: {"claims": []}
 """.strip()
 
 
@@ -83,7 +103,7 @@ class LocalGemmaRuntime:
     def __init__(
         self,
         model_id: str = "gemma-3-27b-it",
-        prompt_version: str = "v1.1",
+        prompt_version: str = "v1.2",
         schema_version: str = "s1",
         system_prompt: str = STABLE_SYSTEM_PROMPT,
         backend: Any | None = None,

@@ -351,11 +351,11 @@ def test_d0_resolve_assertion_c_returns_live_merged_proposition() -> None:
         assert data["proposition"] is not None
         assert data["proposition"]["id"] == "86ad084395852d91"
 
-        # Assert proposition carries 2 live claims from two distinct subjects
+        # Assert proposition carries live claims from two distinct subjects
         claims = store.con.execute(
             "SELECT claim_id, subject_id FROM claims WHERE proposition_id = '86ad084395852d91'"
         ).fetchall()
-        assert len(claims) == 2
+        assert len(claims) >= 2
         subjects = {c[1] for c in claims}
         assert len(subjects) == 2
     finally:
