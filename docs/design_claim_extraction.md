@@ -231,6 +231,9 @@ There is no `output_config.format` here. A local model asked politely for JSON w
 
    This stays deterministic, so §0's "no LLM at scoring time" rule survives and the same corpus always yields the same rejections.
 
+   **Re-validating entailment on proposition deduplication / re-pointing (Item W1):**
+   When proposition deduplication merges propositions based on proposition-to-proposition cosine similarity ($T_{dedup} = 0.86$), claims originally attached to the merged proposition are candidates to re-point to the survivor proposition. However, proposition similarity does not imply quote entailment! If $\text{sim}(\text{quote}, \text{survivor\_proposition}) < T_{ENTAIL\_HIGH} (0.70)$, the claim does not entail the survivor proposition. In that case, the re-point is **refused**, and the claim retains its own proposition (or stays unmerged). This preserves invariant X1 through deduplication. Integrity check #14 (`verify_entailment_holds`) verifies this across all published claims.
+
 **Segmentation is a precondition for all six.** Utterances split on length rather than sentence boundaries produce fragments that begin and end mid-word (`"...as it is bullsh-sh-"`). Asking a model to find a *position* in a fragment that cannot hold one is what invites fabrication in the first place. **Segment on sentence and pause boundaries; a validator is defence in depth, not a substitute for coherent input.**
 
 Log every rejection with its reason. **The rejection rate is a quality signal for the model itself** — if polarity rejections climb after a prompt edit, the prompt got worse, and you will only know because the counter moved.

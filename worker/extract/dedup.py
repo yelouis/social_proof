@@ -120,6 +120,10 @@ def stub_hash_embedding(text: str, dim: int = 768) -> list[float]:
     return [float(x) for x in vec.tolist()]
 
 
+DEFAULT_T_DEDUP: float = 0.86  # Parameter 008
+DEFAULT_T_ENTAIL_HIGH: float = 0.70  # Parameter 026
+
+
 class PropositionCanonicalizer:
     """Canonicalises proposition text and deduplicates semantically against the DuckDB store.
 
@@ -130,21 +134,24 @@ class PropositionCanonicalizer:
         self,
         storage: Storage,
         embedder: Embedder | None = None,
-        t_dedup: float = 0.86,
+        t_dedup: float = DEFAULT_T_DEDUP,
+        t_entail_high: float = DEFAULT_T_ENTAIL_HIGH,
     ) -> None:
         self.storage = storage
         self.embedder = embedder
         self.t_dedup = t_dedup
+        self.t_entail_high = t_entail_high
 
     def canonicalise_and_dedup(
         self,
         raw_proposition_text: str,
         subject_id: str,
         embedding: list[float] | None = None,
+        quote_text: str | None = None,
     ) -> DedupDecision:
         """Finds closest existing proposition by cosine similarity.
 
-        If similarity >= t_dedup: merges into existing proposition.
+        If similarity >= t_dedup and quote entails candidate proposition: merges into existing proposition.
         Otherwise: creates a new proposition.
         """
         canonical_text = normalize_canonical_text(raw_proposition_text)
@@ -161,26 +168,40 @@ class PropositionCanonicalizer:
         if nearest:
             best_id, sim = nearest[0]
             if sim >= self.t_dedup:
-                # Merge into existing proposition
+                # Merge into existing proposition if entailment holds
                 existing = self.storage.get_proposition(best_id)
                 if existing:
-                    subject_ids = list(set(existing.subject_ids + [subject_id]))
-                    updated = Proposition(
-                        proposition_id=existing.proposition_id,
-                        canonical_text=existing.canonical_text,
-                        embedding_ref=existing.embedding_ref,
-                        subject_ids=subject_ids,
-                        claim_count=existing.claim_count + 1,
-                        status=existing.status,
-                        quarantine_reason=existing.quarantine_reason,
-                    )
-                    self.storage.insert_proposition(updated)
-                    return DedupDecision(
-                        proposition_id=best_id,
-                        is_new=False,
-                        similarity=sim,
-                        canonical_text=existing.canonical_text,
-                    )
+                    merge_allowed = True
+                    if quote_text:
+                        if self.embedder is not None:
+                            q_vec = self.embedder.embed_document(quote_text.strip())
+                            p_vec = self.embedder.embed_document(existing.canonical_text)
+                            entail_sim = cosine_similarity(q_vec, p_vec)
+                        else:
+                            q_vec = stub_hash_embedding(quote_text.strip())
+                            p_vec = stub_hash_embedding(existing.canonical_text)
+                            entail_sim = cosine_similarity(q_vec, p_vec)
+                        if entail_sim < self.t_entail_high:
+                            merge_allowed = False
+
+                    if merge_allowed:
+                        subject_ids = list(set(existing.subject_ids + [subject_id]))
+                        updated = Proposition(
+                            proposition_id=existing.proposition_id,
+                            canonical_text=existing.canonical_text,
+                            embedding_ref=existing.embedding_ref,
+                            subject_ids=subject_ids,
+                            claim_count=existing.claim_count + 1,
+                            status=existing.status,
+                            quarantine_reason=existing.quarantine_reason,
+                        )
+                        self.storage.insert_proposition(updated)
+                        return DedupDecision(
+                            proposition_id=best_id,
+                            is_new=False,
+                            similarity=sim,
+                            canonical_text=existing.canonical_text,
+                        )
 
         # Create new proposition
         prop_id = compute_proposition_id(canonical_text)

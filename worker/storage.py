@@ -314,6 +314,13 @@ class Storage:
                 global_topic_id VARCHAR
             );
 
+            CREATE TABLE IF NOT EXISTS claim_entailment_cache (
+                claim_id VARCHAR,
+                proposition_id VARCHAR,
+                similarity DOUBLE,
+                PRIMARY KEY (claim_id, proposition_id)
+            );
+
             CREATE TABLE IF NOT EXISTS topic_resolutions (
                 resolution_key VARCHAR PRIMARY KEY,
                 subject_id VARCHAR,
@@ -384,6 +391,40 @@ class Storage:
             CREATE INDEX IF NOT EXISTS princ_hnsw ON principle_embeddings
                 USING HNSW (embedding) WITH (metric = 'cosine');
         """)
+
+    def get_entailment_cache(self) -> dict[tuple[str, str], float]:
+        """Loads cached claim-to-proposition entailment similarities."""
+        has_table = self.con.execute(
+            "SELECT 1 FROM information_schema.tables WHERE table_name = 'claim_entailment_cache'"
+        ).fetchone()
+        if not has_table:
+            return {}
+        rows = self.con.execute(
+            "SELECT claim_id, proposition_id, similarity FROM claim_entailment_cache"
+        ).fetchall()
+        return {(r[0], r[1]): float(r[2]) for r in rows}
+
+    def set_entailment_cache(self, entries: dict[tuple[str, str], float]) -> None:
+        """Saves claim-to-proposition entailment similarities to persistent cache."""
+        if self.read_only or not entries:
+            return
+        self.con.execute("""
+            CREATE TABLE IF NOT EXISTS claim_entailment_cache (
+                claim_id VARCHAR,
+                proposition_id VARCHAR,
+                similarity DOUBLE,
+                PRIMARY KEY (claim_id, proposition_id)
+            );
+        """)
+        for (cid, pid), sim in entries.items():
+            self.con.execute(
+                """
+                INSERT INTO claim_entailment_cache (claim_id, proposition_id, similarity)
+                VALUES (?, ?, ?)
+                ON CONFLICT (claim_id, proposition_id) DO UPDATE SET similarity = excluded.similarity;
+                """,
+                [cid, pid, sim],
+            )
 
     def insert_subject(self, s: Subject) -> None:
         import json
@@ -955,20 +996,29 @@ class Storage:
 
     def reresolve_propositions(
         self,
-        t_dedup: float = 0.86,
+        t_dedup: float | None = None,
+        t_entail_high: float = 0.70,
         backup_tables: bool = True,
         from_pre_merge: bool = False,
+        embedder: Any | None = None,
+        validate_entailment_on_repoint: bool = True,
     ) -> dict[str, Any]:
         """Re-resolves proposition deduplication over all claims in the corpus at t_dedup (Parameter 008).
 
         1. Optionally creates backup pre-merge snapshot or restores from it.
         2. Queries embeddings of active propositions.
         3. Clusters propositions greedily in chronological order of claims at cosine similarity >= t_dedup.
-        4. Re-points claims to cluster representatives.
+        4. Re-points claims to cluster representatives only if quote entailment holds (Item W1).
         5. Deletes merged-away propositions and embeddings.
         6. Recomputes claim_count and subject_ids on active propositions.
-        7. Returns summary statistics.
+        7. Populates claim_entailment_cache.
+        8. Returns summary statistics.
         """
+        if t_dedup is None:
+            from worker.extract.dedup import DEFAULT_T_DEDUP
+
+            t_dedup = DEFAULT_T_DEDUP
+
         if from_pre_merge:
             self.restore_pre_merge_propositions()
         elif backup_tables:
@@ -990,11 +1040,15 @@ class Storage:
 
         claim_rows = self.con.execute(
             """
-            SELECT claim_id, utterance_id, proposition_id, subject_id, stance, is_own_assertion, recorded_at
+            SELECT claim_id, utterance_id, proposition_id, subject_id, stance, is_own_assertion, recorded_at, quote_text
             FROM claims
             ORDER BY TRY_CAST(recorded_at AS TIMESTAMPTZ), utterance_id, claim_id
             """
         ).fetchall()
+
+        claims_by_pid: dict[str, list[Any]] = {}
+        for r in claim_rows:
+            claims_by_pid.setdefault(r[2], []).append(r)
 
         mapping: dict[str, str] = {}
         active_pids: list[str] = []
@@ -1018,7 +1072,29 @@ class Storage:
                 sims = np.dot(mat, vec)
                 best_idx = int(np.argmax(sims))
                 if float(sims[best_idx]) >= t_dedup:
-                    mapping[orig_pid] = active_pids[best_idx]
+                    cand_rep = active_pids[best_idx]
+                    cand_vec = active_vecs[best_idx]
+                    merge_allowed = True
+                    if validate_entailment_on_repoint:
+                        if embedder is None:
+                            from worker.extract.dedup import get_embedder
+
+                            embedder = get_embedder()
+                        pid_claims = claims_by_pid.get(orig_pid, [])
+                        for c in pid_claims:
+                            q_text = (c[7] or "").strip()
+                            if q_text:
+                                q_vec = np.array(embedder.embed_document(q_text), dtype=np.float32)
+                                entail_sim = float(np.dot(q_vec, cand_vec))
+                                if entail_sim < t_entail_high:
+                                    merge_allowed = False
+                                    break
+                    if merge_allowed:
+                        mapping[orig_pid] = cand_rep
+                    else:
+                        active_pids.append(orig_pid)
+                        active_vecs.append(vec)
+                        mapping[orig_pid] = orig_pid
                 else:
                     active_pids.append(orig_pid)
                     active_vecs.append(vec)
@@ -1031,7 +1107,7 @@ class Storage:
                     "UPDATE claims SET proposition_id = ? WHERE proposition_id = ?",
                     [rep_pid, orig_pid],
                 )
-                repointed_claims_count += 1
+                repointed_claims_count += len(claims_by_pid.get(orig_pid, []))
 
         merged_away = set(mapping.keys()) - set(active_pids)
         for pid in merged_away:
@@ -1053,6 +1129,35 @@ class Storage:
                 "UPDATE propositions SET claim_count = ?, subject_ids = ? WHERE proposition_id = ?",
                 [c_count, s_ids, pid],
             )
+
+        # Populate claim_entailment_cache for all claims against active propositions
+        self.con.execute("""
+            CREATE TABLE IF NOT EXISTS claim_entailment_cache (
+                claim_id VARCHAR,
+                proposition_id VARCHAR,
+                similarity DOUBLE,
+                PRIMARY KEY (claim_id, proposition_id)
+            );
+        """)
+        if embedder is None:
+            from worker.extract.dedup import get_embedder
+
+            embedder = get_embedder()
+        for c in claim_rows:
+            cid = c[0]
+            final_pid = mapping.get(c[2], c[2])
+            q_text = (c[7] or "").strip()
+            if q_text and final_pid in embs:
+                q_vec = np.array(embedder.embed_document(q_text), dtype=np.float32)
+                sim = float(np.dot(q_vec, embs[final_pid]))
+                self.con.execute(
+                    """
+                    INSERT INTO claim_entailment_cache (claim_id, proposition_id, similarity)
+                    VALUES (?, ?, ?)
+                    ON CONFLICT (claim_id, proposition_id) DO UPDATE SET similarity = excluded.similarity;
+                    """,
+                    [cid, final_pid, sim],
+                )
 
         self.con.execute("CHECKPOINT;")
 

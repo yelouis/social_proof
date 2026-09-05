@@ -52,7 +52,7 @@ def test_dedup_assertion_c_multi_source_diff_dates_and_candidate_pairs(live_db: 
     assert len(multi_src_rows) >= 1, (
         f"Assertion (c) FAILED: Expected >=1 proposition with claims from multiple sources on different dates, got {len(multi_src_rows)}"
     )
-    assert len(multi_src_rows) == 10, f"Expected 10 multi-source diff-date propositions at T=0.86, got {len(multi_src_rows)}"
+    assert len(multi_src_rows) == 6, f"Expected 6 multi-source diff-date propositions at T=0.86 with W1 entailment gate, got {len(multi_src_rows)}"
 
     # 2. Tension candidate pairs (opposing stance on same proposition at different dates)
     cand_row = con.execute(
@@ -75,7 +75,7 @@ def test_dedup_assertion_c_multi_source_diff_dates_and_candidate_pairs(live_db: 
     assert candidate_pairs > 0, (
         f"Assertion (c) FAILED: Expected >0 candidate pairs sharing a proposition with opposing stance, got {candidate_pairs}"
     )
-    assert candidate_pairs == 2, f"Expected 2 candidate pairs at T=0.86, got {candidate_pairs}"
+    assert candidate_pairs == 1, f"Expected 1 candidate pair at T=0.86 with W1 entailment gate, got {candidate_pairs}"
 
 
 def test_dedup_merge_histogram_has_healthy_tail(live_db: Storage) -> None:
@@ -94,12 +94,12 @@ def test_dedup_merge_histogram_has_healthy_tail(live_db: Storage) -> None:
     hist = {int(r[0]): int(r[1]) for r in hist_rows}
 
     # Before P0: 1498 x 1, 1 x 3.
-    # At T=0.86: 1369 x 1, 45 x 2, 6 x 3, 4 x 4, 1 x 8.
+    # At T=0.86 with W1 entailment gate: 1374 x 1, 47 x 2, 4 x 3, 4 x 4, 1 x 5.
     assert hist[1] < 1400, f"Expected singletons to be reduced below 1400, got {hist[1]}"
     assert hist.get(2, 0) >= 40, f"Expected >=40 propositions with 2 claims, got {hist.get(2, 0)}"
-    assert hist.get(3, 0) >= 5, f"Expected >=5 propositions with 3 claims, got {hist.get(3, 0)}"
+    assert hist.get(3, 0) >= 4, f"Expected >=4 propositions with 3 claims, got {hist.get(3, 0)}"
     assert hist.get(4, 0) >= 4, f"Expected >=4 propositions with 4 claims, got {hist.get(4, 0)}"
-    assert hist.get(8, 0) == 1, f"Expected 1 proposition with 8 claims, got {hist.get(8, 0)}"
+    assert hist.get(5, 0) == 1, f"Expected 1 proposition with 5 claims, got {hist.get(5, 0)}"
 
     multi_claim_props = sum(v for k, v in hist.items() if k > 1)
     assert multi_claim_props == 56, f"Expected 56 multi-claim propositions, got {multi_claim_props}"
@@ -205,7 +205,7 @@ def test_dedup_falsification_threshold_extremes_on_copy(tmp_path: Path) -> None:
     assert p1_claim != p2_claim, "Expected p1 and p2 not to merge at t=0.999"
 
     # 2. Break 2: t_dedup = 0.30 -> absurd merge: trains merges with open source
-    stats_30 = store.reresolve_propositions(t_dedup=0.30, from_pre_merge=True)
+    stats_30 = store.reresolve_propositions(t_dedup=0.30, from_pre_merge=True, validate_entailment_on_repoint=False)
     p1_claim_30 = _get_pid("all the leading open source models are from China")
     p3_claim_30 = _get_pid("high speed trains going 125")
     assert p1_claim_30 == p3_claim_30, "Expected absurd merge at t=0.30 (trains merged with open source)"
@@ -213,9 +213,9 @@ def test_dedup_falsification_threshold_extremes_on_copy(tmp_path: Path) -> None:
 
     # 3. Revert: t_dedup = 0.86 -> GREEN
     stats_86 = store.reresolve_propositions(t_dedup=0.86, from_pre_merge=True)
-    assert stats_86["candidate_pairs"] == 2
-    assert stats_86["multi_source_diff_date_propositions"] == 10
-    assert stats_86["surviving_propositions"] == 1425
+    assert stats_86["candidate_pairs"] == 1
+    assert stats_86["multi_source_diff_date_propositions"] == 6
+    assert stats_86["surviving_propositions"] == 1430
     p1_claim_86 = _get_pid("all the leading open source models are from China")
     p2_claim_86 = _get_pid("China has made a really big push on open source")
     p3_claim_86 = _get_pid("high speed trains going 125")

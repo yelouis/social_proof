@@ -28,7 +28,7 @@ Collected here because they are enforced together by one pass.
 |---|---|---|
 | **E1** | Every rendered claim carries a verbatim quote, a date, and a resolvable source locator. | Widget tests + integrity pass |
 | **E2** | Every quoted string `grep -F`-matches its stored source text. | `verify_quotes` (§3) |
-| **E2b** | Every quote **supports the proposition attached to it.** E2 alone proved words were said; it never proved they said *that*. A published tension was traced to two real quotes carrying an invented proposition — Issue 025. | Extraction validator 6 (`design_claim_extraction.md` §8) |
+| **E2b** | Every quote **supports the proposition attached to it.** E2 alone proved words were said; it never proved they said *that*. A published tension was traced to two real quotes carrying an invented proposition — Issue 025. | Extraction validator 6 (`design_claim_extraction.md` §8) + `verify_entailment_holds` (§3) |
 | **E3** | Nothing derived from page context ever persists. | `verify_no_page_context` (§3) |
 | **E4** | Below the per-axis gate, no number is computed — not computed-and-hidden. | `verify_no_suppressed_scores` (§3) |
 | **E5** | Any Tension whose preconditions fail is quarantined, never rendered. | `verify_quarantine_not_rendered` (§3) |
@@ -78,9 +78,15 @@ verify_versions_present
     detector_version, embedding_model. A score without provenance
     cannot be reproduced or retired.
 
+verify_role_coverage
+    Every Utterance resolves to a SourceSubjectRole (subject_id, source_id).
+
+verify_source_productivity
+    Every Source clears MIN_UTTERANCE_MEDIA_RATIO (0.80) duration coverage.
+
 verify_canonical_ids
-    For every proposition and principle, stored_id == compute_*_id(canonical_text).
-    Also asserts claim_count matches the real count from claims table.
+    For every proposition, principle, and role: stored_id == compute_*_id(...).
+    Also asserts claim_count matches the real count from claims table and role pairs are unique.
 
 verify_quarantined_propositions_unreachable
     For every quarantined Proposition, no live claim references it, and it cannot
@@ -89,6 +95,12 @@ verify_quarantined_propositions_unreachable
 verify_assessment_subjects_exist
     For every Assessment: its subject_id resolves in subjects, and its topic_id
     resolves in topics or is 'global'. Prevents test pollution and unlinked assessments.
+
+verify_entailment_holds
+    For every published Claim: quote_text entails its current proposition_id
+    clearing T_ENTAIL_HIGH (0.70) and token length >= MIN_QUOTE_TOKENS (7).
+    Guards against deduplication re-pointing claims to propositions their quotes
+    do not support. Caches embeddings in claim_entailment_cache.
 ```
 
 ---

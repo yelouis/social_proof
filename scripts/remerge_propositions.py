@@ -1,6 +1,6 @@
-"""Re-resolves proposition deduplication across the corpus at Parameter 008 (T_dedup = 0.85).
+"""Re-resolves proposition deduplication across the corpus at Parameter 008 (T_dedup = 0.86).
 
-Implements agent_execution_guide.md §17j (P0).
+Implements agent_execution_guide.md §17j (P0) and §17l (W1).
 """
 
 import argparse
@@ -10,6 +10,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from worker.extract.dedup import DEFAULT_T_DEDUP
 from worker.principles.conflict import PrincipleConflictDetector
 from worker.rubric.engine import RubricEngine
 from worker.storage import Storage
@@ -18,7 +19,7 @@ from worker.tension.detect import TensionDetector
 
 def run_remerge(
     db_path: str = "social_proof.duckdb",
-    threshold: float = 0.86,
+    threshold: float = DEFAULT_T_DEDUP,
     from_pre_merge: bool = False,
 ) -> dict[str, object]:
     print(f"=== Proposition Deduplication Re-resolution (T_dedup={threshold:.3f}) ===")
@@ -38,7 +39,7 @@ def run_remerge(
 
     # 2. Re-run P4 Tension Detection
     print("\n--- P4 Tension Detection ---")
-    store.con.execute("DELETE FROM tensions WHERE tension_id != '0068adec4b1501c6';")
+    store.con.execute("DELETE FROM tensions WHERE status != 'quarantined';")
     subjects = [
         r[0]
         for r in store.con.execute("SELECT subject_id FROM subjects ORDER BY subject_id").fetchall()
@@ -137,7 +138,7 @@ def run_remerge(
 def main() -> None:
     parser = argparse.ArgumentParser(description="Re-resolve proposition deduplication at threshold T_dedup.")
     parser.add_argument("--db", type=str, default="social_proof.duckdb", help="Path to DuckDB database")
-    parser.add_argument("--threshold", type=float, default=0.85, help="Deduplication threshold (Parameter 008)")
+    parser.add_argument("--threshold", type=float, default=DEFAULT_T_DEDUP, help="Deduplication threshold (Parameter 008)")
     parser.add_argument("--from-pre-merge", action="store_true", help="Restore from pre-merge tables first")
     args = parser.parse_args()
 

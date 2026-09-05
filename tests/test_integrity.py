@@ -57,6 +57,7 @@ def test_valid_fixtures_pass_all_checks() -> None:
         if r.name not in (
             "verify_quarantine_not_rendered",
             "verify_quarantined_propositions_unreachable",
+            "verify_entailment_holds",
         ):
             assert r.status == "PASS", f"Check {r.name} status expected 'PASS', got '{r.status}'"
         else:
@@ -256,11 +257,12 @@ def test_integrity_pass_corpus_examined_counts_match_db_assertion_c() -> None:
             "SELECT count(*) FROM propositions WHERE status = 'quarantined'"
         ),
         "verify_assessment_subjects_exist": count_query("SELECT count(*) FROM assessments"),
+        "verify_entailment_holds": count_query("SELECT count(*) FROM claims"),
     }
 
     try:
         corpus_results = run_integrity_corpus("social_proof.duckdb")
-        assert len(corpus_results) == 13
+        assert len(corpus_results) == 14
         for r in corpus_results:
             assert r.examined_count == expected_counts[r.name], (
                 f"Check {r.name}: examined_count {r.examined_count} != expected {expected_counts[r.name]}"

@@ -1,6 +1,6 @@
 """Evidence Integrity Automated Pass — design_evidence_integrity.md §3.
 
-Implements the nine mandatory checks:
+Implements the fourteen mandatory checks:
 1. verify_quotes
 2. verify_anchor_chain
 3. verify_no_page_context
@@ -10,6 +10,11 @@ Implements the nine mandatory checks:
 7. verify_negation_recheck
 8. verify_versions_present
 9. verify_role_coverage
+10. verify_source_productivity
+11. verify_canonical_ids
+12. verify_quarantined_propositions_unreachable
+13. verify_assessment_subjects_exist
+14. verify_entailment_holds
 """
 
 import argparse
@@ -832,6 +837,118 @@ def verify_assessment_subjects_exist(
     )
 
 
+_GLOBAL_ENTAILMENT_CACHE: dict[tuple[str, str], float] = {}
+
+
+def verify_entailment_holds(
+    claims: list[Claim],
+    propositions: list[Proposition],
+    utterances: dict[str, Utterance] | list[Utterance] | None = None,
+    t_high: float = 0.70,
+    min_tokens: int = 7,
+    embedder: Any | None = None,
+    cache: dict[tuple[str, str], float] | None = None,
+) -> CheckResult:
+    """Check #14: Entailment survives re-pointing (Item W1, Parameter 026, Rule E2b).
+
+    For every stored Claim with status == 'published' (active own-assertion):
+    recompute quote <-> proposition similarity against its current proposition and assert
+    it clears T_ENTAIL_HIGH (0.70) and token length >= MIN_QUOTE_TOKENS (7).
+    Catches silent merge voiding of Validator 6 guarantee (Trap 41).
+    """
+    if not claims or not propositions:
+        return CheckResult(
+            name="verify_entailment_holds",
+            passed=True,
+            status="NOT APPLICABLE — zero rows",
+            message="No claims or propositions to verify entailment",
+            examined_count=0,
+        )
+
+    prop_map = {p.proposition_id: p for p in propositions}
+    utt_map = (
+        utterances if isinstance(utterances, dict) else {u.utterance_id: u for u in (utterances or [])}
+    )
+
+    if embedder is None:
+        from worker.extract.dedup import get_embedder
+
+        embedder = get_embedder()
+
+    entailment_cache = cache if cache is not None else _GLOBAL_ENTAILMENT_CACHE
+    failing_claims: list[tuple[str, str, float, str]] = []
+
+    published_claims = [c for c in claims if c.status == "published"]
+
+    for claim in published_claims:
+        if claim.proposition_id not in prop_map:
+            failing_claims.append(
+                (claim.claim_id, claim.proposition_id, 0.0, "missing_proposition")
+            )
+            continue
+
+        prop = prop_map[claim.proposition_id]
+        quote = claim.quote_text
+        if not quote and claim.utterance_id in utt_map:
+            u = utt_map[claim.utterance_id]
+            quote = u.text_verbatim[claim.quote_span[0] : claim.quote_span[1]]
+        quote = (quote or "").strip()
+
+        token_count = len(quote.split())
+        if token_count < min_tokens:
+            failing_claims.append(
+                (
+                    claim.claim_id,
+                    prop.proposition_id,
+                    0.0,
+                    f"quote_too_short: {token_count} < {min_tokens}",
+                )
+            )
+            continue
+
+        cache_key = (claim.claim_id, prop.proposition_id)
+        if cache_key in entailment_cache:
+            sim = entailment_cache[cache_key]
+        else:
+            from worker.extract.dedup import cosine_similarity
+
+            vec_quote = embedder.embed_document(quote)
+            vec_prop = embedder.embed_document(prop.canonical_text)
+            sim = cosine_similarity(vec_quote, vec_prop)
+            entailment_cache[cache_key] = sim
+            _GLOBAL_ENTAILMENT_CACHE[cache_key] = sim
+
+        if sim < t_high:
+            failing_claims.append(
+                (
+                    claim.claim_id,
+                    prop.proposition_id,
+                    sim,
+                    f"sim={sim:.4f} < {t_high:.4f}",
+                )
+            )
+
+    if failing_claims:
+        sample_msg = ", ".join(
+            f"{cid} ({reason})" for cid, pid, sim, reason in failing_claims[:10]
+        )
+        return CheckResult(
+            name="verify_entailment_holds",
+            passed=False,
+            status="FAIL",
+            message=f"{len(failing_claims)} published claims failed entailment against current proposition: {sample_msg}",
+            examined_count=len(claims),
+        )
+
+    return CheckResult(
+        name="verify_entailment_holds",
+        passed=True,
+        status="PASS",
+        message=f"All {len(published_claims)} published claims clear entailment (>= {t_high:.2f}) against current propositions",
+        examined_count=len(claims),
+    )
+
+
 def run_all_checks(
     claims: list[Claim] | None = None,
     utterances: list[Utterance] | None = None,
@@ -844,8 +961,10 @@ def run_all_checks(
     principles: list[Principle] | None = None,
     subjects: list[Subject] | None = None,
     topics: list[Topic] | None = None,
+    entailment_cache: dict[tuple[str, str], float] | None = None,
+    embedder: Any | None = None,
 ) -> list[CheckResult]:
-    """Execute all 13 integrity checks."""
+    """Execute all 14 integrity checks."""
     c_list = claims or []
     u_list = utterances or []
     s_list = sources or []
@@ -872,6 +991,13 @@ def run_all_checks(
         verify_canonical_ids(p_list, pr_list, c_list, rol_list),
         verify_quarantined_propositions_unreachable(p_list, c_list),
         verify_assessment_subjects_exist(a_list, sub_list, top_list),
+        verify_entailment_holds(
+            c_list,
+            p_list,
+            u_list,
+            cache=entailment_cache,
+            embedder=embedder,
+        ),
     ]
     return results
 
@@ -970,6 +1096,15 @@ def run_integrity_corpus(db_path: Path | str = "social_proof.duckdb") -> list[Ch
             for r in store.con.execute("SELECT topic_id FROM topics").fetchall()
             if (top := store.get_topic(r[0])) is not None
         ]
+        cache: dict[tuple[str, str], float] = {}
+        has_cache_table = store.con.execute(
+            "SELECT 1 FROM information_schema.tables WHERE table_name = 'claim_entailment_cache'"
+        ).fetchone()
+        if has_cache_table:
+            for r in store.con.execute(
+                "SELECT claim_id, proposition_id, similarity FROM claim_entailment_cache"
+            ).fetchall():
+                cache[(r[0], r[1])] = float(r[2])
     finally:
         store.con.close()
 
@@ -985,6 +1120,7 @@ def run_integrity_corpus(db_path: Path | str = "social_proof.duckdb") -> list[Ch
         principles=principles,
         subjects=subjects,
         topics=topics,
+        entailment_cache=cache,
     )
 
 

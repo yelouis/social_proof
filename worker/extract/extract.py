@@ -6,7 +6,7 @@ Implements design_claim_extraction.md §1-§8 and agent_execution_guide.md §11 
 from typing import Any
 
 from worker.entities import Claim, Utterance
-from worker.extract.dedup import PropositionCanonicalizer
+from worker.extract.dedup import DEFAULT_T_DEDUP, PropositionCanonicalizer
 from worker.extract.gate import ExtractionGate
 from worker.extract.runtime import LocalGemmaRuntime
 from worker.extract.validators import validate_extracted_claim
@@ -23,7 +23,7 @@ class ClaimExtractionPipeline:
         gate: ExtractionGate | None = None,
         confidence_floor: float = 0.70,
         embedder: Any | None = None,
-        t_dedup: float = 0.85,
+        t_dedup: float = DEFAULT_T_DEDUP,
     ) -> None:
         self.storage = storage
         self.runtime = runtime or LocalGemmaRuntime()
@@ -77,11 +77,14 @@ class ClaimExtractionPipeline:
             span = outcome.resolved_quote_span
             is_quarantined = outcome.status == "quarantined"
 
+            verbatim_quote = utterance.text_verbatim[span[0]:span[1]]
+
             # 4. Resolve or create Proposition entity via semantic deduplication (Parameter 008)
             dedup_decision = self.canonicalizer.canonicalise_and_dedup(
                 raw_proposition_text=ec.proposition_text,
                 subject_id=utterance.subject_id,
                 embedding=outcome.prop_embedding,
+                quote_text=verbatim_quote,
             )
             prop_id = dedup_decision.proposition_id
 
@@ -93,7 +96,6 @@ class ClaimExtractionPipeline:
                 extraction_version=self.runtime.extraction_version,
             )
 
-            verbatim_quote = utterance.text_verbatim[span[0]:span[1]]
             claim = Claim(
                 claim_id=claim_id,
                 subject_id=utterance.subject_id,

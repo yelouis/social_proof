@@ -187,6 +187,11 @@ class TensionDetector:
             status = "quarantined" if quarantine_reason is not None else "published"
             tension_id = compute_tension_id(claim_a_id, claim_b_id, tension_type)
 
+            existing_t = self.storage.get_tension(tension_id)
+            if existing_t and existing_t.status == "quarantined":
+                status = "quarantined"
+                quarantine_reason = existing_t.quarantine_reason
+
             tension = Tension(
                 tension_id=tension_id,
                 type=tension_type,  # type: ignore[arg-type]
