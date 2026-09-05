@@ -4,9 +4,9 @@
 
 Do not read this end to end and improvise. **Go to §1, run LOOP 0, let it route you.**
 
-**Where the project is.** X0 is delivered and its work holds — the fabricated tension is quarantined and the 9 surviving claims are verbatim and genuinely supported. But a verification pass on **September 4, 2026** found a red gate and five defects the docs did not know about, and **`mypy` is RED at HEAD**.
+**Where the project is.** G0, M0, E0, D0, X1 and R1 are delivered and **independently verified against the live system on September 4, 2026** — by querying it, not by reading their commit messages. The corpus is real for the first time: **4219 utterances at 99.7–100% coverage** of four full episodes, true feed publication dates, a repaired proposition table, and an entailment guard wired into the extraction chain. All gates green.
 
-**What that means for you.** Start at **G0** (§17b): the gate repair. Nothing else begins until it is green. Then M0 and E0 — two items about numbers and checks that look like measurements and are not. **X1 and R1 are both blocked on Issue 027**, which is open and needs a selection. Read §3 and §5 traps 28–34 before anything else. **Do not treat P4–P7's green status as evidence they work** — the one tension they have ever produced was wrong, and the integrity pass that certifies them has never examined a real assessment (§17d).
+**What that means for you.** Two defects survive, and the first is the one that matters. **R1 delivered the audio and not the claims**: the corpus grew **11.7×** and the claim count is still **9**, so the detectors have still never met material capable of contradicting itself, and X1 has never run over output it did not inherit. Start at **E1** (§17f) — the assessment layer is unguarded, and it is the instrument N0 will be judged by — then **N0** (§17g), the extraction run that finally makes P4–P6 answerable. Read §3 and §5 traps 28–37 first. **Do not treat P4–P7's green status as evidence they work.** It never was, and R1 did not change it.
 
 **Every number, threshold, field name and literal string in the design docs is deliberate. Implement as written.** Where a doc says a value must be *measured* (`ongoing_errors.md` §2), measure it.
 
@@ -114,7 +114,7 @@ grep -c "^Your selection: _____" docs/ongoing_errors.md   # anchored — unancho
 
 ## 3. Verified baseline
 
-Measured **September 4, 2026** at `5f881ea`. Re-run via §2 before trusting.
+Measured **September 4, 2026** at `99b3347`, and re-verified independently by querying the live system rather than reading status rows. Re-run via §2 before trusting.
 
 | Gate | Result | Note |
 |---|---|---|
@@ -122,12 +122,14 @@ Measured **September 4, 2026** at `5f881ea`. Re-run via §2 before trusting.
 | `mypy --strict` | **PASS** — clean on 80 files | Clean across worker/, tests/, fixtures/, golden/. |
 | `pytest tests/ -q` | **PASS** — 180 passed in **101s** | `requires_models` tests ran (not skipped, no deselection in `addopts`). ~101s is well above trap 18's 35s floor. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
-| `worker.integrity --all` | **PASS — independent populations** | 12 checks evaluated. FIXTURES and CORPUS reported separately without unioning. `verify_canonical_ids` and `verify_quarantined_propositions_unreachable` both PASS. Real assessments loaded (9 checked). |
+| `worker.integrity --all` | **PASS — independent populations, but one check is inert** | E0 delivered: 12 checks, FIXTURES and CORPUS reported separately with no union, real assessments loaded (9 checked), `verify_canonical_ids` and `verify_quarantined_propositions_unreachable` both PASS. **However `verify_no_suppressed_scores` reads `sufficiency.get("passed", True)` (`integrity.py:222`) against an engine that never writes that key — so its `PASS (examined: 9)` is nine defaults read, not nine assessments verified. Item E1.** |
 | `worker.golden.report` | **PASS** | Fixtures 20/20 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
 | **CI / Portability** | **PASS** | `portability.yml` tests base install without Apple extra; runs lint, mypy, and non-model tests (161 passed in ~31s). |
 | **Corpus** | **POPULATED, FULL COVERAGE (R1 DELIVERED)** | 4 sources, **4,219 utterances**, 9 claims, 12 propositions, 9 assessments. Coverage across all four sources: **99.7%–100.0%** (5,283s–5,800s of 5,301s–5,801s). Feed `<itunes:duration>` and `pubDate` parsed; `published_at` preserved from feed; `MIN_UTTERANCE_MEDIA_RATIO = 0.80` enforced and passing. Truncation bug eliminated. Item R1 delivered. |
 | **Propositions** | **REPAIRED (D0 DELIVERED)** | 12 propositions total, 8 carrying live claims all embedded with `nomic-embed-text-v1.5` via `embed_document`. 4 orphaned/quarantined rows. `claim_count` matches real claims on every row. Three forked rows merged/updated. Fabricated proposition `db3ec63d33cf6f0a` quarantined. `/resolve` filters structurally for `status = 'active'` and live claims existence. Issue 027 = A; item D0 delivered. |
-| **`source_count`** | **MEASURED** | Sacks and Friedberg record 2; Jason and Chamath record 1. Resolved through utterance anchor chain, `hasattr` removed, I3 anchor-chain violation raises if unresolvable. Item M0 delivered. |
+| **`source_count`** | **MEASURED** | Sacks and Friedberg record 2; Jason and Chamath record 1. Resolved through utterance anchor chain, `hasattr` removed, I3 anchor-chain violation raises if unresolvable. Item M0 delivered. **Independently confirmed against ground truth** (`count(DISTINCT source_id)` per subject via the anchor chain). |
+| **Corpus — claims** | **STILL 9. This is the live defect.** | The corpus grew 11.7× and the claim count did not move. Extraction was never re-run: all 9 claims remain at `gemma-3-27b-it:v1.1:s1`, **E245 holds 1015 utterances and zero claims**, and published tensions and principles are still **0**. X1 is wired and correct but has never processed output it did not inherit — its rejection counters are all zero. **Item N0 (§17g).** |
+| **Assessments** | **UNGUARDED** | 9 rows across 2 topics (`top_ai_reg`, `global`) — the pairing is correct, since `assessment_id` hashes the topic. But one row belongs to **`subj_nonexistent_subject`, which has no row in `subjects`**: test pollution in the production corpus that all 12 checks accept, because nothing relates an assessment to a subject. Item E1. |
 | **Published tension** | **QUARANTINED — X0 delivered** | Tension `0068adec4b1501c6` is `status='quarantined'`, `quarantine_reason='fabricated_proposition'`, and its two claims are gone. Verified. The 9 surviving claims were read individually: quotes are verbatim and the propositions are genuinely supported. The fabricated proposition `db3ec63d33cf6f0a` is quarantined and unreachable from `/resolve`. |
 
 ---
@@ -169,6 +171,9 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 32. **A verification pass that unions fixtures with production data cannot tell you which one passed.** `worker.integrity --all` extends fixture lists with live DB rows and checks the union — and silently omits assessments from the DB side entirely. **Report populations separately, and print the examined count for each**, or a green pass means nothing you can act on.
 33. **A deterministic ID is only as canonical as its normalization.** `compute_proposition_id` lowercases and collapses whitespace but does not strip terminal punctuation, so `"…than Western nations"` and `"…than Western nations."` are different propositions. **No similarity threshold can merge them — the split happens before similarity is computed.** Over-splitting hides contradictions silently, which is the exact failure parameter 008's bias is written against.
 34. **Fixing a measurement without fixing where the measurement comes from is self-confirming.** A coverage check whose duration is read from the truncated download computes ~100% and passes on a corpus that is 92% unread. **The denominator must come from outside the artifact being checked.**
+35. **"Re-ingest" and "re-extract" are different runs, and a stage not named in the instruction does not happen.** R1 multiplied the corpus 11.7× and left the claim count at exactly 9, because the spec said one and not the other. The agent was correct; the spec was short. **When a work item exists to give a downstream stage material, name that stage's re-run as an explicit step.**
+36. **A `.get(key, default)` on a key nobody writes is an unused parameter one layer down.** `verify_no_suppressed_scores` read `sufficiency.get("passed", True)` against an engine that writes only `claim_count`, `source_count` and `span_days` — so it returned its own default nine times and printed PASS over nine real assessments. **Grep for the writer before trusting the reader**, exactly as trap 29 says to grep the body before trusting the signature.
+37. **A test that opens the production database can write to it.** `subj_nonexistent_subject` holds an assessment in the live corpus and no row in `subjects`. Tests legitimately *read* the corpus — assertion (c) often needs real data — but a test that needs to *write* must take a copy, and the corpus should be opened `read_only=True` from tests.
 
 ---
 
@@ -176,26 +181,28 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 | Order | ID | Item | Blocked | Status | Why here |
 |---|---|---|---|---|---|
-| 1 | **G0** | Repair the `mypy` gate | none | **delivered** | 11 errors in `tests/test_segmentation_x0.py` repaired; mypy clean on 78 files. |
-| 2 | **M0** | `source_count` is a constant, not a measurement | none | **delivered** | Resolved through utterance anchor chain without `hasattr`; Sacks/Friedberg 2, Jason/Chamath 1, zero claims 0, unresolvable raises. |
-| 3 | **E0** | Integrity pass must check the corpus, not a union | none | **delivered** | FIXTURES and CORPUS evaluated and reported independently; assessments loaded from DB; examined counts reported. |
-| 4 | **D0** | Proposition table repair (**Issue 027 = A**) | none | **delivered** | Normalized canonical IDs, merged three forked rows, backfilled embeddings for all 8 live propositions, quarantined fabricated db3ec63d33cf6f0a, and added structural read filters. |
-| 5 | **X1** | Entailment validator (Issue 025 = C) | none | **delivered** | Validator 6 added after quote resolution; MIN_QUOTE_TOKENS=7, T_ENTAIL_LOW=0.60, T_ENTAIL_HIGH=0.70; fabrications rejected, 9 live claims pass, prefix sensitivity verified, ambiguous band quarantined and excluded from axis_evidence. |
-| 6 | **R1** | Media duration + real coverage check; fix truncation | none | **delivered** | Feed duration parsed, published_at preserved, MIN_UTTERANCE_MEDIA_RATIO=0.80 enforced, 10MB byte cap removed; full re-ingest yields 4,219 utterances at 99.7%–100.0% coverage across all 4 sources. |
-| 7 | **F0** | Repair the behaviour fixture set | none | **delivered** | 20/20 across all 17 classes. |
-| 8 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | Landed while the corpus was empty, as intended. |
-| 9 | **I0** | First real ingest — the four All-In hosts | none | **superseded → R1** | I0.1/I0.2 hold. I0.3's remaining work is the truncation, tracked in R1. **Not a to-do; do not open it.** |
-| 10 | **R0** | Repair the ingest; add the productivity guard | none | **superseded → R1** | Empty-source bug fixed and deletion gated. The coverage half is R1. **Not a to-do; do not open it.** |
-| 11 | **X0** | Quarantine the fabricated tension; fix segmentation | none | **delivered** | Verified independently: tension quarantined, claims removed, 9 survivors read one by one and genuinely supported. |
-| 12 | **C0** | Portability workflow; `mlx-lm` optional (Issue 024 = B) | none | **delivered** | |
-| 13 | **P4** | Tension detection | none | **delivered · fixtures only** | |
-| 14 | **P3** | Topic model | none | **delivered · fixtures only** | |
-| 15 | **P5** | Principle extraction | none | **delivered · fixtures only** | |
-| 16 | **P6** | Rubric engine | none | **delivered · fixtures only** | **See M0** — its sufficiency block prints a constant. |
-| 17 | **P7** | Local API | none | **delivered** | **See Issue 027** — `/resolve` currently reaches only orphaned propositions. |
-| 18 | **P8** | Browser extension | none | **delivered** | |
+| 1 | **E1** | The assessment layer is unguarded | none | **outstanding** | `verify_no_suppressed_scores` reads a key the engine never writes, so it has never fired on a real assessment; and nothing relates an assessment to a subject, so a test-polluted row sits in the corpus unchallenged. **The instrument N0 will be judged by — repair it before the run.** |
+| 2 | **N0** | Extract over the full corpus | **E1** | **outstanding** | **R1 delivered the audio and not the claims.** 4219 utterances, still 9 claims, E245 contributing zero. The detectors and X1 remain untested against material that could contradict itself. This is the run that makes P4–P6 answerable. |
+| 3 | **G0** | Repair the `mypy` gate | none | **delivered · verified** | Walrus narrowing at `test_segmentation_x0.py:53`; mypy clean on **80** files (re-measured). |
+| 4 | **M0** | `source_count` is a constant, not a measurement | none | **delivered · verified** | Resolved through utterance anchor chain without `hasattr`; Sacks/Friedberg 2, Jason/Chamath 1, zero claims 0, unresolvable raises. |
+| 5 | **E0** | Integrity pass must check the corpus, not a union | none | **delivered · verified** | FIXTURES and CORPUS evaluated and reported independently; assessments loaded from DB; examined counts reported. |
+| 6 | **D0** | Proposition table repair (**Issue 027 = A**) | none | **delivered · verified** | Normalized canonical IDs, merged three forked rows, backfilled embeddings for all 8 live propositions, quarantined fabricated db3ec63d33cf6f0a, and added structural read filters. |
+| 7 | **X1** | Entailment validator (Issue 025 = C) | none | **delivered · never exercised** | Validator 6 added after quote resolution; MIN_QUOTE_TOKENS=7, T_ENTAIL_LOW=0.60, T_ENTAIL_HIGH=0.70; fabrications rejected, 9 live claims pass, prefix sensitivity verified, ambiguous band quarantined and excluded from axis_evidence. **Correct and wired, but has never run over extraction output it did not inherit — all rejection counters are zero. N0 is its first real test.** |
+| 8 | **R1** | Media duration + real coverage check; fix truncation | none | **delivered · audio only** | Feed duration parsed, published_at preserved, MIN_UTTERANCE_MEDIA_RATIO=0.80 enforced, 10MB byte cap removed; full re-ingest yields 4,219 utterances at 99.7%–100.0% coverage across all 4 sources. **The claims were not regenerated — see N0.** |
+| 9 | **F0** | Repair the behaviour fixture set | none | **delivered** | 20/20 across all 17 classes. |
+| 10 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | Landed while the corpus was empty, as intended. |
+| 11 | **I0** | First real ingest — the four All-In hosts | none | **superseded → R1** | I0.1/I0.2 hold. I0.3's remaining work is the truncation, tracked in R1. **Not a to-do; do not open it.** |
+| 12 | **R0** | Repair the ingest; add the productivity guard | none | **superseded → R1** | Empty-source bug fixed and deletion gated. The coverage half is R1. **Not a to-do; do not open it.** |
+| 13 | **X0** | Quarantine the fabricated tension; fix segmentation | none | **delivered** | Verified independently: tension quarantined, claims removed, 9 survivors read one by one and genuinely supported. |
+| 14 | **C0** | Portability workflow; `mlx-lm` optional (Issue 024 = B) | none | **delivered** | |
+| 15 | **P4** | Tension detection | none | **delivered · fixtures only** | |
+| 16 | **P3** | Topic model | none | **delivered · fixtures only** | |
+| 17 | **P5** | Principle extraction | none | **delivered · fixtures only** | |
+| 18 | **P6** | Rubric engine | none | **delivered · fixtures only** | **See E1** — it never records the I5 verdict it computes, so the check for suppressed scores cannot fire. |
+| 19 | **P7** | Local API | none | **delivered** | `/resolve` now filters structurally on `status='active'` + live-claim existence; the 8 reachable propositions all carry claims. Verified. |
+| 20 | **P8** | Browser extension | none | **delivered** | |
 
-> **P3–P7 are delivered as code and unvalidated as behaviour.** They run, they pass their fixture tests, and they produce **zero** published tensions and principles over the live corpus — because a corpus drawn from 7.7% of four episodes cannot contain one (trap 26). Do not read their green status as evidence the detectors work. **R1 is what makes that question answerable**, and E0 is what makes the answer trustworthy when it arrives.
+> **P3–P7 are delivered as code and still unvalidated as behaviour.** R1 was expected to change this and did not. The audio is now complete — 4219 utterances across four episodes spanning 2023 to 2026 — but **extraction never ran over it**, so the detectors are still reading the same 9 claims from the same narrow window and still reporting zero. A corpus that cannot contain a reversal produces zero whether the detector works or not (trap 26). **N0 is what makes the question answerable; E1 is what makes the answer trustworthy when it arrives.**
 
 **Delivered — do NOT rework:** V0–V6 (all externals real, `STUB_REGISTRY` empty), U0–U13 (storage, integrity, adapters, reconciler, segmentation, gate, validators). Detail in git history; §14 has the short list.
 
@@ -812,6 +819,100 @@ Also assert `claim_count` matches the real count — as a **check**, never as a 
 
 ---
 
+## 17f. E1 — The assessment layer is unguarded
+
+**User impact:** the check that exists to stop a score being published over insufficient evidence becomes able to fire at all.
+
+**Contract:** `design_evidence_integrity.md` §3 · `design_rubric_engine.md` (sufficiency) · invariant **I5**.
+
+**Gap — two defects, found by running the pass E0 built.**
+
+**(a) `verify_no_suppressed_scores` is inert on every real assessment.** `worker/integrity.py:222` reads
+
+```python
+passed = a.sufficiency.get("passed", True)
+```
+
+and `worker/rubric/engine.py:103` writes a sufficiency dict containing **`claim_count`, `source_count`, `span_days` — and no `passed` key.** So on every real assessment the check reads **its own default**, `True`, meaning *sufficient*, and the loop body never executes. It fires only on fixtures, which set the key explicitly (`fixtures/fixture_loader.py:163` sets `True`, `tests/test_integrity.py:103` sets `False`) — which is why it has always looked healthy.
+
+E0 is what made this visible rather than what caused it. The CORPUS section now prints `verify_no_suppressed_scores [PASS] (examined: 9)`, which reads as nine real assessments verified and is nine defaults read. **Before E0 the check examined one fixture row and the question could not be asked.**
+
+This is trap 29 and trap 31 on the same line: a default that manufactures the safe-sounding value, on a key nobody writes.
+
+**(b) Nothing relates an assessment to a subject.** `subj_nonexistent_subject` has an assessment row in `social_proof.duckdb` and **no row in `subjects`**. `verify_anchor_chain` walks claims → utterances → sources and stops there, so all 12 checks pass over it. A test wrote into the production corpus and the integrity pass is content.
+
+**Implementation**
+
+1. **Make the engine write the verdict it already computes.** Find where the I5 decision is actually applied — the per-axis gating in `worker/rubric/engine.py` — and persist it as `sufficiency["passed"]: bool`, plus `sufficiency["reason"]` when False. **If no single place makes that decision, that is itself the finding:** I5 is being applied per-axis and never recorded, and it must be recorded before anything can check it.
+2. **Remove the default.** `passed = a.sufficiency["passed"]`; a missing key **FAILS** the check with reason `sufficiency_verdict_missing`. A verdict that was never written is a defect, not a pass — that is the entire lesson of the line being replaced. Do not substitute `.get("passed", False)`; a silent flip to the conservative value is the same bug wearing the other mask.
+3. **New check `verify_assessment_subjects_exist`** — every assessment's `subject_id` resolves in `subjects`, and its `topic_id` in `topics`. Cheap, and it closes the referential gap the anchor chain never covered.
+4. **Delete the `subj_nonexistent_subject` assessment** from the corpus. Do it after step 3 can prove it was there.
+5. **Stop tests writing to the production corpus.** Reads are legitimate — X0's assertion (c) needs real data and several tests open `Storage("social_proof.duckdb")` deliberately. **Writes are not.** Open the corpus `read_only=True` in tests; any test needing to write takes a temp copy.
+
+**Validation**
+
+- **(c)** — `verify_no_suppressed_scores` **FAILS against the corpus as it stands today**, because no real assessment carries a `passed` key. **Run it before touching the engine and watch it go red.** *A check that has only ever returned PASS by reading its own default has never been executed once, and its green history is worth nothing.*
+- **Both directions:** after the engine writes verdicts, a subject below the I5 floor records `passed: False` with no axis score; hand-set one axis score on that assessment and the check must FAIL.
+- `verify_assessment_subjects_exist` **FAILS today**, naming `subj_nonexistent_subject`, and passes after step 4. Run it before the deletion, or you have tested nothing.
+- **No test writes to the corpus:** record `social_proof.duckdb`'s mtime and size before a full `pytest tests/ -q`, and assert both are unchanged after. This catches the whole class, not the one row.
+
+**Falsify.** Restore `.get("passed", True)`. The (c) assertion must go green again over a corpus that still holds no verdicts — proving the default, and nothing else, was producing the PASS. Revert; record both.
+
+**Blast radius.** `worker/integrity.py`, `worker/rubric/engine.py`, `tests/`, the corpus (one row deleted), `docs/design_evidence_integrity.md` §3, `docs/design_rubric_engine.md`, §3, §6.
+
+---
+
+## 17g. N0 — Extract over the full corpus
+
+**User impact:** the detectors finally meet material capable of contradicting itself, and the entailment guard runs for the first time over output it did not hand-pick.
+
+**Contract:** `design_claim_extraction.md` (the six validators, `extraction_version`) · `design_data_layer.md` §3 and §6 · `ongoing_errors.md` §2 parameter 026 · trap 26.
+
+**Gap — measured after R1 landed.** R1 delivered the **audio** and not the **claims**:
+
+| | before R1 | after R1 |
+|---|---|---|
+| utterances | 361 | **4219** |
+| coverage | 7.7% | **99.7–100%** |
+| claims | 9 | **9** |
+| extraction_version | `gemma-3-27b-it:v1.1:s1` | **unchanged** |
+| published tensions | 0 | **0** |
+| principles | 0 | **0** |
+
+The corpus grew **11.7×** and the claim set did not move. `All-In E245` carries **1015 utterances and zero claims.** The 9 claims are still exactly the ones X0 hand-verified over the truncated window, so every conclusion trap 26 warns about still holds: the detectors report zero over a corpus that cannot yet contain a reversal, and **X1 — now wired, correct, and shipped — has never once run over extraction output it did not inherit.** Its rejection counters are all zero.
+
+**This is a spec defect, not an agent error.** §19 said *"re-ingest all four at full length"* and never said *re-extract*. The agent implemented exactly what was written. Recorded in §31.
+
+**Implementation**
+
+1. **Run extraction across all 4219 utterances.** Bump `extraction_version`: the prompt is unchanged but the corpus is not, and `claim_id` hashes the version, so old and new claims coexist and stay auditable instead of colliding (`design_data_layer.md` §3).
+2. **X1 stays in the chain.** `validate_extracted_claim` runs entailment at position 2, immediately after quote resolution. Note that passing `embedder=None` does **not** skip it — `validators.py:128` loads a real embedder — so there is no accidental-bypass path to worry about, and no reason to add one.
+3. **Record the rejection counters. This is the point of the run.** Report `VALIDATOR_REJECTION_COUNTERS` per reason — `quote_too_short`, `quote_does_not_support_proposition`, `entailment_ambiguous` — as counts and as a rate over claims attempted. §18 step 6 makes this the early-warning signal for prompt and model regression; this run establishes its baseline.
+4. **Measure parameter 026 properly, for the first time.** The shipped values were fitted to 9 claims and 2 reconstructed fabrications — far below the 5-case-per-class floor (Issue 018 = B), and correctly labelled provisional at `validators.py:17`. They were measured honestly, and the recorded numbers show how little room they have:
+
+   | threshold | value | nearest real observation | margin |
+   |---|---|---|---|
+   | `T_ENTAIL_HIGH` | 0.70 | lowest true-claim similarity **0.7091** | **0.009** |
+   | `T_ENTAIL_LOW` | 0.60 | highest fabrication similarity **0.5337** | 0.066 |
+   | `MIN_QUOTE_TOKENS` | 7 | shortest true claim is **exactly 7 tokens** | **0** |
+
+   **Two of the three have effectively no margin.** One ordinary claim phrased slightly more tersely, or one embedding drift, and a true claim is rejected or quarantined. That is not an argument for loosening them now — it is the reason they must be re-derived over a real distribution rather than a hand-verified nine. Keep them provisional until each class clears the floor, and **state in the commit body what n each threshold was measured over.**
+5. **Re-run P4, P5 and P6** over the result.
+
+**Validation**
+
+- **(c)** — **the run reports either at least one detected tension, or the candidate pairs it considered and why each was rejected.** Four episodes spanning 2023-04 to 2026-08 — a 1237-day span is already recorded for Sacks — across ~1000 utterances each. A corpus this size returning zero reversals *and* zero updates *and* zero principle conflicts is either a real finding about these four people or a broken detector, and **the run must be able to say which.** *Zero with no denominator is precisely the shape trap 26 describes, and a stub reproduces it perfectly.*
+- **Every source contributes claims.** E245's 1015 utterances yielding zero is a red flag, not a result. Assert no source has zero claims, and if one does, investigate before proceeding.
+- **The rejection counters are non-zero.** A guard that rejected nothing across 4219 utterances has not been tested (standing constraint: *a guard that has never failed has not been tested*).
+- `verify_quotes` PASS over the new claim set; `verify_canonical_ids` still reports 0 mismatches once new propositions land — the normalization D0 introduced must survive contact with a real extraction run.
+- Wall-clock throughput recorded for the full run.
+
+**Falsify.** Set `T_ENTAIL_LOW = 0.0` and re-run over a sample. `quote_does_not_support_proposition` rejections must fall to zero, proving the threshold rather than the surrounding code is doing the work. Then set `MIN_QUOTE_TOKENS = 100` and confirm nearly everything is rejected. Revert both; record all three results.
+
+**Blast radius.** `worker/extract/*`, the corpus (new claims, new propositions), `docs/ongoing_errors.md` §2 (026 re-measured, with n), §3, §6, and the status rows for **P4, P5, P6 — which this run finally makes answerable.**
+
+---
+
 ## 18. X1 — Entailment validator · *Issue 025 = C*
 
 **User impact:** a quote can no longer carry a claim it does not support. This is the guard that would have stopped the fabricated tension from ever being written.
@@ -1246,4 +1347,9 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 | **The integrity pass green over a union of fixtures and live rows** | "Run the ten checks; `NOT APPLICABLE` is not `PASS`" | Same, **plus** "report each population separately and print what was examined." The vocabulary for honesty was already there; the pass just had nothing to apply it to. |
 | **A cap found only by reading the script that wrote the corpus** | "Find why every source truncates" | **"Read the code that produced the data before reading the code that processes it."** Three sections of pipeline were searched before `populate_corpus.py`, where the cap sits on one commented line. |
 
-**The pattern: shape is what a stub reproduces perfectly, and a green gate over zero rows is the emptiest shape of all.** Validation must be satisfiable only by the real thing, operating on real data. **And a number that never varies is a shape too** — the newest three entries above are all constants that passed for measurements.
+| **R1 grew the corpus 11.7× and left the claim count at 9** | "Re-ingest all four at full length once found. Record real throughput." | **"Re-ingest, then re-extract over the new utterances, then re-run P4–P6."** The item existed to give the detectors material. It delivered audio. **A stage not named in the instruction does not run** — and the agent was right to implement exactly what was written. |
+| **A check that read its own default nine times and printed PASS** | "Report each population separately and print what was examined" | Same, **plus** "assert the reader's key is one the writer actually writes." E0 made `verify_no_suppressed_scores` examine 9 real assessments, which is how the inertness became visible — the fix surfaced the defect, it did not cause it. |
+
+**The pattern: shape is what a stub reproduces perfectly, and a green gate over zero rows is the emptiest shape of all.** Validation must be satisfiable only by the real thing, operating on real data. **And a number that never varies is a shape too** — several entries above are constants that passed for measurements.
+
+**The newest pattern, and the one to carry into N0: a correct fix to the wrong scope reads exactly like success.** R1's gates are green, its coverage is real, its numbers are honest, and the thing it existed to enable did not happen. **Check what the item was *for*, not only what it said.**
