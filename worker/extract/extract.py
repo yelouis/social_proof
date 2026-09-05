@@ -5,11 +5,12 @@ Implements design_claim_extraction.md §1-§8 and agent_execution_guide.md §11 
 
 from typing import Any
 
-from worker.entities import Claim, Proposition, Utterance
+from worker.entities import Claim, Utterance
+from worker.extract.dedup import PropositionCanonicalizer
 from worker.extract.gate import ExtractionGate
 from worker.extract.runtime import LocalGemmaRuntime
 from worker.extract.validators import validate_extracted_claim
-from worker.storage import Storage, compute_claim_id, compute_proposition_id
+from worker.storage import Storage, compute_claim_id
 
 
 class ClaimExtractionPipeline:
@@ -22,12 +23,19 @@ class ClaimExtractionPipeline:
         gate: ExtractionGate | None = None,
         confidence_floor: float = 0.70,
         embedder: Any | None = None,
+        t_dedup: float = 0.85,
     ) -> None:
         self.storage = storage
         self.runtime = runtime or LocalGemmaRuntime()
         self.gate = gate or ExtractionGate()
         self.confidence_floor = confidence_floor
         self.embedder = embedder
+        self.t_dedup = t_dedup
+        self.canonicalizer = PropositionCanonicalizer(
+            storage=self.storage,
+            embedder=self.embedder,
+            t_dedup=self.t_dedup,
+        )
 
     def extract_from_utterance(
         self,
@@ -69,26 +77,13 @@ class ClaimExtractionPipeline:
             span = outcome.resolved_quote_span
             is_quarantined = outcome.status == "quarantined"
 
-            # 4. Resolve or create Proposition entity
-            prop_id = compute_proposition_id(ec.proposition_text)
-            existing_prop = self.storage.get_proposition(prop_id)
-            if not existing_prop:
-                prop = Proposition(
-                    proposition_id=prop_id,
-                    canonical_text=ec.proposition_text,
-                    subject_ids=[utterance.subject_id],
-                    claim_count=1,
-                    status="active",
-                    quarantine_reason=None,
-                )
-                self.storage.insert_proposition(prop)
-                if self.embedder is not None:
-                    emb = self.embedder.embed_document(prop.canonical_text)
-                else:
-                    from worker.extract.dedup import get_embedder
-
-                    emb = get_embedder().embed_document(prop.canonical_text)
-                self.storage.insert_proposition_embedding(prop_id, emb)
+            # 4. Resolve or create Proposition entity via semantic deduplication (Parameter 008)
+            dedup_decision = self.canonicalizer.canonicalise_and_dedup(
+                raw_proposition_text=ec.proposition_text,
+                subject_id=utterance.subject_id,
+                embedding=outcome.prop_embedding,
+            )
+            prop_id = dedup_decision.proposition_id
 
             # 5. Build deterministic Claim record
             claim_id = compute_claim_id(

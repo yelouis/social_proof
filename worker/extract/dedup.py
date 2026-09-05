@@ -1,13 +1,12 @@
 """Proposition canonicalisation, embedding generation, and semantic deduplication.
 
-Implements Parameter 002 (T_dedup) and design_claim_extraction.md §1 & §4.
+Implements Parameter 008 (T_dedup) and design_claim_extraction.md §1 & §4.
 
 WARNING / STUB NOTICE:
 `stub_hash_embedding` is a bag-of-words hash vectoriser stub for 768-dim embeddings.
 It has NO semantic capability: 'licensing' and 'permitting' hash to unrelated slots and
 score ~0 similarity. Dedup merges only near-identical strings until real semantic model
-(nomic-embed-text-v1.5) lands in V2. T_dedup = 0.88 is provisional and carries no semantic
-information until V2.
+(nomic-embed-text-v1.5) lands in V2. T_dedup = 0.86 is empirical Parameter 008.
 """
 
 import hashlib
@@ -17,7 +16,7 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 
 from worker.entities import Proposition
-from worker.storage import Storage, compute_proposition_id
+from worker.storage import Storage, compute_proposition_id, normalize_canonical_text
 
 
 class DedupDecision(NamedTuple):
@@ -124,14 +123,14 @@ def stub_hash_embedding(text: str, dim: int = 768) -> list[float]:
 class PropositionCanonicalizer:
     """Canonicalises proposition text and deduplicates semantically against the DuckDB store.
 
-    Parameter 002: T_dedup (default 0.88).
+    Parameter 008: T_dedup (default 0.86).
     """
 
     def __init__(
         self,
         storage: Storage,
         embedder: Embedder | None = None,
-        t_dedup: float = 0.88,
+        t_dedup: float = 0.86,
     ) -> None:
         self.storage = storage
         self.embedder = embedder
@@ -148,7 +147,7 @@ class PropositionCanonicalizer:
         If similarity >= t_dedup: merges into existing proposition.
         Otherwise: creates a new proposition.
         """
-        canonical_text = raw_proposition_text.strip().lower()
+        canonical_text = normalize_canonical_text(raw_proposition_text)
         if embedding is not None:
             emb = embedding
         elif self.embedder is not None:
@@ -172,6 +171,8 @@ class PropositionCanonicalizer:
                         embedding_ref=existing.embedding_ref,
                         subject_ids=subject_ids,
                         claim_count=existing.claim_count + 1,
+                        status=existing.status,
+                        quarantine_reason=existing.quarantine_reason,
                     )
                     self.storage.insert_proposition(updated)
                     return DedupDecision(
@@ -183,11 +184,33 @@ class PropositionCanonicalizer:
 
         # Create new proposition
         prop_id = compute_proposition_id(canonical_text)
+        existing = self.storage.get_proposition(prop_id)
+        if existing:
+            subject_ids = list(set(existing.subject_ids + [subject_id]))
+            updated = Proposition(
+                proposition_id=existing.proposition_id,
+                canonical_text=existing.canonical_text,
+                embedding_ref=existing.embedding_ref,
+                subject_ids=subject_ids,
+                claim_count=existing.claim_count + 1,
+                status=existing.status,
+                quarantine_reason=existing.quarantine_reason,
+            )
+            self.storage.insert_proposition(updated)
+            return DedupDecision(
+                proposition_id=prop_id,
+                is_new=False,
+                similarity=1.0,
+                canonical_text=existing.canonical_text,
+            )
+
         prop = Proposition(
             proposition_id=prop_id,
             canonical_text=canonical_text,
             subject_ids=[subject_id],
             claim_count=1,
+            status="active",
+            quarantine_reason=None,
         )
         self.storage.insert_proposition(prop)
         self.storage.insert_proposition_embedding(prop_id, emb)

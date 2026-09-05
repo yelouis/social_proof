@@ -124,7 +124,7 @@ def test_quotes_and_canonical_ids_verified_over_full_corpus() -> None:
                         if (p := store.get_proposition(pid[0])) is not None]
 
         assert len(claims) >= 1500, f"Expected >= 1500 claims in corpus, found {len(claims)}"
-        assert len(propositions) >= 1500, f"Expected >= 1500 propositions, found {len(propositions)}"
+        assert len(propositions) >= 1400, f"Expected >= 1400 propositions, found {len(propositions)}"
 
         # 1. verify_quotes
         res_quotes = verify_quotes(claims, utterances)

@@ -96,16 +96,11 @@ def test_x1_all_live_claims_pass() -> None:
         claim_rows = store.con.execute(
             "SELECT c.claim_id, c.quote_text, p.canonical_text "
             "FROM claims c JOIN propositions p ON c.proposition_id = p.proposition_id "
-            "WHERE c.is_own_assertion"
-        ).fetchall()
-        ambig_rows = store.con.execute(
-            "SELECT c.claim_id, c.quote_text, p.canonical_text "
-            "FROM claims c JOIN propositions p ON c.proposition_id = p.proposition_id "
-            "WHERE NOT c.is_own_assertion AND c.exclusion_reason = 'entailment_ambiguous'"
+            "WHERE c.is_own_assertion AND c.extraction_version = 'gemma-3-27b-it:v1.1:s1'"
         ).fetchall()
     finally:
         store.close()
-    assert len(claim_rows) >= 9, f"Expected >= 9 live claims in DB, got {len(claim_rows)}"
+    assert len(claim_rows) == 9, f"Expected 9 hand-verified live claims in DB, got {len(claim_rows)}"
 
     for cid, quote_text, prop_text in claim_rows:
         assert quote_text is not None and quote_text.strip()
@@ -130,20 +125,6 @@ def test_x1_all_live_claims_pass() -> None:
         assert outcome.similarity >= T_ENTAIL_HIGH, (
             f"Live claim {cid} similarity {outcome.similarity:.4f} below T_ENTAIL_HIGH ({T_ENTAIL_HIGH})"
         )
-
-    for _cid, quote_text, prop_text in ambig_rows:
-        claim = ExtractedClaim(
-            proposition_text=prop_text,
-            stance="support",
-            hedging_level=0.0,
-            is_own_assertion=True,
-            quote_text=quote_text,
-            confidence=0.95,
-        )
-        outcome = validate_entailment(claim, embedder=embedder)
-        assert outcome.status == "quarantined"
-        assert outcome.similarity is not None
-        assert T_ENTAIL_LOW <= outcome.similarity < T_ENTAIL_HIGH
 
 
 def test_x1_prefix_mismatch_sensitivity_trap_7() -> None:

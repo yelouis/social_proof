@@ -63,6 +63,7 @@ class ValidationOutcome:
     resolved_quote_span: tuple[int, int] | None = None
     status: Literal["passed", "rejected", "quarantined"] = "passed"
     similarity: float | None = None
+    prop_embedding: list[float] | None = None
 
     def __iter__(self) -> Any:
         """Allows 3-element tuple unpacking (is_valid, rejection_reason, span) for backward compatibility."""
@@ -151,6 +152,7 @@ def validate_entailment(
             rejection_reason="quote_does_not_support_proposition",
             status="rejected",
             similarity=sim,
+            prop_embedding=vec_prop,
         )
     elif sim < t_high:
         VALIDATOR_REJECTION_COUNTERS["entailment_ambiguous"] += 1
@@ -167,6 +169,7 @@ def validate_entailment(
             rejection_reason="entailment_ambiguous",
             status="quarantined",
             similarity=sim,
+            prop_embedding=vec_prop,
         )
 
     return ValidationOutcome(
@@ -174,6 +177,7 @@ def validate_entailment(
         rejection_reason=None,
         status="passed",
         similarity=sim,
+        prop_embedding=vec_prop,
     )
 
 
@@ -294,4 +298,5 @@ def validate_extracted_claim(
         resolved_quote_span=res_quote.resolved_quote_span,
         status=res_entail.status,
         similarity=res_entail.similarity,
+        prop_embedding=res_entail.prop_embedding,
     )

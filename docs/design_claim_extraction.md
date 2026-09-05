@@ -285,9 +285,6 @@ Without it, re-extracting under an improved prompt either silently collides with
 
 ## 11. Open decisions
 
-**Resolved:** Issue 007 → local Gemma for both stages (§6). Issue 005 → `nomic-embed-text-v1.5` at 768 dims for dedup.
-
-**Still to measure, not choose** (`ongoing_errors.md` §2):
-- **Issue 008** — proposition merge threshold, and whether ambiguous-band adjudication earns its cost.
+**Resolved:** Issue 007 → local Gemma for both stages (§6). Issue 005 → `nomic-embed-text-v1.5` at 768 dims for dedup. Issue 008 (Parameter 008) → `T_dedup = 0.86` measured empirically over 1,499 live propositions; ambiguous-band adjudication does not earn its cost (Item P0).
 
 **Revisit only with data:** if golden-corpus precision on N1–N4 misses the bar, run the comparison in §6 and file the result as a new issue. Do not switch extractors on a hunch.

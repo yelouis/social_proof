@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 import duckdb
+import numpy as np
 import pyarrow as pa
 import pyarrow.parquet as pq
 
@@ -763,13 +764,15 @@ class Storage:
         )
 
     def query_nearest_propositions(self, query_embedding: list[float], limit: int = 5) -> list[tuple[str, float]]:
-        """Queries nearest propositions by cosine distance."""
+        """Queries nearest propositions by cosine distance, filtering strictly to active propositions."""
         if len(query_embedding) != 768:
             raise ValueError(f"Query vector width must be exactly 768, got {len(query_embedding)}")
         res = self.con.execute(
             """
-            SELECT proposition_id, array_cosine_similarity(embedding, ?::FLOAT[768]) as sim
-            FROM proposition_embeddings
+            SELECT pe.proposition_id, array_cosine_similarity(pe.embedding, ?::FLOAT[768]) as sim
+            FROM proposition_embeddings pe
+            JOIN propositions p ON pe.proposition_id = p.proposition_id
+            WHERE p.status = 'active'
             ORDER BY sim DESC
             LIMIT ?
             """,
@@ -932,6 +935,171 @@ class Storage:
             "embedded_count": embedded_count,
             "total_propositions": len(final_props),
             "live_propositions": len(live_props),
+        }
+
+    def restore_pre_merge_propositions(self) -> bool:
+        """Restores propositions, proposition_embeddings, and claims from pre-merge tables if present."""
+        has_table = self.con.execute(
+            "SELECT 1 FROM information_schema.tables WHERE table_name = 'propositions_pre_merge'"
+        ).fetchone()
+        if not has_table:
+            return False
+        self.con.execute("DELETE FROM proposition_embeddings;")
+        self.con.execute("DELETE FROM propositions;")
+        self.con.execute("DELETE FROM claims;")
+        self.con.execute("INSERT INTO propositions SELECT * FROM propositions_pre_merge;")
+        self.con.execute("INSERT INTO proposition_embeddings SELECT * FROM proposition_embeddings_pre_merge;")
+        self.con.execute("INSERT INTO claims SELECT * FROM claims_pre_merge;")
+        self.con.execute("CHECKPOINT;")
+        return True
+
+    def reresolve_propositions(
+        self,
+        t_dedup: float = 0.86,
+        backup_tables: bool = True,
+        from_pre_merge: bool = False,
+    ) -> dict[str, Any]:
+        """Re-resolves proposition deduplication over all claims in the corpus at t_dedup (Parameter 008).
+
+        1. Optionally creates backup pre-merge snapshot or restores from it.
+        2. Queries embeddings of active propositions.
+        3. Clusters propositions greedily in chronological order of claims at cosine similarity >= t_dedup.
+        4. Re-points claims to cluster representatives.
+        5. Deletes merged-away propositions and embeddings.
+        6. Recomputes claim_count and subject_ids on active propositions.
+        7. Returns summary statistics.
+        """
+        if from_pre_merge:
+            self.restore_pre_merge_propositions()
+        elif backup_tables:
+            self.con.execute("CREATE TABLE IF NOT EXISTS propositions_pre_merge AS SELECT * FROM propositions;")
+            self.con.execute("CREATE TABLE IF NOT EXISTS proposition_embeddings_pre_merge AS SELECT * FROM proposition_embeddings;")
+            self.con.execute("CREATE TABLE IF NOT EXISTS claims_pre_merge AS SELECT * FROM claims;")
+
+        emb_rows = self.con.execute(
+            """
+            SELECT pe.proposition_id, pe.embedding
+            FROM proposition_embeddings pe
+            JOIN propositions p ON pe.proposition_id = p.proposition_id
+            WHERE p.status = 'active'
+            """
+        ).fetchall()
+        embs: dict[str, np.ndarray] = {
+            r[0]: np.array(r[1], dtype=np.float32) for r in emb_rows
+        }
+
+        claim_rows = self.con.execute(
+            """
+            SELECT claim_id, utterance_id, proposition_id, subject_id, stance, is_own_assertion, recorded_at
+            FROM claims
+            ORDER BY TRY_CAST(recorded_at AS TIMESTAMPTZ), utterance_id, claim_id
+            """
+        ).fetchall()
+
+        mapping: dict[str, str] = {}
+        active_pids: list[str] = []
+        active_vecs: list[np.ndarray] = []
+
+        for row in claim_rows:
+            orig_pid = row[2]
+            if orig_pid in mapping:
+                continue
+            if orig_pid not in embs:
+                mapping[orig_pid] = orig_pid
+                active_pids.append(orig_pid)
+                continue
+            vec = embs[orig_pid]
+            if len(active_vecs) == 0:
+                active_pids.append(orig_pid)
+                active_vecs.append(vec)
+                mapping[orig_pid] = orig_pid
+            else:
+                mat = np.array(active_vecs)
+                sims = np.dot(mat, vec)
+                best_idx = int(np.argmax(sims))
+                if float(sims[best_idx]) >= t_dedup:
+                    mapping[orig_pid] = active_pids[best_idx]
+                else:
+                    active_pids.append(orig_pid)
+                    active_vecs.append(vec)
+                    mapping[orig_pid] = orig_pid
+
+        repointed_claims_count = 0
+        for orig_pid, rep_pid in mapping.items():
+            if orig_pid != rep_pid:
+                self.con.execute(
+                    "UPDATE claims SET proposition_id = ? WHERE proposition_id = ?",
+                    [rep_pid, orig_pid],
+                )
+                repointed_claims_count += 1
+
+        merged_away = set(mapping.keys()) - set(active_pids)
+        for pid in merged_away:
+            self.con.execute("DELETE FROM proposition_embeddings WHERE proposition_id = ?", [pid])
+            self.con.execute("DELETE FROM propositions WHERE proposition_id = ?", [pid])
+
+        for pid in active_pids:
+            c_row = self.con.execute(
+                "SELECT count(*) FROM claims WHERE proposition_id = ?", [pid]
+            ).fetchone()
+            c_count = int(c_row[0]) if c_row else 0
+            s_ids = [
+                r[0]
+                for r in self.con.execute(
+                    "SELECT DISTINCT subject_id FROM claims WHERE proposition_id = ?", [pid]
+                ).fetchall()
+            ]
+            self.con.execute(
+                "UPDATE propositions SET claim_count = ?, subject_ids = ? WHERE proposition_id = ?",
+                [c_count, s_ids, pid],
+            )
+
+        self.con.execute("CHECKPOINT;")
+
+        hist_rows = self.con.execute(
+            """
+            SELECT claim_count, count(*)
+            FROM propositions
+            WHERE status = 'active'
+            GROUP BY claim_count
+            ORDER BY claim_count
+            """
+        ).fetchall()
+        hist: dict[int, int] = {int(r[0]): int(r[1]) for r in hist_rows}
+
+        multi_src_rows = self.con.execute(
+            """
+            SELECT c.proposition_id, count(DISTINCT u.source_id) as s_cnt, count(DISTINCT substr(c.recorded_at, 1, 10)) as d_cnt
+            FROM claims c
+            JOIN utterances u ON c.utterance_id = u.utterance_id
+            GROUP BY c.proposition_id
+            HAVING s_cnt > 1 AND d_cnt > 1
+            """
+        ).fetchall()
+
+        cand_row = self.con.execute(
+            """
+            SELECT count(*)
+            FROM claims a
+            JOIN claims b
+              ON a.proposition_id = b.proposition_id
+             AND a.subject_id = b.subject_id
+             AND TRY_CAST(a.recorded_at AS TIMESTAMPTZ) < TRY_CAST(b.recorded_at AS TIMESTAMPTZ)
+             AND a.stance <> b.stance
+            WHERE a.is_own_assertion AND b.is_own_assertion
+              AND a.stance IN ('support', 'oppose')
+              AND b.stance IN ('support', 'oppose')
+            """
+        ).fetchone()
+        cand_pairs = int(cand_row[0]) if cand_row else 0
+
+        return {
+            "surviving_propositions": len(active_pids),
+            "merged_away_propositions": len(merged_away),
+            "repointed_propositions_count": repointed_claims_count,
+            "merge_histogram": hist,
+            "multi_source_diff_date_propositions": len(multi_src_rows),
+            "candidate_pairs": int(cand_pairs),
         }
 
     def insert_principle(self, p: Principle) -> None:
