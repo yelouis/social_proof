@@ -148,7 +148,7 @@ The normalization is deliberately narrow: terminal punctuation and nothing else.
 
 Consequences worth stating plainly, because they remove whole categories of bug:
 
-- **Re-running ingest writes the same IDs**, so every write is an upsert and nothing duplicates.
+- **Re-running ingest writes the same IDs**, so every write is an upsert and nothing duplicates. **This holds only while every writer derives ids through the `compute_*` helpers in `worker/storage.py`.** A hand-built id string — `f"role_{source_id}_{subject_id}"` and the like — produces a different key for the same content, the primary key sees two distinct rows, and the upsert silently becomes a second insert. It happened: two scripts bypassed `compute_role_id` and duplicated every row in `source_roles`, while `verify_role_coverage` reported PASS because resolution and uniqueness are different questions. **Never construct an id inline. `verify_canonical_ids` must cover every content-derived entity, not only propositions and principles.**
 - **A stored ID must always equal the ID recomputed from its own canonical text.** This is checkable in one query and is enforced by `verify_canonical_ids` in the integrity pass. It is the check whose absence let three propositions fork on a trailing period and go unnoticed until a live query found them.
 - **A feed that re-issues its URLs cannot produce a duplicate source**, because the locator is canonicalised and the audio is hashed.
 - **The same tension cannot be reported twice** under a different id ordering, because the claim pair is sorted before hashing.

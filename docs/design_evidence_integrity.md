@@ -109,6 +109,12 @@ A Proposition therefore carries `status` and `quarantine_reason` as well. The vo
 
 **A quarantined Proposition is unreachable, not merely unrendered.** No read path returns it, `/resolve` included, and no new claim may be attached to one. `verify_quarantined_propositions_unreachable` enforces this in the integrity pass.
 
+### Assessments are referentially guarded
+
+`verify_assessment_subjects_exist` requires every assessment's `subject_id` to resolve in `subjects` and its `topic_id` in `topics`. The anchor chain covers claims → utterances → sources and stopped there, so an assessment naming a subject that did not exist sat in the production corpus and passed all twelve checks before it.
+
+**A sufficiency verdict is a stored fact, not an inference.** `verify_no_suppressed_scores` reads `sufficiency["passed"]` with **no default**: a missing verdict is a FAIL, not a pass. That verdict must be computed from the sufficiency *inputs* — claim count, source count, span — against the I5 thresholds, and **never from whether any axis produced a score.** A verdict derived from the scores it exists to gate makes the check tautological: `not passed` becomes true only when every score is already null, and the search for a suppressed score can never find one.
+
 **The rule this generalises to: when a finding is quarantined, quarantine what it was made of.** A false finding assembled from a fabricated part leaves that part behind, and the part is what gets reused.
 
 ---
