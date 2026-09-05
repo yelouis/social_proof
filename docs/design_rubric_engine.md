@@ -161,8 +161,11 @@ There is no single global threshold. Each axis has its own precondition, and an 
 ```json
 {
   "sufficiency": {"passed": true, "claim_count": 84, "source_count": 11, "span_days": 1290},
-  //  sufficiency["passed"] explicitly records whether any axis achieved sufficiency and scored.
-  //  When false, sufficiency["reason"] = "insufficient_corpus" and all axis scores are literally null.
+  //  sufficiency["passed"] is derived strictly from sufficiency inputs against Parameter 012
+  //  BEFORE any axis is scored (verdict -> scores).
+  //  When false, sufficiency["reason"] = "insufficient_corpus" and all axis scores are suppressed as null.
+  //  When true, axes are evaluated independently; an assessment above the floor whose axes
+  //  produce no scores retains passed: true with individual axis reasons.
   //  source_count is resolved through the anchor chain — claim -> utterance -> source —
   //  never from a field on the claim. Claim has no source_id, and a hasattr guard on
   //  one silently yields zero sources and a fallback of 1 for every subject alike
@@ -224,5 +227,5 @@ Every Assessment records `rubric_version`, `detector_version`, `extraction_versi
 **Resolved:** Issue 001 → Specificity added as a scored axis (§2A). Issue 011 → `audience_divergence` stays as flagged evidence (§6), not an axis. Issue 009 → if Even-handedness precision misses the bar, ship the principle pairs as evidence with no score (`design_principle_extraction.md` §8).
 
 **Still to measure, not choose** (`ongoing_errors.md` §2):
-- **Issue 012** — the per-axis gate thresholds.
+- **Issue 012** — the per-axis and sufficiency floor thresholds (`MIN_CLAIMS=3`, `MIN_SOURCES=1`, `MIN_SPAN_DAYS=0`, provisional over $n=1,501$).
 - **Issue 016** — `H_max`, the hedging ceiling in the Specificity checkability test (§2A).

@@ -303,11 +303,15 @@ def test_rubric_engine_source_count_measured_assertion_c() -> None:
 
 
 def test_rubric_engine_sufficiency_verdict_and_integrity_gate() -> None:
-    """Assertion for E1: engine persists sufficiency verdict and verify_no_suppressed_scores gates.
+    """Assertion for E2: engine derives sufficiency from Parameter 012 inputs, not outcomes.
 
-    - Subjects with scored axes get passed: True.
-    - Subjects with no axis scored get passed: False, reason: "insufficient_corpus".
-    - Both directions: hand-setting an axis score on a passed: False assessment FAILS verify_no_suppressed_scores.
+    - Over the live corpus: all four subjects have 209-566 claims across 4 sources,
+      so all record passed: True on the merits, not because scores happen to exist.
+    - A subject with 1 claim from 1 source records passed: False, reason: "insufficient_corpus",
+      and no axis score.
+    - Assertion (c): hand-setting an axis score on a passed: False assessment FAILS verify_no_suppressed_scores.
+    - The other direction: an assessment above the floor with all axis scores null is legitimate
+      and must PASS verify_no_suppressed_scores.
     """
     from worker.integrity import verify_no_suppressed_scores
 
@@ -315,31 +319,45 @@ def test_rubric_engine_sufficiency_verdict_and_integrity_gate() -> None:
     try:
         engine = RubricEngine(storage=live_store)
 
-        # Friedberg has scored axis -> passed: True
-        ass_friedberg = engine.assess_subject_topic("subj_david_friedberg", topic_id="global", persist=False)
-        assert ass_friedberg.sufficiency["passed"] is True
-        assert "reason" not in ass_friedberg.sufficiency or ass_friedberg.sufficiency["reason"] is None
-        assert any(ax["score"] is not None for ax in ass_friedberg.axes.values())
-        res_friedberg = verify_no_suppressed_scores([ass_friedberg])
-        assert res_friedberg.passed is True
+        # 1. Over live corpus: all four subjects record passed: True on the merits
+        for subj_id in ["subj_david_sacks", "subj_david_friedberg", "subj_jason_calacanis", "subj_chamath_palihapitiya"]:
+            ass = engine.assess_subject_topic(subj_id, topic_id="global", persist=False)
+            assert ass.sufficiency["passed"] is True
+            assert ass.sufficiency["claim_count"] >= 209
+            assert ass.sufficiency["source_count"] == 4
+            assert ass.sufficiency["span_days"] >= 1232
+            res = verify_no_suppressed_scores([ass])
+            assert res.passed is True
 
-        # Subject with no scored axis -> passed: False, reason: "insufficient_corpus"
-        ass_sparse = engine.assess_subject_topic("subj_sparse_subject", topic_id="global", override_claims=[], persist=False)
-        assert ass_sparse.sufficiency["passed"] is False
-        assert ass_sparse.sufficiency["reason"] == "insufficient_corpus"
-        assert all(ax["score"] is None for ax in ass_sparse.axes.values())
-        res_sparse = verify_no_suppressed_scores([ass_sparse])
-        assert res_sparse.passed is True
+        # 2. A subject with 1 claim from 1 source records passed: False, reason: "insufficient_corpus", and no axis score
+        all_friedberg_claims = live_store.get_claims_for_subject("subj_david_friedberg")
+        assert len(all_friedberg_claims) >= 1
+        single_claim = all_friedberg_claims[0]
 
-        # Both directions: hand-set an axis score on a passed: False assessment -> FAIL
+        ass_single = engine.assess_subject_topic(
+            "subj_david_friedberg",
+            topic_id="global",
+            override_claims=[single_claim],
+            persist=False,
+        )
+        assert ass_single.sufficiency["claim_count"] == 1
+        assert ass_single.sufficiency["source_count"] == 1
+        assert ass_single.sufficiency["passed"] is False
+        assert ass_single.sufficiency["reason"] == "insufficient_corpus"
+        assert all(ax["score"] is None for ax in ass_single.axes.values())
+        assert all(ax.get("reason") == "insufficient_corpus" for ax in ass_single.axes.values())
+        res_single = verify_no_suppressed_scores([ass_single])
+        assert res_single.passed is True
+
+        # 3. Assertion (c): construct assessment below floor and hand-set an axis score on it -> FAILS
         corrupt_ass = Assessment(
-            assessment_id=ass_sparse.assessment_id,
-            subject_id=ass_sparse.subject_id,
-            topic_id=ass_sparse.topic_id,
-            rubric_version=ass_sparse.rubric_version,
-            sufficiency=dict(ass_sparse.sufficiency),
+            assessment_id=ass_single.assessment_id,
+            subject_id=ass_single.subject_id,
+            topic_id=ass_single.topic_id,
+            rubric_version=ass_single.rubric_version,
+            sufficiency=dict(ass_single.sufficiency),
             axes={
-                **ass_sparse.axes,
+                **ass_single.axes,
                 "consistency": {"score": 0.85, "n": 2},
             },
         )
@@ -347,5 +365,25 @@ def test_rubric_engine_sufficiency_verdict_and_integrity_gate() -> None:
         assert res_corrupt.passed is False
         assert res_corrupt.status == "FAIL"
         assert "has non-null score: 0.85" in res_corrupt.message
+
+        # 4. The other direction: assessment above floor with all axis scores null must PASS
+        # Construct 3 claims with is_own_assertion=False (so Specificity is null), on distinct props (so Consistency is null)
+        c1 = Claim("c_null_1", "subj_david_friedberg", single_claim.utterance_id, "p_null_1", "support", hedging_level=0.5, is_own_assertion=False, recorded_at="2024-01-01T00:00:00Z")
+        c2 = Claim("c_null_2", "subj_david_friedberg", single_claim.utterance_id, "p_null_2", "support", hedging_level=0.5, is_own_assertion=False, recorded_at="2024-01-02T00:00:00Z")
+        c3 = Claim("c_null_3", "subj_david_friedberg", single_claim.utterance_id, "p_null_3", "support", hedging_level=0.5, is_own_assertion=False, recorded_at="2024-01-03T00:00:00Z")
+
+        ass_above_null = engine.assess_subject_topic(
+            "subj_david_friedberg",
+            topic_id="global",
+            override_claims=[c1, c2, c3],
+            override_tensions=[],
+            persist=False,
+        )
+        assert ass_above_null.sufficiency["claim_count"] == 3
+        assert ass_above_null.sufficiency["source_count"] == 1
+        assert ass_above_null.sufficiency["passed"] is True
+        assert all(ax["score"] is None for ax in ass_above_null.axes.values())
+        res_above_null = verify_no_suppressed_scores([ass_above_null])
+        assert res_above_null.passed is True
     finally:
         live_store.close()
