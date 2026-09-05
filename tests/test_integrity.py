@@ -7,7 +7,15 @@ from fixtures.fixture_loader import (
     load_valid_subjects,
     load_valid_topics,
 )
-from worker.entities import Assessment, Claim, Proposition, Subject, Tension, Topic
+from worker.entities import (
+    Assessment,
+    Claim,
+    Proposition,
+    SourceSubjectRole,
+    Subject,
+    Tension,
+    Topic,
+)
 from worker.integrity import (
     run_all_checks,
     run_integrity_corpus,
@@ -48,7 +56,6 @@ def test_valid_fixtures_pass_all_checks() -> None:
         assert r.passed is True, f"Check {r.name} unexpectedly failed: {r.message}"
         if r.name not in (
             "verify_quarantine_not_rendered",
-            "verify_canonical_ids",
             "verify_quarantined_propositions_unreachable",
         ):
             assert r.status == "PASS", f"Check {r.name} status expected 'PASS', got '{r.status}'"
@@ -243,6 +250,7 @@ def test_integrity_pass_corpus_examined_counts_match_db_assertion_c() -> None:
         "verify_canonical_ids": (
             count_query("SELECT count(*) FROM propositions")
             + count_query("SELECT count(*) FROM principles")
+            + count_query("SELECT count(*) FROM source_roles")
         ),
         "verify_quarantined_propositions_unreachable": count_query(
             "SELECT count(*) FROM propositions WHERE status = 'quarantined'"
@@ -357,6 +365,44 @@ def test_verify_canonical_ids_passes_and_fails() -> None:
     assert res_fail_count.passed is False
     assert res_fail_count.status == "FAIL"
     assert "claim_count mismatch" in res_fail_count.message
+
+    # Test SourceSubjectRole canonical IDs
+    from worker.storage import compute_role_id
+
+    valid_role_id = compute_role_id("src_s1", "subj_1")
+    role_valid = SourceSubjectRole(
+        role_id=valid_role_id,
+        source_id="src_s1",
+        subject_id="subj_1",
+        tier="B",
+        venue_type="own_channel",
+        audience_stance="friendly",
+        is_adversarial=False,
+    )
+    res_role_pass = verify_canonical_ids([], [], None, [role_valid])
+    assert res_role_pass.passed is True
+    assert res_role_pass.status == "PASS"
+
+    # Fails when role_id is hand-built
+    role_bad_id = SourceSubjectRole(
+        role_id="role_src_s1_subj_1",
+        source_id="src_s1",
+        subject_id="subj_1",
+        tier="B",
+        venue_type="own_channel",
+        audience_stance="friendly",
+        is_adversarial=False,
+    )
+    res_role_fail = verify_canonical_ids([], [], None, [role_bad_id])
+    assert res_role_fail.passed is False
+    assert res_role_fail.status == "FAIL"
+    assert "role_src_s1_subj_1" in res_role_fail.message
+
+    # Fails when multiple roles share the same (source_id, subject_id) pair
+    res_dup_fail = verify_canonical_ids([], [], None, [role_valid, role_bad_id])
+    assert res_dup_fail.passed is False
+    assert res_dup_fail.status == "FAIL"
+    assert "duplicate role pairs" in res_dup_fail.message
 
 
 def test_verify_quarantined_propositions_unreachable() -> None:

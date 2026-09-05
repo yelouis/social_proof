@@ -29,7 +29,7 @@ from worker.extract.validators import (
 )
 from worker.principles.conflict import PrincipleConflictDetector
 from worker.rubric.engine import RubricEngine
-from worker.storage import Storage
+from worker.storage import Storage, compute_role_id
 from worker.tension.detect import TensionDetector
 
 
@@ -202,7 +202,7 @@ def run_full_extraction() -> dict[str, Any]:
     # Ensure source roles exist for all (source, subject) pairs
     for sid in all_source_ids:
         for subj_id in all_subject_ids:
-            role_id = f"role_{sid}_{subj_id}"
+            role_id = compute_role_id(sid, subj_id)
             store.insert_source_role(SourceSubjectRole(
                 role_id=role_id,
                 source_id=sid,

@@ -72,8 +72,8 @@ cd "$(git rev-parse --show-toplevel)"
 echo "=== HEAD ==="   && git log --oneline -1
 echo "=== DIRTY? ===" && git status --porcelain | head
 echo "=== GATES ==="
-.venv/bin/python -m ruff  check worker/ tests/ fixtures/ golden/ 2>&1 | tail -2
-.venv/bin/python -m mypy        worker/ tests/ fixtures/ golden/ 2>&1 | tail -2
+.venv/bin/python -m ruff  check worker/ tests/ fixtures/ golden/ scripts/ 2>&1 | tail -2
+.venv/bin/python -m mypy        worker/ tests/ fixtures/ golden/ scripts/ 2>&1 | tail -2
 .venv/bin/python -m pytest tests/ -q                             2>&1 | tail -3
 echo "=== STUBS (must be EMPTY) ==="
 .venv/bin/python -c "from worker import STUB_REGISTRY; print(STUB_REGISTRY or 'EMPTY')"
@@ -118,21 +118,19 @@ grep -c "^Your selection: _____" docs/ongoing_errors.md   # anchored — unancho
 
 Measured **September 5, 2026** at `0301265`, by querying the live system rather than reading status rows. Re-run via §2 before trusting.
 
-> **§2's gate block does not cover `scripts/`.** Run `ruff` and `mypy` over it separately until G1 lands: `mypy scripts/` is currently **RED with 17 errors**, and `scripts/` is where every corpus-mutating program lives.
-
 | Gate | Result | Note |
 |---|---|---|
-| `ruff check` | **PASS** | |
-| `mypy --strict` | **PASS on 81 files — RED on `scripts/`** | Clean across worker/, tests/, fixtures/, golden/. **`mypy scripts/` reports 17 errors in `resegment_and_reextract.py` and has never been in the gate.** Item G1. |
-| `pytest tests/ -q` | **PASS** — 188 passed in **134s** | `requires_models` tests ran (not skipped, no deselection in `addopts`). ~134s is well above trap 18's 35s floor. |
+| `ruff check` | **PASS** | Clean across worker/, tests/, fixtures/, golden/, scripts/. |
+| `mypy --strict` | **PASS on 86 files** | Clean across worker/, tests/, fixtures/, golden/, scripts/. Item G1 delivered. |
+| `pytest tests/ -q` | **PASS** — 189 passed in **128s** | `requires_models` tests ran (not skipped, no deselection in `addopts`). ~128s is well above trap 18's 35s floor. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
-| `worker.integrity --all` | **PASS — 13 checks, independent populations, active sufficiency verdicts and referential integrity** | E1 & N0 delivered: 13 checks, FIXTURES and CORPUS reported separately with no union; `verify_quotes` examined 1,501 claims; `verify_anchor_chain` examined 5,720 entities; `verify_canonical_ids` examined 1,503 propositions; `verify_quarantined_propositions_unreachable` examined 1 quarantined fabrication (`db3ec63d33cf6f0a`); `verify_assessment_subjects_exist` verified all 8 assessments. |
+| `worker.integrity --all` | **PASS — 13 checks, independent populations, active sufficiency verdicts and referential integrity** | G1, E1 & N0 delivered: 13 checks, FIXTURES and CORPUS reported separately with no union; `verify_quotes` examined 1,501 claims; `verify_anchor_chain` examined 5,720 entities; `verify_canonical_ids` examined 1,519 entities (1,503 propositions, 0 principles, 16 roles); `verify_quarantined_propositions_unreachable` examined 1 quarantined fabrication (`db3ec63d33cf6f0a`); `verify_assessment_subjects_exist` verified all 8 assessments. |
 | `worker.golden.report` | **PASS** | Fixtures 20/20 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
-| **CI / Portability** | **PASS** | `portability.yml` tests base install without Apple extra; runs lint, mypy, and non-model tests (161 passed in ~31s). |
+| **CI / Portability** | **PASS** | `portability.yml` tests base install without Apple extra; runs lint, mypy, and non-model tests across all 5 directories. |
 | **Corpus** | **POPULATED, FULL COVERAGE (R1 & N0 DELIVERED)** | 4 sources, **4,219 utterances**, **1,501 claims**, **1,503 propositions**, 8 assessments. Coverage across all four sources: **99.7%–100.0%** (5,283s–5,800s of 5,301s–5,801s). Feed `<itunes:duration>` and `pubDate` parsed; `published_at` preserved from feed; `MIN_UTTERANCE_MEDIA_RATIO = 0.80` enforced and passing. Truncation bug eliminated. Items R1 and N0 delivered. |
 | **Propositions — THE LIVE DEFECT** | **1,499 FOR 1,501 CLAIMS** | D0's repairs all still hold (ids canonical, fabrication quarantined and unreachable, `claim_count` correct). **But deduplication never runs.** `worker/extract/extract.py` imports only `get_embedder` from `dedup.py` and never calls the merge, so every claim was given a private proposition: exactly **one** proposition carries more than one claim. `tension/detect.py:73` finds contradictions by joining two claims on a shared `proposition_id` — **measured: zero pairs share a proposition with opposing stance.** A reversal is not undetected, it is unrepresentable. **Item P0 (§17j).** |
 | **`source_count`** | **MEASURED** | All 4 hosts now draw on all 4 episodes. Resolved through the utterance anchor chain, `hasattr` removed, I3 violation raises. Item M0 delivered, independently confirmed against ground truth. |
-| **`source_roles`** | **32 ROWS FOR 16 PAIRS** | Two competing `role_id` schemes: `compute_role_id()`'s sha256 and a hand-built `f"role_{sid}_{subj_id}"` written by `scripts/reextract_corpus.py:205` and `scripts/resegment_and_reextract.py:260`. The `PRIMARY KEY` cannot stop it because the ids differ, so the upsert that §3 of `design_data_layer.md` guarantees is idempotent inserts a second row. `verify_role_coverage` PASSes over a 100%-duplicated table, because it asks whether utterances *resolve to* a role, never whether roles are unique — and `verify_canonical_ids` does not cover roles. **Item G1.** |
+| **`source_roles`** | **16 ROWS FOR 16 PAIRS (G1 DELIVERED)** | Hand-built `f"role_..."` removed from `scripts/reextract_corpus.py` and `scripts/resegment_and_reextract.py`, replaced with `compute_role_id()`. 16 duplicate rows deleted (32 → 16). `verify_canonical_ids` extended to cover `source_roles` and enforce pair uniqueness; idempotence verified across repeated writes. |
 | **Sufficiency verdict** | **CIRCULAR** | E1 removed the `.get("passed", True)` default — correct — but `engine.py:142` now sets `sufficiency["passed"] = any_scored`. `not passed` is therefore true only when every axis score is already null, so `verify_no_suppressed_scores` looks for a non-null score among axes that are null by construction. **The check still cannot fail.** Item E2. |
 | **Corpus — claims** | **1,501 CLAIMS (N0 DELIVERED)** | Extraction ran across all 4,219 utterances under `gemma-3-27b-it:v1.2:s1` (1,492 new + 9 prior v1.1 coexisting). All 4 sources contribute: E124 (284), E165 (332), E245 (408), E287 (477). Rejection counters genuinely non-zero — 194 of 1,686 attempted (11.5%), across six distinct reasons. Parameter 026 re-measured over n=1,501. **Verified.** But **assertion (c) is NOT satisfied**: it required a detected tension *or* a report of the candidate pairs considered and why each was rejected. Published tensions are 0 and there is no candidate report — because P0 means the candidate set is empty by construction. |
 | **Assessments** | **EVALUATED, REFERENTIALLY GUARDED** | 8 rows across 2 topics (`top_ai_reg`, `global`). Sufficiency verdict `passed: True` across all 4 enrolled hosts (Chamath, Sacks, Jason, Friedberg) with calculated Specificity rates (0.2660 to 0.3634). Consistency, update integrity and even-handedness are `None` — correct in form, but they are `None` because P0 makes their inputs impossible, not because the axes were exercised and found nothing. E1's referential half is verified: `verify_assessment_subjects_exist` wired (13 checks), the `subj_nonexistent_subject` row gone, missing-key now FAILs, tests open `read_only=True`. |
@@ -190,7 +188,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 | Order | ID | Item | Blocked | Status | Why here |
 |---|---|---|---|---|---|
-| 1 | **G1** | Two `role_id` schemes; `scripts/` outside every gate | none | **outstanding** | `mypy scripts/` is **RED (17 errors)** and always has been — in the directory holding every corpus-mutating program. Two id schemes have duplicated all 16 role rows, and `verify_canonical_ids` does not cover roles. **Fix the gates before editing what they do not cover.** |
+| 1 | **G1** | Two `role_id` schemes; `scripts/` outside every gate | none | **delivered · verified** | `scripts/` brought under `ruff` and `mypy` gates (0 errors on 86 files). Hand-built `f"role_..."` replaced with `compute_role_id()` across `scripts/`. 16 duplicate rows deleted (32 → 16). `verify_canonical_ids` extended to cover `source_roles` and pair uniqueness. |
 | 2 | **E2** | The sufficiency verdict is circular | none | **outstanding** | E1 removed the default and replaced it with `passed = any_scored`, computed from the very scores it is meant to gate. `verify_no_suppressed_scores` is tautological and still cannot fail. Third guard this project has shipped unable to fail. |
 | 3 | **P0** | Proposition dedup never runs | none | **outstanding** | **The reason 1,501 claims produced zero findings.** 1,499 propositions for 1,501 claims; one shared. Contradiction detection joins on `proposition_id` and has nothing to join. Parameter 008 has never been exercised. **The last prerequisite for P4–P6.** |
 | 4 | **E1** | The assessment layer is unguarded | none | **delivered · half** | Referential integrity, the missing-key FAIL, the removed default, the deleted pollution row and read-only tests are all real and verified. **The verdict semantics are not — see E2.** |

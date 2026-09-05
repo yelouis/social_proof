@@ -9,11 +9,21 @@ Implements agent_execution_guide.md §17 (X0):
 
 import shutil
 from pathlib import Path
+from typing import Literal, TypedDict
 
-from worker.entities import Claim, Proposition, SourceSubjectRole
+from worker.entities import Claim, Proposition, SourceSubjectRole, Utterance
 from worker.segment import segment_words_into_utterances
-from worker.storage import Storage, compute_claim_id, compute_proposition_id
+from worker.storage import Storage, compute_claim_id, compute_proposition_id, compute_role_id
 from worker.transcribe.reconciler import WordTimestamp
+
+
+class VerifiedClaimSpec(TypedDict):
+    source_prefix: str
+    subject_id: str
+    quote: str
+    proposition: str
+    stance: Literal["support", "oppose", "mixed", "hedge"]
+    hedging: float
 
 
 def main() -> None:
@@ -59,13 +69,14 @@ def main() -> None:
                 "attribution_method": u[6],
             })
             w_list = store.artifacts.get_word_timestamps(u[7])
-            for w in w_list:
-                words.append(WordTimestamp(
-                    word=w["word"],
-                    start_ms=w["start_ms"],
-                    end_ms=w["end_ms"],
-                    confidence=w.get("confidence", 1.0),
-                ))
+            if w_list is not None:
+                for w in w_list:
+                    words.append(WordTimestamp(
+                        word=w["word"],
+                        start_ms=w["start_ms"],
+                        end_ms=w["end_ms"],
+                        confidence=w.get("confidence", 1.0),
+                    ))
 
         source_words_map[s_id] = words
         source_speaker_spans[s_id] = spans
@@ -78,9 +89,10 @@ def main() -> None:
     print("Cleared old utterances and claims.")
 
     # 4. Re-segment into sentence-bounded utterances and attribute speakers
-    all_new_utts = []
+    all_new_utts: list[Utterance] = []
     for s_id, _title, _url, _rec_at in sources:
         src_obj = store.get_source(s_id)
+        assert src_obj is not None, f"Source {s_id} not found"
         words = source_words_map[s_id]
         spans = source_speaker_spans[s_id]
 
@@ -120,7 +132,7 @@ def main() -> None:
 
     # 5. Insert hand-verified claims with bumped extraction_version
     extraction_ver = "gemma-3-27b-it:v1.1:s1"
-    verified_claims_spec = [
+    verified_claims_spec: list[VerifiedClaimSpec] = [
         {
             "source_prefix": "All-In E124",
             "subject_id": "subj_jason_calacanis",
@@ -257,7 +269,7 @@ def main() -> None:
     for s_id, _title, _url, _rec_at in sources:
         for subj_id in all_subject_ids:
             store.insert_source_role(SourceSubjectRole(
-                role_id=f"role_{s_id}_{subj_id}",
+                role_id=compute_role_id(s_id, subj_id),
                 source_id=s_id,
                 subject_id=subj_id,
                 tier="B",
@@ -286,14 +298,14 @@ def main() -> None:
     terminal_punct = (".", "?", "!", '."', '?"', '!"', ".'", "?'", "!'", ".”", "?”", "!”")
     bad_starts = []
     bad_ends = []
-    for u in all_new_utts:
-        t = u.text_verbatim.strip()
+    for nu_utt in all_new_utts:
+        t = nu_utt.text_verbatim.strip()
         starts_cap = t[0].isupper() or t[0] in ('"', "'", "“", "‘")
         ends_term = t.endswith(terminal_punct)
         if not starts_cap:
-            bad_starts.append((u.utterance_id, t[:30]))
+            bad_starts.append((nu_utt.utterance_id, t[:30]))
         if not ends_term:
-            bad_ends.append((u.utterance_id, t[-30:]))
+            bad_ends.append((nu_utt.utterance_id, t[-30:]))
 
     print("\n--- VALIDATION ---")
     print(f"Total new utterances: {len(all_new_utts)}")

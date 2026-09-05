@@ -536,6 +536,23 @@ class Storage:
             for row in rows
         ]
 
+    def get_all_source_roles(self) -> list[SourceSubjectRole]:
+        rows = self.con.execute(
+            "SELECT role_id, source_id, subject_id, tier, venue_type, audience_stance, is_adversarial FROM source_roles"
+        ).fetchall()
+        return [
+            SourceSubjectRole(
+                role_id=row[0],
+                source_id=row[1],
+                subject_id=row[2],
+                tier=row[3],
+                venue_type=row[4],
+                audience_stance=row[5],
+                is_adversarial=bool(row[6]),
+            )
+            for row in rows
+        ]
+
     def insert_utterance(self, u: Utterance) -> None:
         self.con.execute(
             """

@@ -142,6 +142,57 @@ def test_idempotent_duplicate_writes_produce_one_row(tmp_path: Path) -> None:
     assert cnt_claim is not None and cnt_claim[0] == 1
 
 
+def test_source_role_idempotence_and_canonical_ids_prevent_duplicates(tmp_path: Path) -> None:
+    store = Storage(db_path=str(tmp_path / "test_roles.duckdb"), artifact_dir=tmp_path / "artifacts")
+    all_source_ids = ["src_1", "src_2"]
+    all_subject_ids = ["subj_1", "subj_2"]
+    for sid in all_source_ids:
+        store.insert_source(Source(
+            source_id=sid,
+            title=sid,
+            publisher="test_pub",
+            canonical_url=f"http://{sid}",
+            artifact_hash=sid,
+            citation_url_template="",
+            interlocutor=None,
+            recorded_at="2024-01-01T00:00:00Z",
+            published_at="2024-01-01T00:00:00Z",
+            transcription_model="whisper",
+            ingested_at="2024-01-01T00:00:00Z",
+            audio_deleted_at="",
+            duration_ms=1000,
+        ))
+    for subj_id in all_subject_ids:
+        store.insert_subject(Subject(subject_id=subj_id, display_name=subj_id))
+
+    def write_roles() -> None:
+        for sid in all_source_ids:
+            for subj_id in all_subject_ids:
+                store.insert_source_role(SourceSubjectRole(
+                    role_id=compute_role_id(sid, subj_id),
+                    source_id=sid,
+                    subject_id=subj_id,
+                    tier="B",
+                    venue_type="own_channel",
+                    audience_stance="friendly",
+                    is_adversarial=False,
+                ))
+
+    write_roles()
+    cnt_1 = store.con.execute("SELECT count(*) FROM source_roles").fetchone()
+    assert cnt_1 is not None and cnt_1[0] == 4
+
+    # Second run must leave row count unchanged (upsert idempotence)
+    write_roles()
+    cnt_2 = store.con.execute("SELECT count(*) FROM source_roles").fetchone()
+    assert cnt_2 is not None and cnt_2[0] == 4
+
+    roles = store.get_all_source_roles()
+    assert len(roles) == 4
+    for r in roles:
+        assert r.role_id == compute_role_id(r.source_id, r.subject_id)
+
+
 def test_vss_embeddings_hnsw_cosine_search(tmp_path: Path) -> None:
     store = Storage(db_path=str(tmp_path / "test.duckdb"), artifact_dir=tmp_path / "artifacts")
 

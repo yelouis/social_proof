@@ -30,7 +30,11 @@ from worker.entities import (
     Topic,
     Utterance,
 )
-from worker.storage import compute_principle_id, compute_proposition_id
+from worker.storage import (
+    compute_principle_id,
+    compute_proposition_id,
+    compute_role_id,
+)
 
 
 @dataclass
@@ -638,18 +642,21 @@ def verify_canonical_ids(
     propositions: list[Proposition],
     principles: list[Principle],
     claims: list[Claim] | None = None,
+    roles: list[SourceSubjectRole] | None = None,
 ) -> CheckResult:
-    """For every proposition and principle: assert stored_id == compute_*_id(canonical_text).
+    """For every proposition, principle, and role: assert stored_id == compute_*_id(...).
 
+    Also assert role uniqueness per (source_id, subject_id).
     Also assert claim_count matches the real count from claims — as a check, never as a filter.
     """
-    total = len(propositions) + len(principles)
+    roles_list = roles or []
+    total = len(propositions) + len(principles) + len(roles_list)
     if total == 0:
         return CheckResult(
             name="verify_canonical_ids",
             passed=True,
             status="NOT APPLICABLE — zero rows",
-            message="No propositions or principles to check",
+            message="No propositions, principles, or roles to check",
             examined_count=0,
         )
 
@@ -665,6 +672,18 @@ def verify_canonical_ids(
         if pr.principle_id != expected_id:
             mismatched_prins.append(pr.principle_id)
 
+    mismatched_roles: list[str] = []
+    seen_role_pairs: set[tuple[str, str]] = set()
+    duplicate_role_pairs: list[str] = []
+    for r in roles_list:
+        expected_id = compute_role_id(r.source_id, r.subject_id)
+        if r.role_id != expected_id:
+            mismatched_roles.append(r.role_id)
+        pair = (r.source_id, r.subject_id)
+        if pair in seen_role_pairs:
+            duplicate_role_pairs.append(f"{r.source_id}:{r.subject_id}")
+        seen_role_pairs.add(pair)
+
     mismatched_counts: list[str] = []
     if claims is not None:
         real_counts: dict[str, int] = {}
@@ -675,12 +694,16 @@ def verify_canonical_ids(
             if p.claim_count != real:
                 mismatched_counts.append(f"{p.proposition_id} (stored={p.claim_count}, real={real})")
 
-    if mismatched_props or mismatched_prins:
+    if mismatched_props or mismatched_prins or mismatched_roles or duplicate_role_pairs:
         details = []
         if mismatched_props:
             details.append(f"propositions: {mismatched_props}")
         if mismatched_prins:
             details.append(f"principles: {mismatched_prins}")
+        if mismatched_roles:
+            details.append(f"roles: {mismatched_roles}")
+        if duplicate_role_pairs:
+            details.append(f"duplicate role pairs: {duplicate_role_pairs}")
         count_detail = f" (also {len(mismatched_counts)} claim_count mismatch(es))" if mismatched_counts else ""
         return CheckResult(
             name="verify_canonical_ids",
@@ -699,11 +722,17 @@ def verify_canonical_ids(
             examined_count=total,
         )
 
+    parts = [
+        f"{len(propositions)} propositions",
+        f"{len(principles)} principles",
+    ]
+    if roles_list:
+        parts.append(f"{len(roles_list)} roles")
     return CheckResult(
         name="verify_canonical_ids",
         passed=True,
         status="PASS",
-        message=f"Verified canonical IDs across {len(propositions)} propositions and {len(principles)} principles",
+        message=f"Verified canonical IDs across {', '.join(parts)}",
         examined_count=total,
     )
 
@@ -840,7 +869,7 @@ def run_all_checks(
         verify_versions_present(a_list),
         verify_role_coverage(u_list, rol_list),
         verify_source_productivity(s_list, u_list),
-        verify_canonical_ids(p_list, pr_list, c_list),
+        verify_canonical_ids(p_list, pr_list, c_list, rol_list),
         verify_quarantined_propositions_unreachable(p_list, c_list),
         verify_assessment_subjects_exist(a_list, sub_list, top_list),
     ]
@@ -910,11 +939,7 @@ def run_integrity_corpus(db_path: Path | str = "social_proof.duckdb") -> list[Ch
             for r in store.con.execute("SELECT source_id FROM sources").fetchall()
             if (s := store.get_source(r[0])) is not None
         ]
-        roles = [
-            role
-            for r in store.con.execute("SELECT source_id, subject_id FROM source_roles").fetchall()
-            if (role := store.get_source_role(r[0], r[1])) is not None
-        ]
+        roles = store.get_all_source_roles()
         tensions = [
             t
             for r in store.con.execute("SELECT tension_id FROM tensions").fetchall()
