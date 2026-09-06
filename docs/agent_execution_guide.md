@@ -1,8 +1,8 @@
 # Agent Execution Guide — Active Build: first real ingest, then Phases 3–8 — August 17, 2026
 
-**You are an engineering agent with no memory of this project. This document is self-driving: it contains the prompts you issue to yourself.**
+**You are an engineering agent with no memory of this project.**
 
-Do not read this end to end and improvise. **Go to §1, run LOOP 0, let it route you.**
+**Read §1 first; it says where to start.** There is no routing machinery below — you are expected to organise the work yourself. What is fixed is §4 (what you may not change), §5 (what has bitten this project), §7 (what counts as evidence) and each item's own assertions.
 
 **Where the project is.** Twenty-one items delivered. **D3 verified on September 6, 2026 by running its validator over the live corpus**, which is not what its own tests do. The instrument genuinely fires both ways now — over a random 300-claim sample it would flip **25 `support`→`oppose` and 12 `oppose`→`support`** — and D3's root-cause diagnosis was correct and honestly reported: `nomic-embed` cannot separate `P` from `¬P` at the ±0.005 the old margin needed. `hedge` is properly retired, enum and data both.
 
@@ -13,59 +13,23 @@ Do not read this end to end and improvise. **Go to §1, run LOOP 0, let it route
 
 **And the reason it did not show up: the evaluation set could not contain the failure.** D3 hand-wrote 12 cases, 6 per class, and scored **6/6 both ways with zero confusion**. A random live sample gives **4/4 wrong** in one direction. The cases were composed to illustrate the rule rather than drawn from the corpus, so every one had a negator whose scope was the proposition — the easy shape.
 
-**What that means for you. Do not re-validate the corpus yet** — it would rewrite ~266 claims to `oppose` using the direction that is broken. **D1** (§17u) first: it is still the root cause of the zero, and its polarity work removes one of the two causes of D4's false flips. Then **D4** (§17w), then **D2** (§17v). Read §3 and §5 traps 28–59 first.
+**What that means for you. Do not re-validate the corpus yet** — it would rewrite ~266 claims to `oppose` using the direction that is broken. **D1** (§13u) first: it is still the root cause of the zero, and its polarity work removes one of the two causes of D4's false flips. Then **D4** (§13w), then **D2** (§13v). Read §3 and §5 traps 28–59 first.
+
+**Items now carry per-step checks, written as `> **Verify:**` after the step they belong to.** Run each before starting the next step. Several are **red-first**: they tell you to run something and *watch it fail* before you fix anything, because a check that has only ever been green on repaired data has not been tested.
 
 **Every number, threshold, field name and literal string in the design docs is deliberate. Implement as written.** Where a doc says a value must be *measured* (`ongoing_errors.md` §2), measure it.
 
 ---
 
-## The loops
+## 1. Where to start
 
-| Loop | When | §
-|---|---|---|
-| **LOOP 0 — ORIENT** | Start of every session | §1 |
-| **LOOP 1 — IMPLEMENT** | Per work item | §7 |
-| **LOOP 2 — FALSIFY** | Inside LOOP 1, mandatory | §8 |
-| **LOOP 3 — ESCALATE** | Blocked, or a decision is the user's | §9 |
-| **LOOP 4 — CLOSE OUT** | Queue empty | §10 |
-| **LOOP 5 — DECOMPOSE** | Item too big for one commit | §11 |
-| **LOOP 6 — RESUME** | Context reset mid-item | §12 |
-| **LOOP 7 — REPAIR** | A gate went red | §13 |
+**Run §2's state-detection block and read its output.** Then read §3, §5, §7 and §6 — the baseline, the traps, the validation standard, and the queue. Then read your item's own section **and every contract doc it cites, in full.** The guide points; the design docs specify. Reading only the guide has produced three of this project's published fabrications.
 
----
+**Pick the first row in §6 whose status is not `delivered` or `superseded` and whose `Blocked` column is `none`.** If the tree is dirty, deal with that first — someone stopped mid-item and half-finished work is not a base to build on. If a gate §3 records as passing comes back red, that outranks the queue.
 
-## 1. LOOP 0 — ORIENT
+**You are trusted to organise your own work.** There is no prescribed routine below beyond §8, which is short. Sequence, batching and when to commit are yours to judge. What is *not* yours to judge is in §4, and what counts as evidence is in §5.
 
-```text
-LOOP 0 — ORIENT
-
-1. Run the state-detection block in §2. Read its output.
-
-2. Is the working tree dirty (uncommitted changes)?
-     YES -> enter LOOP 6 (RESUME, §12). Someone stopped mid-item. Do not
-            start new work on top of half-finished work.
-     NO  -> continue.
-
-3. Compare gate results to the baseline in §3.
-     Any gate RED that §3 records PASS -> enter LOOP 7 (REPAIR, §13).
-     All match                          -> continue.
-
-4. Read the queue in §6. Walk it top to bottom. Select the FIRST row where
-   status is NOT one of {delivered, superseded} AND blocked_on == none.
-   Set ITEM.
-
-   "superseded" means the row's remaining work is tracked under another ID.
-   It is not a to-do. Do not open it; the row names its successor.
-
-5. No such row -> LOOP 4 (CLOSE OUT, §10). Stop.
-
-6. Read ITEM's own section in full. Read every contract doc it cites.
-   The guide points; the doc specifies. Reading only the guide is not enough.
-
-7. Estimate: can ITEM land as ONE commit with one coherent message?
-     NO  -> enter LOOP 5 (DECOMPOSE, §11). It returns a sub-item; use that.
-     YES -> enter LOOP 1 (IMPLEMENT, §7) with ITEM.
-```
+**The one thing to internalise before anything else:** every item in §6 is here because a previous agent's work passed all its gates and was still wrong. Not careless work — *good* work, measured against assertions that could not tell the difference. §5 exists to make that less likely, and §27 records each specific way it has happened.
 
 ---
 
@@ -107,7 +71,7 @@ grep -c "^Your selection: _____" docs/ongoing_errors.md   # anchored — unancho
 
 | Signal | Means |
 |---|---|
-| dirty tree | Someone stopped mid-item → LOOP 6 |
+| dirty tree | Someone stopped mid-item → §9 |
 | `STUB_REGISTRY` non-empty | A V-item regressed. Should be `EMPTY`. |
 | `NO DATABASE` | **I0 not delivered.** Nothing real has been processed. |
 | a phase module `MISSING` | Its P-item is outstanding, whatever any commit says. |
@@ -161,13 +125,13 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 
 ## 4. Standing constraints
 
-- **One item = one commit**, the *why* in the body. Too big → LOOP 5.
+- **One item = one commit**, the *why* in the body. Too big → split it (§9).
 - **Never fill in a `Your selection: _____` line.**
 - **A stub is not a delivery.** Real dependency runs, or it isn't done.
 - **Dependencies land in `pyproject.toml` in the same commit.**
 - **Never print a number you did not measure.** Constants, projections from constants, and metrics below their floor render `NOT MEASURED`.
 - **Every integration item needs one assertion a stub cannot satisfy** (trap 17). The single most important rule here.
-- **A guard that has never failed has not been tested.** LOOP 2 is mandatory.
+- **A guard that has never failed has not been tested.** Falsification is mandatory (§7, §8 step 6).
 - **All writes go through the worker** (I8). **No LLM at scoring time.** **Audio deleted after transcription** (Issue 003). **DuckDB is the only store** (Issue 015).
 - **Update every doc your change invalidates, in the same commit.**
 - **`ongoing_errors.md` is a queue, not an archive.** File new issues at the **top** of §1. When one is selected, move it out: write the consequence into the design doc that owns it, add a row to §4, delete the option text. Git history keeps the reasoning.
@@ -188,7 +152,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 24. **A corpus can be skewed without being thin, and nothing catches that.** Invariant I5 gates on *volume* — too few claims, no score. It says nothing about *composition*. A subject whose primary medium is excluded (Musk without X) yields plenty of claims, passes the gate, and renders a confident score over a systematically unrepresentative slice. Issue 023.
 25. **"Ingested" is not the same as "produced anything."** Three sources were stamped `ingested_at` *and* `audio_deleted_at` while yielding zero utterances. Every integrity check verifies that pointers *resolve* — none verified that the pipeline *emitted* anything. **Success must be defined as output, not as absence of exception**, and any irreversible step (audio deletion) must be gated on that definition.
 26. **A detector finding nothing over a corpus that cannot contain the thing is not a true negative — it is an untested detector.** Every claim in the store is from one day with one stance, so a reversal is impossible by construction. P4/P5/P6 report zero and are green; they have never met data capable of contradicting itself.
-27. **Local green does not mean CI green.** LOOP 0 checks the local battery and has no CI signal at all, so CI stayed red across several commits unnoticed (Issue 024).
+27. **Local green does not mean CI green.** §2's block checks the local battery and has no CI signal at all, so CI stayed red across several commits unnoticed (Issue 024).
 28. **A real quote does not make a real claim.** `verify_quotes` proves the words were said. It never proves they said *that*. A published tension was traced to two genuine quotes carrying a wholly invented proposition, and all five extraction validators passed. **"Is this citation real?" and "does this citation support this claim?" are different questions, and only the first was ever asked.**
 29. **A parameter that is declared, defaulted, and never referenced is not a check.** `verify_source_productivity(min_ratio=0.05)` never uses `min_ratio` — and could not, since no media duration is stored. The function reads as a coverage check and is a non-emptiness check. Grep for the parameter in the body, not just the signature.
 30. **Fragmentary input invites fabrication.** Utterances split on length rather than sentence boundaries end mid-word. Asking a model to find a *position* in a fragment that cannot hold one is how invented propositions get attached to real words. Fix the segmentation before blaming the extractor.
@@ -210,7 +174,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 53. **A `try/except` that substitutes a more-capable object for a less-capable one is a silent privilege escalation.** `except Exception: read_only_con = storage.con.cursor()` turns "this is a reader" into "this can write" with no log and no error. Issue 020 already ruled on the general form — *fail loudly if absent, never downgrade silently* — in a different layer. **Grep for the shape, not just this instance.**
 54. **How a corpus was chosen is part of what it can support.** A tool that judges whether someone applied their principles evenly cannot rest on episodes picked because they looked promising. **Record the selection rule before the run** — "everything in this range" needs no trust, "the relevant ones" needs a lot (Issue 030 = A).
 49. **Pre-rendering a page per row is a database with worse ergonomics.** The static export wrote 2,593 HTML files and 27 MB for 1,288 claims, duplicating the same rows across per-claim, per-person and per-episode pages. **When the data already lives in a queryable store, serve from it** — a build step that materialises every view is a cache of a thing you already have, and it goes stale the moment the corpus changes.
-50. **A blocked item can be built anyway, and nothing in the loops stops it.** U1's queue row read `blocked_on: S1, T1, W2 + one real finding` and it was implemented before any of those landed. LOOP 0 routes by the queue; it has no way to notice that work happened off the queue. **When an item is blocked on a judgement rather than a commit, say in the item what evidence unblocks it and who decides.**
+50. **A blocked item can be built anyway, and nothing in this guide stops it.** U1's queue row read `blocked_on: S1, T1, W2 + one real finding` and it was implemented before any of those landed. Nothing notices work that happens off the queue. **When an item is blocked on a judgement rather than a commit, say in the item what evidence unblocks it and who decides.**
 51. **A correct pipeline can produce nothing, and that is a different finding from a broken one.** Zero candidate pairs over four episodes is a coverage measurement, not a detector fault — and it looks identical in a status table to the three broken zeros that preceded it. **Report the denominator that makes them distinguishable:** 4 propositions span more than one episode, out of 1,229.
 45. **A validator that checks *aboutness* cannot check *direction*.** Validator 6 asks whether a quote supports its proposition and passes it either way it is labelled, so `stance` — the field the whole contradiction detector keys on — went unchecked through six validators. **Enumerate the fields a downstream stage reads, and confirm something validates each one.**
 46. **A guard's firing rate is a measurement, and a suspiciously low one is a finding.** `is_own_assertion` excluded 9 of 1362 claims (0.7%) across four hours of unscripted conversation full of questions and hypotheticals. Nothing was red. **Report every guard's rate next to its rejections; a rate that looks too clean usually means the guard stopped reaching its subject.**
@@ -231,12 +195,12 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 | 1 | **D1** | Propositions drifted back into full clauses | none | **outstanding** | **Still the root cause of the zero**, and its polarity fix removes one of the two causes of D4's false flips. Its re-extraction will run validator 7 over everything, so D4 must not ship a broken direction into it — but D1's own work does not depend on D4. |
 | 2 | **D4** | Validator 7's new direction is wrong on live data | **D1** | **outstanding** | Bidirectional at last, and all four `support`→`oppose` flips read by hand are false. The 12-case curated eval could not detect it. **Do not re-validate the corpus until the false-flip rate is measured.** |
 | 3 | **D2** | Re-measure parameter 008 against a corpus that exists | **D1** | **outstanding** | `T_dedup = 0.86` merges 4.5% of the table and was fitted to a 1,499-proposition corpus that was 7% indexical attractors, replaced twice since. |
-| 4 | **D3** | Validator 7 has only ever corrected in one direction | none | **delivered · verified** | Augmented Validator 7 with syntactic negation analysis; standing bidirectional correction counters reported (`stance_corrected_to_support`, `stance_corrected_to_oppose`); 12 hand-labelled cases verified with 4 support $\to$ oppose corrections (Assertion c) and 2 oppose $\to$ support corrections; 0 confusion errors; LOOP 2 falsification verified; `hedge` resolved to float level across schema, entities, and DB; 240/240 tests pass. |
-| 5 | **A0** | The site's read-only guarantee has a silent escape hatch | none | **delivered · verified** | Deleted silent fallback to `storage.con.cursor()` in `worker/api/server.py`; `create_app` raises `RuntimeError` if read-only connection cannot be established; Assertion (c) verified in `tests/test_review_site_u1.py`; LOOP 2 falsification verified (restoring fallback fails assertion (c), reverting passes); all 235 tests pass. |
-| 6 | **C1** | Expand the corpus chronologically (**Issue 030 = A**) | none | **delivered · verified** | Expanded from 4 to 23 contiguous sources (20 contiguous All-In episodes E279–E288 + 3 historical bootstrap episodes), 20,666 utterances, 3,669 claims, 3,477 propositions, 92 roles. Multi-episode propositions rose from 4 to 67, satisfying Assertion (c). Candidate evaluation reports exact denominator (6 examined, 6 rejected by same-source rule, 0 false reversals published after hand-reading). Zero-claim rule strictly verified across all 23 sources; all 14 integrity checks PASS. LOOP 2 falsification verified. |
-| 7 | **S1** | Nothing validates `stance` or `is_own_assertion` | none | **delivered · verified** | Implemented Validator 7 (`validate_stance_direction`) certifying directional alignment ($P$ vs $\neg P$, Parameter 031 margin $\delta=0.05$); raised Invariant I7 speech-act sensitivity (regex detection of interrogative and hypothetical quotes). Corrected 2 mislabelled oppose claims to support (`af95392de868a188` and `7f571f16d81af8c5`), downgraded 97 non-assertive quotes, raising I7 exclusion rate to 7.78% (106/1,362 claims, floor > 5%). Eliminated all 4 target candidate pairs identified in §17n. Surviving own-assertion oppose claims: 73 ($\ge 50$). All 14 integrity checks PASS. Both threshold directions and falsification verified. |
-| 8 | **T1** | A reversal needs time between its halves | none | **delivered · verified** | Implemented same-source automatic disqualification (`source_a_id == source_b_id`) in `worker/tension/detect.py`; routed disqualified same-source opposing pairs to review surface `stance_conflict_reviews` in `worker/storage.py` with reason `same_source_stance_conflict`; added Parameter 032 `MIN_REVERSAL_GAP_DAYS = 0.0` (unmeasured / provisional); implemented `CandidateEvaluationReport` reporting exact examined denominator and rejection reasons. Verified: all 5 baseline pairs disqualified and routed to review table; 0 reversal candidates over live corpus (1 examined, 1 rejected by same-source rule); synthetic cross-episode pair accepted (1 published reversal); LOOP 2 falsification verified (disabling same-source condition causes candidates to reappear; restoring clears them to 0). |
-| 9 | **W2** | Self-containment, the rest of the pronouns | none | **delivered · verified** | Completed self-containment against the property: extended `validate_self_contained` (`proposition_not_self_contained`) to reject sentence-initial pronouns/deictics, unbound third-person pronouns (`they/their`, `he/his/him`), and comparatives without relata (`the same`, `such`, `the other`), while preserving bound pronouns (`Moderna patented its mRNA technology`). Updated prompt to `v1.5` (`gemma-3-27b-it:v1.5:s1`). Pre-repair RED state verified (132 failing propositions across 139 claims). Re-extracted affected candidate utterances under live MLX Gemma (65 new clean claims produced, 63 invalid proposals rejected by validator), purged orphaned propositions, deduplicated at T=0.86 with W1 entailment guard. Post-repair store verified with exactly 0 unbound propositions (Assertion c). Both target false candidate pairs eliminated. LOOP 2 falsification verified. 14/14 integrity checks and 225/225 tests PASS. |
+| 4 | **D3** | Validator 7 has only ever corrected in one direction | none | **delivered · verified** | Augmented Validator 7 with syntactic negation analysis; standing bidirectional correction counters reported (`stance_corrected_to_support`, `stance_corrected_to_oppose`); 12 hand-labelled cases verified with 4 support $\to$ oppose corrections (Assertion c) and 2 oppose $\to$ support corrections; 0 confusion errors; falsification verified; `hedge` resolved to float level across schema, entities, and DB; 240/240 tests pass. |
+| 5 | **A0** | The site's read-only guarantee has a silent escape hatch | none | **delivered · verified** | Deleted silent fallback to `storage.con.cursor()` in `worker/api/server.py`; `create_app` raises `RuntimeError` if read-only connection cannot be established; Assertion (c) verified in `tests/test_review_site_u1.py`; falsification verified (restoring fallback fails assertion (c), reverting passes); all 235 tests pass. |
+| 6 | **C1** | Expand the corpus chronologically (**Issue 030 = A**) | none | **delivered · verified** | Expanded from 4 to 23 contiguous sources (20 contiguous All-In episodes E279–E288 + 3 historical bootstrap episodes), 20,666 utterances, 3,669 claims, 3,477 propositions, 92 roles. Multi-episode propositions rose from 4 to 67, satisfying Assertion (c). Candidate evaluation reports exact denominator (6 examined, 6 rejected by same-source rule, 0 false reversals published after hand-reading). Zero-claim rule strictly verified across all 23 sources; all 14 integrity checks PASS. falsification verified. |
+| 7 | **S1** | Nothing validates `stance` or `is_own_assertion` | none | **delivered · verified** | Implemented Validator 7 (`validate_stance_direction`) certifying directional alignment ($P$ vs $\neg P$, Parameter 031 margin $\delta=0.05$); raised Invariant I7 speech-act sensitivity (regex detection of interrogative and hypothetical quotes). Corrected 2 mislabelled oppose claims to support (`af95392de868a188` and `7f571f16d81af8c5`), downgraded 97 non-assertive quotes, raising I7 exclusion rate to 7.78% (106/1,362 claims, floor > 5%). Eliminated all 4 target candidate pairs identified in §13n. Surviving own-assertion oppose claims: 73 ($\ge 50$). All 14 integrity checks PASS. Both threshold directions and falsification verified. |
+| 8 | **T1** | A reversal needs time between its halves | none | **delivered · verified** | Implemented same-source automatic disqualification (`source_a_id == source_b_id`) in `worker/tension/detect.py`; routed disqualified same-source opposing pairs to review surface `stance_conflict_reviews` in `worker/storage.py` with reason `same_source_stance_conflict`; added Parameter 032 `MIN_REVERSAL_GAP_DAYS = 0.0` (unmeasured / provisional); implemented `CandidateEvaluationReport` reporting exact examined denominator and rejection reasons. Verified: all 5 baseline pairs disqualified and routed to review table; 0 reversal candidates over live corpus (1 examined, 1 rejected by same-source rule); synthetic cross-episode pair accepted (1 published reversal); falsification verified (disabling same-source condition causes candidates to reappear; restoring clears them to 0). |
+| 9 | **W2** | Self-containment, the rest of the pronouns | none | **delivered · verified** | Completed self-containment against the property: extended `validate_self_contained` (`proposition_not_self_contained`) to reject sentence-initial pronouns/deictics, unbound third-person pronouns (`they/their`, `he/his/him`), and comparatives without relata (`the same`, `such`, `the other`), while preserving bound pronouns (`Moderna patented its mRNA technology`). Updated prompt to `v1.5` (`gemma-3-27b-it:v1.5:s1`). Pre-repair RED state verified (132 failing propositions across 139 claims). Re-extracted affected candidate utterances under live MLX Gemma (65 new clean claims produced, 63 invalid proposals rejected by validator), purged orphaned propositions, deduplicated at T=0.86 with W1 entailment guard. Post-repair store verified with exactly 0 unbound propositions (Assertion c). Both target false candidate pairs eliminated. falsification verified. 14/14 integrity checks and 225/225 tests PASS. |
 | 10 | **U1** | The review site, served live from DuckDB (**Issues 028 + 033**) | none | **delivered · verified** | Served live from DuckDB per request on local API (`/`, `/episode/{source_id}`, `/claim/{claim_id}`, `/person/{subject_id}`) with `read_only=True` connection guarantee. Static export and `site/` deleted (Issue 033). Shared query layer (`worker/api/queries.py`) enforces structural exclusion of quarantined tensions (`status='published'`) and quarantined propositions (`status='active'`), verifies quotes verbatim against utterances per claim, and enforces zero links to offset 00:00 (disabled with explicit reason). Templates (`worker/api/templates.py`) render all sections always with honest absence reasons (§4). Assertion (c) full sweep over all 1,288 claims verified (HTTP 200, 0 quarantined IDs, verbatim quotes verified). Render time 4.27ms for heaviest route. 9/9 tests pass. |
 | 11 | **Q0** | Quarantine both published tensions | none | **delivered · verified** | Quarantined both published tensions (`461e3d1dbf30bde4` and `4b812a6b0dc604b0`) as `fabricated_proposition`, joining `0068adec4b1501c6`. Recomputed all 8 assessments without them (`design_evidence_integrity.md` §5). `verify_quarantine_not_rendered` examines 3 quarantined tensions and passes; no assessment mentions either tension ID. Quarantine rate is 3/3 (100.0%). Falsification verified (re-publishing turns Assertion (c) RED). |
 | 12 | **W1** | Entailment does not survive re-pointing | none | **delivered · verified** | Re-pointing strictly gated by quote entailment validation (`T_ENTAIL_HIGH = 0.70`). Refused 8 candidate claim merges where entailment fell below floor (0.6444–0.6962), leaving 1,430 active propositions (69 merged away). Check #14 `verify_entailment_holds` implemented in `worker/integrity.py` with DuckDB caching (`claim_entailment_cache`), passing on 1,501 claims. Single source of truth for `T_dedup = 0.86` across `dedup.py` and `extract.py`. Assertion (c) and falsification verified (disabling re-validation fails `verify_entailment_holds` with 6 claims). |
@@ -267,237 +231,88 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 > **P3–P7 are delivered as code and still unvalidated as behaviour.** R1 gave them the audio; N0 gave them 1,501 claims. They still report zero, and the reason has moved rather than gone: it is no longer a thin corpus but a **structural** one. Every claim owns a private proposition, so the detector's join has nothing to match. A corpus that cannot *represent* a reversal produces zero whether the detector works or not — trap 26, one layer below where it was first found. **P0 is the last prerequisite; E2 is what makes the answer trustworthy when it arrives.**
 
-**Delivered — do NOT rework:** V0–V6 (all externals real, `STUB_REGISTRY` empty), U0–U13 (storage, integrity, adapters, reconciler, segmentation, gate, validators). Detail in git history; §14 has the short list.
+**Delivered — do NOT rework:** V0–V6 (all externals real, `STUB_REGISTRY` empty), U0–U13 (storage, integrity, adapters, reconciler, segmentation, gate, validators). Detail in git history; §10 has the short list.
 
 **IDs are labels, not sequence numbers.** Follow the **Order** column.
 
 ---
 
-## 7. LOOP 1 — IMPLEMENT
+## 7. Validation standard
 
-```text
-LOOP 1 — IMPLEMENT <ITEM>
+**This section is the difference between an item that lands and one that comes back.** Every rule below was paid for.
 
-STEP 1 — LOAD
-  Read <ITEM>'s section. Read every contract doc it cites, in full.
-  Write down BEFORE coding:
-    a. one-line user impact
-    b. exact files you expect to touch (blast radius)
-    c. THE ONE assertion that cannot pass unless the thing genuinely works
-  Cannot name (c)? -> LOOP 3. The item is underspecified.
+**Read the output a human would read, not the aggregate.** Three fabrications have shipped past complete, honest, passing metrics. Merge histograms looked healthy while the pairs built on them were false; candidate counts rose while the rate stayed flat. **If your item's product is a claim about a person, read some of those claims before you call it delivered.**
 
-STEP 2 — DECLARE
-  Needs a package? Add to pyproject.toml NOW and install.
-  Needs a credential, gated download, or a human judgement? -> LOOP 3
-  BEFORE writing code. Never stub around a missing credential.
+**Draw test data; do not compose it.** A hand-written set tests the mechanism you had in mind. Twelve composed stance cases scored 6/6 both directions with zero confusion, and a random sample of the live corpus was wrong 4 out of 4. **Sample from the corpus, fix the sample, version it, and report a confusion matrix rather than an accuracy.**
 
-STEP 3 — BUILD
-  Implement as specified. Numbers and literal strings are decisions.
-  Impossible value? Keep the intent, deviate minimally, record it in the
-  commit body.
+**State assertions as rates over the table when the table is also changing.** "Rises materially above 4" was satisfied by a rounding error once the corpus tripled — while 95.5% of propositions stayed singletons, which was the thing that mattered.
 
-STEP 4 — VALIDATE
-  Write every assertion under the item's Validation heading. Run them.
-  All pass, including (c).
+**Name the configurations a guard must hold in, then test the awkward one.** The review site's read-only connection raised on `INSERT` in the fixture's configuration and wrote happily in the one you actually run. Both were true; only one was tested.
 
-STEP 5 — FALSIFY
-  Enter LOOP 2. Mandatory. Do not proceed until it completes.
+**Grep for the writer before trusting the reader.** `sufficiency.get("passed", True)` read its own default nine times against an engine that never wrote that key. A `.get(key, default)` on a key nobody writes is an unused parameter one layer down.
 
-STEP 6 — BATTERY
-  Run §2. All gates green. Record REAL numbers. Anything unmeasured is
-  "NOT MEASURED".
+**Check the parameter is referenced in the body, not just the signature.** `verify_source_productivity(min_ratio=0.05)` never mentioned `min_ratio` again.
 
-STEP 7 — PROPAGATE (same commit)
-  - §3 baseline numbers
-  - §6 queue row -> delivered
-  - any design_*.md whose described behaviour changed
-  - ongoing_errors.md §2 if you measured a parameter
-  - ongoing_errors.md §4 if a selection was consumed
+**A guard that has never failed has not been tested, and a guard that fires in only one direction has not been shown to discriminate.** Count corrections and rejections by direction. An *n*:0 ratio is a finding.
 
-STEP 8 — COMMIT
-  One item, one commit. Body contains:
-    - why, in prose
-    - the falsification: what broke, that it went RED, revert, GREEN
-    - deviations, with reasons
-    - measured numbers
+**Record what a parameter was measured over.** `T_dedup = 0.86` cites similarities between strings that three later items removed from the database. A threshold outlives its distribution and nothing notices.
 
-STEP 9 — LOOP
-  Return to LOOP 0. Re-detect state; never pick the next item from memory.
+**A stage not named in the instruction does not run.** "Re-ingest" is not "re-extract"; "fix the validator" is not "re-score the rows it already scored". If your item exists to feed a later stage, name that stage's re-run as a step and assert a property of *its* input.
+
+**Verify the anchor chain end to end, not the pointer.** "Is this citation real?" and "does this citation support this claim?" are different questions, and for a long time only the first was asked.
+
+**Prove the threshold is doing the work.** Set it to a value that must fail, watch the assertion go red, restore it. Record both outputs in the commit body. A repair with no falsification is a guess.
+
+**Re-run every gate yourself before trusting §3.** This file has recorded a gate result that did not match reality more than once.
+
+**Report zero with its denominator.** "No tensions found" over an empty candidate set and "no tensions found" over 400 examined pairs look identical in a status table and mean opposite things.
+
+**When you substitute anything for what the item specifies — a different mechanism, a narrower scope, a value the item did not name — say so in the commit body.** Several items here were delivered exactly as written and still wrong; the substitution log is how the next verification pass finds out which.
+
+---
+
+## 8. The loop
+
+Not a routine to execute mechanically. It is the shortest description of what a finished item looks like here; adapt the order to the work.
+
+```
+(1)  READ the item's section and every contract doc it cites, in full.
+(2)  If the item says "determine X first" or "run it before the repair",
+     DO THAT AND RECORD THE OUTPUT before writing the fix.
+(3)  WRITE the assertion marked (c) first. RUN IT. WATCH IT FAIL.
+     Put the failing output in the commit body. If it passes before you
+     have written anything, the assertion is wrong -- fix it, or say so.
+(4)  IMPLEMENT as specified. RECORD ANY SUBSTITUTION YOU MAKE.
+(5)  VALIDATE step by step, using the per-step checks in the item.
+     Do not batch them to the end; a step that silently did nothing is
+     cheapest to find immediately after it ran.
+(6)  FALSIFY: remove the fix or neuter the threshold, confirm (c) goes
+     red, restore. Record both outputs.
+(7)  READ THE OUTPUT a person would see. Not the counts -- the rows.
+(8)  ENUMERATE every caller of anything you changed and run them.
+(9)  RE-RUN the full battery from section 2, exit codes bare.
+(10) COMMIT: one item, the WHY in the body, with the numbers you measured,
+     the falsification results, and any substitution. Update every doc the
+     change invalidates in the same commit.
 ```
 
 ---
 
-## 8. LOOP 2 — FALSIFY
+## 9. When the situation is unusual
 
-```text
-LOOP 2 — FALSIFY <ITEM>
+**A gate §3 records as passing comes back red.** It outranks the queue. Find the commit that turned it, then decide: the code is wrong (fix the code), the test is wrong (fix the test **and say so explicitly in the commit body** — this is the only circumstance in which a test may change to reach green), or §3 is stale (correct §3 and note the drift). **Never weaken an assertion, delete a test, or narrow a scope to reach green.** If that looks like the answer, it is a question for Louis.
 
-1. Take the assertion from LOOP 1 STEP 1(c).
-2. Break the CODE UNDER IT — not the assertion.
-     deleting the assertion proves nothing
-     deleting the behaviour it guards proves everything
-3. Run it. It MUST go RED.
-     Still GREEN -> the assertion is decorative. Rewrite it, restart LOOP 2.
-     This is a finding: you found a test that cannot fail.
-4. Revert. Run again. MUST go GREEN.
-5. Record BOTH outcomes verbatim in the commit body:
-     "Falsification: <break> -> <assertion> FAILED as expected.
-      Reverted -> PASSED. Both outcomes observed."
-6. Return to LOOP 1 STEP 6.
-```
+**The tree is dirty.** Someone stopped mid-item. Read the diff, decide whether it is worth finishing or reverting, and say which you did. Do not build on top of it.
+
+**The item is too big for one commit.** Split it into sub-items that each land with a coherent message and their own validation, and tick them in the same commit. Say in the commit body which sub-item this is and what remains.
+
+**The item needs a decision that is Louis's.** File it at the **top** of `ongoing_errors.md` §1 with what is blocked, what you already tried, 2–3 options with honest pros *and* cons, a marked recommendation, and a final `Your selection: _____` line. **Never fill that line in.** Then set `Blocked` in §6 and stop; do not guess and proceed.
+
+**The item's spec looks wrong.** Say so, in the commit body or as a new issue, and record what you did instead. **Several items here were implemented exactly as written and were still wrong, because the spec was.** Being right about that is worth more than being compliant.
 
 ---
 
-## 9. LOOP 3 — ESCALATE
-
-```text
-LOOP 3 — ESCALATE
-
-Trigger on ANY of:
-  - a specified value is impossible and intent cannot be preserved
-  - the design as written cannot work
-  - a credential, gated download, or human judgement is required
-  - you cannot name an assertion that proves the thing works
-  - a needed selection is still "Your selection: _____"
-
-Do:
-  1. STOP. No more code on this item.
-  2. Open docs/ongoing_errors.md section 1.
-  3. INSERT a new numbered issue at the TOP of section 1 — newest first, so
-     the user never scrolls to find what is blocking. Use the next free
-     number (highest existing + 1; numbers stay ascending, ORDER is
-     descending). Include:
-       - what is blocked, concretely, and what you already tried
-       - 2-3 options, each with honest pros AND cons
-       - a recommendation, marked as such
-       - final line, exactly: "Your selection: _____"
-  4. NEVER fill in that line.
-  5. Update section 6: set blocked_on for affected rows.
-  5b. When that issue is later SELECTED: move it OUT of ongoing_errors
-      section 1. Write its consequence into the design doc that owns it,
-      add one row to section 4's decision record naming that doc, and
-      delete the option text. That file is a queue, not an archive —
-      git history keeps the reasoning.
-  6. Return to LOOP 0. Nothing unblocked -> LOOP 4.
-```
-
----
-
-## 10. LOOP 4 — CLOSE OUT
-
-```text
-LOOP 4 — CLOSE OUT
-
-Reached only when no row in section 6 is both undelivered and unblocked.
-
-1. Run section 2. Record numbers in section 3.
-2. Confirm STUB_REGISTRY is EMPTY.
-3. Report:
-     - what landed, with measured numbers
-     - what is blocked, and on which issue
-     - any issue filed via LOOP 3
-4. STOP. Do not invent work.
-
-Legitimate resume triggers only:
-     - a "Your selection:" line gets filled
-     - a gate in section 3 goes red
-     - the user asks for something specific
-```
-
----
-
-## 11. LOOP 5 — DECOMPOSE
-
-Phase items (P3–P8) are subsystems, not commits. This loop turns one into a queue.
-
-```text
-LOOP 5 — DECOMPOSE <ITEM>
-
-1. Read <ITEM>'s section and its contract doc in full.
-2. Split into sub-items that each satisfy ALL of:
-     - lands as ONE commit with one coherent message
-     - has its own falsifiable assertion
-     - leaves the repo GREEN when committed alone
-   If a split leaves gates red, it is not a valid split. Merge it back.
-3. Order them so each builds only on what is already committed.
-4. Write the list into this guide under <ITEM>'s section as a checklist:
-       <ITEM>.1  <name>   [ ]
-       <ITEM>.2  <name>   [ ]
-   Commit that plan BY ITSELF, before writing code. The plan is the
-   contract for the rest of the item and must survive a context reset.
-5. Set ITEM = the first unchecked sub-item. Enter LOOP 1.
-6. After each sub-item commits, tick its box in the same commit and
-   return to LOOP 0.
-
-Rule of thumb: a sub-item is too big if its commit message needs more
-than one "and". Three to six sub-items per phase is typical.
-```
-
----
-
-## 12. LOOP 6 — RESUME
-
-A long build will outlive a context window. This is how the next agent picks up without redoing or half-doing work.
-
-```text
-LOOP 6 — RESUME
-
-Entered when LOOP 0 finds a dirty working tree.
-
-1. git diff --stat  and  git status --porcelain
-2. git log --oneline -3   ->  which item was in flight?
-3. Find that item's section. Find its sub-item checklist (LOOP 5 STEP 4)
-   if it has one. The last ticked box tells you where work stopped.
-4. Run the gates (section 2). Classify:
-
-   GREEN and the change looks complete
-     -> finish LOOP 1 from STEP 5 (FALSIFY). Do NOT skip falsification
-        just because someone else wrote the code.
-
-   GREEN but the change looks partial
-     -> finish it. Re-derive intent from the item's spec, NOT from the
-        half-written code. Partial code is a guess; the spec is the contract.
-
-   RED
-     -> enter LOOP 7 (REPAIR).
-
-   Cannot tell what was intended
-     -> git stash the changes, re-read the item spec, restart LOOP 1
-        from STEP 1. Discarding half an unclear implementation costs less
-        than shipping a misunderstanding.
-
-5. Never commit someone else's uncommitted work without running its
-   falsification yourself. An unfalsified guard is not a guard.
-```
-
----
-
-## 13. LOOP 7 — REPAIR
-
-```text
-LOOP 7 — REPAIR
-
-Entered when a gate that section 3 records PASS comes back RED.
-
-1. STOP all feature work. A red gate outranks the queue.
-2. Identify the gate and read its failure output in full. Do not skim.
-3. git log --oneline -5 and bisect if needed: which commit turned it red?
-4. Classify:
-     the code is wrong    -> fix the code
-     the test is wrong    -> fix the test, and say so explicitly in the
-                             commit body. This is the ONLY circumstance in
-                             which a test may change to reach green.
-     the baseline is stale -> section 3 was never re-measured. Correct
-                             section 3, and note the drift.
-5. NEVER weaken an assertion, delete a test, or narrow a scope to reach
-   green. If that seems like the answer, it is a LOOP 3 escalation.
-6. Falsify the fix (LOOP 2). A repair with no falsification is a guess.
-7. Commit the repair ALONE, then return to LOOP 0.
-```
-
----
-
-## 14. Delivered — do NOT rework
+## 10. Delivered — do NOT rework
 
 **V0–V6:** fabricated-throughput removal; stub registry + CI guard; fixture/corpus split with metric floor and parameter-readiness report; real `nomic-embed-text-v1.5` embeddings with task prefixes; real `faster-whisper` dual-pass transcription with audio disposal; real `pyannote.audio` diarization; real Gemma runtime on MLX. `STUB_REGISTRY` is empty.
 
@@ -507,7 +322,7 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 15. F0 — Repair the behaviour fixture set
+## 11. F0 — Repair the behaviour fixture set
 
 **User impact:** the tests that are supposed to prove contradiction detection works become capable of proving it.
 
@@ -546,7 +361,7 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 16. S0 — `SourceSubjectRole` migration · *Issue 022 = A*
+## 12. S0 — `SourceSubjectRole` migration · *Issue 022 = A*
 
 **User impact:** the system can hold the truth that one recording means different things to different people in it — which is what a four-host podcast with an occasional guest actually is.
 
@@ -578,9 +393,9 @@ Entered when a gate that section 3 records PASS comes back RED.
 
 ---
 
-## 16b. R0 — Repair the ingest; add the productivity guard · **SUPERSEDED → R1**
+## 12b. R0 — Repair the ingest; add the productivity guard · **SUPERSEDED → R1**
 
-> **Do not open this as a work item.** The empty-source bug is fixed and audio deletion is gated; both hold. The coverage half was never implemented and is tracked in **§19 (R1)**, which also names the root cause. This section is kept for the reasoning only.
+> **Do not open this as a work item.** The empty-source bug is fixed and audio deletion is gated; both hold. The coverage half was never implemented and is tracked in **§15 (R1)**, which also names the root cause. This section is kept for the reasoning only.
 
 **User impact:** the corpus stops containing three episodes' worth of nothing, and the pipeline stops reporting success when it produced no output.
 
@@ -622,7 +437,7 @@ The consequence for everything above it: all 15 claims share one date and one st
 
 ---
 
-## 17. X0 — Quarantine the fabricated tension; fix segmentation
+## 13. X0 — Quarantine the fabricated tension; fix segmentation
 
 **User impact:** the database stops containing a false accusation, and the pipeline stops manufacturing them.
 
@@ -657,9 +472,9 @@ Neither quote is about licensing. The extractor invented the proposition, two in
 
 ---
 
-## 17b. G0 — Repair the `mypy` gate · *LOOP 7*
+## 13b. G0 — Repair the `mypy` gate · *red-gate repair*
 
-**This is a LOOP 7 repair, not a LOOP 1 item.** A red gate outranks the queue; nothing below it starts until this is green.
+**This is a red-gate repair (§9), not a queue item.** A red gate outranks the queue; nothing below it starts until this is green.
 
 **Gap — measured September 4, 2026 at `5f881ea`.** §3 records `mypy --strict` PASS on 74 files. It is now **RED: 11 errors across 78 files**, all in `tests/test_segmentation_x0.py`, all from one line. It arrived with X0, at HEAD.
 
@@ -687,7 +502,7 @@ Then add the assertion the narrowing makes necessary: `assert len(claims) == len
 
 ---
 
-## 17c. M0 — `source_count` is a constant wearing a measurement's name
+## 13c. M0 — `source_count` is a constant wearing a measurement's name
 
 **User impact:** the sufficiency gate stops reporting `1` for every subject regardless of how many sources they were read from.
 
@@ -736,7 +551,7 @@ The general form is worth more than the instance: **`hasattr` on a dataclass fie
 
 ---
 
-## 17d. E0 — The integrity pass must check the corpus, not a union with fixtures
+## 13d. E0 — The integrity pass must check the corpus, not a union with fixtures
 
 **User impact:** the pass that certifies evidence integrity starts telling you something about your data.
 
@@ -768,7 +583,7 @@ This is trap 21 in a new location: green over data that is not the product's.
 
 ---
 
-## 17e. D0 — Proposition table repair · *Issue 027 = A*
+## 13e. D0 — Proposition table repair · *Issue 027 = A*
 
 **User impact:** `/resolve` stops returning propositions nobody ever said, and the entailment guard X1 depends on becomes buildable.
 
@@ -845,7 +660,7 @@ Backfill `proposition_embeddings` for all propositions with ≥1 live claim — 
 
 **Do not inherit an embedding across a merge.** In step 2.3 the surviving row's text differs from the absorbed row's by a period; the vector was computed on the absorbed text. Re-embed from the surviving row's own `canonical_text`. **An embedding must correspond to the exact text of the row it hangs on**, or the provenance chain quietly stops being true — and X1 is about to make decisions from these vectors.
 
-Leave orphan embeddings in place. Louis selected A: nothing is purged. *(Pruning `proposition_embeddings` down to the readable set is a B-time cleanup; noted in §28 so it is not lost.)*
+Leave orphan embeddings in place. Louis selected A: nothing is purged. *(Pruning `proposition_embeddings` down to the readable set is a B-time cleanup; noted in §24 so it is not lost.)*
 
 **5. Make the read path filter structurally, not on the counter.**
 
@@ -883,9 +698,9 @@ Also assert `claim_count` matches the real count — as a **check**, never as a 
 
 ---
 
-## 17f. E1 — The assessment layer is unguarded · **DELIVERED IN HALF**
+## 13f. E1 — The assessment layer is unguarded · **DELIVERED IN HALF**
 
-> **Verified September 5, 2026.** The referential half is real: `verify_assessment_subjects_exist` is present and wired (13 checks), the `subj_nonexistent_subject` row is gone, a missing `passed` key now FAILs, and tests open the corpus `read_only=True`. **The verdict half is not.** `engine.py:142` sets `passed = any_scored`, computed from the scores the check exists to police, so `verify_no_suppressed_scores` is now tautological. **See §17i (E2).** Kept below for the reasoning.
+> **Verified September 5, 2026.** The referential half is real: `verify_assessment_subjects_exist` is present and wired (13 checks), the `subj_nonexistent_subject` row is gone, a missing `passed` key now FAILs, and tests open the corpus `read_only=True`. **The verdict half is not.** `engine.py:142` sets `passed = any_scored`, computed from the scores the check exists to police, so `verify_no_suppressed_scores` is now tautological. **See §13i (E2).** Kept below for the reasoning.
 
 **User impact:** the check that exists to stop a score being published over insufficient evidence becomes able to fire at all.
 
@@ -928,9 +743,9 @@ This is trap 29 and trap 31 on the same line: a default that manufactures the sa
 
 ---
 
-## 17g. N0 — Extract over the full corpus · **DELIVERED · (c) NOT SATISFIED**
+## 13g. N0 — Extract over the full corpus · **DELIVERED · (c) NOT SATISFIED**
 
-> **Verified September 5, 2026.** The extraction is real and the numbers hold: 1,501 claims across all four episodes, rejection counters genuinely non-zero, parameter 026 re-measured over n=1,501. **But this item's (c) required a detected tension *or* a report of the candidate pairs considered and why each was rejected, and neither exists** — because proposition dedup never ran, so the candidate set is empty by construction (§17j, P0). The work was done correctly against a prerequisite nobody had identified. Kept below for the reasoning.
+> **Verified September 5, 2026.** The extraction is real and the numbers hold: 1,501 claims across all four episodes, rejection counters genuinely non-zero, parameter 026 re-measured over n=1,501. **But this item's (c) required a detected tension *or* a report of the candidate pairs considered and why each was rejected, and neither exists** — because proposition dedup never ran, so the candidate set is empty by construction (§13j, P0). The work was done correctly against a prerequisite nobody had identified. Kept below for the reasoning.
 
 **User impact:** the detectors finally meet material capable of contradicting itself, and the entailment guard runs for the first time over output it did not hand-pick.
 
@@ -949,13 +764,13 @@ This is trap 29 and trap 31 on the same line: a default that manufactures the sa
 
 The corpus grew **11.7×** and the claim set did not move. `All-In E245` carries **1015 utterances and zero claims.** The 9 claims are still exactly the ones X0 hand-verified over the truncated window, so every conclusion trap 26 warns about still holds: the detectors report zero over a corpus that cannot yet contain a reversal, and **X1 — now wired, correct, and shipped — has never once run over extraction output it did not inherit.** Its rejection counters are all zero.
 
-**This is a spec defect, not an agent error.** §19 said *"re-ingest all four at full length"* and never said *re-extract*. The agent implemented exactly what was written. Recorded in §31.
+**This is a spec defect, not an agent error.** §15 said *"re-ingest all four at full length"* and never said *re-extract*. The agent implemented exactly what was written. Recorded in §27.
 
 **Implementation**
 
 1. **Run extraction across all 4219 utterances.** Bump `extraction_version`: the prompt is unchanged but the corpus is not, and `claim_id` hashes the version, so old and new claims coexist and stay auditable instead of colliding (`design_data_layer.md` §3).
 2. **X1 stays in the chain.** `validate_extracted_claim` runs entailment at position 2, immediately after quote resolution. Note that passing `embedder=None` does **not** skip it — `validators.py:128` loads a real embedder — so there is no accidental-bypass path to worry about, and no reason to add one.
-3. **Record the rejection counters. This is the point of the run.** Report `VALIDATOR_REJECTION_COUNTERS` per reason — `quote_too_short`, `quote_does_not_support_proposition`, `entailment_ambiguous` — as counts and as a rate over claims attempted. §18 step 6 makes this the early-warning signal for prompt and model regression; this run establishes its baseline.
+3. **Record the rejection counters. This is the point of the run.** Report `VALIDATOR_REJECTION_COUNTERS` per reason — `quote_too_short`, `quote_does_not_support_proposition`, `entailment_ambiguous` — as counts and as a rate over claims attempted. §14 step 6 makes this the early-warning signal for prompt and model regression; this run establishes its baseline.
 4. **Measure parameter 026 properly, for the first time.** The shipped values were fitted to 9 claims and 2 reconstructed fabrications — far below the 5-case-per-class floor (Issue 018 = B), and correctly labelled provisional at `validators.py:17`. They were measured honestly, and the recorded numbers show how little room they have:
 
    | threshold | value | nearest real observation | margin |
@@ -981,7 +796,7 @@ The corpus grew **11.7×** and the claim set did not move. `All-In E245` carries
 
 ---
 
-## 17h. G1 — Two `role_id` schemes, and a directory outside every gate · **DELIVERED · VERIFIED**
+## 13h. G1 — Two `role_id` schemes, and a directory outside every gate · **DELIVERED · VERIFIED**
 
 > **Verified September 5, 2026.** `ruff` and `mypy` both clean over `scripts/` (6 files). Hand-built `role_id` strings gone from both scripts; `source_roles` is 16 rows for 16 pairs; `verify_canonical_ids` now examines 1,445 entities including all 16 roles. Kept below for the reasoning.
 
@@ -1026,7 +841,7 @@ The count also tells a story worth reading: `source_roles` was 32, R1's re-inges
 
 ---
 
-## 17i. E2 — The sufficiency verdict is circular, so the check still cannot fail · **DELIVERED · VERIFIED**
+## 13i. E2 — The sufficiency verdict is circular, so the check still cannot fail · **DELIVERED · VERIFIED**
 
 > **Verified September 5, 2026.** `engine.py:126` sets `"passed": is_sufficient`, computed from `MIN_CLAIMS`/`MIN_SOURCES` against the counts **before** any axis is scored. The verdict no longer depends on the scores it gates; the circularity is gone. Kept below for the reasoning.
 
@@ -1075,11 +890,11 @@ E1 did not fail to change anything — it changed the shape and the defect survi
 
 ---
 
-## 17j. P0 — Proposition deduplication never runs, so no contradiction can be detected · **DELIVERED · PRODUCED TWO FABRICATIONS**
+## 13j. P0 — Proposition deduplication never runs, so no contradiction can be detected · **DELIVERED · PRODUCED TWO FABRICATIONS**
 
-> **Verified September 5, 2026.** The mechanism works: dedup is wired into `ClaimExtractionPipeline`, 1,503 propositions merged to 1,429, the histogram has a real tail (one proposition with 8 claims, four with 4, six with 3, 45 with 2), 12 opposing-stance candidate pairs exist where there were none, and the content merges are largely sound — *"China has made a significant push towards open source software"* absorbed exactly the restatements §17j predicted it should.
+> **Verified September 5, 2026.** The mechanism works: dedup is wired into `ClaimExtractionPipeline`, 1,503 propositions merged to 1,429, the histogram has a real tail (one proposition with 8 claims, four with 4, six with 3, 45 with 2), 12 opposing-stance candidate pairs exist where there were none, and the content merges are largely sound — *"China has made a significant push towards open source software"* absorbed exactly the restatements §13j predicted it should.
 >
-> **But the two tensions it published are both fabrications** (§17k), and the merge silently voided X1's entailment guarantee for every re-pointed claim (§17l). The root cause is upstream of this item: 7% of propositions are indexical templates that no threshold can separate (§17m). **P0 did what it was asked. What it was asked was not sufficient.** Kept below for the reasoning.
+> **But the two tensions it published are both fabrications** (§13k), and the merge silently voided X1's entailment guarantee for every re-pointed claim (§13l). The root cause is upstream of this item: 7% of propositions are indexical templates that no threshold can separate (§13m). **P0 did what it was asked. What it was asked was not sufficient.** Kept below for the reasoning.
 
 **User impact:** the product can finally find the thing it exists to find. Until this lands it cannot, at any corpus size.
 
@@ -1122,7 +937,7 @@ This is parameter 008's stated bias arriving exactly as written: **"Over-splitti
 
 ---
 
-## 17k. Q0 — Quarantine both published tensions · **DO THIS FIRST**
+## 13k. Q0 — Quarantine both published tensions · **DO THIS FIRST**
 
 **User impact:** the system stops asserting two things about two real people that are not true.
 
@@ -1155,7 +970,7 @@ Sacks's pair contains **no assertion about creating anything, in either quote.**
 
 ---
 
-## 17l. W1 — Entailment does not survive re-pointing
+## 13l. W1 — Entailment does not survive re-pointing
 
 **User impact:** a claim can no longer end up attached to a proposition its quote was never checked against — which is how both fabrications in Q0 were built.
 
@@ -1191,7 +1006,7 @@ Each passed validator 6 honestly, against text it no longer carries. **74 propos
 
 ---
 
-## 17m. W0 — Propositions must be self-contained, not indexical
+## 13m. W0 — Propositions must be self-contained, not indexical
 
 **User impact:** propositions become things that can be true or false about the world, rather than templates that collapse into each other.
 
@@ -1227,7 +1042,7 @@ The speaker believes they created the subject matter.   <- 8 claims
 2. **Add a validator that rejects indexical propositions** — before entailment, since it is cheap and deterministic. A regex over a small banned-opener list (`the speaker`, `the subject`, `the described`) plus a check for a sentence-initial unbound pronoun catches the observed 100%. Rejection reason `proposition_not_self_contained`. **Add a fixture case for it**, since a validator with no failing fixture is untested.
 3. **Repair the existing 126.** Re-extract the affected claims under the fixed prompt. Do **not** hand-edit proposition text: the id is derived from it, and rewriting text without re-deriving ids and re-validating entailment is how W1's defect was created.
 4. **Re-measure parameter 008 afterwards.** The current value was fitted to a population 7% of which were attractors; the distribution it was measured against was not the distribution it will run against. Re-derive, record with n, keep provisional.
-5. **Decide whether stance-opposition alone should ever publish a tension.** Both Q0 fabrications had `severity 1.0` from `stance='support'` vs `stance='oppose'` on a shared proposition. If the proposition is weak, opposing stances are noise. Consider requiring both claims to independently clear entailment against the shared proposition **and** the proposition to be non-indexical before a tension may publish. If that is a design change rather than a fix, escalate it via LOOP 3 rather than deciding it here.
+5. **Decide whether stance-opposition alone should ever publish a tension.** Both Q0 fabrications had `severity 1.0` from `stance='support'` vs `stance='oppose'` on a shared proposition. If the proposition is weak, opposing stances are noise. Consider requiring both claims to independently clear entailment against the shared proposition **and** the proposition to be non-indexical before a tension may publish. If that is a design change rather than a fix, it is Louis's call — file it per §9 rather than deciding it here.
 
 **Validation**
 - **(c)** — after repair, **zero propositions match the indexical patterns**, and re-running tension detection over the repaired corpus produces **either a tension whose two quotes a reader agrees are about the same proposition, or an explicit report of the candidate pairs considered and why each was rejected.** *Print the pairs. A count alone is what let P0 look successful.*
@@ -1242,7 +1057,7 @@ The speaker believes they created the subject matter.   <- 8 claims
 
 ---
 
-## 17n. S1 — Nothing validates `stance` or `is_own_assertion`
+## 13n. S1 — Nothing validates `stance` or `is_own_assertion`
 
 **User impact:** the two fields the contradiction detector actually keys on stop being the only unchecked things in the claim.
 
@@ -1269,7 +1084,7 @@ Both pairs would render as a person contradicting themselves. Both are the perso
 **Implementation**
 1. **Validator 7 — stance direction.** After entailment establishes *aboutness*, check *direction*. Entailment already computes an embedding for the quote and the proposition; the cheap version compares the quote against the proposition and against its negated form and requires the labelled stance to be the nearer. **Whatever mechanism you choose, it must be able to reject** — a stance validator that never fires is the fourth guard this project has shipped unable to fail.
 2. **Raise I7's sensitivity, and measure it.** Interrogatives, conditionals introduced by *"you can say"* / *"they'd argue"* / *"the argument is"*, and second-person framings (*"you're saying…"*) are reported speech or rhetorical setup, not own assertions. `design_claim_extraction.md` §3 already specifies this guard; it is firing at 0.7% and the observed misses are all in this shape.
-3. **Report the exclusion rate as a first-class number**, next to the validator rejection counters. It is the same early-warning signal §18 step 6 established for entailment: a rate that collapses means a guard stopped working, not that the corpus got cleaner.
+3. **Report the exclusion rate as a first-class number**, next to the validator rejection counters. It is the same early-warning signal §14 step 6 established for entailment: a rate that collapses means a guard stopped working, not that the corpus got cleaner.
 4. **Fixtures for both**, in `fixtures/behaviour/`: the Verizon analogy, the Chamath question, and the two same-stance-labelled-differently pairs. A validator with no failing fixture is untested (trap 22).
 
 **Validation**
@@ -1284,7 +1099,7 @@ Both pairs would render as a person contradicting themselves. Both are the perso
 
 ---
 
-## 17o. T1 — A reversal needs time between its halves
+## 13o. T1 — A reversal needs time between its halves
 
 **User impact:** the system stops calling a single continuous argument a change of mind.
 
@@ -1319,7 +1134,7 @@ Two claims seconds apart in one conversation are not a reversal; they are almost
 
 ---
 
-## 17p. W2 — Self-containment, the rest of the pronouns
+## 13p. W2 — Self-containment, the rest of the pronouns
 
 **User impact:** finishes W0. A proposition stops depending on a pronoun whose referent is in an utterance the reader cannot see.
 
@@ -1336,7 +1151,7 @@ Two claims seconds apart in one conversation are not a reversal; they are almost
 
 Roughly **130 propositions (10%)** still cannot be resolved standing alone. Two of the five false candidate pairs sit on them — *"We should do the same thing on AI"* (same as **what**?) and *"The substance of what **he's** saying is more accurate than **his** overall stance"* (**who**?).
 
-**The lesson is about how the item was written, not about the agent.** §17m listed the three observed patterns and the implementation copied the list. **A validator built from a list of observed failures catches the failures you observed.** Write it against the property — *resolvable without external context* — and let the list be examples.
+**The lesson is about how the item was written, not about the agent.** §13m listed the three observed patterns and the implementation copied the list. **A validator built from a list of observed failures catches the failures you observed.** Write it against the property — *resolvable without external context* — and let the list be examples.
 
 **Implementation**
 1. Extend the self-containment validator: reject a proposition containing any pronoun or deictic without an antecedent **inside the proposition itself** — third-person pronouns, sentence-initial `It`/`This`/`That`, and comparatives with no relatum (`the same`, `such`, `the other`). Keep `proposition_not_self_contained` as the reason so the class stays greppable.
@@ -1355,13 +1170,13 @@ Roughly **130 propositions (10%)** still cannot be resolved standing alone. Two 
 **Blast radius.** `worker/extract/validators.py`, `worker/extract/runtime.py` (prompt), `fixtures/behaviour/`, the corpus (re-extraction), `docs/design_claim_extraction.md` §2, §3, §6.
 
 ---
-## 17q. U1 — The review site, served live from DuckDB · *Issue 028, amended by Issue 033*
+## 13q. U1 — The review site, served live from DuckDB · *Issue 028, amended by Issue 033*
 
 **User impact:** you can read what the system found, by episode and by person, without a build step and without 2,593 files on disk.
 
 **This item was rewritten on September 5, 2026.** An earlier attempt built the static export Issue 028 originally specified. It produced **2,593 HTML files and 27 MB for 1,288 claims** — one page per claim, plus per-person and per-episode duplicates of the same rows. That output has been deleted. **Issue 033 replaces the static export with a local server that queries DuckDB per request.**
 
-**Start here — the tree is dirty and two gates are red.** `scripts/export_site.py` and `tests/test_review_site_u1.py` are uncommitted, and between them hold the one `ruff` F541 and the two `mypy` errors currently failing §2's block. **Both files are obsolete under Issue 033. Deleting them is the LOOP 7 repair** — do it in the first commit of this item, before writing anything new. Also revert the uncommitted change to `scripts/build_tokens.py` unless you can state why the new architecture needs it.
+**Start here — the tree is dirty and two gates are red.** `scripts/export_site.py` and `tests/test_review_site_u1.py` are uncommitted, and between them hold the one `ruff` F541 and the two `mypy` errors currently failing §2's block. **Both files are obsolete under Issue 033. Deleting them is the red-gate repair (§9)** — do it in the first commit of this item, before writing anything new. Also revert the uncommitted change to `scripts/build_tokens.py` unless you can state why the new architecture needs it.
 
 **Contract:** `design_ui_direction.md` §2 (timeline), §3 (citation-first, **I3**), §4 (rendering null), §5 (tension card), §6b (the review site) · `design_local_api_and_clients.md` §2 (the four security controls) · Issue 014 (no in-app playback) · Issues 028 and 033.
 
@@ -1428,7 +1243,7 @@ GET /person/{subject_id}  that person across all episodes
 **Blast radius.** `worker/api/server.py`, templates under `worker/api/`, `tests/`, deletion of `scripts/export_site.py` and `tests/test_review_site_u1.py`, `docs/design_ui_direction.md` §6b, `docs/design_local_api_and_clients.md` §3 (new routes), `docs/ongoing_errors.md` §4 (Issue 033), §3, §6.
 
 ---
-## 17r. A0 — The site's read-only guarantee has a silent escape hatch · DELIVERED · VERIFIED
+## 13r. A0 — The site's read-only guarantee has a silent escape hatch · DELIVERED · VERIFIED
 
 **User impact:** the review site becomes incapable of writing to the corpus in the configuration you actually run it in, not just the one the test uses.
 
@@ -1459,7 +1274,7 @@ This is the project's signature failure in a new place: a guard exercised only w
 
 **Implementation**
 1. **Delete the fallback.** If a read-only connection cannot be opened, **raise** with a message naming the cause. A review site that cannot guarantee it is a reader should refuse to start, not quietly become a writer.
-2. If sharing one process with a writing worker is a configuration you want to support, support it deliberately — open the site's connection against a **snapshot copy**, or run the site in its own process. Both are honest; the cursor fallback is not. **This may be a real design question rather than a fix; if so it is a LOOP 3 escalation, not a decision to make inside this item.**
+2. If sharing one process with a writing worker is a configuration you want to support, support it deliberately — open the site's connection against a **snapshot copy**, or run the site in its own process. Both are honest; the cursor fallback is not. **This may be a real design question rather than a fix; if so file it for Louis per §9, rather than deciding it inside this item.**
 3. Keep the first branch as-is. It is correct.
 
 **Validation**
@@ -1473,7 +1288,7 @@ This is the project's signature failure in a new place: a guard exercised only w
 
 ---
 
-## 17s. C1 — Expand the corpus chronologically · *Issue 030 = A*
+## 13s. C1 — Expand the corpus chronologically · *Issue 030 = A*
 
 **User impact:** the corpus gets enough overlap for a reversal to be possible at all. Today it is not.
 
@@ -1502,9 +1317,9 @@ This is the project's signature failure in a new place: a guard exercised only w
 **Blast radius.** `scripts/populate_corpus.py`, the corpus (20 new sources, ~80 role rows, ~6,000 new claims), `docs/design_source_acquisition.md` §2, `docs/ongoing_errors.md` §2 (008, 026, 032 re-measurable at n≫), §3, §6, and **P4/P5/P6 — which this is finally the corpus for.**
 
 ---
-## 17t. D3 — Validator 7 has only ever corrected in one direction · **DELIVERED · ONE DIRECTION WRONG**
+## 13t. D3 — Validator 7 has only ever corrected in one direction · **DELIVERED · ONE DIRECTION WRONG**
 
-> **Verified September 6, 2026 by running the validator over the live corpus**, which its own tests do not do. It is genuinely bidirectional — 25 `support`→`oppose` and 12 `oppose`→`support` over a random 300-claim sample — and the root-cause diagnosis was correct. `hedge` is properly retired. **But all four `support`→`oppose` flips I read are false, and it has never been run over the corpus.** See §17w (D4). Kept below for the reasoning.
+> **Verified September 6, 2026 by running the validator over the live corpus**, which its own tests do not do. It is genuinely bidirectional — 25 `support`→`oppose` and 12 `oppose`→`support` over a random 300-claim sample — and the root-cause diagnosis was correct. `hedge` is properly retired. **But all four `support`→`oppose` flips I read are false, and it has never been run over the corpus.** See §13w (D4). Kept below for the reasoning.
 
 **User impact:** `oppose` stops quietly becoming `support`, which is the difference between a corpus that can contain a reversal and one that cannot.
 
@@ -1548,7 +1363,7 @@ This does not mean the nine corrections were wrong — I have not read them. It 
 
 ---
 
-## 17u. D1 — Propositions drifted back into full clauses, and that is why nothing merges
+## 13u. D1 — Propositions drifted back into full clauses, and that is why nothing merges
 
 **User impact:** two phrasings of the same matter start resolving to the same proposition, which is the precondition for finding a contradiction at all.
 
@@ -1570,12 +1385,49 @@ This does not mean the nine corrections were wrong — I have not read them. It 
 
 **A six-fold corpus changed the merge rate by 0.006.** Scaling did not fix overlap because overlap was never limited by corpus size — it is limited by propositions being too specific to recur. Of the 63 propositions that do span episodes, only 9 carry more than one stance, and none is a cross-source `support`↔`oppose` pair.
 
-**Implementation**
-1. **Restore the canonical form in the prompt**, with §2's table as few-shot examples. A proposition is the **matter at issue**: a noun phrase where that reads naturally, tenseless, actor stripped, **polarity stripped in both directions**.
-2. **Extend the polarity validator to positive polarity.** It currently catches only negation. Evaluative and modal constructions — `should`, `must`, `is better/cheaper/faster than`, `is favored to`, `will win` — carry a position and belong in `stance`, not in the proposition text. Reason `proposition_carries_polarity`, the existing string.
-3. **Add a form check:** reject a proposition that is a full clause where a matter-at-issue phrase is available. This is harder than a regex and may need the extractor to be asked twice; **if a deterministic check is not achievable, say so and rely on the prompt plus the polarity check rather than shipping a validator that cannot fail.**
-4. **Re-extract.** Proposition text changes wholesale, so ids change, and `claim_id` hashes `proposition_id` — this is a full re-derivation, not an edit. **Do not hand-edit proposition text** (trap: W1's defect was created exactly that way).
-5. Run D3 first if it is not already done — its stance corrections apply during this re-extraction rather than after it.
+**Implementation — each step carries its own check. Run the check before starting the next step.**
+
+**Step 0 — Record the baseline you must beat.** Before changing anything, run and paste into the commit body:
+
+```sql
+SELECT count(*) FROM propositions;                                   -- expect 3477
+SELECT count(*) FROM claims;                                         -- expect 3669
+-- singleton rate
+SELECT count(*) FROM (SELECT proposition_id FROM claims GROUP BY 1 HAVING count(*)=1);  -- expect 3318
+-- full-clause rate: propositions containing a finite verb
+--   regex: \b(is|are|was|were|will|would|can|could|should|has|have|do|does|did)\b
+--   expect 2615 of 3477 = 75.2%
+```
+
+> **Verify:** your numbers match these within a few rows. **If they do not, stop and say so** — the corpus has moved since this item was written and every target below needs recomputing.
+
+**Step 1 — Extend the polarity validator, and watch it go red on today's corpus.** `worker/extract/validators.py` currently rejects only `\b(should not|shouldn't|must not|never|oppose|against|no )\b`. Extend it to positive and modal polarity: bare `should`/`must`/`ought`, comparatives of evaluation (`better|worse|cheaper|faster|stronger than`), and outcome predictions (`is favored to`, `will win`, `will beat`). Keep the existing reason string `proposition_carries_polarity`.
+
+> **Verify (this is a red-first step):** run the extended validator over all 3,477 stored propositions **before touching the prompt**. **It must reject a substantial set**, and *"Forces should be allowed to play out"*, *"democrats are favored to win the house in the upcoming election"* and *"Azure is cheaper than running a database on-premise"* must each be among them. **Record the count and three examples in the commit body.** If it rejects nothing, the patterns are wrong and step 2 will paper over it.
+
+**Step 2 — Extend the same validator to negation inside subordinate clauses.** §2 now says negation is polarity. *"Running a Chinese model does not necessarily mean data goes to China"* and *"The device will not be similar to an iPad"* must be rejected; the current list misses both because the negator is not one of the listed modals.
+
+> **Verify:** those two exact strings are rejected. **This step is also D4's dependency** — it removes one of the two causes of validator 7's false flips — so state in the commit body how many stored propositions carried negation.
+
+**Step 3 — Restore the canonical form in the prompt.** `worker/extract/runtime.py`. A proposition is the **matter at issue**: noun phrase where that reads naturally, tenseless, actor stripped, polarity stripped in both directions. Use §2's table as few-shot examples verbatim — `federal licensing of frontier AI models` is the shape.
+
+> **Verify:** extract from **20 utterances only** and read all 20 propositions by hand. **Do not proceed to the full run until you have.** At least 15 of 20 should be noun phrases; every one must pass the step 1–2 validators. If they are still full clauses, the prompt change did not take, and a 5-hour re-extraction will bake that in.
+
+**Step 4 — Decide the form check honestly.** A deterministic "is this a full clause" test is harder than a regex. **Try it; if you cannot make one that discriminates, say so in the commit body and rely on the prompt plus the polarity validators.** Do not ship a validator that cannot fail — that has happened four times here (§5 traps 29, 36, 38, 52).
+
+> **Verify:** if you ship a form check, it must reject *"Azure is cheaper than running a database on-premise"* and accept *"federal licensing of frontier AI models"*. If you do not ship one, the commit body says why.
+
+**Step 5 — Re-extract the full corpus.** Proposition text changes wholesale, ids change, and `claim_id` hashes `proposition_id`, so this is a full re-derivation. **Do not hand-edit proposition text** — W1's defect was created exactly that way. Bump `prompt_version`; old claims stay auditable.
+
+> **Verify immediately after, before any analysis:** `verify_quotes`, `verify_canonical_ids` and `verify_entailment_holds` all PASS; no source has zero claims; claim count is within ~20% of 3,669. **A large drop means the new validators are rejecting good claims** — investigate before continuing.
+
+**Step 6 — Re-run dedup at the existing `T_dedup = 0.86`.** Do **not** retune it here; that is D2, and changing form and threshold together makes neither measurable.
+
+> **Verify — this is the whole point of the item:** recompute the singleton rate. **It must fall materially below 95%.** Report it beside 95.5%. If it has not moved, the form change did not fix merging and D2 will not save it — stop and report that, which is a legitimate delivery.
+
+**Step 7 — Re-run tension detection and report the denominator.** Pairs examined, pairs rejected, reason for each.
+
+> **Verify:** read every candidate pair the detector would publish, by hand. Not a sample — all of them. This project has published three fabrications, and all three were obvious on sight and invisible in aggregate.
 
 **Validation**
 - **(c)** — **the singleton rate falls materially below 95%**, and **`propositions spanning 2+ episodes` rises well above 1.8% of the table**, over the *same 23 episodes*. *Same corpus, different form: this isolates the change to proposition shape and cannot be satisfied by adding episodes, which is what C1 already proved does not work.*
@@ -1590,7 +1442,7 @@ This does not mean the nine corrections were wrong — I have not read them. It 
 
 ---
 
-## 17v. D2 — Re-measure parameter 008 against a corpus that exists
+## 13v. D2 — Re-measure parameter 008 against a corpus that exists
 
 **Blocked on D1.** Measuring the merge threshold before proposition form is fixed measures the wrong distribution.
 
@@ -1601,10 +1453,15 @@ This does not mean the nine corrections were wrong — I have not read them. It 
 **A threshold measured against a distribution that has been replaced is not a measured threshold.** It is currently merging 4.5% of propositions, which is the observable consequence.
 
 **Implementation**
+**Each step carries its own check. Run the check before starting the next step.**
+
 1. After D1, embed every proposition and **plot the nearest-neighbour similarity distribution.** Choose the threshold where genuine restatements merge and distinct matters do not — §2's bias is **toward merging**, because over-splitting hides every contradiction silently and over-merging produces visible, fixable false positives.
+   > **Verify:** the distribution shows visible structure — a mass of near-duplicates and a mass of unrelated pairs — **before** you pick anything. If it is unimodal there is no threshold to find, and the honest delivery is to report that embedding similarity over proposition text cannot separate restatement from difference at this corpus size. **Paste the decile boundaries into the commit body.**
 2. **Record the value with its n and the date**, and state that it supersedes P0's measurement and why.
+   > **Verify:** `ongoing_errors.md` §2's row for parameter 008 names the corpus it was measured over — claim count, proposition count, prompt version — so the next reader can tell when it has expired. Nobody could do that for `0.86`, which is why it outlived two corpora.
 3. Re-examine whether the ambiguous band earns its cost. Issue 008 concluded it does not, over the old distribution. **That conclusion inherits the old distribution's flaw** and should be re-taken, not assumed.
 4. Re-run tension detection and report the candidate denominator.
+   > **Verify:** read every candidate pair by hand before recording the item delivered. **All three fabrications this project published were obvious on sight and invisible in aggregate.**
 
 **Validation**
 - **(c)** — **at least one proposition carries claims from two different episodes with opposing stances**, i.e. the candidate set is non-empty for the first time — **or** the item reports, with the distribution plot and the pairs it considered, that no threshold in a defensible range produces one. *Both are real results. A number with no denominator is not.*
@@ -1616,7 +1473,7 @@ This does not mean the nine corrections were wrong — I have not read them. It 
 **Blast radius.** `worker/extract/dedup.py`, the corpus (proposition re-resolution), `docs/ongoing_errors.md` §2 (008 superseded), `docs/design_claim_extraction.md`, §3, §6.
 
 ---
-## 17w. D4 — Validator 7 now fires both ways, and its new direction is wrong on live data
+## 13w. D4 — Validator 7 now fires both ways, and its new direction is wrong on live data
 
 **User impact:** stance corrections stop introducing errors at roughly the rate they remove them.
 
@@ -1634,7 +1491,7 @@ unchanged                    : 263
 
 That is a genuinely bidirectional validator, and D3's root-cause diagnosis was correct and honestly reported — `nomic-embed` cannot separate `P` from `¬P` at the ±0.005 the old margin needed, so parameter 031's `delta = 0.05` was unreachable in one direction. `hedge` is also properly retired: the enum is `support|oppose|mixed` and **0 claims** carry `hedge`.
 
-**What is wrong.** I read the flips by hand, as §31 now requires. **All four `support` → `oppose` flips I read are false.** All four are the same mistake — **negation detected without scope**:
+**What is wrong.** I read the flips by hand, as §27 now requires. **All four `support` → `oppose` flips I read are false.** All four are the same mistake — **negation detected without scope**:
 
 | proposition | quote | why the flip is wrong |
 |---|---|---|
@@ -1652,10 +1509,15 @@ The four `oppose` → `support` flips I read all look **correct** — that direc
 **And the reason none of this showed up: the evaluation set could not contain the failure.** D3 built 12 hand-written cases, 6 per class, and scored **6/6 both ways with zero confusion**. A random live sample gives **4/4 wrong** in one direction. The cases were composed to illustrate the rule rather than **drawn from the corpus**, so every one had a negator whose scope was the proposition — the easy shape. **A curated set tests the mechanism you had in mind; only a drawn set tests the one you built** (traps 20 and 22).
 
 **Implementation**
-1. **Rebuild the evaluation set by sampling, not by writing.** Draw ≥ 40 own-assertion claims at random from the live corpus, hand-label each, and keep the sample fixed and versioned. Issue 018 = B's 5-case floor is a floor, not a target, and a curated set does not satisfy it in spirit.
-2. **Report a confusion matrix, not an accuracy.** Four cells, both directions, with the count of live claims each rate implies. The single number this item exists to produce is the **false-flip rate in the `support` → `oppose` direction**, which is currently unmeasured and looks to be near 100% on the sample I read.
+**Each step carries its own check. Run the check before starting the next step.**
+
+1. **Rebuild the evaluation set by sampling, not by writing.** Draw ≥ 40 own-assertion claims at random from the live corpus with a **recorded seed**, hand-label each, and commit the sample as a fixture. Issue 018 = B's 5-case floor is a floor, not a target, and a curated set does not satisfy it in spirit.
+   > **Verify:** the fixture records the seed and the query used to draw it, and **the labels were assigned before running the validator** — otherwise you are labelling to agree with it. State in the commit body how many of the 40 you labelled `oppose`; if that is far from the corpus's 11.9%, the draw is not representative and you should redraw.
+2. **Report a confusion matrix, not an accuracy.** Four cells, both directions, with the count of live claims each rate implies. The single number this item exists to produce is the **false-flip rate in the `support` → `oppose` direction**, currently unmeasured and near 100% on the sample read during verification.
+   > **Verify (red-first):** run the **current, unmodified** validator over the drawn set and record its matrix as the baseline. **You must see the `support`→`oppose` direction fail here.** If it does not, the draw missed the failure mode — redraw, larger, before changing any code.
 3. **Give negation a scope test.** Matching a negator anywhere in the quote is not enough. A dependency parse that checks whether the negation governs the predicate the proposition names is the honest version; a heuristic that at minimum excludes negation of a *different* verb would catch three of the four failures above. **If neither is achievable at acceptable cost, report that and leave stance to the extractor with the validator restricted to the `oppose` → `support` direction it demonstrably gets right** — a validator that runs in one direction knowingly is far better than one that runs in two and is wrong in one.
 4. **Only after the false-flip rate is known and acceptable, re-validate the corpus.** Then say in the commit body how many claims changed in each direction, and re-run tension detection with its denominator.
+   > **Verify:** before running it, **state the number of claims you expect to change in each direction** from the measured rates. Run it. Compare prediction to outcome in the commit body. A prediction that matches is worth more than either number alone; one that does not is a finding.
 5. Do **D1 first** — its polarity fix removes cause (2), and D1's re-extraction will run validator 7 over everything, so shipping a validator with an 8%-of-claims false-flip rate into that run would bake the errors in.
 
 **Validation**
@@ -1669,11 +1531,11 @@ The four `oppose` → `support` flips I read all look **correct** — that direc
 **Blast radius.** `worker/extract/validators.py`, `fixtures/behaviour/stance_validation_eval.json` (rebuilt by sampling), `docs/design_claim_extraction.md` §2, `docs/ongoing_errors.md` §2 (031 re-measured with a confusion matrix), §3, §6.
 
 ---
-## 18. X1 — Entailment validator · *Issue 025 = C*
+## 14. X1 — Entailment validator · *Issue 025 = C*
 
 **User impact:** a quote can no longer carry a claim it does not support. This is the guard that would have stopped the fabricated tension from ever being written.
 
-**BLOCKED on D0 (§17e) — read it before planning.** Step 3 below embeds the proposition, and **no surviving proposition has an embedding**: all 7 rows in `proposition_embeddings` belong to the pre-X0 generation whose claims X0 removed. Both sides of the cosine are missing, so the (c) assertion cannot be reached. **Issue 027 = A** settles how the table is repaired; D0 does it. When D0 lands, the 8 live propositions are embedded with `embed_document` — the same prefix this validator must use — so do not re-embed them here.
+**BLOCKED on D0 (§13e) — read it before planning.** Step 3 below embeds the proposition, and **no surviving proposition has an embedding**: all 7 rows in `proposition_embeddings` belong to the pre-X0 generation whose claims X0 removed. Both sides of the cosine are missing, so the (c) assertion cannot be reached. **Issue 027 = A** settles how the table is repaired; D0 does it. When D0 lands, the 8 live propositions are embedded with `embed_document` — the same prefix this validator must use — so do not re-embed them here.
 
 **Contract:** `design_claim_extraction.md` §8 validator 6 (mechanism, verbatim) · `design_evidence_integrity.md` §2 rule E2b.
 
@@ -1708,7 +1570,7 @@ The four `oppose` → `support` flips I read all look **correct** — that direc
 
 ---
 
-## 19. R1 — Media duration and a real coverage check; fix the truncation · **DELIVERED**
+## 15. R1 — Media duration and a real coverage check; fix the truncation · **DELIVERED**
 
 **User impact:** the system reads whole episodes instead of the first seven minutes, and can tell when it hasn't.
 
@@ -1746,7 +1608,7 @@ which `worker/adapters/podcast.py:111` turns into an HTTP `Range: bytes=0-100000
 
 ---
 
-## 20. C0 — Portability workflow; `mlx-lm` as an optional extra · *Issue 024 = B*
+## 16. C0 — Portability workflow; `mlx-lm` as an optional extra · *Issue 024 = B*
 
 **User impact:** the project can be installed on a machine that is not your Mac — which is what the roadmap's rented-GPU ingest step requires, and what it currently cannot do.
 
@@ -1794,15 +1656,15 @@ So `pip install -e ".[dev]"` fails during resolution on any non-Apple machine �
 
 ---
 
-## 21. I0 — First real ingest · **SUPERSEDED → R1**
+## 17. I0 — First real ingest · **SUPERSEDED → R1**
 
-> **Do not open this as a work item.** I0.1 (enrollment) and I0.2 (single-speaker ingest) hold. I0.3's remaining defect is the 10MB download cap, tracked in **§19 (R1)**. This section is kept for the enrollment and panel detail, which R1's re-ingest still depends on.
+> **Do not open this as a work item.** I0.1 (enrollment) and I0.2 (single-speaker ingest) hold. I0.3's remaining defect is the 10MB download cap, tracked in **§15 (R1)**. This section is kept for the enrollment and panel detail, which R1's re-ingest still depends on.
 
 *Subjects selected: Issue 021 = B.*
 
 **Subjects:** Chamath Palihapitiya, David Sacks, Jason Calacanis, David Friedberg — the four All-In hosts. **Primary source:** the All-In Podcast.
 
-> **Elon Musk is deferred — Issue 023 = A.** He is out of I0 entirely and out of the queue; see §24 for the trigger. He was named in the Issue 021 selection, but his primary medium is X, which is deferred (`master_implementation_plan.md` §9), and a long-form-only corpus would clear the sufficiency gate while measuring a systematically unrepresentative slice of him. **Do not ingest him.** The four hosts are the better first corpus regardless.
+> **Elon Musk is deferred — Issue 023 = A.** He is out of I0 entirely and out of the queue; see §20 for the trigger. He was named in the Issue 021 selection, but his primary medium is X, which is deferred (`master_implementation_plan.md` §9), and a long-form-only corpus would clear the sufficiency gate while measuring a systematically unrepresentative slice of him. **Do not ingest him.** The four hosts are the better first corpus regardless.
 
 **User impact:** the system processes real human beings for the first time. Until now every green gate has been green over nothing.
 
@@ -1812,9 +1674,9 @@ This guide previously said *"start single-speaker so diarization is not also on 
 
 That is not a reason to push back on the choice. It is an excellent corpus for this product: five people, the same room, the same recurring topics across years, high-quality audio, hundreds of episodes, and public figures with enough material to clear the sufficiency gate. It also exercises cross-person comparison — which nothing else in the plan would have done this early.
 
-**But the de-risking intent must be preserved by decomposition rather than abandoned.** The split below is the LOOP 5 output; it is already done, so use it rather than re-deriving one.
+**But the de-risking intent must be preserved by decomposition rather than abandoned.** The split below is already done; use it rather than re-deriving one.
 
-### Sub-items (LOOP 5 checklist — tick in the same commit)
+### Sub-items — tick in the same commit
 
 ```
 I0.1  Enrollment for the four hosts           [x]
@@ -1883,13 +1745,13 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 22. P4 — Tension detection
+## 18. P4 — Tension detection
 
 **User impact:** the product's core claim starts working — *here are two things you said that cannot both be your view.*
 
 **Contract:** `design_rubric_engine.md` §1. Read it fully; this section does not repeat the tension-type table.
 
-**Likely LOOP 5 split:** (1) the reversal self-join, (2) the acknowledgement window, (3) the six preconditions + quarantine, (4) audience divergence.
+**Likely split:** (1) the reversal self-join, (2) the acknowledgement window, (3) the six preconditions + quarantine, (4) audience divergence.
 
 **Implementation**
 1. `worker/tension/detect.py`. The core detector is the self-join in `design_data_layer.md` §4 — **in DuckDB, not in Python.** Pulling the claims table into memory to loop over it is the design error that store was chosen to prevent.
@@ -1913,7 +1775,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 23. P3 — Topic model
+## 19. P3 — Topic model
 
 **User impact:** you can ask about any topic in your own words and get that person's record on it.
 
@@ -1940,7 +1802,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 24. P5 — Principle extraction
+## 20. P5 — Principle extraction
 
 **User impact:** the system can spot a double standard — the same principle applied to one person and not another.
 
@@ -1969,7 +1831,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 25. P6 — Rubric engine
+## 21. P6 — Rubric engine
 
 **User impact:** the four numbers appear — and, just as importantly, correctly refuse to appear when the evidence is thin.
 
@@ -2001,7 +1863,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 26. P7 — Local API
+## 22. P7 — Local API
 
 **User impact:** something outside Python can finally read the corpus.
 
@@ -2032,7 +1894,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 27. P8 — Browser extension
+## 23. P8 — Browser extension
 
 **User impact:** the product exists where you actually read.
 
@@ -2062,7 +1924,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 28. Deferred — designed for, not queued
+## 24. Deferred — designed for, not queued
 
 **Elon Musk (Issue 023 = A).** Out of scope until X/Twitter ingest exists. **Trigger:** an `XAPIAdapter` or `XArchiveImportAdapter` lands behind the `SourceAdapter` Protocol and a Musk corpus can be assembled that includes his primary medium. Until then, ingesting him would produce a confident score over a systematically skewed slice, and **invariant I5 would not catch it** — it gates on volume, not composition (trap 24).
 
@@ -2074,7 +1936,7 @@ Preserves the original de-risking intent: prove transcription, gating, extractio
 
 ---
 
-## 29. Invariants — do NOT change
+## 25. Invariants — do NOT change
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -2082,13 +1944,13 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 
 ---
 
-## 30. Contracts
+## 26. Contracts
 
 `master_implementation_plan.md` · `design_source_acquisition.md` · `design_claim_extraction.md` · `design_principle_extraction.md` · `design_topic_model.md` · `design_rubric_engine.md` · `design_data_layer.md` · `design_local_api_and_clients.md` · `design_ui_direction.md` · `design_evidence_integrity.md` · `e2e_verification_journeys.md` · `ongoing_errors.md`
 
 ---
 
-## 31. Feedback loop — what specs here have got wrong
+## 27. Feedback loop — what specs here have got wrong
 
 | What happened | Spec said | Should have said |
 |---|---|---|
