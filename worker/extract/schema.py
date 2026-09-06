@@ -19,7 +19,7 @@ class ExtractedClaim(BaseModel):
         ...,
         description="Canonical, stance-neutral description of the matter at issue (no polarity).",
     )
-    stance: Literal["support", "oppose", "mixed", "hedge"] = Field(
+    stance: Literal["support", "oppose", "mixed"] = Field(
         ...,
         description="The speaker's stance toward the proposition.",
     )

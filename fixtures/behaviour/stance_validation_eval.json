@@ -1,0 +1,98 @@
+[
+  {
+    "case_id": "d3_oppose_licensing_harmful",
+    "proposition_text": "federal licensing of frontier AI models",
+    "quote_text": "Licensing would kill open source. It is a terrible idea and we should never do it.",
+    "initial_stance": "support",
+    "true_stance": "oppose",
+    "notes": "Mislabeled support by extractor; contains strong negative predicates (kill, terrible, never) opposing licensing."
+  },
+  {
+    "case_id": "d3_oppose_licensing_negation",
+    "proposition_text": "federal licensing of frontier AI models",
+    "quote_text": "We should not have federal licensing for frontier AI models.",
+    "initial_stance": "support",
+    "true_stance": "oppose",
+    "notes": "Mislabeled support; explicit syntactic negation ('should not') opposing licensing."
+  },
+  {
+    "case_id": "d3_oppose_ubi_unaffordable",
+    "proposition_text": "universal basic income",
+    "quote_text": "Universal basic income is completely unaffordable and destroys work incentives.",
+    "initial_stance": "oppose",
+    "true_stance": "oppose",
+    "notes": "Genuine oppose correctly labeled; must stay oppose without being falsely flipped to support."
+  },
+  {
+    "case_id": "d3_oppose_ubi_reject",
+    "proposition_text": "universal basic income",
+    "quote_text": "We should never implement universal basic income.",
+    "initial_stance": "support",
+    "true_stance": "oppose",
+    "notes": "Mislabeled support; syntactic negation ('never') directly rejecting UBI."
+  },
+  {
+    "case_id": "d3_oppose_spending_denial",
+    "proposition_text": "The federal government faces a fundamental fiscal spending problem.",
+    "quote_text": "The federal government does not face any fiscal spending problem whatsoever.",
+    "initial_stance": "support",
+    "true_stance": "oppose",
+    "notes": "Mislabeled support; explicit clausal negation ('does not face ... whatsoever') denying proposition."
+  },
+  {
+    "case_id": "d3_oppose_open_source_never",
+    "proposition_text": "corporate America has embraced open source in the past 20 years",
+    "quote_text": "Corporate America has never embraced open source software.",
+    "initial_stance": "oppose",
+    "true_stance": "oppose",
+    "notes": "Genuine oppose correctly labeled; syntactic negation ('never') opposing clausal proposition."
+  },
+  {
+    "case_id": "d3_support_licensing_need",
+    "proposition_text": "federal licensing of frontier AI models",
+    "quote_text": "We absolutely need federal licensing for frontier models.",
+    "initial_stance": "support",
+    "true_stance": "support",
+    "notes": "Direct assertion supporting licensing; must stay support."
+  },
+  {
+    "case_id": "d3_support_licensing_essential",
+    "proposition_text": "federal licensing of frontier AI models",
+    "quote_text": "Federal licensing of frontier AI models is essential for safety.",
+    "initial_stance": "support",
+    "true_stance": "support",
+    "notes": "Direct normative support; must stay support."
+  },
+  {
+    "case_id": "d3_support_friedberg_spending",
+    "proposition_text": "The federal government faces a fundamental fiscal spending problem.",
+    "quote_text": "And the big problem at this point is the federal government is spending so much.",
+    "initial_stance": "oppose",
+    "true_stance": "support",
+    "notes": "S1 mislabeled oppose due to critical sentiment ('big problem'); asserts proposition, must correct to support."
+  },
+  {
+    "case_id": "d3_support_sacks_ai_tasks",
+    "proposition_text": "artificial intelligence will automate human knowledge work",
+    "quote_text": "The reason is that AI is going to do all of these knowledge worker tasks much faster.",
+    "initial_stance": "oppose",
+    "true_stance": "support",
+    "notes": "S1 mislabeled oppose; asserts proposition positively, must correct to support."
+  },
+  {
+    "case_id": "d3_support_ubi_dividend",
+    "proposition_text": "universal basic income",
+    "quote_text": "Giving every citizen a monthly dividend is the only way forward.",
+    "initial_stance": "support",
+    "true_stance": "support",
+    "notes": "Advocacy for UBI; must stay support."
+  },
+  {
+    "case_id": "d3_support_china_reg",
+    "proposition_text": "Chinese regulatory agencies are facilitating faster AI development",
+    "quote_text": "You could actually watch it playing out in China where their regulatory agencies are allowing them to move much more quickly.",
+    "initial_stance": "support",
+    "true_stance": "support",
+    "notes": "Verbatim corpus assertion supporting Chinese regulatory facilitation; must stay support."
+  }
+]

@@ -70,7 +70,7 @@ class Claim:
     subject_id: str
     utterance_id: str
     proposition_id: str
-    stance: Literal["support", "oppose", "mixed", "hedge"]
+    stance: Literal["support", "oppose", "mixed"]
     hedging_level: float
     is_own_assertion: bool
     exclusion_reason: (

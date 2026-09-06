@@ -35,7 +35,7 @@ RULES:
   "claims": [
     {
       "proposition_text": "stance-neutral matter at issue",
-      "stance": "support" | "oppose" | "mixed" | "hedge",
+      "stance": "support" | "oppose" | "mixed",
       "hedging_level": 0.0 to 1.0,
       "is_own_assertion": true | false,
       "exclusion_reason": null | "reported_speech" | "hypothetical" | "sarcasm" | "steelman" | "joke" | "question",

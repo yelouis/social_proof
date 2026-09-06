@@ -26,6 +26,8 @@ T_ENTAIL_HIGH: float = 0.70
 VALIDATOR_REJECTION_COUNTERS: Counter[str] = Counter()
 # Invariant I7 speech-act exclusion counters (Item S1 / §17n)
 VALIDATOR_EXCLUSION_COUNTERS: Counter[str] = Counter()
+# Standing bidirectional stance correction counters (Item D3 / §17t)
+VALIDATOR_CORRECTION_COUNTERS: Counter[str] = Counter()
 
 
 def get_rejection_counts() -> dict[str, int]:
@@ -46,6 +48,16 @@ def get_exclusion_counts() -> dict[str, int]:
 def reset_exclusion_counts() -> None:
     """Resets speech-act exclusion counters."""
     VALIDATOR_EXCLUSION_COUNTERS.clear()
+
+
+def get_stance_correction_counts() -> dict[str, int]:
+    """Returns a snapshot of directional stance corrections (Item D3 / §17t)."""
+    return dict(VALIDATOR_CORRECTION_COUNTERS)
+
+
+def reset_stance_correction_counts() -> None:
+    """Resets directional stance correction counters."""
+    VALIDATOR_CORRECTION_COUNTERS.clear()
 
 
 def get_exclusion_rate(storage: Any) -> tuple[int, int, float]:
@@ -139,7 +151,7 @@ PRONOUN_UNBOUND: list[re.Pattern[str]] = [
     re.compile(r"\b(?:of\s+those|of\s+these)\b(?!\s+[a-z]+)", re.IGNORECASE),
 ]
 
-VALID_STANCES: set[str] = {"support", "oppose", "mixed", "hedge"}
+VALID_STANCES: set[str] = {"support", "oppose", "mixed"}
 VALID_EXCLUSIONS: set[str] = {
     "reported_speech",
     "hypothetical",
@@ -322,23 +334,61 @@ def validate_self_contained(claim: ExtractedClaim) -> ValidationOutcome:
     return ValidationOutcome(True, status="passed")
 
 
+# Syntactic negation patterns for Validator 7 instrument (Item D3 / §17t)
+SYNTACTIC_NEGATION_PATTERNS: list[re.Pattern[str]] = [
+    re.compile(r"\b(?:not|never|no|neither|nor|none|n't|cannot)\b", re.IGNORECASE),
+    re.compile(
+        r"\b(?:oppose|opposed|opposing|opposition|against|reject|rejected|rejecting|refuse|refused|refusing|deny|denied|denies|denying|disagree|disagrees|disagreed)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:terrible|disastrous|unnecessary|unneeded|unjustified|harmful|unaffordable|bankrupt|ridiculous|mistake|kill)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(r"\b(?:does not face|will not|would not|should not|must not|cannot)\b", re.IGNORECASE),
+]
+
+EXCLUDED_NEGATION_IDIOMS: list[re.Pattern[str]] = [
+    re.compile(
+        r"\b(?:not only|not just|no doubt|without a doubt|cannot wait|cannot afford to wait)\b",
+        re.IGNORECASE,
+    ),
+]
+
+
+def has_syntactic_negation(text: str) -> bool:
+    """Checks whether text contains syntactic negation operators or oppositional predicates."""
+    clean_text = text
+    for idiom in EXCLUDED_NEGATION_IDIOMS:
+        clean_text = idiom.sub("", clean_text)
+    return any(p.search(clean_text) for p in SYNTACTIC_NEGATION_PATTERNS)
+
+
 def validate_stance_direction(
     claim: ExtractedClaim,
     embedder: Any | None = None,
     delta: float = 0.05,
+    auto_correct: bool = False,
     prop_embedding: list[float] | None = None,
     quote_embedding: list[float] | None = None,
 ) -> ValidationOutcome:
-    """Validator 7: Stance direction validation (Item S1, §17n).
+    """Validator 7: Stance direction validation (Items S1 §17n, D3 §17t).
 
     Verifies directional alignment between quote_text and proposition_text.
     Validator 6 certifies aboutness (entailment), while Validator 7 certifies direction.
 
-    Compares quote embedding against proposition P and its negated form not-P:
-    - For oppose: the quote must be closer to not-P than to P (sim_pos <= sim_neg).
-      If the quote is strictly closer to P than to not-P, rejects with 'stance_direction_mismatch'.
-    - For support: the quote must be closer to P than to not-P (sim_neg <= sim_pos + 0.05).
-      If the quote is clearly closer to not-P than to P, rejects with 'stance_direction_mismatch'.
+    Uses an augmented instrument combining syntactic negation analysis with document embeddings:
+    - For oppose:
+      - If quote contains syntactic negation of the proposition, it is confirmed oppose.
+      - If quote contains NO negation AND embedding sim(Q, P) > sim(Q, not-P), the quote asserts
+        P rather than opposing it (e.g. negative tone mistranslated as opposition).
+        If auto_correct=True, inverts stance to 'support' and increments stance_corrected_to_support.
+        Else rejects with 'stance_direction_mismatch'.
+    - For support:
+      - If quote contains syntactic negation opposing the proposition OR sim(Q, not-P) > sim(Q, P) + delta,
+        the quote asserts not-P rather than supporting P.
+        If auto_correct=True, inverts stance to 'oppose' and increments stance_corrected_to_oppose.
+        Else rejects with 'stance_direction_mismatch'.
     """
     stance = claim.stance
     if stance not in ("support", "oppose"):
@@ -364,37 +414,59 @@ def validate_stance_direction(
     sim_pos = cosine_similarity(v_quote, v_prop)
     sim_neg = cosine_similarity(v_quote, v_neg_prop)
 
-    if stance == "oppose" and sim_pos > sim_neg:
-        VALIDATOR_REJECTION_COUNTERS["stance_direction_mismatch"] += 1
-        logger.info(
-            "Validator 7 rejected claim (stance_direction_mismatch): stance='oppose' but sim_pos=%.4f > sim_neg=%.4f. Prop: '%s', Quote: '%s'",
-            sim_pos,
-            sim_neg,
-            prop,
-            quote,
-        )
-        return ValidationOutcome(
-            is_valid=False,
-            rejection_reason="stance_direction_mismatch",
-            status="rejected",
-            similarity=sim_pos,
-        )
+    has_neg = has_syntactic_negation(quote)
 
-    if stance == "support" and sim_neg > sim_pos + 0.05:
-        VALIDATOR_REJECTION_COUNTERS["stance_direction_mismatch"] += 1
-        logger.info(
-            "Validator 7 rejected claim (stance_direction_mismatch): stance='support' but sim_neg=%.4f > sim_pos=%.4f + 0.05. Prop: '%s', Quote: '%s'",
-            sim_neg,
-            sim_pos,
-            prop,
-            quote,
-        )
-        return ValidationOutcome(
-            is_valid=False,
-            rejection_reason="stance_direction_mismatch",
-            status="rejected",
-            similarity=sim_pos,
-        )
+    if stance == "oppose":
+        if not has_neg and sim_pos > sim_neg:
+            if auto_correct:
+                claim.stance = "support"
+                VALIDATOR_CORRECTION_COUNTERS["stance_corrected_to_support"] += 1
+                logger.info(
+                    "Validator 7 corrected claim from 'oppose' to 'support'. Prop: '%s', Quote: '%s'",
+                    prop,
+                    quote,
+                )
+                return ValidationOutcome(True, status="passed", similarity=sim_pos)
+            VALIDATOR_REJECTION_COUNTERS["stance_direction_mismatch"] += 1
+            logger.info(
+                "Validator 7 rejected claim (stance_direction_mismatch): stance='oppose' but sim_pos=%.4f > sim_neg=%.4f without negation. Prop: '%s', Quote: '%s'",
+                sim_pos,
+                sim_neg,
+                prop,
+                quote,
+            )
+            return ValidationOutcome(
+                is_valid=False,
+                rejection_reason="stance_direction_mismatch",
+                status="rejected",
+                similarity=sim_pos,
+            )
+
+    if stance == "support":
+        if has_neg or (sim_neg > sim_pos + delta):
+            if auto_correct:
+                claim.stance = "oppose"
+                VALIDATOR_CORRECTION_COUNTERS["stance_corrected_to_oppose"] += 1
+                logger.info(
+                    "Validator 7 corrected claim from 'support' to 'oppose'. Prop: '%s', Quote: '%s'",
+                    prop,
+                    quote,
+                )
+                return ValidationOutcome(True, status="passed", similarity=sim_pos)
+            VALIDATOR_REJECTION_COUNTERS["stance_direction_mismatch"] += 1
+            logger.info(
+                "Validator 7 rejected claim (stance_direction_mismatch): stance='support' with syntactic negation or sim_neg=%.4f > sim_pos=%.4f + delta. Prop: '%s', Quote: '%s'",
+                sim_neg,
+                sim_pos,
+                prop,
+                quote,
+            )
+            return ValidationOutcome(
+                is_valid=False,
+                rejection_reason="stance_direction_mismatch",
+                status="rejected",
+                similarity=sim_pos,
+            )
 
     return ValidationOutcome(True, status="passed", similarity=sim_pos)
 

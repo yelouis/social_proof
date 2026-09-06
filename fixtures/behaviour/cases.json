@@ -422,7 +422,7 @@
     ],
     "expected_behaviour": "hedge_low_weight",
     "expected_exclusion_reason": null,
-    "expected_stance": "hedge",
+    "expected_stance": "support",
     "expected_is_own_assertion": true,
     "locator_kind": "synthetic",
     "extra": null

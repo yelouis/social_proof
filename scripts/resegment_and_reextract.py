@@ -22,7 +22,7 @@ class VerifiedClaimSpec(TypedDict):
     subject_id: str
     quote: str
     proposition: str
-    stance: Literal["support", "oppose", "mixed", "hedge"]
+    stance: Literal["support", "oppose", "mixed"]
     hedging: float
 
 

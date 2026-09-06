@@ -240,15 +240,16 @@ There is no `output_config.format` here. A local model asked politely for JSON w
    **Re-validating entailment on proposition deduplication / re-pointing (Item W1):**
    When proposition deduplication merges propositions based on proposition-to-proposition cosine similarity ($T_{dedup} = 0.86$), claims originally attached to the merged proposition are candidates to re-point to the survivor proposition. However, proposition similarity does not imply quote entailment! If $\text{sim}(\text{quote}, \text{survivor\_proposition}) < T_{ENTAIL\_HIGH} (0.70)$, the claim does not entail the survivor proposition. In that case, the re-point is **refused**, and the claim retains its own proposition (or stays unmerged). This preserves invariant X1 through deduplication. Integrity check #14 (`verify_entailment_holds`) verifies this across all published claims.
 
-7. **Stance Direction Check — the directional half of entailment.** *(Added September 5, 2026 after four candidate contradiction pairs were traced to mislabelled stances or rhetorical setups — Item S1, §17n.)*
+7. **Stance Direction Check — the directional half of entailment.** *(Added September 5, 2026 after four candidate contradiction pairs were traced to mislabelled stances or rhetorical setups — Item S1, §17n; augmented September 6, 2026 with syntactic negation analysis and bidirectional correction — Item D3, §17t.)*
 
    Validator 6 certifies *aboutness* (does the quote discuss proposition $P$?). Validator 7 certifies *direction* (does the quote assert $P$ or $\neg P$?).
    An extractor readily confuses negative sentiment ("the government is spending so much", "unregulated frontier models") with opposing a proposition. A speaker asserting a problem or negative state supports the proposition describing that state; their stance is `support`, not `oppose`.
 
-   **Mechanism:** Compare the quote embedding against proposition $P$ and its explicit negation $\neg P$ (`f"It is not the case that {P}"`):
-   - For `oppose`: $\text{sim}(Q, \neg P) > \text{sim}(Q, P) - \delta$ ($\delta = 0.05$). If $\text{sim}(Q, P) > \text{sim}(Q, \neg P)$, the quote asserts $P$, so the stance is inverted. Reject with `rejection_reason: stance_direction_mismatch`.
-   - For `support`: $\text{sim}(Q, P) > \text{sim}(Q, \neg P) - \delta$. Symmetrically ensures support claims do not assert the negated proposition.
-   Reuses cached quote and proposition embeddings from Validator 6 for efficiency, only embedding $\neg P$.
+   **Mechanism:** Sentence embeddings represent negation weakly ($sim(Q, P) \approx sim(Q, \neg P)$ within $\pm 0.005$), which caused legacy Validator 7 to only ever correct in one direction (9 oppose $\to$ support, 0 support $\to$ oppose; Trap 56). Under Item D3, Validator 7 uses an augmented instrument combining syntactic negation detection with document embeddings:
+   - For `oppose`: If quote contains syntactic negation of the proposition, it is confirmed oppose. If quote contains NO negation and $sim(Q, P) > sim(Q, \neg P)$, quote asserts $P$ rather than opposing it, correcting to `support` (incrementing standing counter `stance_corrected_to_support`) or rejecting with `rejection_reason: stance_direction_mismatch`.
+   - For `support`: If quote contains syntactic negation opposing the proposition or $sim(Q, \neg P) > sim(Q, P) + \delta$ ($\delta = 0.05$), quote asserts $\neg P$ rather than supporting $P$, correcting to `oppose` (incrementing standing counter `stance_corrected_to_oppose`) or rejecting with `rejection_reason: stance_direction_mismatch`.
+   - Standing bidirectional counters: `stance_corrected_to_support` and `stance_corrected_to_oppose`.
+   - `hedge` retired as a discrete stance literal; hedging is represented exclusively as `hedging_level: float` on `Literal["support", "oppose", "mixed"]`.
 
 8. **Speech-Act Sensitivity (Invariant I7).** *(Enhanced September 5, 2026 — Item S1, §17n.)*
 
@@ -272,7 +273,7 @@ Instruction-tuned models are trained to be helpful, and "return an empty list" r
 ```python
 class ExtractedClaim(BaseModel):
     proposition_text: str
-    stance: Literal["support", "oppose", "mixed", "hedge"]
+    stance: Literal["support", "oppose", "mixed"]
     hedging_level: float
     is_own_assertion: bool
     exclusion_reason: str | None
