@@ -170,7 +170,7 @@ A **local** site for reading what the system found: episodes newest-first, each 
 
 **Every section renders always, including the empty ones.** `principles` currently holds zero rows and the panel must still show a principles section, reading *"no principle conflicts detected on this topic"* — §4 is the governing screen here, not an edge case. **An honest empty section is a finished feature; a hidden one is not.** The ship gate is that nothing shown is false, never that everything is populated.
 
-**The export is the trust boundary and it enforces rather than assumes.** Quarantined tensions and propositions are excluded by query predicate, never by a template conditional — a renderer that filters is one conditional away from publishing a fabrication, and this project has shipped three. Every exported claim's quote is re-verified verbatim against its utterance at export time rather than trusted from the store.
+**The shared query layer is the trust boundary and it enforces rather than assumes.** Quarantined tensions and propositions are excluded by query predicate, never by a template conditional — a renderer that filters is one conditional away from publishing a fabrication, and this project has shipped three. Every claim's quote is re-verified verbatim against its utterance in the query layer rather than trusted from the store.
 
 ---
 

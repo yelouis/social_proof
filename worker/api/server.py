@@ -13,8 +13,9 @@ import json
 import uuid
 from typing import Any
 
+import duckdb
 from fastapi import FastAPI, HTTPException, Query, status
-from fastapi.responses import StreamingResponse
+from fastapi.responses import HTMLResponse, StreamingResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from worker.api.models import (
@@ -33,7 +34,20 @@ from worker.api.models import (
     TimelineResponse,
     TopicSummary,
 )
+from worker.api.queries import (
+    get_all_subjects,
+    get_claim_panel,
+    get_episode_detail,
+    get_episodes_list,
+    get_person_detail,
+)
 from worker.api.security import TokenManager, auth_middleware, validate_host
+from worker.api.templates import (
+    render_claim_panel_page,
+    render_episode_page,
+    render_index_page,
+    render_person_page,
+)
 from worker.entities import Assessment, IngestJob, Tension
 from worker.rubric.engine import RubricEngine
 from worker.storage import Storage
@@ -63,7 +77,53 @@ def create_app(
     app.state.resolver = TopicResolver(storage=storage, embedder=embedder)
     app.state.embedder = embedder
 
+    if storage.read_only:
+        read_only_con = duckdb.connect(str(storage.db_path), read_only=True)
+    else:
+        try:
+            read_only_con = duckdb.connect(str(storage.db_path), read_only=True)
+        except Exception:
+            read_only_con = storage.con.cursor()
+    app.state.read_only_con = read_only_con
+
     app.add_middleware(BaseHTTPMiddleware, dispatch=auth_middleware)
+
+    # --- Review Site HTML Routes (Issue 028 & Issue 033) ---
+
+    @app.get("/", response_class=HTMLResponse)
+    def review_index(token: str | None = None) -> HTMLResponse:
+        """Route 1: Episodes catalog (newest first) & Persons."""
+        episodes = get_episodes_list(app.state.read_only_con)
+        subjects = get_all_subjects(app.state.read_only_con)
+        html_content = render_index_page(episodes, subjects, token=token)
+        return HTMLResponse(content=html_content)
+
+    @app.get("/episode/{source_id}", response_class=HTMLResponse)
+    def review_episode(source_id: str, token: str | None = None) -> HTMLResponse:
+        """Route 2: Episode detail with claims grouped by person in timestamp order."""
+        ep_detail = get_episode_detail(app.state.read_only_con, source_id)
+        if not ep_detail:
+            raise HTTPException(status_code=404, detail="Episode not found")
+        html_content = render_episode_page(ep_detail, token=token)
+        return HTMLResponse(content=html_content)
+
+    @app.get("/claim/{claim_id}", response_class=HTMLResponse)
+    def review_claim(claim_id: str, token: str | None = None) -> HTMLResponse:
+        """Route 3: Social Proof Panel (Depth 2)."""
+        panel_data = get_claim_panel(app.state.read_only_con, claim_id)
+        if not panel_data:
+            raise HTTPException(status_code=404, detail="Claim not found")
+        html_content = render_claim_panel_page(panel_data, token=token)
+        return HTMLResponse(content=html_content)
+
+    @app.get("/person/{subject_id}", response_class=HTMLResponse)
+    def review_person(subject_id: str, token: str | None = None) -> HTMLResponse:
+        """Route 4: Person dossier across all episodes."""
+        person_data = get_person_detail(app.state.read_only_con, subject_id)
+        if not person_data:
+            raise HTTPException(status_code=404, detail="Person not found")
+        html_content = render_person_page(person_data, token=token)
+        return HTMLResponse(content=html_content)
 
     @app.get("/health", response_model=HealthResponse)
     def health() -> HealthResponse:

@@ -89,8 +89,21 @@ async def auth_middleware(request: Request, call_next: Any) -> Any:
 
     token_manager: TokenManager = request.app.state.token_manager
     auth_header = request.headers.get("Authorization")
+    query_token = request.query_params.get("token")
+    cookie_token = request.cookies.get("sp_token")
 
-    if not token_manager.verify(auth_header):
+    authed = False
+    set_cookie = False
+
+    if auth_header and token_manager.verify(auth_header):
+        authed = True
+    elif query_token and secrets.compare_digest(query_token, token_manager.token):
+        authed = True
+        set_cookie = True
+    elif cookie_token and secrets.compare_digest(cookie_token, token_manager.token):
+        authed = True
+
+    if not authed:
         # Uniform 404 response matching unknown routes
         return JSONResponse(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -106,6 +119,8 @@ async def auth_middleware(request: Request, call_next: Any) -> Any:
         )
 
     response = await call_next(request)
+    if set_cookie:
+        response.set_cookie("sp_token", token_manager.token, httponly=True, samesite="lax")
     if origin and CORSPolicy.is_allowed_origin(origin):
         response.headers["Access-Control-Allow-Origin"] = origin
         response.headers["Access-Control-Allow-Credentials"] = "true"
