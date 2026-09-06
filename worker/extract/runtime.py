@@ -24,7 +24,7 @@ RULES:
    - A proposition must be a standalone declarative statement naming its concrete real-world referents, resolvable without knowing who uttered it.
    - Strip the actor completely: state the factual or normative matter at issue neutrally, without prefixing 'The speaker believes/argues/suggests'.
    - If the utterance is conversational banter, a personal question, or lacks a concrete named referent, return {"claims": []}.
-4. INVARIANT I7 (SPEECH-ACT GUARDS): Exclude reported speech, hypotheticals, sarcasm, steelmanning, jokes, questions, and ambiguous quote agreements. If excluded, set is_own_assertion=false and specify exclusion_reason. If is_own_assertion=true, exclusion_reason MUST be null.
+4. INVARIANT I7 (SPEECH-ACT GUARDS): Exclude reported speech, hypotheticals, rhetorical setups ('You can say, okay...'), sarcasm, steelmanning, jokes, questions ('So you're saying...'), and ambiguous quote agreements. If excluded, set is_own_assertion=false and specify exclusion_reason. If is_own_assertion=true, exclusion_reason MUST be null.
 5. QUOTE TEXT: Return the exact verbatim substring from the utterance text as quote_text.
 6. CONSTRAINED SCHEMA: Output must strictly conform to JSON format:
 {
@@ -44,6 +44,12 @@ RULES:
 Examples:
 Utterance: "It is true that China is much more optimistic about AI than we are."
 Result: {"claims": [{"proposition_text": "China has greater societal and official optimism toward artificial intelligence than Western nations", "stance": "support", "hedging_level": 0.05, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "It is true that China is much more optimistic about AI than we are.", "confidence": 0.95}]}
+
+Utterance: "So you're saying that the government should regulate all frontier compute clusters?"
+Result: {"claims": [{"proposition_text": "Government regulation of frontier artificial intelligence compute clusters", "stance": "support", "hedging_level": 0.0, "is_own_assertion": false, "exclusion_reason": "question", "quote_text": "So you're saying that the government should regulate all frontier compute clusters?", "confidence": 0.90}]}
+
+Utterance: "You can say, okay, well Verizon spent a hundred billion dollars on fiber optics."
+Result: {"claims": [{"proposition_text": "Telecommunications infrastructure capital expenditure in fiber optics", "stance": "support", "hedging_level": 0.1, "is_own_assertion": false, "exclusion_reason": "hypothetical", "quote_text": "You can say, okay, well Verizon spent a hundred billion dollars on fiber optics.", "confidence": 0.85}]}
 
 Utterance: "No sparks, but I saw a video that I said to him, I said, is this CGI or is this real?"
 Result: {"claims": []}
@@ -114,7 +120,7 @@ class LocalGemmaRuntime:
     def __init__(
         self,
         model_id: str = "gemma-3-27b-it",
-        prompt_version: str = "v1.3",
+        prompt_version: str = "v1.4",
         schema_version: str = "s1",
         system_prompt: str = STABLE_SYSTEM_PROMPT,
         backend: Any | None = None,

@@ -1,0 +1,74 @@
+[
+  {
+    "case_id": "s1_verizon_analogy",
+    "proposition_text": "Verizon is not responsible for people using its services to coordinate a bank robbery.",
+    "quote_text": "You can say, okay, Verizon's responsible of people use it in a terrorist attack.",
+    "stance": "support",
+    "claimed_is_own_assertion": true,
+    "expected_is_own_assertion": false,
+    "expected_exclusion_reason": "hypothetical"
+  },
+  {
+    "case_id": "s1_chamath_question",
+    "proposition_text": "The substance of what he's saying is more accurate than his overall stance.",
+    "quote_text": "So you're saying the substance of what he says will no longer matter to you or you're going to for me, I will wonder, I will wonder what is his actual opinion and what you're saying.",
+    "stance": "mixed",
+    "claimed_is_own_assertion": true,
+    "expected_is_own_assertion": false,
+    "expected_exclusion_reason": "question"
+  },
+  {
+    "case_id": "s1_friedberg_spending_mismatch",
+    "proposition_text": "The federal government faces a fundamental fiscal spending problem.",
+    "quote_text": "And the big problem at this point is the federal government is spending so much.",
+    "stance": "oppose",
+    "claimed_is_own_assertion": true,
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "stance_direction_mismatch"
+  },
+  {
+    "case_id": "s1_sacks_ai_tasks_mismatch",
+    "proposition_text": "It is complicated for AI to perform tasks based on user instructions.",
+    "quote_text": "Is that you can just tell the AI to do something for you pretty complicated and it will be able to do it.",
+    "stance": "oppose",
+    "claimed_is_own_assertion": true,
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "stance_direction_mismatch"
+  },
+  {
+    "case_id": "s1_friedberg_spending_corrected",
+    "proposition_text": "The federal government faces a fundamental fiscal spending problem.",
+    "quote_text": "And the big problem at this point is the federal government is spending so much.",
+    "stance": "support",
+    "claimed_is_own_assertion": true,
+    "expected_behaviour": "passed",
+    "expected_rejection_reason": null
+  },
+  {
+    "case_id": "s1_sacks_ai_tasks_corrected",
+    "proposition_text": "It is complicated for AI to perform tasks based on user instructions.",
+    "quote_text": "Is that you can just tell the AI to do something for you pretty complicated and it will be able to do it.",
+    "stance": "support",
+    "claimed_is_own_assertion": true,
+    "expected_behaviour": "passed",
+    "expected_rejection_reason": null
+  },
+  {
+    "case_id": "s1_positive_oppose",
+    "proposition_text": "The federal government faces a fundamental fiscal spending problem.",
+    "quote_text": "The federal government does not face any fiscal spending problem whatsoever.",
+    "stance": "oppose",
+    "claimed_is_own_assertion": true,
+    "expected_behaviour": "passed",
+    "expected_rejection_reason": null
+  },
+  {
+    "case_id": "s1_positive_own_assertion",
+    "proposition_text": "Open source software fosters decentralized innovation in technology markets.",
+    "quote_text": "I think the fundamental issue here is that open source software fosters decentralized innovation.",
+    "stance": "support",
+    "claimed_is_own_assertion": true,
+    "expected_is_own_assertion": true,
+    "expected_exclusion_reason": null
+  }
+]

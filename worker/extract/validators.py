@@ -24,6 +24,8 @@ T_ENTAIL_HIGH: float = 0.70
 
 # Rejection counters for observability / regression detection
 VALIDATOR_REJECTION_COUNTERS: Counter[str] = Counter()
+# Invariant I7 speech-act exclusion counters (Item S1 / §17n)
+VALIDATOR_EXCLUSION_COUNTERS: Counter[str] = Counter()
 
 
 def get_rejection_counts() -> dict[str, int]:
@@ -35,6 +37,47 @@ def reset_rejection_counts() -> None:
     """Resets validation counters (useful for test isolation)."""
     VALIDATOR_REJECTION_COUNTERS.clear()
 
+
+def get_exclusion_counts() -> dict[str, int]:
+    """Returns a snapshot of Invariant I7 speech-act exclusions."""
+    return dict(VALIDATOR_EXCLUSION_COUNTERS)
+
+
+def reset_exclusion_counts() -> None:
+    """Resets speech-act exclusion counters."""
+    VALIDATOR_EXCLUSION_COUNTERS.clear()
+
+
+def get_exclusion_rate(storage: Any) -> tuple[int, int, float]:
+    """Computes (excluded_count, total_claims, exclusion_rate_pct) from database."""
+    row = storage.con.execute("""
+        SELECT
+            count(*) FILTER (WHERE NOT is_own_assertion),
+            count(*),
+            (count(*) FILTER (WHERE NOT is_own_assertion) * 100.0) / NULLIF(count(*), 0)
+        FROM claims
+    """).fetchone()
+    if not row or row[1] == 0:
+        return 0, 0, 0.0
+    return int(row[0]), int(row[1]), float(row[2])
+
+
+# Invariant I7 speech act patterns (Item S1 / §17n)
+QUESTION_SPEECH_ACT_PATTERNS: list[re.Pattern[str]] = [
+    re.compile(r"^\s*(?:so\s+)?you(?:'re|\s+are)\s+saying\b", re.IGNORECASE),
+    re.compile(
+        r"^\s*(?:are\s+you|do\s+you|can\s+you|should\s+we|would\s+you|is\s+it|is\s+that|why\s+do|why\s+would|what\s+is|what\s+if)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(r"\?\s*$"),
+]
+
+RHETORICAL_SPEECH_ACT_PATTERNS: list[re.Pattern[str]] = [
+    re.compile(r"^\s*you\s+can\s+say\s*,\s*okay\b", re.IGNORECASE),
+    re.compile(r"^\s*(?:someone|they)(?:'d|\s+would|\s+might)\s+say\b", re.IGNORECASE),
+    re.compile(r"^\s*the\s+argument\s+(?:could|would)\s+be\b", re.IGNORECASE),
+    re.compile(r"^\s*suppose\s+that\b", re.IGNORECASE),
+]
 
 # Banned polarity tokens in proposition_text (must live exclusively in stance)
 POLARITY_BANNED_PATTERNS: list[re.Pattern[str]] = [
@@ -78,6 +121,7 @@ class ValidationOutcome:
     status: Literal["passed", "rejected", "quarantined"] = "passed"
     similarity: float | None = None
     prop_embedding: list[float] | None = None
+    quote_embedding: list[float] | None = None
 
     def __iter__(self) -> Any:
         """Allows 3-element tuple unpacking (is_valid, rejection_reason, span) for backward compatibility."""
@@ -99,12 +143,11 @@ def validate_quote_verbatim(claim: ExtractedClaim, utterance_text: str) -> Valid
         idx_lower = utterance_text.lower().find(quote.lower())
         if idx_lower == -1:
             return ValidationOutcome(
-                False, "quote_verbatim_not_found_in_utterance", status="rejected"
+                False, "quote_not_verbatim_in_utterance", status="rejected"
             )
         idx = idx_lower
 
-    span = (idx, idx + len(quote))
-    return ValidationOutcome(True, resolved_quote_span=span, status="passed")
+    return ValidationOutcome(True, resolved_quote_span=(idx, idx + len(quote)), status="passed")
 
 
 def validate_entailment(
@@ -114,48 +157,39 @@ def validate_entailment(
     t_low: float = T_ENTAIL_LOW,
     t_high: float = T_ENTAIL_HIGH,
 ) -> ValidationOutcome:
-    """Validator 6: Entailment guard (Issue 025 = C, Parameter 026).
+    """Validator 6: Entailment guard (Issue 025 = C, Item X1 / §18).
 
-    Enforces that a quote actually supports the proposition attached to it.
-    1. Length floor check (MIN_QUOTE_TOKENS). Rejects short arbitrary fragments (both X0 fabrications were 6 tokens).
-    2. Document-to-document embedding similarity with 'search_document:' prefix on both sides (Trap 7).
-    3. Three outcomes:
-       - sim < t_low: reject ("quote_does_not_support_proposition")
-       - t_low <= sim < t_high: quarantine ("entailment_ambiguous")
-       - sim >= t_high: pass
+    Guarantees quote actually supports proposition.
+    Rejects arbitary or fabricated quotes via token length floor and embedding similarity.
     """
-    quote = (claim.quote_text or "").strip()
+    quote = claim.quote_text.strip()
     token_count = len(quote.split())
     if token_count < min_quote_tokens:
         VALIDATOR_REJECTION_COUNTERS["quote_too_short"] += 1
         logger.info(
-            "Validator 6 rejected claim (quote_too_short): %d < %d tokens. Quote: '%s'",
+            "Validator 6 rejected claim (quote_too_short: %d < %d tokens). Quote: '%s'",
             token_count,
             min_quote_tokens,
             quote,
         )
-        return ValidationOutcome(
-            is_valid=False,
-            rejection_reason="quote_too_short",
-            status="rejected",
-        )
+        return ValidationOutcome(False, rejection_reason="quote_too_short", status="rejected")
 
     if embedder is None:
         from worker.extract.dedup import get_embedder
 
         embedder = get_embedder()
 
-    # Document-to-document similarity with "search_document:" prefix on both sides (Trap 7)
-    vec_quote = embedder.embed_document(quote)
-    vec_prop = embedder.embed_document(claim.proposition_text.strip())
     from worker.extract.dedup import cosine_similarity
 
+    # Crucial: both use 'search_document:' prefix (Trap 7: avoiding asymmetric prefix spaces)
+    vec_quote = embedder.embed_document(quote)
+    vec_prop = embedder.embed_document(claim.proposition_text.strip())
     sim = cosine_similarity(vec_quote, vec_prop)
 
     if sim < t_low:
         VALIDATOR_REJECTION_COUNTERS["quote_does_not_support_proposition"] += 1
         logger.info(
-            "Validator 6 rejected claim (quote_does_not_support_proposition): sim=%.4f < %.4f. Prop: '%s', Quote: '%s'",
+            "Validator 6 rejected claim (quote_does_not_support_proposition: sim=%.4f < %.4f). Prop: '%s', Quote: '%s'",
             sim,
             t_low,
             claim.proposition_text,
@@ -167,6 +201,7 @@ def validate_entailment(
             status="rejected",
             similarity=sim,
             prop_embedding=vec_prop,
+            quote_embedding=vec_quote,
         )
     elif sim < t_high:
         VALIDATOR_REJECTION_COUNTERS["entailment_ambiguous"] += 1
@@ -184,6 +219,7 @@ def validate_entailment(
             status="quarantined",
             similarity=sim,
             prop_embedding=vec_prop,
+            quote_embedding=vec_quote,
         )
 
     return ValidationOutcome(
@@ -192,6 +228,7 @@ def validate_entailment(
         status="passed",
         similarity=sim,
         prop_embedding=vec_prop,
+        quote_embedding=vec_quote,
     )
 
 
@@ -222,6 +259,83 @@ def validate_self_contained(claim: ExtractedClaim) -> ValidationOutcome:
     return ValidationOutcome(True, status="passed")
 
 
+def validate_stance_direction(
+    claim: ExtractedClaim,
+    embedder: Any | None = None,
+    delta: float = 0.05,
+    prop_embedding: list[float] | None = None,
+    quote_embedding: list[float] | None = None,
+) -> ValidationOutcome:
+    """Validator 7: Stance direction validation (Item S1, §17n).
+
+    Verifies directional alignment between quote_text and proposition_text.
+    Validator 6 certifies aboutness (entailment), while Validator 7 certifies direction.
+
+    Compares quote embedding against proposition P and its negated form not-P:
+    - For oppose: the quote must be closer to not-P than to P (sim_pos <= sim_neg).
+      If the quote is strictly closer to P than to not-P, rejects with 'stance_direction_mismatch'.
+    - For support: the quote must be closer to P than to not-P (sim_neg <= sim_pos + 0.05).
+      If the quote is clearly closer to not-P than to P, rejects with 'stance_direction_mismatch'.
+    """
+    stance = claim.stance
+    if stance not in ("support", "oppose"):
+        return ValidationOutcome(True, status="passed")
+
+    prop = (claim.proposition_text or "").strip()
+    quote = (claim.quote_text or "").strip()
+    if not prop or not quote:
+        return ValidationOutcome(True, status="passed")
+
+    if embedder is None:
+        from worker.extract.dedup import get_embedder
+
+        embedder = get_embedder()
+
+    from worker.extract.dedup import cosine_similarity
+
+    neg_prop = f"It is not the case that {prop[0].lower() + prop[1:] if prop else prop}"
+    v_prop = prop_embedding if prop_embedding is not None else embedder.embed_document(prop)
+    v_neg_prop = embedder.embed_document(neg_prop)
+    v_quote = quote_embedding if quote_embedding is not None else embedder.embed_document(quote)
+
+    sim_pos = cosine_similarity(v_quote, v_prop)
+    sim_neg = cosine_similarity(v_quote, v_neg_prop)
+
+    if stance == "oppose" and sim_pos > sim_neg:
+        VALIDATOR_REJECTION_COUNTERS["stance_direction_mismatch"] += 1
+        logger.info(
+            "Validator 7 rejected claim (stance_direction_mismatch): stance='oppose' but sim_pos=%.4f > sim_neg=%.4f. Prop: '%s', Quote: '%s'",
+            sim_pos,
+            sim_neg,
+            prop,
+            quote,
+        )
+        return ValidationOutcome(
+            is_valid=False,
+            rejection_reason="stance_direction_mismatch",
+            status="rejected",
+            similarity=sim_pos,
+        )
+
+    if stance == "support" and sim_neg > sim_pos + 0.05:
+        VALIDATOR_REJECTION_COUNTERS["stance_direction_mismatch"] += 1
+        logger.info(
+            "Validator 7 rejected claim (stance_direction_mismatch): stance='support' but sim_neg=%.4f > sim_pos=%.4f + 0.05. Prop: '%s', Quote: '%s'",
+            sim_neg,
+            sim_pos,
+            prop,
+            quote,
+        )
+        return ValidationOutcome(
+            is_valid=False,
+            rejection_reason="stance_direction_mismatch",
+            status="rejected",
+            similarity=sim_pos,
+        )
+
+    return ValidationOutcome(True, status="passed", similarity=sim_pos)
+
+
 def validate_polarity(claim: ExtractedClaim) -> ValidationOutcome:
     """Validator 2: Proposition text must be stance-neutral and contain no polarity words."""
     prop_text = claim.proposition_text
@@ -233,8 +347,45 @@ def validate_polarity(claim: ExtractedClaim) -> ValidationOutcome:
     return ValidationOutcome(True, status="passed")
 
 
-def validate_speech_acts(claim: ExtractedClaim) -> ValidationOutcome:
-    """Validator 3: Invariant I7 speech-act validation."""
+def validate_speech_acts(
+    claim: ExtractedClaim,
+    utterance: Utterance | None = None,
+) -> ValidationOutcome:
+    """Validator 3: Invariant I7 speech-act validation with enhanced sensitivity (Item S1, §17n).
+
+    Automatically identifies and excludes rhetorical setups and interrogatives
+    from own assertions, setting is_own_assertion=False and appropriate exclusion_reason.
+    """
+    quote = (claim.quote_text or "").strip()
+    utt_text = (utterance.text_verbatim or "").strip() if utterance else ""
+
+    # 1. Question / interrogative detection
+    if claim.is_own_assertion:
+        for pat in QUESTION_SPEECH_ACT_PATTERNS:
+            if pat.search(quote) or (utt_text and pat.search(utt_text)):
+                claim.is_own_assertion = False
+                claim.exclusion_reason = "question"
+                VALIDATOR_EXCLUSION_COUNTERS["question"] += 1
+                logger.info(
+                    "Invariant I7 excluded claim as question: '%s'",
+                    quote,
+                )
+                break
+
+    # 2. Rhetorical / hypothetical setup detection
+    if claim.is_own_assertion:
+        for pat in RHETORICAL_SPEECH_ACT_PATTERNS:
+            if pat.search(quote) or (utt_text and pat.search(utt_text)):
+                claim.is_own_assertion = False
+                claim.exclusion_reason = "hypothetical"
+                VALIDATOR_EXCLUSION_COUNTERS["hypothetical"] += 1
+                logger.info(
+                    "Invariant I7 excluded claim as hypothetical/rhetorical: '%s'",
+                    quote,
+                )
+                break
+
+    # 3. Schema consistency check
     if not claim.is_own_assertion:
         if not claim.exclusion_reason or claim.exclusion_reason not in VALID_EXCLUSIONS:
             return ValidationOutcome(
@@ -283,10 +434,11 @@ def validate_extracted_claim(
     1. Quote Verbatim (substring in utterance)
     2. Self-Contained (Item W0: reject indexicals and unbound pronouns before embedder)
     3. Entailment (Validator 6: length floor, document-to-document embedding similarity)
-    4. Polarity (neutral proposition text)
-    5. Speech Acts (Invariant I7: exclusions vs own assertions)
-    6. Confidence Floor (confidence >= floor)
-    7. Schema (valid stance, hedging level in [0, 1])
+    4. Stance Direction (Validator 7, Item S1: verify directional entailment P vs ~P)
+    5. Polarity (neutral proposition text)
+    6. Speech Acts (Invariant I7: exclusions vs own assertions, interrogative/rhetorical sensitivity)
+    7. Confidence Floor (confidence >= floor)
+    8. Schema (valid stance, hedging level in [0, 1])
     """
     # 1. Quote Verbatim
     res_quote = validate_quote_verbatim(claim, utterance.text_verbatim)
@@ -315,25 +467,37 @@ def validate_extracted_claim(
         claim.is_own_assertion = False
         claim.exclusion_reason = "entailment_ambiguous"
 
-    # 3. Polarity
+    # 4. Stance Direction (Validator 7, Item S1 / §17n)
+    # Evaluated when claim clears entailment (not quarantined or rejected)
+    if res_entail.status != "quarantined":
+        res_stance = validate_stance_direction(
+            claim,
+            embedder=embedder,
+            prop_embedding=res_entail.prop_embedding,
+            quote_embedding=res_entail.quote_embedding,
+        )
+        if not res_stance.is_valid:
+            return res_stance
+
+    # 5. Polarity
     res_pol = validate_polarity(claim)
     if not res_pol.is_valid:
         VALIDATOR_REJECTION_COUNTERS[res_pol.rejection_reason or "polarity_failed"] += 1
         return res_pol
 
-    # 4. Speech Acts
-    res_sa = validate_speech_acts(claim)
+    # 6. Speech Acts (Invariant I7 with enhanced sensitivity, Item S1 / §17n)
+    res_sa = validate_speech_acts(claim, utterance)
     if not res_sa.is_valid:
         VALIDATOR_REJECTION_COUNTERS[res_sa.rejection_reason or "speech_acts_failed"] += 1
         return res_sa
 
-    # 5. Confidence Floor
+    # 7. Confidence Floor
     res_conf = validate_confidence_floor(claim, confidence_floor)
     if not res_conf.is_valid:
         VALIDATOR_REJECTION_COUNTERS[res_conf.rejection_reason or "confidence_floor_failed"] += 1
         return res_conf
 
-    # 6. Schema
+    # 8. Schema
     res_schema = validate_schema(claim)
     if not res_schema.is_valid:
         VALIDATOR_REJECTION_COUNTERS[res_schema.rejection_reason or "schema_failed"] += 1
@@ -346,4 +510,5 @@ def validate_extracted_claim(
         status=res_entail.status,
         similarity=res_entail.similarity,
         prop_embedding=res_entail.prop_embedding,
+        quote_embedding=res_entail.quote_embedding,
     )

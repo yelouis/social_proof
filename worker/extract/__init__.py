@@ -5,12 +5,16 @@ from worker.extract.gate import ExtractionGate, GateDecision
 from worker.extract.runtime import LocalGemmaRuntime
 from worker.extract.schema import ExtractedClaim, ExtractionResult
 from worker.extract.validators import (
+    get_exclusion_counts,
+    get_exclusion_rate,
+    reset_exclusion_counts,
     validate_confidence_floor,
     validate_extracted_claim,
     validate_polarity,
     validate_quote_verbatim,
     validate_schema,
     validate_speech_acts,
+    validate_stance_direction,
 )
 
 __all__ = [
@@ -20,10 +24,14 @@ __all__ = [
     "ExtractionResult",
     "GateDecision",
     "LocalGemmaRuntime",
+    "get_exclusion_counts",
+    "get_exclusion_rate",
+    "reset_exclusion_counts",
     "validate_confidence_floor",
     "validate_extracted_claim",
     "validate_polarity",
     "validate_quote_verbatim",
     "validate_schema",
     "validate_speech_acts",
+    "validate_stance_direction",
 ]

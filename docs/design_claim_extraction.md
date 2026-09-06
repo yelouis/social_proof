@@ -35,11 +35,11 @@ Claim {
 **Never ask a model for `[start_char, end_char]`.** Character offsets require counting characters, tokenizers do not align with characters, and every model — local or frontier — is unreliable at it. The failure is silent: you get plausible-looking integers pointing at the wrong words.
 
 ```python
-quote_text = extracted.quote_text          # the model returns the substring
+quote_text = extracted.quote_text  # the model returns the substring
 idx = utterance.text_verbatim.find(quote_text)
 if idx == -1:
     reject_claim(reason="quote_not_found")  # hard fail — this is the fabrication check
-quote_span = (idx, idx + len(quote_text))   # computed, never generated
+quote_span = (idx, idx + len(quote_text))  # computed, never generated
 ```
 
 If the substring appears more than once, take the first occurrence and flag `quote_ambiguous` — rare, and not worth a second model call. This is strictly better than generated offsets on any model, and it is what makes the whole extraction stage viable on a local model.
@@ -156,7 +156,8 @@ Under a hosted extractor the gate existed to save money. Locally it costs nothin
 
 ```python
 class ClaimExtractor(Protocol):
-    model_id: str          # goes into extraction_version — see §9
+    model_id: str  # goes into extraction_version — see §9
+
     def gate(self, utterance: str) -> bool: ...
     def extract(self, utterance: str) -> ExtractionResult: ...
 ```
@@ -219,10 +220,11 @@ There is no `output_config.format` here. A local model asked politely for JSON w
        reject(reason="quote_too_short")
 
    # 2. Entailment by embedding similarity, nomic-embed, pinned.
-   sim = cosine(embed("search_document: " + quote_text),
-                embed("search_document: " + proposition_text))
-   if sim < T_ENTAIL_LOW:   reject(reason="quote_does_not_support_proposition")
-   elif sim < T_ENTAIL_HIGH: quarantine(reason="entailment_ambiguous")
+   sim = cosine(embed("search_document: " + quote_text), embed("search_document: " + proposition_text))
+   if sim < T_ENTAIL_LOW:
+       reject(reason="quote_does_not_support_proposition")
+   elif sim < T_ENTAIL_HIGH:
+       quarantine(reason="entailment_ambiguous")
    ```
 
    **Both prefixes are `search_document:`** — this is a document-to-document comparison, not a query lookup. Using `search_query:` on either side puts them in different regions of the space and the similarity becomes meaningless (trap 7).
@@ -236,7 +238,24 @@ There is no `output_config.format` here. A local model asked politely for JSON w
    **Re-validating entailment on proposition deduplication / re-pointing (Item W1):**
    When proposition deduplication merges propositions based on proposition-to-proposition cosine similarity ($T_{dedup} = 0.86$), claims originally attached to the merged proposition are candidates to re-point to the survivor proposition. However, proposition similarity does not imply quote entailment! If $\text{sim}(\text{quote}, \text{survivor\_proposition}) < T_{ENTAIL\_HIGH} (0.70)$, the claim does not entail the survivor proposition. In that case, the re-point is **refused**, and the claim retains its own proposition (or stays unmerged). This preserves invariant X1 through deduplication. Integrity check #14 (`verify_entailment_holds`) verifies this across all published claims.
 
-**Segmentation is a precondition for all six.** Utterances split on length rather than sentence boundaries produce fragments that begin and end mid-word (`"...as it is bullsh-sh-"`). Asking a model to find a *position* in a fragment that cannot hold one is what invites fabrication in the first place. **Segment on sentence and pause boundaries; a validator is defence in depth, not a substitute for coherent input.**
+7. **Stance Direction Check — the directional half of entailment.** *(Added September 5, 2026 after four candidate contradiction pairs were traced to mislabelled stances or rhetorical setups — Item S1, §17n.)*
+
+   Validator 6 certifies *aboutness* (does the quote discuss proposition $P$?). Validator 7 certifies *direction* (does the quote assert $P$ or $\neg P$?).
+   An extractor readily confuses negative sentiment ("the government is spending so much", "unregulated frontier models") with opposing a proposition. A speaker asserting a problem or negative state supports the proposition describing that state; their stance is `support`, not `oppose`.
+
+   **Mechanism:** Compare the quote embedding against proposition $P$ and its explicit negation $\neg P$ (`f"It is not the case that {P}"`):
+   - For `oppose`: $\text{sim}(Q, \neg P) > \text{sim}(Q, P) - \delta$ ($\delta = 0.05$). If $\text{sim}(Q, P) > \text{sim}(Q, \neg P)$, the quote asserts $P$, so the stance is inverted. Reject with `rejection_reason: stance_direction_mismatch`.
+   - For `support`: $\text{sim}(Q, P) > \text{sim}(Q, \neg P) - \delta$. Symmetrically ensures support claims do not assert the negated proposition.
+   Reuses cached quote and proposition embeddings from Validator 6 for efficiency, only embedding $\neg P$.
+
+8. **Speech-Act Sensitivity (Invariant I7).** *(Enhanced September 5, 2026 — Item S1, §17n.)*
+
+   Invariant I7 requires that only a subject's genuine first-person assertions enter scoring. Extracted claims framing another speaker's views, asking questions, or exploring hypotheticals must have `is_own_assertion: false`.
+   - **Interrogatives:** Patterns such as `"So you're saying..."`, `"Are you..."`, `"Can you..."`, or terminal question marks are classified as `exclusion_reason: "question"`.
+   - **Rhetorical / Hypothetical Setups:** Openers such as `"You can say, okay..."` or `"They'd argue..."` are classified as `exclusion_reason: "hypothetical"`.
+   - **Exclusion Rate as a First-Class Metric:** Monitored via `get_exclusion_rate()`. The exclusion rate is calibrated above a floor of 5% (measured at 7.78% on live corpus; previously a blind 0.66%).
+
+**Segmentation is a precondition for all validators.** Utterances split on length rather than sentence boundaries produce fragments that begin and end mid-word (`"...as it is bullsh-sh-"`). Asking a model to find a *position* in a fragment that cannot hold one is what invites fabrication in the first place. **Segment on sentence and pause boundaries; a validator is defence in depth, not a substitute for coherent input.**
 
 Log every rejection with its reason. **The rejection rate is a quality signal for the model itself** — if polarity rejections climb after a prompt edit, the prompt got worse, and you will only know because the counter moved.
 
@@ -255,14 +274,15 @@ class ExtractedClaim(BaseModel):
     hedging_level: float
     is_own_assertion: bool
     exclusion_reason: str | None
-    quote_text: str                   # the substring; offsets are computed in code (§1)
+    quote_text: str  # the substring; offsets are computed in code (§1)
     condition: str | None
     prior_stance_reported: Literal["support", "oppose"] | None
     change_marker: ChangeMarker | None
     confidence: float
 
+
 class ExtractionResult(BaseModel):
-    claims: list[ExtractedClaim]      # empty list is the common, correct answer
+    claims: list[ExtractedClaim]  # empty list is the common, correct answer
 ```
 
 This Pydantic model does double duty: it generates the GBNF grammar that constrains decoding, and it validates the parsed result afterwards.
