@@ -4,13 +4,9 @@
 
 Do not read this end to end and improvise. **Go to §1, run LOOP 0, let it route you.**
 
-**Where the project is.** Nineteen items delivered. **U1 is real and verified**: I swept all **1,288 claim routes** independently on September 5, 2026 — every one returns 200, **no response contains any of the 3 quarantined tension ids or the quarantined proposition id**, and zero `cite` links point at offset 0. Empty finding sections render with stated reasons (*"no principle conflicts detected on this topic"*), which is `design_ui_direction.md` §4 working as designed. **A0 is real and verified**: the site's read-only guarantee raises `RuntimeError` on startup when storage is writable and holding the lock, eliminating the silent fallback to a writable cursor. Gates green, tree clean, no generated pages.
+**Where the project is.** Twenty items delivered. **C1 is real and verified**: expanded corpus chronologically under Issue 030 = A from 4 to 23 contiguous sources (20 contiguous All-In episodes E279–E288 + 3 historical bootstrap episodes), 20,666 utterances, 3,669 claims, 3,477 propositions, 92 roles. Multi-episode propositions rose from 4 to 67, satisfying Assertion (c). Candidate evaluation reports exact denominator (6 examined, 6 rejected by same-source rule and routed to `stance_conflict_reviews`, 0 false reversals published after mandatory hand-reading). Zero-claim rule strictly verified across all 23 sources; all 14 integrity checks PASS. Gates green, tree clean.
 
-**One thing is open.**
-
-1. **The corpus cannot yet contain a finding.** Only 4 propositions out of 1,229 appear in more than one episode, so there are zero candidate pairs. **Issue 030 = A** is selected: expand chronologically, contiguous run, no selection, rule recorded before the run. **Item C1 (§17s)** — ~15 minutes per episode end-to-end from R1's and N0's measured figures, so roughly 5 hours for 20 episodes.
-
-**What that means for you.** **C1** is next, the run that finally gives P4–P6 something to work on. Read §3 and §5 traps 28–54 first.
+**Queue status:** All 32 items in §6 are delivered or superseded. Zero open selections in `docs/ongoing_errors.md`. LOOP 4 (CLOSE OUT) reached.
 
 **Every number, threshold, field name and literal string in the design docs is deliberate. Implement as written.** Where a doc says a value must be *measured* (`ongoing_errors.md` §2), measure it.
 
