@@ -60,6 +60,10 @@ Get this wrong and the system silently never works. If the extractor emits `"AI 
 | "Licensing would kill open source. Terrible idea." | `AI should not be licensed` | `federal licensing of frontier AI models` | `oppose` |
 | "I could see licensing working, maybe." | `AI licensing might work` | `federal licensing of frontier AI models` | `support`, hedging 0.8 |
 
+**Negation is polarity, and so is the positive case.** A proposition reading *"the device will **not** be similar to an iPad"*, *"running a Chinese model does **not** necessarily mean data goes to China"*, *"Forces **should** be allowed to play out"* or *"democrats **are favored to win** the house"* carries its position in the text, which is exactly what this rule forbids. The validator below catches only the negative modals; **positive polarity passes freely and negation inside a subordinate clause passes too.**
+
+Negation in a proposition does a second kind of damage. Validator 7 decides stance direction partly by looking for negation in the quote; when the **proposition** also carries a negator, a quote that agrees with it reads as opposing it — measured on live data, that is one of the two causes of a `support` → `oppose` false-flip rate near 100% on the claims sampled. **Strip polarity from the proposition in both directions and let `stance` carry it.**
+
 Enforce it in the extraction prompt *and* in a validator: reject any proposition text matching `\b(should not|shouldn't|must not|never|oppose|against|no )\b` at canonicalisation time. A rule the model can violate silently is not a rule.
 
 ### The actor must be stripped too, and that half was never enforced
