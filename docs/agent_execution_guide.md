@@ -4,15 +4,16 @@
 
 Do not read this end to end and improvise. **Go to §1, run LOOP 0, let it route you.**
 
-**Where the project is.** Fourteen items delivered. Q0, W1 and W0 all verified correct on September 5, 2026: three tensions quarantined, **zero indexical propositions remain** (was 126), `verify_entailment_holds` added as check 14, `t_dedup` unified behind one constant. Gates green, 207 passed, 14 integrity checks PASS. **1362 claims, every quote verbatim-verified against its utterance.** That half of the product is real and trustworthy.
+**Where the project is.** Seventeen items delivered. S1, T1 and W2 all verified correct on September 5, 2026 by querying the live system: stance is validated by a seventh validator, the own-assertion guard fires at **8.2%** (was 0.7%), propositions carry no unbound pronouns, and same-source pairs are disqualified from reversal. **1,288 claims, every quote verbatim-verified.**
 
-**No finding it has ever produced has been.** All three tensions ever published were fabrications and are quarantined — a 100% quarantine rate, which is the honest health metric. **I read all five surviving candidate pairs by hand and every one is false**, for three causes none of the six validators covers:
+**The pipeline is now correct, and a correct pipeline over four episodes finds nothing.** Zero opposing-stance candidate pairs among own assertions; zero cross-source. **Only 4 propositions out of 1,229 appear in more than one episode.** This is the good version of zero — every earlier zero was a broken detector or an unrepresentable corpus, and this one is an honest measurement. But it means **the bottleneck has moved from correctness to corpus coverage**, which is **Issue 030, open and awaiting a selection.**
 
-- **Nothing validates `stance`.** Validator 6 asks *does this quote support this proposition* and is stance-blind by construction, so one person asserting the same thing twice can be labelled `support` and `oppose` and render as a self-contradiction. Two pairs are exactly this.
-- **The own-assertion guard is under-firing.** 1353 of 1362 claims are own assertions; **9 exclusions total (0.7%)**. A rhetorical setup (*"You can say, okay, Verizon's responsible…"*) and a question (*"So you're saying…"*) both became claims. Invariant I7 exists for these.
-- **Self-containment was fixed against a list, not a principle.** W0's named patterns are gone, and ~130 propositions (10%) still carry unbound `they`, `he`, `the same`, or a sentence-initial `It`.
+**Two things need your attention before you write code.**
 
-**What that means for you.** **S1** (§17n) — validate the two fields a tension is actually made of. **T1** (§17o) — a reversal needs time between its halves; all five candidates are same-episode and there are **zero** cross-episode candidates in the corpus. **W2** (§17p) — finish self-containment against the property. Then **U1** (§17q), the review site, which Issue 028 gates on a finding surviving being read by hand. Read §3 and §5 traps 28–48 first.
+1. **The tree is dirty and two gates are RED.** `scripts/export_site.py` and `tests/test_review_site_u1.py` are uncommitted and hold one `ruff` F541 and two `mypy` errors. **Both are obsolete under Issue 033. Deleting them is the LOOP 7 repair**, and it is U1's first commit.
+2. **U1 was built while blocked, and its output has been deleted.** The static export Issue 028 specified produced **2,593 HTML files and 27 MB** for 1,288 claims — one page per claim, plus per-person and per-episode copies of the same rows. **Issue 033 replaces it with a local server that queries DuckDB per request.** The `site/` directory is gone; do not regenerate it.
+
+**What that means for you.** **U1** (§17q), rewritten — serve the site live from a read-only DuckDB connection on the existing local API, four routes, no build step, no generated files. Render every finding section including the empty ones, with reasons. Read §3 and §5 traps 28–51 first.
 
 **Every number, threshold, field name and literal string in the design docs is deliberate. Implement as written.** Where a doc says a value must be *measured* (`ongoing_errors.md` §2), measure it.
 
@@ -130,6 +131,9 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
 | `worker.integrity --all` | **PASS — 14 checks, independent populations, active sufficiency verdicts, referential integrity, and entailment validation** | G1, E1, N0, P0, W1, W0 & S1 delivered: 14 checks, FIXTURES and CORPUS reported separately with no union; `verify_quotes` examined 1,362 claims; `verify_anchor_chain` examined 5,581 entities; `verify_canonical_ids` examined 1,319 entities (1,303 propositions, 0 principles, 16 roles); `verify_quarantined_propositions_unreachable` examined 1 quarantined proposition (`a1e8c751a02cb424`); `verify_assessment_subjects_exist` verified all 8 assessments; `verify_entailment_holds` examined 1,362 claims against current propositions (PASS, all 1,256 published claims >= 0.70; 106 excluded/quarantined). |
 | `worker.golden.report` | **PASS** | Fixtures 20/20 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
+| **Working tree** | **DIRTY · 2 GATES RED** | `scripts/export_site.py` (ruff F541, mypy import-not-found) and `tests/test_review_site_u1.py` (mypy index error) are uncommitted. Both obsolete under Issue 033; **deleting them is the repair.** `scripts/build_tokens.py` is also modified — revert unless the new architecture needs it. |
+| **Generated site** | **DELETED — 2,593 files, 27 MB** | The static export produced one HTML page per claim plus per-person and per-episode duplicates. Removed September 5. **Issue 033: serve from DuckDB per request instead.** Do not regenerate. |
+| **Corpus overlap** | **4 PROPOSITIONS SPAN 2+ EPISODES** | Out of 1,229. A reversal needs one proposition, two episodes, opposing stances — that pair does not exist in this corpus. **Not a detector fault; a coverage fault.** Issue 030, open. |
 | **CI / Portability** | **PASS** | `portability.yml` tests base install without Apple extra; runs lint, mypy, and non-model tests across all 5 directories. |
 | **Corpus** | **POPULATED, FULL COVERAGE (R1, N0, P0, W1 & W0 DELIVERED)** | 4 sources, **4,219 utterances**, **1,362 claims**, **1,303 propositions** (1,302 active with claims, 1 quarantined), 8 assessments. Coverage across all four sources: **99.7%–100.0%** (5,283s–5,800s of 5,301s–5,801s). Feed `<itunes:duration>` and `pubDate` parsed; `published_at` preserved from feed; `MIN_UTTERANCE_MEDIA_RATIO = 0.80` enforced and passing. Truncation bug eliminated. Items R1, N0, P0, W1, and W0 delivered. |
 | **Propositions** | **1,228 ACTIVE FOR 1,288 CLAIMS (W2 DELIVERED)** | Deduplication unified at empirical Parameter 008 ($T_{\text{dedup}} = 0.86$) with strict re-point entailment validation (`T_ENTAIL_HIGH = 0.70`) and zero unbound pronouns or indexicals. 5 multi-source diff-date propositions. Top 5 merged clusters manually verified as single propositions rather than broad topics. Falsification verified (0.999 collapses to singletons/0 candidates; 0.30 causes absurd merge; 0.86 with entailment validation and self-containedness holds). |
@@ -192,6 +196,9 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 37. **A test that opens the production database can write to it.** `subj_nonexistent_subject` holds an assessment in the live corpus and no row in `subjects`. Tests legitimately *read* the corpus — assertion (c) often needs real data — but a test that needs to *write* must take a copy, and the corpus should be opened `read_only=True` from tests.
 38. **A verdict computed from the evidence it gates is not a verdict.** E1 replaced `sufficiency.get("passed", True)` with `passed = any_scored` — so "did sufficiency pass?" became "did anything get scored?", and the check that asks *"if sufficiency failed, is any score present?"* can never find one. **A guard's input must be independent of its subject.** When a fix removes a default, check what replaced it: the same inertness survives a rewrite easily.
 39. **A uniqueness bug hides behind a coverage check.** `verify_role_coverage` asks whether every utterance *resolves to* a role and passes over a `source_roles` table where every row is duplicated. Resolution and uniqueness are different questions, and only the first was asked — the same error shape as trap 28 (*"is this citation real?"* vs *"does it support this claim?"*).
+49. **Pre-rendering a page per row is a database with worse ergonomics.** The static export wrote 2,593 HTML files and 27 MB for 1,288 claims, duplicating the same rows across per-claim, per-person and per-episode pages. **When the data already lives in a queryable store, serve from it** — a build step that materialises every view is a cache of a thing you already have, and it goes stale the moment the corpus changes.
+50. **A blocked item can be built anyway, and nothing in the loops stops it.** U1's queue row read `blocked_on: S1, T1, W2 + one real finding` and it was implemented before any of those landed. LOOP 0 routes by the queue; it has no way to notice that work happened off the queue. **When an item is blocked on a judgement rather than a commit, say in the item what evidence unblocks it and who decides.**
+51. **A correct pipeline can produce nothing, and that is a different finding from a broken one.** Zero candidate pairs over four episodes is a coverage measurement, not a detector fault — and it looks identical in a status table to the three broken zeros that preceded it. **Report the denominator that makes them distinguishable:** 4 propositions span more than one episode, out of 1,229.
 45. **A validator that checks *aboutness* cannot check *direction*.** Validator 6 asks whether a quote supports its proposition and passes it either way it is labelled, so `stance` — the field the whole contradiction detector keys on — went unchecked through six validators. **Enumerate the fields a downstream stage reads, and confirm something validates each one.**
 46. **A guard's firing rate is a measurement, and a suspiciously low one is a finding.** `is_own_assertion` excluded 9 of 1362 claims (0.7%) across four hours of unscripted conversation full of questions and hypotheticals. Nothing was red. **Report every guard's rate next to its rejections; a rate that looks too clean usually means the guard stopped reaching its subject.**
 47. **A validator written from a list of observed failures catches the failures you observed.** W0 named three indexical patterns and the implementation matched them exactly — leaving 130 propositions with unbound `they`, `he` and `the same`. **State the property in the spec and the docstring; let the patterns be examples, never the definition.**
@@ -211,7 +218,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 | 1 | **S1** | Nothing validates `stance` or `is_own_assertion` | none | **delivered · verified** | Implemented Validator 7 (`validate_stance_direction`) certifying directional alignment ($P$ vs $\neg P$, Parameter 031 margin $\delta=0.05$); raised Invariant I7 speech-act sensitivity (regex detection of interrogative and hypothetical quotes). Corrected 2 mislabelled oppose claims to support (`af95392de868a188` and `7f571f16d81af8c5`), downgraded 97 non-assertive quotes, raising I7 exclusion rate to 7.78% (106/1,362 claims, floor > 5%). Eliminated all 4 target candidate pairs identified in §17n. Surviving own-assertion oppose claims: 73 ($\ge 50$). All 14 integrity checks PASS. Both threshold directions and falsification verified. |
 | 2 | **T1** | A reversal needs time between its halves | none | **delivered · verified** | Implemented same-source automatic disqualification (`source_a_id == source_b_id`) in `worker/tension/detect.py`; routed disqualified same-source opposing pairs to review surface `stance_conflict_reviews` in `worker/storage.py` with reason `same_source_stance_conflict`; added Parameter 032 `MIN_REVERSAL_GAP_DAYS = 0.0` (unmeasured / provisional); implemented `CandidateEvaluationReport` reporting exact examined denominator and rejection reasons. Verified: all 5 baseline pairs disqualified and routed to review table; 0 reversal candidates over live corpus (1 examined, 1 rejected by same-source rule); synthetic cross-episode pair accepted (1 published reversal); LOOP 2 falsification verified (disabling same-source condition causes candidates to reappear; restoring clears them to 0). |
 | 3 | **W2** | Self-containment, the rest of the pronouns | none | **delivered · verified** | Completed self-containment against the property: extended `validate_self_contained` (`proposition_not_self_contained`) to reject sentence-initial pronouns/deictics, unbound third-person pronouns (`they/their`, `he/his/him`), and comparatives without relata (`the same`, `such`, `the other`), while preserving bound pronouns (`Moderna patented its mRNA technology`). Updated prompt to `v1.5` (`gemma-3-27b-it:v1.5:s1`). Pre-repair RED state verified (132 failing propositions across 139 claims). Re-extracted affected candidate utterances under live MLX Gemma (65 new clean claims produced, 63 invalid proposals rejected by validator), purged orphaned propositions, deduplicated at T=0.86 with W1 entailment guard. Post-repair store verified with exactly 0 unbound propositions (Assertion c). Both target false candidate pairs eliminated. LOOP 2 falsification verified. 14/14 integrity checks and 225/225 tests PASS. |
-| 4 | **U1** | The review site (**Issue 028**) | **S1, T1, W2 + one real finding** | **outstanding** | Episodes → claims by person → Social Proof panel. Static export, local only, everything rendered including absence. **Issue 028 gates it on a tension surviving being read by hand.** |
+| 4 | **U1** | The review site, served live from DuckDB (**Issues 028 + 033**) | none | **outstanding · REWRITTEN** | **Unblocked.** S1/T1/W2 are delivered, and Issue 030 reframes the "one real finding" gate — the corpus yields no candidates, so the site ships with honest absence per §4. First commit deletes the obsolete export and repairs the red gates. |
 | 5 | **Q0** | Quarantine both published tensions | none | **delivered · verified** | Quarantined both published tensions (`461e3d1dbf30bde4` and `4b812a6b0dc604b0`) as `fabricated_proposition`, joining `0068adec4b1501c6`. Recomputed all 8 assessments without them (`design_evidence_integrity.md` §5). `verify_quarantine_not_rendered` examines 3 quarantined tensions and passes; no assessment mentions either tension ID. Quarantine rate is 3/3 (100.0%). Falsification verified (re-publishing turns Assertion (c) RED). |
 | 6 | **W1** | Entailment does not survive re-pointing | none | **delivered · verified** | Re-pointing strictly gated by quote entailment validation (`T_ENTAIL_HIGH = 0.70`). Refused 8 candidate claim merges where entailment fell below floor (0.6444–0.6962), leaving 1,430 active propositions (69 merged away). Check #14 `verify_entailment_holds` implemented in `worker/integrity.py` with DuckDB caching (`claim_entailment_cache`), passing on 1,501 claims. Single source of truth for `T_dedup = 0.86` across `dedup.py` and `extract.py`. Assertion (c) and falsification verified (disabling re-validation fails `verify_entailment_holds` with 6 claims). |
 | 7 | **W0** | Propositions must be self-contained, not indexical | **W1** | **delivered · verified** | Stripped actor frames and unbound indexicals at extraction: fixed prompt to `v1.3` (`gemma-3-27b-it:v1.3:s1`) with Rule 3; implemented `validate_self_contained` validator (`proposition_not_self_contained`) running before entailment; added Precondition 6 to tension detection. Pre-repair RED state verified (192 indexical propositions across 204 claims). Live corpus repaired: old indexical claims deleted, 204 candidate utterances re-extracted (122 indexical rejections, 65 clean new claims produced), orphaned propositions purged, deduplicated at T=0.86 with W1 entailment gate. Zero propositions now match indexical patterns (down from 7%). Top 5 merged clusters inspected and confirmed single propositions. 4 multi-source diff-date propositions, 4 concordant candidate pairs examined, 0 opposing-stance false positives from attractor propositions. All 14 integrity checks PASS on fixtures and corpus. |
@@ -1329,64 +1336,77 @@ Roughly **130 propositions (10%)** still cannot be resolved standing alone. Two 
 **Blast radius.** `worker/extract/validators.py`, `worker/extract/runtime.py` (prompt), `fixtures/behaviour/`, the corpus (re-extraction), `docs/design_claim_extraction.md` §2, §3, §6.
 
 ---
-## 17q. U1 — The review site · *Issue 028*
+## 17q. U1 — The review site, served live from DuckDB · *Issue 028, amended by Issue 033*
 
-**User impact:** you can finally see what the system found, by episode and by person, and click any claim to get its full record.
+**User impact:** you can read what the system found, by episode and by person, without a build step and without 2,593 files on disk.
 
-**Blocked on S1, T1, W2 — and on one real finding existing.** Issue 028 = *fix findings first*: this site is not built while every candidate pair in the corpus is false. **The gate is explicit: at least one tension survives being read by hand.** That is a judgement, not a threshold — a person reads the tension and agrees the two quotes are about the same proposition and genuinely conflict.
+**This item was rewritten on September 5, 2026.** An earlier attempt built the static export Issue 028 originally specified. It produced **2,593 HTML files and 27 MB for 1,288 claims** — one page per claim, plus per-person and per-episode duplicates of the same rows. That output has been deleted. **Issue 033 replaces the static export with a local server that queries DuckDB per request.**
 
-**Contract:** `design_ui_direction.md` §2 (timeline), §3 (citation-first, **I3**), §4 (rendering null), §5 (tension card) · Issue 014 (no in-app playback) · Issue 028 (below).
+**Start here — the tree is dirty and two gates are red.** `scripts/export_site.py` and `tests/test_review_site_u1.py` are uncommitted, and between them hold the one `ruff` F541 and the two `mypy` errors currently failing §2's block. **Both files are obsolete under Issue 033. Deleting them is the LOOP 7 repair** — do it in the first commit of this item, before writing anything new. Also revert the uncommitted change to `scripts/build_tokens.py` unless you can state why the new architecture needs it.
 
-### Issue 028 — the four decisions, and what each rules out
+**Contract:** `design_ui_direction.md` §2 (timeline), §3 (citation-first, **I3**), §4 (rendering null), §5 (tension card), §6b (the review site) · `design_local_api_and_clients.md` §2 (the four security controls) · Issue 014 (no in-app playback) · Issues 028 and 033.
 
-| | Selected | Consequence |
+### Issue 033 — what changed and what did not
+
+| | Issue 028 (superseded) | Issue 033 (current) |
 |---|---|---|
-| **Panel content** | **Everything** | Timeline, four rubric axes, tensions and principles — the full `/resolve` payload `design_ui_direction.md` §151 already specifies as Depth 2. **The same components rendering more of the same payloads, not a second implementation.** |
-| **Audience** | **Local only** | No hosting, no auth surface, no exposure. A wrong claim about a real person cannot leave the machine. This removes the entire publication-risk class from the MVP. |
-| **Honesty** | **Fix findings first** | The site does not ship while its findings are known-false. Claims and timelines are trustworthy today; axes, tensions and principles are not. |
-| **Build** | **Static export** | DuckDB → JSON at build time, static files after. **No server, no write path, no database reachable from a page.** The export is the only trust boundary and it is one function. |
+| **Rendering** | Pre-rendered static HTML, one file per claim | **Server-rendered per request**, no generated files |
+| **Data access** | JSON export snapshot | **Queries DuckDB live**, computed on demand |
+| **Build step** | `export_site.py` before every view | **None** |
+| **Write safety** | Guaranteed by having no server | **Guaranteed by opening DuckDB `read_only=True`** |
 
-**"Everything" and "fix findings first" together set a high bar — read this before planning.** The panel is specified to show principles, and `principles` has **0 rows**; P5 has never produced one. The resolution is **not** to wait for principles: it is `design_ui_direction.md` §4, *"Rendering null — the most important screen in the product."* **The panel renders every section always, and renders absence explicitly** — *"no principle conflicts detected on this topic"*, *"consistency: insufficient evidence (3 claims, floor is 5)"* — with the reason, never as a blank or an omitted card. The ship gate is that nothing shown is **false**, not that everything is populated. An honest empty section is a finished feature; a hidden one is not.
+**Unchanged from Issue 028, and still binding:** the panel shows **everything** (timeline, four axes, tensions, principles); it is **local only**; and it is **not shipped until a finding survives being read by hand.** See the gate note below, which has become the interesting part.
+
+### The gate has moved, and you need to know why before you plan
+
+Issue 028 gated this site on *"one tension surviving being read by hand."* **S1, T1 and W2 are all delivered and correct, and the corpus now yields zero tension candidates at all** — not zero *published* tensions, zero *candidates*:
+
+```
+opposing-stance pairs, own assertions only :  0
+  ... of those, cross-source (T1 rule)     :  0
+propositions with claims from 2+ sources   :  4      (out of 1,229)
+```
+
+**Only four propositions in the entire corpus appear in more than one episode.** Four episodes spanning 2023–2026 barely revisit the same ground, so a cross-episode reversal is not merely undetected — there is no pair to detect. **The bottleneck has moved from correctness to corpus coverage**, which is Issue 030, open and awaiting a selection.
+
+**Do not read this as a reason to stall U1.** It is the reason `design_ui_direction.md` §4 exists. Claims, quotes, speakers, timestamps and deep links are all real, verbatim-verified and worth reading today. **Build the site; render the finding sections as honest, reasoned absence.** The ship gate stands — *nothing shown may be false* — and an empty tension section with a stated reason satisfies it completely.
 
 ### Implementation
 
-**1. The export (`scripts/export_site.py`).** One function, DuckDB → a JSON tree. It is the entire trust boundary, so it enforces rather than assumes:
+**1. Extend the existing local API; do not start a second service.** `worker/api/server.py` already binds loopback-only, already holds the four controls in `design_local_api_and_clients.md` §2, and already has the query layer `/resolve` uses. Add HTML routes to it, server-rendered (Jinja2 or equivalent). One codebase, one security surface, no build step.
 
-- **Quarantined rows are excluded structurally**, by query predicate — `tensions.status='published'`, `propositions.status='active'` — never by a template conditional. A renderer that filters is one `v-if` away from publishing a fabrication.
-- **Re-verify at export, do not trust the store.** Every exported claim's `quote_text` must appear verbatim in its utterance's `text_verbatim`; every exported claim must resolve to an utterance, a source and a subject. **Export fails loudly on any violation.** The store passed these checks when written; the export is where they matter to a reader.
-- Export nothing the page does not render — no embeddings, no `_pre_merge` tables, no `word_timestamps_ref`.
+**2. Open DuckDB `read_only=True`, and let that be the guarantee.** The static plan was safe because it had no write path; this plan is safe because the connection cannot write. **Assert it** — a test that opens the site's connection and attempts an `INSERT` must raise.
 
-**2. Routes**, static files, no client-side routing needed:
+**3. One shared query layer, and the exclusions live in it.** Quarantined tensions (`status='published'` only) and quarantined propositions (`status='active'` only) are filtered **in the queries**, never in a template. Every route calls the same functions. *A renderer that filters is one conditional away from publishing a fabrication, and this project has published three.*
+
+**4. Verify the quote in the query layer, not at render.** Before any claim is returned to a template, its `quote_text` must be confirmed present in its utterance's `text_verbatim`. The store passed this when written; the page is where a reader would be misled, so check it there. Fail the request loudly rather than rendering an unverified quote.
+
+**5. Four routes, computed per request:**
 
 ```
-/                      episodes, newest first: title, date, duration, claim count
-/episode/<source_id>   the episode; claims grouped by person, in timestamp order
-/claim/<claim_id>      the Social Proof panel
-/person/<subject_id>   optional: everything by one person across episodes
+GET /                     episodes newest-first: title, date, duration, claim count
+GET /episode/{source_id}  claims grouped by person, timestamp order
+GET /claim/{claim_id}     the Social Proof panel
+GET /person/{subject_id}  that person across all episodes
 ```
 
-**3. The Social Proof panel** — the whole of `design_ui_direction.md` §2–§5 for one claim:
+**6. The Social Proof panel** — `design_ui_direction.md` §2–§5 for one claim: the quote verbatim with speaker, episode, timestamp, stance and hedging; a **`cite`** deep link opening the source at the quote's offset, **disabled with a stated reason** where no `citation_url_template` exists (§3 — never link to 00:00); **the timeline** of every other claim by that person on the same proposition, each with its own quote and `cite`; **the four axes** with evidence decomposition or an explicit insufficiency reason; **tensions** (published only) as §5 cards; **principles**, same treatment. **Every section renders always.** Absence is rendered with its reason, never omitted.
 
-- **The claim**: quote verbatim, speaker, episode, timestamp, stance, hedging.
-- **`cite`**: a deep link opening the source at the quote's offset. **No in-app playback** (Issue 014 = B); audio is deleted (Issue 003 = C). Where a source has no `citation_url_template`, render the affordance **disabled with a reason** — §3 is explicit that sending a reader to 00:00 of a three-hour recording is worse than admitting the link is unavailable.
-- **The timeline**: every other claim by that person on the same proposition, on a time axis, each with its own quote and `cite`. **This is the primary artifact** (§2) — if only one section works, it is this one.
-- **The four axes** with their evidence decomposition, each either a score or an explicit insufficiency reason (§4).
-- **Tensions**: published only, as §5 tension cards with both quotes and both deep links.
-- **Principles**: same treatment, absence rendered explicitly.
-
-**4. Reuse the extension's design tokens** (`design_ui_direction.md` §157). One visual language, one set of components. Do not fork the styling.
+**7. Reuse the extension's design tokens** (§157). No second component set, no second visual language.
 
 ### Validation
 
-- **(c)** — **the exported JSON contains zero quarantined tension ids and zero quarantined proposition ids**, asserted by loading the export and cross-checking every id against the DB's quarantined set; **and** every claim in the export has its `quote_text` found verbatim in the corresponding utterance, re-checked from the DB at test time. *This is the assertion that makes the site safe to look at: no stub, no template and no hand-wave satisfies it, and it is the exact failure — a fabrication rendered as a finding — that this project has now shipped three times.*
-- **Rendering null is tested, not assumed:** point the export at a subject with one claim and no tensions. Every panel section still renders, each with an explicit reason. **Assert the strings appear.** A blank section fails this test.
-- Every `cite` link resolves to a real URL with a timestamp, or is disabled with a stated reason. **Zero links to offset 0.**
-- The site is served from `file://` or a static server with **no network calls and no writes**. Assert the built output contains no fetch to a non-static origin.
-- Claim counts per episode in the UI equal `SELECT count(*)` per source in the DB.
+- **(c)** — **no route can render a quarantined tension, a quarantined proposition, or a claim whose quote is not verbatim in its utterance.** Prove it against the live corpus: request `/claim/{id}` for every claim in the store, assert every response is 200, and assert no response body contains any of the three quarantined tension ids or the quarantined proposition id. *This is the assertion that makes the site safe to look at, and it is exactly the failure — a fabrication rendered as a finding — that this project has shipped three times. Aggregate counts do not satisfy it; the sweep does.*
+- **The read-only guarantee is tested:** the site's connection raises on `INSERT`. Not asserted by inspection of the connection string — by attempting the write.
+- **Rendering null is tested, not assumed:** on today's corpus, which has zero tensions and zero principles, `/claim/{id}` still renders a tensions section and a principles section, each with a stated reason. **Assert the reason strings appear in the HTML.** A blank or omitted section fails.
+- **No generated pages:** assert the repository and working tree contain no `site/` directory and no build artefact after the server has been exercised. `.gitignore` should not need to mention one.
+- Every `cite` is a real URL with a timestamp or is disabled with a reason. **Zero links to offset 0.**
+- Claim counts shown per episode equal `SELECT count(*)` per source.
+- Page render time for the heaviest route (an episode with ~330 claims) is recorded. If it is slow, say so with the number rather than adding a cache; a cache is a second copy of the truth and this project has been bitten by one already (trap 36).
 
-**Falsify.** Publish one quarantined tension into the export and confirm the (c) assertion goes red. Then remove a `citation_url_template` and confirm the affordance renders disabled rather than linking to 00:00. Revert; record both.
+**Falsify.** Point the query layer at `status` unfiltered so a quarantined tension becomes reachable, and confirm the (c) sweep goes red naming it. Then remove a source's `citation_url_template` and confirm the affordance renders disabled rather than linking to 00:00. Revert; record both.
 
-**Blast radius.** `scripts/export_site.py`, a new `site/` directory, `tests/`, `docs/design_ui_direction.md` (§6 gains the review site alongside the extension), `docs/ongoing_errors.md` §4 (Issue 028), §3, §6.
+**Blast radius.** `worker/api/server.py`, templates under `worker/api/`, `tests/`, deletion of `scripts/export_site.py` and `tests/test_review_site_u1.py`, `docs/design_ui_direction.md` §6b, `docs/design_local_api_and_clients.md` §3 (new routes), `docs/ongoing_errors.md` §4 (Issue 033), §3, §6.
 
 ---
 ## 18. X1 — Entailment validator · *Issue 025 = C*
@@ -1836,5 +1856,7 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 
 | **All five surviving candidate pairs false, in three new ways** | "Read the five largest merge clusters by hand and confirm each groups restatements of one proposition." | **"...and read every candidate pair the detector would publish, before recording the item delivered."** Reading the *merges* was right and insufficient: the merges were sound and the pairs built on them were not. **Read the thing the user would see, not the intermediate the fix touched.** |
 | **W0 removed three patterns and left ten percent** | "Reject `the speaker`, bare `the subject`, `the described`." | **"Reject any proposition not resolvable without external context; the three patterns above are examples."** The item handed the implementation a list, so it got a list. |
+
+| **2,593 HTML files for 1,288 claims** | "Static export: dump DuckDB to JSON at build time and serve a static site." | **"...and say how many files that produces at the corpus's current size."** The option was chosen for its safety properties — no server, no write path — and those were real. Nobody costed the output. **When an architecture's cost scales with row count, put the row count in the option.** |
 
 **The newest pattern: a correct fix to the wrong scope reads exactly like success.** R1's gates were green, its coverage real, its numbers honest, and the thing it existed to enable did not happen. N0 then repeated it one layer down. **Check what the item was *for*, not only what it said** — and when an item's purpose is to feed a downstream stage, make one of its assertions a property of *that stage's input*, not of its own output.

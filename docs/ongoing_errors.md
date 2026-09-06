@@ -8,13 +8,62 @@
 - **Once selected, a decision moves out of §1.** Its consequence is written into the design doc that owns it, and it becomes one row in §4. The full option text stays in git history — this file is a queue, not an archive.
 - Recommendations are marked. A recommendation is not a decision.
 
-**Status: 22 decisions made, 0 open.** Live work is queued in `agent_execution_guide.md` §6.
+**Status: 23 decisions made, 1 open (030).** Live work is queued in `agent_execution_guide.md` §6.
 
 ---
 
 ## 1. OPEN — awaiting your selection
 
-*Newest first. Nothing is open right now.*
+*Newest first.*
+
+### 030 — The pipeline is correct now, and a correct pipeline over four episodes finds nothing
+
+**Blocks:** U1's ship gate (Issue 028: *not shipped until a finding survives being read by hand*). **Filed:** September 5, 2026, from a live query at `a9b344c`.
+
+**What was measured.** S1, T1 and W2 are all delivered and verified. Stance is validated, the own-assertion guard fires at 8.2% (was 0.7%), propositions are self-contained, and same-source pairs are disqualified. With all of that correct:
+
+```
+opposing-stance pairs, own assertions only :  0
+  ... of those, cross-source (T1 rule)     :  0
+propositions with claims from 2+ sources   :  4      out of 1,229
+propositions with 2+ claims, same subject  : 37      (all within one episode)
+```
+
+**Only four propositions in the whole corpus appear in more than one episode.** A `unacknowledged_reversal` is a claim about one person changing position across time; to find one, the same proposition has to come up twice, in different episodes, with opposing stances. That pair does not exist here — not because the detector is broken, but because **four episodes spanning three years barely revisit the same ground.**
+
+This is the good version of zero. Every previous zero was a broken detector or an unrepresentable corpus; this one is an honest measurement over a working pipeline. But it means the product's central claim — *we can show you how someone's positions held up over time* — is still unproven, and U1 will ship with every finding section reading "none detected."
+
+**What is not the answer.** Loosening `t_dedup` or dropping T1's same-source rule would manufacture candidates immediately. **That is the exact move that produced all three fabrications this project has published**, and parameter 008 was measured honestly at 0.86. Re-tuning a threshold until findings appear is not measurement.
+
+---
+
+**Option A — Scale chronologically: ingest the next N episodes in sequence.** ← **recommended**
+
+Pick a contiguous run — say the 20 most recent episodes — and ingest all of them, no selection.
+
+- **Pro:** **unbiased by construction.** No episode is chosen because of what it contains, so nothing about the resulting corpus can be attributed to your picking. For a product whose whole subject is even-handedness, an auditable "we took everything in this range" is worth a great deal.
+- **Pro:** the pipeline is proven on this exact format; roles are enrolled, the adapter works, no new code.
+- **Con:** compute. R1 recorded real per-episode throughput — use that figure to estimate before committing, not a guess.
+- **Con:** overlap grows slowly. Four episodes gave 4 shared propositions; 20 might give ~30. Enough to find something, probably not a lot.
+
+**Option B — Scale by a pre-registered rule.** Fix a mechanical selection rule *before* running it — for example every episode whose description mentions AI regulation — record it, then ingest whatever matches.
+
+- **Pro:** **far higher proposition overlap per episode ingested**, because it concentrates on recurring themes, which is exactly the bottleneck.
+- **Pro:** still auditable, provided the rule is written down first and applied without exception.
+- **Con:** it narrows the corpus to one theme, and **Even-handedness is measured by comparing how a person treats different actors on comparable issues** — a single-theme corpus weakens that axis specifically.
+- **Con:** the rule is a judgement call, and a reader has to trust you fixed it in advance. Option A needs no such trust.
+
+**Option C — Ship U1 with no findings and revisit later.** Accept the empty finding sections as an honest state of the product.
+
+- **Pro:** nothing is spent, and the site is genuinely useful today — 1,288 verbatim claims, dated, attributed, deep-linked.
+- **Pro:** honest. §4 exists for exactly this.
+- **Con:** the thing the project exists to demonstrate stays undemonstrated, and you will not know whether the rubric engine works until a real finding passes through it. **P4–P6 remain unvalidated as behaviour**, which has been true for the entire build.
+
+**Recommendation: A**, and it is not close. The corpus overlap problem is a volume problem, and A solves it without spending the product's credibility. B is defensible with a pre-registered rule, but it trades away exactly the property — visible impartiality in what you chose to look at — that this product is asking its readers to care about. **C is a reasonable thing to do *alongside* A** — ship the site now with honest absence, and let the findings appear as the corpus grows.
+
+Your selection: _____
+
+---
 
 > **For the agent filing a new one:** insert it at the **top** of this section, not the bottom, and use the next free number. Include what is blocked, what you already tried, 2–3 options with honest pros *and* cons, a marked recommendation, and a final `Your selection: _____` line. Then set `blocked_on` in the guide's queue. Never fill the line in.
 
@@ -54,6 +103,7 @@ Newest first. One row each; **the design doc named is where that decision now li
 
 | # | Decision | Now lives in |
 |---|---|---|
+| **033** | **Amends 028** — the review site is **served live from DuckDB per request**, not pre-rendered. The static export produced 2,593 HTML files and 27 MB for 1,288 claims; it is deleted. Write safety now comes from opening the database `read_only=True` rather than from having no server. | `design_ui_direction.md` §6b · `agent_execution_guide.md` U1 |
 | **028** | **The review site**: panel shows *everything* (timeline, axes, tensions, principles) · **local only**, no hosting · **static export** DuckDB→JSON, no server and no write path · **fix findings first** — not built until a tension survives being read by hand | `design_ui_direction.md` §6 · `agent_execution_guide.md` U1 |
 | **027** | **A** — repair the proposition table in place: normalize canonical IDs, merge the forked rows, backfill embeddings for live propositions, quarantine the fabricated proposition. Nothing purged. | `design_data_layer.md` §3–§4 · `design_evidence_integrity.md` §4 · `design_local_api_and_clients.md` §4 · `agent_execution_guide.md` D0 |
 | **025** | **C** — entailment guard: embedding similarity + minimum quote length, ambiguous band quarantines | `design_claim_extraction.md` §8 validator 6 · `design_evidence_integrity.md` E2b |
