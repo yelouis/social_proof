@@ -1,0 +1,168 @@
+[
+  {
+    "case_id": "t1_pair_1_spending",
+    "description": "Baseline Pair 1: Opposing stances within same episode on federal spending",
+    "subject_id": "subj_david_sacks",
+    "proposition_text": "The federal government faces a fundamental fiscal spending problem.",
+    "source_id": "src_allin_e165",
+    "recorded_at": "2024-02-09T00:00:00Z",
+    "claim_a": {
+      "stance": "support",
+      "text": "The federal government is spending too much money and running massive deficits.",
+      "start_ms": 10000
+    },
+    "claim_b": {
+      "stance": "oppose",
+      "text": "The federal government does not have a spending problem, it has a revenue problem.",
+      "start_ms": 120000
+    },
+    "expected_status": "rejected",
+    "expected_reason": "same_source_stance_conflict"
+  },
+  {
+    "case_id": "t1_pair_2_ai_tasks",
+    "description": "Baseline Pair 2: Opposing stances within same episode on AI task execution",
+    "subject_id": "subj_david_sacks",
+    "proposition_text": "It is complicated for AI to perform tasks based on user instructions.",
+    "source_id": "src_allin_e165",
+    "recorded_at": "2024-02-09T00:00:00Z",
+    "claim_a": {
+      "stance": "support",
+      "text": "It is very complicated for AI models to reliably follow intricate instructions.",
+      "start_ms": 200000
+    },
+    "claim_b": {
+      "stance": "oppose",
+      "text": "You can just tell the AI to do something complicated and it will easily do it.",
+      "start_ms": 250000
+    },
+    "expected_status": "rejected",
+    "expected_reason": "same_source_stance_conflict"
+  },
+  {
+    "case_id": "t1_pair_3_verizon_analogy",
+    "description": "Baseline Pair 3: Opposing stances within same episode on platform liability",
+    "subject_id": "subj_david_sacks",
+    "proposition_text": "Verizon is not responsible for people using its services to coordinate a bank robbery.",
+    "source_id": "src_allin_e124",
+    "recorded_at": "2023-04-14T00:00:00Z",
+    "claim_a": {
+      "stance": "support",
+      "text": "Verizon is obviously not responsible when someone uses their phone lines for a crime.",
+      "start_ms": 50000
+    },
+    "claim_b": {
+      "stance": "oppose",
+      "text": "You could argue telecommunications providers should be held liable for criminal traffic.",
+      "start_ms": 80000
+    },
+    "expected_status": "rejected",
+    "expected_reason": "same_source_stance_conflict"
+  },
+  {
+    "case_id": "t1_pair_4_chamath_substance",
+    "description": "Baseline Pair 4: Opposing stances within same episode on speaker credibility",
+    "subject_id": "subj_chamath_palihapitiya",
+    "proposition_text": "The substance of what the speaker is saying is more accurate than their overall stance.",
+    "source_id": "src_allin_e287",
+    "recorded_at": "2026-07-10T00:00:00Z",
+    "claim_a": {
+      "stance": "support",
+      "text": "The underlying substance of the argument is far more credible than the public posturing.",
+      "start_ms": 300000
+    },
+    "claim_b": {
+      "stance": "oppose",
+      "text": "The substance is completely flawed regardless of the high-level position presented.",
+      "start_ms": 340000
+    },
+    "expected_status": "rejected",
+    "expected_reason": "same_source_stance_conflict"
+  },
+  {
+    "case_id": "t1_pair_5_sacks_ai_agents",
+    "description": "Baseline Pair 5: Opposing stances within same episode on autonomous agents",
+    "subject_id": "subj_david_sacks",
+    "proposition_text": "Autonomous software agents will replace enterprise SaaS workflows within five years.",
+    "source_id": "src_allin_e287",
+    "recorded_at": "2026-07-10T00:00:00Z",
+    "claim_a": {
+      "stance": "support",
+      "text": "Autonomous agents are going to completely replace existing enterprise software tools.",
+      "start_ms": 500000
+    },
+    "claim_b": {
+      "stance": "oppose",
+      "text": "SaaS workflows are deeply entrenched and autonomous agents cannot replace them anytime soon.",
+      "start_ms": 560000
+    },
+    "expected_status": "rejected",
+    "expected_reason": "same_source_stance_conflict"
+  },
+  {
+    "case_id": "t1_synthetic_cross_episode_accepted",
+    "description": "Synthetic cross-episode pair with genuine temporal gap: must be accepted as candidate",
+    "subject_id": "subj_david_sacks",
+    "proposition_text": "Mandatory federal licensing regimes for frontier artificial intelligence compute.",
+    "source_a_id": "src_allin_e124",
+    "recorded_at_a": "2023-04-14T00:00:00Z",
+    "claim_a": {
+      "stance": "oppose",
+      "text": "Mandatory federal licensing for frontier AI compute will destroy open innovation in America.",
+      "start_ms": 10000
+    },
+    "source_b_id": "src_allin_e287",
+    "recorded_at_b": "2026-07-10T00:00:00Z",
+    "claim_b": {
+      "stance": "support",
+      "text": "We urgently need mandatory federal licensing regimes for frontier artificial intelligence compute.",
+      "start_ms": 20000
+    },
+    "expected_status": "accepted",
+    "expected_reason": null
+  },
+  {
+    "case_id": "t1_synthetic_cross_episode_same_date",
+    "description": "Synthetic cross-episode pair on the same date: cannot establish temporal arrow",
+    "subject_id": "subj_david_sacks",
+    "proposition_text": "Commercial nuclear fission reactors require regulatory pre-approval for micro-reactors.",
+    "source_a_id": "src_morning_interview",
+    "recorded_at_a": "2024-05-01T00:00:00Z",
+    "claim_a": {
+      "stance": "oppose",
+      "text": "Commercial nuclear fission micro-reactors should not require regulatory pre-approval.",
+      "start_ms": 5000
+    },
+    "source_b_id": "src_evening_panel",
+    "recorded_at_b": "2024-05-01T00:00:00Z",
+    "claim_b": {
+      "stance": "support",
+      "text": "Commercial nuclear fission micro-reactors definitely require strict regulatory pre-approval.",
+      "start_ms": 15000
+    },
+    "expected_status": "rejected",
+    "expected_reason": "same_recorded_date"
+  },
+  {
+    "case_id": "t1_synthetic_cross_episode_insufficient_gap",
+    "description": "Synthetic cross-episode pair with gap below configured MIN_REVERSAL_GAP_DAYS",
+    "subject_id": "subj_david_sacks",
+    "proposition_text": "Central bank digital currencies pose fundamental surveillance risks to citizens.",
+    "source_a_id": "src_day1_interview",
+    "recorded_at_a": "2024-05-01T10:00:00Z",
+    "claim_a": {
+      "stance": "support",
+      "text": "Central bank digital currencies pose fundamental surveillance risks to citizens.",
+      "start_ms": 5000
+    },
+    "source_b_id": "src_day2_interview",
+    "recorded_at_b": "2024-05-02T10:00:00Z",
+    "claim_b": {
+      "stance": "oppose",
+      "text": "Central bank digital currencies do not pose meaningful surveillance risks compared to banks.",
+      "start_ms": 15000
+    },
+    "expected_status": "rejected",
+    "expected_reason": "insufficient_time_gap"
+  }
+]

@@ -21,6 +21,7 @@ from worker.entities import (
     Proposition,
     Source,
     SourceSubjectRole,
+    StanceConflictReview,
     Subject,
     Tension,
     Topic,
@@ -81,6 +82,14 @@ def compute_tension_id(claim_a_id: str, claim_b_id: str, tension_type: str) -> s
 
 def compute_assessment_id(subject_id: str, topic_id: str, rubric_version: str) -> str:
     key = f"{subject_id}|{topic_id}|{rubric_version}"
+    return hashlib.sha256(key.encode("utf-8")).hexdigest()[:16]
+
+
+def compute_review_id(claim_a_id: str, claim_b_id: str, reason: str) -> str:
+    """Computes deterministic review_id = sha256(min(a,b) : max(a,b) | reason)[:16]."""
+    first = min(claim_a_id, claim_b_id)
+    second = max(claim_a_id, claim_b_id)
+    key = f"{first}:{second}|{reason}"
     return hashlib.sha256(key.encode("utf-8")).hexdigest()[:16]
 
 
@@ -344,6 +353,18 @@ class Storage:
                 status VARCHAR,
                 quarantine_reason VARCHAR
             );
+
+            CREATE TABLE IF NOT EXISTS stance_conflict_reviews (
+                review_id VARCHAR PRIMARY KEY,
+                subject_id VARCHAR,
+                proposition_id VARCHAR,
+                claim_a_id VARCHAR,
+                claim_b_id VARCHAR,
+                source_id VARCHAR,
+                reason VARCHAR,
+                detected_at VARCHAR
+            );
+            CREATE INDEX IF NOT EXISTS idx_conflict_reviews_subj ON stance_conflict_reviews(subject_id);
 
             CREATE TABLE IF NOT EXISTS assessments (
                 assessment_id VARCHAR PRIMARY KEY,
@@ -1467,6 +1488,70 @@ class Storage:
                 detector_version=r[7],
                 status=r[8],
                 quarantine_reason=r[9],
+            )
+            for r in rows
+        ]
+
+    def insert_stance_conflict_review(self, review: StanceConflictReview) -> None:
+        self.con.execute(
+            """
+            INSERT INTO stance_conflict_reviews VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT (review_id) DO UPDATE SET
+                subject_id = excluded.subject_id,
+                proposition_id = excluded.proposition_id,
+                claim_a_id = excluded.claim_a_id,
+                claim_b_id = excluded.claim_b_id,
+                source_id = excluded.source_id,
+                reason = excluded.reason,
+                detected_at = excluded.detected_at
+            """,
+            [
+                review.review_id,
+                review.subject_id,
+                review.proposition_id,
+                review.claim_a_id,
+                review.claim_b_id,
+                review.source_id,
+                review.reason,
+                review.detected_at,
+            ],
+        )
+
+    def get_stance_conflict_reviews_for_subject(
+        self, subject_id: str
+    ) -> list[StanceConflictReview]:
+        rows = self.con.execute(
+            "SELECT * FROM stance_conflict_reviews WHERE subject_id = ? ORDER BY review_id",
+            [subject_id],
+        ).fetchall()
+        return [
+            StanceConflictReview(
+                review_id=r[0],
+                subject_id=r[1],
+                proposition_id=r[2],
+                claim_a_id=r[3],
+                claim_b_id=r[4],
+                source_id=r[5],
+                reason=r[6],
+                detected_at=r[7] or "",
+            )
+            for r in rows
+        ]
+
+    def get_all_stance_conflict_reviews(self) -> list[StanceConflictReview]:
+        rows = self.con.execute(
+            "SELECT * FROM stance_conflict_reviews ORDER BY subject_id, review_id"
+        ).fetchall()
+        return [
+            StanceConflictReview(
+                review_id=r[0],
+                subject_id=r[1],
+                proposition_id=r[2],
+                claim_a_id=r[3],
+                claim_b_id=r[4],
+                source_id=r[5],
+                reason=r[6],
+                detected_at=r[7] or "",
             )
             for r in rows
         ]

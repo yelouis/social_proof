@@ -44,6 +44,7 @@ Both claims must satisfy, or no Tension is created:
 - **Matching `condition`** — a conditional claim does not contradict an unconditional one (`design_claim_extraction.md` §5)
 - Both claims' `quote_span` resolves against stored source text (invariant I9)
 - The negation re-check has passed on both (`design_source_acquisition.md` §5.3)
+- **Temporal separation and same-source disqualification (Item T1 / §17o, Parameter 032)**: An `unacknowledged_reversal` requires change over time. Two claims within the same recording/episode (`source_a_id == source_b_id`) are part of a single continuous speech-act context and are automatically disqualified from reversal detection. Rather than being silently dropped, they are persisted to the `stance_conflict_reviews` review table with reason `same_source_stance_conflict`. Distinct sources must have resolvable temporal order (`recorded_at_a != recorded_at_b`) and clear `MIN_REVERSAL_GAP_DAYS`.
 
 Any Tension failing a precondition is written with `status: quarantined` and a `quarantine_reason`. **Quarantined Tensions never reach a score and never render.** They exist so the failure rate is measurable.
 

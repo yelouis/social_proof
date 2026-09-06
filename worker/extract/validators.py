@@ -143,7 +143,7 @@ def validate_quote_verbatim(claim: ExtractedClaim, utterance_text: str) -> Valid
         idx_lower = utterance_text.lower().find(quote.lower())
         if idx_lower == -1:
             return ValidationOutcome(
-                False, "quote_not_verbatim_in_utterance", status="rejected"
+                False, "quote_verbatim_not_found_in_utterance", status="rejected"
             )
         idx = idx_lower
 

@@ -173,6 +173,18 @@ class Tension:
 
 
 @dataclass
+class StanceConflictReview:
+    review_id: str
+    subject_id: str
+    proposition_id: str
+    claim_a_id: str
+    claim_b_id: str
+    source_id: str
+    reason: str = "same_source_stance_conflict"
+    detected_at: str = ""
+
+
+@dataclass
 class Assessment:
     assessment_id: str
     subject_id: str
