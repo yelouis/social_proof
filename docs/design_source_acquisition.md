@@ -20,6 +20,16 @@ Anything failing one of the three is not "low quality." It is **inadmissible** a
 
 ## 2. Source tiers
 
+### Corpus expansion is mechanical and pre-registered (Issue 030 = A)
+
+**Episodes are never chosen for what they contain.** When the corpus grows, it grows by a **contiguous run** — every episode in a stated range, ingested without exception — and **the rule is written down before the run, not after.** The range, the date it was fixed, and the no-exceptions statement all go in the commit body and here.
+
+The reason is the product's subject. Social Proof asks a reader to accept a judgement about whether someone applied their principles evenly; a corpus assembled by picking the episodes that looked promising cannot support that, however sound the pipeline underneath. **"We took everything in this range" needs no trust; "we picked the relevant ones" needs a great deal.**
+
+Selecting by a mechanical topical rule — every episode whose description mentions a term — is defensible *if* the rule is genuinely fixed in advance, but it narrows the corpus toward one theme and Even-handedness is measured by comparing treatment of different actors across comparable issues. Issue 030 chose the contiguous run for that reason.
+
+**This does not fix composition skew** (trap 24). A larger corpus of one show in one medium is still one show in one medium; invariant I5 gates volume, not composition. Report the composition rather than letting size imply breadth.
+
 All four tiers are in bounds. They differ in attribution difficulty and in how much the venue shapes what was said — both of which get recorded, because audience-divergence detection (`design_rubric_engine.md`) reads them.
 
 | Tier | What | Attribution | Notes |
