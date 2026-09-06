@@ -135,6 +135,8 @@ COMPARATIVE_NO_RELATUM: list[re.Pattern[str]] = [
 PRONOUN_UNBOUND: list[re.Pattern[str]] = [
     re.compile(r"\b(?:they|their|theirs)\b", re.IGNORECASE),
     re.compile(r"\b(?:he|him|his|she|her|hers)\b", re.IGNORECASE),
+    re.compile(r"\b(?:those|these)\b\s*[,.\?!;]", re.IGNORECASE),
+    re.compile(r"\b(?:of\s+those|of\s+these)\b(?!\s+[a-z]+)", re.IGNORECASE),
 ]
 
 VALID_STANCES: set[str] = {"support", "oppose", "mixed", "hedge"}
@@ -217,10 +219,13 @@ def validate_entailment(
         embedder = get_embedder()
 
     from worker.extract.dedup import cosine_similarity
+    from worker.storage import normalize_canonical_text
 
     # Crucial: both use 'search_document:' prefix (Trap 7: avoiding asymmetric prefix spaces)
+    # Proposition is normalized to canonical form to match stored proposition text
+    norm_prop = normalize_canonical_text(claim.proposition_text)
     vec_quote = embedder.embed_document(quote)
-    vec_prop = embedder.embed_document(claim.proposition_text.strip())
+    vec_prop = embedder.embed_document(norm_prop)
     sim = cosine_similarity(vec_quote, vec_prop)
 
     if sim < t_low:

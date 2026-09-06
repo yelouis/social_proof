@@ -23,7 +23,7 @@
     "case_id": "t1_pair_2_ai_tasks",
     "description": "Baseline Pair 2: Opposing stances within same episode on AI task execution",
     "subject_id": "subj_david_sacks",
-    "proposition_text": "It is complicated for AI to perform tasks based on user instructions.",
+    "proposition_text": "Performing tasks based on user instructions is complicated for AI models.",
     "source_id": "src_allin_e165",
     "recorded_at": "2024-02-09T00:00:00Z",
     "claim_a": {
@@ -63,7 +63,7 @@
     "case_id": "t1_pair_4_chamath_substance",
     "description": "Baseline Pair 4: Opposing stances within same episode on speaker credibility",
     "subject_id": "subj_chamath_palihapitiya",
-    "proposition_text": "The substance of what the speaker is saying is more accurate than their overall stance.",
+    "proposition_text": "The substance of the argument is more accurate than the overall stance.",
     "source_id": "src_allin_e287",
     "recorded_at": "2026-07-10T00:00:00Z",
     "claim_a": {

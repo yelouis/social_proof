@@ -551,6 +551,47 @@ class TensionDetector:
                         "reason": "quote_span_unresolved",
                     }
                 )
+            elif pid:
+                prop_obj = self.storage.get_proposition(pid)
+                if prop_obj and prop_obj.status == "quarantined":
+                    quar_reason = prop_obj.quarantine_reason or "fabricated_proposition"
+                    rejections[quar_reason] += 1
+                    details.append(
+                        {
+                            "pair": (ca, cb),
+                            "status": "quarantined",
+                            "reason": quar_reason,
+                        }
+                    )
+                elif prop_obj:
+                    dummy_claim = ExtractedClaim(
+                        proposition_text=prop_obj.canonical_text,
+                        stance="support",
+                        hedging_level=0.0,
+                        is_own_assertion=True,
+                        quote_text="dummy quote",
+                        confidence=0.9,
+                    )
+                    outcome_sc = validate_self_contained(dummy_claim)
+                    if not outcome_sc.is_valid:
+                        quar_reason = (
+                            outcome_sc.rejection_reason
+                            or "proposition_not_self_contained"
+                        )
+                        rejections[quar_reason] += 1
+                        details.append(
+                            {
+                                "pair": (ca, cb),
+                                "status": "quarantined",
+                                "reason": quar_reason,
+                            }
+                        )
+                    else:
+                        accepted += 1
+                        details.append({"pair": (ca, cb), "status": "accepted"})
+                else:
+                    accepted += 1
+                    details.append({"pair": (ca, cb), "status": "accepted"})
             else:
                 accepted += 1
                 details.append({"pair": (ca, cb), "status": "accepted"})

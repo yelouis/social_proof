@@ -107,7 +107,12 @@ class SpeakerAttributor:
         runner_up_sim = sorted_candidates[1][1] if len(sorted_candidates) > 1 else -1.0
         margin = best_sim - runner_up_sim
 
-        if best_sim >= self.t_high and margin >= min_margin:
+        # Parameter 004: Standard threshold is T_high with min_margin.
+        # Summit/remote microphones with large margin (>= 0.25) and best_sim >= 0.60
+        # also guarantee high confidence against cross-subject distractors.
+        if (best_sim >= self.t_high and margin >= min_margin) or (
+            best_sim >= 0.60 and margin >= 0.25
+        ):
             confidence: Literal["high", "low", "discard"] = "high"
             assigned_subject: str | None = best_subj
         elif best_sim >= self.t_low:

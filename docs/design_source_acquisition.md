@@ -30,6 +30,12 @@ Selecting by a mechanical topical rule — every episode whose description menti
 
 **This does not fix composition skew** (trap 24). A larger corpus of one show in one medium is still one show in one medium; invariant I5 gates volume, not composition. Report the composition rather than letting size imply breadth.
 
+#### Item C1 Pre-Registered Selection Rule (Fixed September 5, 2026)
+- **Episode range:** The 20 most recent contiguous episodes from the All-In podcast feed (`https://allinchamathjason.libsyn.com/rss`), spanning the publication date range from 2026-07-03T22:12:00+00:00 (All-In E279) through 2026-09-04T23:10:00+00:00 (All-In E288).
+- **Date fixed:** September 5, 2026.
+- **No-exceptions declaration:** Every episode in this contiguous range is ingested without exception. No episode is selected or omitted based on title, topic, guest, or controversial content.
+- **Composition skew (Trap 24):** The corpus remains single-show (All-In podcast) and single-medium (Tier B self-published audio). Invariant I5 volume sufficiency is satisfied without implying cross-medium breadth.
+
 All four tiers are in bounds. They differ in attribution difficulty and in how much the venue shapes what was said — both of which get recorded, because audience-divergence detection (`design_rubric_engine.md`) reads them.
 
 | Tier | What | Attribution | Notes |

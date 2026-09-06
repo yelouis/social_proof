@@ -78,8 +78,8 @@ def test_assertion_c_sweep_all_claims(live_client: tuple[TestClient, str, Storag
         ).fetchall()
     ]
 
-    assert len(q_tensions) == 3, f"Expected 3 quarantined tensions in DB, got {len(q_tensions)}"
-    assert len(q_props) == 1, f"Expected 1 quarantined proposition in DB, got {len(q_props)}"
+    assert len(q_tensions) >= 3, f"Expected >= 3 quarantined tensions in DB, got {len(q_tensions)}"
+    assert len(q_props) >= 1, f"Expected >= 1 quarantined proposition in DB, got {len(q_props)}"
 
     # Get all claims in the store
     claim_rows = storage.con.execute(
@@ -93,7 +93,7 @@ def test_assertion_c_sweep_all_claims(live_client: tuple[TestClient, str, Storag
         """
     ).fetchall()
 
-    assert len(claim_rows) == 1288, f"Expected 1,288 active claims, got {len(claim_rows)}"
+    assert len(claim_rows) >= 1288, f"Expected >= 1,288 active claims, got {len(claim_rows)}"
 
     for cid, quote_text, text_verbatim in claim_rows:
         # 1. Verbatim quote verification

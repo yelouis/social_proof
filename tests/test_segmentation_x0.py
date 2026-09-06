@@ -20,7 +20,7 @@ def test_assertion_c_zero_utterances_begin_or_end_mid_word() -> None:
         bad_ends = []
         for uid, text in utterances:
             t = text.strip()
-            starts_valid = t[0].isupper() or t[0] in OPENING_QUOTES or t[0].isdigit()
+            starts_valid = t[0].isupper() or t[0] in OPENING_QUOTES or t[0].isdigit() or t[0] in "$€£"
             ends_valid = t.endswith(TERMINAL_PUNCT_TUPLE)
             if not starts_valid:
                 bad_starts.append((uid, t[:40]))

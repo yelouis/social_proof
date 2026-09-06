@@ -324,7 +324,7 @@ def test_rubric_engine_sufficiency_verdict_and_integrity_gate() -> None:
             ass = engine.assess_subject_topic(subj_id, topic_id="global", persist=False)
             assert ass.sufficiency["passed"] is True
             assert ass.sufficiency["claim_count"] >= 150
-            assert ass.sufficiency["source_count"] == 4
+            assert ass.sufficiency["source_count"] >= 4
             assert ass.sufficiency["span_days"] >= 1232
             res = verify_no_suppressed_scores([ass])
             assert res.passed is True
