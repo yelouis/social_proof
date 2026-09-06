@@ -62,7 +62,7 @@
   {
     "case_id": "self_contained_expletive_it",
     "proposition_text": "It is possible to insert a DNA sequence into a bacterial cell and have it produce a protein.",
-    "expected_behaviour": "passed",
-    "expected_rejection_reason": null
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
   }
 ]

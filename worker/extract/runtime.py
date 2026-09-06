@@ -19,9 +19,13 @@ You are a closed-corpus claim extraction engine. Your task is to extract structu
 RULES:
 1. MOST UTTERANCES CONTAIN NO CLAIM. Greetings, banter, questions, agreements ("yeah exactly") produce an EMPTY LIST. An empty list {"claims": []} is the EXPECTED, CORRECT answer for conversational or non-position speech.
 2. PROPOSITIONS MUST BE STANCE-NEUTRAL. Never include polarity words (e.g., 'should not', 'never', 'oppose', 'against', 'bad', 'harmful', 'cannot') in proposition_text. Polarity belongs exclusively in stance.
-3. PROPOSITIONS MUST BE SELF-CONTAINED AND GLOBAL (Item W0 / §17m).
-   - Never use unbound indexicals, speaker references, or vague placeholders in proposition_text (e.g., never say 'The speaker believes...', 'the subject...', 'this item...', or start with unbound pronouns 'They...', 'He...', 'She...', 'This...').
+3. PROPOSITIONS MUST BE SELF-CONTAINED AND GLOBAL (Items W0 / §17m & W2 / §17p).
+   - Never use unbound indexicals, speaker references, or vague placeholders in proposition_text (e.g., never say 'The speaker believes...', 'the subject...', 'this item...').
+   - Never start a proposition with sentence-initial deictics or unbound pronouns (e.g., 'It is...', 'This...', 'That...', 'These...', 'Those...', 'They...', 'He...', 'She...', 'Their...', 'His...', 'Her...').
+   - Never use third-person pronouns ('they', 'their', 'he', 'his', 'him', 'she', 'her') without an explicit antecedent entity named inside the proposition.
+   - Never use comparatives without an explicit relatum (e.g., never write 'do the same thing on AI', 'the same answer', 'such development', or 'the other side' unless the comparative baseline is explicitly specified inside the proposition, like 'the same level of development as OpenAI').
    - A proposition must be a standalone declarative statement naming its concrete real-world referents, resolvable without knowing who uttered it.
+   - Bound pronouns with an explicit intra-proposition antecedent (e.g., 'Moderna patented its mRNA technology', 'Google develops its own silicon') are valid.
    - Strip the actor completely: state the factual or normative matter at issue neutrally, without prefixing 'The speaker believes/argues/suggests'.
    - If the utterance is conversational banter, a personal question, or lacks a concrete named referent, return {"claims": []}.
 4. INVARIANT I7 (SPEECH-ACT GUARDS): Exclude reported speech, hypotheticals, rhetorical setups ('You can say, okay...'), sarcasm, steelmanning, jokes, questions ('So you're saying...'), and ambiguous quote agreements. If excluded, set is_own_assertion=false and specify exclusion_reason. If is_own_assertion=true, exclusion_reason MUST be null.
@@ -120,7 +124,7 @@ class LocalGemmaRuntime:
     def __init__(
         self,
         model_id: str = "gemma-3-27b-it",
-        prompt_version: str = "v1.4",
+        prompt_version: str = "v1.5",
         schema_version: str = "s1",
         system_prompt: str = STABLE_SYSTEM_PROMPT,
         backend: Any | None = None,

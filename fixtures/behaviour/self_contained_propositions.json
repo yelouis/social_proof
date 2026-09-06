@@ -1,0 +1,68 @@
+[
+  {
+    "case_id": "w2_target_pair_01_the_same_thing",
+    "proposition_text": "We should do the same thing on AI",
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
+  },
+  {
+    "case_id": "w2_target_pair_02_unbound_he",
+    "proposition_text": "The substance of what he's saying is more accurate than his overall stance.",
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
+  },
+  {
+    "case_id": "w2_bound_pronoun_moderna",
+    "proposition_text": "Moderna patented its mRNA technology",
+    "expected_behaviour": "passed",
+    "expected_rejection_reason": null
+  },
+  {
+    "case_id": "w2_bound_pronoun_google_silicon",
+    "proposition_text": "Google is attempting to develop its own silicon for chips.",
+    "expected_behaviour": "passed",
+    "expected_rejection_reason": null
+  },
+  {
+    "case_id": "w2_both_directions_clean_pass",
+    "proposition_text": "China has made a significant push towards open source software.",
+    "expected_behaviour": "passed",
+    "expected_rejection_reason": null
+  },
+  {
+    "case_id": "w2_sentence_initial_it",
+    "proposition_text": "It is possible to forge letters using Microsoft Word and create fraudulent financial statements using Microsoft Excel.",
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
+  },
+  {
+    "case_id": "w2_sentence_initial_their",
+    "proposition_text": "Their operations generated $165 million in profit.",
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
+  },
+  {
+    "case_id": "w2_bare_they",
+    "proposition_text": "They argue that open source AI models will surpass proprietary models within two years.",
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
+  },
+  {
+    "case_id": "w2_sentence_initial_this",
+    "proposition_text": "This requires massive capital expenditure in high-voltage transmission lines.",
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
+  },
+  {
+    "case_id": "w2_comparative_no_relatum_such",
+    "proposition_text": "Such regulatory mandates will hinder competitiveness across startups.",
+    "expected_behaviour": "rejected",
+    "expected_rejection_reason": "proposition_not_self_contained"
+  },
+  {
+    "case_id": "w2_idiom_at_the_same_time",
+    "proposition_text": "Capital investment and power grid expansion must proceed at the same time.",
+    "expected_behaviour": "passed",
+    "expected_rejection_reason": null
+  }
+]

@@ -49,7 +49,7 @@ def test_every_source_contributes_claims() -> None:
             """, [sid]).fetchone()
             cnt = row[0] if row else 0
             assert cnt > 0, f"Source {sid} ({title}) has zero claims!"
-            assert cnt >= 250, f"Source {sid} ({title}) has implausibly few claims: {cnt}"
+            assert cnt >= 200, f"Source {sid} ({title}) has implausibly few claims: {cnt}"
     finally:
         store.close()
 
@@ -123,8 +123,8 @@ def test_quotes_and_canonical_ids_verified_over_full_corpus() -> None:
         propositions = [p for pid in store.con.execute("SELECT proposition_id FROM propositions").fetchall()
                         if (p := store.get_proposition(pid[0])) is not None]
 
-        assert len(claims) >= 1350, f"Expected >= 1350 claims in corpus, found {len(claims)}"
-        assert len(propositions) >= 1300, f"Expected >= 1300 propositions, found {len(propositions)}"
+        assert len(claims) >= 1250, f"Expected >= 1250 claims in corpus, found {len(claims)}"
+        assert len(propositions) >= 1200, f"Expected >= 1200 propositions, found {len(propositions)}"
 
         # 1. verify_quotes
         res_quotes = verify_quotes(claims, utterances)

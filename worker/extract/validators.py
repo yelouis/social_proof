@@ -86,18 +86,55 @@ POLARITY_BANNED_PATTERNS: list[re.Pattern[str]] = [
     re.compile(r"\b(?:is bad|is harmful|is evil|is wrong)\b", re.IGNORECASE),
 ]
 
-# Banned indexical patterns in proposition_text (must be self-contained and global, Item W0 / §17m)
+# ==============================================================================
+# Principle of Proposition Self-Containment (Items W0 / §17m & W2 / §17p):
+#
+# A proposition must be globally interpretable and evaluable standing entirely on
+# its own, without requiring reference to external conversational context, episode
+# history, or speaker identity. Any proposition containing an unbound indexical,
+# pronoun, or comparative lacking an internal antecedent or relatum inside the
+# proposition itself cannot be resolved independently and must be rejected.
+#
+# Rules:
+# 1. Discourse participant indexicals: reject 'the speaker', 'the subject', 'the described'.
+# 2. Sentence-initial deictics & pronouns: reject propositions starting with
+#    'It is/was/would/has...', 'This...', 'That...', 'These...', 'Those...',
+#    'They...', 'He...', 'She...', 'Their...', 'His...', 'Her...', 'Its...'.
+# 3. Third-person personal pronouns: reject 'they', 'their', 'theirs', 'he', 'him',
+#    'his', 'she', 'her', 'hers' that refer to unspecified entities outside the proposition.
+# 4. Comparatives without relata: reject 'the same', 'such', 'the other' lacking an explicit
+#    comparative standard, while preserving standard idioms ('at the same time', 'the same day',
+#    'as such', 'on the other hand', 'each other').
+# 5. Bound pronoun preservation: bound possessive pronouns with an explicit intra-proposition
+#    antecedent (e.g., 'Moderna patented its mRNA technology') remain valid.
+# ==============================================================================
+
+# Banned indexical patterns in proposition_text (must be self-contained and global, Items W0 / §17m & W2 / §17p)
 INDEXICAL_BANNED_OPENERS: list[re.Pattern[str]] = [
     re.compile(r"^\s*the\s+speaker\b", re.IGNORECASE),
     re.compile(r"^\s*the\s+subject\b", re.IGNORECASE),
     re.compile(r"^\s*the\s+described\b", re.IGNORECASE),
-    re.compile(r"^\s*(?:they|he|she|this|that|these|those)\b", re.IGNORECASE),
+    re.compile(
+        r"^\s*(?:it(?:\x27s|\s+is|\s+was|\s+would|\s+doesn\x27t|\s+might|\s+has|\s+can|\s+could|\s+should|\s+must|\s+will|\s+did|\s+does)|this|that|these|those|they|he|she|their|his|her|its)\b",
+        re.IGNORECASE,
+    ),
 ]
 
 INDEXICAL_BANNED_ANYWHERE: list[re.Pattern[str]] = [
     re.compile(r"\bthe\s+speaker\b", re.IGNORECASE),
     re.compile(r"\bthe\s+subject\b", re.IGNORECASE),
     re.compile(r"\bthe\s+described\s+powers?\b", re.IGNORECASE),
+]
+
+COMPARATIVE_NO_RELATUM: list[re.Pattern[str]] = [
+    re.compile(r"\bthe\s+same\b(?!\s+(?:as|time|day|year|quarter|month|week|way|manner|room|sentiment)\b)", re.IGNORECASE),
+    re.compile(r"\bsuch\s+(?!as\b)", re.IGNORECASE),
+    re.compile(r"\bthe\s+other\b(?!\s+(?:hand|side)\b)", re.IGNORECASE),
+]
+
+PRONOUN_UNBOUND: list[re.Pattern[str]] = [
+    re.compile(r"\b(?:they|their|theirs)\b", re.IGNORECASE),
+    re.compile(r"\b(?:he|him|his|she|her|hers)\b", re.IGNORECASE),
 ]
 
 VALID_STANCES: set[str] = {"support", "oppose", "mixed", "hedge"}
@@ -235,9 +272,12 @@ def validate_entailment(
 def validate_self_contained(claim: ExtractedClaim) -> ValidationOutcome:
     """Validator: Proposition text must be self-contained, global, and free of unbound indexicals.
 
-    Implements design_claim_extraction.md §2, design_data_layer.md §2, and Item W0 (§17m).
+    Implements design_claim_extraction.md §2, design_data_layer.md §2, and Items W0 (§17m) & W2 (§17p).
     Rejects propositions containing 'the speaker', 'the subject', 'the described',
-    or sentence-initial unbound pronouns ('they', 'he', 'she', 'this', 'that', 'these', 'those').
+    sentence-initial deictics/pronouns ('It is...', 'This...', 'That...', 'They...', etc.),
+    unbound third-person pronouns ('they', 'their', 'he', 'his', 'him', etc.),
+    or comparatives with no relatum ('the same', 'such', 'the other').
+    Preserves bound pronouns with internal antecedents (e.g., 'Moderna patented its mRNA technology').
     """
     prop_text = (claim.proposition_text or "").strip()
     for pat in INDEXICAL_BANNED_OPENERS:
@@ -249,6 +289,24 @@ def validate_self_contained(claim: ExtractedClaim) -> ValidationOutcome:
                 status="rejected",
             )
     for pat in INDEXICAL_BANNED_ANYWHERE:
+        if pat.search(prop_text):
+            VALIDATOR_REJECTION_COUNTERS["proposition_not_self_contained"] += 1
+            return ValidationOutcome(
+                is_valid=False,
+                rejection_reason="proposition_not_self_contained",
+                status="rejected",
+            )
+    for pat in COMPARATIVE_NO_RELATUM:
+        if pat.search(prop_text):
+            if "at the same time" in prop_text.lower() or "as such" in prop_text.lower() or "each other" in prop_text.lower():
+                continue
+            VALIDATOR_REJECTION_COUNTERS["proposition_not_self_contained"] += 1
+            return ValidationOutcome(
+                is_valid=False,
+                rejection_reason="proposition_not_self_contained",
+                status="rejected",
+            )
+    for pat in PRONOUN_UNBOUND:
         if pat.search(prop_text):
             VALIDATOR_REJECTION_COUNTERS["proposition_not_self_contained"] += 1
             return ValidationOutcome(

@@ -153,3 +153,14 @@ def load_fabricated_proposition_fixtures(
     if not path.exists():
         return []
     return cast(list[dict[str, Any]], json.loads(path.read_text(encoding="utf-8")))
+
+
+def load_self_contained_fixtures(
+    fixture_file: Path | str = "fixtures/behaviour/self_contained_propositions.json",
+) -> list[dict[str, Any]]:
+    """Loads self-containment behaviour fixtures for Item W2."""
+    path = Path(fixture_file)
+    if not path.exists():
+        return []
+    return cast(list[dict[str, Any]], json.loads(path.read_text(encoding="utf-8")))
+

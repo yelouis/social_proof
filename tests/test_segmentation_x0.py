@@ -70,6 +70,7 @@ def test_surviving_claims_have_verbatim_supporting_quotes() -> None:
                 "gemma-3-27b-it:v1.2:s1",
                 "gemma-3-27b-it:v1.3:s1",
                 "gemma-3-27b-it:v1.4:s1",
+                "gemma-3-27b-it:v1.5:s1",
             ), (
                 f"Claim {c.claim_id} does not have bumped extraction version: {c.extraction_version}"
             )
