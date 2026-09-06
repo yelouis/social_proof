@@ -14,13 +14,14 @@ Validates:
 """
 
 from pathlib import Path
+from typing import Any
 
 import pytest
 from fastapi.testclient import TestClient
 
 from worker.api.security import CORSPolicy, validate_host
 from worker.api.server import create_app
-from worker.entities import Claim, Proposition, Source, Subject, Utterance
+from worker.entities import Assessment, Claim, Proposition, Source, Subject, Utterance
 from worker.extract.dedup import stub_hash_embedding
 from worker.integrity import verify_no_page_context
 from worker.storage import Storage, compute_proposition_id
@@ -43,7 +44,9 @@ class MockApiEmbedder:
 def test_store(tmp_path: Path) -> Storage:
     db_path = tmp_path / "api_test.duckdb"
     artifacts_dir = tmp_path / "artifacts"
-    return Storage(db_path=str(db_path), artifact_dir=artifacts_dir)
+    s = Storage(db_path=str(db_path), artifact_dir=artifacts_dir)
+    s.close()
+    return Storage(db_path=str(db_path), artifact_dir=artifacts_dir, read_only=True)
 
 
 @pytest.fixture
@@ -53,6 +56,25 @@ def test_client(test_store: Storage) -> tuple[TestClient, str]:
     app = create_app(storage=test_store, token=token, embedder=embedder, host="127.0.0.1")
     client = TestClient(app)
     return client, token
+
+
+def _make_populated_client(
+    tmp_path: Path,
+    db_name: str,
+    populate_fn: Any = None,
+    embedder: Any = None,
+    token: str = "test_secret_bearer_token_12345",
+) -> tuple[TestClient, Storage]:
+    db_path = tmp_path / db_name
+    artifacts_dir = tmp_path / f"artifacts_{db_name}"
+    writer = Storage(db_path=str(db_path), artifact_dir=artifacts_dir)
+    if populate_fn:
+        populate_fn(writer)
+    writer.close()
+
+    reader = Storage(db_path=str(db_path), artifact_dir=artifacts_dir, read_only=True)
+    app = create_app(storage=reader, token=token, embedder=embedder, host="127.0.0.1")
+    return TestClient(app), reader
 
 
 def test_loopback_binding_enforcement(test_store: Storage) -> None:
@@ -114,26 +136,16 @@ def test_strict_cors_rejects_wildcard() -> None:
 
 
 def test_post_resolve_selection_triggered_journey_j8_assertion_c(
-    test_client: tuple[TestClient, str],
-    test_store: Storage,
+    tmp_path: Path,
 ) -> None:
     """Assertion c & Journey J8: POST /resolve processes selection in memory only;
 
     asserts zero rows anywhere with origin = 'page_context' and no created entities.
     """
-    client, token = test_client
-
-    # Populate subject and proposition in DuckDB
     subject = Subject(subject_id="subj_test_01", display_name="Dr. Jane Scientist")
-    test_store.insert_subject(subject)
-
     prop_text = "mandatory AI compute threshold auditing prevents rogue training runs"
     prop_id = compute_proposition_id(prop_text)
     prop = Proposition(proposition_id=prop_id, canonical_text=prop_text, subject_ids=[subject.subject_id])
-    test_store.insert_proposition(prop)
-    test_store.insert_proposition_embedding(prop_id, stub_hash_embedding(f"search_document: {prop_text}"))
-
-    # Insert backing claim so proposition satisfies EXISTS (SELECT 1 FROM claims ...)
     source = Source(
         source_id="src_test_01",
         title="Interview",
@@ -141,7 +153,6 @@ def test_post_resolve_selection_triggered_journey_j8_assertion_c(
         artifact_hash="hash_test_01",
         canonical_url="https://example.com",
     )
-    test_store.insert_source(source)
     utt = Utterance(
         utterance_id="utt_test_01",
         source_id="src_test_01",
@@ -153,7 +164,6 @@ def test_post_resolve_selection_triggered_journey_j8_assertion_c(
         attribution_confidence="high",
         attribution_method="manual",
     )
-    test_store.insert_utterance(utt)
     claim = Claim(
         claim_id="clm_test_01",
         subject_id=subject.subject_id,
@@ -163,55 +173,71 @@ def test_post_resolve_selection_triggered_journey_j8_assertion_c(
         hedging_level=0.1,
         is_own_assertion=True,
     )
-    test_store.insert_claim(claim)
 
-    headers = {
-        "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json",
-    }
-    payload = {
-        "selected_text": "mandatory AI compute threshold auditing prevents rogue training runs",
-        "context_before": "According to Dr. Jane Scientist in a recent interview,",
-        "context_after": "which has sparked widespread debate across the sector.",
-        "page_url": "https://news.hostile-example.com/articles/ai-audit-controversy",
-        "page_title": "Hostile External News Report",
-    }
+    def populate(s: Storage) -> None:
+        s.insert_subject(subject)
+        s.insert_proposition(prop)
+        s.insert_proposition_embedding(prop_id, stub_hash_embedding(f"search_document: {prop_text}"))
+        s.insert_source(source)
+        s.insert_utterance(utt)
+        s.insert_claim(claim)
 
-    r_c0 = test_store.con.execute("SELECT count(*) FROM claims").fetchone()
-    initial_claims_count = int(r_c0[0]) if r_c0 else 0
-    r_p0 = test_store.con.execute("SELECT count(*) FROM propositions").fetchone()
-    initial_props_count = int(r_p0[0]) if r_p0 else 0
-    r_s0 = test_store.con.execute("SELECT count(*) FROM sources").fetchone()
-    initial_sources_count = int(r_s0[0]) if r_s0 else 0
+    embedder = MockApiEmbedder()
+    token = "test_secret_bearer_token_12345"
+    client, reader = _make_populated_client(
+        tmp_path, "resolve_test.duckdb", populate, embedder=embedder, token=token
+    )
 
-    # Call /resolve
-    res = client.post("/resolve", headers=headers, json=payload)
-    assert res.status_code == 200
-    data = res.json()
+    try:
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json",
+        }
+        payload = {
+            "selected_text": "mandatory AI compute threshold auditing prevents rogue training runs",
+            "context_before": "According to Dr. Jane Scientist in a recent interview,",
+            "context_after": "which has sparked widespread debate across the sector.",
+            "page_url": "https://news.hostile-example.com/articles/ai-audit-controversy",
+            "page_title": "Hostile External News Report",
+        }
 
-    # Verify resolved subjects and proposition
-    assert len(data["subjects"]) >= 1
-    assert data["subjects"][0]["subject_id"] == subject.subject_id
-    assert data["proposition"] is not None
-    assert data["proposition"]["id"] == prop_id
+        r_c0 = reader.con.execute("SELECT count(*) FROM claims").fetchone()
+        initial_claims_count = int(r_c0[0]) if r_c0 else 0
+        r_p0 = reader.con.execute("SELECT count(*) FROM propositions").fetchone()
+        initial_props_count = int(r_p0[0]) if r_p0 else 0
+        r_s0 = reader.con.execute("SELECT count(*) FROM sources").fetchone()
+        initial_sources_count = int(r_s0[0]) if r_s0 else 0
 
-    # CRITICAL ASSERTION C & JOURNEY J8: Zero rows created in database
-    r_c1 = test_store.con.execute("SELECT count(*) FROM claims").fetchone()
-    final_claims_count = int(r_c1[0]) if r_c1 else 0
-    r_p1 = test_store.con.execute("SELECT count(*) FROM propositions").fetchone()
-    final_props_count = int(r_p1[0]) if r_p1 else 0
-    r_s1 = test_store.con.execute("SELECT count(*) FROM sources").fetchone()
-    final_sources_count = int(r_s1[0]) if r_s1 else 0
+        # Call /resolve
+        res = client.post("/resolve", headers=headers, json=payload)
+        assert res.status_code == 200
+        data = res.json()
 
-    assert final_claims_count == initial_claims_count
-    assert final_props_count == initial_props_count
-    assert final_sources_count == initial_sources_count
+        # Verify resolved subjects and proposition
+        assert len(data["subjects"]) >= 1
+        assert data["subjects"][0]["subject_id"] == subject.subject_id
+        assert data["proposition"] is not None
+        assert data["proposition"]["id"] == prop_id
 
-    # Verify integrity guard: zero rows with origin = 'page_context'
-    claim_rows = test_store.con.execute("SELECT * FROM claims").fetchall()
-    records = [{"origin": "page_context"} for r in claim_rows if "page_context" in str(r)]
-    integrity_res = verify_no_page_context(records)
-    assert integrity_res.passed is True
+        # CRITICAL ASSERTION C & JOURNEY J8: Zero rows created in database
+        r_c1 = reader.con.execute("SELECT count(*) FROM claims").fetchone()
+        final_claims_count = int(r_c1[0]) if r_c1 else 0
+        r_p1 = reader.con.execute("SELECT count(*) FROM propositions").fetchone()
+        final_props_count = int(r_p1[0]) if r_p1 else 0
+        r_s1 = reader.con.execute("SELECT count(*) FROM sources").fetchone()
+        final_sources_count = int(r_s1[0]) if r_s1 else 0
+
+        assert final_claims_count == initial_claims_count
+        assert final_props_count == initial_props_count
+        assert final_sources_count == initial_sources_count
+
+        # Verify integrity guard: zero rows with origin = 'page_context'
+        claim_rows = reader.con.execute("SELECT * FROM claims").fetchall()
+        records = [{"origin": "page_context"} for r in claim_rows if "page_context" in str(r)]
+        integrity_res = verify_no_page_context(records)
+        assert integrity_res.passed is True
+    finally:
+        reader.close()
 
 
 def test_falsification_deliberate_persistence_fails_page_context_check(test_store: Storage) -> None:
@@ -229,55 +255,48 @@ def test_falsification_deliberate_persistence_fails_page_context_check(test_stor
 
 
 def test_compare_returns_409_on_version_mismatch(
-    test_client: tuple[TestClient, str],
-    test_store: Storage,
+    tmp_path: Path,
 ) -> None:
     """Head-to-head comparison: returns HTTP 409 Conflict if rubric versions differ."""
-    client, token = test_client
-
     subj_a = Subject(subject_id="subj_cmp_a", display_name="Subject A")
     subj_b = Subject(subject_id="subj_cmp_b", display_name="Subject B")
-    test_store.insert_subject(subj_a)
-    test_store.insert_subject(subj_b)
 
-    headers = {"Authorization": f"Bearer {token}"}
+    def populate(s: Storage) -> None:
+        s.insert_subject(subj_a)
+        s.insert_subject(subj_b)
 
-    # 1. Matching versions -> 200 OK
-    res_ok = client.get("/compare?a=subj_cmp_a&b=subj_cmp_b&topic=global", headers=headers)
-    assert res_ok.status_code == 200
-    assert res_ok.json()["rubric_version"] == "v1.0"
+    token = "test_secret_bearer_token_12345"
+    client, reader = _make_populated_client(tmp_path, "compare_test.duckdb", populate, token=token)
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
 
-    # 2. If app rubric engine is updated to version v2.0 for subject B, comparison must 409
-    from worker.rubric.engine import RubricEngine
-    client.app.state.rubric_engine = RubricEngine(storage=test_store, rubric_version="v2.0")  # type: ignore[attr-defined]
+        # 1. Matching versions -> 200 OK
+        res_ok = client.get("/compare?a=subj_cmp_a&b=subj_cmp_b&topic=global", headers=headers)
+        assert res_ok.status_code == 200
+        assert res_ok.json()["rubric_version"] == "v1.0"
 
-    # Pre-calculate assessment for subj_a with v1.0, while engine is now v2.0
-    from worker.entities import Assessment
-    test_store.insert_assessment(
-        Assessment(
-            assessment_id="subj_cmp_a|global|v1.0",
-            subject_id="subj_cmp_a",
-            topic_id="global",
-            rubric_version="v1.0",
-        )
-    )
+        # 2. If app rubric engine is updated to version v2.0 for subject B, comparison must 409
+        from worker.rubric.engine import RubricEngine
+        client.app.state.rubric_engine = RubricEngine(storage=reader, rubric_version="v2.0")  # type: ignore[attr-defined]
 
-    # Calling compare where A is v1.0 and B is v2.0 -> returns 409
-    # Monkey-patch assess_subject_topic to return different versions
-    def mock_assess(subject_id: str, topic_id: str = "global") -> Assessment:
-        ver = "v1.0" if subject_id == "subj_cmp_a" else "v2.0"
-        return Assessment(
-            assessment_id=f"{subject_id}|{topic_id}|{ver}",
-            subject_id=subject_id,
-            topic_id=topic_id,
-            rubric_version=ver,
-        )
+        # Calling compare where A is v1.0 and B is v2.0 -> returns 409
+        # Monkey-patch assess_subject_topic to return different versions
+        def mock_assess(subject_id: str, topic_id: str = "global") -> Assessment:
+            ver = "v1.0" if subject_id == "subj_cmp_a" else "v2.0"
+            return Assessment(
+                assessment_id=f"{subject_id}|{topic_id}|{ver}",
+                subject_id=subject_id,
+                topic_id=topic_id,
+                rubric_version=ver,
+            )
 
-    client.app.state.rubric_engine.assess_subject_topic = mock_assess  # type: ignore[attr-defined]
+        client.app.state.rubric_engine.assess_subject_topic = mock_assess  # type: ignore[attr-defined]
 
-    res_conflict = client.get("/compare?a=subj_cmp_a&b=subj_cmp_b&topic=global", headers=headers)
-    assert res_conflict.status_code == 409
-    assert "Conflict" in res_conflict.json()["detail"]
+        res_conflict = client.get("/compare?a=subj_cmp_a&b=subj_cmp_b&topic=global", headers=headers)
+        assert res_conflict.status_code == 409
+        assert "Conflict" in res_conflict.json()["detail"]
+    finally:
+        reader.close()
 
 
 def test_client_write_endpoints_prohibited_invariant_i8(test_client: tuple[TestClient, str]) -> None:
@@ -301,26 +320,30 @@ def test_client_write_endpoints_prohibited_invariant_i8(test_client: tuple[TestC
 
 
 def test_assessment_returns_version_provenance(
-    test_client: tuple[TestClient, str],
-    test_store: Storage,
+    tmp_path: Path,
 ) -> None:
     """GET /subjects/{id}/assessment returns complete version provenance."""
-    client, token = test_client
-
     subj = Subject(subject_id="subj_prov_api", display_name="Provenance Subject")
-    test_store.insert_subject(subj)
 
-    headers = {"Authorization": f"Bearer {token}"}
-    res = client.get(f"/subjects/{subj.subject_id}/assessment", headers=headers)
-    assert res.status_code == 200
-    data = res.json()
+    def populate(s: Storage) -> None:
+        s.insert_subject(subj)
 
-    assert data["rubric_version"] == "v1.0"
-    assert data["detector_version"] == "v1.0"
-    assert data["embedding_model"] == "nomic-embed-text-v1.5"
-    assert data["nlp_version"] == "v1.0-regex-ner"
-    assert "axes" in data
-    assert "sufficiency" in data
+    token = "test_secret_bearer_token_12345"
+    client, reader = _make_populated_client(tmp_path, "prov_test.duckdb", populate, token=token)
+    try:
+        headers = {"Authorization": f"Bearer {token}"}
+        res = client.get(f"/subjects/{subj.subject_id}/assessment", headers=headers)
+        assert res.status_code == 200
+        data = res.json()
+
+        assert data["rubric_version"] == "v1.0"
+        assert data["detector_version"] == "v1.0"
+        assert data["embedding_model"] == "nomic-embed-text-v1.5"
+        assert data["nlp_version"] == "v1.0-regex-ner"
+        assert "axes" in data
+        assert "sufficiency" in data
+    finally:
+        reader.close()
 
 
 def test_d0_resolve_assertion_c_returns_live_merged_proposition() -> None:

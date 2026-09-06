@@ -4,14 +4,13 @@
 
 Do not read this end to end and improvise. **Go to §1, run LOOP 0, let it route you.**
 
-**Where the project is.** Eighteen items delivered. **U1 is real and verified**: I swept all **1,288 claim routes** independently on September 5, 2026 — every one returns 200, **no response contains any of the 3 quarantined tension ids or the quarantined proposition id**, and zero `cite` links point at offset 0. Empty finding sections render with stated reasons (*"no principle conflicts detected on this topic"*), which is `design_ui_direction.md` §4 working as designed. Gates green, tree clean, no generated pages.
+**Where the project is.** Nineteen items delivered. **U1 is real and verified**: I swept all **1,288 claim routes** independently on September 5, 2026 — every one returns 200, **no response contains any of the 3 quarantined tension ids or the quarantined proposition id**, and zero `cite` links point at offset 0. Empty finding sections render with stated reasons (*"no principle conflicts detected on this topic"*), which is `design_ui_direction.md` §4 working as designed. **A0 is real and verified**: the site's read-only guarantee raises `RuntimeError` on startup when storage is writable and holding the lock, eliminating the silent fallback to a writable cursor. Gates green, tree clean, no generated pages.
 
-**Two things are open.**
+**One thing is open.**
 
-1. **The site's read-only guarantee has a silent escape hatch.** `server.py:83-86` falls back to `storage.con.cursor()` — a **writable** connection — when a read-only connect fails, which is exactly when the worker already holds the file. I ran both configurations: read-only storage raises on `INSERT`; **writable storage holding the lock writes a row through the site's connection.** The U1 test asserts the raise and passes, because its fixture never reaches the fallback. **Item A0 (§17r).**
-2. **The corpus cannot yet contain a finding.** Only 4 propositions out of 1,229 appear in more than one episode, so there are zero candidate pairs. **Issue 030 = A** is selected: expand chronologically, contiguous run, no selection, rule recorded before the run. **Item C1 (§17s)** — ~15 minutes per episode end-to-end from R1's and N0's measured figures, so roughly 5 hours for 20 episodes.
+1. **The corpus cannot yet contain a finding.** Only 4 propositions out of 1,229 appear in more than one episode, so there are zero candidate pairs. **Issue 030 = A** is selected: expand chronologically, contiguous run, no selection, rule recorded before the run. **Item C1 (§17s)** — ~15 minutes per episode end-to-end from R1's and N0's measured figures, so roughly 5 hours for 20 episodes.
 
-**What that means for you.** **A0** first — it is small, and it is a guard currently tested only where it cannot fail. Then **C1**, the run that finally gives P4–P6 something to work on. Read §3 and §5 traps 28–54 first.
+**What that means for you.** **C1** is next, the run that finally gives P4–P6 something to work on. Read §3 and §5 traps 28–54 first.
 
 **Every number, threshold, field name and literal string in the design docs is deliberate. Implement as written.** Where a doc says a value must be *measured* (`ongoing_errors.md` §2), measure it.
 
@@ -124,14 +123,14 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 | Gate | Result | Note |
 |---|---|---|
 | `ruff check` | **PASS** | Clean across worker/, tests/, fixtures/, golden/, scripts/. |
-| `mypy --strict` | **PASS on 100 files** | Clean across worker/, tests/, fixtures/, golden/, scripts/. Item G1, W0, S1 & U1 delivered. |
-| `pytest tests/ -q` | **PASS** — 234 passed in **220s** | `requires_models` tests ran (not skipped, no deselection in `addopts`). All 234 unit, behavioural, and falsification tests pass. |
+| `mypy --strict` | **PASS on 100 files** | Clean across worker/, tests/, fixtures/, golden/, scripts/. Item G1, W0, S1, U1 & A0 delivered. |
+| `pytest tests/ -q` | **PASS** — 235 passed in **221s** | `requires_models` tests ran (not skipped, no deselection in `addopts`). All 235 unit, behavioural, and falsification tests pass. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
 | `worker.integrity --all` | **PASS — 14 checks, independent populations, active sufficiency verdicts, referential integrity, and entailment validation** | G1, E1, N0, P0, W1, W0 & S1 delivered: 14 checks, FIXTURES and CORPUS reported separately with no union; `verify_quotes` examined 1,288 claims; `verify_anchor_chain` examined 5,507 entities; `verify_canonical_ids` examined 1,245 entities (1,229 propositions, 0 principles, 16 roles); `verify_quarantined_propositions_unreachable` examined 1 quarantined proposition (`a1e8c751a02cb424`); `verify_assessment_subjects_exist` verified all 8 assessments; `verify_entailment_holds` examined 1,288 claims against current propositions (PASS, all 1,182 published claims >= 0.70; 106 excluded/quarantined). |
 | `worker.golden.report` | **PASS** | Fixtures 20/20 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
-| **Working tree** | **CLEAN** | All gates pass; U1 delivered and verified live from DuckDB. |
+| **Working tree** | **CLEAN** | All gates pass; U1 and A0 delivered and verified live from DuckDB. |
 | **Review site** | **DELIVERED (U1 DELIVERED)** | Served live from DuckDB on local API (`/`, `/episode/{source_id}`, `/claim/{claim_id}`, `/person/{subject_id}`) with `read_only=True` connection guarantee. Static export and `site/` deleted (Issue 033). Assertion (c) full sweep over 1,288 claims verified (200 OK, verbatim quotes verified, zero quarantined IDs). Empty sections render with honest reasons (§4). Zero links to offset 00:00. |
-| **Site read-only guarantee** | **HAS A SILENT ESCAPE HATCH** | `server.py:83-86` falls back to `storage.con.cursor()` when a read-only connect fails — which is precisely when the worker holds the file. Verified by attempting the write: read-only storage raises `InvalidInputException`; **writable storage holding the lock successfully creates a table and inserts a row through the site's connection.** The U1 test passes because its fixture takes the other branch. Item A0. |
+| **Site read-only guarantee** | **DELIVERED · VERIFIED (A0 DELIVERED)** | Deleted silent fallback to `storage.con.cursor()`. When `Storage` is writable and holding the lock, `create_app` raises `RuntimeError` naming the cause, strictly enforcing the read-only guarantee. Assertion (c) verified in `test_review_site_u1.py`; falsification verified (restoring fallback fails assertion (c)). |
 | **Corpus overlap** | **4 PROPOSITIONS SPAN 2+ EPISODES** | Out of 1,229. A reversal needs one proposition, two episodes, opposing stances — that pair does not exist in this corpus. **Not a detector fault; a coverage fault.** Issue 030, open. |
 | **CI / Portability** | **PASS** | `portability.yml` tests base install without Apple extra; runs lint, mypy, and non-model tests across all 5 directories. |
 | **Corpus** | **POPULATED, FULL COVERAGE (R1, N0, P0, W1 & W0 DELIVERED)** | 4 sources, **4,219 utterances**, **1,362 claims**, **1,303 propositions** (1,302 active with claims, 1 quarantined), 8 assessments. Coverage across all four sources: **99.7%–100.0%** (5,283s–5,800s of 5,301s–5,801s). Feed `<itunes:duration>` and `pubDate` parsed; `published_at` preserved from feed; `MIN_UTTERANCE_MEDIA_RATIO = 0.80` enforced and passing. Truncation bug eliminated. Items R1, N0, P0, W1, and W0 delivered. |
@@ -217,7 +216,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 | Order | ID | Item | Blocked | Status | Why here |
 |---|---|---|---|---|---|
-| 1 | **A0** | The site's read-only guarantee has a silent escape hatch | none | **outstanding** | A `try/except` substitutes a writable cursor for a read-only connection, in the configuration you actually run. Tested only in the branch where it cannot fail. Small, and it is an **I8** hole. |
+| 1 | **A0** | The site's read-only guarantee has a silent escape hatch | none | **delivered · verified** | Deleted silent fallback to `storage.con.cursor()` in `worker/api/server.py`; `create_app` raises `RuntimeError` if read-only connection cannot be established; Assertion (c) verified in `tests/test_review_site_u1.py`; LOOP 2 falsification verified (restoring fallback fails assertion (c), reverting passes); all 235 tests pass. |
 | 2 | **C1** | Expand the corpus chronologically (**Issue 030 = A**) | none | **outstanding** | Zero candidate pairs because only 4 propositions span 2+ episodes. Contiguous run, no selection, rule recorded first. ~15 min/episode measured; ~5 h for 20. **The corpus P4–P6 have been waiting for.** |
 | 3 | **S1** | Nothing validates `stance` or `is_own_assertion` | none | **delivered · verified** | Implemented Validator 7 (`validate_stance_direction`) certifying directional alignment ($P$ vs $\neg P$, Parameter 031 margin $\delta=0.05$); raised Invariant I7 speech-act sensitivity (regex detection of interrogative and hypothetical quotes). Corrected 2 mislabelled oppose claims to support (`af95392de868a188` and `7f571f16d81af8c5`), downgraded 97 non-assertive quotes, raising I7 exclusion rate to 7.78% (106/1,362 claims, floor > 5%). Eliminated all 4 target candidate pairs identified in §17n. Surviving own-assertion oppose claims: 73 ($\ge 50$). All 14 integrity checks PASS. Both threshold directions and falsification verified. |
 | 4 | **T1** | A reversal needs time between its halves | none | **delivered · verified** | Implemented same-source automatic disqualification (`source_a_id == source_b_id`) in `worker/tension/detect.py`; routed disqualified same-source opposing pairs to review surface `stance_conflict_reviews` in `worker/storage.py` with reason `same_source_stance_conflict`; added Parameter 032 `MIN_REVERSAL_GAP_DAYS = 0.0` (unmeasured / provisional); implemented `CandidateEvaluationReport` reporting exact examined denominator and rejection reasons. Verified: all 5 baseline pairs disqualified and routed to review table; 0 reversal candidates over live corpus (1 examined, 1 rejected by same-source rule); synthetic cross-episode pair accepted (1 published reversal); LOOP 2 falsification verified (disabling same-source condition causes candidates to reappear; restoring clears them to 0). |
@@ -1413,7 +1412,7 @@ GET /person/{subject_id}  that person across all episodes
 **Blast radius.** `worker/api/server.py`, templates under `worker/api/`, `tests/`, deletion of `scripts/export_site.py` and `tests/test_review_site_u1.py`, `docs/design_ui_direction.md` §6b, `docs/design_local_api_and_clients.md` §3 (new routes), `docs/ongoing_errors.md` §4 (Issue 033), §3, §6.
 
 ---
-## 17r. A0 — The site's read-only guarantee has a silent escape hatch
+## 17r. A0 — The site's read-only guarantee has a silent escape hatch · DELIVERED · VERIFIED
 
 **User impact:** the review site becomes incapable of writing to the corpus in the configuration you actually run it in, not just the one the test uses.
 

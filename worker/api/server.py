@@ -82,8 +82,11 @@ def create_app(
     else:
         try:
             read_only_con = duckdb.connect(str(storage.db_path), read_only=True)
-        except Exception:
-            read_only_con = storage.con.cursor()
+        except Exception as e:
+            raise RuntimeError(
+                f"Cannot open read-only database connection for review site at {storage.db_path}: "
+                f"storage connection is writable. A review site cannot start without a read-only guarantee: {e}"
+            ) from e
     app.state.read_only_con = read_only_con
 
     app.add_middleware(BaseHTTPMiddleware, dispatch=auth_middleware)

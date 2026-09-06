@@ -298,3 +298,18 @@ def test_falsification_missing_template_renders_disabled_rather_than_offset_zero
     assert "No citation URL template available for this source" in cite_html
     assert "href=" not in cite_html
     assert "#t=0" not in cite_html
+
+
+def test_a0_assertion_c_writable_storage_raises_at_startup(tmp_path: Path) -> None:
+    """Item A0 (§17r) Assertion (c): create_app refuses to start when Storage holds a writable lock.
+
+    Eliminates the silent fallback to storage.con.cursor() which permitted writes
+    through the review site's connection.
+    """
+    db_path = tmp_path / "writable_lock_test.duckdb"
+    writable_storage = Storage(db_path=str(db_path), read_only=False)
+    try:
+        with pytest.raises(RuntimeError, match="Cannot open read-only database connection for review site"):
+            create_app(storage=writable_storage, token="test_token", host="127.0.0.1")
+    finally:
+        writable_storage.close()

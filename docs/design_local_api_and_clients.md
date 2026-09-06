@@ -136,7 +136,7 @@ GET /claim/{claim_id}     the Social Proof panel (design_ui_direction.md §6b)
 GET /person/{subject_id}  one person across all episodes
 ```
 
-**These routes open DuckDB `read_only=True`.** The site is a reader; the connection should be incapable of writing, not merely disinclined to. All writes still go through the worker (**I8**), and §2's four controls cover these routes exactly as they cover `/resolve` — the site adds pages, not a second security surface.
+**These routes open DuckDB `read_only=True`.** The site is a reader; the connection should be incapable of writing, not merely disinclined to. If a read-only connection cannot be established (e.g. because another component holds an exclusive writable lock on the file), the application refuses to start (raises `RuntimeError`) rather than falling back to a writable cursor (Item A0). All writes still go through the worker (**I8**), and §2's four controls cover these routes exactly as they cover `/resolve` — the site adds pages, not a second security surface.
 
 **Quarantine exclusions live in the shared query layer, never in a template.** `tensions.status='published'` and `propositions.status='active'` are conditions on the queries every route calls. A renderer that filters is one conditional away from publishing a fabrication, and this project has published three.
 
