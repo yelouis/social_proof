@@ -160,6 +160,18 @@ One `tokens.json` (colour, type scale, spacing, radii) generates the extension's
 
 ---
 
+## 6b. The review site — the same components, no second implementation (Issue 028)
+
+A **local, static** site for reading what the system found: episodes newest-first, each episode's claims grouped by person in timestamp order, and a Social Proof panel on any claim. **Issue 028** settled its four questions — the panel shows *everything* (timeline, four axes, tensions, principles); it is **local only**, with no hosting and therefore no way for a wrong claim about a real person to leave the machine; it is a **static export** of DuckDB to JSON, so there is no server, no write path and no database reachable from a page; and it is **not built until the findings are trustworthy** — specifically, until one tension survives being read by hand.
+
+**It is Depth 2 in a browser tab.** §6's expanded view already specifies this payload, and §157's tokens already style it. Build no second component set.
+
+**Every section renders always, including the empty ones.** `principles` currently holds zero rows and the panel must still show a principles section, reading *"no principle conflicts detected on this topic"* — §4 is the governing screen here, not an edge case. **An honest empty section is a finished feature; a hidden one is not.** The ship gate is that nothing shown is false, never that everything is populated.
+
+**The export is the trust boundary and it enforces rather than assumes.** Quarantined tensions and propositions are excluded by query predicate, never by a template conditional — a renderer that filters is one conditional away from publishing a fabrication, and this project has shipped three. Every exported claim's quote is re-verified verbatim against its utterance at export time rather than trusted from the store.
+
+---
+
 ## 7. Head-to-head — exactly two, never N
 
 ```
@@ -219,6 +231,6 @@ Minimal and functional. Timeline scrubbing and card expansion get motion because
 
 ## 12. Decisions
 
-**Resolved:** Issue 002 -> extension first, Flutter deferred, shared tokens. Issue 013 -> selection-triggered overlay with two depths (SS6). Issue 014 -> no in-app playback; `cite` deep-links to the source at its offset.
+**Resolved:** Issue 028 -> local static review site, everything-panel, gated on a hand-verified finding (§6b). Issue 002 -> extension first, Flutter deferred, shared tokens. Issue 013 -> selection-triggered overlay with two depths (SS6). Issue 014 -> no in-app playback; `cite` deep-links to the source at its offset.
 
 **Open:** none blocking this contract.

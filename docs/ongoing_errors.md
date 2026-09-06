@@ -8,7 +8,7 @@
 - **Once selected, a decision moves out of §1.** Its consequence is written into the design doc that owns it, and it becomes one row in §4. The full option text stays in git history — this file is a queue, not an archive.
 - Recommendations are marked. A recommendation is not a decision.
 
-**Status: 21 decisions made, 0 open.** Live work is queued in `agent_execution_guide.md` §6.
+**Status: 22 decisions made, 0 open.** Live work is queued in `agent_execution_guide.md` §6.
 
 ---
 
@@ -52,6 +52,7 @@ Newest first. One row each; **the design doc named is where that decision now li
 
 | # | Decision | Now lives in |
 |---|---|---|
+| **028** | **The review site**: panel shows *everything* (timeline, axes, tensions, principles) · **local only**, no hosting · **static export** DuckDB→JSON, no server and no write path · **fix findings first** — not built until a tension survives being read by hand | `design_ui_direction.md` §6 · `agent_execution_guide.md` U1 |
 | **027** | **A** — repair the proposition table in place: normalize canonical IDs, merge the forked rows, backfill embeddings for live propositions, quarantine the fabricated proposition. Nothing purged. | `design_data_layer.md` §3–§4 · `design_evidence_integrity.md` §4 · `design_local_api_and_clients.md` §4 · `agent_execution_guide.md` D0 |
 | **025** | **C** — entailment guard: embedding similarity + minimum quote length, ambiguous band quarantines | `design_claim_extraction.md` §8 validator 6 · `design_evidence_integrity.md` E2b |
 | **024** | **B** — CI's one job is portability; `mlx-lm` optional, workflow renamed for its scope | `agent_execution_guide.md` C0 (delivered) |

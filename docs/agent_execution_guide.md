@@ -4,11 +4,15 @@
 
 Do not read this end to end and improvise. **Go to §1, run LOOP 0, let it route you.**
 
-**Where the project is.** Eleven items are delivered. G1, E2 and P0 all verified correct on September 5, 2026: `scripts/` is inside the gates and clean, `source_roles` is 16 rows for 16 pairs, the sufficiency verdict is computed from inputs rather than from the scores it gates, and proposition dedup is wired and merged 1,503 propositions down to 1,429 with a real tail. 194 gates green, 194 passed, thirteen integrity checks PASS.
+**Where the project is.** Fourteen items delivered. Q0, W1 and W0 all verified correct on September 5, 2026: three tensions quarantined, **zero indexical propositions remain** (was 126), `verify_entailment_holds` added as check 14, `t_dedup` unified behind one constant. Gates green, 207 passed, 14 integrity checks PASS. **1362 claims, every quote verbatim-verified against its utterance.** That half of the product is real and trustworthy.
 
-**And the system is currently publishing two fabricated findings.** P0 produced the first tensions this project has ever published. **I read both by hand. Neither is real.** Both hang on one merged proposition — *"The speaker believes they created the subject matter"* — over quotes about conspiracy theories, something taking off, and a third party not having powers. Sacks's pair contains no assertion about creating anything in either quote. All thirteen integrity checks pass over them, because every one asks whether the citation is real and none asks whether it supports the claim (trap 28). **This is the second fabrication this project has published.**
+**No finding it has ever produced has been.** All three tensions ever published were fabrications and are quarantined — a 100% quarantine rate, which is the honest health metric. **I read all five surviving candidate pairs by hand and every one is false**, for three causes none of the six validators covers:
 
-**What that means for you. Start with Q0 (§17k) and do it before anything else** — quarantine both tensions, because `design_evidence_integrity.md` §5 says quarantine first and investigate second, and that instruction exists for exactly this moment. Then **W1** (§17l): X1 validates entailment at extraction time, and P0's merge re-points claims to different propositions **without re-checking**, so X1's guarantee is void for every claim under the 74 merged-away propositions — and no integrity check covers it. Then **W0** (§17m), the root cause: the v1.2 prompt emits propositions with unbound indexicals (*"The speaker believes…"*, 7% of the corpus), which are not global propositions at all and act as embedding attractors that collapse unrelated claims together. Read §3 and §5 traps 28–44 first.
+- **Nothing validates `stance`.** Validator 6 asks *does this quote support this proposition* and is stance-blind by construction, so one person asserting the same thing twice can be labelled `support` and `oppose` and render as a self-contradiction. Two pairs are exactly this.
+- **The own-assertion guard is under-firing.** 1353 of 1362 claims are own assertions; **9 exclusions total (0.7%)**. A rhetorical setup (*"You can say, okay, Verizon's responsible…"*) and a question (*"So you're saying…"*) both became claims. Invariant I7 exists for these.
+- **Self-containment was fixed against a list, not a principle.** W0's named patterns are gone, and ~130 propositions (10%) still carry unbound `they`, `he`, `the same`, or a sentence-initial `It`.
+
+**What that means for you.** **S1** (§17n) — validate the two fields a tension is actually made of. **T1** (§17o) — a reversal needs time between its halves; all five candidates are same-episode and there are **zero** cross-episode candidates in the corpus. **W2** (§17p) — finish self-containment against the property. Then **U1** (§17q), the review site, which Issue 028 gates on a finding surviving being read by hand. Read §3 and §5 traps 28–48 first.
 
 **Every number, threshold, field name and literal string in the design docs is deliberate. Implement as written.** Where a doc says a value must be *measured* (`ongoing_errors.md` §2), measure it.
 
@@ -134,7 +138,11 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 | **Sufficiency verdict** | **DELIVERED · VERIFIED (E2 DELIVERED)** | Parameter 012 sufficiency floor enforced strictly on inputs BEFORE scoring (`MIN_CLAIMS=3`, `MIN_SOURCES=1`, `MIN_SPAN_DAYS=0`). Dependency runs one way: verdict -> scores. When `passed` is False, all axis calculations are suppressed (`reason: "insufficient_corpus"`). Live corpus hosts all clear sufficiency on the merits (190–504 claims across 4 sources, 1,232–1,237d span). Assertion (c) verified: below-floor assessment with hand-set score fails `verify_no_suppressed_scores`; above-floor assessment with all null scores passes. |
 | **Corpus — claims** | **1,362 CLAIMS (N0, P0, W0 DELIVERED)** | Extraction ran across all 4,219 utterances. Old indexical claims deleted and re-extracted under `v1.3` prompt (`gemma-3-27b-it:v1.3:s1`) with `validate_self_contained` active (122 indexical rejections, 65 clean new claims produced). All 4 sources contribute. Parameter 026 re-measured over n=1,362. With W0 indexical removal, candidate pairs considered across subjects is 4 (all 4 concordant `support` vs `support`, 0 opposing-stance false positives from attractor propositions). |
 | **Assessments** | **EVALUATED, REFERENTIALLY GUARDED** | 8 rows across 2 topics (`top_ai_reg`, `global`). Sufficiency verdict `passed: True` across all 4 enrolled hosts (Chamath 343, Sacks 504, Jason 190, Friedberg 325) with active Specificity rates and Consistency rates (1.0000 across all 4 subjects following Q0 tension quarantine). |
-| **Published tensions** | **0 PUBLISHED (Q0 DELIVERED) · 3 QUARANTINED (100% QUARANTINE RATE)** | Both fabrications (`461e3d1dbf30bde4` and `4b812a6b0dc604b0`) quarantined as `fabricated_proposition`, joining `0068adec4b1501c6`. All 8 assessments recomputed without them (`design_evidence_integrity.md` §5). `verify_quarantine_not_rendered` examines 3 quarantined tensions and passes; none appears in any assessment's `axis_evidence`. Item Q0 delivered. |
+| **Published tensions** | **0 PUBLISHED · 3 QUARANTINED (100% QUARANTINE RATE)** | Both fabrications (`461e3d1dbf30bde4` and `4b812a6b0dc604b0`) quarantined as `fabricated_proposition`, joining `0068adec4b1501c6`. All 8 assessments recomputed without them (`design_evidence_integrity.md` §5). `verify_quarantine_not_rendered` examines 3 quarantined tensions and passes; none appears in any assessment's `axis_evidence`. Item Q0 delivered. |
+| **Candidate pairs** | **5 REMAIN — ALL FIVE FALSE** | Read by hand, September 5. Two are stance errors (one person asserting the same thing twice, labelled `support` and `oppose`); two are I7 misses (a rhetorical setup and a question recorded as claims); two sit on residual unbound pronouns. **All five are same-episode; there are zero cross-episode candidates in the corpus.** Items S1, T1, W2. |
+| **`stance`** | **UNVALIDATED** | Six validators check quote, entailment, polarity, speech act, confidence and schema. **None checks `stance`**, and validator 6 cannot — entailment is stance-blind by construction, so a quote genuinely about the proposition passes whichever direction it is labelled. This is the field the contradiction detector keys on. Item S1. |
+| **`is_own_assertion`** | **UNDER-FIRING at 0.7%** | 1353 of 1362 claims are own assertions; the 9 exclusions are all `entailment_ambiguous`, none for speech act. Implausible across four hours of unscripted conversation. Item S1. |
+| **Propositions — residual indexicals** | **~130 (10%) STILL UNBOUND** | W0's named patterns are at zero, but 82 propositions contain a bare `they`/`their`, 23 start `It`/`This`/`That`, 13 carry a bare `he`/`his`, 12 contain `the same`. **The validator was written against the observed list rather than the property.** Item W2. |
 | **Entailment after merge** | **DELIVERED · VERIFIED (W1 DELIVERED)** | Re-pointing strictly validates entailment (`T_ENTAIL_HIGH = 0.70`); refuses merge when quote does not entail target proposition. Check #14 `verify_entailment_holds` asserts entailment holds across all stored claims against current propositions (PASS on 1,362 claims). Falsification verified. |
 | **Propositions — indexical** | **0% — ZERO INDEXICAL PROPOSITIONS (W0 DELIVERED)** | 192 indexical propositions across 204 claims identified and repaired. Fixed prompt `v1.3` with Rule 3 explicitly prohibiting indexical frames; added `validate_self_contained` validator (`proposition_not_self_contained`); Precondition 6 in tension detector. Cleaned live corpus contains exactly 0 indexical propositions. Item W0 delivered. |
 | **`t_dedup`** | **DELIVERED · VERIFIED (W1 DELIVERED)** | Unified at `T_dedup = 0.86` with single source of truth in `worker/extract/dedup.py`. Hardcoded `0.85` removed from `worker/extract/extract.py`. |
@@ -183,6 +191,10 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 37. **A test that opens the production database can write to it.** `subj_nonexistent_subject` holds an assessment in the live corpus and no row in `subjects`. Tests legitimately *read* the corpus — assertion (c) often needs real data — but a test that needs to *write* must take a copy, and the corpus should be opened `read_only=True` from tests.
 38. **A verdict computed from the evidence it gates is not a verdict.** E1 replaced `sufficiency.get("passed", True)` with `passed = any_scored` — so "did sufficiency pass?" became "did anything get scored?", and the check that asks *"if sufficiency failed, is any score present?"* can never find one. **A guard's input must be independent of its subject.** When a fix removes a default, check what replaced it: the same inertness survives a rewrite easily.
 39. **A uniqueness bug hides behind a coverage check.** `verify_role_coverage` asks whether every utterance *resolves to* a role and passes over a `source_roles` table where every row is duplicated. Resolution and uniqueness are different questions, and only the first was asked — the same error shape as trap 28 (*"is this citation real?"* vs *"does it support this claim?"*).
+45. **A validator that checks *aboutness* cannot check *direction*.** Validator 6 asks whether a quote supports its proposition and passes it either way it is labelled, so `stance` — the field the whole contradiction detector keys on — went unchecked through six validators. **Enumerate the fields a downstream stage reads, and confirm something validates each one.**
+46. **A guard's firing rate is a measurement, and a suspiciously low one is a finding.** `is_own_assertion` excluded 9 of 1362 claims (0.7%) across four hours of unscripted conversation full of questions and hypotheticals. Nothing was red. **Report every guard's rate next to its rejections; a rate that looks too clean usually means the guard stopped reaching its subject.**
+47. **A validator written from a list of observed failures catches the failures you observed.** W0 named three indexical patterns and the implementation matched them exactly — leaving 130 propositions with unbound `they`, `he` and `the same`. **State the property in the spec and the docstring; let the patterns be examples, never the definition.**
+48. **A same-context pair is not a change of mind.** Every `unacknowledged_reversal` candidate in the corpus is two claims from one episode, usually a position voiced then rejected. A tension type that asserts change over time must require time. **Check that a detector's structural preconditions actually encode the claim its name makes.**
 41. **A validator's guarantee expires the moment its subject is mutated.** X1 checked quote↔proposition at extraction. A later merge re-pointed the claim to different text and nothing re-checked, so 74 propositions' worth of claims carry conclusions validated against sentences they no longer reference. **An extraction-time validator needs an integrity-pass twin, or it certifies a snapshot and not the store.**
 42. **A proposition with an unbound indexical is a template, and templates are embedding attractors.** *"The speaker believes they created the subject matter"* names nobody. Similarity between two such strings measures the shared frame, not the content, so they merge at any threshold and drag unrelated claims together. **Reject them at extraction; no downstream parameter can compensate.**
 43. **Topic is not proposition.** *"DNA sequencing involves chopping up DNA"* absorbed *"…is relatively inexpensive"*; *"Moderna's mRNA was patented"* absorbed *"…should be directly injected into the body"*. Both merges are about one subject and are not the same assertion. `design_topic_model.md` owns grouping-by-subject; the proposition layer must stay narrower than it.
@@ -195,32 +207,36 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 | Order | ID | Item | Blocked | Status | Why here |
 |---|---|---|---|---|---|
-| 1 | **Q0** | Quarantine both published tensions | none | **delivered · verified** | Quarantined both published tensions (`461e3d1dbf30bde4` and `4b812a6b0dc604b0`) as `fabricated_proposition`, joining `0068adec4b1501c6`. Recomputed all 8 assessments without them (`design_evidence_integrity.md` §5). `verify_quarantine_not_rendered` examines 3 quarantined tensions and passes; no assessment mentions either tension ID. Quarantine rate is 3/3 (100.0%). Falsification verified (re-publishing turns Assertion (c) RED). |
-| 2 | **W1** | Entailment does not survive re-pointing | none | **delivered · verified** | Re-pointing strictly gated by quote entailment validation (`T_ENTAIL_HIGH = 0.70`). Refused 8 candidate claim merges where entailment fell below floor (0.6444–0.6962), leaving 1,430 active propositions (69 merged away). Check #14 `verify_entailment_holds` implemented in `worker/integrity.py` with DuckDB caching (`claim_entailment_cache`), passing on 1,501 claims. Single source of truth for `T_dedup = 0.86` across `dedup.py` and `extract.py`. Assertion (c) and falsification verified (disabling re-validation fails `verify_entailment_holds` with 6 claims). |
-| 3 | **W0** | Propositions must be self-contained, not indexical | **W1** | **delivered · verified** | Stripped actor frames and unbound indexicals at extraction: fixed prompt to `v1.3` (`gemma-3-27b-it:v1.3:s1`) with Rule 3; implemented `validate_self_contained` validator (`proposition_not_self_contained`) running before entailment; added Precondition 6 to tension detection. Pre-repair RED state verified (192 indexical propositions across 204 claims). Live corpus repaired: old indexical claims deleted, 204 candidate utterances re-extracted (122 indexical rejections, 65 clean new claims produced), orphaned propositions purged, deduplicated at T=0.86 with W1 entailment gate. Zero propositions now match indexical patterns (down from 7%). Top 5 merged clusters inspected and confirmed single propositions. 4 multi-source diff-date propositions, 4 concordant candidate pairs examined, 0 opposing-stance false positives from attractor propositions. All 14 integrity checks PASS on fixtures and corpus. |
-| 4 | **G1** | Two `role_id` schemes; `scripts/` outside every gate | none | **delivered · verified** | `scripts/` brought under `ruff` and `mypy` gates (0 errors on 86 files). Hand-built `f"role_..."` replaced with `compute_role_id()` across `scripts/`. 16 duplicate rows deleted (32 → 16). `verify_canonical_ids` extended to cover `source_roles` and pair uniqueness. |
-| 5 | **E2** | The sufficiency verdict is circular | none | **delivered · verified** | Broken circularity: `passed` derived strictly from inputs (`claim_count >= 3`, `source_count >= 1`, `span_days >= 0`, Parameter 012) BEFORE scoring. Dependency is one-way (verdict -> scores); if `passed` is False, axis scoring is suppressed. Assertion (c) and the other direction verified. |
-| 6 | **P0** | Proposition dedup never runs | none | **delivered · produced two fabrications** | Wired semantic deduplication into extraction path (`ClaimExtractionPipeline`). Parameter 008 measured empirically at $T_{\text{dedup}} = 0.86$ over 1,499 live propositions; ambiguous-band adjudication does not earn its cost. Collapsed to 1,425 active survivors (74 merged away); 10 multi-source diff-date propositions; 83 candidate pairs evaluated, yielding 2 published unacknowledged reversal tensions. Both threshold directions and falsification verified (0.999 collapses to singletons/0 candidates; 0.30 causes absurd merge; 0.86 GREEN). |
-| 7 | **E1** | The assessment layer is unguarded | none | **delivered · half** | Referential integrity, the missing-key FAIL, the removed default, the deleted pollution row and read-only tests are all real and verified. **The verdict semantics are not — see E2.** |
-| 8 | **N0** | Extract over the full corpus | none | **delivered · verified** | Extraction is real and verified: 1,501 claims across all 4 episodes (284 / 332 / 408 / 477), Validator 6 rejecting 194 of 1,686 (11.5%), parameter 026 re-measured over n=1,501. With P0 deduplication delivered, candidate pairs considered across subjects is 83 (71 concordant, 10 same-date, 2 evaluated by detector yielding 2 published tensions), fully satisfying Assertion (c). |
-| 9 | **G0** | Repair the `mypy` gate | none | **delivered · verified** | Walrus narrowing at `test_segmentation_x0.py:53`; mypy clean on **80** files (re-measured). |
-| 10 | **M0** | `source_count` is a constant, not a measurement | none | **delivered · verified** | Resolved through utterance anchor chain without `hasattr`; Sacks/Friedberg 2, Jason/Chamath 1, zero claims 0, unresolvable raises. |
-| 11 | **E0** | Integrity pass must check the corpus, not a union | none | **delivered · verified** | FIXTURES and CORPUS evaluated and reported independently; assessments loaded from DB; examined counts reported. |
-| 12 | **D0** | Proposition table repair (**Issue 027 = A**) | none | **delivered · verified** | Normalized canonical IDs, merged three forked rows, backfilled embeddings for all 8 live propositions, quarantined fabricated db3ec63d33cf6f0a, and added structural read filters. |
-| 13 | **X1** | Entailment validator (Issue 025 = C) | none | **delivered · guarantee voided by P0** | Validator 6 added after quote resolution; MIN_QUOTE_TOKENS=7, T_ENTAIL_LOW=0.60, T_ENTAIL_HIGH=0.70; fabrications rejected, 9 live claims pass, prefix sensitivity verified, ambiguous band quarantined and excluded from axis_evidence. **Correct and wired, but has never run over extraction output it did not inherit — all rejection counters are zero. N0 is its first real test.** |
-| 14 | **R1** | Media duration + real coverage check; fix truncation | none | **delivered · audio only** | Feed duration parsed, published_at preserved, MIN_UTTERANCE_MEDIA_RATIO=0.80 enforced, 10MB byte cap removed; full re-ingest yields 4,219 utterances at 99.7%–100.0% coverage across all 4 sources. **The claims were not regenerated — see N0.** |
-| 15 | **F0** | Repair the behaviour fixture set | none | **delivered** | 20/20 across all 17 classes. |
-| 16 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | Landed while the corpus was empty, as intended. |
-| 17 | **I0** | First real ingest — the four All-In hosts | none | **superseded → R1** | I0.1/I0.2 hold. I0.3's remaining work is the truncation, tracked in R1. **Not a to-do; do not open it.** |
-| 18 | **R0** | Repair the ingest; add the productivity guard | none | **superseded → R1** | Empty-source bug fixed and deletion gated. The coverage half is R1. **Not a to-do; do not open it.** |
-| 19 | **X0** | Quarantine the fabricated tension; fix segmentation | none | **delivered** | Verified independently: tension quarantined, claims removed, 9 survivors read one by one and genuinely supported. |
-| 20 | **C0** | Portability workflow; `mlx-lm` optional (Issue 024 = B) | none | **delivered** | |
-| 21 | **P4** | Tension detection | none | **delivered · fixtures only** | |
-| 22 | **P3** | Topic model | none | **delivered · fixtures only** | |
-| 23 | **P5** | Principle extraction | none | **delivered · fixtures only** | |
-| 24 | **P6** | Rubric engine | none | **delivered · fixtures only** | **See E1** — it never records the I5 verdict it computes, so the check for suppressed scores cannot fire. |
-| 25 | **P7** | Local API | none | **delivered** | `/resolve` now filters structurally on `status='active'` + live-claim existence; the 8 reachable propositions all carry claims. Verified. |
-| 26 | **P8** | Browser extension | none | **delivered** | |
+| 1 | **S1** | Nothing validates `stance` or `is_own_assertion` | none | **outstanding** | The two fields a tension is made of are the only unchecked ones in the claim. Four of five false candidate pairs come from this. |
+| 2 | **T1** | A reversal needs time between its halves | none | **outstanding** | All 5 candidates are same-episode; zero cross-episode candidates exist. One structural condition rejects all five. **A filter, not a correctness fix** — see the item. |
+| 3 | **W2** | Self-containment, the rest of the pronouns | none | **outstanding** | W0 delivered its spec exactly; the spec listed patterns instead of stating the property. ~130 propositions still unresolvable standing alone. |
+| 4 | **U1** | The review site (**Issue 028**) | **S1, T1, W2 + one real finding** | **outstanding** | Episodes → claims by person → Social Proof panel. Static export, local only, everything rendered including absence. **Issue 028 gates it on a tension surviving being read by hand.** |
+| 5 | **Q0** | Quarantine both published tensions | none | **delivered · verified** | Quarantined both published tensions (`461e3d1dbf30bde4` and `4b812a6b0dc604b0`) as `fabricated_proposition`, joining `0068adec4b1501c6`. Recomputed all 8 assessments without them (`design_evidence_integrity.md` §5). `verify_quarantine_not_rendered` examines 3 quarantined tensions and passes; no assessment mentions either tension ID. Quarantine rate is 3/3 (100.0%). Falsification verified (re-publishing turns Assertion (c) RED). |
+| 6 | **W1** | Entailment does not survive re-pointing | none | **delivered · verified** | Re-pointing strictly gated by quote entailment validation (`T_ENTAIL_HIGH = 0.70`). Refused 8 candidate claim merges where entailment fell below floor (0.6444–0.6962), leaving 1,430 active propositions (69 merged away). Check #14 `verify_entailment_holds` implemented in `worker/integrity.py` with DuckDB caching (`claim_entailment_cache`), passing on 1,501 claims. Single source of truth for `T_dedup = 0.86` across `dedup.py` and `extract.py`. Assertion (c) and falsification verified (disabling re-validation fails `verify_entailment_holds` with 6 claims). |
+| 7 | **W0** | Propositions must be self-contained, not indexical | **W1** | **delivered · verified** | Stripped actor frames and unbound indexicals at extraction: fixed prompt to `v1.3` (`gemma-3-27b-it:v1.3:s1`) with Rule 3; implemented `validate_self_contained` validator (`proposition_not_self_contained`) running before entailment; added Precondition 6 to tension detection. Pre-repair RED state verified (192 indexical propositions across 204 claims). Live corpus repaired: old indexical claims deleted, 204 candidate utterances re-extracted (122 indexical rejections, 65 clean new claims produced), orphaned propositions purged, deduplicated at T=0.86 with W1 entailment gate. Zero propositions now match indexical patterns (down from 7%). Top 5 merged clusters inspected and confirmed single propositions. 4 multi-source diff-date propositions, 4 concordant candidate pairs examined, 0 opposing-stance false positives from attractor propositions. All 14 integrity checks PASS on fixtures and corpus. |
+| 8 | **G1** | Two `role_id` schemes; `scripts/` outside every gate | none | **delivered · verified** | `scripts/` brought under `ruff` and `mypy` gates (0 errors on 86 files). Hand-built `f"role_..."` replaced with `compute_role_id()` across `scripts/`. 16 duplicate rows deleted (32 → 16). `verify_canonical_ids` extended to cover `source_roles` and pair uniqueness. |
+| 9 | **E2** | The sufficiency verdict is circular | none | **delivered · verified** | Broken circularity: `passed` derived strictly from inputs (`claim_count >= 3`, `source_count >= 1`, `span_days >= 0`, Parameter 012) BEFORE scoring. Dependency is one-way (verdict -> scores); if `passed` is False, axis scoring is suppressed. Assertion (c) and the other direction verified. |
+| 10 | **P0** | Proposition dedup never runs | none | **delivered · produced two fabrications** | Wired semantic deduplication into extraction path (`ClaimExtractionPipeline`). Parameter 008 measured empirically at $T_{\text{dedup}} = 0.86$ over 1,499 live propositions; ambiguous-band adjudication does not earn its cost. Collapsed to 1,425 active survivors (74 merged away); 10 multi-source diff-date propositions; 83 candidate pairs evaluated, yielding 2 published unacknowledged reversal tensions. Both threshold directions and falsification verified (0.999 collapses to singletons/0 candidates; 0.30 causes absurd merge; 0.86 GREEN). |
+| 11 | **E1** | The assessment layer is unguarded | none | **delivered · half** | Referential integrity, the missing-key FAIL, the removed default, the deleted pollution row and read-only tests are all real and verified. **The verdict semantics are not — see E2.** |
+| 12 | **N0** | Extract over the full corpus | none | **delivered · verified** | Extraction is real and verified: 1,501 claims across all 4 episodes (284 / 332 / 408 / 477), Validator 6 rejecting 194 of 1,686 (11.5%), parameter 026 re-measured over n=1,501. With P0 deduplication delivered, candidate pairs considered across subjects is 83 (71 concordant, 10 same-date, 2 evaluated by detector yielding 2 published tensions), fully satisfying Assertion (c). |
+| 13 | **G0** | Repair the `mypy` gate | none | **delivered · verified** | Walrus narrowing at `test_segmentation_x0.py:53`; mypy clean on **80** files (re-measured). |
+| 14 | **M0** | `source_count` is a constant, not a measurement | none | **delivered · verified** | Resolved through utterance anchor chain without `hasattr`; Sacks/Friedberg 2, Jason/Chamath 1, zero claims 0, unresolvable raises. |
+| 15 | **E0** | Integrity pass must check the corpus, not a union | none | **delivered · verified** | FIXTURES and CORPUS evaluated and reported independently; assessments loaded from DB; examined counts reported. |
+| 16 | **D0** | Proposition table repair (**Issue 027 = A**) | none | **delivered · verified** | Normalized canonical IDs, merged three forked rows, backfilled embeddings for all 8 live propositions, quarantined fabricated db3ec63d33cf6f0a, and added structural read filters. |
+| 17 | **X1** | Entailment validator (Issue 025 = C) | none | **delivered · guarantee voided by P0** | Validator 6 added after quote resolution; MIN_QUOTE_TOKENS=7, T_ENTAIL_LOW=0.60, T_ENTAIL_HIGH=0.70; fabrications rejected, 9 live claims pass, prefix sensitivity verified, ambiguous band quarantined and excluded from axis_evidence. **Correct and wired, but has never run over extraction output it did not inherit — all rejection counters are zero. N0 is its first real test.** |
+| 18 | **R1** | Media duration + real coverage check; fix truncation | none | **delivered · audio only** | Feed duration parsed, published_at preserved, MIN_UTTERANCE_MEDIA_RATIO=0.80 enforced, 10MB byte cap removed; full re-ingest yields 4,219 utterances at 99.7%–100.0% coverage across all 4 sources. **The claims were not regenerated — see N0.** |
+| 19 | **F0** | Repair the behaviour fixture set | none | **delivered** | 20/20 across all 17 classes. |
+| 20 | **S0** | `SourceSubjectRole` migration (Issue 022 = A) | none | **delivered** | Landed while the corpus was empty, as intended. |
+| 21 | **I0** | First real ingest — the four All-In hosts | none | **superseded → R1** | I0.1/I0.2 hold. I0.3's remaining work is the truncation, tracked in R1. **Not a to-do; do not open it.** |
+| 22 | **R0** | Repair the ingest; add the productivity guard | none | **superseded → R1** | Empty-source bug fixed and deletion gated. The coverage half is R1. **Not a to-do; do not open it.** |
+| 23 | **X0** | Quarantine the fabricated tension; fix segmentation | none | **delivered** | Verified independently: tension quarantined, claims removed, 9 survivors read one by one and genuinely supported. |
+| 24 | **C0** | Portability workflow; `mlx-lm` optional (Issue 024 = B) | none | **delivered** | |
+| 25 | **P4** | Tension detection | none | **delivered · fixtures only** | |
+| 26 | **P3** | Topic model | none | **delivered · fixtures only** | |
+| 27 | **P5** | Principle extraction | none | **delivered · fixtures only** | |
+| 28 | **P6** | Rubric engine | none | **delivered · fixtures only** | **See E1** — it never records the I5 verdict it computes, so the check for suppressed scores cannot fire. |
+| 29 | **P7** | Local API | none | **delivered** | `/resolve` now filters structurally on `status='active'` + live-claim existence; the 8 reachable propositions all carry claims. Verified. |
+| 30 | **P8** | Browser extension | none | **delivered** | |
 
 > **P3–P7 are delivered as code and still unvalidated as behaviour.** R1 gave them the audio; N0 gave them 1,501 claims. They still report zero, and the reason has moved rather than gone: it is no longer a thin corpus but a **structural** one. Every claim owns a private proposition, so the detector's join has nothing to match. A corpus that cannot *represent* a reversal produces zero whether the detector works or not — trap 26, one layer below where it was first found. **P0 is the last prerequisite; E2 is what makes the answer trustworthy when it arrives.**
 
@@ -1198,6 +1214,179 @@ The speaker believes they created the subject matter.   <- 8 claims
 
 ---
 
+## 17n. S1 — Nothing validates `stance` or `is_own_assertion`
+
+**User impact:** the two fields the contradiction detector actually keys on stop being the only unchecked things in the claim.
+
+**Contract:** `design_claim_extraction.md` §2 (stance carries polarity) and §3 (own-assertion guards, invariant **I7**) · `design_rubric_engine.md` (tension types).
+
+**Gap — read off the five surviving candidate pairs, every one of which is false.**
+
+Six validators run on every extraction. They check that the quote is verbatim, that it entails the proposition, that the proposition carries no polarity, that speech acts are consistent, that confidence clears a floor, and that the schema is valid. **None of them checks the two fields a tension is made of.**
+
+**(a) `stance` is unvalidated, and validator 6 cannot cover it.** Entailment asks *"does this quote support this proposition?"* — it is **stance-blind by construction**, so a quote that is genuinely about the proposition passes whether it is labelled `support` or `oppose`. Two of the five pairs are one person saying the same thing twice, labelled both ways:
+
+> **Friedberg, E287, same episode.** `support`: *"We have fundamental fiscal spending problem with the federal government right now."* · `oppose`: *"And the big problem at this point is the federal government is spending so much."*
+
+> **Sacks, E124, same episode.** `oppose`: *"you can just tell the AI to do something for you pretty complicated and it will be able to do it."* · `support`: *"We're now the AI can take complicated tasks."*
+
+Both pairs would render as a person contradicting themselves. Both are the person agreeing with themselves, twice.
+
+**(b) The own-assertion guard is under-firing.** **1353 of 1362 claims are `is_own_assertion = True`; only 9 (0.7%) are excluded**, all for `entailment_ambiguous` rather than for speech act. In four hours of unscripted conversation among four people who constantly voice positions in order to reject them, 0.7% is not a plausible exclusion rate. Two more pairs come from this:
+
+> **Calacanis, E245.** `support`: *"You can say, okay, Verizon's responsible of people use it in a terrorist attack."* · `oppose`: *"Verizon's not responsible of people use it to coordinate a bank robbery."* — one continuous analogy, seconds apart. He is stating a position **in order to reject it**, which invariant I7 exists to exclude.
+
+> **Chamath, E287.** `mixed`: *"So you're saying the substance of what he says will no longer matter to you…"* — **a question**, recorded as a claim.
+
+**Implementation**
+1. **Validator 7 — stance direction.** After entailment establishes *aboutness*, check *direction*. Entailment already computes an embedding for the quote and the proposition; the cheap version compares the quote against the proposition and against its negated form and requires the labelled stance to be the nearer. **Whatever mechanism you choose, it must be able to reject** — a stance validator that never fires is the fourth guard this project has shipped unable to fail.
+2. **Raise I7's sensitivity, and measure it.** Interrogatives, conditionals introduced by *"you can say"* / *"they'd argue"* / *"the argument is"*, and second-person framings (*"you're saying…"*) are reported speech or rhetorical setup, not own assertions. `design_claim_extraction.md` §3 already specifies this guard; it is firing at 0.7% and the observed misses are all in this shape.
+3. **Report the exclusion rate as a first-class number**, next to the validator rejection counters. It is the same early-warning signal §18 step 6 established for entailment: a rate that collapses means a guard stopped working, not that the corpus got cleaner.
+4. **Fixtures for both**, in `fixtures/behaviour/`: the Verizon analogy, the Chamath question, and the two same-stance-labelled-differently pairs. A validator with no failing fixture is untested (trap 22).
+
+**Validation**
+- **(c)** — **all four of the pairs quoted above stop being candidate pairs**, each for the right reason: the two stance errors corrected, the analogy and the question excluded as non-own-assertions. Assert them individually by claim id, not as an aggregate count. *An aggregate can be satisfied by rejecting everything; naming the four proves the guards discriminate.*
+- **Both directions:** a genuine `oppose` claim is still labelled `oppose` and still counted. Assert at least one real opposing claim survives — a stance validator that collapses everything to `support` would satisfy (c) and destroy the product.
+- The I7 exclusion rate is reported and is **materially above 0.7%**. Do not target a number; report what the corpus gives once interrogatives and reported speech are excluded, and say what n it came from.
+- `verify_entailment_holds` still passes over every surviving claim.
+
+**Falsify.** Disable validator 7 and re-run; the two stance pairs must reappear as candidates. Disable the I7 change and re-run; the Verizon and Chamath pairs must reappear. Revert; record all three.
+
+**Blast radius.** `worker/extract/validators.py`, `worker/extract/runtime.py` (prompt), `fixtures/behaviour/`, the corpus (re-validation of stance on existing claims), `docs/design_claim_extraction.md` §2–§3, `docs/ongoing_errors.md` §2 (a new parameter if the stance check has a threshold), §3, §6.
+
+---
+
+## 17o. T1 — A reversal needs time between its halves
+
+**User impact:** the system stops calling a single continuous argument a change of mind.
+
+**Contract:** `design_rubric_engine.md` (tension types) · `design_claim_extraction.md` §4 (temporal self-reference).
+
+**Gap.** `unacknowledged_reversal` is by definition a claim about **change over time**. `worker/tension/detect.py` requires a shared proposition, the same subject and opposing stances — and **nothing about when the two claims were made.**
+
+**All five surviving candidate pairs are same-episode.** There are **zero** cross-episode candidates in the entire corpus:
+
+```
+same_source = True :  5 pairs
+same_source = False:  0 pairs
+```
+
+Two claims seconds apart in one conversation are not a reversal; they are almost always rhetorical structure — a position voiced then rejected, a question then its answer, a hedge then its firming-up. This one structural condition would have blocked **all five** of today's false candidates.
+
+**Be precise about what this does and does not fix.** It would **not** have caught the two tensions Q0 quarantined — those were genuinely cross-episode (E124 2023 vs E287 2026, E165 2024 vs E287 2026) and false for a different reason. **T1 is a cheap filter, not a correctness fix.** S1 and W2 are the correctness fixes; do not let a green T1 suggest the detector is sound.
+
+**Implementation**
+1. Require a minimum gap between the two claims for `unacknowledged_reversal`. **Same source is an automatic disqualification** regardless of timestamps — a single recording is one speech act context.
+2. **The gap is a parameter to be measured, not chosen** — add it to `ongoing_errors.md` §2 with the bias stated: *toward requiring more time*, since a false reversal is a published accusation and a missed one is silence. Today's corpus supports only the same-source rule, since there are no cross-episode candidates at all; record the numeric gap as unmeasured until candidates exist.
+3. A same-episode pair with opposing stances is still **evidence worth keeping** — it usually means a stance error (S1) or a rhetorical setup (I7). Route it to a review surface with reason `same_source_stance_conflict` rather than discarding it. That queue is the fastest signal S1's guards are working.
+
+**Validation**
+- **(c)** — all five current candidate pairs are rejected by the same-source rule, and the detector reports **zero** `unacknowledged_reversal` candidates over today's corpus **with the count of pairs it examined and rejected, by reason.** *Zero with a denominator is a result; zero without one is what P0 shipped.*
+- A synthetic cross-episode pair with opposing stances on one proposition **is** accepted as a candidate — proving the rule filters on time and source rather than rejecting everything.
+- The `same_source_stance_conflict` queue is non-empty and contains the five pairs.
+
+**Falsify.** Remove the same-source condition; the five pairs must return as candidates. Revert; record both.
+
+**Blast radius.** `worker/tension/detect.py`, `worker/storage.py` (review queue), `tests/`, `docs/design_rubric_engine.md`, `docs/ongoing_errors.md` §2, §3, §6.
+
+---
+
+## 17p. W2 — Self-containment, the rest of the pronouns
+
+**User impact:** finishes W0. A proposition stops depending on a pronoun whose referent is in an utterance the reader cannot see.
+
+**Contract:** `design_claim_extraction.md` §2 (the actor must be stripped) · `design_data_layer.md` §2 (propositions are global).
+
+**Gap.** W0 delivered exactly what it specified and the specification was too narrow. The named patterns are **gone — 0 of 1303 propositions** begin *"The speaker"* or contain *"the subject"* or *"the described"*. But the validator was written against that list rather than against the principle, and unbound referents remain:
+
+| pattern | propositions | share |
+|---|---|---|
+| bare `they` / `their` | **82** | 6.3% |
+| starts `It` / `This` / `That` | **23** | 1.8% |
+| bare `he` / `his` / `him` | **13** | 1.0% |
+| contains `the same` | **12** | 0.9% |
+
+Roughly **130 propositions (10%)** still cannot be resolved standing alone. Two of the five false candidate pairs sit on them — *"We should do the same thing on AI"* (same as **what**?) and *"The substance of what **he's** saying is more accurate than **his** overall stance"* (**who**?).
+
+**The lesson is about how the item was written, not about the agent.** §17m listed the three observed patterns and the implementation copied the list. **A validator built from a list of observed failures catches the failures you observed.** Write it against the property — *resolvable without external context* — and let the list be examples.
+
+**Implementation**
+1. Extend the self-containment validator: reject a proposition containing any pronoun or deictic without an antecedent **inside the proposition itself** — third-person pronouns, sentence-initial `It`/`This`/`That`, and comparatives with no relatum (`the same`, `such`, `the other`). Keep `proposition_not_self_contained` as the reason so the class stays greppable.
+2. **State the principle in the docstring**, above the pattern list, so the next extension is a matter of adding a case rather than rediscovering the rule.
+3. Re-extract the ~130 affected claims. **Do not hand-edit proposition text** — the id derives from it (`design_data_layer.md` §3) and W1's entailment cache keys on the pair.
+4. Re-run `verify_canonical_ids` and `verify_entailment_holds` afterwards.
+
+**Validation**
+- **(c)** — **zero propositions in the store contain an unbound pronoun or deictic**, checked by the same predicate the validator uses, run as a query over the live corpus. And the two named pairs above are gone. *Assert the property over the whole table, not a spot check of the four patterns in the table above — that is the mistake this item exists to correct.*
+- The validator **FAILS on today's corpus** naming ~130 propositions. Run it before the re-extraction.
+- **Both directions:** *"China has made a significant push towards open source software"* passes; *"We should do the same thing on AI"* is rejected.
+- No regression: propositions with a *bound* pronoun (*"Moderna patented its mRNA technology"* — `its` resolves inside) still pass. A validator that rejects every pronoun is over-strict and will hollow out the corpus.
+
+**Falsify.** Disable the extension and re-extract a sample; unbound-pronoun propositions must reappear at roughly 10%. Revert; record both.
+
+**Blast radius.** `worker/extract/validators.py`, `worker/extract/runtime.py` (prompt), `fixtures/behaviour/`, the corpus (re-extraction), `docs/design_claim_extraction.md` §2, §3, §6.
+
+---
+## 17q. U1 — The review site · *Issue 028*
+
+**User impact:** you can finally see what the system found, by episode and by person, and click any claim to get its full record.
+
+**Blocked on S1, T1, W2 — and on one real finding existing.** Issue 028 = *fix findings first*: this site is not built while every candidate pair in the corpus is false. **The gate is explicit: at least one tension survives being read by hand.** That is a judgement, not a threshold — a person reads the tension and agrees the two quotes are about the same proposition and genuinely conflict.
+
+**Contract:** `design_ui_direction.md` §2 (timeline), §3 (citation-first, **I3**), §4 (rendering null), §5 (tension card) · Issue 014 (no in-app playback) · Issue 028 (below).
+
+### Issue 028 — the four decisions, and what each rules out
+
+| | Selected | Consequence |
+|---|---|---|
+| **Panel content** | **Everything** | Timeline, four rubric axes, tensions and principles — the full `/resolve` payload `design_ui_direction.md` §151 already specifies as Depth 2. **The same components rendering more of the same payloads, not a second implementation.** |
+| **Audience** | **Local only** | No hosting, no auth surface, no exposure. A wrong claim about a real person cannot leave the machine. This removes the entire publication-risk class from the MVP. |
+| **Honesty** | **Fix findings first** | The site does not ship while its findings are known-false. Claims and timelines are trustworthy today; axes, tensions and principles are not. |
+| **Build** | **Static export** | DuckDB → JSON at build time, static files after. **No server, no write path, no database reachable from a page.** The export is the only trust boundary and it is one function. |
+
+**"Everything" and "fix findings first" together set a high bar — read this before planning.** The panel is specified to show principles, and `principles` has **0 rows**; P5 has never produced one. The resolution is **not** to wait for principles: it is `design_ui_direction.md` §4, *"Rendering null — the most important screen in the product."* **The panel renders every section always, and renders absence explicitly** — *"no principle conflicts detected on this topic"*, *"consistency: insufficient evidence (3 claims, floor is 5)"* — with the reason, never as a blank or an omitted card. The ship gate is that nothing shown is **false**, not that everything is populated. An honest empty section is a finished feature; a hidden one is not.
+
+### Implementation
+
+**1. The export (`scripts/export_site.py`).** One function, DuckDB → a JSON tree. It is the entire trust boundary, so it enforces rather than assumes:
+
+- **Quarantined rows are excluded structurally**, by query predicate — `tensions.status='published'`, `propositions.status='active'` — never by a template conditional. A renderer that filters is one `v-if` away from publishing a fabrication.
+- **Re-verify at export, do not trust the store.** Every exported claim's `quote_text` must appear verbatim in its utterance's `text_verbatim`; every exported claim must resolve to an utterance, a source and a subject. **Export fails loudly on any violation.** The store passed these checks when written; the export is where they matter to a reader.
+- Export nothing the page does not render — no embeddings, no `_pre_merge` tables, no `word_timestamps_ref`.
+
+**2. Routes**, static files, no client-side routing needed:
+
+```
+/                      episodes, newest first: title, date, duration, claim count
+/episode/<source_id>   the episode; claims grouped by person, in timestamp order
+/claim/<claim_id>      the Social Proof panel
+/person/<subject_id>   optional: everything by one person across episodes
+```
+
+**3. The Social Proof panel** — the whole of `design_ui_direction.md` §2–§5 for one claim:
+
+- **The claim**: quote verbatim, speaker, episode, timestamp, stance, hedging.
+- **`cite`**: a deep link opening the source at the quote's offset. **No in-app playback** (Issue 014 = B); audio is deleted (Issue 003 = C). Where a source has no `citation_url_template`, render the affordance **disabled with a reason** — §3 is explicit that sending a reader to 00:00 of a three-hour recording is worse than admitting the link is unavailable.
+- **The timeline**: every other claim by that person on the same proposition, on a time axis, each with its own quote and `cite`. **This is the primary artifact** (§2) — if only one section works, it is this one.
+- **The four axes** with their evidence decomposition, each either a score or an explicit insufficiency reason (§4).
+- **Tensions**: published only, as §5 tension cards with both quotes and both deep links.
+- **Principles**: same treatment, absence rendered explicitly.
+
+**4. Reuse the extension's design tokens** (`design_ui_direction.md` §157). One visual language, one set of components. Do not fork the styling.
+
+### Validation
+
+- **(c)** — **the exported JSON contains zero quarantined tension ids and zero quarantined proposition ids**, asserted by loading the export and cross-checking every id against the DB's quarantined set; **and** every claim in the export has its `quote_text` found verbatim in the corresponding utterance, re-checked from the DB at test time. *This is the assertion that makes the site safe to look at: no stub, no template and no hand-wave satisfies it, and it is the exact failure — a fabrication rendered as a finding — that this project has now shipped three times.*
+- **Rendering null is tested, not assumed:** point the export at a subject with one claim and no tensions. Every panel section still renders, each with an explicit reason. **Assert the strings appear.** A blank section fails this test.
+- Every `cite` link resolves to a real URL with a timestamp, or is disabled with a stated reason. **Zero links to offset 0.**
+- The site is served from `file://` or a static server with **no network calls and no writes**. Assert the built output contains no fetch to a non-static origin.
+- Claim counts per episode in the UI equal `SELECT count(*)` per source in the DB.
+
+**Falsify.** Publish one quarantined tension into the export and confirm the (c) assertion goes red. Then remove a `citation_url_template` and confirm the affordance renders disabled rather than linking to 00:00. Revert; record both.
+
+**Blast radius.** `scripts/export_site.py`, a new `site/` directory, `tests/`, `docs/design_ui_direction.md` (§6 gains the review site alongside the extension), `docs/ongoing_errors.md` §4 (Issue 028), §3, §6.
+
+---
 ## 18. X1 — Entailment validator · *Issue 025 = C*
 
 **User impact:** a quote can no longer carry a claim it does not support. This is the guard that would have stopped the fabricated tension from ever being written.
@@ -1642,5 +1831,8 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 
 | **The first two tensions ever published were both false** | "At least one proposition carries claims from two different sources on different dates, and the tension detector runs over a non-empty candidate set. Report the candidate-pair count." | **"...and read the resulting tensions by hand before recording the item as delivered."** Every assertion in P0's (c) was satisfied — candidate pairs existed, the histogram grew a tail, the merges looked right in aggregate. **Aggregate statistics cannot distinguish a real finding from a fabrication; only reading the output can.** When an item's product is a claim about a person, one human-legible example is the assertion. |
 | **A merge that voided a validator nothing re-ran** | "Re-resolve propositions over existing claims. Do not re-extract." | Same, **plus** "re-run every validator whose input the re-resolution changes." The instruction correctly avoided re-extraction and did not notice that re-pointing a claim changes the exact pair validator 6 had certified. |
+
+| **All five surviving candidate pairs false, in three new ways** | "Read the five largest merge clusters by hand and confirm each groups restatements of one proposition." | **"...and read every candidate pair the detector would publish, before recording the item delivered."** Reading the *merges* was right and insufficient: the merges were sound and the pairs built on them were not. **Read the thing the user would see, not the intermediate the fix touched.** |
+| **W0 removed three patterns and left ten percent** | "Reject `the speaker`, bare `the subject`, `the described`." | **"Reject any proposition not resolvable without external context; the three patterns above are examples."** The item handed the implementation a list, so it got a list. |
 
 **The newest pattern: a correct fix to the wrong scope reads exactly like success.** R1's gates were green, its coverage real, its numbers honest, and the thing it existed to enable did not happen. N0 then repeated it one layer down. **Check what the item was *for*, not only what it said** — and when an item's purpose is to feed a downstream stage, make one of its assertions a property of *that stage's input*, not of its own output.
