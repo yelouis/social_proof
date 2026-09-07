@@ -1,20 +1,14 @@
-# Agent Execution Guide — Active Build: first real ingest, then Phases 3–8 — August 17, 2026
+# Agent Execution Guide — Active Build: make the detector produce a real finding — September 6, 2026
 
 **You are an engineering agent with no memory of this project.**
 
 **Read §1 first; it says where to start.** There is no routing machinery below — you are expected to organise the work yourself. What is fixed is §4 (what you may not change), §5 (what has bitten this project), §7 (what counts as evidence) and each item's own assertions.
 
-**Where the project is.** Twenty-two items delivered. **D1 verified on September 6, 2026 against the live corpus.** Its form work is real and large: propositions carrying polarity fell from 393 to **zero across 2,113 rows**, the polarity validator was verified red-first on the old corpus before the prompt changed, prompt v1.6's few-shot examples come verbatim from `design_claim_extraction.md` §2, all four candidate pairs and the top ten merge clusters were **read by hand**, and the falsifications were run. **The commit body is the most honest this project has produced** — it states plainly that the singleton rate did not fall, which §13u explicitly licensed as a legitimate delivery.
+**Where the project is.** Twenty-two items delivered. **Nothing has landed since the last verification pass** — `HEAD` is that pass's own commit, and every corpus number is unchanged: 2,174 claims, 2,113 propositions, 20,666 utterances, 23 sources, 97.7% singletons, 4 cross-source candidate pairs. Gates green, tree clean, 245 tests passing, 14 integrity checks PASS.
 
-**Three things it got wrong, and the first is a labelling problem worth naming.**
+**The queue is D4 → D5 → D2, and D4 is the one that matters.** D1 produced the first **4 cross-source `support`↔`oppose` candidate pairs** this corpus has ever had, read all four by hand, and traced every one to D4's negation-without-scope defect — *"regardless of whether the creator wants them to or not"* flipping a supporting claim. **Fix that and the detector has real candidates for the first time in this project's history.** Then **D5** (§13x): 41% of the claims vanished in D1's re-extraction and the loss has no attribution, because the run's rejection counters were never captured.
 
-1. **Assertion (c) failed and was recorded as verified.** §13u's (c) is *"the singleton rate falls materially below 95%, and propositions spanning 2+ episodes rises well above 1.8% of the table."* Measured: singletons **rose to 97.7%** and multi-episode propositions **fell to 1.0%**. The test named `test_assertion_c_live_corpus_metrics` asserts `c_prop > 0` — that the table is non-empty — and that no stored proposition carries polarity. **Neither is either half of (c).** A future reader scanning for "(c) verified" would conclude this item succeeded.
-2. **"Full-clauses (finite verbs): 0 (0.00%)" is not true.** **450 of 2,113 (21.3%)** contain a finite verb: *"human cognition **can** be simulated"*, *"trust and safety **will** give permission for censorship"*, *"bitcoin's use for black market transactions **is** a misconception"*. Down from 75.2%, which is a real and large improvement — but not zero, and the test does not check it.
-3. **41% of the claims vanished and the item's own tripwire was not run.** 3,669 → **2,174**. §13u step 5 says to investigate a drop beyond ~20%; the drop is double that and the commit does not mention it. One 90-minute episode is now down to **one claim**. **Item D5 (§13x).**
-
-**One genuine breakthrough.** For the first time there are **4 cross-source `support`↔`oppose` candidate pairs** where there have always been zero. D1 read all four and traced every one to D4's negation-scope defect — *"regardless of whether the creator wants them to or not"* flipping a supporting claim. **That makes D4 the unblocker, not merely a cleanup.**
-
-**What that means for you.** **D4** (§13w) — its defect is now the only thing between this corpus and its first real finding. **D5** (§13x) — find out where 1,495 claims went before building anything on the smaller corpus. Then **D2** (§13v). Read §3, §5 and §7 first.
+**One rule changed in this guide since the last pass, and it is worth reading before you start.** §4 now requires you to **quote your item's `(c)` verbatim in the commit body and answer it with a number beside its target**, and to answer every `> **Verify:**` step including the ones you skipped. This is not bureaucracy. D1 was careful, honest work that reported its real numbers in prose and separately recorded "assertion (c) verified" about a test asserting only that the proposition table was non-empty — while (c) itself had failed in both halves. **`(c)` failing is a legitimate outcome; several items here explicitly license one. Concealing it is not, and it happened without anyone intending it.**
 
 **Items now carry per-step checks, written as `> **Verify:**` after the step they belong to.** Run each before starting the next step. Several are **red-first**: they tell you to run something and *watch it fail* before you fix anything, because a check that has only ever been green on repaired data has not been tested.
 
@@ -132,6 +126,9 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 - **Dependencies land in `pyproject.toml` in the same commit.**
 - **Never print a number you did not measure.** Constants, projections from constants, and metrics below their floor render `NOT MEASURED`.
 - **Every integration item needs one assertion a stub cannot satisfy** (trap 17). The single most important rule here.
+- **Quote the item's `(c)` verbatim in the commit body and answer it with a number, next to its target.** Not "assertion (c) verified" — the sentence, then the measurement. **If a test carries `assertion_c` in its name, re-read the item's `(c)` and confirm the test asserts *that sentence*; the name is not the contract** (trap 60). D1 reported its real numbers honestly in prose and separately recorded "(c) verified" about a test asserting the table was non-empty. Both were written in good faith and the label was still wrong.
+- **`(c)` failing is a legitimate outcome. Concealing it is not.** Several items here explicitly license a negative result — *"if it has not moved, stop and report that."* Report it as `(c) NOT MET`, with the numbers. **An item that lands with `(c)` honestly unmet is worth more than one that lands with `(c)` relabelled**, because only the first tells the next agent where the problem actually is.
+- **Every `> **Verify:**` step is answered in the commit body — including the ones you skipped, marked as skipped, with the reason.** A per-step check that is silently passed over is indistinguishable from one that passed. D1's step-5 check would have caught a 41% loss of the corpus; it was not run and not mentioned.
 - **A guard that has never failed has not been tested.** Falsification is mandatory (§7, §8 step 6).
 - **All writes go through the worker** (I8). **No LLM at scoring time.** **Audio deleted after transcription** (Issue 003). **DuckDB is the only store** (Issue 015).
 - **Update every doc your change invalidates, in the same commit.**
@@ -272,6 +269,8 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 **Report zero with its denominator.** "No tensions found" over an empty candidate set and "no tensions found" over 400 examined pairs look identical in a status table and mean opposite things.
 
+**Answer the assertion that was written, not the one you can satisfy.** An item's `(c)` is a sentence with a number in it. Quote it, measure it, put the two side by side. Every other form of reporting — a passing test whose name references it, a narrative that mentions the metric elsewhere, a summary that says "verified" — has been used here to record a failed assertion as met, without anyone intending to.
+
 **When you substitute anything for what the item specifies — a different mechanism, a narrower scope, a value the item did not name — say so in the commit body.** Several items here were delivered exactly as written and still wrong; the substitution log is how the next verification pass finds out which.
 
 ---
@@ -296,7 +295,10 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 (7)  READ THE OUTPUT a person would see. Not the counts -- the rows.
 (8)  ENUMERATE every caller of anything you changed and run them.
 (9)  RE-RUN the full battery from section 2, exit codes bare.
-(10) COMMIT: one item, the WHY in the body, with the numbers you measured,
+(10) ANSWER (c) IN WRITING: quote the item's (c) sentence, then give the
+     number beside its target -- "target < 95%, measured 97.7%, NOT MET".
+     Then answer every `> Verify:` step, including any you skipped.
+(11) COMMIT: one item, the WHY in the body, with the numbers you measured,
      the falsification results, and any substitution. Update every doc the
      change invalidates in the same commit.
 ```
