@@ -54,6 +54,17 @@ Get this wrong and the system silently never works. If the extractor emits `"AI 
 
 **Canonical form:** a neutral, tenseless statement of the *matter at issue*, with the actor and the polarity stripped out.
 
+**And it must still admit a position.** Stripping is bounded at both ends. `federal licensing of frontier AI models` is a noun phrase **and** a specific thing a person can be for or against; `most enterprises`, `ai race in america` and `american efforts regarding ai` are noun phrases and nothing more. **The test is whether both of these are coherent, different claims:**
+
+```
+  <subject> supports <proposition>
+  <subject> opposes  <proposition>
+```
+
+A proposition that fails it is a **topic**, and topics are `design_topic_model.md`'s business. Attaching `support` and `oppose` to one does not produce a contradiction — it produces two claims about the same subject area, which is how six false candidate pairs were once read as verified reversals.
+
+**This bound is as load-bearing as the polarity rule above it, and it was learned the same way.** Removing finite verbs to satisfy the canonical form drove a quarter of the proposition table below it.
+
 | Utterance | ❌ Wrong proposition | ✅ Right proposition | stance |
 |---|---|---|---|
 | "We absolutely need federal licensing for frontier models." | `AI should be federally licensed` | `federal licensing of frontier AI models` | `support` |
