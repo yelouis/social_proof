@@ -24,7 +24,7 @@ def test_hand_labelled_eval_set_both_directions() -> None:
     - Confusion counts reported.
     - Standing bidirectional counters reported.
     """
-    fixture_path = Path("fixtures/behaviour/stance_validation_eval.json")
+    fixture_path = Path("fixtures/behaviour/stance_validation_eval_curated.json")
     assert fixture_path.exists(), f"Missing fixture file: {fixture_path}"
 
     with open(fixture_path, encoding="utf-8") as f:

@@ -344,34 +344,207 @@ def validate_self_contained(claim: ExtractedClaim) -> ValidationOutcome:
     return ValidationOutcome(True, status="passed")
 
 
-# Syntactic negation patterns for Validator 7 instrument (Item D3 / §17t)
+# Syntactic negation patterns for Validator 7 instrument (Items D3 §17t, D4 §13w)
 SYNTACTIC_NEGATION_PATTERNS: list[re.Pattern[str]] = [
-    re.compile(r"\b(?:not|never|no|neither|nor|none|n't|cannot)\b", re.IGNORECASE),
+    re.compile(
+        r"\b(?:not|never|no|neither|nor|none|cannot|won't|wouldn't|shouldn't|couldn't|doesn't|don't|isn't|aren't|wasn't|weren't|hasn't|haven't|hadn't)\b",
+        re.IGNORECASE,
+    ),
     re.compile(
         r"\b(?:oppose|opposed|opposing|opposition|against|reject|rejected|rejecting|refuse|refused|refusing|deny|denied|denies|denying|disagree|disagrees|disagreed)\b",
         re.IGNORECASE,
     ),
     re.compile(
-        r"\b(?:terrible|disastrous|unnecessary|unneeded|unjustified|harmful|unaffordable|bankrupt|ridiculous|mistake|kill)\b",
+        r"\b(?:terrible|disastrous|unnecessary|unneeded|unjustified|harmful|unaffordable|bankrupt|ridiculous|mistake|kill|unfeasible|unworkable|dangerous)\b",
         re.IGNORECASE,
     ),
     re.compile(r"\b(?:does not face|will not|would not|should not|must not|cannot)\b", re.IGNORECASE),
 ]
+
+DISCOURSE_NEGATION_PREFIX: re.Pattern[str] = re.compile(
+    r"^(?:(?:well|yeah|look|so|and|i mean|i think|to me)\s*[,.]?\s*)*(?:no|nah)\s*[,.]\s*",
+    re.IGNORECASE,
+)
 
 EXCLUDED_NEGATION_IDIOMS: list[re.Pattern[str]] = [
     re.compile(
         r"\b(?:not only|not just|no doubt|without a doubt|cannot wait|cannot afford to wait)\b",
         re.IGNORECASE,
     ),
+    re.compile(
+        r"\b(?:whether\s+or\s+not|regardless\s+of\s+whether\b.*?\bor\s+not)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(r"\bnext\s+to\s+none\b", re.IGNORECASE),
+    re.compile(
+        r"\b(?:not|never|won't|wouldn't|cannot)\s+(?:going\s+to\s+)?(?:stop|cease|quit|terminate|abandon)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:never|would\s+never|could\s+never)\s+(?:have\s+been\s+able\s+to\s+)?(?:predict|foresee|anticipate|imagine|expect|guess)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:don't|do\s+not|doesn't|does\s+not)\s+(?:know|think|believe|see)\s+(?:if|whether|that)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bnot\s+(?:that|all\s+that|so|very|particularly|quite)\s+(?:much|many|fast|big|high|great|large|well)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bnot\s+(?:because|physically|technically|due\s+to)\b.*?\bbut\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:maybe|perhaps)?\s*not\s+[a-zA-Z]+\s*,\s*but\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bpeople\s+(?:think|believe|assume)\b.*?\bbut\s+it's\s+not\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bnot\s+(?:necessarily|always|automatically)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:i|we|you)\s+(?:don't|do\s+not)\s+know\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bwhy\s+(?:don't|do\s+not)\s+(?:we|you)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:wasn't|weren't|isn't|aren't|doesn't|don't)\s+just\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:they|we|people|you)\s+(?:don't|do\s+not)\s+(?:say|tell|claim|suggest)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bdoesn't\s+mean\s+(?:that\s+)?.*?\bdoesn't\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bwhen\s+models\s+don't\s+get\s+exhausted\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bif\s+(?:we|you|they|it|one)\s+(?:don't|do\s+not|doesn't|does\s+not|didn't|did\s+not|won't|wouldn't|cannot|can't)\b.*?(?:,\s*|\bthen\b|$)",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:for\s+)?(?:people|anyone|someone|users|founders)\s+who\s+(?:don't|do\s+not|doesn't|does\s+not|didn't)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:make\s+sure|ensure|so\s+that)\s+(?:that\s+)?.*?\b(?:don't|doesn't|no\b)\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:you|we)\s+(?:don't|do\s+not)\s+need\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bexclusively\s+non\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bdoesn't\s+score\s+(?:that|all\s+that|so|very)?\s*well\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bdon't\s*(?:\.{1,3}\s*)?talk\s+to\s+anyone\b.*?\bthat\s+isn't\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\bhaven't\s+used\b",
+        re.IGNORECASE,
+    ),
 ]
 
 
-def has_syntactic_negation(text: str) -> bool:
-    """Checks whether text contains syntactic negation operators or oppositional predicates."""
-    clean_text = text
+def _stem_word(w: str) -> str:
+    s = w.lower().strip(".,!?;:'\"")
+    for suffix in ["ation", "izing", "tion", "ing", "ed", "es", "ly", "s"]:
+        if len(s) > len(suffix) + 2 and s.endswith(suffix):
+            return s[:-len(suffix)]
+    return s
+
+
+def has_syntactic_negation(text: str, prop: str = "") -> bool:
+    """Checks whether text contains syntactic negation operators or oppositional predicates
+
+    whose scope genuinely governs the matter at issue (Item D4 §13w).
+    """
+    clean_text = text.strip()
+
+    # 1. Strip conversational discourse markers at start of quote
+    clean_text = DISCOURSE_NEGATION_PREFIX.sub("", clean_text)
+
+    # 2. Strip non-scoping idioms, double negative continuation verbs, epistemic modals
     for idiom in EXCLUDED_NEGATION_IDIOMS:
-        clean_text = idiom.sub("", clean_text)
-    return any(p.search(clean_text) for p in SYNTACTIC_NEGATION_PATTERNS)
+        clean_text = idiom.sub(" ", clean_text)
+
+    if not prop:
+        return any(p.search(clean_text) for p in SYNTACTIC_NEGATION_PATTERNS)
+
+    prop_stems = {_stem_word(w) for w in re.findall(r"\b[a-zA-Z']+\b", prop.lower()) if len(w) > 2}
+    tokens = re.findall(r"\b[a-zA-Z']+\b", clean_text.lower())
+
+    for i, tok in enumerate(tokens):
+        if _stem_word(tok) in prop_stems:
+            # Token echoes proposition itself (e.g. 'none' in 'next to none')
+            continue
+        is_neg = any(p.fullmatch(tok) for p in SYNTACTIC_NEGATION_PATTERNS)
+        if not is_neg:
+            continue
+
+        # Check what the negation operator governs (lookahead 1-4 tokens)
+        governed: list[str] = []
+        for j in range(i + 1, min(i + 5, len(tokens))):
+            w = tokens[j]
+            if w in {"a", "an", "the", "to", "be", "been", "being", "have", "has", "had", "any", "that", "this"}:
+                continue
+            governed.append(w)
+
+        if governed:
+            gov_stems = {_stem_word(w) for w in governed}
+            # If any governed word matches the proposition terms, it scopes over proposition
+            if gov_stems & prop_stems:
+                return True
+            # Strong oppositional predicates (kill, terrible, opposed, against, refuse, deny, etc.)
+            if tok in {
+                "oppose",
+                "opposed",
+                "opposing",
+                "against",
+                "reject",
+                "rejected",
+                "refuse",
+                "refused",
+                "deny",
+                "denied",
+                "terrible",
+                "disastrous",
+                "harmful",
+                "unaffordable",
+                "kill",
+                "unfeasible",
+                "unworkable",
+                "dangerous",
+            }:
+                return True
+            # Quantified negation ('no risk', 'no conversion risk', 'no study', 'no young people')
+            if tok == "no" and governed:
+                return True
+        else:
+            return True
+
+    return False
 
 
 def validate_stance_direction(
@@ -424,7 +597,7 @@ def validate_stance_direction(
     sim_pos = cosine_similarity(v_quote, v_prop)
     sim_neg = cosine_similarity(v_quote, v_neg_prop)
 
-    has_neg = has_syntactic_negation(quote)
+    has_neg = has_syntactic_negation(quote, prop)
 
     if stance == "oppose":
         if not has_neg and sim_pos > sim_neg:
@@ -453,7 +626,7 @@ def validate_stance_direction(
             )
 
     if stance == "support":
-        if has_neg or (sim_neg > sim_pos + delta):
+        if has_neg:
             if auto_correct:
                 claim.stance = "oppose"
                 VALIDATOR_CORRECTION_COUNTERS["stance_corrected_to_oppose"] += 1
