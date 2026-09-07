@@ -172,6 +172,11 @@ class ClaimExtractor(Protocol):
 
 **The known weak spot to watch:** speech-act classification. Sarcasm, steelmanning, and devil's-advocate framing are the subtlest judgments in the whole schema, and they are where a 27B model is most likely to fall short of a frontier one. The errors are silent — a steelman scored as an own assertion doesn't crash anything, it just quietly corrupts an axis. **Measure N1–N4 specifically and separately**; do not let a good aggregate precision number hide a bad number on those four.
 
+### Observability and Retention Guards (Item D5 / §13x)
+
+1. **Rejection Counters:** Extraction runs must record and report `VALIDATOR_REJECTION_COUNTERS` (`quote_verbatim_not_found_in_utterance`, `quote_too_short`, `quote_does_not_support_proposition`, `entailment_ambiguous`, `proposition_carries_polarity`, `proposition_not_self_contained`, `stance_*`, plus gate rejections). Spikes in rejections identify prompt regressions or overly aggressive validators before corpus loss occurs.
+2. **Claims-Per-Hour Rate Guard:** The inert zero-claim floor ("no source contributes zero claims") is replaced with `verify_claims_per_hour` in `worker/integrity.py` (`MIN_CLAIMS_PER_HOUR = 3.0`, Parameter 033). Every source must yield claims proportionate to its audio duration, preventing episodes from silently starving due to query omission or pipeline drops.
+
 ---
 
 ## 7. KV cache prefix reuse — the local analogue, and it matters more here

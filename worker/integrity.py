@@ -1,6 +1,6 @@
 """Evidence Integrity Automated Pass — design_evidence_integrity.md §3.
 
-Implements the fourteen mandatory checks:
+Implements the fifteen mandatory checks:
 1. verify_quotes
 2. verify_anchor_chain
 3. verify_no_page_context
@@ -11,10 +11,11 @@ Implements the fourteen mandatory checks:
 8. verify_versions_present
 9. verify_role_coverage
 10. verify_source_productivity
-11. verify_canonical_ids
-12. verify_quarantined_propositions_unreachable
-13. verify_assessment_subjects_exist
-14. verify_entailment_holds
+11. verify_claims_per_hour
+12. verify_canonical_ids
+13. verify_quarantined_propositions_unreachable
+14. verify_assessment_subjects_exist
+15. verify_entailment_holds
 """
 
 import argparse
@@ -643,6 +644,85 @@ def verify_source_productivity(
     )
 
 
+# Parameter 033: Minimum claims per hour of audio (Item D5 / §13x)
+# Replaces C1's inert zero-floor rule. Derived from 23-source empirical distribution:
+# Genuinely thin guest-heavy panels yield 6.7 - 7.5 claims/hr.
+# Starved episodes (< 1 claim/hr) represent extraction truncation or pipeline drops.
+MIN_CLAIMS_PER_HOUR: float = 3.0
+
+
+def verify_claims_per_hour(
+    sources: list[Source],
+    claims: list[Claim],
+    utterances: list[Utterance],
+    min_rate: float = MIN_CLAIMS_PER_HOUR,
+) -> CheckResult:
+    """Restates C1's zero-floor rule as a claims-per-hour rate check.
+
+    Invariant: No source may be starved by extraction truncation or silent pipeline drops.
+    Every ingested source with audio duration must produce claims at or above min_rate claims/hr.
+    """
+    ingested_sources = [s for s in sources if s.ingested_at is not None]
+    if not ingested_sources:
+        return CheckResult(
+            name="verify_claims_per_hour",
+            passed=True,
+            status="NOT APPLICABLE — zero rows",
+            message="No ingested sources to verify claims-per-hour rate",
+            examined_count=0,
+        )
+
+    utt_to_source: dict[str, str] = {u.utterance_id: u.source_id for u in utterances}
+    claims_by_source: dict[str, int] = {s.source_id: 0 for s in ingested_sources}
+    for c in claims:
+        sid = utt_to_source.get(c.utterance_id)
+        if sid in claims_by_source:
+            claims_by_source[sid] += 1
+
+    starved_sources: list[tuple[str, str, int, float, float]] = []
+    rates: list[float] = []
+
+    for s in ingested_sources:
+        duration_ms = s.duration_ms or 0
+        if duration_ms <= 0:
+            continue
+        duration_hours = duration_ms / 1000.0 / 3600.0
+        c_count = claims_by_source[s.source_id]
+        rate = c_count / duration_hours
+        rates.append(rate)
+
+        if rate < min_rate:
+            starved_sources.append(
+                (s.source_id, s.title, c_count, duration_hours, rate)
+            )
+
+    if starved_sources:
+        details = "; ".join(
+            f"'{title}' ({sid}): {cnt} claims in {hrs:.2f}h ({rate:.2f} claims/hr < {min_rate:.1f})"
+            for sid, title, cnt, hrs, rate in starved_sources
+        )
+        return CheckResult(
+            name="verify_claims_per_hour",
+            passed=False,
+            status="FAIL",
+            message=f"{len(starved_sources)} source(s) fall below rate floor of {min_rate:.1f} claims/hr: {details}",
+            examined_count=len(ingested_sources),
+        )
+
+    min_rate_obs = min(rates) if rates else 0.0
+    max_rate_obs = max(rates) if rates else 0.0
+    return CheckResult(
+        name="verify_claims_per_hour",
+        passed=True,
+        status="PASS",
+        message=(
+            f"All {len(ingested_sources)} sources clear minimum rate floor {min_rate:.1f} claims/hr "
+            f"(observed range: {min_rate_obs:.2f} – {max_rate_obs:.2f} claims/hr across {sum(claims_by_source.values())} claims)"
+        ),
+        examined_count=len(ingested_sources),
+    )
+
+
 def verify_canonical_ids(
     propositions: list[Proposition],
     principles: list[Principle],
@@ -964,7 +1044,7 @@ def run_all_checks(
     entailment_cache: dict[tuple[str, str], float] | None = None,
     embedder: Any | None = None,
 ) -> list[CheckResult]:
-    """Execute all 14 integrity checks."""
+    """Execute all 15 integrity checks."""
     c_list = claims or []
     u_list = utterances or []
     s_list = sources or []
@@ -988,6 +1068,7 @@ def run_all_checks(
         verify_versions_present(a_list),
         verify_role_coverage(u_list, rol_list),
         verify_source_productivity(s_list, u_list),
+        verify_claims_per_hour(s_list, c_list, u_list),
         verify_canonical_ids(p_list, pr_list, c_list, rol_list),
         verify_quarantined_propositions_unreachable(p_list, c_list),
         verify_assessment_subjects_exist(a_list, sub_list, top_list),
