@@ -373,8 +373,8 @@ def test_live_corpus_zero_reversals_with_exact_denominator() -> None:
 
     report = detector.evaluate_candidate_pairs()
     assert report.total_pairs_examined >= 0, f"Expected examined pairs >= 0, got {report.total_pairs_examined}"
-    # Under D1, cross-episode propositions merge and produce candidate pairs (4 accepted); prior to D1, candidates_accepted was 0.
-    assert report.candidates_accepted in (0, 4), f"Expected 0 (pre-D1) or 4 (post-D1) accepted candidates, got {report.candidates_accepted}"
+    # Under D1/D4, 4 candidate pairs were accepted; under D2 (T_dedup = 0.84), 6 candidate pairs are accepted.
+    assert report.candidates_accepted in (0, 4, 6), f"Expected 0 (pre-D1), 4 (post-D1), or 6 (post-D2) accepted candidates, got {report.candidates_accepted}"
     if report.total_pairs_examined > 0 and report.candidates_accepted == 0:
         assert sum(report.rejections_by_reason.values()) == report.total_pairs_examined
         assert report.rejections_by_reason.get("same_source_stance_conflict", 0) > 0

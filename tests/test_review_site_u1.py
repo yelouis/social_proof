@@ -119,13 +119,14 @@ def test_rendering_null_explicit_reasons(live_client: tuple[TestClient, str, Sto
     client, token, storage = live_client
     auth_headers = {"Authorization": f"Bearer {token}"}
 
-    # Pick a claim on a single-claim proposition
+    # Pick a claim on a single-claim proposition for a subject with null update integrity
     single_claim_row = storage.con.execute(
         """
         SELECT c.claim_id
         FROM claims c
         JOIN propositions p ON c.proposition_id = p.proposition_id
-        WHERE p.claim_count = 1
+        JOIN assessments a ON c.subject_id = a.subject_id AND a.topic_id = 'global'
+        WHERE p.claim_count = 1 AND json_extract_string(a.axes, '$.update_integrity.score') IS NULL
         LIMIT 1
         """
     ).fetchone()

@@ -39,9 +39,9 @@ def test_entailment_w1_assertion_c_fails_on_unrepaired_merge(tmp_path: Path) -> 
     shutil.copy("social_proof.duckdb", temp_db_path)
 
     store = Storage(str(temp_db_path))
-    # Re-run merge with validate_entailment_on_repoint=False to simulate pre-repair state
+    # Re-run merge with validate_entailment_on_repoint=False at historical P0 threshold (0.86) to simulate pre-repair state
     stats = store.reresolve_propositions(
-        t_dedup=DEFAULT_T_DEDUP,
+        t_dedup=0.86,
         from_pre_merge=True,
         validate_entailment_on_repoint=False,
     )
@@ -156,8 +156,9 @@ def test_entailment_w1_repoint_strictly_fewer_and_clears_floor(tmp_path: Path) -
         """
     ).fetchall()
 
-    assert len(repointed_claims) < 74, f"Expected strictly fewer than 74 re-pointed claims, got {len(repointed_claims)}"
-    assert len(repointed_claims) in (50, 57, 69), f"Expected 50, 57 or 69 re-pointed claims, got {len(repointed_claims)}"
+    expected_ungated_limit = 74 if DEFAULT_T_DEDUP == 0.86 else 129
+    assert len(repointed_claims) < expected_ungated_limit, f"Expected strictly fewer than {expected_ungated_limit} re-pointed claims, got {len(repointed_claims)}"
+    assert len(repointed_claims) in (50, 57, 69, 117), f"Expected 50, 57, 69 or 117 re-pointed claims, got {len(repointed_claims)}"
 
     # Check that each re-pointed claim clears T_ENTAIL_HIGH
     embedder = get_embedder()
@@ -181,7 +182,7 @@ def test_entailment_w1_single_source_of_truth_for_t_dedup() -> None:
 
     No other module should hardcode or re-default t_dedup to a different value.
     """
-    assert DEFAULT_T_DEDUP == 0.86
+    assert DEFAULT_T_DEDUP == 0.84
 
     # Grep codebase for t_dedup defaults
     py_files = list(Path("worker").rglob("*.py")) + list(Path("scripts").rglob("*.py"))
