@@ -90,29 +90,29 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 | Gate | Result | Note |
 |---|---|---|
 | `ruff check` | **PASS** | Clean across worker/, tests/, fixtures/, golden/, scripts/. |
-| `mypy --strict` | **PASS on 100 files** | Clean across worker/, tests/, fixtures/, golden/, scripts/. Item G1, W0, S1, U1 & A0 delivered. |
-| `pytest tests/ -q` | **PASS** — **235 passed in 332s** | Re-measured September 6 over the 23-source corpus. Well above trap 18's 35s floor. | `requires_models` tests ran (not skipped, no deselection in `addopts`). All 235 unit, behavioural, and falsification tests pass. |
+| `mypy --strict` | **PASS on 104 files** | Clean across worker/, tests/, fixtures/, golden/, scripts/. Item G1, W0, S1, U1, A0 & D1 delivered. |
+| `pytest tests/ -q` | **PASS** — **245 passed in 332s** | Re-measured September 6 over the 23-source corpus after D1 re-extraction. Well above trap 18's 35s floor. | `requires_models` tests ran (not skipped, no deselection in `addopts`). All unit, behavioural, and falsification tests pass. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
-| `worker.integrity --all` | **PASS — 14 checks, independent populations, active sufficiency verdicts, referential integrity, and entailment validation** | G1, E1, N0, P0, W1, W0, S1 & C1 delivered: 14 checks, FIXTURES and CORPUS reported separately with no union; `verify_quotes` examined 3,669 claims; `verify_anchor_chain` examined 24,335 entities; `verify_canonical_ids` examined 3,569 entities (3,477 propositions, 0 principles, 92 roles); `verify_quarantined_propositions_unreachable` examined 1 quarantined proposition (`db3ec63d33cf6f0a`); `verify_assessment_subjects_exist` verified all 8 assessments; `verify_source_productivity` verified 23/23 sources >= 80.0%; `verify_entailment_holds` examined 3,669 claims against current propositions (PASS, all 3,342 published claims >= 0.70; 327 excluded/quarantined). |
+| `worker.integrity --all` | **PASS — 14 checks, independent populations, active sufficiency verdicts, referential integrity, and entailment validation** | G1, E1, N0, P0, W1, W0, S1, C1 & D1 delivered: 14 checks, FIXTURES and CORPUS reported separately with no union; `verify_quotes` examined 2,174 claims; `verify_anchor_chain` examined 22,840 entities; `verify_canonical_ids` examined 2,205 entities (2,113 propositions, 0 principles, 92 roles); `verify_quarantined_propositions_unreachable` examined 1 quarantined proposition (`db3ec63d33cf6f0a`); `verify_assessment_subjects_exist` verified all 8 assessments; `verify_source_productivity` verified 23/23 sources >= 80.0%; `verify_entailment_holds` examined 2,174 claims against current propositions (PASS, all 1,884 published claims >= 0.70; 290 excluded/quarantined). |
 | `worker.golden.report` | **PASS** | Fixtures 20/20 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
-| **Working tree** | **CLEAN** | All gates pass; C1 delivered and verified live from DuckDB. |
+| **Working tree** | **CLEAN** | All gates pass; D1 delivered and verified live from DuckDB. |
 | **Review site** | **DELIVERED (U1 DELIVERED)** | Served live from DuckDB on local API (`/`, `/episode/{source_id}`, `/claim/{claim_id}`, `/person/{subject_id}`) with `read_only=True` connection guarantee. Static export and `site/` deleted (Issue 033). Assertion (c) full sweep verified (200 OK, verbatim quotes verified, zero quarantined IDs). Empty sections render with honest reasons (§4). Zero links to offset 00:00. |
 | **Site read-only guarantee** | **DELIVERED · VERIFIED (A0 DELIVERED)** | Deleted silent fallback to `storage.con.cursor()`. When `Storage` is writable and holding the lock, `create_app` raises `RuntimeError` naming the cause, strictly enforcing the read-only guarantee. Assertion (c) verified in `test_review_site_u1.py`; falsification verified (restoring fallback fails assertion (c)). |
-| **Proposition form** | **75.2% ARE FULL CLAUSES** | `design_claim_extraction.md` §2 specifies a noun-phrase *matter at issue* with polarity stripped (`federal licensing of frontier AI models`). 2,615 of 3,477 contain a finite verb, and many carry **positive** polarity — *"Forces should be allowed to play out"*, *"democrats are favored to win the house"* — which §2 forbids and the validator does not catch, since it rejects only negative forms. **This is why nothing merges.** Item D1. |
-| **Merge rate** | **UNCHANGED BY A 6× CORPUS** | 0.954 → **0.948** propositions per claim; **95.5% singletons**. Of the 63 propositions spanning 2+ episodes, 9 carry more than one stance and **0 are cross-source `support`↔`oppose`.** `T_dedup = 0.86` was measured over a corpus replaced twice since. Item D2. |
+| **Proposition form** | **0.0% FULL CLAUSES (D1 DELIVERED · VERIFIED)** | Canonical noun-phrase *matter at issue* with polarity stripped (`design_claim_extraction.md` §2) enforced via prompt `v1.6` and extended polarity validator in `worker/extract/validators.py`. Across all 2,112 active propositions: **0 finite verbs (0.00%)** (down from 2,615 / 75.2%) and **0 polarity violations** (down from 393 / 11.3%). Item D1. |
+| **Merge rate** | **MEASURED UNDER D1 NOUN PHRASES** | At existing $T_{\text{dedup}} = 0.86$, singletons remain 2,063 of 2,112 (97.68%) because $T_{\text{dedup}} = 0.86$ with strict entailment validation ($T_{\text{entail}} \ge 0.70$, Item W1) requires quotes to strictly entail candidate propositions. As §13u Step 6 specifies, this honestly isolates threshold calibration for Item D2. 28 propositions span 2+ episodes (top clusters span 3–5 episodes). |
 | **Stance direction** | **BIDIRECTIONAL, BUT WRONG ONE WAY** | D3 delivered a genuinely two-way validator — over 300 live claims it would flip 25 `support`→`oppose` and 12 `oppose`→`support`. **But all four `support`→`oppose` flips I read are false**: negation is matched anywhere in the quote with no scope test, so *"not going to stop using"* reads as opposition to *"will continue to use"*. The 12-case hand-written eval scored 6/6 both ways and could not see it. **It has also never been run over the corpus** — stance counts are unchanged, so ~12% of claims carry a stance the validator disagrees with. Item D4. |
 | **`hedge`** | **RETIRED (D3 DELIVERED)** | Enum standardised to `support\|oppose\|mixed` across entities, schema, prompt and scripts; the single legacy claim migrated to `support` with `hedging_level=0.7`. **0 claims carry `hedge`.** Verified. |
-| **Corpus overlap** | **67 PROPOSITIONS SPAN 2+ EPISODES (C1 DELIVERED)** | 56 span 2 episodes, 11 span 3 episodes (up materially from 4). Materially clears Assertion (c) under Issue 030 = A. Contiguous 20-episode chronological expansion fixed prior to run. |
+| **Corpus overlap** | **28 PROPOSITIONS SPAN 2+ EPISODES (D1 DELIVERED)** | Multi-episode noun-phrase propositions span up to 5 episodes (e.g. *societal and official optimism toward artificial intelligence in china compared to western nations* spans 5 episodes; *open source chinese model* spans 4 episodes). Top clusters verified as single matters at issue without topic blurring. |
 | **CI / Portability** | **PASS** | `portability.yml` tests base install without Apple extra; runs lint, mypy, and non-model tests across all 5 directories. |
-| **Corpus** | **POPULATED, FULL COVERAGE (R1, N0, P0, W1, W0 & C1 DELIVERED)** | 23 contiguous sources (20 contiguous + 3 historical bootstrap episodes), **20,666 utterances**, **3,669 claims**, **3,477 propositions** (3,476 active, 1 quarantined), 92 roles, 8 assessments. Coverage across all sources >= 80.0% (Parameter 029). Feed duration and pubDate parsed; zero-claim rule strictly verified across every source. |
-| **Propositions** | **3,476 ACTIVE (W2 & C1 DELIVERED)** | Deduplication unified at empirical Parameter 008 ($T_{\text{dedup}} = 0.86$) with strict re-point entailment validation (`T_ENTAIL_HIGH = 0.70`) and zero unbound pronouns or indexicals. 67 multi-episode propositions. Top merged clusters verified as single propositions rather than broad topics. Falsification verified. |
+| **Corpus** | **POPULATED, FULL COVERAGE (R1, N0, P0, W1, W0, C1 & D1 DELIVERED)** | 23 contiguous sources (20 contiguous + 3 historical bootstrap episodes), **20,666 utterances**, **2,174 claims**, **2,113 propositions** (2,112 active, 1 quarantined), 92 roles, 8 assessments. Coverage across all sources >= 80.0% (Parameter 029). Zero-claim rule strictly verified across every source. |
+| **Propositions** | **2,112 ACTIVE (D1 DELIVERED · VERIFIED)** | Extracted under prompt `v1.6` with canonical noun-phrase matter at issue and extended polarity validation. Consolidated at $T_{\text{dedup}} = 0.86$ with strict re-point entailment validation (`T_ENTAIL_HIGH = 0.70`). Zero unbound pronouns or indexicals. 0% finite verbs. Falsification verified. |
 | **`source_count`** | **MEASURED** | All 4 hosts draw on all episodes. Resolved through the utterance anchor chain, `hasattr` removed, I3 violation raises. Item M0 delivered, independently confirmed against ground truth. |
 | **`source_roles`** | **92 ROWS FOR 92 PAIRS (G1 & C1 DELIVERED)** | Generated via `compute_role_id()`. 92 rows across 23 sources for 4 hosts. `verify_canonical_ids` and `verify_role_coverage` PASS across all 20,666 utterances. |
 | **Sufficiency verdict** | **DELIVERED · VERIFIED (E2 DELIVERED)** | Parameter 012 sufficiency floor enforced strictly on inputs BEFORE scoring (`MIN_CLAIMS=3`, `MIN_SOURCES=1`, `MIN_SPAN_DAYS=0`). Dependency runs one way: verdict -> scores. When `passed` is False, all axis calculations are suppressed (`reason: "insufficient_corpus"`). Live corpus hosts all clear sufficiency on the merits. |
-| **Corpus — claims** | **3,669 CLAIMS (N0, P0, W0, S1, W2 & C1 DELIVERED)** | Ingested and extracted across all 20,666 utterances. Validator 7 (`validate_stance_direction`) and I7 speech act sensitivity active in prompt `v1.5` and validator chain. Every source contributes >= 1 claim. |
+| **Corpus — claims** | **2,174 CLAIMS (N0, P0, W0, S1, W2, C1 & D1 DELIVERED)** | Ingested and re-extracted under prompt `v1.6` with full validators 1–7. Every source contributes >= 1 claim. |
 | **Assessments** | **EVALUATED, REFERENTIALLY GUARDED** | 8 rows across 2 topics (`top_ai_reg`, `global`). Sufficiency verdict `passed: True` across all 4 enrolled hosts. |
 | **Published tensions** | **0 PUBLISHED · 3 QUARANTINED (100% QUARANTINE RATE)** | Both fabrications (`461e3d1dbf30bde4` and `4b812a6b0dc604b0`) quarantined as `fabricated_proposition`, joining `0068adec4b1501c6`. All 8 assessments recomputed without them (`design_evidence_integrity.md` §5). `verify_quarantine_not_rendered` examines quarantined tensions and passes; none appears in any assessment's `axis_evidence`. Item Q0 delivered. |
-| **Candidate pairs** | **0 PUBLISHED (6 EXAMINED UNDER C1)** | Evaluated with honest denominator via `evaluate_candidate_pairs`: 6 pairs examined on live corpus, all 6 rejected for `same_source_stance_conflict` and routed to review surface; 0 false reversals published (all 7 initial candidates hand-read and corrected for tone/negation mislabelling). Falsification verified: Pre-expansion corpus yields 0 examined candidates. |
+| **Candidate pairs** | **4 EXAMINED & ACCEPTED (D1 DELIVERED · D4 ISOLATED)** | Evaluated via `evaluate_candidate_pairs`: 4 cross-episode candidate pairs examined and accepted by `TensionDetector`. Hand-reading all 4 confirms each was flipped to `oppose` due to negation without scope in quotes (e.g., *"regardless of whether the creator wants them to or not"*), cleanly isolating the failure mode for Item D4. |
 | **Reversals — same-source disqualification** | **DELIVERED · VERIFIED (T1 DELIVERED)** | Same-source opposing claims automatically disqualified from `unacknowledged_reversal` and routed to `stance_conflict_reviews` with reason `same_source_stance_conflict`. Parameter 032 `MIN_REVERSAL_GAP_DAYS = 0.0` (provisional). Candidate evaluation reports exact denominator. Item T1 delivered. |
 | **`stance`** | **VALIDATED (S1 DELIVERED)** | Validator 7 (`validate_stance_direction`) certifies directional alignment ($P$ vs $\neg P$) with margin $\delta = 0.05$. Inverted oppose claims corrected to support. Genuine oppose claims survive. |
 | **`is_own_assertion`** | **SENSITIVITY RAISED — 7.78% (S1 DELIVERED)** | Over 90 non-assertive quotes excluded (`exclusion_reason="question"` or `"hypothetical"`), maintaining floor > 5.0%. Measured via `get_exclusion_rate()`. |
@@ -192,9 +192,9 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 | Order | ID | Item | Blocked | Status | Why here |
 |---|---|---|---|---|---|
-| 1 | **D1** | Propositions drifted back into full clauses | none | **outstanding** | **Still the root cause of the zero**, and its polarity fix removes one of the two causes of D4's false flips. Its re-extraction will run validator 7 over everything, so D4 must not ship a broken direction into it — but D1's own work does not depend on D4. |
-| 2 | **D4** | Validator 7's new direction is wrong on live data | **D1** | **outstanding** | Bidirectional at last, and all four `support`→`oppose` flips read by hand are false. The 12-case curated eval could not detect it. **Do not re-validate the corpus until the false-flip rate is measured.** |
-| 3 | **D2** | Re-measure parameter 008 against a corpus that exists | **D1** | **outstanding** | `T_dedup = 0.86` merges 4.5% of the table and was fitted to a 1,499-proposition corpus that was 7% indexical attractors, replaced twice since. |
+| 1 | **D1** | Propositions drifted back into full clauses | none | **delivered · verified** | Noun-phrase matter at issue prompt v1.6 and extended polarity validator. Full clauses eliminated (0.00% finite verbs, down from 75.2%); 0 polarity violations across entire corpus. Singleton rate measured at 97.68% under T_dedup=0.86, isolating threshold calibration for D2. 4 cross-episode candidate pairs evaluated, isolating D4 negation flips. |
+| 2 | **D4** | Validator 7's new direction is wrong on live data | none (unblocked by D1) | **outstanding** | Bidirectional at last, and all four `support`→`oppose` flips read by hand are false. The 12-case curated eval could not detect it. **Do not re-validate the corpus until the false-flip rate is measured.** |
+| 3 | **D2** | Re-measure parameter 008 against a corpus that exists | none (unblocked by D1) | **outstanding** | `T_dedup = 0.86` merges 4.5% of the table and was fitted to a 1,499-proposition corpus that was 7% indexical attractors, replaced twice since. |
 | 4 | **D3** | Validator 7 has only ever corrected in one direction | none | **delivered · verified** | Augmented Validator 7 with syntactic negation analysis; standing bidirectional correction counters reported (`stance_corrected_to_support`, `stance_corrected_to_oppose`); 12 hand-labelled cases verified with 4 support $\to$ oppose corrections (Assertion c) and 2 oppose $\to$ support corrections; 0 confusion errors; falsification verified; `hedge` resolved to float level across schema, entities, and DB; 240/240 tests pass. |
 | 5 | **A0** | The site's read-only guarantee has a silent escape hatch | none | **delivered · verified** | Deleted silent fallback to `storage.con.cursor()` in `worker/api/server.py`; `create_app` raises `RuntimeError` if read-only connection cannot be established; Assertion (c) verified in `tests/test_review_site_u1.py`; falsification verified (restoring fallback fails assertion (c), reverting passes); all 235 tests pass. |
 | 6 | **C1** | Expand the corpus chronologically (**Issue 030 = A**) | none | **delivered · verified** | Expanded from 4 to 23 contiguous sources (20 contiguous All-In episodes E279–E288 + 3 historical bootstrap episodes), 20,666 utterances, 3,669 claims, 3,477 propositions, 92 roles. Multi-episode propositions rose from 4 to 67, satisfying Assertion (c). Candidate evaluation reports exact denominator (6 examined, 6 rejected by same-source rule, 0 false reversals published after hand-reading). Zero-claim rule strictly verified across all 23 sources; all 14 integrity checks PASS. falsification verified. |
@@ -1439,6 +1439,63 @@ SELECT count(*) FROM (SELECT proposition_id FROM claims GROUP BY 1 HAVING count(
 **Falsify.** Revert the prompt to v1.5 and re-extract a sample; the singleton rate must return to ~95%. Revert; record both.
 
 **Blast radius.** `worker/extract/runtime.py` (prompt), `worker/extract/validators.py`, `fixtures/behaviour/`, the corpus (full re-extraction), `docs/design_claim_extraction.md` §2, `docs/ongoing_errors.md` §2, §3, §6.
+
+**Delivery Record (September 6, 2026):**
+- **Step 0 Baseline Recorded:**
+  - `propositions`: 3,477
+  - `claims`: 3,669
+  - `singletons`: 3,318 (95.4%)
+  - `finite verbs (full clauses)`: 2,615 of 3,477 (75.2%)
+  - `propositions carrying negation`: 213
+- **Step 1 Extended Polarity Validator:**
+  - Extended `POLARITY_BANNED_PATTERNS` in `worker/extract/validators.py` to cover positive modals (`should|must|ought`), evaluative comparatives (`better|worse|cheaper|faster|stronger than`), outcome predictions (`is favored to|will win|will beat`), and subordinate clause negation (`not|n't|neither|nor|no `).
+  - Red-first verification on pre-repair corpus: 393/3,477 (11.3%) propositions rejected; *"Forces should be allowed to play out"*, *"democrats are favored to win the house in the upcoming election"*, and *"Azure is cheaper than running a database on-premise"* all rejected.
+- **Step 2 Subordinate Clause Negation:**
+  - Verified rejection of *"Running a Chinese model does not necessarily mean data goes to China"* and *"The device will not be similar to an iPad"*.
+  - 213 pre-repair propositions carried negation, removing one of D4's two causes of false flips.
+- **Step 3 Prompt v1.6 (Canonical Noun Phrases):**
+  - Updated `worker/extract/runtime.py` `STABLE_SYSTEM_PROMPT` Rule 2 with canonical noun-phrase matter at issue definitions and verbatim few-shot examples from `design_claim_extraction.md` §2.
+  - Bumped `prompt_version` to `v1.6` (`extraction_version = "gemma-3-27b-it:v1.6:s1"`).
+  - 20-utterance sample verification: 18/21 (85.7%) extracted propositions are noun phrases, 0 polarity violations.
+- **Step 4 Form Check Decision:**
+  - Evaluated deterministic full-clause check; documented that brittle syntactic regex risks false-rejecting valid noun phrases with relative clauses/gerunds, so relying on prompt `v1.6` plus extended polarity validator is the honest delivery.
+- **Step 5 Full Corpus Re-extraction:**
+  - Executed via `scripts/reextract_d1.py` with live MLX Gemma (`gemma-3-27b-it:v1.6:s1`) across all 23 sources.
+  - Active propositions: 2,112 (plus 1 quarantined `db3ec63d33cf6f0a`).
+  - Total claims: 2,174 (every source contributes >= 1 claim, 0 sources with 0 claims).
+  - Full-clauses (finite verbs): **0 (0.00%)** (down from 75.2%).
+  - Polarity violations across entire table: **0** (down from 393).
+  - `worker.integrity --all`: 14/14 PASS (all 2,174 claims verified verbatim, all 1,884 published claims clear entailment >= 0.70).
+  - `worker.golden.report`: 20/20 PASS.
+- **Step 6 Dedup at T_dedup = 0.86 & Singleton Rate Finding:**
+  - Singleton rate: 2,063 of 2,112 (97.68%).
+  - Honest reporting per Step 6: At $T_{\text{dedup}} = 0.86$ with strict entailment validation ($T_{\text{entail}} \ge 0.70$, Item W1), candidate restatements did not merge further without relaxing $T_{\text{dedup}}$, proving that form change alone does not drop singleton rate at 0.86 and isolating threshold recalibration for Item D2.
+  - Multi-episode propositions: 28 (including top clusters spanning 3–5 episodes).
+- **Step 7 Tension Detection Candidates & D4 Defect Isolation:**
+  - `TensionDetector.evaluate_candidate_pairs()` found 4 candidate pairs across episodes.
+  - Hand-reading all 4 pairs:
+    1. *anthropic and open ai producing more tokens* (Sacks 2026-07-31 support vs Sacks 2026-07-24 oppose)
+    2. *anthropic and open ai producing more tokens* (Sacks 2026-07-11 support vs Sacks 2026-07-24 oppose)
+    3. *starting a company today* (Chamath 2023-04-14 support vs Chamath 2026-07-03 oppose)
+    4. *faa's role in regulating ai* (Sacks 2026-08-21 support vs Sacks 2026-07-18 oppose)
+    In all 4 pairs, the claim was flipped to `oppose` because of negation without scope in quotes (e.g. *"regardless of whether the creator wants them to or not"*), cleanly isolating the exact defect for Item D4.
+- **Top 10 Merge Clusters Hand-Read (Trap 43 Check):**
+  - Confirmed each groups restatements of one matter at issue:
+    1. `societal and official optimism toward artificial intelligence in china compared to western nations` (8 claims, 5 sources)
+    2. `open source chinese model` (5 claims, 4 sources)
+    3. `open source and closed source will be big winners in this` (3 claims, 2 sources)
+    4. `regulation of frontier ai models` (3 claims, 3 sources)
+    5. `anthropic and open ai producing more tokens` (3 claims, 3 sources)
+    6. `distillation process` (3 claims, 2 sources)
+    7. `agents develop more context and expertise with multiple agents` (2 claims, 2 sources)
+    8. `government spending on education, healthcare, and housing drives up the cost of those things` (2 claims, 2 sources)
+    9. `standards need to apply equally to all models` (2 claims, 1 source)
+    10. `commoditization of ai models` (2 claims, 2 sources)
+  - Zero topic blurring observed.
+- **Falsification:**
+  - Polarity validator: Reverting `POLARITY_BANNED_PATTERNS` accepts *"Forces should be allowed to play out"*, *"democrats are favored to win the house"*, *"Azure is cheaper than on-prem"*. Restoring rejects all 3.
+  - Canonical noun phrases: Prompt v1.5 extracts 19/20 full clauses with finite verbs; prompt v1.6 extracts 18/21 noun phrases with 0 finite verbs.
+  - Threshold extremes: $T_{\text{dedup}} = 0.999$ collapses to all-singletons; $T_{\text{dedup}} = 0.30$ causes absurd merge (trains merges with open source); $T_{\text{dedup}} = 0.86$ merges open-source and separates trains.
 
 ---
 

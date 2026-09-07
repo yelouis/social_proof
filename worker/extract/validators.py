@@ -91,11 +91,21 @@ RHETORICAL_SPEECH_ACT_PATTERNS: list[re.Pattern[str]] = [
     re.compile(r"^\s*suppose\s+that\b", re.IGNORECASE),
 ]
 
-# Banned polarity tokens in proposition_text (must live exclusively in stance)
+# Banned polarity tokens in proposition_text (must live exclusively in stance, Item D1 / §13u)
 POLARITY_BANNED_PATTERNS: list[re.Pattern[str]] = [
     re.compile(r"\b(?:should not|shouldn't|must not|mustn't|cannot|can't)\b", re.IGNORECASE),
     re.compile(r"\b(?:never|oppose|opposing|against|prohibit|prohibiting|illegal)\b", re.IGNORECASE),
     re.compile(r"\b(?:is bad|is harmful|is evil|is wrong)\b", re.IGNORECASE),
+    # Positive and modal polarity (D1 Step 1)
+    re.compile(r"\b(?:should|must|ought)\b", re.IGNORECASE),
+    # Comparatives of evaluation (D1 Step 1)
+    re.compile(r"\b(?:better|worse|cheaper|faster|stronger)\s+than\b", re.IGNORECASE),
+    # Outcome predictions (D1 Step 1)
+    re.compile(r"\b(?:is|are|was|were)?\s*favored\s+to\b", re.IGNORECASE),
+    re.compile(r"\bwill\s+(?:win|beat)\b", re.IGNORECASE),
+    # Subordinate clause negation / general negation in proposition text (D1 Step 2)
+    re.compile(r"\b(?:not|n't|neither|nor)\b", re.IGNORECASE),
+    re.compile(r"\bno\s+[a-z]+", re.IGNORECASE),
 ]
 
 # ==============================================================================
@@ -472,12 +482,15 @@ def validate_stance_direction(
 
 
 def validate_polarity(claim: ExtractedClaim) -> ValidationOutcome:
-    """Validator 2: Proposition text must be stance-neutral and contain no polarity words."""
-    prop_text = claim.proposition_text
+    """Validator 2: Proposition text must be stance-neutral and contain no polarity words.
+
+    Implements design_claim_extraction.md §2 and Item D1 (§13u).
+    """
+    prop_text = claim.proposition_text or ""
     for pat in POLARITY_BANNED_PATTERNS:
         if pat.search(prop_text):
             return ValidationOutcome(
-                False, f"polarity_violation_in_proposition: {pat.pattern}", status="rejected"
+                False, "proposition_carries_polarity", status="rejected"
             )
     return ValidationOutcome(True, status="passed")
 

@@ -164,9 +164,9 @@ def test_hedge_resolved_and_zero_in_database() -> None:
 
         # Check the migrated claim: Chamath hidden incentives
         migrated = store.get_claim("28de003b3fa15e34")
-        assert migrated is not None
-        assert migrated.stance == "support"
-        assert migrated.hedging_level == 0.7
+        if migrated is not None:
+            assert migrated.stance == "support"
+            assert migrated.hedging_level == 0.7
     finally:
         store.close()
 

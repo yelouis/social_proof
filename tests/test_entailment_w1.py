@@ -130,12 +130,20 @@ def test_entailment_w1_both_directions(live_db: Storage) -> None:
     assert "clm_bad_test" in res_bad.message
 
 
-def test_entailment_w1_repoint_strictly_fewer_and_clears_floor(live_db: Storage) -> None:
+def test_entailment_w1_repoint_strictly_fewer_and_clears_floor(tmp_path: Path) -> None:
     """With re-point validation active, strictly fewer claims are re-pointed than P0 (69 < 74),
 
     and every re-pointed claim clears T_ENTAIL_HIGH against its new text.
     """
-    con = live_db.con
+    temp_db_path = tmp_path / "repoint_test.duckdb"
+    shutil.copy("social_proof.duckdb", temp_db_path)
+    store = Storage(str(temp_db_path))
+    store.reresolve_propositions(
+        t_dedup=DEFAULT_T_DEDUP,
+        from_pre_merge=True,
+        validate_entailment_on_repoint=True,
+    )
+    con = store.con
 
     # Check how many claims changed proposition_id from pre-merge
     repointed_claims = con.execute(
@@ -153,7 +161,7 @@ def test_entailment_w1_repoint_strictly_fewer_and_clears_floor(live_db: Storage)
 
     # Check that each re-pointed claim clears T_ENTAIL_HIGH
     embedder = get_embedder()
-    cache = live_db.get_entailment_cache()
+    cache = store.get_entailment_cache()
     for cid, qtext, pid, ptext in repointed_claims:
         if (cid, pid) in cache:
             sim = cache[(cid, pid)]
@@ -165,6 +173,7 @@ def test_entailment_w1_repoint_strictly_fewer_and_clears_floor(live_db: Storage)
         assert sim >= DEFAULT_T_ENTAIL_HIGH, (
             f"Re-pointed claim {cid} failed T_ENTAIL_HIGH ({DEFAULT_T_ENTAIL_HIGH}): sim={sim:.4f}"
         )
+    store.close()
 
 
 def test_entailment_w1_single_source_of_truth_for_t_dedup() -> None:

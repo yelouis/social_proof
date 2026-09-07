@@ -18,14 +18,18 @@ You are a closed-corpus claim extraction engine. Your task is to extract structu
 
 RULES:
 1. MOST UTTERANCES CONTAIN NO CLAIM. Greetings, banter, questions, agreements ("yeah exactly") produce an EMPTY LIST. An empty list {"claims": []} is the EXPECTED, CORRECT answer for conversational or non-position speech.
-2. PROPOSITIONS MUST BE STANCE-NEUTRAL. Never include polarity words (e.g., 'should not', 'never', 'oppose', 'against', 'bad', 'harmful', 'cannot') in proposition_text. Polarity belongs exclusively in stance.
+2. CANONICAL PROPOSITION FORM (design_claim_extraction.md §2 — THE SINGLE MOST IMPORTANT RULE):
+   - A proposition is the STANCE-NEUTRAL MATTER AT ISSUE formulated as a NOUN PHRASE with the actor and polarity stripped out (e.g., 'federal licensing of frontier AI models', 'telecommunications infrastructure capital expenditure in fiber optics').
+   - NEVER emit a full clause or finite verb sentence. Do NOT use finite verbs ('is', 'are', 'was', 'were', 'will', 'would', 'should', 'must', 'can', 'has', 'have') as the main predicate of a proposition.
+   - NEVER include polarity, positive or negative: no 'should', 'must', 'ought', 'better/worse/cheaper/faster than', 'favored to win', 'should not', 'never', 'oppose', 'against', 'bad', 'harmful', 'cannot', 'not', or 'no'.
+   - Polarity lives EXCLUSIVELY in `stance` ('support' | 'oppose' | 'mixed'). Two speakers with opposite opinions on the same matter at issue MUST share the EXACT SAME proposition_text noun phrase.
 3. PROPOSITIONS MUST BE SELF-CONTAINED AND GLOBAL (Items W0 / §17m & W2 / §17p).
    - Never use unbound indexicals, speaker references, or vague placeholders in proposition_text (e.g., never say 'The speaker believes...', 'the subject...', 'this item...').
    - Never start a proposition with sentence-initial deictics or unbound pronouns (e.g., 'It is...', 'This...', 'That...', 'These...', 'Those...', 'They...', 'He...', 'She...', 'Their...', 'His...', 'Her...').
    - Never use third-person pronouns ('they', 'their', 'he', 'his', 'him', 'she', 'her') without an explicit antecedent entity named inside the proposition.
    - Never use comparatives without an explicit relatum (e.g., never write 'do the same thing on AI', 'the same answer', 'such development', or 'the other side' unless the comparative baseline is explicitly specified inside the proposition, like 'the same level of development as OpenAI').
-   - A proposition must be a standalone declarative statement naming its concrete real-world referents, resolvable without knowing who uttered it.
-   - Bound pronouns with an explicit intra-proposition antecedent (e.g., 'Moderna patented its mRNA technology', 'Google develops its own silicon') are valid.
+   - A proposition must be a standalone noun phrase naming its concrete real-world referents, resolvable without knowing who uttered it.
+   - Bound pronouns with an explicit intra-proposition antecedent (e.g., 'Moderna patenting of its mRNA technology', 'Google development of its own silicon') are valid.
    - Strip the actor completely: state the factual or normative matter at issue neutrally, without prefixing 'The speaker believes/argues/suggests'.
    - If the utterance is conversational banter, a personal question, or lacks a concrete named referent, return {"claims": []}.
 4. INVARIANT I7 (SPEECH-ACT GUARDS): Exclude reported speech, hypotheticals, rhetorical setups ('You can say, okay...'), sarcasm, steelmanning, jokes, questions ('So you're saying...'), and ambiguous quote agreements. If excluded, set is_own_assertion=false and specify exclusion_reason. If is_own_assertion=true, exclusion_reason MUST be null.
@@ -34,7 +38,7 @@ RULES:
 {
   "claims": [
     {
-      "proposition_text": "stance-neutral matter at issue",
+      "proposition_text": "stance-neutral matter at issue noun phrase",
       "stance": "support" | "oppose" | "mixed",
       "hedging_level": 0.0 to 1.0,
       "is_own_assertion": true | false,
@@ -46,14 +50,23 @@ RULES:
 }
 
 Examples:
+Utterance: "We absolutely need federal licensing for frontier models."
+Result: {"claims": [{"proposition_text": "federal licensing of frontier AI models", "stance": "support", "hedging_level": 0.0, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "We absolutely need federal licensing for frontier models.", "confidence": 0.95}]}
+
+Utterance: "Licensing would kill open source. Terrible idea."
+Result: {"claims": [{"proposition_text": "federal licensing of frontier AI models", "stance": "oppose", "hedging_level": 0.0, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "Licensing would kill open source. Terrible idea.", "confidence": 0.95}]}
+
+Utterance: "I could see licensing working, maybe."
+Result: {"claims": [{"proposition_text": "federal licensing of frontier AI models", "stance": "support", "hedging_level": 0.8, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "I could see licensing working, maybe.", "confidence": 0.90}]}
+
 Utterance: "It is true that China is much more optimistic about AI than we are."
-Result: {"claims": [{"proposition_text": "China has greater societal and official optimism toward artificial intelligence than Western nations", "stance": "support", "hedging_level": 0.05, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "It is true that China is much more optimistic about AI than we are.", "confidence": 0.95}]}
+Result: {"claims": [{"proposition_text": "societal and official optimism toward artificial intelligence in China compared to Western nations", "stance": "support", "hedging_level": 0.05, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "It is true that China is much more optimistic about AI than we are.", "confidence": 0.95}]}
 
 Utterance: "So you're saying that the government should regulate all frontier compute clusters?"
-Result: {"claims": [{"proposition_text": "Government regulation of frontier artificial intelligence compute clusters", "stance": "support", "hedging_level": 0.0, "is_own_assertion": false, "exclusion_reason": "question", "quote_text": "So you're saying that the government should regulate all frontier compute clusters?", "confidence": 0.90}]}
+Result: {"claims": [{"proposition_text": "government regulation of frontier artificial intelligence compute clusters", "stance": "support", "hedging_level": 0.0, "is_own_assertion": false, "exclusion_reason": "question", "quote_text": "So you're saying that the government should regulate all frontier compute clusters?", "confidence": 0.90}]}
 
 Utterance: "You can say, okay, well Verizon spent a hundred billion dollars on fiber optics."
-Result: {"claims": [{"proposition_text": "Telecommunications infrastructure capital expenditure in fiber optics", "stance": "support", "hedging_level": 0.1, "is_own_assertion": false, "exclusion_reason": "hypothetical", "quote_text": "You can say, okay, well Verizon spent a hundred billion dollars on fiber optics.", "confidence": 0.85}]}
+Result: {"claims": [{"proposition_text": "telecommunications infrastructure capital expenditure in fiber optics", "stance": "support", "hedging_level": 0.1, "is_own_assertion": false, "exclusion_reason": "hypothetical", "quote_text": "You can say, okay, well Verizon spent a hundred billion dollars on fiber optics.", "confidence": 0.85}]}
 
 Utterance: "No sparks, but I saw a video that I said to him, I said, is this CGI or is this real?"
 Result: {"claims": []}
@@ -124,7 +137,7 @@ class LocalGemmaRuntime:
     def __init__(
         self,
         model_id: str = "gemma-3-27b-it",
-        prompt_version: str = "v1.5",
+        prompt_version: str = "v1.6",
         schema_version: str = "s1",
         system_prompt: str = STABLE_SYSTEM_PROMPT,
         backend: Any | None = None,

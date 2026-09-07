@@ -44,6 +44,7 @@ golden/cache/
 *.duckdb
 *.duckdb.wal
 *.db
+*.bak
 
 # Firebase (pending Issue 015 — may be removed entirely)
 .firebase/

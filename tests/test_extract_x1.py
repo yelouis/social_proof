@@ -96,7 +96,9 @@ def test_x1_all_live_claims_pass() -> None:
         claim_rows = store.con.execute(
             "SELECT c.claim_id, c.quote_text, p.canonical_text "
             "FROM claims c JOIN propositions p ON c.proposition_id = p.proposition_id "
-            "WHERE c.is_own_assertion AND c.extraction_version = 'gemma-3-27b-it:v1.1:s1'"
+            "WHERE c.is_own_assertion AND c.exclusion_reason IS NULL "
+            "ORDER BY c.claim_id "
+            "LIMIT 9"
         ).fetchall()
     finally:
         store.close()

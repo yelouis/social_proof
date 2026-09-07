@@ -116,11 +116,21 @@ def test_rendering_null_explicit_reasons(live_client: tuple[TestClient, str, Sto
 
     Never blank or omitted cards.
     """
-    client, token, _ = live_client
+    client, token, storage = live_client
     auth_headers = {"Authorization": f"Bearer {token}"}
 
     # Pick a claim on a single-claim proposition
-    cid = "002ab6e70fdafafb"
+    single_claim_row = storage.con.execute(
+        """
+        SELECT c.claim_id
+        FROM claims c
+        JOIN propositions p ON c.proposition_id = p.proposition_id
+        WHERE p.claim_count = 1
+        LIMIT 1
+        """
+    ).fetchone()
+    assert single_claim_row is not None
+    cid = single_claim_row[0]
     res = client.get(f"/claim/{cid}", headers=auth_headers)
     assert res.status_code == 200
     html_content = res.text
