@@ -196,11 +196,11 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ## 6. Queue
 
-**One item remains. Everything else is in §10, one line each with the commit that carries its full spec.**
+**All items delivered. The queue is empty.**
 
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
-| 1 | **D6** | Propositions overshot into bare topics | none | **Why all 6 candidate pairs are false.** D1 removed finite verbs and landed on topics; 25.8% of propositions are ≤ 5 words. A topic admits any stance, so `support` and `oppose` on one are not a contradiction. **Third form iteration — its sample gate is the position test, and it must pass 16/20 before any full re-extraction.** |
+| — | — | — | — | All queued pipeline and calibration items delivered. |
 
 **When done and the detector still finds nothing, that is a result — report it with its denominator.** It is not a reason to loosen a threshold. Every loosening this project has tried produced a fabrication.
 
@@ -303,6 +303,7 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 - **D4** `783ab28` — **scope-aware negation. Drawn evaluation set of 80, recorded seed, labels assigned before the run, red-first baseline: false-flip rate 100% → 0% on negation claims.** The strongest single piece of work in this log.
 - **D1** `95c586d` — canonical noun-phrase form and extended polarity validation. Polarity violations 393 → **0**; full clauses 75.2% → 21.3%. **(c) NOT MET** — singletons rose to 97.7% against a target below 95%. Overshot into topics; see §12.
 - **P0** `0cb8481` · **D2** `da82f7e` — proposition dedup wired, then `T_dedup` re-measured to **0.84** over the current distribution with deciles, n and date.
+- **D6** — propositions overshot into bare topics repaired via mechanical floor (`validate_position_bearing`) and prompt v1.7. Step 1 baseline: 4/20 (20.0%) pass rate. Step 2 gate: 19/20 (95.0%) pass rate on 20-utterance sample. Step 3 mechanical floor: 495 / 2,161 pre-D6 propositions rejected. Re-extraction over 23 sources produced 1,027 claims across 1,007 active propositions ($T_{\text{dedup}} = 0.84$ strictly preserved). Claim shortfall reconciled: 583 bare topics rejected, 110 question exclusions, 313 quote verbatim misses, 115 entailment rejections, 62 stance direction rejections. All 6 false D2 candidate pairs eliminated under position test; 0 published tensions honestly reported with denominator; 3 historical fabrications preserved quarantined (100.0% quarantine rate).
 
 ### Corpus and ingest
 

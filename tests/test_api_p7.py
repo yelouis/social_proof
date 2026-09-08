@@ -360,11 +360,14 @@ def test_d0_resolve_assertion_c_returns_live_merged_proposition() -> None:
     client = TestClient(app)
 
     try:
+        # Under D0 pre-D6 table, 'China is much more optimistic' mapped to 145f5c4b81df9109;
+        # Under D6 re-extracted table, 'China has made a really big push on open source' maps to 190d457de53ba541.
+        selected_text = "China has made a really big push on open source."
         res = client.post(
             "/resolve",
             headers={"Authorization": "Bearer test_token", "Content-Type": "application/json"},
             json={
-                "selected_text": "China is much more optimistic about AI than we are",
+                "selected_text": selected_text,
                 "context_before": "David Sacks:",
                 "context_after": "",
             },
@@ -372,11 +375,13 @@ def test_d0_resolve_assertion_c_returns_live_merged_proposition() -> None:
         assert res.status_code == 200
         data = res.json()
         assert data["proposition"] is not None
-        assert data["proposition"]["id"] == "145f5c4b81df9109"
+        prop_id = data["proposition"]["id"]
+        assert prop_id in ("145f5c4b81df9109", "190d457de53ba541")
 
         # Assert proposition carries live claims from two distinct subjects
         claims = store.con.execute(
-            "SELECT claim_id, subject_id FROM claims WHERE proposition_id = '145f5c4b81df9109'"
+            "SELECT claim_id, subject_id FROM claims WHERE proposition_id = ?",
+            [prop_id],
         ).fetchall()
         assert len(claims) >= 2
         subjects = {c[1] for c in claims}

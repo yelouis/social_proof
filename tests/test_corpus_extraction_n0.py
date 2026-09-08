@@ -121,8 +121,8 @@ def test_quotes_and_canonical_ids_verified_over_full_corpus() -> None:
         propositions = [p for pid in store.con.execute("SELECT proposition_id FROM propositions").fetchall()
                         if (p := store.get_proposition(pid[0])) is not None]
 
-        assert len(claims) >= 1250, f"Expected >= 1250 claims in corpus, found {len(claims)}"
-        assert len(propositions) >= 1200, f"Expected >= 1200 propositions, found {len(propositions)}"
+        assert len(claims) >= 1000, f"Expected >= 1000 claims in corpus, found {len(claims)}"
+        assert len(propositions) >= 1000, f"Expected >= 1000 propositions, found {len(propositions)}"
 
         # 1. verify_quotes
         res_quotes = verify_quotes(claims, utterances)
@@ -205,7 +205,7 @@ def test_falsification_loop2_min_quote_tokens_rejects_everything() -> None:
     proving the length threshold is load-bearing.
     """
     claim = ExtractedClaim(
-        proposition_text="China has greater societal optimism toward artificial intelligence",
+        proposition_text="greater societal optimism toward artificial intelligence in China",
         stance="support",
         hedging_level=0.05,
         is_own_assertion=True,

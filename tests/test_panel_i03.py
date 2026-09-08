@@ -278,7 +278,7 @@ def test_panel_ingest_end_to_end_and_integrity(
     mock_claims_by_subject = {
         "subj_jason_calacanis": [
             {
-                "proposition_text": "The Chinese Communist Party is effective at public relations regarding artificial intelligence and robotics.",
+                "proposition_text": "effectiveness of the Chinese Communist Party at public relations regarding artificial intelligence and robotics",
                 "stance": "support",
                 "quote_text": "the CCP, is f***ing brilliant at PR",
                 "hedging_level": 0.05,
@@ -289,7 +289,7 @@ def test_panel_ingest_end_to_end_and_integrity(
         ],
         "subj_david_friedberg": [
             {
-                "proposition_text": "Mainstream scientific institutional consensus stifles heterodox theory and alternative physics models.",
+                "proposition_text": "stifling of heterodox theory and alternative physics models by mainstream scientific institutional consensus",
                 "stance": "support",
                 "quote_text": "stagnation in science in America because if you do not part of the mainstream You get excluded",
                 "hedging_level": 0.1,
@@ -300,7 +300,7 @@ def test_panel_ingest_end_to_end_and_integrity(
         ],
         "subj_chamath_palihapitiya": [
             {
-                "proposition_text": "String theory remains unproved until verified empirically.",
+                "proposition_text": "unproven status of string theory prior to empirical verification",
                 "stance": "support",
                 "quote_text": "until string theory is proved, it's unproved",
                 "hedging_level": 0.05,
@@ -311,7 +311,7 @@ def test_panel_ingest_end_to_end_and_integrity(
         ],
         "subj_david_sacks": [
             {
-                "proposition_text": "China has greater societal and official optimism toward artificial intelligence than Western nations.",
+                "proposition_text": "greater societal and official optimism toward artificial intelligence in China compared to Western nations",
                 "stance": "support",
                 "quote_text": "China is much more optimistic about AI than we are",
                 "hedging_level": 0.05,

@@ -146,6 +146,7 @@ INDEXICAL_BANNED_ANYWHERE: list[re.Pattern[str]] = [
     re.compile(r"\bthe\s+speaker\b", re.IGNORECASE),
     re.compile(r"\bthe\s+subject\b", re.IGNORECASE),
     re.compile(r"\bthe\s+described\s+powers?\b", re.IGNORECASE),
+    re.compile(r"\bthe\s+matter\s+at\s+issue\b", re.IGNORECASE),
 ]
 
 COMPARATIVE_NO_RELATUM: list[re.Pattern[str]] = [
@@ -668,6 +669,116 @@ def validate_polarity(claim: ExtractedClaim) -> ValidationOutcome:
     return ValidationOutcome(True, status="passed")
 
 
+# Relational prepositions and comparative markers indicating predicate-bearing matter at issue (Item D6)
+RELATIONAL_PREPOSITIONS: set[str] = {
+    "of", "for", "in", "on", "at", "to", "from", "with", "by", "about", "against",
+    "between", "into", "through", "during", "before", "after", "above", "below",
+    "under", "over", "across", "toward", "towards", "upon", "within", "without",
+    "regarding", "concerning", "versus", "vs",
+}
+
+COMPARATIVE_MARKERS: set[str] = {
+    "than", "versus", "vs", "compared", "relative",
+}
+
+FINITE_ROOT_VERBS: set[str] = {
+    "is", "are", "was", "were", "has", "have", "had", "will", "would", "should", "must",
+    "went", "uses", "used", "got", "came", "can", "could", "need", "needs",
+}
+
+REL_PRONOUNS: set[str] = {
+    "that", "which", "who", "whom", "whose", "where", "when", "if", "because",
+}
+
+BARE_VERB_OPENERS: set[str] = {
+    "have", "has", "had", "support", "supports", "bolt", "disrupt", "disrupts",
+    "take", "takes", "make", "makes", "run", "runs", "do", "does", "get", "gets",
+    "put", "puts", "went", "stop", "stops",
+}
+
+UNBOUND_TRAILING_PRONOUN_PAT: re.Pattern[str] = re.compile(
+    r"\b(?:for\s+it|to\s+it|about\s+it|of\s+it|in\s+it|on\s+it|this\s+thing)\s*$",
+    re.IGNORECASE,
+)
+
+DEICTIC_OR_VALUATION_PAT: re.Pattern[str] = re.compile(
+    r"\b(?:it's|before\s+it|after\s+it)\b|^\s*(?:\$?\d+|\d+\s+to\s+\d+)\s+(?:billion|million|trillion)\b",
+    re.IGNORECASE,
+)
+
+QUESTION_OPENER_PAT: re.Pattern[str] = re.compile(
+    r"^\s*(?:how\s+to|why|what|when|where)\b",
+    re.IGNORECASE,
+)
+
+MIN_PROPOSITION_WORDS: int = 5
+
+
+def has_proposition_relation(text: str) -> bool:
+    """Checks whether text contains a relational marker: preposition, comparative, or participle."""
+    tokens = re.findall(r"\b[a-z]+\b", text.lower())
+    if any(t in RELATIONAL_PREPOSITIONS for t in tokens):
+        return True
+    if any(t in COMPARATIVE_MARKERS for t in tokens):
+        return True
+    if any(t.endswith("ing") and len(t) > 4 for t in tokens):
+        return True
+    return False
+
+
+def has_finite_root_verb(text: str) -> bool:
+    """Checks whether text contains an un-relativized finite verb."""
+    tokens = re.findall(r"\b[a-z]+\b", text.lower())
+    for i, tok in enumerate(tokens):
+        if tok in FINITE_ROOT_VERBS:
+            if i == 0 or tokens[i - 1] not in REL_PRONOUNS:
+                return True
+    return False
+
+
+def validate_position_bearing(claim: ExtractedClaim) -> ValidationOutcome:
+    """Validator 2b: Propositions must be position-bearing matters at issue, not bare topics.
+
+    Implements design_claim_extraction.md §2 and Item D6 (§11).
+    Rejects propositions below minimum length (< 5 words), bare noun phrases
+    with no relation (no preposition, no participle, no comparative), full clauses
+    with finite root verbs, bare verb openers, question openers, and unbound trailing pronouns.
+    Reason: proposition_not_position_bearing.
+    """
+    text = (claim.proposition_text or "").strip()
+    words = text.split()
+    if len(words) < MIN_PROPOSITION_WORDS:
+        return ValidationOutcome(
+            False, "proposition_not_position_bearing", status="rejected"
+        )
+    if not has_proposition_relation(text):
+        return ValidationOutcome(
+            False, "proposition_not_position_bearing", status="rejected"
+        )
+    first_word = words[0].lower() if words else ""
+    if first_word in BARE_VERB_OPENERS:
+        return ValidationOutcome(
+            False, "proposition_not_position_bearing", status="rejected"
+        )
+    if QUESTION_OPENER_PAT.search(text):
+        return ValidationOutcome(
+            False, "proposition_not_position_bearing", status="rejected"
+        )
+    if UNBOUND_TRAILING_PRONOUN_PAT.search(text):
+        return ValidationOutcome(
+            False, "proposition_not_position_bearing", status="rejected"
+        )
+    if DEICTIC_OR_VALUATION_PAT.search(text):
+        return ValidationOutcome(
+            False, "proposition_not_position_bearing", status="rejected"
+        )
+    if has_finite_root_verb(text):
+        return ValidationOutcome(
+            False, "proposition_not_position_bearing", status="rejected"
+        )
+    return ValidationOutcome(True, status="passed")
+
+
 def validate_speech_acts(
     claim: ExtractedClaim,
     utterance: Utterance | None = None,
@@ -772,7 +883,13 @@ def validate_extracted_claim(
     if not res_self_contained.is_valid:
         return res_self_contained
 
-    # 3. Entailment (Validator 6) runs immediately after self-contained check
+    # 2b. Position-Bearing Matter at Issue (Item D6)
+    res_pos = validate_position_bearing(claim)
+    if not res_pos.is_valid:
+        VALIDATOR_REJECTION_COUNTERS[res_pos.rejection_reason or "proposition_not_position_bearing"] += 1
+        return res_pos
+
+    # 3. Entailment (Validator 6) runs immediately after position-bearing check
     res_entail = validate_entailment(
         claim=claim,
         embedder=embedder,

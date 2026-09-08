@@ -72,7 +72,7 @@ def test_single_speaker_ingest_end_to_end_and_integrity(clean_ingest_env: tuple[
     # Chamath verbatim in clip: "I think the high end of the market where Mark operates where the large monoliths operate is quite safe."
     mock_claims = [
         {
-            "proposition_text": "The high end of the market where large enterprise monoliths operate is safe.",
+            "proposition_text": "safety of large enterprise monoliths at the high end of the market",
             "stance": "support",
             "quote_text": "where the large monoliths operate is quite safe",
             "hedging_level": 0.1,
@@ -228,7 +228,7 @@ def test_falsification_corrupt_text_verbatim_fails_verify_quotes_on_real_data(cl
 
     mock_claims = [
         {
-            "proposition_text": "Enterprise software market monoliths are safe.",
+            "proposition_text": "safety of enterprise software market monoliths",
             "stance": "support",
             "quote_text": "where the large monoliths operate is quite safe",
             "hedging_level": 0.1,

@@ -104,7 +104,7 @@ def test_i7_exclusion_rate_reported_and_above_floor() -> None:
     store = Storage("social_proof.duckdb", read_only=True)
     try:
         exc_count, total_count, exc_rate = get_exclusion_rate(store)
-        assert total_count >= 1200
+        assert total_count >= 1000
         assert exc_count >= 90, f"Expected >= 90 exclusions, got {exc_count}"
         assert exc_rate >= 5.0, f"Expected exclusion rate >= 5.0%, got {exc_rate:.2f}%"
     finally:

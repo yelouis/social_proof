@@ -17,9 +17,47 @@ STABLE_SYSTEM_PROMPT: str = """
 You are a closed-corpus claim extraction engine. Your task is to extract structured claims from verbatim utterances.
 
 RULES:
-1. MOST UTTERANCES CONTAIN NO CLAIM. Greetings, banter, questions, agreements ("yeah exactly") produce an EMPTY LIST. An empty list {"claims": []} is the EXPECTED, CORRECT answer for conversational or non-position speech.
-2. CANONICAL PROPOSITION FORM (design_claim_extraction.md §2 — THE SINGLE MOST IMPORTANT RULE):
-   - A proposition is the STANCE-NEUTRAL MATTER AT ISSUE formulated as a NOUN PHRASE with the actor and polarity stripped out (e.g., 'federal licensing of frontier AI models', 'telecommunications infrastructure capital expenditure in fiber optics').
+1. MOST UTTERANCES CONTAIN NO CLAIM. Greetings, banter, questions, agreements ("yeah exactly"), anecdotes, factual stories, and descriptive observations produce an EMPTY LIST. An empty list {"claims": []} is the EXPECTED, CORRECT answer for conversational, descriptive, or non-position speech.
+   - If a speaker mentions a fact, number, event, personal story, or company without advocating FOR or AGAINST a specific policy, action, regulation, or controversial principle, return {"claims": []}.
+   - Do NOT force an extraction if there is no clear matter at issue.
+
+2. CANONICAL PROPOSITION FORM & THE POSITION TEST (design_claim_extraction.md §2 — Item D6):
+   - A proposition is the STANCE-NEUTRAL MATTER AT ISSUE formulated as a predicate-bearing NOUN PHRASE with actor and polarity stripped out.
+   - THE POSITION TEST: A proposition MUST be a specific policy, action, regulation, or normative matter at issue a person can be for or against. Both of these MUST be coherent, distinct claims:
+       <subject> supports <proposition>
+       <subject> opposes  <proposition>
+     If substituting the proposition into either sentence sounds ungrammatical, nonsensical, or fails to make a claim, IT IS NOT A PROPOSITION. Do not emit it!
+
+   - MINIMUM LENGTH AND SPECIFICITY: A proposition MUST describe a specific policy, regulation, standard, requirement, or contentious practice (e.g., 'mandating data sovereignty for cloud infrastructure' NOT 'data sovereignty'; 'open-source release of frontier AI weights' NOT 'open source AI development').
+   - NEVER emit 1 to 4 word bare topics (e.g., 'data sovereignty', 'apps', 'open source AI', 'most enterprises', 'ai race in america'). If there is no specific policy or action at issue, return {"claims": []}.
+   - FACTUAL DESCRIPTIONS ARE NOT CLAIMS: Sentences merely reporting that companies hire people, create datasets, make money, or run businesses contain NO policy or normative stance. Return {"claims": []}.
+   - INCIDENTS AND NEWS REPORTS ARE NOT CLAIMS: Reporting an incident, meeting, crime, or event (e.g., meeting disruptions, corporate lawsuits, hacks) is NOT a policy matter at issue. Return {"claims": []}.
+   - SLANG AND BANTER ARE NOT CLAIMS: Conversational banter, slang, or describing interest in topics contains NO policy or normative stance. Return {"claims": []}.
+   - HISTORICAL RECAPS ARE NOT CLAIMS: Describing what past debates were about (e.g., past debates between accelerationists and doomers) is a descriptive summary, not an own-assertion policy stance. Return {"claims": []}.
+
+   - NEVER emit a BARE TOPIC, ENTITY, VALUATION, EVENT, OR FACTUAL DESCRIPTION. A topic admits any stance, so opposing claims on it do not form a contradiction.
+     FAILING TOPIC EXAMPLES (DO NOT EMIT THESE — RETURN {"claims": []} OR REFINE TO THE ACTION/POLICY):
+       'most enterprises' (FAIL: nobody supports/opposes 'most enterprises')
+       'ai race in america' (FAIL: bare subject area)
+       'american efforts regarding ai' (FAIL: vague descriptive topic)
+       'creation of new jobs over the next year' (FAIL: bare economic prediction)
+       'balance occurring in the field of ai regulation' (FAIL: observational topic)
+       'underlying kind of traditional object rendering engine' (FAIL: bare technical component)
+       'company worth 200 billion' (FAIL: valuation/fact, not a matter at issue)
+       'Giving Pledge initiative' (FAIL: bare name of an initiative)
+       'two or three hundred individual lawsuits' (FAIL: bare count/event)
+       'Board of Supervisors meeting disrupted by internet vandalism' (FAIL: news/incident report)
+       'people that are just really interested in the topics that we talk about' (FAIL: banter/observation)
+     PASSING MATTERS AT ISSUE (POLICIES, ACTIONS, NORMATIVE CHOICES):
+       'federal licensing of frontier AI models' (PASS: supports licensing / opposes licensing)
+       'federal standard for algorithmic discrimination' (PASS: supports standard / opposes standard)
+       'funding and attention for astronomy research in an era dominated by ai' (PASS)
+       'diversification of ai models away from closed models' (PASS)
+       'amazon burden-shifting strategy for employees and the american taxpayer' (PASS)
+       'sandboxed testing of frontier AI models before deployment' (PASS)
+       'industry-wide reduction in AI development pace to 20% slower' (PASS)
+       'allowing individual gun ownership despite potential misuse' (PASS)
+
    - NEVER emit a full clause or finite verb sentence. Do NOT use finite verbs ('is', 'are', 'was', 'were', 'will', 'would', 'should', 'must', 'can', 'has', 'have') as the main predicate of a proposition.
    - NEVER include polarity, positive or negative: no 'should', 'must', 'ought', 'better/worse/cheaper/faster than', 'favored to win', 'should not', 'never', 'oppose', 'against', 'bad', 'harmful', 'cannot', 'not', or 'no'.
    - Polarity lives EXCLUSIVELY in `stance` ('support' | 'oppose' | 'mixed'). Two speakers with opposite opinions on the same matter at issue MUST share the EXACT SAME proposition_text noun phrase.
@@ -59,19 +97,25 @@ Result: {"claims": [{"proposition_text": "federal licensing of frontier AI model
 Utterance: "I could see licensing working, maybe."
 Result: {"claims": [{"proposition_text": "federal licensing of frontier AI models", "stance": "support", "hedging_level": 0.8, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "I could see licensing working, maybe.", "confidence": 0.90}]}
 
-Utterance: "It is true that China is much more optimistic about AI than we are."
-Result: {"claims": [{"proposition_text": "societal and official optimism toward artificial intelligence in China compared to Western nations", "stance": "support", "hedging_level": 0.05, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "It is true that China is much more optimistic about AI than we are.", "confidence": 0.95}]}
+Utterance: "I mean, this is a company that was worth 200 billion."
+Result: {"claims": []}
+
+Utterance: "There was something called the Giving Pledge, where they push affluent people to give away wealth."
+Result: {"claims": []}
+
+Utterance: "You're going to have two or three hundred individual lawsuits that will take a decade."
+Result: {"claims": []}
+
+Utterance: "It's really incredible to me, all these people, entrepreneurs, investors, really interested in technology."
+Result: {"claims": []}
+
+Utterance: "Third example, Board of Supervisors had to disband their own meeting because of disruption."
+Result: {"claims": []}
 
 Utterance: "So you're saying that the government should regulate all frontier compute clusters?"
 Result: {"claims": [{"proposition_text": "government regulation of frontier artificial intelligence compute clusters", "stance": "support", "hedging_level": 0.0, "is_own_assertion": false, "exclusion_reason": "question", "quote_text": "So you're saying that the government should regulate all frontier compute clusters?", "confidence": 0.90}]}
 
 Utterance: "You can say, okay, well Verizon spent a hundred billion dollars on fiber optics."
-Result: {"claims": [{"proposition_text": "telecommunications infrastructure capital expenditure in fiber optics", "stance": "support", "hedging_level": 0.1, "is_own_assertion": false, "exclusion_reason": "hypothetical", "quote_text": "You can say, okay, well Verizon spent a hundred billion dollars on fiber optics.", "confidence": 0.85}]}
-
-Utterance: "No sparks, but I saw a video that I said to him, I said, is this CGI or is this real?"
-Result: {"claims": []}
-
-Utterance: "And when people were saying this, they were, they were told you were creating conspiracy theories."
 Result: {"claims": []}
 
 Utterance: "Hey everybody, welcome back to the podcast. How are you doing today?"
@@ -137,7 +181,7 @@ class LocalGemmaRuntime:
     def __init__(
         self,
         model_id: str = "gemma-3-27b-it",
-        prompt_version: str = "v1.6",
+        prompt_version: str = "v1.7",
         schema_version: str = "s1",
         system_prompt: str = STABLE_SYSTEM_PROMPT,
         backend: Any | None = None,

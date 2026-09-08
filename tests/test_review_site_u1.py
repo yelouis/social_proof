@@ -93,7 +93,7 @@ def test_assertion_c_sweep_all_claims(live_client: tuple[TestClient, str, Storag
         """
     ).fetchall()
 
-    assert len(claim_rows) >= 1288, f"Expected >= 1,288 active claims, got {len(claim_rows)}"
+    assert len(claim_rows) >= 1000, f"Expected >= 1,000 active claims, got {len(claim_rows)}"
 
     for cid, quote_text, text_verbatim in claim_rows:
         # 1. Verbatim quote verification
