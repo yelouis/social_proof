@@ -315,11 +315,16 @@ def verify_quarantine_not_rendered(
                         examined_count=len(quarantined_ids),
                     )
 
+    total_tensions = len(tensions)
+    quarantine_rate = len(quarantined_ids) / total_tensions if total_tensions > 0 else 0.0
     return CheckResult(
         name="verify_quarantine_not_rendered",
         passed=True,
         status="PASS",
-        message=f"Verified {len(quarantined_ids)} quarantined tensions are not rendered",
+        message=(
+            f"Verified {len(quarantined_ids)} quarantined tensions are not rendered; "
+            f"quarantine rate {quarantine_rate:.1%} ({len(quarantined_ids)}/{total_tensions})"
+        ),
         examined_count=len(quarantined_ids),
     )
 

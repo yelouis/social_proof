@@ -111,7 +111,7 @@ A Tension that fails a precondition is **written with `status: quarantined` and 
 
 Dropping hides the failure rate. Quarantining makes it a measurable number: how many findings the system generated and then declined to publish, and why. That number is the health metric for the whole pipeline. A quarantine rate that suddenly falls to zero usually means a precondition stopped being checked, not that quality improved.
 
-Quarantined Tensions are visible in a review surface. **They never enter a score and never render as findings.**
+Quarantined Tensions are visible in a review surface. **They never enter a score and never render as findings.** The quarantine rate is derived directly from the `tensions` table alone (`count(quarantined) / count(*)`) via `Storage.get_quarantine_rate()` and `Storage.get_quarantine_summary()`, and reported as a first-class health metric in the integrity pass (`verify_quarantine_not_rendered`).
 
 ### Propositions quarantine too (Issue 027 = A)
 

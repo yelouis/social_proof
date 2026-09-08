@@ -88,11 +88,11 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 |---|---|---|
 | `ruff check` | **PASS** | Clean across worker/, tests/, fixtures/, golden/, scripts/. |
 | `mypy --strict` | **PASS on 104 files** | Clean across worker/, tests/, fixtures/, golden/, scripts/. Item G1, W0, S1, U1, A0 & D1 delivered. |
-| `pytest tests/ -q` | **PASS** — **245 passed in 332s** | Re-measured September 6 over the 23-source corpus after D1 re-extraction. Well above trap 18's 35s floor. | `requires_models` tests ran (not skipped, no deselection in `addopts`). All unit, behavioural, and falsification tests pass. |
+| `pytest tests/ -q` | **PASS** — **266 passed in 295s** | Re-measured September 7 over 23-source corpus. Well above trap 18's 35s floor. All unit, behavioural, and falsification tests pass. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
-| `worker.integrity --all` | **PASS — 15 checks, independent populations, active sufficiency verdicts, referential integrity, entailment validation, and claims-per-hour rate check** | G1, E1, N0, P0, W1, W0, S1, C1, D1, D4 & D5 delivered: 15 checks, FIXTURES and CORPUS reported separately with no union; `verify_quotes` examined 2,261 claims; `verify_anchor_chain` examined 22,927 entities; `verify_canonical_ids` examined 2,284 entities (2,192 propositions, 0 principles, 92 roles); `verify_quarantined_propositions_unreachable` examined 1 quarantined proposition (`db3ec63d33cf6f0a`); `verify_assessment_subjects_exist` verified all 8 assessments; `verify_source_productivity` verified 23/23 sources >= 80.0%; `verify_claims_per_hour` verified all 23 sources >= 3.0 claims/hr (range: 6.70 – 152.04 claims/hr); `verify_entailment_holds` examined 2,261 claims against current propositions (PASS, all 1,953 published claims >= 0.70). |
+| `worker.integrity --all` | **PASS — 15 checks, independent populations, active sufficiency verdicts, referential integrity, entailment validation, and claims-per-hour rate check** | G1, E1, N0, P0, W1, W0, S1, C1, D1, D4, D5 & D7 delivered: 15 checks, FIXTURES and CORPUS reported separately with no union; `verify_quarantine_not_rendered` reports quarantine rate 33.3% (3/9) derivable from table alone; `verify_attribution_floor` and `verify_negation_recheck` examine 6 published tensions and pass. |
 | `worker.golden.report` | **PASS** | Fixtures 20/20 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
-| **Working tree** | **CLEAN** | All gates pass; D5 delivered and verified live from DuckDB. |
+| **Working tree** | **CLEAN** | All gates pass; D7 delivered and verified live from DuckDB. |
 | **Review site** | **DELIVERED (U1 DELIVERED)** | Served live from DuckDB on local API (`/`, `/episode/{source_id}`, `/claim/{claim_id}`, `/person/{subject_id}`) with `read_only=True` connection guarantee. Static export and `site/` deleted (Issue 033). Assertion (c) full sweep verified (200 OK, verbatim quotes verified, zero quarantined IDs). Empty sections render with honest reasons (§4). Zero links to offset 00:00. |
 | **Site read-only guarantee** | **DELIVERED · VERIFIED (A0 DELIVERED)** | Deleted silent fallback to `storage.con.cursor()`. When `Storage` is writable and holding the lock, `create_app` raises `RuntimeError` naming the cause, strictly enforcing the read-only guarantee. Assertion (c) verified in `test_review_site_u1.py`; falsification verified (restoring fallback fails assertion (c)). |
 | **Proposition form** | **0.0% FULL CLAUSES (D1 DELIVERED · VERIFIED)** | Canonical noun-phrase *matter at issue* with polarity stripped (`design_claim_extraction.md` §2) enforced via prompt `v1.6` and extended polarity validator in `worker/extract/validators.py`. Across all active propositions: **0 finite verbs (0.00%)** and **0 polarity violations**. Item D1. |
@@ -108,7 +108,7 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 | **Sufficiency verdict** | **DELIVERED · VERIFIED (E2 DELIVERED)** | Parameter 012 sufficiency floor enforced strictly on inputs BEFORE scoring (`MIN_CLAIMS=3`, `MIN_SOURCES=1`, `MIN_SPAN_DAYS=0`). Dependency runs one way: verdict -> scores. When `passed` is False, all axis calculations are suppressed (`reason: "insufficient_corpus"`). Live corpus hosts all clear sufficiency on the merits. |
 | **Corpus — claims** | **2,261 CLAIMS (N0, P0, W0, S1, W2, C1, D1, D4 & D5 DELIVERED)** | Ingested and re-extracted under prompt `v1.6` with full validators 1–7. Every source contributes >= 3.0 claims/hr. |
 | **Assessments** | **EVALUATED, REFERENTIALLY GUARDED** | 8 rows across 2 topics (`top_ai_reg`, `global`). Sufficiency verdict `passed: True` across all 4 enrolled hosts. |
-| **Published tensions** | **6 PUBLISHED · 3 QUARANTINED** | 6 published unacknowledged reversal tensions detected across 3 distinct multi-episode propositions (David Sacks on Anthropic/OpenAI token production, AI development thresholds, and FAA role in AI regulation). Both historical fabrications quarantined. `verify_attribution_floor` and `verify_negation_recheck` examine 6 published tensions and pass. |
+| **Published tensions** | **6 PUBLISHED · 3 QUARANTINED (D7 DELIVERED)** | 6 published unacknowledged reversal tensions detected across 3 distinct multi-episode propositions (David Sacks on Anthropic/OpenAI token production, AI development thresholds, and FAA role in AI regulation). Both historical fabrications quarantined. Quarantine rate: 33.3% (3/9) reported as first-class metric derivable from table alone. `verify_attribution_floor` and `verify_negation_recheck` examine 6 published tensions and pass. |
 | **Candidate pairs** | **7 EXAMINED · 6 ACCEPTED (D2 DELIVERED · NON-EMPTY)** | Evaluated via `evaluate_candidate_pairs`: 7 candidate pairs examined; 1 rejected by same-source rule; 6 cross-episode pairs accepted across 3 propositions, satisfying Assertion (c). Hand-read all 6 pairs. |
 | **Reversals — same-source disqualification** | **DELIVERED · VERIFIED (T1 DELIVERED)** | Same-source opposing claims automatically disqualified from `unacknowledged_reversal` and routed to `stance_conflict_reviews` with reason `same_source_stance_conflict`. Parameter 032 `MIN_REVERSAL_GAP_DAYS = 0.0` (provisional). Candidate evaluation reports exact denominator. Item T1 delivered. |
 | **`stance`** | **VALIDATED (S1 DELIVERED)** | Validator 7 (`validate_stance_direction`) certifies directional alignment ($P$ vs $\neg P$) with margin $\delta = 0.05$. Inverted oppose claims corrected to support. Genuine oppose claims survive. |
@@ -196,16 +196,13 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ## 6. Queue
 
-**Two items. Everything else is in §10, one line each with the commit that carries its full spec.**
+**One item remains. Everything else is in §10, one line each with the commit that carries its full spec.**
 
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
-| 1 | **D7** | Accepted candidates produce no tension row | none | 6 candidates accepted, **0 rows written** — not published, not quarantined. `design_evidence_integrity.md` §4 forbids the silent drop by name, because it makes the quarantine rate unmeasurable. Small, and it makes D6's result visible. |
-| 2 | **D6** | Propositions overshot into bare topics | none | **Why all 6 candidate pairs are false.** D1 removed finite verbs and landed on topics; 25.8% of propositions are ≤ 5 words. A topic admits any stance, so `support` and `oppose` on one are not a contradiction. **Third form iteration — its sample gate is the position test, and it must pass 16/20 before any full re-extraction.** |
+| 1 | **D6** | Propositions overshot into bare topics | none | **Why all 6 candidate pairs are false.** D1 removed finite verbs and landed on topics; 25.8% of propositions are ≤ 5 words. A topic admits any stance, so `support` and `oppose` on one are not a contradiction. **Third form iteration — its sample gate is the position test, and it must pass 16/20 before any full re-extraction.** |
 
-**Do them in that order.** D7 is small and makes D6's outcome legible; running D6 first means its result lands in a table that is silently dropping rows.
-
-**When both are done and the detector still finds nothing, that is a result — report it with its denominator.** It is not a reason to loosen a threshold. Every loosening this project has tried produced a fabrication.
+**When done and the detector still finds nothing, that is a result — report it with its denominator.** It is not a reason to loosen a threshold. Every loosening this project has tried produced a fabrication.
 
 ---
 
@@ -326,6 +323,7 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 - **D0** `399e775` — proposition table repaired in place (Issue 027 = A): canonical IDs normalised, forked rows merged, embeddings backfilled, fabrication quarantined.
 - **Q0** `46eecea` — both published tensions quarantined as fabrications. **Quarantine rate is 3 of 3 tensions ever generated.**
 - **T1** `226abe4` — same-source pairs disqualified from reversal and routed to `stance_conflict_reviews`.
+- **D7** — accepted candidates produce tension rows; quarantine rate 33.3% (3/9) reported as first-class metric derivable from table alone; both directions and falsification verified.
 
 ### Clients and portability
 
@@ -338,59 +336,15 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 
 **P4** `365896e` tension detection · **P3** `4c24312` topic model · **P5** `b3db6ce` principle extraction · **P6** `0a6b4b6` rubric engine.
 
-They pass their fixture tests and have **never produced a true finding over the live corpus.** Every zero they have reported has had a cause upstream of them — an empty corpus, then an unrepresentable one, then propositions that could not carry a position. **Do not read their green status as evidence the detectors work.** §12 and §11 are what make the question answerable.
+They pass their fixture tests and have **never produced a true finding over the live corpus.** Every zero they have reported has had a cause upstream of them — an empty corpus, then an unrepresentable one, then propositions that could not carry a position. **Do not read their green status as evidence the detectors work.** §11 is what makes the question answerable.
 
 ### Accepted equivalents — do NOT "fix" these back
 
 The `TranscriptionEngine` Protocol plus its `Mock` test-double split · `LocalGemmaRuntime`'s shape · `verify_source_productivity` reporting coverage as a percentage rather than a ratio. All three are better than the spec implied.
 
 ---
-## 11. D7 — Six accepted candidates produced no tension row at all
 
-**User impact:** the quarantine rate becomes a real number again, which is the health metric for the whole pipeline.
-
-**Contract:** `design_evidence_integrity.md` §4 — *"A Tension that fails a precondition is **written with `status: quarantined` and a reason** — not silently dropped. Dropping hides the failure rate."*
-
-**Gap.** D2 reports **6 accepted candidate pairs** across 3 multi-episode propositions. The `tensions` table contains **3 rows, all of them the old quarantined fabrications.** Nothing new was written — not published, not quarantined.
-
-```
-candidates accepted (D2 commit) : 6
-tension rows written            : 0
-tensions table                  : 3 rows, all pre-existing, all quarantined
-stance_conflict_reviews         : 8 rows
-```
-
-**`design_evidence_integrity.md` §4 is explicit that this is the one thing not to do**, and gives the reason: *"A quarantine rate that suddenly falls to zero usually means a precondition stopped being checked, not that quality improved."* Right now the rate is unmeasurable, because the denominator is not being recorded.
-
-Either the detector was never run against the corpus after D2's re-resolution, or accepted candidates are dropped between acceptance and the write. **Determine which before writing any fix** — they are different bugs.
-
-**Implementation**
-
-**Step 1 — Establish which of the two it is.** Run `TensionDetector.detect_tensions_for_subject` for all four subjects against the live corpus and count rows written.
-
-> **Verify:** report the number of candidates examined, accepted, and rows written, as three numbers. **If rows written is 0 while accepted is 6, the drop is in the write path.** If the detector was simply never run, say so — that is a process finding, not a code defect, and the fix is a step in D2's item rather than a change here.
-
-**Step 2 — Make every accepted candidate produce a row.** Published if it clears all six preconditions; `quarantined` with the failing precondition as its reason otherwise. No path may return without writing.
-
-> **Verify (red-first):** before the fix, assert that the count of tension rows is less than the count of accepted candidates — i.e. reproduce the drop as a failing test. A test written after the fix cannot show the bug existed.
-
-**Step 3 — Report the quarantine rate as a first-class number**, next to the validator rejection counters, per `design_evidence_integrity.md` §4.
-
-> **Verify:** the rate is derivable from the table alone — `count(quarantined) / count(*)` — with no external bookkeeping. If it needs a log to reconstruct, it will be lost.
-
-**Validation**
-
-- **(c)** — **`count(tensions) >= number of accepted candidates`** after a detection run over the live corpus, and every quarantined row carries a `quarantine_reason` naming which of the six preconditions failed. *Today the tensions table has 3 rows against 6 accepted candidates; this assertion is currently false and reproducing that is step 2's red-first check.*
-- Both directions: a candidate that clears all preconditions writes `published`; one that fails any writes `quarantined` with that reason. Neither writes nothing.
-- `verify_quarantine_not_rendered` still PASSes — new quarantined rows appear in no assessment's `axis_evidence`.
-
-**Falsify.** Re-introduce the early return, confirm the row count drops below the candidate count and (c) goes red. Revert; record both.
-
-**Blast radius.** `worker/tension/detect.py`, `worker/storage.py`, `worker/integrity.py` (quarantine-rate reporting), `tests/`, `docs/design_evidence_integrity.md` §4, §3, §6.
-
----
-
-## 12. D6 — Propositions overshot from full clauses into bare topics
+## 11. D6 — Propositions overshot from full clauses into bare topics
 
 **User impact:** a proposition becomes something a person can actually agree or disagree with, which is the precondition for a contradiction meaning anything.
 

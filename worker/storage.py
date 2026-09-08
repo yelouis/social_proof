@@ -1492,6 +1492,55 @@ class Storage:
             for r in rows
         ]
 
+    def get_quarantine_summary(self) -> dict[str, Any]:
+        """Derives quarantine health metrics directly from tensions table alone.
+
+        Contract: design_evidence_integrity.md §4.
+        """
+        row = self.con.execute("""
+            SELECT
+                count(*) AS total,
+                count(*) FILTER (WHERE status = 'quarantined') AS quarantined,
+                count(*) FILTER (WHERE status = 'published') AS published,
+                count(*) FILTER (WHERE status = 'dismissed') AS dismissed
+            FROM tensions
+        """).fetchone()
+        if not row or row[0] == 0:
+            return {
+                "total": 0,
+                "quarantined": 0,
+                "published": 0,
+                "dismissed": 0,
+                "quarantine_rate": 0.0,
+                "reasons": {},
+            }
+        total, quar, pub, dis = int(row[0]), int(row[1]), int(row[2]), int(row[3])
+        rate = quar / total if total > 0 else 0.0
+        reason_rows = self.con.execute("""
+            SELECT quarantine_reason, count(*)
+            FROM tensions
+            WHERE status = 'quarantined'
+            GROUP BY quarantine_reason
+            ORDER BY count(*) DESC
+        """).fetchall()
+        reasons = {str(r[0]): int(r[1]) for r in reason_rows}
+        return {
+            "total": total,
+            "quarantined": quar,
+            "published": pub,
+            "dismissed": dis,
+            "quarantine_rate": rate,
+            "reasons": reasons,
+        }
+
+    def get_quarantine_rate(self) -> float:
+        """Returns count(quarantined) / count(*) from tensions table alone.
+
+        Returns 0.0 if tensions table is empty.
+        """
+        summary = self.get_quarantine_summary()
+        return float(summary["quarantine_rate"])
+
     def insert_stance_conflict_review(self, review: StanceConflictReview) -> None:
         self.con.execute(
             """
