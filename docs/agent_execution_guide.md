@@ -4,9 +4,7 @@
 
 **Read §1 first; it says where to start.** There is no routing machinery below — you are expected to organise the work yourself. What is fixed is §4 (what you may not change), §5 (what has bitten this project), §7 (what counts as evidence) and each item's own assertions.
 
-**Where the project is.** Twenty-seven items delivered — §10 lists them with the commit carrying each full spec. **`mypy scripts/` is RED at HEAD** (§11). **Issue 034 is selected: B.**
-
-**Two items, in order. G2 then X2.**
+**Where the project is.** Twenty-nine items delivered — §10 lists them with the commit carrying each full spec. All gates GREEN at HEAD. Queue in §6 is empty; Items G2 (`6111c21`) and X2 (`2c3c5a4`) delivered.
 
 **X2 (§12) is the one that matters, and it is not a fourth prompt iteration.** Three passes asked the model for a neutral matter at issue and then judged whether it was positionable. Each produced a different failure — indexical templates, full clauses, bare topics — each was fixed, and the corpus fell **3,669 → 1,027 claims** while cross-episode candidates went **0 → 6 → 0**. The wording was never the problem. **The problem is that "is this positionable?" is asked after the artefact exists and answered generously**: six false pairs were recorded *"hand-read and verified"*, and D6's gate reported 18/20 where an independent seeded draw scored 9/20.
 
@@ -307,7 +305,7 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 - **D1** `95c586d` — canonical noun-phrase form and extended polarity validation. Polarity violations 393 → **0**; full clauses 75.2% → 21.3%. **(c) NOT MET** — singletons rose to 97.7% against a target below 95%. Overshot into topics; see §12.
 - **P0** `0cb8481` · **D2** `da82f7e` — proposition dedup wired, then `T_dedup` re-measured to **0.84** over the current distribution with deciles, n and date.
 - **D6** `3100a48` — mechanical position floor (`validate_position_bearing`) + prompt v1.7; 495 of 2,161 old propositions rejected (22.9%), ≤5-word share 25.8% → 17.4%, claim loss 2,261 → 1,027 reported and reconciled, Parameter 033 still met on all 23 sources. **(c) NOT MET on an independent draw** — reported 18/20, a fresh seeded sample scores **9/20 strict / 13/20 charitable** against a 16/20 gate. Issue 034.
-- **X2** `—` — elicit position with proposition (Issue 034 = B): prompt `v1.8` writes the position frame (`the speaker is FOR/AGAINST ⟨X⟩`), stored directly in `claims.position_frame`; 1,517 claims across 1,464 active propositions; (c) verified on 20/20 random claims drawn with seed 2026; Validator 2b alarm drop 22.2% → 11.1%; dual falsification verified (identity rule + prompt v1.7 reversion).
+- **X2** `2c3c5a4` — elicit position with proposition (Issue 034 = B): prompt `v1.8` writes the position frame (`the speaker is FOR/AGAINST ⟨X⟩`), stored directly in `claims.position_frame`; 1,517 claims across 1,464 active propositions; (c) verified on 20/20 random claims drawn with seed 2026; Validator 2b alarm drop 22.2% → 11.1%; dual falsification verified (identity rule + prompt v1.7 reversion).
 
 ### Corpus and ingest
 
@@ -350,7 +348,7 @@ The `TranscriptionEngine` Protocol plus its `Mock` test-double split · `LocalGe
 
 ---
 
-## 11. G2 — `mypy scripts/` is red · *red-gate repair*
+## 11. G2 — `mypy scripts/` is red · *red-gate repair* · **DELIVERED (`6111c21`)**
 
 **This is a red-gate repair (§9), not a queue item.** §3 records `mypy scripts/` passing; it is failing at HEAD. Nothing else starts until it is green.
 
@@ -383,7 +381,7 @@ scripts/reextract_d6.py:266-269      verify_quotes / verify_canonical_ids /
 **Blast radius.** `scripts/reextract_d6.py`, `scripts/verify_20_props_step2.py`, §3.
 
 ---
-## 12. X2 — Elicit the position with the proposition · *Issue 034 = B* · **DELIVERED**
+## 12. X2 — Elicit the position with the proposition · *Issue 034 = B* · **DELIVERED (`2c3c5a4`)**
 
 **Delivered.** G2 red-gate repaired and committed (`6111c21`). Item X2 delivered and verified. Prompt v1.8 writes position frame; 1,517 claims across 1,464 active propositions; (c) verified 20/20 on random sample; dual falsification passed.
 
