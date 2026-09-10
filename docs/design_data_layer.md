@@ -172,7 +172,7 @@ CREATE TABLE claims (
   claim_id VARCHAR PRIMARY KEY, subject_id VARCHAR, utterance_id VARCHAR,
   proposition_id VARCHAR, stance VARCHAR, hedging_level DOUBLE,
   is_own_assertion BOOLEAN, exclusion_reason VARCHAR,
-  recorded_at TIMESTAMPTZ
+  recorded_at TIMESTAMPTZ, position_frame VARCHAR
 );
 
 -- 768 dims: nomic-embed-text-v1.5, run locally (Issue 005, Option A).
@@ -191,7 +191,7 @@ CREATE INDEX prop_hnsw ON proposition_embeddings
 
 ```sql
 -- The core detector, in full. This query is why the store is DuckDB.
-SELECT a.claim_id, b.claim_id, a.proposition_id
+SELECT a.claim_id, b.claim_id, a.proposition_id, a.position_frame, b.position_frame
 FROM claims a JOIN claims b
   ON a.proposition_id = b.proposition_id
  AND a.subject_id     = b.subject_id
@@ -200,6 +200,8 @@ FROM claims a JOIN claims b
 WHERE a.is_own_assertion AND b.is_own_assertion
   AND a.stance IN ('support','oppose') AND b.stance IN ('support','oppose');
 ```
+
+Before a candidate pair can publish, it must clear the frame-⟨X⟩ identity mechanical precondition (Item X3): both claims' position frames must name the exact same proposition matter `⟨X⟩` under canonical normalisation. Candidate pairs failing frame identity are quarantined with `quarantine_reason='frame_mismatch'`.
 
 That query is a self-join plus a vector lookup. Any store that cannot serve both is the wrong store — if you find yourself pulling the whole claims table into Python to run it, escalate rather than implement it.
 

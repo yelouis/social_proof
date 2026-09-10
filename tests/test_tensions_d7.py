@@ -33,6 +33,7 @@ EXPECTED_PRECONDITIONS = {
     "quote_span_unresolved",
     "fabricated_proposition",
     "proposition_not_self_contained",
+    "frame_mismatch",
 }
 
 

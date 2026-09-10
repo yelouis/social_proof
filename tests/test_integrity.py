@@ -259,11 +259,12 @@ def test_integrity_pass_corpus_examined_counts_match_db_assertion_c() -> None:
         "verify_assessment_subjects_exist": count_query("SELECT count(*) FROM assessments"),
         "verify_entailment_holds": count_query("SELECT count(*) FROM claims"),
         "verify_claims_per_hour": count_query("SELECT count(*) FROM sources WHERE ingested_at IS NOT NULL"),
+        "verify_frame_identity": count_query("SELECT count(*) FROM tensions WHERE status = 'published'"),
     }
 
     try:
         corpus_results = run_integrity_corpus("social_proof.duckdb")
-        assert len(corpus_results) == 15
+        assert len(corpus_results) == 16
         for r in corpus_results:
             assert r.examined_count == expected_counts[r.name], (
                 f"Check {r.name}: examined_count {r.examined_count} != expected {expected_counts[r.name]}"

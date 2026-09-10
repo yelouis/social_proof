@@ -19,9 +19,9 @@
 
 **The prompt is not at fault.** Both frames are well-formed and match their quotes. **Dedup merged two different matters** at `T_dedup = 0.84` — a threshold D2 measured against a distribution X2 has since replaced. Four of the store's five support/oppose proposition groups are dedup artefacts.
 
-**Two items. X3 (§11) then D8 (§12).** X3 quarantines the false tension and makes frame-⟨X⟩ identity a mechanical precondition, so a mismatch can never publish again. D8 re-measures `T_dedup` against the v1.8 distribution — the follow-up X2 correctly deferred — and it can now be measured **against the frames rather than against a judgement**, which is a first for this parameter.
+**X3 (§11) delivered. D8 (§12) is now active.** X3 quarantined the false tension and made frame-⟨X⟩ identity a mechanical precondition, so a mismatch can never publish again. D8 re-measures `T_dedup` against the v1.8 distribution — the follow-up X2 correctly deferred — and it can now be measured **against the frames rather than against a judgement**, which is a first for this parameter.
 
-**Start at §11.** §5 and §7 are why the items look the way they do.
+**Start at §12.** §5 and §7 are why the items look the way they do.
 
 **Items now carry per-step checks, written as `> **Verify:**` after the step they belong to.** Run each before starting the next step. Several are **red-first**: they tell you to run something and *watch it fail* before you fix anything, because a check that has only ever been green on repaired data has not been tested.
 
@@ -98,12 +98,12 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 | Gate | Result | Note |
 |---|---|---|
 | `ruff check` | **PASS** | Clean across worker/, tests/, fixtures/, golden/, scripts/. |
-| `mypy --strict` | **PASS** | Clean across worker/, tests/, fixtures/, golden/, scripts/ (118 files). Item G2 delivered. |
-| `pytest tests/ -q` | **PASS** — **272 passed in 299s** | Re-measured September 7 over 23-source corpus. Well above trap 18's 35s floor. All unit, behavioural, and falsification tests pass. |
+| `mypy --strict` | **PASS** | Clean across worker/, tests/, fixtures/, golden/, scripts/ (120 files). Item G2 & X3 delivered. |
+| `pytest tests/ -q` | **PASS** — **277 passed in 296s** | Re-measured September 10 over 23-source corpus. Well above trap 18's 35s floor. All unit, behavioural, and falsification tests pass. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
-| `worker.integrity --all` | **PASS — 15 checks, independent populations, active sufficiency verdicts, referential integrity, entailment validation, and claims-per-hour rate check** | G1, E1, N0, P0, W1, W0, S1, C1, D1, D4, D5, D7 & X2 delivered: 15 checks, FIXTURES and CORPUS reported separately with no union; `verify_quarantine_not_rendered` reports quarantine rate 80.0% (4/5) derivable from table alone; `verify_attribution_floor` and `verify_negation_recheck` examine 1 published tension and pass; `verify_claims_per_hour` reports all 23 sources satisfy >= 3.0 claims/hr floor (15.01 - 89.98 claims/hr across 1,517 claims); `verify_entailment_holds` passes on all 1,277 published claims. |
+| `worker.integrity --all` | **PASS — 16 checks, independent populations, active sufficiency verdicts, referential integrity, entailment validation, claims-per-hour rate check, and frame identity** | G1, E1, N0, P0, W1, W0, S1, C1, D1, D4, D5, D7, X2 & X3 delivered: 16 checks (Check #16: `verify_frame_identity`), FIXTURES and CORPUS reported separately with no union; `verify_quarantine_not_rendered` reports quarantine rate 100.0% (5/5) derivable from table alone; 0 published tensions; `verify_frame_identity` passes on both FIXTURES (1 published tension verified) and CORPUS (0 published tensions, zero rows); all 16 checks PASS. |
 | `worker.golden.report` | **PASS** | Fixtures 20/20 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
-| **Working tree** | **CLEAN** | All gates pass; D7, G2 & X2 delivered and verified live from DuckDB. |
+| **Working tree** | **CLEAN** | All gates pass; D7, G2, X2 & X3 delivered and verified live from DuckDB. |
 | **Review site** | **DELIVERED (U1 DELIVERED)** | Served live from DuckDB on local API (`/`, `/episode/{source_id}`, `/claim/{claim_id}`, `/person/{subject_id}`) with `read_only=True` connection guarantee. Static export and `site/` deleted (Issue 033). Assertion (c) full sweep verified (200 OK, verbatim quotes verified, zero quarantined IDs). Empty sections render with honest reasons (§4). Zero links to offset 00:00. |
 | **Site read-only guarantee** | **DELIVERED · VERIFIED (A0 DELIVERED)** | Deleted silent fallback to `storage.con.cursor()`. When `Storage` is writable and holding the lock, `create_app` raises `RuntimeError` naming the cause, strictly enforcing the read-only guarantee. Assertion (c) verified in `test_review_site_u1.py`; falsification verified (restoring fallback fails assertion (c)). |
 | **Proposition form** | **STORED POSITION FRAMES (ITEM X2 DELIVERED · VERIFIED)** | Canonical noun-phrase *matter at issue* elicited with position frame under prompt `v1.8` (`gemma-3-27b-it:v1.8:s1`). Stored in `claims.position_frame`. 20/20 random claims pass byte-identical agreement with proposition and stance. Across all active propositions: **0 finite verbs (0.00%)** and **0 polarity violations**. Item X2. |
@@ -214,8 +214,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
-| 1 | **X3** | A tension may only publish when both frames name the same ⟨X⟩ | none | X2 published a false tension whose own stored frames disagree in two lines. **Quarantine it, then make the check mechanical** — this is the judgement that has been made by eye four times and got it wrong four times. |
-| 2 | **D8** | Re-measure `T_dedup` against the v1.8 distribution | X3 | The follow-up X2 correctly deferred. 0.84 merged *"60 to 80 percent growth"* with *"10x growth for ever"*. **The frames are now ground truth for whether a merge was right** — this parameter has never had that. |
+| 1 | **D8** | Re-measure `T_dedup` against the v1.8 distribution | none | The follow-up X2 correctly deferred, now unblocked by X3. 0.84 merged *"60 to 80 percent growth"* with *"10x growth for ever"*. **The frames are now ground truth for whether a merge was right** — this parameter has never had that. |
 
 ---
 
@@ -343,6 +342,7 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 
 - **G2** `6111c21` — `mypy scripts/` red gate repaired; `reextract_d6.py`'s four dead integrity calls given real arguments and shown to execute.
 - **X2** `2c3c5a4` — **Issue 034 = B: the position elicited with the proposition.** `position_frame` stored on all 1,517 claims (0 unparseable, 0 stance disagreements, 96.3% ⟨X⟩ identity), prompt v1.8, validator 2b fire rate 22.9% → 11.1%. **The corpus grew for the first time in the sequence, 1,027 → 1,517.** It also published one false tension whose frames disagree — §11.
+- **X3** — **Frame-⟨X⟩ identity mechanical precondition in `TensionDetector` and Check #16 `verify_frame_identity` in integrity pass.** Pre-repair false tension `12a7503f8c27b24d` quarantined with `quarantine_reason='frame_mismatch'`; affected David Sacks assessment recomputed; quarantine rate 100.0% (5/5 ever generated); dual falsification verified (synthetic identical ⟨X⟩ frames publish; real growth pair quarantined; disabling guard breaks Assertion (c)).
 
 ### Clients and portability
 
@@ -363,7 +363,7 @@ The `TranscriptionEngine` Protocol plus its `Mock` test-double split · `LocalGe
 
 ---
 
-## 11. X3 — A tension may only publish when both frames name the same ⟨X⟩
+## 11. X3 — A tension may only publish when both frames name the same ⟨X⟩ (DELIVERED · VERIFIED)
 
 **User impact:** the check that has been made by judgement four times, and got it wrong four times, becomes a line of SQL.
 

@@ -101,6 +101,11 @@ verify_entailment_holds
     clearing T_ENTAIL_HIGH (0.70) and token length >= MIN_QUOTE_TOKENS (7).
     Guards against deduplication re-pointing claims to propositions their quotes
     do not support. Caches embeddings in claim_entailment_cache.
+
+verify_frame_identity
+    For every published Tension: assert that both claims' position_frames
+    name the exact same proposition matter <X> after canonical normalisation.
+    Precondition to publication (Item X3 / §11).
 ```
 
 ---
@@ -108,6 +113,16 @@ verify_entailment_holds
 ## 4. Quarantine
 
 A Tension that fails a precondition is **written with `status: quarantined` and a reason** — not silently dropped.
+
+Precondition failure reasons:
+- `frame_mismatch`: candidate claims have conflicting proposition matter `⟨X⟩` in their position frames.
+- `negation_uncertain`: dual-pass transcription failed negation verification.
+- `low_attribution_confidence`: attribution confidence below high.
+- `insufficient_transcription_passes`: transcription pass count < 2.
+- `condition_mismatch`: conditional vs unconditional stance conflict.
+- `quote_span_unresolved`: claim quote span out of utterance bounds.
+- `fabricated_proposition`: historical fabrication or unsupported proposition.
+- `proposition_not_self_contained`: proposition contains unresolved deictics.
 
 Dropping hides the failure rate. Quarantining makes it a measurable number: how many findings the system generated and then declined to publish, and why. That number is the health metric for the whole pipeline. A quarantine rate that suddenly falls to zero usually means a precondition stopped being checked, not that quality improved.
 

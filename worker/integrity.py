@@ -16,6 +16,7 @@ Implements the fifteen mandatory checks:
 13. verify_quarantined_propositions_unreachable
 14. verify_assessment_subjects_exist
 15. verify_entailment_holds
+16. verify_frame_identity
 """
 
 import argparse
@@ -40,7 +41,9 @@ from worker.storage import (
     compute_principle_id,
     compute_proposition_id,
     compute_role_id,
+    normalize_canonical_text,
 )
+from worker.tension.detect import extract_matter_from_frame
 
 
 @dataclass
@@ -326,6 +329,70 @@ def verify_quarantine_not_rendered(
             f"quarantine rate {quarantine_rate:.1%} ({len(quarantined_ids)}/{total_tensions})"
         ),
         examined_count=len(quarantined_ids),
+    )
+
+
+def verify_frame_identity(
+    tensions: list[Tension],
+    claims: list[Claim] | dict[str, Claim],
+) -> CheckResult:
+    """For every published Tension: assert that both claims' position_frames
+
+    name the exact same proposition matter <X> after canonical normalisation.
+    Precondition to publication (Item X3 / §11).
+    """
+    published_tensions = [t for t in tensions if t.status == "published"]
+    if not published_tensions:
+        return CheckResult(
+            name="verify_frame_identity",
+            passed=True,
+            status="NOT APPLICABLE — zero rows",
+            message="No published tensions to verify frame identity",
+            examined_count=0,
+        )
+
+    claim_map = claims if isinstance(claims, dict) else {c.claim_id: c for c in claims}
+    for t in published_tensions:
+        ca = claim_map.get(t.claim_a_id)
+        cb = claim_map.get(t.claim_b_id)
+        if ca is None or cb is None:
+            return CheckResult(
+                name="verify_frame_identity",
+                passed=False,
+                status="FAIL",
+                message=f"Tension {t.tension_id} references missing claim(s)",
+                examined_count=len(published_tensions),
+            )
+        fa = ca.position_frame
+        fb = cb.position_frame
+        if not fa or not fb:
+            return CheckResult(
+                name="verify_frame_identity",
+                passed=False,
+                status="FAIL",
+                message=f"Tension {t.tension_id} claim(s) missing position_frame (ca={bool(fa)}, cb={bool(fb)})",
+                examined_count=len(published_tensions),
+            )
+        norm_a = normalize_canonical_text(extract_matter_from_frame(fa))
+        norm_b = normalize_canonical_text(extract_matter_from_frame(fb))
+        if norm_a != norm_b:
+            return CheckResult(
+                name="verify_frame_identity",
+                passed=False,
+                status="FAIL",
+                message=(
+                    f"Published tension {t.tension_id} has mismatched frames: "
+                    f"'{norm_a}' != '{norm_b}'"
+                ),
+                examined_count=len(published_tensions),
+            )
+
+    return CheckResult(
+        name="verify_frame_identity",
+        passed=True,
+        status="PASS",
+        message=f"All {len(published_tensions)} published tensions verified with frame identity",
+        examined_count=len(published_tensions),
     )
 
 
@@ -1049,7 +1116,7 @@ def run_all_checks(
     entailment_cache: dict[tuple[str, str], float] | None = None,
     embedder: Any | None = None,
 ) -> list[CheckResult]:
-    """Execute all 15 integrity checks."""
+    """Execute all 16 integrity checks."""
     c_list = claims or []
     u_list = utterances or []
     s_list = sources or []
@@ -1084,6 +1151,7 @@ def run_all_checks(
             cache=entailment_cache,
             embedder=embedder,
         ),
+        verify_frame_identity(t_list, c_list),
     ]
     return results
 

@@ -185,22 +185,22 @@ def test_step5_candidate_pairs_and_tensions() -> None:
     ).fetchall()
     assert len(pub_tensions) in (0, 1), f"Expected 0 or 1 published tensions, got {len(pub_tensions)}"
 
-    # 2. Quarantined tensions: 3 under D6 (historical fabrications), 4 under X2 (+1 low_attribution_confidence)
+    # 2. Quarantined tensions: 3 under D6 (historical fabrications), 4 under X2 (+1 low_attribution_confidence), 5 under X3 (+1 frame_mismatch)
     quarantined = store.con.execute(
         "SELECT tension_id, quarantine_reason FROM tensions WHERE status = 'quarantined'"
     ).fetchall()
-    assert len(quarantined) in (3, 4), f"Expected 3 or 4 quarantined tensions, got {len(quarantined)}"
+    assert len(quarantined) in (3, 4, 5), f"Expected 3, 4, or 5 quarantined tensions, got {len(quarantined)}"
     assert sum(1 for _tid, reason in quarantined if reason == "fabricated_proposition") == 3
 
     store.close()
 
 
 def test_integrity_checks_pass() -> None:
-    """Validation: All 15 integrity checks PASS on the repaired live database."""
+    """Validation: All 16 integrity checks PASS on the repaired live database."""
     from worker.integrity import run_integrity_corpus
 
     results = run_integrity_corpus("social_proof.duckdb")
-    assert len(results) == 15, f"Expected 15 checks, got {len(results)}"
+    assert len(results) == 16, f"Expected 16 checks, got {len(results)}"
     for r in results:
         assert r.passed is True, f"Integrity check {r.name} failed: {r.message}"
 

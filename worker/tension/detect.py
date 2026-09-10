@@ -18,10 +18,34 @@ from typing import Any
 from worker.entities import StanceConflictReview, Tension
 from worker.extract.schema import ExtractedClaim
 from worker.extract.validators import validate_self_contained
-from worker.storage import Storage, compute_review_id, compute_tension_id
+from worker.storage import (
+    Storage,
+    compute_review_id,
+    compute_tension_id,
+    normalize_canonical_text,
+)
 
 # Parameter 032: Minimum time gap between reversal halves (provisional until cross-episode candidates exist)
 MIN_REVERSAL_GAP_DAYS: float = 0.0
+
+
+def extract_matter_from_frame(frame: str | None) -> str:
+    """Extract proposition matter <X> from position_frame."""
+    if not frame:
+        return ""
+    s = frame.strip()
+    s_lower = s.lower()
+    for prefix in (
+        "the speaker is for ",
+        "the speaker is against ",
+        "the speaker is support ",
+        "the speaker is oppose ",
+        "the speaker is ambivalent about ",
+        "the speaker has no stance on ",
+    ):
+        if s_lower.startswith(prefix):
+            return s[len(prefix) :].strip()
+    return s
 
 
 def _parse_timestamp(ts_str: str | None) -> datetime | None:
@@ -104,7 +128,9 @@ class TensionDetector:
                 ua.source_id AS source_a_id,
                 ub.source_id AS source_b_id,
                 ua.start_ms AS start_ms_a,
-                ub.start_ms AS start_ms_b
+                ub.start_ms AS start_ms_b,
+                a.position_frame AS frame_a,
+                b.position_frame AS frame_b
             FROM claims a
             JOIN claims b
               ON a.proposition_id = b.proposition_id
@@ -161,6 +187,8 @@ class TensionDetector:
             source_b_id = str(r[28])
             start_ms_a = int(r[29]) if r[29] is not None else 0
             start_ms_b = int(r[30]) if r[30] is not None else 0
+            frame_a = str(r[31]) if r[31] is not None else ""
+            frame_b = str(r[32]) if r[32] is not None else ""
 
             # 1. Same-source check (Item T1 / §17o)
             if source_a_id == source_b_id:
@@ -198,6 +226,7 @@ class TensionDetector:
                         neg_unc_a, neg_unc_b = neg_unc_b, neg_unc_a
                         pass_count_a, pass_count_b = pass_count_b, pass_count_a
                         text_a, text_b = text_b, text_a
+                        frame_a, frame_b = frame_b, frame_a
             else:
                 # 2. Distinct sources: establish temporal order
                 dt_a = _parse_timestamp(rec_a)
@@ -222,6 +251,7 @@ class TensionDetector:
                     neg_unc_a, neg_unc_b = neg_unc_b, neg_unc_a
                     pass_count_a, pass_count_b = pass_count_b, pass_count_a
                     text_a, text_b = text_b, text_a
+                    frame_a, frame_b = frame_b, frame_a
                     dt_a, dt_b = dt_b, dt_a
 
                 gap_seconds = abs((dt_b - dt_a).total_seconds())
@@ -231,11 +261,16 @@ class TensionDetector:
                 ):
                     continue
 
-            # 3. Six Precondition Checks (design_rubric_engine.md §1)
+            # 3. Precondition Checks (design_rubric_engine.md §1, Item X3 / §11)
             quarantine_reason: str | None = None
 
+            # Precondition 0: Frame identity (both frames name the exact same proposition matter <X>)
+            norm_xa = normalize_canonical_text(extract_matter_from_frame(frame_a))
+            norm_xb = normalize_canonical_text(extract_matter_from_frame(frame_b))
+            if norm_xa != norm_xb:
+                quarantine_reason = "frame_mismatch"
             # Precondition 1: Negation certainty
-            if neg_unc_a or neg_unc_b:
+            elif neg_unc_a or neg_unc_b:
                 quarantine_reason = "negation_uncertain"
             # Precondition 2: Attribution confidence high
             elif attr_conf_a != "high" or attr_conf_b != "high":
@@ -391,7 +426,9 @@ class TensionDetector:
                 b.quote_span_start AS q_start_b,
                 b.quote_span_end AS q_end_b,
                 ua.text_verbatim AS text_a,
-                ub.text_verbatim AS text_b
+                ub.text_verbatim AS text_b,
+                a.position_frame AS frame_a,
+                b.position_frame AS frame_b
             FROM claims a
             JOIN claims b
               ON a.proposition_id = b.proposition_id
@@ -441,6 +478,8 @@ class TensionDetector:
             q_end_b = r[23]
             txt_a = r[24] or ""
             txt_b = r[25] or ""
+            frame_a = str(r[26]) if r[26] is not None else ""
+            frame_b = str(r[27]) if r[27] is not None else ""
 
             # Check same-source
             if src_a == src_b:
@@ -460,6 +499,7 @@ class TensionDetector:
                     if start_a > start_b:
                         ca, cb = cb, ca
                         rec_a, rec_b = rec_b, rec_a
+                        frame_a, frame_b = frame_b, frame_a
             else:
                 dt_a = _parse_timestamp(rec_a)
                 dt_b = _parse_timestamp(rec_b)
@@ -498,8 +538,19 @@ class TensionDetector:
                     )
                     continue
 
-            # Check preconditions
-            if neg_unc_a or neg_unc_b:
+            # Check preconditions (Item X3 / §11)
+            norm_xa = normalize_canonical_text(extract_matter_from_frame(frame_a))
+            norm_xb = normalize_canonical_text(extract_matter_from_frame(frame_b))
+            if norm_xa != norm_xb:
+                rejections["frame_mismatch"] += 1
+                details.append(
+                    {
+                        "pair": (ca, cb),
+                        "status": "quarantined",
+                        "reason": "frame_mismatch",
+                    }
+                )
+            elif neg_unc_a or neg_unc_b:
                 rejections["negation_uncertain"] += 1
                 details.append(
                     {
