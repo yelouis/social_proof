@@ -4,16 +4,17 @@
 
 **Read §1 first; it says where to start.** There is no routing machinery below — you are expected to organise the work yourself. What is fixed is §4 (what you may not change), §5 (what has bitten this project), §7 (what counts as evidence) and each item's own assertions.
 
-**Where the project is.** Twenty-seven items delivered — §10 lists them with the commit carrying each full spec. **`mypy scripts/` is RED at HEAD** (§11), and **Issue 034 is open and needs Louis.**
+**Where the project is.** Twenty-seven items delivered — §10 lists them with the commit carrying each full spec. **`mypy scripts/` is RED at HEAD** (§11). **Issue 034 is selected: B.**
 
-D7 and D6 both did real work. **D7** made every accepted candidate produce a tension row and put the quarantine rate into the integrity pass as a first-class number. **D6** added a mechanical position floor that rejects 495 of the old 2,161 propositions (22.9%), reported its 55% claim loss honestly and reconciled it, and kept Parameter 033 satisfied across all 23 sources.
+**Two items, in order. G2 then X2.**
 
-**Two things before you touch anything.**
+**X2 (§12) is the one that matters, and it is not a fourth prompt iteration.** Three passes asked the model for a neutral matter at issue and then judged whether it was positionable. Each produced a different failure — indexical templates, full clauses, bare topics — each was fixed, and the corpus fell **3,669 → 1,027 claims** while cross-episode candidates went **0 → 6 → 0**. The wording was never the problem. **The problem is that "is this positionable?" is asked after the artefact exists and answered generously**: six false pairs were recorded *"hand-read and verified"*, and D6's gate reported 18/20 where an independent seeded draw scored 9/20.
 
-1. **D7 published six tensions and all six were fabrications** — the same six pairs the previous verification pass had already documented as false, and which D2 had recorded as *"hand-read and verified"*. They existed until D6's re-extraction removed the claims underneath them. **The corpus is safe now by accident of ordering, not by design.** The sequencing error was mine: D7 was told to publish anything clearing the preconditions, while every accepted candidate was already known to be false. **When an item's effect is to publish, check what it will publish before you run it.**
-2. **The extraction form has not converged after three passes, and that is now Louis's call rather than a fix to attempt.** Corpus 3,669 → **1,027** claims across D1/D5/D6; cross-episode candidates 0 → 6 → **0**; and D6's (c) gate was reported at 18/20 where an independent draw with a recorded seed gives **9/20 strict, 13/20 charitable**. **Do not start a fourth prompt iteration.** Read Issue 034 in `ongoing_errors.md` §1, and if `Your selection:` is still blank, stop.
+**Issue 034 = B moves that test from a judgement into the output format.** The extractor emits `the speaker is FOR/AGAINST ⟨X⟩` and ⟨X⟩ *is* the proposition — a claim it cannot phrase that way is never emitted. **And the frame sentence is stored**, so from now on the position test is answered by reading a column rather than re-deriving a judgement. That storage is as much the deliverable as the prompt.
 
-**Start at §11, the red gate.** §5 and §7 are why the items look the way they do.
+**Before you start, know what the last pass cost.** D7 published six tensions and **all six were fabrications** — the same pairs already documented as false. Its spec said publish anything clearing the preconditions; they cleared; it published. D6's re-extraction later removed them, so the store is clean by accident of ordering rather than by design. **When an item's effect is to publish, read what is currently in its input first.**
+
+**Start at §11.** §5 and §7 are why the items look the way they do.
 
 **Items now carry per-step checks, written as `> **Verify:**` after the step they belong to.** Run each before starting the next step. Several are **red-first**: they tell you to run something and *watch it fail* before you fix anything, because a check that has only ever been green on repaired data has not been tested.
 
@@ -202,14 +203,10 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ## 6. Queue
 
-**Nothing is queued. One red gate, one open decision.**
-
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
-| 1 | **G2** | `mypy scripts/` is red | none | §3 records it passing; **11 errors at HEAD**, from D6. A red gate outranks everything (§9). Four of them are D6's own integrity calls, which cannot execute as written. |
-| — | — | Extraction form | **Issue 034** | Three passes have not converged and each costs a quarter of the corpus. **Do not start a fourth prompt iteration** — the decision is Louis's. |
-
-**When Issue 034 is selected**, write its consequence into `design_claim_extraction.md` §2 and file the item here, per §4.
+| 1 | **G2** | `mypy scripts/` is red | none | §3 records it passing; **11 errors at HEAD**, from D6. A red gate outranks everything (§9). Four are D6's own integrity calls, which cannot execute as written. Thirty minutes. |
+| 2 | **X2** | Elicit the position with the proposition (**Issue 034 = B**) | G2 | **The extraction form, taken out of the judgement loop.** The model emits `the speaker is FOR/AGAINST ⟨X⟩`, ⟨X⟩ becomes the proposition, and the frame sentence is stored so the position test is auditable from the table. **Not a fourth prompt iteration** — read §12's opening before planning. |
 
 ---
 
@@ -385,7 +382,76 @@ scripts/reextract_d6.py:266-269      verify_quotes / verify_canonical_ids /
 **Blast radius.** `scripts/reextract_d6.py`, `scripts/verify_20_props_step2.py`, §3.
 
 ---
-## 12. Deferred — designed for, not queued
+## 12. X2 — Elicit the position with the proposition · *Issue 034 = B*
+
+**Blocked on G2** — a red gate outranks the queue, and G2 is thirty minutes.
+
+**User impact:** a proposition becomes something the extractor could only have produced by taking a position, so the question *"can you be for or against this?"* stops being asked after the fact.
+
+**Contract:** `design_claim_extraction.md` §2 — read the whole section, especially *"The position is elicited with the proposition, not applied to it"* · `design_data_layer.md` §3 (ids derive from `canonical_text`; changing it is a migration) · `ongoing_errors.md` §2 parameters 008, 026, 031, 033.
+
+### Why this is not a fourth prompt iteration
+
+Three passes have asked the model for a neutral matter at issue and then judged whether it was positionable. Each produced a different failure — indexical templates (W0), full clauses (D1), bare topics (D6) — and each was fixed, and the corpus fell **3,669 → 2,174 → 2,261 → 1,027** while cross-episode candidates went **0 → 6 → 0**. **The wording was never the problem. The problem is that "is this positionable?" is asked after the artefact exists, and answered generously** — six false pairs were recorded *"hand-read and verified"*, and D6's gate reported 18/20 where a seeded redraw scored 9/20.
+
+**Issue 034 = B moves the test from a judgement to a format.** ⟨X⟩ only exists because the model wrote *"the speaker is FOR ⟨X⟩"*. There is no separate positionable-ness to assess.
+
+### Implementation
+
+**Step 0 — Record the baseline you must beat.** Paste into the commit body:
+
+```sql
+SELECT count(*) FROM claims;                    -- 1027
+SELECT count(*) FROM propositions;              -- 1007
+SELECT stance, count(*) FROM claims GROUP BY 1; -- support/oppose/mixed
+-- singleton rate, and propositions spanning 2+ episodes
+-- cross-episode support<->oppose candidate pairs: currently 0
+```
+
+> **Verify:** your numbers match. **If they do not, stop and say so** — the corpus has moved and every target below needs recomputing.
+
+**Step 1 — Add `position_frame` to the schema and the store.** A string on `ExtractedClaim` and on the `claims` table holding the literal sentence the model wrote: `the speaker is FOR <X>` or `the speaker is AGAINST <X>`. Non-null on every new claim.
+
+> **Verify:** a claim cannot be persisted without it. **This field is the deliverable of this item as much as the prompt is** — it is what makes the position test answerable by reading a column instead of re-deriving a judgement, and every previous application of that test as a judgement has been scored generously.
+
+**Step 2 — Rewrite Rule 2 of the prompt as the frame.** `worker/extract/runtime.py`, bump to `v1.8`. The model emits the frame first and ⟨X⟩ is taken from it. Three things the few-shot examples must do, and the second is the one that breaks the system if you get it wrong:
+
+1. Show a claim the model should **decline** to emit because neither frame can be written — use a real failure from the current table: *"implementing software inside of an organization"*, *"prompt length for ai model development"*, *"a good deal to be made"*.
+2. **Show the same ⟨X⟩ under both frames.** `the speaker is FOR federal licensing of frontier AI models` and `the speaker is AGAINST federal licensing of frontier AI models` — **byte-identical ⟨X⟩.** If ⟨X⟩ varies with the stance, the two claims get different `proposition_id`s, the self-join in `design_data_layer.md` §4 matches nothing, and **a person can reverse themselves a hundred times with a perfect Consistency score.** That is §2's opening warning and this is the step that can reintroduce it.
+3. Show a `mixed` case where **both** frames are written for one claim, per §2's new definition — FOR in one respect, AGAINST in another. If only one frame can be written, the stance is that one; `mixed` is no longer a residue.
+
+> **Verify:** extract from **20 utterances** and for each claim **paste both the frame the model wrote and ⟨X⟩** into the commit body. **At least 16 of 20 frames must read as sentences a person would write about that utterance.** Do not report a count on its own — the count is what was reported at 18/20 when an independent draw scored 9/20. **Paste the sentences. If fewer than 16 hold up, iterate here; do not start the full run.**
+
+**Step 3 — Take stance from the frame, and keep validator 7.** `stance` is now FOR → `support`, AGAINST → `oppose`, both → `mixed`. Validator 7 (`validate_stance_direction`) still runs and still corrects.
+
+> **Verify:** validator 7's input distribution has changed, so **D4's measured false-flip rate no longer describes it.** Re-run D4's drawn evaluation set against the new output and report the confusion matrix. **If the false-flip rate has risen above D4's 0%, say so and do not proceed to step 5** — a validator that was measured on v1.7 output and is wrong on v1.8 output is worse than none, because its corrections are silent.
+
+**Step 4 — Keep validator 2b as an alarm, not a filter.** `validate_position_bearing` stays exactly as D6 built it. Under the frame it should almost never fire.
+
+> **Verify:** report its fire rate on the sample from step 2. **A rate near zero means the frame is doing its job; a rate near D6's 22.9% means the model is ignoring the frame and you are back to iteration three.** This number is the cheapest signal that Issue 034 = B is working, and it costs nothing to read.
+
+**Step 5 — Re-extract, then re-run dedup at `T_dedup = 0.84` unchanged.** Proposition text changes wholesale, so ids change and `claim_id` hashes `proposition_id` — a full re-derivation, not an edit. **Do not retune `t_dedup` in this commit;** D2 measured 0.84 against a distribution this step replaces, and changing form and threshold together makes neither attributable. Re-measuring it is a separate item, filed after this one lands.
+
+> **Verify:** capture `VALIDATOR_REJECTION_COUNTERS` and **reconcile them against the change in claim count**, per D5's precedent — if the arithmetic does not close, claims are being lost before the validators and that is the finding. Report the full trajectory `3,669 → 2,174 → 2,261 → 1,027 → <new>`. **Parameter 033 (`MIN_CLAIMS_PER_HOUR = 3.0`) must hold on all 23 sources**; if it does not, stop and report rather than lowering it.
+
+**Step 6 — Re-run tension detection and read what it accepts.** For every accepted candidate pair, the two `position_frame` sentences are now stored — **paste both into the commit body**, then say whether they conflict.
+
+> **Verify:** this is the step D2 got wrong while doing it in good faith. **With frames stored you are no longer judging whether a proposition is positionable; you are reading two sentences and saying whether they contradict.** If the two frames are not about the same ⟨X⟩, that is a step-2 failure and the pair is evidence against the prompt, not a finding.
+
+### Validation
+
+- **(c)** — **every claim in the store has a non-null `position_frame`, and for 20 claims drawn at random with a recorded seed, the stored frame and the stored `proposition_text` agree** — ⟨X⟩ in the frame is byte-identical to `proposition_text`, and the FOR/AGAINST matches `stance`. **Paste all 20.** *A count cannot satisfy this and neither can a passing test whose name references it (trap 60); the artefact is twenty sentences a reader can check without rerunning anything, which is the whole point of Issue 034 = B.*
+- **Both directions on the identity that matters:** find one proposition carrying both a `support` and an `oppose` claim and show the two frames differ **only** in FOR/AGAINST. If no such proposition exists in the new corpus, say so — **that is a meaningful negative result**, and it means the self-join still has nothing to match.
+- Cross-episode `support`↔`oppose` candidate pairs reported **with the denominator**: pairs examined, accepted, rejected, and the reason for each.
+- `verify_quotes`, `verify_canonical_ids`, `verify_entailment_holds`, `verify_claims_per_hour` all PASS; `worker.integrity --all` green on both populations.
+- Validator 2b's fire rate reported; validator 7's confusion matrix re-measured on v1.8 output.
+
+**Falsify.** Revert the prompt to v1.7 and extract the same 20 utterances; validator 2b's fire rate must climb back toward 22.9% and the frames must stop being writable. Record both rates. **Then** — separately — break step 2's identity rule deliberately by letting ⟨X⟩ vary with stance on one example, and confirm the two claims land on different `proposition_id`s and the self-join loses the pair. That second falsification is the one worth doing carefully; it is the failure §2 opens by warning about, and nothing downstream would report it.
+
+**Blast radius.** `worker/extract/schema.py`, `worker/extract/runtime.py` (prompt v1.8), `worker/extract/extract.py`, `worker/entities.py`, `worker/storage.py` (`position_frame` column + migration), `worker/extract/validators.py` (stance from frame), `fixtures/behaviour/`, the corpus (full re-extraction), `docs/design_claim_extraction.md` §2, `docs/ongoing_errors.md` §2 (031 re-measured on v1.8 output; 008 re-measurement filed as a follow-up), §3, §6.
+
+---
+## 13. Deferred — designed for, not queued
 
 **Elon Musk (Issue 023 = A).** Out of scope until X/Twitter ingest exists. **Trigger:** an `XAPIAdapter` or `XArchiveImportAdapter` lands behind the `SourceAdapter` Protocol and a Musk corpus can be assembled that includes his primary medium. Until then, ingesting him would produce a confident score over a systematically skewed slice, and **invariant I5 would not catch it** — it gates on volume, not composition (trap 24).
 
@@ -397,7 +463,7 @@ scripts/reextract_d6.py:266-269      verify_quotes / verify_canonical_ids /
 
 ---
 
-## 13. Invariants — do NOT change
+## 14. Invariants — do NOT change
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -405,13 +471,13 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 
 ---
 
-## 14. Contracts
+## 15. Contracts
 
 `master_implementation_plan.md` · `design_source_acquisition.md` · `design_claim_extraction.md` · `design_principle_extraction.md` · `design_topic_model.md` · `design_rubric_engine.md` · `design_data_layer.md` · `design_local_api_and_clients.md` · `design_ui_direction.md` · `design_evidence_integrity.md` · `e2e_verification_journeys.md` · `ongoing_errors.md`
 
 ---
 
-## 15. Feedback loop — what specs here have got wrong
+## 16. Feedback loop — what specs here have got wrong
 
 | What happened | Spec said | Should have said |
 |---|---|---|

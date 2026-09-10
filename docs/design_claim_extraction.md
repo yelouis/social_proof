@@ -61,7 +61,26 @@ Get this wrong and the system silently never works. If the extractor emits `"AI 
   <subject> opposes  <proposition>
 ```
 
-A proposition that fails it is a **topic**, and topics are `design_topic_model.md`'s business. Attaching `support` and `oppose` to one does not produce a contradiction — it produces two claims about the same subject area, which is how six false candidate pairs were once read as verified reversals.
+A proposition that fails it is a **topic**, and topics are `design_topic_model.md`'s business.
+
+### The position is elicited with the proposition, not applied to it (Issue 034 = B)
+
+**Do not ask the model for a neutral matter at issue and label the stance afterwards.** Three attempts to do that produced, in turn, indexical templates, full clauses, and bare topics — each fixed and each replaced by the next, while the corpus fell from 3,669 claims to 1,027 and the detector's candidate set went from zero to six false pairs and back to zero.
+
+**Ask for the position and the matter in one frame:**
+
+```
+  the speaker is FOR     ⟨X⟩
+  the speaker is AGAINST ⟨X⟩
+```
+
+⟨X⟩ becomes `proposition_text`; FOR/AGAINST becomes `stance`. **A claim the model cannot phrase this way is not emitted** — which is the point. *"implementing software inside of an organization"* fails not because a validator rejects it but because *"the speaker is FOR implementing software inside of an organization"* is not a sentence the model would write about that utterance.
+
+**This does not weaken the rule above it.** ⟨X⟩ is still stance-neutral and polarity still lives in `stance`; only the elicitation changes. The proposition self-join, `proposition_id`, dedup and every downstream stage are untouched. **The few-shot examples must show the same ⟨X⟩ under both frames** — that identity is what makes the self-join find a reversal, and a prompt that varies ⟨X⟩ with the stance silently destroys it.
+
+**`mixed` has a definition now rather than a residue:** the speaker is FOR ⟨X⟩ in one respect and AGAINST it in another, and **both frames can be written for the same claim.** If only one can be written, the stance is that one.
+
+**Store the frame sentence.** `position_frame` is persisted next to the claim, so the position test is answerable by reading a column instead of re-deriving a judgement. Every time this test has been applied as a judgement it has been scored generously — six false pairs recorded as *"hand-read and verified"*, a position gate reported at 18/20 that a seeded redraw scored 9/20. **A stored sentence is checkable by anyone, later, without rerunning anything.** Attaching `support` and `oppose` to one does not produce a contradiction — it produces two claims about the same subject area, which is how six false candidate pairs were once read as verified reversals.
 
 **This bound is as load-bearing as the polarity rule above it, and it was learned the same way.** Removing finite verbs to satisfy the canonical form drove a quarter of the proposition table below it.
 

@@ -8,68 +8,13 @@
 - **Once selected, a decision moves out of §1.** Its consequence is written into the design doc that owns it, and it becomes one row in §4. The full option text stays in git history — this file is a queue, not an archive.
 - Recommendations are marked. A recommendation is not a decision.
 
-**Status: 24 decisions made, 1 open (034).** Live work is queued in `agent_execution_guide.md` §6.
+**Status: 25 decisions made, 0 open.** Live work is queued in `agent_execution_guide.md` §6.
 
 ---
 
 ## 1. OPEN — awaiting your selection
 
-*Newest first.*
-
-### 034 — Three prompt iterations have not produced a position-bearing proposition table, and each one costs a corpus
-
-**Blocks:** any further work on the extraction form. **Filed:** September 9, 2026, from a live query at `3100a48`.
-
-**What was measured.** Three passes have now tried to fix proposition form, each correct in its own terms, each shrinking the corpus, and none producing a table you can detect a contradiction in:
-
-| | claims | propositions | ≤5 words | cross-episode candidates |
-|---|---|---|---|---|
-| after C1 | 3,669 | 3,477 | — | 0 |
-| after D1 *(noun-phrase form)* | 2,174 | 2,113 | 25.8% | 4 (all false) |
-| after D5 repair | 2,261 | 2,161 | 25.8% | 6 (all false) |
-| **after D6** *(position floor)* | **1,027** | **1,007** | **17.4%** | **0** |
-
-**The corpus is 28% of its post-C1 size and the candidate set is back where it started.**
-
-**And the acceptance gate keeps passing when an independent reading fails it.** D6's (c) required 16 of 20 randomly drawn propositions to pass the position test and reported **18/20 (90%)**. I drew 20 with a recorded seed (`20260909`) and applied D6's own test — *are "supports X" and "opposes X" both coherent and different?* — and got **9/20 strict, 13/20 charitable.** Below the gate either way. The failures are not exotic:
-
-> *implementing software inside of an organization* · *prompt length for ai model development* · *understanding of partisanship and gamesmanship in negotiations* · *a good deal to be made* · *finding it very hard to get to two by 2040*
-
-This is the third time a judgement-based gate has been recorded as met while an independent reading disagreed — D2 recorded six false pairs as *"hand-read and verified"*, D1 recorded a failed (c) as verified, and now this. **The pattern is not carelessness. It is that the test is applied by looking at a proposition and asking whether it seems positionable, which is much easier to answer yes to than actually writing the two sentences out.**
-
-**What is not in question.** D6's mechanical floor is real and working (495 of 2,161 old propositions rejected, 22.9%), Parameter 033 still holds across all 23 sources, and D6 reported its 55% claim loss honestly and reconciled it. This is not a quality-of-work problem.
-
----
-
-**Option A — A fourth prompt iteration, with the gate applied by writing the sentences.** Keep the approach; change only how the gate is scored: the agent must write out *"<subject> supports X"* and *"<subject> opposes X"* for each of the 20 and paste both sentences into the commit body, so a reader can check the judgement instead of taking the count.
-
-- **Pro:** smallest change. The mechanical floor is already in place, and each pass has genuinely improved the named metric.
-- **Pro:** it directly attacks the thing that keeps going wrong — the gate, not the prompt.
-- **Con:** three passes have not converged, and each costs a full re-extraction plus another slice of the corpus. There is no evidence a fourth converges.
-- **Con:** it still asks a model to produce a neutral matter at issue and hope it is positionable, which is the part that has failed repeatedly.
-
-**Option B — Elicit the position and the proposition together.** ← **recommended**
-
-Change what the extractor is asked for. Instead of *"give me the neutral matter at issue"* and labelling stance afterwards, ask it to emit, per claim, the pair **"the speaker is FOR / AGAINST ⟨X⟩"** — and take ⟨X⟩ as the proposition. **A claim it cannot phrase that way is not emitted.**
-
-- **Pro:** the position test stops being a judgement applied afterwards and becomes a **property of the output format.** *"implementing software inside of an organization"* cannot be produced, because "the speaker is FOR implementing software inside of an organization" is not a sentence the model would generate about that utterance.
-- **Pro:** it does not change the schema or violate §2. ⟨X⟩ is still stance-neutral and polarity still lives in `stance`; only the elicitation changes, so the proposition self-join and everything downstream is untouched.
-- **Pro:** it removes the failure mode that has now cost three passes — a gate scored by impression.
-- **Con:** a real change to the extraction contract, and `design_claim_extraction.md` §2 needs restating to describe the frame without weakening stance-neutrality.
-- **Con:** the corpus shrinks again on the next extraction, and we do not know by how much until it runs.
-
-**Option C — Accept that most utterances carry no positionable claim, and stop trying.** Keep the current form, drop the target, and let the corpus be small and clean.
-
-- **Pro:** honest, and free. 1,027 claims across 23 episodes with a working mechanical floor is a real artefact, and the review site renders it today.
-- **Pro:** stops spending re-extractions on a target that has not moved.
-- **Con:** the product's central claim stays undemonstrated, and **P4–P6 remain unvalidated as behaviour**, which has been true for the entire build.
-- **Con:** it does not fix the propositions that *do* get through — 45–65% of them still fail the position test, so any future finding is built on the same ground.
-
-**Recommendation: B.** The thing that has failed three times is not the prompt wording; it is that *"is this positionable?"* is asked after the fact and answered generously. B makes it unanswerable rather than easy — the format either produces the sentence or it does not. **A is worth folding into B regardless**: whichever option you pick, the gate should be scored by pasting the two sentences, not by reporting a count.
-
-Your selection: _____
-
----
+*Newest first. Nothing is open right now.*
 
 > **For the agent filing a new one:** insert it at the **top** of this section, not the bottom, and use the next free number. Include what is blocked, what you already tried, 2–3 options with honest pros *and* cons, a marked recommendation, and a final `Your selection: _____` line. Then set `blocked_on` in the guide's queue. Never fill the line in.
 
@@ -90,6 +35,7 @@ Your selection: _____
 | **029** | `MIN_UTTERANCE_MEDIA_RATIO = 0.80` — source productivity coverage floor | R1 | **Conservative.** Catches truncation without rejecting ordinary podcast silence/intros/outros. Measured truncated corpus at 7.4%–7.9% (< 0.80 -> FAIL); full episodes clear > 0.90. Provisional until 5-case floor. |
 | **031** | `delta = 0.05` — stance direction margin (Validator 7, Items S1 / §17n, D3 / §17t, D4 / §13w); augmented with scope-aware syntactic negation analysis (governance of proposition predicate, continuation modals, epistemic verbs, discourse markers, conversational qualifiers); standing bidirectional correction counters (`stance_corrected_to_support`, `stance_corrected_to_oppose`); `hedge` stance literal retired in favor of `hedging_level: float` on `Literal["support", "oppose", "mixed"]` | S1 (§17n) / D3 (§17t) / D4 (§13w) | **Directional entailment and scope-aware syntactic governance.** Sentence embeddings represent negation weakly ($sim(Q, P) \approx sim(Q, \neg P)$ within $\pm 0.005$), while un-scoped syntactic negation matches negators indiscriminately across quotes (causing a near 100% false-flip rate on live support claims containing negation, Item D4). Under Item D4, `has_syntactic_negation` enforces syntactic scope governance over proposition predicates while excluding non-scoping idioms, double-negative continuation modals (*"not going to stop"*), epistemic verbs (*"never predict that"*), attenuating qualifiers (*"not that much of an increase"*), and contrastive foil subclauses. Re-measured over drawn random sample from live corpus ($n=80$ own-assertion claims, seed 168): confusion matrix shows True Support: 75/75 (100.0%) ended Support, 0/75 (0.00%) ended Oppose (0.00% false-flip rate, down from 100% of negation claims under unmodified D3); True Oppose: 5/5 (100.0%) ended Oppose, 0/5 (0.00%) ended Support (Issue 018 = B 5-case floor satisfied); zero confusion errors across all 80 cases. All 4 canonical quotes end as `support`. Re-validated live corpus ($n=1,884$ own-assertion claims): 2 support $\to$ oppose flips, 6 oppose $\to$ support flips, 1,876 unchanged. Post-revalidation corpus ($n=2,174$): support 1,817 (83.58%), oppose 309 (14.21%), mixed 48 (2.21%), hedge 0 (0.00%). |
 | **032** | `MIN_REVERSAL_GAP_DAYS = 0.0` (unmeasured / provisional until cross-episode candidates exist); same-source automatic disqualification (`source_a_id == source_b_id`) routes to `stance_conflict_reviews` with reason `same_source_stance_conflict` | T1 / C1 | **Toward requiring more time.** An unacknowledged reversal is by definition a change of mind over time; two claims within a single recording or episode are part of one continuous speech-act context (rhetorical setup, clarification, or hedge) and must be disqualified. False reversal is a published accusation; missed reversal is silence. Measured over 23-source corpus: 6 same-episode pairs disqualified and routed to review surface; all candidate pairs examined and rejected (0 false reversals published). Numeric gap parameter marked provisional/unmeasured until cross-episode candidates exist. |
+| **034** | **B** — elicit the position and the proposition **together**: the extractor emits `the speaker is FOR/AGAINST ⟨X⟩` and ⟨X⟩ becomes the proposition. A claim that cannot be phrased that way is not emitted. The frame sentence is **stored**, so the position test is auditable from the table rather than re-judged. | `design_claim_extraction.md` §2 · `agent_execution_guide.md` X2 |
 | **033** | `MIN_CLAIMS_PER_HOUR = 3.0` — source claims-per-hour rate floor (Item D5 / §13x); replaces C1's zero-floor rule (`no source contributes zero claims`) with an audio-duration rate check in `worker/integrity.py` (`verify_claims_per_hour`) | D5 (§13x) | **Conservative rate floor guarding against silent truncation and starved sources.** Derived from empirical 23-source distribution: guest-dominated interview panels yield 6.7 to 7.5 claims/hr (Mark Cuban: 7.20 claims/hr pre-repair, Rahm Emanuel: 6.70 claims/hr, Saronic: 7.45 claims/hr), whereas starved sources due to extraction omission or truncation fall below 1.0 claim/hr (Robotics CEOs summit panel fell to 0.87 claims/hr under D1 omission). Red-first verified: check FAILS on pre-repair corpus naming `79e5cda81c5740e9` (0.87 < 3.0). Post-repair with host utterances extracted: Robotics CEOs rose to 50 claims (43.74 claims/hr), Mark Cuban rose to 43 claims (61.94 claims/hr), corpus grew 2,174 -> 2,261 claims; all 23 sources clear floor (observed range: 6.70 – 152.04 claims/hr). Provisional until 5-case floor. |
 
 ---
