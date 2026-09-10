@@ -120,14 +120,14 @@ def stub_hash_embedding(text: str, dim: int = 768) -> list[float]:
     return [float(x) for x in vec.tolist()]
 
 
-DEFAULT_T_DEDUP: float = 0.84  # Parameter 008
+DEFAULT_T_DEDUP: float = 0.96  # Parameter 008 (calibrated September 10, 2026 under prompt v1.8, N=1465)
 DEFAULT_T_ENTAIL_HIGH: float = 0.70  # Parameter 026
 
 
 class PropositionCanonicalizer:
     """Canonicalises proposition text and deduplicates semantically against the DuckDB store.
 
-    Parameter 008: T_dedup (default 0.84).
+    Parameter 008: T_dedup (default 0.96).
     """
 
     def __init__(

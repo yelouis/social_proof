@@ -34,6 +34,16 @@ def extract_matter_from_frame(frame: str | None) -> str:
     if not frame:
         return ""
     s = frame.strip()
+    import re
+
+    m = re.match(
+        r"^the speaker is (?:for|against|support|oppose) (.+?) in one respect and the speaker is (?:against|for|oppose|support) (.+?) in another$",
+        s,
+        re.IGNORECASE,
+    )
+    if m:
+        return m.group(1).strip()
+
     s_lower = s.lower()
     for prefix in (
         "the speaker is for ",

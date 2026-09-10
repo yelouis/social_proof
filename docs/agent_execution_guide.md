@@ -4,7 +4,7 @@
 
 **Read §1 first; it says where to start.** There is no routing machinery below — you are expected to organise the work yourself. What is fixed is §4 (what you may not change), §5 (what has bitten this project), §7 (what counts as evidence) and each item's own assertions.
 
-**Where the project is.** Twenty-nine items delivered — §10 lists them with the commit carrying each full spec. Gates green, tree clean, `mypy scripts/` repaired.
+**Where the project is.** Thirty-one items delivered — §10 lists them with the commit carrying each full spec. Gates green, tree clean, `mypy scripts/` repaired.
 
 **X2 worked, and the thing it added is why this pass is short.** Issue 034 = B moved the position test out of judgement and into the output format. Every one of **1,517 claims** now carries a `position_frame` — *"the speaker is FOR/AGAINST ⟨X⟩"* — **0 unparseable, 0 stance disagreements, ⟨X⟩ matching `proposition_text` on 96.3%** of them under the store's own normalisation. Validator 2b's fire rate halved, 22.9% → 11.1%. **And the corpus grew for the first time in this whole sequence: 1,027 → 1,517 claims.** Three form iterations shrank it by 72%; the format change reversed that.
 
@@ -19,9 +19,9 @@
 
 **The prompt is not at fault.** Both frames are well-formed and match their quotes. **Dedup merged two different matters** at `T_dedup = 0.84` — a threshold D2 measured against a distribution X2 has since replaced. Four of the store's five support/oppose proposition groups are dedup artefacts.
 
-**X3 (§11) delivered. D8 (§12) is now active.** X3 quarantined the false tension and made frame-⟨X⟩ identity a mechanical precondition, so a mismatch can never publish again. D8 re-measures `T_dedup` against the v1.8 distribution — the follow-up X2 correctly deferred — and it can now be measured **against the frames rather than against a judgement**, which is a first for this parameter.
+**X3 (§11) and D8 (§12) delivered.** X3 quarantined the false tension and made frame-⟨X⟩ identity a mechanical precondition, so a mismatch can never publish again. D8 re-measured `T_dedup = 0.96` against the v1.8 distribution and stored frames ground truth (superseding 0.84), separating all 4 defect pairs, with 100% clean frame identity on support/oppose propositions (1,507 propositions, 1,499 singletons).
 
-**Start at §12.** §5 and §7 are why the items look the way they do.
+**§5 and §7 are why the items look the way they do.**
 
 **Items now carry per-step checks, written as `> **Verify:**` after the step they belong to.** Run each before starting the next step. Several are **red-first**: they tell you to run something and *watch it fail* before you fix anything, because a check that has only ever been green on repaired data has not been tested.
 
@@ -98,36 +98,36 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 | Gate | Result | Note |
 |---|---|---|
 | `ruff check` | **PASS** | Clean across worker/, tests/, fixtures/, golden/, scripts/. |
-| `mypy --strict` | **PASS** | Clean across worker/, tests/, fixtures/, golden/, scripts/ (120 files). Item G2 & X3 delivered. |
-| `pytest tests/ -q` | **PASS** — **277 passed in 296s** | Re-measured September 10 over 23-source corpus. Well above trap 18's 35s floor. All unit, behavioural, and falsification tests pass. |
+| `mypy --strict` | **PASS** | Clean across worker/, tests/, fixtures/, golden/, scripts/ (125 files). Item G2, X3 & D8 delivered. |
+| `pytest tests/ -q` | **PASS** — **281 passed in 298s** | Re-measured September 10 over 23-source corpus. Well above trap 18's 35s floor. All unit, behavioural, and falsification tests pass. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
-| `worker.integrity --all` | **PASS — 16 checks, independent populations, active sufficiency verdicts, referential integrity, entailment validation, claims-per-hour rate check, and frame identity** | G1, E1, N0, P0, W1, W0, S1, C1, D1, D4, D5, D7, X2 & X3 delivered: 16 checks (Check #16: `verify_frame_identity`), FIXTURES and CORPUS reported separately with no union; `verify_quarantine_not_rendered` reports quarantine rate 100.0% (5/5) derivable from table alone; 0 published tensions; `verify_frame_identity` passes on both FIXTURES (1 published tension verified) and CORPUS (0 published tensions, zero rows); all 16 checks PASS. |
+| `worker.integrity --all` | **PASS — 16 checks, independent populations, active sufficiency verdicts, referential integrity, entailment validation, claims-per-hour rate check, and frame identity** | G1, E1, N0, P0, W1, W0, S1, C1, D1, D4, D5, D7, X2, X3 & D8 delivered: 16 checks (Check #16: `verify_frame_identity`), FIXTURES and CORPUS reported separately with no union; `verify_quarantine_not_rendered` reports quarantine rate 100.0% (5/5) derivable from table alone; 0 published tensions; `verify_frame_identity` passes on both FIXTURES (1 published tension verified) and CORPUS (0 published tensions, zero rows); all 16 checks PASS. |
 | `worker.golden.report` | **PASS** | Fixtures 20/20 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
-| **Working tree** | **CLEAN** | All gates pass; D7, G2, X2 & X3 delivered and verified live from DuckDB. |
+| **Working tree** | **CLEAN** | All gates pass; D7, G2, X2, X3 & D8 delivered and verified live from DuckDB. |
 | **Review site** | **DELIVERED (U1 DELIVERED)** | Served live from DuckDB on local API (`/`, `/episode/{source_id}`, `/claim/{claim_id}`, `/person/{subject_id}`) with `read_only=True` connection guarantee. Static export and `site/` deleted (Issue 033). Assertion (c) full sweep verified (200 OK, verbatim quotes verified, zero quarantined IDs). Empty sections render with honest reasons (§4). Zero links to offset 00:00. |
 | **Site read-only guarantee** | **DELIVERED · VERIFIED (A0 DELIVERED)** | Deleted silent fallback to `storage.con.cursor()`. When `Storage` is writable and holding the lock, `create_app` raises `RuntimeError` naming the cause, strictly enforcing the read-only guarantee. Assertion (c) verified in `test_review_site_u1.py`; falsification verified (restoring fallback fails assertion (c)). |
 | **Proposition form** | **STORED POSITION FRAMES (ITEM X2 DELIVERED · VERIFIED)** | Canonical noun-phrase *matter at issue* elicited with position frame under prompt `v1.8` (`gemma-3-27b-it:v1.8:s1`). Stored in `claims.position_frame`. 20/20 random claims pass byte-identical agreement with proposition and stance. Across all active propositions: **0 finite verbs (0.00%)** and **0 polarity violations**. Item X2. |
-| **Merge rate** | **RE-MEASURED UNDER ITEM D2 (0.84)** | At calibrated $T_{\text{dedup}} = 0.84$, 31 propositions merged, reducing active propositions to 2,160; singletons: 2,081 (96.3%); 43 propositions span 2+ episodes (2.0%). |
+| **Merge rate** | **RE-MEASURED UNDER ITEM D8 (0.96)** | At calibrated $T_{\text{dedup}} = 0.96$, 2 merges performed on live store, reducing active propositions from 1,508 to 1,507; singletons: 1,499 (99.47%); 8 multi-claim propositions (`[(1, 1499), (2, 7), (4, 1)]`). All 4 named defect pairs separated. |
 | **Stance direction** | **SCOPE-AWARE & BIDIRECTIONAL (D4 & X2 DELIVERED · VERIFIED)** | Stance elicited directly from position frame (FOR $\to$ support, AGAINST $\to$ oppose, both $\to$ mixed) and certified via Validator 7 with scope-aware negation detection (`has_syntactic_negation`). Re-measured under Item X2 over drawn sample from live corpus (80 claims, seed 168, 75 support / 5 oppose): 0/75 false flips in support $\to$ oppose (0.00% false-flip rate); True Oppose: 5/5 (100.0%) ended Oppose; zero confusion errors across all 80 cases. All 4 canonical quotes end as `support`. |
 | **`hedge`** | **RETIRED (D3 DELIVERED)** | Enum standardised to `support\|oppose\|mixed` across entities, schema, prompt and scripts; the single legacy claim migrated to `support` with `hedging_level=0.7`. **0 claims carry `hedge`.** Verified. |
-| **Corpus overlap** | **MULTI-EPISODE CLUSTERS (D2 DELIVERED)** | Multi-episode noun-phrase propositions span up to 5 episodes. Top clusters verified as single matters at issue without topic blurring. |
+| **Corpus overlap** | **MULTI-EPISODE CLUSTERS (D2 & D8 DELIVERED)** | Multi-episode noun-phrase propositions span up to 5 episodes. Top clusters verified as single matters at issue without topic blurring. |
 | **CI / Portability** | **PASS** | `portability.yml` tests base install without Apple extra; runs lint, mypy, and non-model tests across all 5 directories. |
-| **Corpus** | **POPULATED, FULL COVERAGE (R1, N0, P0, W1, W0, C1, D1, D4, D5, D2 & X2 DELIVERED)** | 23 contiguous sources (20 contiguous + 3 historical bootstrap episodes), **20,666 utterances**, **1,517 claims**, **1,465 propositions** (1,464 active, 1 quarantined), 92 roles, 8 assessments. Coverage across all sources >= 80.0% (Parameter 029). All 23 sources clear claims-per-hour rate floor >= 3.0 claims/hr (Parameter 033: observed range 15.01 – 89.98 claims/hr). |
-| **Propositions** | **1,464 ACTIVE (D1, D5, D2 & X2 DELIVERED · VERIFIED)** | Extracted under prompt `v1.8` with position frame and canonical noun-phrase matter at issue. Consolidated at calibrated $T_{\text{dedup}} = 0.84$ with strict re-point entailment validation (`T_ENTAIL_HIGH = 0.70`). Zero unbound pronouns or indexicals. 0% finite verbs. Falsification verified. |
+| **Corpus** | **POPULATED, FULL COVERAGE (R1, N0, P0, W1, W0, C1, D1, D4, D5, D2, X2 & D8 DELIVERED)** | 23 contiguous sources (20 contiguous + 3 historical bootstrap episodes), **20,666 utterances**, **1,517 claims**, **1,508 propositions** (1,507 active, 1 quarantined), 92 roles, 8 assessments. Coverage across all sources >= 80.0% (Parameter 029). All 23 sources clear claims-per-hour rate floor >= 3.0 claims/hr (Parameter 033: observed range 15.01 – 89.98 claims/hr). |
+| **Propositions** | **1,507 ACTIVE (D1, D5, D2, X2 & D8 DELIVERED · VERIFIED)** | Extracted under prompt `v1.8` with position frame and canonical noun-phrase matter at issue. Consolidated at calibrated $T_{\text{dedup}} = 0.96$ with strict re-point entailment validation (`T_ENTAIL_HIGH = 0.70`). Zero unbound pronouns or indexicals. 0% finite verbs. 100% clean frame identity on support/oppose propositions (1/1). Falsification verified. |
 | **`source_count`** | **MEASURED** | All 4 hosts draw on all episodes. Resolved through the utterance anchor chain, `hasattr` removed, I3 violation raises. Item M0 delivered, independently confirmed against ground truth. |
 | **`source_roles`** | **92 ROWS FOR 92 PAIRS (G1 & C1 DELIVERED)** | Generated via `compute_role_id()`. 92 rows across 23 sources for 4 hosts. `verify_canonical_ids` and `verify_role_coverage` PASS across all 20,666 utterances. |
 | **Sufficiency verdict** | **DELIVERED · VERIFIED (E2 DELIVERED)** | Parameter 012 sufficiency floor enforced strictly on inputs BEFORE scoring (`MIN_CLAIMS=3`, `MIN_SOURCES=1`, `MIN_SPAN_DAYS=0`). Dependency runs one way: verdict -> scores. When `passed` is False, all axis calculations are suppressed (`reason: "insufficient_corpus"`). Live corpus hosts all clear sufficiency on the merits. |
 | **Corpus — claims** | **1,517 CLAIMS (N0, P0, W0, S1, W2, C1, D1, D4, D5 & X2 DELIVERED)** | Ingested and re-extracted under prompt `v1.8` with stored `position_frame`. Every source contributes >= 3.0 claims/hr (15.01 – 89.98 claims/hr). |
 | **Assessments** | **EVALUATED, REFERENTIALLY GUARDED** | 8 rows across 2 topics (`top_ai_reg`, `global`). Sufficiency verdict `passed: True` across all 4 enrolled hosts. |
-| **Published tensions** | **1 PUBLISHED · 4 QUARANTINED (ITEM X2 DELIVERED)** | 1 published unacknowledged reversal tension detected (David Sacks on 60-80% growth vs 10x growth forever). Quarantine rate: 80.0% (4/5) reported as first-class metric derivable from table alone. `verify_attribution_floor` and `verify_negation_recheck` examine 1 published tension and pass. |
-| **Candidate pairs** | **3 EXAMINED · 1 ACCEPTED (ITEM X2 DELIVERED)** | Evaluated via `evaluate_candidate_pairs`: 3 candidate pairs examined; 1 rejected by same-source rule; 1 quarantined for low attribution confidence; 1 accepted. |
+| **Published tensions** | **0 PUBLISHED · 5 QUARANTINED (ITEM X3 & D8 DELIVERED)** | Quarantine rate: 100.0% (5/5) reported as first-class metric derivable from table alone. All 16 integrity checks PASS. |
+| **Candidate pairs** | **1 EXAMINED · 0 ACCEPTED · 1 REJECTED (ITEM D8 DELIVERED)** | Evaluated via `evaluate_candidate_pairs`: 1 candidate pair examined; 1 rejected by same-source rule (`same_source_stance_conflict` on California company migration); 0 accepted. |
 | **Reversals — same-source disqualification** | **DELIVERED · VERIFIED (T1 DELIVERED)** | Same-source opposing claims automatically disqualified from `unacknowledged_reversal` and routed to `stance_conflict_reviews` with reason `same_source_stance_conflict`. Parameter 032 `MIN_REVERSAL_GAP_DAYS = 0.0` (provisional). Candidate evaluation reports exact denominator. Item T1 delivered. |
 | **`stance`** | **VALIDATED (S1 DELIVERED)** | Validator 7 (`validate_stance_direction`) certifies directional alignment ($P$ vs $\neg P$) with margin $\delta = 0.05$. Inverted oppose claims corrected to support. Genuine oppose claims survive. |
 | **`is_own_assertion`** | **SENSITIVITY RAISED — 7.78% (S1 DELIVERED)** | Over 90 non-assertive quotes excluded (`exclusion_reason="question"` or `"hypothetical"`), maintaining floor > 5.0%. Measured via `get_exclusion_rate()`. |
 | **Propositions — residual indexicals** | **0% — ZERO UNBOUND PRONOUNS / DEICTICS (W2 DELIVERED)** | Extended validator to enforce the principle of self-containment against the property: rejects sentence-initial pronouns/deictics, unbound third-person pronouns (`they/their`, `he/his/him`), and comparatives without relata (`the same`, `such`, `the other`). Preserves bound pronouns with internal antecedents (`Moderna patented its mRNA technology`). Pre-repair RED state verified (132 failing propositions across 139 claims). Re-extracted under `v1.5` prompt; active store contains exactly 0 unbound propositions (Assertion c). Both target false candidate pairs eliminated. Item W2 delivered. |
 | **Entailment after merge** | **DELIVERED · VERIFIED (W1 DELIVERED)** | Re-pointing strictly validates entailment (`T_ENTAIL_HIGH = 0.70`); refuses merge when quote does not entail target proposition. Check #14 `verify_entailment_holds` asserts entailment holds across all stored claims against current propositions (PASS on 1,288 claims). Falsification verified. |
 | **Propositions — indexical** | **0% — ZERO INDEXICAL PROPOSITIONS (W0 DELIVERED)** | 192 indexical propositions across 204 claims identified and repaired. Fixed prompt `v1.3` with Rule 3 explicitly prohibiting indexical frames; added `validate_self_contained` validator (`proposition_not_self_contained`); Precondition 6 in tension detector. Cleaned live corpus contains exactly 0 indexical propositions. Item W0 delivered. |
-| **`t_dedup`** | **DELIVERED · VERIFIED (D2 DELIVERED)** | Re-measured at `T_dedup = 0.84` (single source of truth in `worker/extract/dedup.py`). Deciles: D10 0.6902, D50 0.7547, D90 0.8351. Both canonical directions verified. Ambiguous band re-examined (329 pairs in [0.80, 0.84); does not earn its cost). Falsification verified. |
+| **`t_dedup`** | **DELIVERED · VERIFIED (ITEM D8 DELIVERED)** | Re-measured and calibrated at `T_dedup = 0.96` against prompt v1.8 distribution and stored frames ground truth (single source of truth in `worker/extract/dedup.py`). Deciles ($n=1,507$): min 0.6184, D10 0.6948, D20 0.7132, D30 0.7261, D40 0.7382, D50 0.7522, D60 0.7694, D70 0.7860, D80 0.8087, D90 0.8425, max 0.9843. Separates all 4 named defect pairs. Dual falsification verified (0.999 collapses to singletons, 0.60 spikes frame contradictions). |
 
 ---
 
@@ -212,9 +212,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ## 6. Queue
 
-| Order | ID | Item | Blocked | Why here |
-|---|---|---|---|---|
-| 1 | **D8** | Re-measure `T_dedup` against the v1.8 distribution | none | The follow-up X2 correctly deferred, now unblocked by X3. 0.84 merged *"60 to 80 percent growth"* with *"10x growth for ever"*. **The frames are now ground truth for whether a merge was right** — this parameter has never had that. |
+*Queue is empty — all queued items delivered. See §10 for delivered items and §13 for deferred items.*
 
 ---
 
@@ -342,7 +340,8 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 
 - **G2** `6111c21` — `mypy scripts/` red gate repaired; `reextract_d6.py`'s four dead integrity calls given real arguments and shown to execute.
 - **X2** `2c3c5a4` — **Issue 034 = B: the position elicited with the proposition.** `position_frame` stored on all 1,517 claims (0 unparseable, 0 stance disagreements, 96.3% ⟨X⟩ identity), prompt v1.8, validator 2b fire rate 22.9% → 11.1%. **The corpus grew for the first time in the sequence, 1,027 → 1,517.** It also published one false tension whose frames disagree — §11.
-- **X3** — **Frame-⟨X⟩ identity mechanical precondition in `TensionDetector` and Check #16 `verify_frame_identity` in integrity pass.** Pre-repair false tension `12a7503f8c27b24d` quarantined with `quarantine_reason='frame_mismatch'`; affected David Sacks assessment recomputed; quarantine rate 100.0% (5/5 ever generated); dual falsification verified (synthetic identical ⟨X⟩ frames publish; real growth pair quarantined; disabling guard breaks Assertion (c)).
+- **X3** `1d9ed04` — **Frame-⟨X⟩ identity mechanical precondition in `TensionDetector` and Check #16 `verify_frame_identity` in integrity pass.** Pre-repair false tension `12a7503f8c27b24d` quarantined with `quarantine_reason='frame_mismatch'`; affected David Sacks assessment recomputed; quarantine rate 100.0% (5/5 ever generated); dual falsification verified (synthetic identical ⟨X⟩ frames publish; real growth pair quarantined; disabling guard breaks Assertion (c)).
+- **D8** — **Re-measure `T_dedup = 0.96` against the v1.8 distribution and stored frames ground truth.** Parameter 008 calibrated at 0.96 (superseding 0.84) using stored position frames as ground truth, unblocked by X3. 1-NN similarity deciles reported (median 0.7522, D90 0.8425, max 0.9843); all 4 named defect pairs separated (< 0.96); 1/1 support/oppose propositions cleanly match frames (100%); DuckDB store re-resolved to 1,507 active propositions (1,499 singletons, 99.47%); dual falsification verified (0.999 collapses to 1,508 singletons, 0.60 spikes frame contradictions to 451). All 16 integrity checks PASS.
 
 ### Clients and portability
 
@@ -417,7 +416,7 @@ The `TranscriptionEngine` Protocol plus its `Mock` test-double split · `LocalGe
 
 ---
 
-## 12. D8 — Re-measure `T_dedup` against the v1.8 distribution
+## 12. D8 — Re-measure `T_dedup` against the v1.8 distribution (DELIVERED · VERIFIED)
 
 **Blocked on X3** — X3 stops the bad pair reaching a reader; this stops it being created. Do them in that order so the guard exists while you are changing what dedup emits.
 

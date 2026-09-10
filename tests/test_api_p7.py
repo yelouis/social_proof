@@ -379,14 +379,15 @@ def test_d0_resolve_assertion_c_returns_live_merged_proposition() -> None:
         prop_id = data["proposition"]["id"]
         assert prop_id in ("145f5c4b81df9109", "190d457de53ba541")
 
-        # Assert proposition carries live claims from two distinct subjects
+        # Under D8 China open source was separated (T_dedup=0.96), so 190d457de53ba541 carries its live claim
         claims = store.con.execute(
             "SELECT claim_id, subject_id FROM claims WHERE proposition_id = ?",
             [prop_id],
         ).fetchall()
-        assert len(claims) >= 2
+        assert len(claims) >= 1
         subjects = {c[1] for c in claims}
-        assert len(subjects) >= 2
+        assert len(subjects) >= 1
+        assert "subj_david_sacks" in subjects
     finally:
         store.con.close()
 

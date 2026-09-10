@@ -281,7 +281,7 @@ There is no `output_config.format` here. A local model asked politely for JSON w
    This stays deterministic, so §0's "no LLM at scoring time" rule survives and the same corpus always yields the same rejections.
 
    **Re-validating entailment on proposition deduplication / re-pointing (Item W1):**
-   When proposition deduplication merges propositions based on proposition-to-proposition cosine similarity ($T_{dedup} = 0.84$, Parameter 008, re-measured in Item D2), claims originally attached to the merged proposition are candidates to re-point to the survivor proposition. However, proposition similarity does not imply quote entailment! If $\text{sim}(\text{quote}, \text{survivor\_proposition}) < T_{ENTAIL\_HIGH} (0.70)$, the claim does not entail the survivor proposition. In that case, the re-point is **refused**, and the claim retains its own proposition (or stays unmerged). This preserves invariant X1 through deduplication. Integrity check #14 (`verify_entailment_holds`) verifies this across all published claims.
+   When proposition deduplication merges propositions based on proposition-to-proposition cosine similarity ($T_{dedup} = 0.96$, Parameter 008, calibrated against stored frames ground truth in Item D8 superseding D2 and P0), claims originally attached to the merged proposition are candidates to re-point to the survivor proposition. However, proposition similarity does not imply quote entailment! If $\text{sim}(\text{quote}, \text{survivor\_proposition}) < T_{ENTAIL\_HIGH} (0.70)$, the claim does not entail the survivor proposition. In that case, the re-point is **refused**, and the claim retains its own proposition (or stays unmerged). This preserves invariant X1 through deduplication. Integrity check #14 (`verify_entailment_holds`) verifies this across all published claims.
 
 7. **Stance Direction Check — the directional half of entailment.** *(Added September 5, 2026 after four candidate contradiction pairs were traced to mislabelled stances or rhetorical setups — Item S1, §17n; augmented September 6, 2026 with syntactic negation analysis and bidirectional correction — Item D3, §17t.)*
 
@@ -371,6 +371,6 @@ Without it, re-extracting under an improved prompt either silently collides with
 
 ## 11. Open decisions
 
-**Resolved:** Issue 007 → local Gemma for both stages (§6). Issue 005 → `nomic-embed-text-v1.5` at 768 dims for dedup. Issue 008 (Parameter 008) → `T_dedup = 0.84` measured empirically over live noun-phrase corpus ($n=2,191$ active propositions, Item D2 superseding P0); ambiguous-band adjudication does not earn its cost.
+**Resolved:** Issue 007 → local Gemma for both stages (§6). Issue 005 → `nomic-embed-text-v1.5` at 768 dims for dedup. Issue 008 (Parameter 008) → `T_dedup = 0.96` calibrated against stored frames ground truth over prompt v1.8 distribution ($n=1,508$ active propositions, September 10, 2026, Item D8 superseding D2 and P0); separates all 4 named defect pairs, 100% clean support/oppose frame identity; ambiguous-band adjudication does not earn its cost.
 
 **Revisit only with data:** if golden-corpus precision on N1–N4 misses the bar, run the comparison in §6 and file the result as a new issue. Do not switch extractors on a hunch.

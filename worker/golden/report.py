@@ -281,7 +281,7 @@ def generate_full_report(
     n7_c = metrics.cases_by_class.get("N7", 0)
 
     lines.append(f"  004 T_high / T_low  {'MEASURED' if n9_c >= 5 else 'NOT MEASURABLE'} — need 5 N9 cases, have {n9_c}")
-    lines.append(f"  008 T_dedup         {'MEASURED' if dedup_c >= 5 else 'NOT MEASURABLE'} — need 5 dedup pairs, have {dedup_c}   [provisional 0.84]")
+    lines.append(f"  008 T_dedup         {'MEASURED' if dedup_c >= 5 else 'NOT MEASURABLE'} — need 5 dedup pairs, have {dedup_c}   [provisional 0.96]")
     lines.append(f"  012 sufficiency     {'MEASURED' if n11_c >= 5 else 'NOT MEASURABLE'} — need 5 N11 cases, have {n11_c}")
     lines.append(f"  016 H_max           {'MEASURED' if n7_c >= 5 else 'NOT MEASURABLE'} — need 5 hedge-boundary cases, have {n7_c}")
     lines.append("=" * 60)

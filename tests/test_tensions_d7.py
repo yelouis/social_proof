@@ -53,11 +53,11 @@ def test_d7_step1_process_finding_candidates_vs_written() -> None:
         examined = report.total_pairs_examined
         accepted = report.candidates_accepted
 
-        # Check candidate evaluation:
         # Under D7 pre-D6 table: 7 examined, 6 accepted (1 rejected by same_source).
         # Under D6 repaired table: bare topic candidates eliminated (0 examined, 0 accepted).
-        # Under X2 prompt v1.8: 3 examined, 1 accepted, 1 quarantined, 1 rejected.
-        assert examined in (0, 3, 7), f"Expected 0, 3, or 7 examined candidates, got {examined}"
+        # Under X2 prompt v1.8 (at 0.84): 3 examined, 1 accepted, 1 quarantined, 1 rejected.
+        # Under D8 prompt v1.8 (at 0.96): 1 examined, 0 accepted, 1 rejected by same_source.
+        assert examined in (0, 1, 3, 7), f"Expected 0, 1, 3, or 7 examined candidates, got {examined}"
         assert accepted in (0, 1, 6), f"Expected 0, 1, or 6 accepted candidates, got {accepted}"
 
         # Check existing tensions in live store
