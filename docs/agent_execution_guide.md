@@ -4,13 +4,22 @@
 
 **Read §1 first; it says where to start.** There is no routing machinery below — you are expected to organise the work yourself. What is fixed is §4 (what you may not change), §5 (what has bitten this project), §7 (what counts as evidence) and each item's own assertions.
 
-**Where the project is.** Twenty-nine items delivered — §10 lists them with the commit carrying each full spec. All gates GREEN at HEAD. Queue in §6 is empty; Items G2 (`6111c21`) and X2 (`2c3c5a4`) delivered.
+**Where the project is.** Twenty-nine items delivered — §10 lists them with the commit carrying each full spec. Gates green, tree clean, `mypy scripts/` repaired.
 
-**X2 (§12) is the one that matters, and it is not a fourth prompt iteration.** Three passes asked the model for a neutral matter at issue and then judged whether it was positionable. Each produced a different failure — indexical templates, full clauses, bare topics — each was fixed, and the corpus fell **3,669 → 1,027 claims** while cross-episode candidates went **0 → 6 → 0**. The wording was never the problem. **The problem is that "is this positionable?" is asked after the artefact exists and answered generously**: six false pairs were recorded *"hand-read and verified"*, and D6's gate reported 18/20 where an independent seeded draw scored 9/20.
+**X2 worked, and the thing it added is why this pass is short.** Issue 034 = B moved the position test out of judgement and into the output format. Every one of **1,517 claims** now carries a `position_frame` — *"the speaker is FOR/AGAINST ⟨X⟩"* — **0 unparseable, 0 stance disagreements, ⟨X⟩ matching `proposition_text` on 96.3%** of them under the store's own normalisation. Validator 2b's fire rate halved, 22.9% → 11.1%. **And the corpus grew for the first time in this whole sequence: 1,027 → 1,517 claims.** Three form iterations shrank it by 72%; the format change reversed that.
 
-**Issue 034 = B moves that test from a judgement into the output format.** The extractor emits `the speaker is FOR/AGAINST ⟨X⟩` and ⟨X⟩ *is* the proposition — a claim it cannot phrase that way is never emitted. **And the frame sentence is stored**, so from now on the position test is answered by reading a column rather than re-deriving a judgement. That storage is as much the deliverable as the prompt.
+**X2 also published one tension, and it is false — the fourth this system has published.** But read how it fails:
 
-**Before you start, know what the last pass cost.** D7 published six tensions and **all six were fabrications** — the same pairs already documented as false. Its spec said publish anything clearing the preconditions; they cleared; it published. D6's re-extraction later removed them, so the store is clean by accident of ordering rather than by design. **When an item's effect is to publish, read what is currently in its input first.**
+```
+  A  support  the speaker is FOR      60 to 80 percent growth year over year
+  B  oppose   the speaker is AGAINST  10x year over year growth for ever
+```
+
+**⟨X⟩ differs.** Sacks being pleased with 60–80% growth and holding that 10x forever is impossible are not a reversal. **The previous three fabrications took a careful read of quotes to spot. This one is a two-line diff of a stored column** — which is exactly what `position_frame` was added to make possible, and it means the check can now be code instead of judgement.
+
+**The prompt is not at fault.** Both frames are well-formed and match their quotes. **Dedup merged two different matters** at `T_dedup = 0.84` — a threshold D2 measured against a distribution X2 has since replaced. Four of the store's five support/oppose proposition groups are dedup artefacts.
+
+**Two items. X3 (§11) then D8 (§12).** X3 quarantines the false tension and makes frame-⟨X⟩ identity a mechanical precondition, so a mismatch can never publish again. D8 re-measures `T_dedup` against the v1.8 distribution — the follow-up X2 correctly deferred — and it can now be measured **against the frames rather than against a judgement**, which is a first for this parameter.
 
 **Start at §11.** §5 and §7 are why the items look the way they do.
 
@@ -167,6 +176,8 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 37. **A test that opens the production database can write to it.** `subj_nonexistent_subject` holds an assessment in the live corpus and no row in `subjects`. Tests legitimately *read* the corpus — assertion (c) often needs real data — but a test that needs to *write* must take a copy, and the corpus should be opened `read_only=True` from tests.
 38. **A verdict computed from the evidence it gates is not a verdict.** E1 replaced `sufficiency.get("passed", True)` with `passed = any_scored` — so "did sufficiency pass?" became "did anything get scored?", and the check that asks *"if sufficiency failed, is any score present?"* can never find one. **A guard's input must be independent of its subject.** When a fix removes a default, check what replaced it: the same inertness survives a rewrite easily.
 39. **A uniqueness bug hides behind a coverage check.** `verify_role_coverage` asks whether every utterance *resolves to* a role and passes over a `source_roles` table where every row is duplicated. Resolution and uniqueness are different questions, and only the first was asked — the same error shape as trap 28 (*"is this citation real?"* vs *"does it support this claim?"*).
+69. **Storing the judgement turns the next check into code.** Three fabrications needed a careful read of quotes to spot. The fourth is a two-line diff of `position_frame`, because X2 persisted the sentence the model wrote instead of only its conclusion. **When a step depends on a judgement, store the artefact the judgement was made from** — the next person gets a query instead of an opinion.
+70. **A parameter measured on a distribution that a later item replaces is stale on the day that item lands.** `T_dedup = 0.84` was measured over v1.7 propositions and merged *"60 to 80 percent growth"* with *"10x growth for ever"* on v1.8 output. X2 correctly refused to retune it in the same commit; **the cost of that discipline is a follow-up item, and it must actually be filed** (§12).
 66. **An item whose effect is to publish must be checked against what it will publish.** D7 was told to make every accepted candidate produce a tension row, and did — publishing six findings that the same guide, two sections below, documented as false. The spec was followed exactly. **Before running an item that writes user-visible output, read what is currently in its input.**
 67. **A judgement gate is scored generously unless the judgement is written down.** Three times now a gate has been recorded as met while an independent reading disagreed — six false pairs "hand-read and verified", a failed (c) recorded verified, and a position test reported at 18/20 that a seeded redraw scores 9–13/20. **Require the artefact, not the count**: paste the two sentences, quote the pair, show the working. A number is not checkable; a sentence is.
 68. **A repair loop that shrinks its subject on every pass is not converging.** Three extraction-form passes took the corpus from 3,669 claims to 1,027 and the candidate set from 0 to 6 to 0. **Track the trajectory across passes, not the delta within one** — each pass improved its own metric and the sequence went nowhere.
@@ -203,7 +214,8 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
-| — | *Queue empty* | — | — | All queued items delivered. Follow-up items filed. |
+| 1 | **X3** | A tension may only publish when both frames name the same ⟨X⟩ | none | X2 published a false tension whose own stored frames disagree in two lines. **Quarantine it, then make the check mechanical** — this is the judgement that has been made by eye four times and got it wrong four times. |
+| 2 | **D8** | Re-measure `T_dedup` against the v1.8 distribution | X3 | The follow-up X2 correctly deferred. 0.84 merged *"60 to 80 percent growth"* with *"10x growth for ever"*. **The frames are now ground truth for whether a merge was right** — this parameter has never had that. |
 
 ---
 
@@ -329,6 +341,9 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 - **T1** `226abe4` — same-source pairs disqualified from reversal and routed to `stance_conflict_reviews`.
 - **D7** `1866d7a` — every accepted candidate now writes a tension row; quarantine rate reported as a first-class metric derivable from the table. **It also published 6 tensions, all of them fabrications**, because the six accepted candidates were already known to be false when it ran. D6's re-extraction later removed them; the store now holds 3 rows, 0 published.
 
+- **G2** `6111c21` — `mypy scripts/` red gate repaired; `reextract_d6.py`'s four dead integrity calls given real arguments and shown to execute.
+- **X2** `2c3c5a4` — **Issue 034 = B: the position elicited with the proposition.** `position_frame` stored on all 1,517 claims (0 unparseable, 0 stance disagreements, 96.3% ⟨X⟩ identity), prompt v1.8, validator 2b fire rate 22.9% → 11.1%. **The corpus grew for the first time in the sequence, 1,027 → 1,517.** It also published one false tension whose frames disagree — §11.
+
 ### Clients and portability
 
 - **C0** `e2979ac` — `mlx-lm` optional; `portability.yml` tests the base install off-Mac (Issue 024 = B).
@@ -348,106 +363,102 @@ The `TranscriptionEngine` Protocol plus its `Mock` test-double split · `LocalGe
 
 ---
 
-## 11. G2 — `mypy scripts/` is red · *red-gate repair* · **DELIVERED (`6111c21`)**
+## 11. X3 — A tension may only publish when both frames name the same ⟨X⟩
 
-**This is a red-gate repair (§9), not a queue item.** §3 records `mypy scripts/` passing; it is failing at HEAD. Nothing else starts until it is green.
+**User impact:** the check that has been made by judgement four times, and got it wrong four times, becomes a line of SQL.
 
-**Gap.** **11 errors in 2 files**, introduced by D6:
+**Contract:** `design_claim_extraction.md` §2 (*"the few-shot examples must show the same ⟨X⟩ under both frames"*) · `design_data_layer.md` §4 (the proposition self-join) · `design_evidence_integrity.md` §4–§5 (quarantine first).
+
+**Gap.** X2 published one tension. **It is false, and its own stored frames say so in two lines:**
 
 ```
-scripts/verify_20_props_step2.py:53  Need type annotation for "propositions_tested"
-scripts/reextract_d6.py:74,75        Value of type "tuple[Any, ...] | None" is not indexable
-scripts/reextract_d6.py:266-269      verify_quotes / verify_canonical_ids /
-                                     verify_entailment_holds / verify_claims_per_hour
-                                     each called with a Storage where a list is expected,
-                                     and each missing a positional argument
+  A  support  the speaker is FOR      60 to 80 percent growth year over year
+              "And now if it's going from 60 to 80 percent growth year over year, you're happy."
+  B  oppose   the speaker is AGAINST  10x year over year growth for ever
+              "It's not physically possible to grow 10x year over year for ever."
 ```
 
-**The four calls at 266–269 are the more interesting half.** They are D6's own post-extraction integrity verification, and with those signatures **they cannot execute** — every one would raise `TypeError` before doing any work. D6's integrity evidence came from `worker.integrity --all` at the CLI (15/15 PASS, which I re-ran and confirmed), so the *outcome* is sound. But the script's inline verification is dead code that looks like a check, which is the shape §5 has recorded eleven times.
+**⟨X⟩ differs.** *60–80% growth* and *10x growth forever* are different matters, and Sacks's two statements are perfectly compatible — being pleased with 60–80% growth and holding that 10x forever is impossible are not a reversal. Dedup merged the two propositions at `T_dedup = 0.84` and the detector joined on the merged id.
 
-**Implementation**
-1. Fix the annotation at `verify_20_props_step2.py:53`.
-2. Fix the two `None`-narrowing errors at `reextract_d6.py:74-75` — the walrus idiom at `worker/integrity.py:632` is the house pattern.
-3. **Decide what the four calls were for.** Either give them the arguments their signatures require — load the entities from `Storage` first, as `run_integrity_corpus` does — or **delete them and call `run_integrity_corpus(db_path)`**, which is what actually produced D6's evidence. Deleting is the better answer if the CLI already covers it.
+**X2's own step-6 check named this exact case:** *"If the two frames are not about the same ⟨X⟩, that is a step-2 failure and the pair is evidence against the prompt, not a finding."* The pair was published anyway. **This is the fourth fabrication this system has published.**
 
-> **Verify:** whichever you choose, run the script's verification path and show it producing output. **A check that has never executed is not a check** — if you keep the calls, they must run; if you delete them, say in the commit body that the CLI covers it.
+**But something changed, and it is the reason this item is small.** The previous three required reading quotes and reasoning about aboutness. This one is visible in a two-line diff of a stored column — **X2's `position_frame` did exactly what it was added to do.** The judgement is now an artefact, and an artefact can be checked in code.
 
-**Validation**
-- **(c)** — `mypy scripts/` clean, and the verification path in `reextract_d6.py` **executes and prints results** rather than being unreachable. *mypy alone cannot satisfy this: deleting the four lines would make mypy green while leaving the script with no verification at all, which is why the second half is here.*
-- `mypy worker/ tests/ fixtures/ golden/` stays clean, `ruff` stays clean, the suite still passes.
-
-**Falsify.** Restore one wrong call signature; `mypy scripts/` must go red naming it. Revert; record both.
-
-**Blast radius.** `scripts/reextract_d6.py`, `scripts/verify_20_props_step2.py`, §3.
-
----
-## 12. X2 — Elicit the position with the proposition · *Issue 034 = B* · **DELIVERED (`2c3c5a4`)**
-
-**Delivered.** G2 red-gate repaired and committed (`6111c21`). Item X2 delivered and verified. Prompt v1.8 writes position frame; 1,517 claims across 1,464 active propositions; (c) verified 20/20 on random sample; dual falsification passed.
-
-**User impact:** a proposition becomes something the extractor could only have produced by taking a position, so the question *"can you be for or against this?"* stops being asked after the fact.
-
-**Contract:** `design_claim_extraction.md` §2 — read the whole section, especially *"The position is elicited with the proposition, not applied to it"* · `design_data_layer.md` §3 (ids derive from `canonical_text`; changing it is a migration) · `ongoing_errors.md` §2 parameters 008, 026, 031, 033.
-
-### Why this is not a fourth prompt iteration
-
-Three passes have asked the model for a neutral matter at issue and then judged whether it was positionable. Each produced a different failure — indexical templates (W0), full clauses (D1), bare topics (D6) — and each was fixed, and the corpus fell **3,669 → 2,174 → 2,261 → 1,027** while cross-episode candidates went **0 → 6 → 0**. **The wording was never the problem. The problem is that "is this positionable?" is asked after the artefact exists, and answered generously** — six false pairs were recorded *"hand-read and verified"*, and D6's gate reported 18/20 where a seeded redraw scored 9/20.
-
-**Issue 034 = B moves the test from a judgement to a format.** ⟨X⟩ only exists because the model wrote *"the speaker is FOR ⟨X⟩"*. There is no separate positionable-ness to assess.
+**The prompt is not at fault here.** Both frames are well-formed, both name a real matter, both match their quote. **The defect is in dedup**, which is D8's subject — X3 stops the bad pair reaching a reader, D8 stops it being created.
 
 ### Implementation
 
-**Step 0 — Record the baseline you must beat.** Paste into the commit body:
+**Step 1 — Quarantine `12a7503f8c27b24d` first.** `status='quarantined'`, `quarantine_reason='frame_mismatch'`. Recompute the affected assessment without it. **Do not fix the merge here** — `design_evidence_integrity.md` §5 is quarantine first, investigate second, and this row is the evidence X3 and D8 are measured against.
 
-```sql
-SELECT count(*) FROM claims;                    -- 1027
-SELECT count(*) FROM propositions;              -- 1007
-SELECT stance, count(*) FROM claims GROUP BY 1; -- support/oppose/mixed
--- singleton rate, and propositions spanning 2+ episodes
--- cross-episode support<->oppose candidate pairs: currently 0
-```
+> **Verify:** zero published tensions remain. The quarantine rate is now **4 of 5** ever generated; report it, do not bury it.
 
-> **Verify:** your numbers match. **If they do not, stop and say so** — the corpus has moved and every target below needs recomputing.
+**Step 2 — Add the guard to the detector, before the six preconditions.** For a candidate pair, parse ⟨X⟩ out of each claim's `position_frame` and require them to match under the same normalisation `compute_proposition_id` uses (`worker/storage.py` — lowercase, collapse whitespace, strip terminal punctuation). Mismatch → **quarantine** with reason `frame_mismatch`, never drop (D7 established that; §10).
 
-**Step 1 — Add `position_frame` to the schema and the store.** A string on `ExtractedClaim` and on the `claims` table holding the literal sentence the model wrote: `the speaker is FOR <X>` or `the speaker is AGAINST <X>`. Non-null on every new claim.
+> **Verify (red-first):** run the guard over today's corpus **before** wiring it in, and confirm it flags `12a7503f8c27b24d`. **If it does not fire on that pair, the parse or the normalisation is wrong** — that pair is the one known positive and it must be reproducible.
 
-> **Verify:** a claim cannot be persisted without it. **This field is the deliverable of this item as much as the prompt is** — it is what makes the position test answerable by reading a column instead of re-deriving a judgement, and every previous application of that test as a judgement has been scored generously.
+**Step 3 — Decide how strict the match is, and say why.** Exact-after-normalisation is the safe default and will also reject near-identical pairs such as *"30 years at 5% interest rate"* vs *"a 30-year at 5.2 interest rate"* — which **should** be rejected, since 5% and 5.2% are different claims.
 
-**Step 2 — Rewrite Rule 2 of the prompt as the frame.** `worker/extract/runtime.py`, bump to `v1.8`. The model emits the frame first and ⟨X⟩ is taken from it. Three things the few-shot examples must do, and the second is the one that breaks the system if you get it wrong:
+> **Verify:** report how many of the store's existing support/oppose proposition groups survive the guard. **Today four of five have mismatched frames** — the only clean one is *"companies moving out of California"*, where both frames are byte-identical. If your guard passes more than one or two, it is too loose; if it passes none, check it against that pair specifically.
 
-1. Show a claim the model should **decline** to emit because neither frame can be written — use a real failure from the current table: *"implementing software inside of an organization"*, *"prompt length for ai model development"*, *"a good deal to be made"*.
-2. **Show the same ⟨X⟩ under both frames.** `the speaker is FOR federal licensing of frontier AI models` and `the speaker is AGAINST federal licensing of frontier AI models` — **byte-identical ⟨X⟩.** If ⟨X⟩ varies with the stance, the two claims get different `proposition_id`s, the self-join in `design_data_layer.md` §4 matches nothing, and **a person can reverse themselves a hundred times with a perfect Consistency score.** That is §2's opening warning and this is the step that can reintroduce it.
-3. Show a `mixed` case where **both** frames are written for one claim, per §2's new definition — FOR in one respect, AGAINST in another. If only one frame can be written, the stance is that one; `mixed` is no longer a residue.
+**Step 4 — Add `verify_frame_identity` to the integrity pass.** No published tension may have mismatched frames. This is the standing version of step 2.
 
-> **Verify:** extract from **20 utterances** and for each claim **paste both the frame the model wrote and ⟨X⟩** into the commit body. **At least 16 of 20 frames must read as sentences a person would write about that utterance.** Do not report a count on its own — the count is what was reported at 18/20 when an independent draw scored 9/20. **Paste the sentences. If fewer than 16 hold up, iterate here; do not start the full run.**
-
-**Step 3 — Take stance from the frame, and keep validator 7.** `stance` is now FOR → `support`, AGAINST → `oppose`, both → `mixed`. Validator 7 (`validate_stance_direction`) still runs and still corrects.
-
-> **Verify:** validator 7's input distribution has changed, so **D4's measured false-flip rate no longer describes it.** Re-run D4's drawn evaluation set against the new output and report the confusion matrix. **If the false-flip rate has risen above D4's 0%, say so and do not proceed to step 5** — a validator that was measured on v1.7 output and is wrong on v1.8 output is worse than none, because its corrections are silent.
-
-**Step 4 — Keep validator 2b as an alarm, not a filter.** `validate_position_bearing` stays exactly as D6 built it. Under the frame it should almost never fire.
-
-> **Verify:** report its fire rate on the sample from step 2. **A rate near zero means the frame is doing its job; a rate near D6's 22.9% means the model is ignoring the frame and you are back to iteration three.** This number is the cheapest signal that Issue 034 = B is working, and it costs nothing to read.
-
-**Step 5 — Re-extract, then re-run dedup at `T_dedup = 0.84` unchanged.** Proposition text changes wholesale, so ids change and `claim_id` hashes `proposition_id` — a full re-derivation, not an edit. **Do not retune `t_dedup` in this commit;** D2 measured 0.84 against a distribution this step replaces, and changing form and threshold together makes neither attributable. Re-measuring it is a separate item, filed after this one lands.
-
-> **Verify:** capture `VALIDATOR_REJECTION_COUNTERS` and **reconcile them against the change in claim count**, per D5's precedent — if the arithmetic does not close, claims are being lost before the validators and that is the finding. Report the full trajectory `3,669 → 2,174 → 2,261 → 1,027 → <new>`. **Parameter 033 (`MIN_CLAIMS_PER_HOUR = 3.0`) must hold on all 23 sources**; if it does not, stop and report rather than lowering it.
-
-**Step 6 — Re-run tension detection and read what it accepts.** For every accepted candidate pair, the two `position_frame` sentences are now stored — **paste both into the commit body**, then say whether they conflict.
-
-> **Verify:** this is the step D2 got wrong while doing it in good faith. **With frames stored you are no longer judging whether a proposition is positionable; you are reading two sentences and saying whether they contradict.** If the two frames are not about the same ⟨X⟩, that is a step-2 failure and the pair is evidence against the prompt, not a finding.
+> **Verify:** it FAILS on the corpus as it stands today (before step 1), naming `12a7503f8c27b24d`. Run it in that order — a check first seen green on repaired data has not been tested.
 
 ### Validation
 
-- **(c)** — **every claim in the store has a non-null `position_frame`, and for 20 claims drawn at random with a recorded seed, the stored frame and the stored `proposition_text` agree** — ⟨X⟩ in the frame is byte-identical to `proposition_text`, and the FOR/AGAINST matches `stance`. **Paste all 20.** *A count cannot satisfy this and neither can a passing test whose name references it (trap 60); the artefact is twenty sentences a reader can check without rerunning anything, which is the whole point of Issue 034 = B.*
-- **Both directions on the identity that matters:** find one proposition carrying both a `support` and an `oppose` claim and show the two frames differ **only** in FOR/AGAINST. If no such proposition exists in the new corpus, say so — **that is a meaningful negative result**, and it means the self-join still has nothing to match.
-- Cross-episode `support`↔`oppose` candidate pairs reported **with the denominator**: pairs examined, accepted, rejected, and the reason for each.
-- `verify_quotes`, `verify_canonical_ids`, `verify_entailment_holds`, `verify_claims_per_hour` all PASS; `worker.integrity --all` green on both populations.
-- Validator 2b's fire rate reported; validator 7's confusion matrix re-measured on v1.8 output.
+- **(c)** — **no published tension exists whose two claims' frames name different ⟨X⟩**, asserted by a query over the live store that parses both frames and compares them normalised; **and the guard, run against today's pre-repair corpus, flags exactly `12a7503f8c27b24d`.** *Both halves are needed: the first alone is satisfiable by publishing nothing, which is today's state and proves nothing.*
+- **Both directions:** a synthetic pair with byte-identical ⟨X⟩ and opposing FOR/AGAINST passes the guard and reaches the six preconditions; the growth pair does not.
+- Every rejected candidate writes a `quarantined` row with `frame_mismatch` — none is dropped (§10, D7).
+- `worker.integrity --all` green on both populations, with the quarantine rate reported.
 
-**Falsify.** Revert the prompt to v1.7 and extract the same 20 utterances; validator 2b's fire rate must climb back toward 22.9% and the frames must stop being writable. Record both rates. **Then** — separately — break step 2's identity rule deliberately by letting ⟨X⟩ vary with stance on one example, and confirm the two claims land on different `proposition_id`s and the self-join loses the pair. That second falsification is the one worth doing carefully; it is the failure §2 opens by warning about, and nothing downstream would report it.
+**Falsify.** Remove the guard and re-run detection; `12a7503f8c27b24d` must return as published and (c) must go red. Revert; record both.
 
-**Blast radius.** `worker/extract/schema.py`, `worker/extract/runtime.py` (prompt v1.8), `worker/extract/extract.py`, `worker/entities.py`, `worker/storage.py` (`position_frame` column + migration), `worker/extract/validators.py` (stance from frame), `fixtures/behaviour/`, the corpus (full re-extraction), `docs/design_claim_extraction.md` §2, `docs/ongoing_errors.md` §2 (031 re-measured on v1.8 output; 008 re-measurement filed as a follow-up), §3, §6.
+**Blast radius.** `worker/tension/detect.py`, `worker/integrity.py`, `worker/storage.py`, `tests/`, the corpus (one row quarantined), `docs/design_evidence_integrity.md` §4, `docs/design_data_layer.md` §4, §3, §6.
+
+---
+
+## 12. D8 — Re-measure `T_dedup` against the v1.8 distribution
+
+**Blocked on X3** — X3 stops the bad pair reaching a reader; this stops it being created. Do them in that order so the guard exists while you are changing what dedup emits.
+
+**Contract:** `ongoing_errors.md` §2 parameter 008 · `design_claim_extraction.md` §2 (Deduplication) · trap 57.
+
+**Gap — this is the deferred half of X2, now due.** X2 step 5 said explicitly: *"Do not retune `t_dedup` in this commit; D2 measured 0.84 against a distribution this step replaces, and changing form and threshold together makes neither attributable. Re-measuring it is a separate item, filed after this one lands."* That was right, and it has landed.
+
+**0.84 is now merging different matters.** The published fabrication is the proof: *"60 to 80 percent growth year over year"* and *"10x year over year growth for ever"* were merged into one proposition. So were *"the FDA's involvement in drug approval process"* and *"the approval process for drugs that influence the body"*, and *"China's push on open source"* and *"the open source model being published by China"*. **Four of the store's five support/oppose proposition groups are dedup artefacts rather than genuine shared matters.**
+
+**The corpus it was measured on no longer exists.** D2 measured 0.84 over 2,191 propositions from prompt v1.7. The store now holds **1,465 propositions from v1.8**, and — for the first time in this sequence — the corpus **grew**: 1,027 → **1,517 claims**. Different text, different length distribution, different similarity structure.
+
+**Read this before choosing a number.** Parameter 008's bias is *toward merging*, because over-splitting hides contradictions silently while over-merging produces visible, fixable false positives. **That bias was written before the frames existed and it should now be re-read, not reapplied.** With `position_frame` stored and X3's guard in place, an over-merge is caught mechanically at publish time — which makes over-merging much cheaper than it was, and the bias arguably *more* correct than before. Say which way you read it and why.
+
+### Implementation
+
+**Step 1 — Measure before choosing.** Embed all 1,465 propositions, compute the 1-NN similarity distribution, and report the deciles.
+
+> **Verify:** paste the deciles. **If the distribution is unimodal there is no threshold to find**, and the honest delivery is to say so and report that similarity over proposition text cannot separate restatement from difference at this size — a legitimate result, not a failure.
+
+**Step 2 — Use the frames as ground truth, which is new.** For every currently-merged proposition carrying more than one claim, the stored frames say whether the merge was right. **This is a labelled set you did not have to build.**
+
+> **Verify:** report, at the candidate threshold, how many existing merges the frames endorse and how many they contradict. **The four named above must be contradicted.** This is the first time this parameter can be measured against something other than a judgement — use it.
+
+**Step 3 — Choose, record with n and date, supersede 0.84 explicitly.**
+
+> **Verify:** `ongoing_errors.md` §2's row names the corpus — claim count, proposition count, prompt version, date — so the next reader can tell when it has expired. That is what 0.86 lacked, and it outlived two corpora.
+
+**Step 4 — Re-resolve propositions and re-run detection.**
+
+> **Verify:** report the candidate denominator — examined, accepted, rejected, with reasons — and **paste both frames for every accepted pair.** With X3 in place a frame mismatch cannot publish, but it can still be created, and its rate is how you tell whether the new threshold is right.
+
+### Validation
+
+- **(c)** — **at the chosen threshold, every proposition carrying both a `support` and an `oppose` claim has frames whose ⟨X⟩ match after normalisation.** Today that is **1 of 5**. *This is measurable from the store with no judgement, which is the whole reason `position_frame` exists — and it cannot be satisfied by merging nothing, because the count of such propositions must also be reported and a zero says the self-join has nothing to match.*
+- Both directions at the chosen threshold: two genuine restatements of one matter merge; the growth pair and the FDA pair do not.
+- Merge histogram and singleton rate reported before and after.
+- `verify_frame_identity` (X3) PASSes; `verify_quotes`, `verify_canonical_ids`, `verify_entailment_holds`, `verify_claims_per_hour` PASS.
+
+**Falsify.** Set `t_dedup = 0.999` and confirm the histogram collapses to singletons; set it to 0.60 and confirm the frame-contradicted merge count climbs sharply. Record all three, with the frame-contradiction count at each — that number, not the histogram, is the one that now decides this parameter.
+
+**Blast radius.** `worker/extract/dedup.py`, the corpus (proposition re-resolution), `docs/ongoing_errors.md` §2, `docs/design_claim_extraction.md` §2, §3, §6.
 
 ---
 ## 13. Deferred — designed for, not queued
@@ -519,4 +530,6 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 
 | **Six fabrications published by an item that followed its spec exactly** | "Make every accepted candidate produce a row. Published if it clears all six preconditions; quarantined otherwise." | **"...and read the current accepted set before running it; if those candidates are known-false, this item quarantines rather than publishes."** I wrote D7 knowing all six accepted candidates were false and sequenced it first anyway, because it was small. **Small is not the same as safe when the item's effect is to publish.** |
 
-**The newest pattern: a correct fix to the wrong scope reads exactly like success.** And its companion, first seen this pass: **a fix can overshoot into the mirror of the defect it removed**, while every metric the item defined still improves. D1 is its cleanest instance yet — genuinely good work, honestly reported in prose, with the headline label wrong. And the sharpest version this project has produced: **Issue 030 was the right decision against the wrong diagnosis.** The corpus did need expanding and expanding it was done well; it simply was not what stood between the pipeline and a finding. **Before committing hours of compute to a diagnosis, check that the cheap query agrees with it.** R1's gates were green, its coverage real, its numbers honest, and the thing it existed to enable did not happen. N0 then repeated it one layer down. **Check what the item was *for*, not only what it said** — and when an item's purpose is to feed a downstream stage, make one of its assertions a property of *that stage's input*, not of its own output.
+| **A false tension published with well-formed frames** | "For every accepted candidate pair the two frames are stored — paste both, then say whether they conflict. If they are not about the same ⟨X⟩, the pair is evidence against the prompt, not a finding." | The instruction was right and was not applied. **Make it a precondition in the detector rather than a step in the commit body** — anything that depends on the agent noticing will eventually meet an agent who does not. §11 does this. |
+
+**The newest pattern: a correct fix to the wrong scope reads exactly like success.** And the encouraging counterpart, first seen this pass: **a fix that converts a judgement into a stored artefact makes the next failure cheap to find.** X2 published a fabrication and simultaneously made that class of fabrication mechanically detectable. And its companion, first seen this pass: **a fix can overshoot into the mirror of the defect it removed**, while every metric the item defined still improves. D1 is its cleanest instance yet — genuinely good work, honestly reported in prose, with the headline label wrong. And the sharpest version this project has produced: **Issue 030 was the right decision against the wrong diagnosis.** The corpus did need expanding and expanding it was done well; it simply was not what stood between the pipeline and a finding. **Before committing hours of compute to a diagnosis, check that the cheap query agrees with it.** R1's gates were green, its coverage real, its numbers honest, and the thing it existed to enable did not happen. N0 then repeated it one layer down. **Check what the item was *for*, not only what it said** — and when an item's purpose is to feed a downstream stage, make one of its assertions a property of *that stage's input*, not of its own output.
