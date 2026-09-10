@@ -63,6 +63,35 @@ class ClaimExtractionPipeline:
 
         # 3. Apply Validators sequentially (1 to 6)
         for ec in extracted_claims:
+            # Derive stance and proposition_text from position_frame if present (Issue 034 = B)
+            if ec.position_frame:
+                frame = ec.position_frame.strip().rstrip(".")
+                frame_lower = frame.lower()
+                if "the speaker is for " in frame_lower and "the speaker is against " in frame_lower:
+                    ec.stance = "mixed"
+                    if not ec.proposition_text:
+                        idx = frame_lower.find("the speaker is for ")
+                        rest = frame[idx + len("the speaker is for "):]
+                        ec.proposition_text = rest.split(" and ")[0].strip().rstrip(".")
+                    ec.position_frame = f"the speaker is FOR {ec.proposition_text} in one respect and the speaker is AGAINST {ec.proposition_text} in another"
+                elif frame_lower.startswith("the speaker is for "):
+                    ec.stance = "support"
+                    ec.proposition_text = frame[len("the speaker is for "):].strip().rstrip(".")
+                    ec.position_frame = f"the speaker is FOR {ec.proposition_text}"
+                elif frame_lower.startswith("the speaker is against "):
+                    ec.stance = "oppose"
+                    ec.proposition_text = frame[len("the speaker is against "):].strip().rstrip(".")
+                    ec.position_frame = f"the speaker is AGAINST {ec.proposition_text}"
+            elif ec.proposition_text:
+                prop = ec.proposition_text.strip().rstrip(".")
+                ec.proposition_text = prop
+                if ec.stance == "support":
+                    ec.position_frame = f"the speaker is FOR {prop}"
+                elif ec.stance == "oppose":
+                    ec.position_frame = f"the speaker is AGAINST {prop}"
+                else:
+                    ec.position_frame = f"the speaker is FOR {prop} in one respect and the speaker is AGAINST {prop} in another"
+
             outcome = validate_extracted_claim(
                 claim=ec,
                 utterance=utterance,
@@ -112,6 +141,7 @@ class ClaimExtractionPipeline:
                 extraction_version=self.runtime.extraction_version,
                 recorded_at=source_recorded_at,
                 quote_text=verbatim_quote,
+                position_frame=ec.position_frame,
             )
 
             self.storage.insert_claim(claim)

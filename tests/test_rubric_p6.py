@@ -80,6 +80,7 @@ def test_sufficiency_gate_n11_assertion_c(test_store: Storage) -> None:
             is_own_assertion=True,
             quote_span=(0, len(u.text)),
             recorded_at=u.recorded_at,
+            position_frame=f"the speaker is FOR {u.text}",
         )
         test_store.insert_claim(c)
         claims.append(c)

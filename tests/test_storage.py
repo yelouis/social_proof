@@ -477,6 +477,7 @@ def test_migration_guard_fires_when_live_claim_proposition_moves(tmp_path: Path)
         stance="support",
         hedging_level=0.1,
         is_own_assertion=True,
+        position_frame="the speaker is FOR federal licensing prevents catastrophic rogue deployments",
     )
     store.insert_claim(claim)
 
@@ -540,6 +541,7 @@ def test_migration_idempotence_and_zero_changes(tmp_path: Path) -> None:
             stance="support",
             hedging_level=0.1,
             is_own_assertion=True,
+            position_frame="the speaker is FOR autonomous AI agents operate effectively",
         )
     )
 

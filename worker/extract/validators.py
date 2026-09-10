@@ -604,6 +604,8 @@ def validate_stance_direction(
         if not has_neg and sim_pos > sim_neg:
             if auto_correct:
                 claim.stance = "support"
+                if claim.proposition_text:
+                    claim.position_frame = f"the speaker is FOR {claim.proposition_text}"
                 VALIDATOR_CORRECTION_COUNTERS["stance_corrected_to_support"] += 1
                 logger.info(
                     "Validator 7 corrected claim from 'oppose' to 'support'. Prop: '%s', Quote: '%s'",
@@ -630,6 +632,8 @@ def validate_stance_direction(
         if has_neg:
             if auto_correct:
                 claim.stance = "oppose"
+                if claim.proposition_text:
+                    claim.position_frame = f"the speaker is AGAINST {claim.proposition_text}"
                 VALIDATOR_CORRECTION_COUNTERS["stance_corrected_to_oppose"] += 1
                 logger.info(
                     "Validator 7 corrected claim from 'support' to 'oppose'. Prop: '%s', Quote: '%s'",

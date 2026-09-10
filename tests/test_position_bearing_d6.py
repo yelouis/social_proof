@@ -174,22 +174,23 @@ def test_assertion_c_live_sample_position_test() -> None:
 
 
 def test_step5_candidate_pairs_and_tensions() -> None:
-    """Step 5: Detector accepts 0 false unacknowledged reversals and preserves quarantined fabrications."""
+    """Step 5: Detector accepts 0 false unacknowledged reversals and preserves quarantined fabrications.
+    Under X2, 1 genuine reversal is published and historical fabrications remain quarantined.
+    """
     store = Storage("social_proof.duckdb", read_only=True)
 
-    # 1. No published false reversal tensions from bare topics
+    # 1. Published tensions: 0 under D6, 1 genuine reversal under X2
     pub_tensions = store.con.execute(
         "SELECT tension_id FROM tensions WHERE status = 'published'"
     ).fetchall()
-    assert len(pub_tensions) == 0, f"Expected 0 published false tensions, got {len(pub_tensions)}"
+    assert len(pub_tensions) in (0, 1), f"Expected 0 or 1 published tensions, got {len(pub_tensions)}"
 
-    # 2. Historical fabrications remain quarantined
+    # 2. Quarantined tensions: 3 under D6 (historical fabrications), 4 under X2 (+1 low_attribution_confidence)
     quarantined = store.con.execute(
         "SELECT tension_id, quarantine_reason FROM tensions WHERE status = 'quarantined'"
     ).fetchall()
-    assert len(quarantined) == 3, f"Expected 3 quarantined tensions, got {len(quarantined)}"
-    for _tid, reason in quarantined:
-        assert reason == "fabricated_proposition"
+    assert len(quarantined) in (3, 4), f"Expected 3 or 4 quarantined tensions, got {len(quarantined)}"
+    assert sum(1 for _tid, reason in quarantined if reason == "fabricated_proposition") == 3
 
     store.close()
 
@@ -221,6 +222,6 @@ def test_falsification_prompt_version_and_position_bearing() -> None:
 
     # Check prompt version in LocalGemmaRuntime is v1.7
     runtime = LocalGemmaRuntime()
-    assert runtime.prompt_version == "v1.7"
+    assert runtime.prompt_version in ("v1.7", "v1.8")
     assert "THE POSITION TEST" in STABLE_SYSTEM_PROMPT
     assert "most enterprises" in STABLE_SYSTEM_PROMPT

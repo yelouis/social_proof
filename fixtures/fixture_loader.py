@@ -129,6 +129,7 @@ def load_valid_fixtures() -> tuple[list[Source], list[Utterance], list[Claim], l
         extraction_version="gemma-3-27b-it:v1.0:s1",
         recorded_at="2024-01-15T10:00:00Z",
         quote_text=q1,
+        position_frame="the speaker is FOR federal licensing of frontier AI models",
     )
 
     claim_2 = Claim(
@@ -147,6 +148,7 @@ def load_valid_fixtures() -> tuple[list[Source], list[Utterance], list[Claim], l
         extraction_version="gemma-3-27b-it:v1.0:s1",
         recorded_at="2024-05-10T14:00:00Z",
         quote_text=q2,
+        position_frame="the speaker is AGAINST federal licensing of frontier AI models",
     )
 
     tension_1 = Tension(
@@ -207,6 +209,7 @@ def load_broken_quote_fixture() -> tuple[list[Source], list[Utterance], list[Cla
         extraction_model="gemma-3-27b-it",
         prompt_version="v1.0",
         extraction_version="gemma-3-27b-it:v1.0:s1",
+        position_frame="the speaker is FOR federal licensing of frontier AI models",
     )
     return sources, utterances, [broken_claim]
 

@@ -74,6 +74,7 @@ def test_phase_2_gate_journey_j3_reversal_detector_on_live_claims(tmp_path: Path
         prompt_version="v1.0",
         extraction_version="gemma-3-27b-it:v1.0:s1",
         recorded_at=src1.recorded_at,
+        position_frame="the speaker is FOR frontier AI model licensing requirement",
     )
     store.insert_claim(claim1)
 
@@ -117,6 +118,7 @@ def test_phase_2_gate_journey_j3_reversal_detector_on_live_claims(tmp_path: Path
         prompt_version="v1.0",
         extraction_version="gemma-3-27b-it:v1.0:s1",
         recorded_at=src2.recorded_at,
+        position_frame="the speaker is AGAINST frontier AI model licensing requirement",
     )
     store.insert_claim(claim2)
 

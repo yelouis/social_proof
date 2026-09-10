@@ -97,6 +97,7 @@ class Claim:
     extraction_version: str = ""
     recorded_at: str = ""
     quote_text: str | None = None
+    position_frame: str | None = None
 
     @property
     def status(self) -> str:

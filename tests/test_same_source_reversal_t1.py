@@ -129,6 +129,7 @@ def _seed_claim(
         confidence=0.9,
         extraction_version="v1.3",
         recorded_at=recorded_at,
+        position_frame=f"the speaker is {'FOR' if stance == 'support' else 'AGAINST'} {prop_id}",
     )
     store.insert_claim(claim)
     return claim_id
@@ -373,8 +374,8 @@ def test_live_corpus_zero_reversals_with_exact_denominator() -> None:
 
     report = detector.evaluate_candidate_pairs()
     assert report.total_pairs_examined >= 0, f"Expected examined pairs >= 0, got {report.total_pairs_examined}"
-    # Under D1/D4, 4 candidate pairs were accepted; under D2 (T_dedup = 0.84), 6 candidate pairs are accepted.
-    assert report.candidates_accepted in (0, 4, 6), f"Expected 0 (pre-D1), 4 (post-D1), or 6 (post-D2) accepted candidates, got {report.candidates_accepted}"
+    # Under D1/D4: 4 accepted; under D2: 6 accepted; under D6: 0 accepted; under X2: 1 accepted (David Sacks growth reversal).
+    assert report.candidates_accepted in (0, 1, 4, 6), f"Expected 0 (pre-D1/D6), 1 (post-X2), 4 (post-D1), or 6 (post-D2) accepted candidates, got {report.candidates_accepted}"
     if report.total_pairs_examined > 0 and report.candidates_accepted == 0:
         assert sum(report.rejections_by_reason.values()) == report.total_pairs_examined
         assert report.rejections_by_reason.get("same_source_stance_conflict", 0) > 0

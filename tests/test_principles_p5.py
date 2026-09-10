@@ -118,6 +118,7 @@ def test_fixture_p3_principle_conflict(test_store: Storage) -> None:
             is_own_assertion=True,
             quote_span=(0, len(u.text)),
             recorded_at=u.recorded_at,
+            position_frame=f"the speaker is {'FOR' if i == 0 else 'AGAINST'} corporate accountability",
         )
         test_store.insert_claim(claim)
 
@@ -211,6 +212,7 @@ def test_fixture_n6_distinction_excluded_from_scoring(test_store: Storage) -> No
             is_own_assertion=True,
             quote_span=(0, len(u.text)),
             recorded_at=u.recorded_at,
+            position_frame=f"the speaker is {'FOR' if i == 0 else 'AGAINST'} regulatory oversight",
         )
         test_store.insert_claim(claim)
 
@@ -300,6 +302,7 @@ def test_falsification_disabling_stated_distinction_causes_n6_to_publish_conflic
                 is_own_assertion=True,
                 quote_span=(0, len(u.text)),
                 recorded_at=u.recorded_at,
+                position_frame=f"the speaker is {'FOR' if i == 0 else 'AGAINST'} financial transparency",
             )
         )
 
@@ -367,6 +370,7 @@ def test_unresolved_actor_never_enters_conflict(test_store: Storage) -> None:
                 hedging_level=0.0,
                 is_own_assertion=True,
                 quote_span=(0, 11),
+                position_frame=f"the speaker is {'FOR' if i == 0 else 'AGAINST'} whistleblower protection",
             )
         )
         # Application 1 has resolved actor, Application 2 has UNRESOLVED actor ('unknown')
@@ -467,6 +471,7 @@ def test_tension_detector_integration_with_principles(test_store: Storage) -> No
                 hedging_level=0.0,
                 is_own_assertion=True,
                 quote_span=(0, 11),
+                position_frame=f"the speaker is {'FOR' if i == 0 else 'AGAINST'} executive responsibility",
             )
         )
         app_id = f"app_td_{i}"

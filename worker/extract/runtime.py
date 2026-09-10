@@ -21,34 +21,30 @@ RULES:
    - If a speaker mentions a fact, number, event, personal story, or company without advocating FOR or AGAINST a specific policy, action, regulation, or controversial principle, return {"claims": []}.
    - Do NOT force an extraction if there is no clear matter at issue.
 
-2. CANONICAL PROPOSITION FORM & THE POSITION TEST (design_claim_extraction.md §2 — Item D6):
-   - A proposition is the STANCE-NEUTRAL MATTER AT ISSUE formulated as a predicate-bearing NOUN PHRASE with actor and polarity stripped out.
-   - THE POSITION TEST: A proposition MUST be a specific policy, action, regulation, or normative matter at issue a person can be for or against. Both of these MUST be coherent, distinct claims:
-       <subject> supports <proposition>
-       <subject> opposes  <proposition>
-     If substituting the proposition into either sentence sounds ungrammatical, nonsensical, or fails to make a claim, IT IS NOT A PROPOSITION. Do not emit it!
-
-   - MINIMUM LENGTH AND SPECIFICITY: A proposition MUST describe a specific policy, regulation, standard, requirement, or contentious practice (e.g., 'mandating data sovereignty for cloud infrastructure' NOT 'data sovereignty'; 'open-source release of frontier AI weights' NOT 'open source AI development').
-   - NEVER emit 1 to 4 word bare topics (e.g., 'data sovereignty', 'apps', 'open source AI', 'most enterprises', 'ai race in america'). If there is no specific policy or action at issue, return {"claims": []}.
-   - FACTUAL DESCRIPTIONS ARE NOT CLAIMS: Sentences merely reporting that companies hire people, create datasets, make money, or run businesses contain NO policy or normative stance. Return {"claims": []}.
-   - INCIDENTS AND NEWS REPORTS ARE NOT CLAIMS: Reporting an incident, meeting, crime, or event (e.g., meeting disruptions, corporate lawsuits, hacks) is NOT a policy matter at issue. Return {"claims": []}.
-   - SLANG AND BANTER ARE NOT CLAIMS: Conversational banter, slang, or describing interest in topics contains NO policy or normative stance. Return {"claims": []}.
-   - HISTORICAL RECAPS ARE NOT CLAIMS: Describing what past debates were about (e.g., past debates between accelerationists and doomers) is a descriptive summary, not an own-assertion policy stance. Return {"claims": []}.
-
-   - NEVER emit a BARE TOPIC, ENTITY, VALUATION, EVENT, OR FACTUAL DESCRIPTION. A topic admits any stance, so opposing claims on it do not form a contradiction.
-     FAILING TOPIC EXAMPLES (DO NOT EMIT THESE — RETURN {"claims": []} OR REFINE TO THE ACTION/POLICY):
-       'most enterprises' (FAIL: nobody supports/opposes 'most enterprises')
-       'ai race in america' (FAIL: bare subject area)
-       'american efforts regarding ai' (FAIL: vague descriptive topic)
-       'creation of new jobs over the next year' (FAIL: bare economic prediction)
-       'balance occurring in the field of ai regulation' (FAIL: observational topic)
-       'underlying kind of traditional object rendering engine' (FAIL: bare technical component)
-       'company worth 200 billion' (FAIL: valuation/fact, not a matter at issue)
-       'Giving Pledge initiative' (FAIL: bare name of an initiative)
-       'two or three hundred individual lawsuits' (FAIL: bare count/event)
-       'Board of Supervisors meeting disrupted by internet vandalism' (FAIL: news/incident report)
-       'people that are just really interested in the topics that we talk about' (FAIL: banter/observation)
-     PASSING MATTERS AT ISSUE (POLICIES, ACTIONS, NORMATIVE CHOICES):
+2. THE POSITION FRAME & CANONICAL PROPOSITION FORM (THE POSITION TEST — design_claim_extraction.md §2 — Issue 034 = B):
+   - The position is elicited with the proposition, not applied to it after the fact.
+   - A claim is elicited by writing the position frame:
+       the speaker is FOR     <X>
+       the speaker is AGAINST <X>
+     <X> becomes `proposition_text`, and FOR / AGAINST becomes `stance` ('support' / 'oppose').
+   - If you CANNOT write "the speaker is FOR <X>" or "the speaker is AGAINST <X>" as a coherent, grammatical sentence that a person would write about this utterance, DO NOT EMIT A CLAIM. Return {"claims": []}.
+   - CANONICAL NOUN PHRASE: <X> MUST BE a stance-neutral, predicate-bearing NOUN PHRASE with the actor and polarity stripped out.
+   - BYTE-IDENTICAL IDENTITY RULE: Two speakers with opposite opinions on the same matter at issue MUST share the EXACT SAME <X> noun phrase. The difference between opposing views lives EXCLUSIVELY in FOR vs AGAINST (or support vs oppose). NEVER vary <X> based on the speaker's stance.
+   - MIXED STANCE: The speaker is FOR <X> in one respect and AGAINST <X> in another, and both frames can be written for the same claim (e.g., 'the speaker is FOR <X> in respect A and the speaker is AGAINST <X> in respect B'). If only one frame can be written, the stance is that one; `mixed` is not a residue.
+   - NEVER emit a BARE TOPIC, ENTITY, VALUATION, EVENT, OR FACTUAL DESCRIPTION. A topic admits any stance, so opposing claims on it do not form a contradiction. If neither frame can be written, decline to emit:
+       - "implementing software inside of an organization" (DECLINE: not a matter at issue someone is for/against)
+       - "prompt length for ai model development" (DECLINE: technical parameter/topic)
+       - "a good deal to be made" (DECLINE: commercial observation)
+       - "most enterprises" (DECLINE: bare entity)
+       - "ai race in america" (DECLINE: bare subject area)
+       - "company worth 200 billion" (DECLINE: factual valuation)
+       - "two or three hundred individual lawsuits" (DECLINE: event/count)
+       - "Board of Supervisors meeting disrupted by internet vandalism" (DECLINE: incident report)
+       - "people that are just really interested in the topics that we talk about" (DECLINE: banter/observation)
+   - LENGTH AND RELATIONAL STRUCTURE FLOOR: <X> MUST be at least 5 words and include a relational marker: a preposition ('of', 'for', 'in', 'on', 'to', 'against', 'between') or a participle ('-ing'). Never emit 1-4 word fragments (e.g., 'eronic', 'apps', 'open source AI', 'federal debt reduction').
+   - QUESTIONS AND CASUAL BANTER ARE NOT CLAIMS: Rhetorical questions, banter, or conversational remarks contain no own assertion. Return {"claims": []}.
+   - SOFTWARE FEATURES AND TECHNICAL DESCRIPTIONS ARE NOT CLAIMS: Sentences describing how software works, what apps do, or capex investments are factual observations. Return {"claims": []}.
+   - PASSING MATTERS AT ISSUE (POLICIES, ACTIONS, NORMATIVE CHOICES):
        'federal licensing of frontier AI models' (PASS: supports licensing / opposes licensing)
        'federal standard for algorithmic discrimination' (PASS: supports standard / opposes standard)
        'funding and attention for astronomy research in an era dominated by ai' (PASS)
@@ -57,10 +53,10 @@ RULES:
        'sandboxed testing of frontier AI models before deployment' (PASS)
        'industry-wide reduction in AI development pace to 20% slower' (PASS)
        'allowing individual gun ownership despite potential misuse' (PASS)
+   - NEVER emit a full clause or finite verb sentence. Do NOT use finite verbs ('is', 'are', 'was', 'were', 'will', 'would', 'should', 'must', 'can', 'has', 'have') as the main predicate of <X>.
+   - NEVER include polarity inside <X>: no 'should', 'must', 'ought', 'better/worse/cheaper/faster than', 'favored to win', 'should not', 'never', 'oppose', 'against', 'bad', 'harmful', 'cannot', 'not', or 'no'.
+   - Polarity lives EXCLUSIVELY in `position_frame` and `stance`.
 
-   - NEVER emit a full clause or finite verb sentence. Do NOT use finite verbs ('is', 'are', 'was', 'were', 'will', 'would', 'should', 'must', 'can', 'has', 'have') as the main predicate of a proposition.
-   - NEVER include polarity, positive or negative: no 'should', 'must', 'ought', 'better/worse/cheaper/faster than', 'favored to win', 'should not', 'never', 'oppose', 'against', 'bad', 'harmful', 'cannot', 'not', or 'no'.
-   - Polarity lives EXCLUSIVELY in `stance` ('support' | 'oppose' | 'mixed'). Two speakers with opposite opinions on the same matter at issue MUST share the EXACT SAME proposition_text noun phrase.
 3. PROPOSITIONS MUST BE SELF-CONTAINED AND GLOBAL (Items W0 / §17m & W2 / §17p).
    - Never use unbound indexicals, speaker references, or vague placeholders in proposition_text (e.g., never say 'The speaker believes...', 'the subject...', 'this item...').
    - Never start a proposition with sentence-initial deictics or unbound pronouns (e.g., 'It is...', 'This...', 'That...', 'These...', 'Those...', 'They...', 'He...', 'She...', 'Their...', 'His...', 'Her...').
@@ -70,13 +66,17 @@ RULES:
    - Bound pronouns with an explicit intra-proposition antecedent (e.g., 'Moderna patenting of its mRNA technology', 'Google development of its own silicon') are valid.
    - Strip the actor completely: state the factual or normative matter at issue neutrally, without prefixing 'The speaker believes/argues/suggests'.
    - If the utterance is conversational banter, a personal question, or lacks a concrete named referent, return {"claims": []}.
+
 4. INVARIANT I7 (SPEECH-ACT GUARDS): Exclude reported speech, hypotheticals, rhetorical setups ('You can say, okay...'), sarcasm, steelmanning, jokes, questions ('So you're saying...'), and ambiguous quote agreements. If excluded, set is_own_assertion=false and specify exclusion_reason. If is_own_assertion=true, exclusion_reason MUST be null.
+
 5. QUOTE TEXT: Return the exact verbatim substring from the utterance text as quote_text.
+
 6. CONSTRAINED SCHEMA: Output must strictly conform to JSON format:
 {
   "claims": [
     {
-      "proposition_text": "stance-neutral matter at issue noun phrase",
+      "position_frame": "the speaker is FOR <X> | the speaker is AGAINST <X>",
+      "proposition_text": "stance-neutral matter at issue noun phrase (<X>)",
       "stance": "support" | "oppose" | "mixed",
       "hedging_level": 0.0 to 1.0,
       "is_own_assertion": true | false,
@@ -89,15 +89,33 @@ RULES:
 
 Examples:
 Utterance: "We absolutely need federal licensing for frontier models."
-Result: {"claims": [{"proposition_text": "federal licensing of frontier AI models", "stance": "support", "hedging_level": 0.0, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "We absolutely need federal licensing for frontier models.", "confidence": 0.95}]}
+Result: {"claims": [{"position_frame": "the speaker is FOR federal licensing of frontier AI models", "proposition_text": "federal licensing of frontier AI models", "stance": "support", "hedging_level": 0.0, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "We absolutely need federal licensing for frontier models.", "confidence": 0.95}]}
 
 Utterance: "Licensing would kill open source. Terrible idea."
-Result: {"claims": [{"proposition_text": "federal licensing of frontier AI models", "stance": "oppose", "hedging_level": 0.0, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "Licensing would kill open source. Terrible idea.", "confidence": 0.95}]}
+Result: {"claims": [{"position_frame": "the speaker is AGAINST federal licensing of frontier AI models", "proposition_text": "federal licensing of frontier AI models", "stance": "oppose", "hedging_level": 0.0, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "Licensing would kill open source. Terrible idea.", "confidence": 0.95}]}
 
-Utterance: "I could see licensing working, maybe."
-Result: {"claims": [{"proposition_text": "federal licensing of frontier AI models", "stance": "support", "hedging_level": 0.8, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "I could see licensing working, maybe.", "confidence": 0.90}]}
+Utterance: "Federal licensing makes sense for frontier clusters, but we can't impose it on smaller open research models."
+Result: {"claims": [{"position_frame": "the speaker is FOR federal licensing of frontier AI models for top compute clusters and the speaker is AGAINST federal licensing of frontier AI models for smaller open research models", "proposition_text": "federal licensing of frontier AI models", "stance": "mixed", "hedging_level": 0.0, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "Federal licensing makes sense for frontier clusters, but we can't impose it on smaller open research models.", "confidence": 0.90}]}
+
+Utterance: "Implementing software inside of an organization is always tough."
+Result: {"claims": []}
+
+Utterance: "We're experimenting with prompt length for ai model development."
+Result: {"claims": []}
+
+Utterance: "There is probably a good deal to be made in commercial real estate."
+Result: {"claims": []}
 
 Utterance: "I mean, this is a company that was worth 200 billion."
+Result: {"claims": []}
+
+Utterance: "What talent do you need to come do this duty and go work?"
+Result: {"claims": []}
+
+Utterance: "Tools like this automate prompt suggestions for users."
+Result: {"claims": []}
+
+Utterance: "Video models can generate short clips but cannot make a full feature movie yet."
 Result: {"claims": []}
 
 Utterance: "There was something called the Giving Pledge, where they push affluent people to give away wealth."
@@ -113,7 +131,7 @@ Utterance: "Third example, Board of Supervisors had to disband their own meeting
 Result: {"claims": []}
 
 Utterance: "So you're saying that the government should regulate all frontier compute clusters?"
-Result: {"claims": [{"proposition_text": "government regulation of frontier artificial intelligence compute clusters", "stance": "support", "hedging_level": 0.0, "is_own_assertion": false, "exclusion_reason": "question", "quote_text": "So you're saying that the government should regulate all frontier compute clusters?", "confidence": 0.90}]}
+Result: {"claims": [{"position_frame": "the speaker is FOR government regulation of frontier artificial intelligence compute clusters", "proposition_text": "government regulation of frontier artificial intelligence compute clusters", "stance": "support", "hedging_level": 0.0, "is_own_assertion": false, "exclusion_reason": "question", "quote_text": "So you're saying that the government should regulate all frontier compute clusters?", "confidence": 0.90}]}
 
 Utterance: "You can say, okay, well Verizon spent a hundred billion dollars on fiber optics."
 Result: {"claims": []}
@@ -181,7 +199,7 @@ class LocalGemmaRuntime:
     def __init__(
         self,
         model_id: str = "gemma-3-27b-it",
-        prompt_version: str = "v1.7",
+        prompt_version: str = "v1.8",
         schema_version: str = "s1",
         system_prompt: str = STABLE_SYSTEM_PROMPT,
         backend: Any | None = None,

@@ -15,6 +15,10 @@ class ChangeMarker(BaseModel):
 
 
 class ExtractedClaim(BaseModel):
+    position_frame: str = Field(
+        default="",
+        description="The literal sentence the model wrote: 'the speaker is FOR <X>' or 'the speaker is AGAINST <X>'.",
+    )
     proposition_text: str = Field(
         ...,
         description="Canonical, stance-neutral description of the matter at issue (no polarity).",

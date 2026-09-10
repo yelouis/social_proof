@@ -93,7 +93,7 @@ def test_falsification_disabled_polarity_validator() -> None:
 def test_prompt_v1_6_canonical_specification() -> None:
     """4. Prompt v1.6/v1.7 specifies canonical noun-phrase form."""
     runtime = LocalGemmaRuntime()
-    assert runtime.prompt_version in ("v1.6", "v1.7")
+    assert runtime.prompt_version in ("v1.6", "v1.7", "v1.8")
     assert "CANONICAL PROPOSITION FORM" in STABLE_SYSTEM_PROMPT
     assert "NOUN PHRASE" in STABLE_SYSTEM_PROMPT
     assert "federal licensing of frontier AI models" in STABLE_SYSTEM_PROMPT

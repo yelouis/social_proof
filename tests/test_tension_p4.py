@@ -124,6 +124,7 @@ def test_fixture_p1_unacknowledged_reversal(test_store: Storage) -> None:
             condition=u.condition,
             change_marker={"acknowledged": True} if u.change_marker else None,
             recorded_at=u.recorded_at,
+            position_frame=f"the speaker is {stance.upper()} federal licensing for frontier compute models",
         )
         test_store.insert_claim(claim)
         claims.append(claim)
@@ -221,6 +222,7 @@ def test_fixture_p2_acknowledged_update_trap_2(test_store: Storage) -> None:
             condition=u.condition,
             change_marker=change_json,
             recorded_at=u.recorded_at,
+            position_frame=f"the speaker is {stance.upper()} releasing open weight foundation models",
         )
         test_store.insert_claim(claim)
 
@@ -304,6 +306,7 @@ def test_falsification_narrow_acknowledgement_to_later_utterance(test_store: Sto
             condition=u.condition,
             change_marker=change_json,
             recorded_at=u.recorded_at,
+            position_frame=f"the speaker is {stance.upper()} releasing open weight foundation models",
         )
         test_store.insert_claim(claim)
 
@@ -396,6 +399,7 @@ def test_fixture_p4_audience_divergence(test_store: Storage) -> None:
             is_own_assertion=True,
             quote_span=(span[0], span[1]),
             recorded_at=u.recorded_at,
+            position_frame=f"the speaker is {stance.upper()} mandatory federal compute registration",
         )
         test_store.insert_claim(claim)
 
@@ -471,6 +475,7 @@ def test_fixture_n5_condition_mismatch_quarantined(test_store: Storage) -> None:
             quote_span=(span[0], span[1]),
             condition=u.condition,
             recorded_at=u.recorded_at,
+            position_frame=f"the speaker is {stance.upper()} hold interest rates constant",
         )
         test_store.insert_claim(claim)
 
@@ -545,6 +550,7 @@ def test_fixture_n7_hedge_weighting(test_store: Storage) -> None:
             is_own_assertion=True,
             quote_span=(span[0], span[1]),
             recorded_at=u.recorded_at,
+            position_frame=f"the speaker is {stance.upper()} hold interest rates constant n7",
         )
         test_store.insert_claim(claim)
 
@@ -607,6 +613,7 @@ def test_precondition_negation_uncertain_quarantined(test_store: Storage) -> Non
                 is_own_assertion=True,
                 quote_span=(0, len(text)),
                 recorded_at=rec,
+                position_frame=f"the speaker is {'FOR' if i == 0 else 'AGAINST'} scientific consensus test",
             )
         )
 
@@ -694,6 +701,7 @@ def test_tension_integrity_checks_pass(test_store: Storage) -> None:
             is_own_assertion=True,
             quote_span=(0, len(text)),
             recorded_at=rec,
+            position_frame=f"the speaker is {'FOR' if i == 0 else 'AGAINST'} tension integrity test",
         )
         test_store.insert_claim(c)
         claims.append(c)

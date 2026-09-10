@@ -111,6 +111,7 @@ def test_phase_0_gate_journey_j1_and_j11(tmp_path: Path) -> None:
         prompt_version="v1.0",
         extraction_version="gemma-3-27b-it:v1.0:s1",
         recorded_at=source.recorded_at,
+        position_frame="the speaker is FOR mandatory safety audits for all frontier machine learning clusters",
     )
     store.insert_claim(claim)
 

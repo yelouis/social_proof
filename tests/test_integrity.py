@@ -465,6 +465,7 @@ def test_integrity_pass_both_directions_independent_verdict(tmp_path: Path) -> N
         is_own_assertion=True,
         quote_span=(0, 20),
         quote_text="NONEXISTENT QUOTE TEXT IN UTTERANCE",
+        position_frame="the speaker is FOR corrupt proposition",
     )
     corrupt_store.insert_claim(bad_claim)
     corrupt_store.close()

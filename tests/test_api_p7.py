@@ -172,6 +172,7 @@ def test_post_resolve_selection_triggered_journey_j8_assertion_c(
         stance="support",
         hedging_level=0.1,
         is_own_assertion=True,
+        position_frame=f"the speaker is FOR {prop_text}",
     )
 
     def populate(s: Storage) -> None:

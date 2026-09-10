@@ -277,8 +277,10 @@ class Storage:
                 prompt_version VARCHAR,
                 extraction_version VARCHAR,
                 recorded_at VARCHAR,
-                quote_text VARCHAR
+                quote_text VARCHAR,
+                position_frame VARCHAR
             );
+            ALTER TABLE claims ADD COLUMN IF NOT EXISTS position_frame VARCHAR;
 
             CREATE TABLE IF NOT EXISTS propositions (
                 proposition_id VARCHAR PRIMARY KEY,
@@ -412,6 +414,18 @@ class Storage:
             CREATE INDEX IF NOT EXISTS princ_hnsw ON principle_embeddings
                 USING HNSW (embedding) WITH (metric = 'cosine');
         """)
+
+        has_pre_merge = self.con.execute(
+            "SELECT 1 FROM information_schema.tables WHERE table_name = 'claims_pre_merge'"
+        ).fetchone()
+        if has_pre_merge:
+            self.con.execute("ALTER TABLE claims_pre_merge ADD COLUMN IF NOT EXISTS position_frame VARCHAR;")
+
+        has_pre_d6 = self.con.execute(
+            "SELECT 1 FROM information_schema.tables WHERE table_name = 'claims_pre_d6'"
+        ).fetchone()
+        if has_pre_d6:
+            self.con.execute("ALTER TABLE claims_pre_d6 ADD COLUMN IF NOT EXISTS position_frame VARCHAR;")
 
     def get_entailment_cache(self) -> dict[tuple[str, str], float]:
         """Loads cached claim-to-proposition entailment similarities."""
@@ -683,9 +697,11 @@ class Storage:
 
     def insert_claim(self, c: Claim) -> None:
         import json
+        if not c.position_frame or not str(c.position_frame).strip():
+            raise ValueError(f"Claim {c.claim_id} cannot be persisted without position_frame (Issue 034 = B)")
         self.con.execute(
             """
-            INSERT INTO claims VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO claims VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT (claim_id) DO UPDATE SET
                 stance = excluded.stance,
                 hedging_level = excluded.hedging_level,
@@ -693,7 +709,8 @@ class Storage:
                 exclusion_reason = excluded.exclusion_reason,
                 confidence = excluded.confidence,
                 recorded_at = excluded.recorded_at,
-                quote_text = excluded.quote_text
+                quote_text = excluded.quote_text,
+                position_frame = excluded.position_frame
             """,
             [
                 c.claim_id,
@@ -715,6 +732,7 @@ class Storage:
                 c.extraction_version,
                 c.recorded_at,
                 c.quote_text,
+                c.position_frame,
             ],
         )
 
@@ -742,6 +760,7 @@ class Storage:
             extraction_version=res[16],
             recorded_at=res[17],
             quote_text=res[18] if len(res) > 18 else None,
+            position_frame=res[19] if len(res) > 19 else None,
         )
 
     def get_claims_for_subject(self, subject_id: str) -> list[Claim]:
@@ -770,6 +789,7 @@ class Storage:
                 extraction_version=r[16],
                 recorded_at=r[17],
                 quote_text=r[18] if len(r) > 18 else None,
+                position_frame=r[19] if len(r) > 19 else None,
             )
             for r in rows
         ]
@@ -1009,6 +1029,10 @@ class Storage:
         self.con.execute("DELETE FROM proposition_embeddings;")
         self.con.execute("DELETE FROM propositions;")
         self.con.execute("DELETE FROM claims;")
+        col_info = self.con.execute("PRAGMA table_info(claims_pre_merge);").fetchall()
+        col_names = [c[1] for c in col_info]
+        if "position_frame" not in col_names:
+            self.con.execute("ALTER TABLE claims_pre_merge ADD COLUMN position_frame VARCHAR;")
         self.con.execute("INSERT INTO propositions SELECT * FROM propositions_pre_merge;")
         self.con.execute("INSERT INTO proposition_embeddings SELECT * FROM proposition_embeddings_pre_merge;")
         self.con.execute("INSERT INTO claims SELECT * FROM claims_pre_merge;")
