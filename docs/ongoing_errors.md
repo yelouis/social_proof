@@ -8,13 +8,68 @@
 - **Once selected, a decision moves out of §1.** Its consequence is written into the design doc that owns it, and it becomes one row in §4. The full option text stays in git history — this file is a queue, not an archive.
 - Recommendations are marked. A recommendation is not a decision.
 
-**Status: 24 decisions made, 0 open.** Live work is queued in `agent_execution_guide.md` §6.
+**Status: 24 decisions made, 1 open (034).** Live work is queued in `agent_execution_guide.md` §6.
 
 ---
 
 ## 1. OPEN — awaiting your selection
 
-*Newest first. Nothing is open right now.*
+*Newest first.*
+
+### 034 — Three prompt iterations have not produced a position-bearing proposition table, and each one costs a corpus
+
+**Blocks:** any further work on the extraction form. **Filed:** September 9, 2026, from a live query at `3100a48`.
+
+**What was measured.** Three passes have now tried to fix proposition form, each correct in its own terms, each shrinking the corpus, and none producing a table you can detect a contradiction in:
+
+| | claims | propositions | ≤5 words | cross-episode candidates |
+|---|---|---|---|---|
+| after C1 | 3,669 | 3,477 | — | 0 |
+| after D1 *(noun-phrase form)* | 2,174 | 2,113 | 25.8% | 4 (all false) |
+| after D5 repair | 2,261 | 2,161 | 25.8% | 6 (all false) |
+| **after D6** *(position floor)* | **1,027** | **1,007** | **17.4%** | **0** |
+
+**The corpus is 28% of its post-C1 size and the candidate set is back where it started.**
+
+**And the acceptance gate keeps passing when an independent reading fails it.** D6's (c) required 16 of 20 randomly drawn propositions to pass the position test and reported **18/20 (90%)**. I drew 20 with a recorded seed (`20260909`) and applied D6's own test — *are "supports X" and "opposes X" both coherent and different?* — and got **9/20 strict, 13/20 charitable.** Below the gate either way. The failures are not exotic:
+
+> *implementing software inside of an organization* · *prompt length for ai model development* · *understanding of partisanship and gamesmanship in negotiations* · *a good deal to be made* · *finding it very hard to get to two by 2040*
+
+This is the third time a judgement-based gate has been recorded as met while an independent reading disagreed — D2 recorded six false pairs as *"hand-read and verified"*, D1 recorded a failed (c) as verified, and now this. **The pattern is not carelessness. It is that the test is applied by looking at a proposition and asking whether it seems positionable, which is much easier to answer yes to than actually writing the two sentences out.**
+
+**What is not in question.** D6's mechanical floor is real and working (495 of 2,161 old propositions rejected, 22.9%), Parameter 033 still holds across all 23 sources, and D6 reported its 55% claim loss honestly and reconciled it. This is not a quality-of-work problem.
+
+---
+
+**Option A — A fourth prompt iteration, with the gate applied by writing the sentences.** Keep the approach; change only how the gate is scored: the agent must write out *"<subject> supports X"* and *"<subject> opposes X"* for each of the 20 and paste both sentences into the commit body, so a reader can check the judgement instead of taking the count.
+
+- **Pro:** smallest change. The mechanical floor is already in place, and each pass has genuinely improved the named metric.
+- **Pro:** it directly attacks the thing that keeps going wrong — the gate, not the prompt.
+- **Con:** three passes have not converged, and each costs a full re-extraction plus another slice of the corpus. There is no evidence a fourth converges.
+- **Con:** it still asks a model to produce a neutral matter at issue and hope it is positionable, which is the part that has failed repeatedly.
+
+**Option B — Elicit the position and the proposition together.** ← **recommended**
+
+Change what the extractor is asked for. Instead of *"give me the neutral matter at issue"* and labelling stance afterwards, ask it to emit, per claim, the pair **"the speaker is FOR / AGAINST ⟨X⟩"** — and take ⟨X⟩ as the proposition. **A claim it cannot phrase that way is not emitted.**
+
+- **Pro:** the position test stops being a judgement applied afterwards and becomes a **property of the output format.** *"implementing software inside of an organization"* cannot be produced, because "the speaker is FOR implementing software inside of an organization" is not a sentence the model would generate about that utterance.
+- **Pro:** it does not change the schema or violate §2. ⟨X⟩ is still stance-neutral and polarity still lives in `stance`; only the elicitation changes, so the proposition self-join and everything downstream is untouched.
+- **Pro:** it removes the failure mode that has now cost three passes — a gate scored by impression.
+- **Con:** a real change to the extraction contract, and `design_claim_extraction.md` §2 needs restating to describe the frame without weakening stance-neutrality.
+- **Con:** the corpus shrinks again on the next extraction, and we do not know by how much until it runs.
+
+**Option C — Accept that most utterances carry no positionable claim, and stop trying.** Keep the current form, drop the target, and let the corpus be small and clean.
+
+- **Pro:** honest, and free. 1,027 claims across 23 episodes with a working mechanical floor is a real artefact, and the review site renders it today.
+- **Pro:** stops spending re-extractions on a target that has not moved.
+- **Con:** the product's central claim stays undemonstrated, and **P4–P6 remain unvalidated as behaviour**, which has been true for the entire build.
+- **Con:** it does not fix the propositions that *do* get through — 45–65% of them still fail the position test, so any future finding is built on the same ground.
+
+**Recommendation: B.** The thing that has failed three times is not the prompt wording; it is that *"is this positionable?"* is asked after the fact and answered generously. B makes it unanswerable rather than easy — the format either produces the sentence or it does not. **A is worth folding into B regardless**: whichever option you pick, the gate should be scored by pasting the two sentences, not by reporting a count.
+
+Your selection: _____
+
+---
 
 > **For the agent filing a new one:** insert it at the **top** of this section, not the bottom, and use the next free number. Include what is blocked, what you already tried, 2–3 options with honest pros *and* cons, a marked recommendation, and a final `Your selection: _____` line. Then set `blocked_on` in the guide's queue. Never fill the line in.
 

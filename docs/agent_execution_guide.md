@@ -4,13 +4,16 @@
 
 **Read §1 first; it says where to start.** There is no routing machinery below — you are expected to organise the work yourself. What is fixed is §4 (what you may not change), §5 (what has bitten this project), §7 (what counts as evidence) and each item's own assertions.
 
-**Where the project is.** Twenty-five items delivered — §10 lists them, one line each, with the commit that carries the full specification. **Two remain**, and they are both about the same thing: the detector has candidate pairs for the first time, and every one of them is false.
+**Where the project is.** Twenty-seven items delivered — §10 lists them with the commit carrying each full spec. **`mypy scripts/` is RED at HEAD** (§11), and **Issue 034 is open and needs Louis.**
 
-D4, D5 and D2 all landed and verified on September 7, 2026. D4 in particular fixed the stance validator properly — drawn evaluation set of 80, recorded seed, labels assigned before the run, **false-flip rate 100% → 0%** on negation claims. D5 closed D1's 41% claim shortfall to arithmetic (the cause was a copy-pasted source ID in a script). D2 re-measured `T_dedup` to 0.84 over the current distribution.
+D7 and D6 both did real work. **D7** made every accepted candidate produce a tension row and put the quarantine rate into the integrity pass as a first-class number. **D6** added a mechanical position floor that rejects 495 of the old 2,161 propositions (22.9%), reported its 55% claim loss honestly and reconciled it, and kept Parameter 033 satisfied across all 23 sources.
 
-**And the six cross-episode candidate pairs those unlocked are all false.** The cause is that D1 overshot: it drove finite verbs out of propositions and landed on **topics rather than matters at issue**. `federal licensing of frontier AI models` is a noun phrase *and* a specific thing to be for or against; *"most enterprises"*, *"ai race in america"* and *"american efforts regarding ai"* are noun phrases and nothing else. **25.8% of propositions are five words or fewer.** A topic admits any stance, so `support` and `oppose` on one are two claims about a subject area, not a contradiction. D2 read all six and recorded them verified — **the reading happened and the conclusion was wrong, because a topic-shaped proposition makes a false pair structurally identical to a real one.**
+**Two things before you touch anything.**
 
-**Start with §6.** §5 and §7 are why the items look the way they do, and are worth the ten minutes before you write anything.
+1. **D7 published six tensions and all six were fabrications** — the same six pairs the previous verification pass had already documented as false, and which D2 had recorded as *"hand-read and verified"*. They existed until D6's re-extraction removed the claims underneath them. **The corpus is safe now by accident of ordering, not by design.** The sequencing error was mine: D7 was told to publish anything clearing the preconditions, while every accepted candidate was already known to be false. **When an item's effect is to publish, check what it will publish before you run it.**
+2. **The extraction form has not converged after three passes, and that is now Louis's call rather than a fix to attempt.** Corpus 3,669 → **1,027** claims across D1/D5/D6; cross-episode candidates 0 → 6 → **0**; and D6's (c) gate was reported at 18/20 where an independent draw with a recorded seed gives **9/20 strict, 13/20 charitable**. **Do not start a fourth prompt iteration.** Read Issue 034 in `ongoing_errors.md` §1, and if `Your selection:` is still blank, stop.
+
+**Start at §11, the red gate.** §5 and §7 are why the items look the way they do.
 
 **Items now carry per-step checks, written as `> **Verify:**` after the step they belong to.** Run each before starting the next step. Several are **red-first**: they tell you to run something and *watch it fail* before you fix anything, because a check that has only ever been green on repaired data has not been tested.
 
@@ -26,7 +29,7 @@ D4, D5 and D2 all landed and verified on September 7, 2026. D4 in particular fix
 
 **You are trusted to organise your own work.** There is no prescribed routine below beyond §8, which is short. Sequence, batching and when to commit are yours to judge. What is *not* yours to judge is in §4, and what counts as evidence is in §5.
 
-**The one thing to internalise before anything else:** every item in §6 is here because a previous agent's work passed all its gates and was still wrong. Not careless work — *good* work, measured against assertions that could not tell the difference. §5 exists to make that less likely, and §16 records each specific way it has happened.
+**The one thing to internalise before anything else:** every item in §6 is here because a previous agent's work passed all its gates and was still wrong. Not careless work — *good* work, measured against assertions that could not tell the difference. §5 exists to make that less likely, and §15 records each specific way it has happened.
 
 ---
 
@@ -87,8 +90,8 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 | Gate | Result | Note |
 |---|---|---|
 | `ruff check` | **PASS** | Clean across worker/, tests/, fixtures/, golden/, scripts/. |
-| `mypy --strict` | **PASS on 104 files** | Clean across worker/, tests/, fixtures/, golden/, scripts/. Item G1, W0, S1, U1, A0 & D1 delivered. |
-| `pytest tests/ -q` | **PASS** — **266 passed in 295s** | Re-measured September 7 over 23-source corpus. Well above trap 18's 35s floor. All unit, behavioural, and falsification tests pass. |
+| `mypy --strict` | **PASS** on `worker/ tests/ fixtures/ golden/` (98 files) · **RED on `scripts/`** | 11 errors in 2 files, introduced by D6. Four are integrity calls in `reextract_d6.py` that cannot execute as written. **Item G2 (§11).** |
+| `pytest tests/ -q` | **PASS** — **272 passed in 299s** | Re-measured September 7 over 23-source corpus. Well above trap 18's 35s floor. All unit, behavioural, and falsification tests pass. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
 | `worker.integrity --all` | **PASS — 15 checks, independent populations, active sufficiency verdicts, referential integrity, entailment validation, and claims-per-hour rate check** | G1, E1, N0, P0, W1, W0, S1, C1, D1, D4, D5 & D7 delivered: 15 checks, FIXTURES and CORPUS reported separately with no union; `verify_quarantine_not_rendered` reports quarantine rate 33.3% (3/9) derivable from table alone; `verify_attribution_floor` and `verify_negation_recheck` examine 6 published tensions and pass. |
 | `worker.golden.report` | **PASS** | Fixtures 20/20 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
@@ -165,6 +168,9 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 37. **A test that opens the production database can write to it.** `subj_nonexistent_subject` holds an assessment in the live corpus and no row in `subjects`. Tests legitimately *read* the corpus — assertion (c) often needs real data — but a test that needs to *write* must take a copy, and the corpus should be opened `read_only=True` from tests.
 38. **A verdict computed from the evidence it gates is not a verdict.** E1 replaced `sufficiency.get("passed", True)` with `passed = any_scored` — so "did sufficiency pass?" became "did anything get scored?", and the check that asks *"if sufficiency failed, is any score present?"* can never find one. **A guard's input must be independent of its subject.** When a fix removes a default, check what replaced it: the same inertness survives a rewrite easily.
 39. **A uniqueness bug hides behind a coverage check.** `verify_role_coverage` asks whether every utterance *resolves to* a role and passes over a `source_roles` table where every row is duplicated. Resolution and uniqueness are different questions, and only the first was asked — the same error shape as trap 28 (*"is this citation real?"* vs *"does it support this claim?"*).
+66. **An item whose effect is to publish must be checked against what it will publish.** D7 was told to make every accepted candidate produce a tension row, and did — publishing six findings that the same guide, two sections below, documented as false. The spec was followed exactly. **Before running an item that writes user-visible output, read what is currently in its input.**
+67. **A judgement gate is scored generously unless the judgement is written down.** Three times now a gate has been recorded as met while an independent reading disagreed — six false pairs "hand-read and verified", a failed (c) recorded verified, and a position test reported at 18/20 that a seeded redraw scores 9–13/20. **Require the artefact, not the count**: paste the two sentences, quote the pair, show the working. A number is not checkable; a sentence is.
+68. **A repair loop that shrinks its subject on every pass is not converging.** Three extraction-form passes took the corpus from 3,669 claims to 1,027 and the candidate set from 0 to 6 to 0. **Track the trajectory across passes, not the delta within one** — each pass improved its own metric and the sequence went nowhere.
 63. **Fixing a form defect can overshoot into its mirror image.** D1 was told propositions were full clauses and made them noun phrases; a quarter are now bare topics — *"most enterprises"* — which carry a position no better than a clause carried none. **When an item removes a property, state the floor as well as the ceiling**, or the next reading finds the opposite failure with the same metric looking healthy.
 64. **A hand-read reaches a wrong conclusion when the artefact cannot carry the distinction.** Six candidate pairs were read and recorded verified; all six are false, because a topic-shaped proposition makes a false pair structurally identical to a real one. **Reading is necessary and not sufficient — say what the reader must be able to write down.** D6 requires the sentence *"A takes position X, B takes position Y"*; a pair for which it cannot be written is not a contradiction, whatever its stance labels say.
 65. **An acceptance gate that measures the wrong property passes cheerfully.** D1's 20-utterance sample reported "18/21 are noun phrases" — true, and blind to the defect that made the whole re-extraction miss. **The sample gate must test the property the item exists to produce**, not the one that is easy to count.
@@ -196,13 +202,14 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ## 6. Queue
 
-**All items delivered. The queue is empty.**
+**Nothing is queued. One red gate, one open decision.**
 
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
-| — | — | — | — | All queued pipeline and calibration items delivered. |
+| 1 | **G2** | `mypy scripts/` is red | none | §3 records it passing; **11 errors at HEAD**, from D6. A red gate outranks everything (§9). Four of them are D6's own integrity calls, which cannot execute as written. |
+| — | — | Extraction form | **Issue 034** | Three passes have not converged and each costs a quarter of the corpus. **Do not start a fourth prompt iteration** — the decision is Louis's. |
 
-**When done and the detector still finds nothing, that is a result — report it with its denominator.** It is not a reason to loosen a threshold. Every loosening this project has tried produced a fabrication.
+**When Issue 034 is selected**, write its consequence into `design_claim_extraction.md` §2 and file the item here, per §4.
 
 ---
 
@@ -303,7 +310,7 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 - **D4** `783ab28` — **scope-aware negation. Drawn evaluation set of 80, recorded seed, labels assigned before the run, red-first baseline: false-flip rate 100% → 0% on negation claims.** The strongest single piece of work in this log.
 - **D1** `95c586d` — canonical noun-phrase form and extended polarity validation. Polarity violations 393 → **0**; full clauses 75.2% → 21.3%. **(c) NOT MET** — singletons rose to 97.7% against a target below 95%. Overshot into topics; see §12.
 - **P0** `0cb8481` · **D2** `da82f7e` — proposition dedup wired, then `T_dedup` re-measured to **0.84** over the current distribution with deciles, n and date.
-- **D6** — propositions overshot into bare topics repaired via mechanical floor (`validate_position_bearing`) and prompt v1.7. Step 1 baseline: 4/20 (20.0%) pass rate. Step 2 gate: 19/20 (95.0%) pass rate on 20-utterance sample. Step 3 mechanical floor: 495 / 2,161 pre-D6 propositions rejected. Re-extraction over 23 sources produced 1,027 claims across 1,007 active propositions ($T_{\text{dedup}} = 0.84$ strictly preserved). Claim shortfall reconciled: 583 bare topics rejected, 110 question exclusions, 313 quote verbatim misses, 115 entailment rejections, 62 stance direction rejections. All 6 false D2 candidate pairs eliminated under position test; 0 published tensions honestly reported with denominator; 3 historical fabrications preserved quarantined (100.0% quarantine rate).
+- **D6** `3100a48` — mechanical position floor (`validate_position_bearing`) + prompt v1.7; 495 of 2,161 old propositions rejected (22.9%), ≤5-word share 25.8% → 17.4%, claim loss 2,261 → 1,027 reported and reconciled, Parameter 033 still met on all 23 sources. **(c) NOT MET on an independent draw** — reported 18/20, a fresh seeded sample scores **9/20 strict / 13/20 charitable** against a 16/20 gate. Issue 034.
 
 ### Corpus and ingest
 
@@ -324,7 +331,7 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 - **D0** `399e775` — proposition table repaired in place (Issue 027 = A): canonical IDs normalised, forked rows merged, embeddings backfilled, fabrication quarantined.
 - **Q0** `46eecea` — both published tensions quarantined as fabrications. **Quarantine rate is 3 of 3 tensions ever generated.**
 - **T1** `226abe4` — same-source pairs disqualified from reversal and routed to `stance_conflict_reviews`.
-- **D7** — accepted candidates produce tension rows; quarantine rate 33.3% (3/9) reported as first-class metric derivable from table alone; both directions and falsification verified.
+- **D7** `1866d7a` — every accepted candidate now writes a tension row; quarantine rate reported as a first-class metric derivable from the table. **It also published 6 tensions, all of them fabrications**, because the six accepted candidates were already known to be false when it ran. D6's re-extraction later removed them; the store now holds 3 rows, 0 published.
 
 ### Clients and portability
 
@@ -345,79 +352,40 @@ The `TranscriptionEngine` Protocol plus its `Mock` test-double split · `LocalGe
 
 ---
 
-## 11. D6 — Propositions overshot from full clauses into bare topics
+## 11. G2 — `mypy scripts/` is red · *red-gate repair*
 
-**User impact:** a proposition becomes something a person can actually agree or disagree with, which is the precondition for a contradiction meaning anything.
+**This is a red-gate repair (§9), not a queue item.** §3 records `mypy scripts/` passing; it is failing at HEAD. Nothing else starts until it is green.
 
-**Contract:** `design_claim_extraction.md` §2 (canonical form) · `design_topic_model.md` (which owns grouping-by-subject) · traps 42, 43.
-
-**Gap — D1 fixed the stated defect and overshot into its mirror image.** §2's canonical form is *"a neutral, tenseless statement of the **matter at issue**"*, and its worked example is `federal licensing of frontier AI models` — a noun phrase **and** a specific policy a person can be for or against. D1 drove out finite verbs successfully and landed on noun phrases that are **topics, not matters at issue**:
+**Gap.** **11 errors in 2 files**, introduced by D6:
 
 ```
-most enterprises                      ai race in america
-american efforts regarding ai         creation of new jobs over the next year
-balance occurring in the field of ai regulation
-underlying kind of traditional object rendering engine
+scripts/verify_20_props_step2.py:53  Need type annotation for "propositions_tested"
+scripts/reextract_d6.py:74,75        Value of type "tuple[Any, ...] | None" is not indexable
+scripts/reextract_d6.py:266-269      verify_quotes / verify_canonical_ids /
+                                     verify_entailment_holds / verify_claims_per_hour
+                                     each called with a Storage where a list is expected,
+                                     and each missing a positional argument
 ```
 
-**25.8% of propositions are five words or fewer** (median 8, minimum 1). *"most enterprises"* is a noun phrase in exactly the way `federal licensing of frontier AI models` is, and it names nothing anyone could hold a position on.
-
-**This is why all six of D2's accepted candidate pairs are false.** A topic admits any stance, so `support` and `oppose` attached to one are not a contradiction — they are two claims about the same subject area. Read them:
-
-| proposition | quote A | quote B | why it is not a reversal |
-|---|---|---|---|
-| *starting a company today* | *"let's say you're going to start a company today"* | *"you're not starting it for the moment that exists today"* | A is a hypothetical framing. Neither takes a position on anything. |
-| *anthropic and open ai producing more tokens* ×3 | *"it's basically anthropic, and open AI"* | *"…they are free to train on all the world's output regardless of whether the creator wants them to or not"* | B is about **training-data rights**, not token production. The same B claim anchors all three pairs. |
-| *threshold for ai model development* | *"where are you going to get compute unless your model is capable…"* | *"every single AI model is like well past that threshold now"* | Different thresholds, different sentences. |
-| *faa's role in regulating ai* | *"Now he's saying it's an FAA for AI"* | *"…it's a really extreme proposal"* | **A is reported speech** — an I7 miss that survived S1 and D4. |
-
-**D2 recorded these as "All candidate pairs hand-read and verified."** The reading happened; the conclusion was wrong, because a topic-shaped proposition makes a false pair look structurally identical to a real one. **This is not a diligence failure — it is what happens when the artefact being read cannot carry the distinction.**
-
-**Read this before planning: D1's sample check passed and did not catch it.** D1 extracted 20 utterances and reported *"18/21 (85.7%) are noun phrases; 0 polarity violations"* — both true, and both measuring **form**. **The acceptance test for the sample must be the position test, not the form test.**
+**The four calls at 266–269 are the more interesting half.** They are D6's own post-extraction integrity verification, and with those signatures **they cannot execute** — every one would raise `TypeError` before doing any work. D6's integrity evidence came from `worker.integrity --all` at the CLI (15/15 PASS, which I re-ran and confirmed), so the *outcome* is sound. But the script's inline verification is dead code that looks like a check, which is the shape §5 has recorded eleven times.
 
 **Implementation**
+1. Fix the annotation at `verify_20_props_step2.py:53`.
+2. Fix the two `None`-narrowing errors at `reextract_d6.py:74-75` — the walrus idiom at `worker/integrity.py:632` is the house pattern.
+3. **Decide what the four calls were for.** Either give them the arguments their signatures require — load the entities from `Storage` first, as `run_integrity_corpus` does — or **delete them and call `run_integrity_corpus(db_path)`**, which is what actually produced D6's evidence. Deleting is the better answer if the CLI already covers it.
 
-**Step 1 — Write the position test down before touching the prompt.** A proposition passes if both of these are coherent, different claims:
-
-```
-  <subject> supports  <proposition>
-  <subject> opposes   <proposition>
-```
-
-`federal licensing of frontier AI models` → *supports federal licensing* / *opposes federal licensing*. Coherent, different. **PASS.**
-`most enterprises` → *supports most enterprises* / *opposes most enterprises*. Neither is a claim. **FAIL.**
-
-> **Verify:** apply the test by hand to **20 propositions drawn at random from the live table** and record pass/fail for each. **This is your baseline and it must be bad** — the sample above suggests well under half will pass. If most pass, your reading of the test is too lenient; re-read the four examples above and try again.
-
-**Step 2 — Fix the prompt to require a predicate-bearing matter at issue.** §2's examples stay; add the position test to the prompt in words, plus failing examples drawn from step 1's own output — the model is more corrigible against its own failures than against invented ones.
-
-> **Verify:** extract from **20 utterances** and apply the **position test** to every proposition produced. **At least 16 of 20 must pass.** Do not measure noun-phrase-ness; that is what D1 measured and it is the reason this item exists. **If fewer than 16 pass, iterate on the prompt here — do not start the full re-extraction.** This is the third form iteration; a fourth is much cheaper caught at 20 utterances than at 20,000.
-
-**Step 3 — Guard the floor mechanically where you can.** A full position test is a judgement, but its cheapest failure mode is not: reject propositions below a minimum length and those that are a bare noun phrase with no relation — no preposition, no participle, no comparative. Reason `proposition_not_position_bearing`.
-
-> **Verify (red-first):** the check rejects *"most enterprises"*, *"ai race in america"* and *"american efforts regarding ai"* from the live table, and accepts *"federal licensing of frontier AI models"* and *"amazon's burden-shifting strategy for employees and the american taxpayer"*. **Report how many of the 2,161 stored propositions it rejects.** Run this before the re-extraction.
-
-**Step 4 — Re-extract, then re-run dedup and detection.** Do **not** retune `t_dedup` in the same commit; D2 measured 0.84 against the current distribution and changing form and threshold together makes neither attributable.
-
-> **Verify:** claim count within 20% of 2,261 — and **if it is not, stop and report it**, which is the check D1 skipped and D5 had to reconstruct. Rejection counters captured and reconciled against the row-count change, as D5 established (§10).
-
-**Step 5 — Read every candidate pair the detector accepts, using the position test.** For each, state which of the two claims takes which position on the proposition, in words, before judging whether they conflict.
-
-> **Verify:** if you cannot write that sentence for a pair, the pair is not a contradiction regardless of its stance labels. **Say so and reject it.** That sentence is the artefact this item exists to make writable.
+> **Verify:** whichever you choose, run the script's verification path and show it producing output. **A check that has never executed is not a check** — if you keep the calls, they must run; if you delete them, say in the commit body that the CLI covers it.
 
 **Validation**
+- **(c)** — `mypy scripts/` clean, and the verification path in `reextract_d6.py` **executes and prints results** rather than being unreachable. *mypy alone cannot satisfy this: deleting the four lines would make mypy green while leaving the script with no verification at all, which is why the second half is here.*
+- `mypy worker/ tests/ fixtures/ golden/` stays clean, `ruff` stays clean, the suite still passes.
 
-- **(c)** — **at least 16 of 20 propositions drawn at random from the repaired table pass the position test**, recorded pass/fail individually with the proposition text, and **every candidate pair the detector accepts has a written "A takes position X, B takes position Y" sentence.** *A count of noun phrases cannot satisfy this; only reading can, and that is deliberate — D1's form metric was true and told nobody anything.*
-- The mechanical floor from step 3 fails on today's table and passes on the repaired one.
-- **Both directions:** `federal licensing of frontier AI models` survives; `most enterprises` does not.
-- `verify_quotes`, `verify_canonical_ids`, `verify_entailment_holds` PASS; claims-per-hour (Parameter 033) holds for all 23 sources.
+**Falsify.** Restore one wrong call signature; `mypy scripts/` must go red naming it. Revert; record both.
 
-**Falsify.** Revert the prompt to v1.6 and extract 20 utterances; the position-test pass rate must fall back toward the step-1 baseline. Record both rates.
-
-**Blast radius.** `worker/extract/runtime.py`, `worker/extract/validators.py`, `fixtures/behaviour/`, the corpus (re-extraction), `docs/design_claim_extraction.md` §2, `docs/ongoing_errors.md` §2, §3, §6.
+**Blast radius.** `scripts/reextract_d6.py`, `scripts/verify_20_props_step2.py`, §3.
 
 ---
-## 13. Deferred — designed for, not queued
+## 12. Deferred — designed for, not queued
 
 **Elon Musk (Issue 023 = A).** Out of scope until X/Twitter ingest exists. **Trigger:** an `XAPIAdapter` or `XArchiveImportAdapter` lands behind the `SourceAdapter` Protocol and a Musk corpus can be assembled that includes his primary medium. Until then, ingesting him would produce a confident score over a systematically skewed slice, and **invariant I5 would not catch it** — it gates on volume, not composition (trap 24).
 
@@ -429,7 +397,7 @@ underlying kind of traditional object rendering engine
 
 ---
 
-## 14. Invariants — do NOT change
+## 13. Invariants — do NOT change
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -437,13 +405,13 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 
 ---
 
-## 15. Contracts
+## 14. Contracts
 
 `master_implementation_plan.md` · `design_source_acquisition.md` · `design_claim_extraction.md` · `design_principle_extraction.md` · `design_topic_model.md` · `design_rubric_engine.md` · `design_data_layer.md` · `design_local_api_and_clients.md` · `design_ui_direction.md` · `design_evidence_integrity.md` · `e2e_verification_journeys.md` · `ongoing_errors.md`
 
 ---
 
-## 16. Feedback loop — what specs here have got wrong
+## 15. Feedback loop — what specs here have got wrong
 
 | What happened | Spec said | Should have said |
 |---|---|---|
@@ -483,5 +451,7 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 | **(c) failed, and the commit recorded it verified** | "**(c)** — the singleton rate falls materially below 95%, and propositions spanning 2+ episodes rises well above 1.8% of the table." | The assertion was fine. **What was missing was an instruction to state (c)'s outcome as a number in the commit body, next to the target.** D1 reported the singleton rate honestly in its Step 6 narrative and separately wrote "Assertion (c) verified" about a different test. **Require the item's (c) to be quoted and answered numerically, so agreement is checkable rather than asserted.** |
 
 | **Six false pairs recorded as hand-read and verified** | "Read every candidate pair the detector would publish, by hand." | **"...and for each, write the sentence 'A takes position X on P, B takes position Y' before judging."** The reading was done. What was missing was the artefact that makes a wrong reading visible — for four of the six pairs that sentence cannot be written at all, and that is the tell. |
+
+| **Six fabrications published by an item that followed its spec exactly** | "Make every accepted candidate produce a row. Published if it clears all six preconditions; quarantined otherwise." | **"...and read the current accepted set before running it; if those candidates are known-false, this item quarantines rather than publishes."** I wrote D7 knowing all six accepted candidates were false and sequenced it first anyway, because it was small. **Small is not the same as safe when the item's effect is to publish.** |
 
 **The newest pattern: a correct fix to the wrong scope reads exactly like success.** And its companion, first seen this pass: **a fix can overshoot into the mirror of the defect it removed**, while every metric the item defined still improves. D1 is its cleanest instance yet — genuinely good work, honestly reported in prose, with the headline label wrong. And the sharpest version this project has produced: **Issue 030 was the right decision against the wrong diagnosis.** The corpus did need expanding and expanding it was done well; it simply was not what stood between the pipeline and a finding. **Before committing hours of compute to a diagnosis, check that the cheap query agrees with it.** R1's gates were green, its coverage real, its numbers honest, and the thing it existed to enable did not happen. N0 then repeated it one layer down. **Check what the item was *for*, not only what it said** — and when an item's purpose is to feed a downstream stage, make one of its assertions a property of *that stage's input*, not of its own output.
