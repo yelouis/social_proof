@@ -36,12 +36,7 @@ from worker.extract.validators import (
     reset_exclusion_counts,
     reset_rejection_counts,
 )
-from worker.integrity import (
-    verify_canonical_ids,
-    verify_claims_per_hour,
-    verify_entailment_holds,
-    verify_quotes,
-)
+from worker.integrity import run_integrity_corpus
 from worker.principles.conflict import PrincipleConflictDetector
 from worker.rubric.engine import RubricEngine
 from worker.storage import Storage
@@ -71,8 +66,8 @@ def run_d6_reextraction(db_path: str = "social_proof.duckdb") -> None:
     store.con.execute("CREATE TABLE IF NOT EXISTS tensions_pre_d6 AS SELECT * FROM tensions;")
     store.con.commit()
 
-    pre_claims_count = store.con.execute("SELECT count(*) FROM claims_pre_d6").fetchone()[0]
-    pre_props_count = store.con.execute("SELECT count(*) FROM propositions_pre_d6").fetchone()[0]
+    pre_claims_count = r[0] if (r := store.con.execute("SELECT count(*) FROM claims_pre_d6").fetchone()) else 0
+    pre_props_count = r[0] if (r := store.con.execute("SELECT count(*) FROM propositions_pre_d6").fetchone()) else 0
     print(f"   Pre-D6 baseline: {pre_claims_count} claims, {pre_props_count} propositions.")
 
     # Candidate utterances: all utterances in pre-D6 claims plus host utterances for low-claim sources
@@ -261,24 +256,34 @@ def run_d6_reextraction(db_path: str = "social_proof.duckdb") -> None:
     else:
         print("   No published tensions detected (0 accepted pairs).")
 
+    store.close()
+
     # Run Integrity Checks
     print("\n12. Running Core Integrity Checks...")
-    iq = verify_quotes(store)
-    ic = verify_canonical_ids(store)
-    ie = verify_entailment_holds(store)
-    ih = verify_claims_per_hour(store)
+    results = run_integrity_corpus(db_path)
+    core_names = {"verify_quotes", "verify_canonical_ids", "verify_entailment_holds", "verify_claims_per_hour"}
+    for res in results:
+        if res.name in core_names:
+            print(f"   {res.name:<26}: {res.status} ({res.message})")
 
-    print(f"   verify_quotes:          {'PASS' if iq.passed else 'FAIL'}")
-    print(f"   verify_canonical_ids:   {'PASS' if ic.passed else 'FAIL'}")
-    print(f"   verify_entailment_holds:{'PASS' if ie.passed else 'FAIL'}")
-    print(f"   verify_claims_per_hour: {'PASS' if ih.passed else 'FAIL'}")
-
-    store.close()
     print("\nItem D6 Re-extraction Complete.")
+
+
+def run_d6_verification(db_path: str = "social_proof.duckdb") -> None:
+    print(f"Running Integrity Verification on {db_path}...")
+    results = run_integrity_corpus(db_path)
+    core_names = {"verify_quotes", "verify_canonical_ids", "verify_entailment_holds", "verify_claims_per_hour"}
+    for res in results:
+        if res.name in core_names:
+            print(f"   {res.name:<26}: {res.status} ({res.message})")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Re-extract corpus for Item D6")
     parser.add_argument("--db", default="social_proof.duckdb", help="Path to database")
+    parser.add_argument("--verify-only", action="store_true", help="Run only step 12 integrity checks")
     args = parser.parse_args()
-    run_d6_reextraction(args.db)
+    if args.verify_only:
+        run_d6_verification(args.db)
+    else:
+        run_d6_reextraction(args.db)

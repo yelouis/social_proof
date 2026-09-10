@@ -50,7 +50,7 @@ def main() -> None:
     runtime = LocalGemmaRuntime(load_live_backend=True)
     embedder = Embedder()
 
-    propositions_tested = []
+    propositions_tested: list[tuple[str, bool, str]] = []
 
     print(f"Collecting 20 valid propositions under {runtime.extraction_version}...\n")
 

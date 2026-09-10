@@ -91,7 +91,7 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 | Gate | Result | Note |
 |---|---|---|
 | `ruff check` | **PASS** | Clean across worker/, tests/, fixtures/, golden/, scripts/. |
-| `mypy --strict` | **PASS** on `worker/ tests/ fixtures/ golden/` (98 files) · **RED on `scripts/`** | 11 errors in 2 files, introduced by D6. Four are integrity calls in `reextract_d6.py` that cannot execute as written. **Item G2 (§11).** |
+| `mypy --strict` | **PASS** | Clean across worker/, tests/, fixtures/, golden/, scripts/ (118 files). Item G2 delivered. |
 | `pytest tests/ -q` | **PASS** — **272 passed in 299s** | Re-measured September 7 over 23-source corpus. Well above trap 18's 35s floor. All unit, behavioural, and falsification tests pass. |
 | `STUB_REGISTRY` | **EMPTY** | All V-items genuinely delivered. |
 | `worker.integrity --all` | **PASS — 15 checks, independent populations, active sufficiency verdicts, referential integrity, entailment validation, and claims-per-hour rate check** | G1, E1, N0, P0, W1, W0, S1, C1, D1, D4, D5 & D7 delivered: 15 checks, FIXTURES and CORPUS reported separately with no union; `verify_quarantine_not_rendered` reports quarantine rate 33.3% (3/9) derivable from table alone; `verify_attribution_floor` and `verify_negation_recheck` examine 6 published tensions and pass. |
@@ -205,8 +205,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
-| 1 | **G2** | `mypy scripts/` is red | none | §3 records it passing; **11 errors at HEAD**, from D6. A red gate outranks everything (§9). Four are D6's own integrity calls, which cannot execute as written. Thirty minutes. |
-| 2 | **X2** | Elicit the position with the proposition (**Issue 034 = B**) | G2 | **The extraction form, taken out of the judgement loop.** The model emits `the speaker is FOR/AGAINST ⟨X⟩`, ⟨X⟩ becomes the proposition, and the frame sentence is stored so the position test is auditable from the table. **Not a fourth prompt iteration** — read §12's opening before planning. |
+| 1 | **X2** | Elicit the position with the proposition (**Issue 034 = B**) | none | **The extraction form, taken out of the judgement loop.** The model emits `the speaker is FOR/AGAINST ⟨X⟩`, ⟨X⟩ becomes the proposition, and the frame sentence is stored so the position test is auditable from the table. **Not a fourth prompt iteration** — read §12's opening before planning. |
 
 ---
 
@@ -325,6 +324,7 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 - **E1** `6166613` · **E2** `763329d` — assessment referential guards and the missing-key FAIL; then the sufficiency verdict computed from **inputs** rather than from the scores it gates.
 - **M0** `49d82e1` — `source_count` resolved through the utterance anchor chain; `hasattr` guard removed; I3 violation raises.
 - **G0** `065331b` · **G1** `b558669` — mypy gate repaired; then `scripts/` brought inside the gates, `role_id` unified behind `compute_role_id`, `source_roles` 32 → 16.
+- **G2** `—` — `mypy scripts/` red-gate repair; 11 errors fixed in `verify_20_props_step2.py` and `reextract_d6.py`; inline verification path updated to call `run_integrity_corpus(db_path)` and verified executing live; falsification verified.
 - **D0** `399e775` — proposition table repaired in place (Issue 027 = A): canonical IDs normalised, forked rows merged, embeddings backfilled, fabrication quarantined.
 - **Q0** `46eecea` — both published tensions quarantined as fabrications. **Quarantine rate is 3 of 3 tensions ever generated.**
 - **T1** `226abe4` — same-source pairs disqualified from reversal and routed to `stance_conflict_reviews`.
