@@ -104,7 +104,9 @@ def test_phase_1_gate_journey_j2_and_golden_n9_misattribution_trap() -> None:
     attributor = SpeakerAttributor(t_high=0.75, t_low=0.50)
 
     # Attribute turns against Guest enrollment:
-    attributed_for_guest = attribute_speaker_turns(turns, guest_subject_id, guest_voice_ref, attributor)
+    attributed_for_guest = attribute_speaker_turns(
+        turns, guest_subject_id, guest_voice_ref, attributor
+    )
 
     # Assert Host turn was DISCARDED from Guest's corpus
     assert attributed_for_guest[0].attribution_confidence == "discard"
@@ -116,7 +118,8 @@ def test_phase_1_gate_journey_j2_and_golden_n9_misattribution_trap() -> None:
 
     # Compute Misattribution Rate (must be 0)
     misattributions = sum(
-        1 for a in attributed_for_guest
+        1
+        for a in attributed_for_guest
         if a.turn.speaker_cluster_id == "spk_host" and a.attribution_confidence == "high"
     )
     misattribution_rate = misattributions / len(turns)
@@ -148,6 +151,7 @@ def test_falsification_swapped_enrollment_triggers_misattributions() -> None:
 
 def test_pyannote_diarizer_wrapper_with_embedding_extractor() -> None:
     """Tests PyannoteDiarizer with embedding extraction."""
+
     def mock_extractor(path: str) -> np.ndarray:
         return np.ones(512, dtype=np.float32)
 

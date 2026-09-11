@@ -34,18 +34,24 @@ def test_q0_zero_published_tensions_assertion_c() -> None:
         quarantined_rows = store.con.execute(
             "SELECT tension_id, type, status, quarantine_reason FROM tensions WHERE status = 'quarantined'"
         ).fetchall()
-        assert len(quarantined_rows) >= 3, f"Expected >= 3 quarantined tensions, found {len(quarantined_rows)}"
+        assert len(quarantined_rows) >= 3, (
+            f"Expected >= 3 quarantined tensions, found {len(quarantined_rows)}"
+        )
 
         quarantined_ids = {r[0] for r in quarantined_rows}
         expected_ids = {"0068adec4b1501c6", "461e3d1dbf30bde4", "4b812a6b0dc604b0"}
-        assert expected_ids.issubset(quarantined_ids), f"Mismatch in quarantined IDs: {expected_ids} not in {quarantined_ids}"
+        assert expected_ids.issubset(quarantined_ids), (
+            f"Mismatch in quarantined IDs: {expected_ids} not in {quarantined_ids}"
+        )
         assert expected_ids.isdisjoint(published_ids), (
             f"Quarantined fabrication leaked into published tensions: {expected_ids.intersection(published_ids)}"
         )
 
         for r in quarantined_rows:
             if r[0] in expected_ids:
-                assert r[3] == "fabricated_proposition", f"Tension {r[0]} quarantine_reason={r[3]}, expected 'fabricated_proposition'"
+                assert r[3] == "fabricated_proposition", (
+                    f"Tension {r[0]} quarantine_reason={r[3]}, expected 'fabricated_proposition'"
+                )
 
         # 3. Load all entities via storage helpers and run verify_quarantine_not_rendered
         tensions = [
@@ -61,7 +67,9 @@ def test_q0_zero_published_tensions_assertion_c() -> None:
 
         res = verify_quarantine_not_rendered(tensions=tensions, assessments=assessments)
         assert res.passed is True, f"verify_quarantine_not_rendered failed: {res.message}"
-        assert res.examined_count >= 3, f"Expected >= 3 examined quarantined tensions, got {res.examined_count}"
+        assert res.examined_count >= 3, (
+            f"Expected >= 3 examined quarantined tensions, got {res.examined_count}"
+        )
 
         # 4. Explicit check that no assessment's axis_evidence mentions either tension
         for a in assessments:
@@ -77,7 +85,9 @@ def test_q0_zero_published_tensions_assertion_c() -> None:
         total_tensions = int(t_count_row[0])
         assert total_tensions >= 3
         quarantine_rate = len(quarantined_rows) / total_tensions
-        assert 0.0 < quarantine_rate <= 1.0, f"Expected positive quarantine rate, got {quarantine_rate:.2%}"
+        assert 0.0 < quarantine_rate <= 1.0, (
+            f"Expected positive quarantine rate, got {quarantine_rate:.2%}"
+        )
 
     finally:
         store.close()
@@ -104,19 +114,25 @@ def test_q0_falsification_republish_tension_assertion_c_goes_red(tmp_path: Path)
         "UPDATE tensions SET status = 'published', quarantine_reason = NULL WHERE tension_id = '461e3d1dbf30bde4'"
     )
 
-    published = store.con.execute("SELECT tension_id FROM tensions WHERE status = 'published'").fetchall()
+    published = store.con.execute(
+        "SELECT tension_id FROM tensions WHERE status = 'published'"
+    ).fetchall()
     published_ids = {r[0] for r in published}
     # Falsification check 1: zero-published assertion fails on leaked fabrication
     assert "461e3d1dbf30bde4" in published_ids
     assert len(published) == initial_published_count + 1
 
     # Also simulate leakage into assessment evidence
-    a_row = store.con.execute("SELECT assessment_id, axis_evidence FROM assessments LIMIT 1").fetchone()
+    a_row = store.con.execute(
+        "SELECT assessment_id, axis_evidence FROM assessments LIMIT 1"
+    ).fetchone()
     assert a_row is not None
     aid = a_row[0]
     ev = json.loads(a_row[1]) if isinstance(a_row[1], str) else a_row[1]
     ev["consistency"] = ["461e3d1dbf30bde4"]
-    store.con.execute("UPDATE assessments SET axis_evidence = ? WHERE assessment_id = ?", [json.dumps(ev), aid])
+    store.con.execute(
+        "UPDATE assessments SET axis_evidence = ? WHERE assessment_id = ?", [json.dumps(ev), aid]
+    )
 
     # Re-quarantine to check verify_quarantine_not_rendered when evidence leaks
     store.con.execute(
@@ -133,14 +149,20 @@ def test_q0_falsification_republish_tension_assertion_c_goes_red(tmp_path: Path)
         if (a := store.get_assessment(r[0])) is not None
     ]
 
-    res_fail = verify_quarantine_not_rendered(tensions=tensions_quar, assessments=assessments_leaked)
+    res_fail = verify_quarantine_not_rendered(
+        tensions=tensions_quar, assessments=assessments_leaked
+    )
     # Falsification check 2: verify_quarantine_not_rendered MUST FAIL (RED)
-    assert res_fail.passed is False, "verify_quarantine_not_rendered should have failed on leaked tension"
+    assert res_fail.passed is False, (
+        "verify_quarantine_not_rendered should have failed on leaked tension"
+    )
     assert res_fail.status == "FAIL"
 
     # 2. Revert: clean up assessment evidence
     ev["consistency"] = []
-    store.con.execute("UPDATE assessments SET axis_evidence = ? WHERE assessment_id = ?", [json.dumps(ev), aid])
+    store.con.execute(
+        "UPDATE assessments SET axis_evidence = ? WHERE assessment_id = ?", [json.dumps(ev), aid]
+    )
 
     assessments_clean = [
         a

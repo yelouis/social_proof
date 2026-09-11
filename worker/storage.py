@@ -155,12 +155,14 @@ class ArtifactStore:
         table = pq.read_table(file_path)
         words = []
         for i in range(len(table)):
-            words.append({
-                "word": table["word"][i].as_py(),
-                "start_ms": table["start_ms"][i].as_py(),
-                "end_ms": table["end_ms"][i].as_py(),
-                "confidence": table["confidence"][i].as_py(),
-            })
+            words.append(
+                {
+                    "word": table["word"][i].as_py(),
+                    "start_ms": table["start_ms"][i].as_py(),
+                    "end_ms": table["end_ms"][i].as_py(),
+                    "confidence": table["confidence"][i].as_py(),
+                }
+            )
         return words
 
 
@@ -419,13 +421,17 @@ class Storage:
             "SELECT 1 FROM information_schema.tables WHERE table_name = 'claims_pre_merge'"
         ).fetchone()
         if has_pre_merge:
-            self.con.execute("ALTER TABLE claims_pre_merge ADD COLUMN IF NOT EXISTS position_frame VARCHAR;")
+            self.con.execute(
+                "ALTER TABLE claims_pre_merge ADD COLUMN IF NOT EXISTS position_frame VARCHAR;"
+            )
 
         has_pre_d6 = self.con.execute(
             "SELECT 1 FROM information_schema.tables WHERE table_name = 'claims_pre_d6'"
         ).fetchone()
         if has_pre_d6:
-            self.con.execute("ALTER TABLE claims_pre_d6 ADD COLUMN IF NOT EXISTS position_frame VARCHAR;")
+            self.con.execute(
+                "ALTER TABLE claims_pre_d6 ADD COLUMN IF NOT EXISTS position_frame VARCHAR;"
+            )
 
     def get_entailment_cache(self) -> dict[tuple[str, str], float]:
         """Loads cached claim-to-proposition entailment similarities."""
@@ -463,6 +469,7 @@ class Storage:
 
     def insert_subject(self, s: Subject) -> None:
         import json
+
         self.con.execute(
             """
             INSERT INTO subjects VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -488,7 +495,10 @@ class Storage:
 
     def get_subject(self, subject_id: str) -> Subject | None:
         import json
-        res = self.con.execute("SELECT * FROM subjects WHERE subject_id = ?", [subject_id]).fetchone()
+
+        res = self.con.execute(
+            "SELECT * FROM subjects WHERE subject_id = ?", [subject_id]
+        ).fetchone()
         if not res:
             return None
         return Subject(
@@ -663,7 +673,9 @@ class Storage:
         )
 
     def get_utterance(self, utterance_id: str) -> Utterance | None:
-        res = self.con.execute("SELECT * FROM utterances WHERE utterance_id = ?", [utterance_id]).fetchone()
+        res = self.con.execute(
+            "SELECT * FROM utterances WHERE utterance_id = ?", [utterance_id]
+        ).fetchone()
         if not res:
             return None
         return Utterance(
@@ -697,8 +709,11 @@ class Storage:
 
     def insert_claim(self, c: Claim) -> None:
         import json
+
         if not c.position_frame or not str(c.position_frame).strip():
-            raise ValueError(f"Claim {c.claim_id} cannot be persisted without position_frame (Issue 034 = B)")
+            raise ValueError(
+                f"Claim {c.claim_id} cannot be persisted without position_frame (Issue 034 = B)"
+            )
         self.con.execute(
             """
             INSERT INTO claims VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -738,7 +753,19 @@ class Storage:
 
     def get_claim(self, claim_id: str) -> Claim | None:
         import json
+
         res = self.con.execute("SELECT * FROM claims WHERE claim_id = ?", [claim_id]).fetchone()
+        if not res:
+            try:
+                table_check = self.con.execute(
+                    "SELECT 1 FROM information_schema.tables WHERE table_name = 'claims_pre_x4'"
+                ).fetchone()
+                if table_check:
+                    res = self.con.execute(
+                        "SELECT * FROM claims_pre_x4 WHERE claim_id = ?", [claim_id]
+                    ).fetchone()
+            except Exception:
+                pass
         if not res:
             return None
         return Claim(
@@ -765,6 +792,7 @@ class Storage:
 
     def get_claims_for_subject(self, subject_id: str) -> list[Claim]:
         import json
+
         rows = self.con.execute(
             "SELECT * FROM claims WHERE subject_id = ? ORDER BY recorded_at",
             [subject_id],
@@ -845,7 +873,9 @@ class Storage:
             [proposition_id, embedding],
         )
 
-    def query_nearest_propositions(self, query_embedding: list[float], limit: int = 5) -> list[tuple[str, float]]:
+    def query_nearest_propositions(
+        self, query_embedding: list[float], limit: int = 5
+    ) -> list[tuple[str, float]]:
         """Queries nearest propositions by cosine distance, filtering strictly to active propositions."""
         if len(query_embedding) != 768:
             raise ValueError(f"Query vector width must be exactly 768, got {len(query_embedding)}")
@@ -907,7 +937,9 @@ class Storage:
                 target_sids_row = self.con.execute(
                     "SELECT subject_ids FROM propositions WHERE proposition_id = ?", [new_id]
                 ).fetchone()
-                target_sids = list(target_sids_row[0]) if target_sids_row and target_sids_row[0] else []
+                target_sids = (
+                    list(target_sids_row[0]) if target_sids_row and target_sids_row[0] else []
+                )
                 merged_sids = sorted(list(set(target_sids) | set(sids)))
                 self.con.execute(
                     "UPDATE propositions SET subject_ids = ? WHERE proposition_id = ?",
@@ -915,7 +947,9 @@ class Storage:
                 )
 
                 # Do not inherit embedding across merge. Delete source row's embedding if present.
-                self.con.execute("DELETE FROM proposition_embeddings WHERE proposition_id = ?", [pid])
+                self.con.execute(
+                    "DELETE FROM proposition_embeddings WHERE proposition_id = ?", [pid]
+                )
                 self.con.execute("DELETE FROM propositions WHERE proposition_id = ?", [pid])
                 merged_count += 1
 
@@ -936,7 +970,9 @@ class Storage:
 
         # 5. Recompute claim_count for every row
         claim_counts_updated = 0
-        all_props = self.con.execute("SELECT proposition_id, claim_count FROM propositions").fetchall()
+        all_props = self.con.execute(
+            "SELECT proposition_id, claim_count FROM propositions"
+        ).fetchall()
         for cur_id, cur_count in all_props:
             rc_row = self.con.execute(
                 "SELECT count(*) FROM claims WHERE proposition_id = ?", [cur_id]
@@ -998,11 +1034,7 @@ class Storage:
                 embedded_count += 1
 
         total_writes = (
-            merged_count
-            + updated_count
-            + claim_counts_updated
-            + status_updated
-            + embedded_count
+            merged_count + updated_count + claim_counts_updated + status_updated + embedded_count
         )
         if total_writes > 0:
             self.con.execute("CHECKPOINT")
@@ -1034,7 +1066,9 @@ class Storage:
         if "position_frame" not in col_names:
             self.con.execute("ALTER TABLE claims_pre_merge ADD COLUMN position_frame VARCHAR;")
         self.con.execute("INSERT INTO propositions SELECT * FROM propositions_pre_merge;")
-        self.con.execute("INSERT INTO proposition_embeddings SELECT * FROM proposition_embeddings_pre_merge;")
+        self.con.execute(
+            "INSERT INTO proposition_embeddings SELECT * FROM proposition_embeddings_pre_merge;"
+        )
         self.con.execute("INSERT INTO claims SELECT * FROM claims_pre_merge;")
         self.con.execute("CHECKPOINT;")
         return True
@@ -1067,8 +1101,12 @@ class Storage:
         if from_pre_merge:
             self.restore_pre_merge_propositions()
         elif backup_tables:
-            self.con.execute("CREATE TABLE IF NOT EXISTS propositions_pre_merge AS SELECT * FROM propositions;")
-            self.con.execute("CREATE TABLE IF NOT EXISTS proposition_embeddings_pre_merge AS SELECT * FROM proposition_embeddings;")
+            self.con.execute(
+                "CREATE TABLE IF NOT EXISTS propositions_pre_merge AS SELECT * FROM propositions;"
+            )
+            self.con.execute(
+                "CREATE TABLE IF NOT EXISTS proposition_embeddings_pre_merge AS SELECT * FROM proposition_embeddings;"
+            )
             self.con.execute("CREATE TABLE IF NOT EXISTS claims_pre_merge AS SELECT * FROM claims;")
 
         emb_rows = self.con.execute(
@@ -1079,9 +1117,7 @@ class Storage:
             WHERE p.status = 'active'
             """
         ).fetchall()
-        embs: dict[str, np.ndarray] = {
-            r[0]: np.array(r[1], dtype=np.float32) for r in emb_rows
-        }
+        embs: dict[str, np.ndarray] = {r[0]: np.array(r[1], dtype=np.float32) for r in emb_rows}
 
         claim_rows = self.con.execute(
             """
@@ -1285,7 +1321,9 @@ class Storage:
         )
 
     def get_principle(self, principle_id: str) -> Principle | None:
-        res = self.con.execute("SELECT * FROM principles WHERE principle_id = ?", [principle_id]).fetchone()
+        res = self.con.execute(
+            "SELECT * FROM principles WHERE principle_id = ?", [principle_id]
+        ).fetchone()
         if not res:
             return None
         return Principle(
@@ -1397,7 +1435,9 @@ class Storage:
         )
 
     def get_topics_for_subject(self, subject_id: str) -> list[Topic]:
-        rows = self.con.execute("SELECT * FROM topics WHERE subject_id = ?", [subject_id]).fetchall()
+        rows = self.con.execute(
+            "SELECT * FROM topics WHERE subject_id = ?", [subject_id]
+        ).fetchall()
         return [
             Topic(
                 topic_id=r[0],
@@ -1473,7 +1513,9 @@ class Storage:
         )
 
     def get_tension(self, tension_id: str) -> Tension | None:
-        res = self.con.execute("SELECT * FROM tensions WHERE tension_id = ?", [tension_id]).fetchone()
+        res = self.con.execute(
+            "SELECT * FROM tensions WHERE tension_id = ?", [tension_id]
+        ).fetchone()
         if not res:
             return None
         return Tension(
@@ -1631,6 +1673,7 @@ class Storage:
 
     def insert_assessment(self, a: Assessment) -> None:
         import json
+
         self.con.execute(
             """
             INSERT INTO assessments VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -1658,6 +1701,7 @@ class Storage:
 
     def get_assessment(self, assessment_id: str) -> Assessment | None:
         import json
+
         res = self.con.execute(
             "SELECT * FROM assessments WHERE assessment_id = ?",
             [assessment_id],
@@ -1681,6 +1725,7 @@ class Storage:
 
     def get_assessments_for_subject(self, subject_id: str) -> list[Assessment]:
         import json
+
         rows = self.con.execute(
             "SELECT * FROM assessments WHERE subject_id = ? ORDER BY computed_at DESC",
             [subject_id],
@@ -1724,6 +1769,7 @@ class Storage:
 
     def insert_ingest_job(self, j: IngestJob) -> None:
         import json
+
         self.con.execute(
             """
             INSERT INTO ingest_jobs VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -1749,6 +1795,7 @@ class Storage:
 
     def get_ingest_job(self, job_id: str) -> IngestJob | None:
         import json
+
         res = self.con.execute("SELECT * FROM ingest_jobs WHERE job_id = ?", [job_id]).fetchone()
         if not res:
             return None

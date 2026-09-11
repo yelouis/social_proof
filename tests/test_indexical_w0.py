@@ -84,7 +84,9 @@ def test_both_directions_and_rejection_counters() -> None:
         confidence=0.9,
     )
     res_clean = validate_self_contained(clean_claim)
-    assert res_clean.is_valid, f"Expected self-contained proposition to pass, got rejected: {res_clean.rejection_reason}"
+    assert res_clean.is_valid, (
+        f"Expected self-contained proposition to pass, got rejected: {res_clean.rejection_reason}"
+    )
     assert res_clean.rejection_reason is None
 
     # Direction 2: Indexicals and unbound pronouns must be rejected
@@ -202,7 +204,9 @@ def test_top_5_merged_clusters_are_propositions_not_topics(live_db: Storage) -> 
             quote_text="dummy quote",
             confidence=0.9,
         )
-        assert validate_self_contained(dummy).is_valid, f"Top cluster {pid} ('{text}') is an indexical attractor!"
+        assert validate_self_contained(dummy).is_valid, (
+            f"Top cluster {pid} ('{text}') is an indexical attractor!"
+        )
 
 
 def test_falsification_loop_2() -> None:
@@ -225,7 +229,9 @@ def test_falsification_loop_2() -> None:
     def simulated_bypass_validate(_claim: ExtractedClaim) -> Any:
         return True
 
-    assert simulated_bypass_validate(test_claim) is True, "Bypassed validator should permit indexical template"
+    assert simulated_bypass_validate(test_claim) is True, (
+        "Bypassed validator should permit indexical template"
+    )
 
     # Revert to active validator: blocked again (GREEN)
     outcome_reverted = validate_self_contained(test_claim)

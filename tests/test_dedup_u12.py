@@ -67,6 +67,7 @@ def test_semantic_synonyms_merge_and_antonyms_separate_with_real_embedder(tmp_pa
 
 def test_dimension_mismatch_raises_at_startup() -> None:
     """A model instance reporting wrong dimension raises ValueError at initialization."""
+
     class FakeModel:
         def get_embedding_dimension(self) -> int:
             return 512

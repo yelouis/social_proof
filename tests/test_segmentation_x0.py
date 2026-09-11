@@ -13,22 +13,30 @@ def test_assertion_c_zero_utterances_begin_or_end_mid_word() -> None:
     """
     store = Storage("social_proof.duckdb", read_only=True)
     try:
-        utterances = store.con.execute("SELECT utterance_id, text_verbatim FROM utterances").fetchall()
+        utterances = store.con.execute(
+            "SELECT utterance_id, text_verbatim FROM utterances"
+        ).fetchall()
         assert len(utterances) > 0, "Expected utterances in database"
 
         bad_starts = []
         bad_ends = []
         for uid, text in utterances:
             t = text.strip()
-            starts_valid = t[0].isupper() or t[0] in OPENING_QUOTES or t[0].isdigit() or t[0] in "$€£"
+            starts_valid = (
+                t[0].isupper() or t[0] in OPENING_QUOTES or t[0].isdigit() or t[0] in "$€£"
+            )
             ends_valid = t.endswith(TERMINAL_PUNCT_TUPLE)
             if not starts_valid:
                 bad_starts.append((uid, t[:40]))
             if not ends_valid:
                 bad_ends.append((uid, t[-40:]))
 
-        assert bad_starts == [], f"Found {len(bad_starts)} utterances starting mid-word: {bad_starts[:5]}"
-        assert bad_ends == [], f"Found {len(bad_ends)} utterances ending without terminal punctuation: {bad_ends[:5]}"
+        assert bad_starts == [], (
+            f"Found {len(bad_starts)} utterances starting mid-word: {bad_starts[:5]}"
+        )
+        assert bad_ends == [], (
+            f"Found {len(bad_ends)} utterances ending without terminal punctuation: {bad_ends[:5]}"
+        )
     finally:
         store.close()
 
@@ -38,12 +46,16 @@ def test_quarantined_tension_0068adec4b1501c6_not_rendered() -> None:
     store = Storage("social_proof.duckdb", read_only=True)
     try:
         tension = store.get_tension("0068adec4b1501c6")
-        assert tension is not None, "Quarantined tension 0068adec4b1501c6 must be preserved for audit"
+        assert tension is not None, (
+            "Quarantined tension 0068adec4b1501c6 must be preserved for audit"
+        )
         assert tension.status == "quarantined"
         assert tension.quarantine_reason == "fabricated_proposition"
 
         # Verify no assessment contains the quarantined tension in its axis_evidence
-        assessments = store.con.execute("SELECT assessment_id, axis_evidence FROM assessments").fetchall()
+        assessments = store.con.execute(
+            "SELECT assessment_id, axis_evidence FROM assessments"
+        ).fetchall()
         for aid, evidence_json in assessments:
             assert "0068adec4b1501c6" not in str(evidence_json), (
                 f"Assessment {aid} contains quarantined tension in axis_evidence: {evidence_json}"
@@ -58,7 +70,9 @@ def test_surviving_claims_have_verbatim_supporting_quotes() -> None:
     try:
         claim_ids = [r[0] for r in store.con.execute("SELECT claim_id FROM claims").fetchall()]
         claims = [c for cid in claim_ids if (c := store.get_claim(cid)) is not None]
-        assert len(claims) == len(claim_ids), f"Unresolvable claims: found {len(claims)} of {len(claim_ids)}"
+        assert len(claims) == len(claim_ids), (
+            f"Unresolvable claims: found {len(claims)} of {len(claim_ids)}"
+        )
         assert len(claims) >= 9, f"Expected at least 9 verified claims, found {len(claims)}"
 
         for c in claims:
@@ -74,16 +88,16 @@ def test_surviving_claims_have_verbatim_supporting_quotes() -> None:
                 "gemma-3-27b-it:v1.6:s1",
                 "gemma-3-27b-it:v1.7:s1",
                 "gemma-3-27b-it:v1.8:s1",
-            ), (
-                f"Claim {c.claim_id} does not have bumped extraction version: {c.extraction_version}"
-            )
+                "gemma-3-27b-it:v1.9:s1",
+            ), f"Claim {c.claim_id} does not have bumped extraction version: {c.extraction_version}"
 
             # Quote must resolve verbatim against its utterance
             utt = store.get_utterance(c.utterance_id)
             assert utt is not None, f"Utterance {c.utterance_id} for claim {c.claim_id} not found"
-            assert c.quote_text in utt.text_verbatim or c.quote_text.lower() in utt.text_verbatim.lower(), (
-                f"Claim quote '{c.quote_text}' not in utterance '{utt.text_verbatim}'"
-            )
+            assert (
+                c.quote_text in utt.text_verbatim
+                or c.quote_text.lower() in utt.text_verbatim.lower()
+            ), f"Claim quote '{c.quote_text}' not in utterance '{utt.text_verbatim}'"
     finally:
         store.close()
 
@@ -101,7 +115,7 @@ def test_falsification_fixed_length_segmenter_fails_assertion_c() -> None:
     )
     # Simulate naive fixed-character chunking (e.g. 50 characters)
     chunk_size = 50
-    fixed_chunks = [sample_text[i:i + chunk_size] for i in range(0, len(sample_text), chunk_size)]
+    fixed_chunks = [sample_text[i : i + chunk_size] for i in range(0, len(sample_text), chunk_size)]
 
     bad_starts = []
     bad_ends = []
@@ -113,5 +127,7 @@ def test_falsification_fixed_length_segmenter_fails_assertion_c() -> None:
             bad_ends.append(t[-20:])
 
     # Under naive fixed-length segmentation, Assertion (c) MUST FAIL (go RED)
-    assert len(bad_starts) > 0, "Fixed-length segmentation should have produced mid-word/lowercase starts"
+    assert len(bad_starts) > 0, (
+        "Fixed-length segmentation should have produced mid-word/lowercase starts"
+    )
     assert len(bad_ends) > 0, "Fixed-length segmentation should have produced unpunctuated ends"

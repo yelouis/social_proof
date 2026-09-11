@@ -115,22 +115,26 @@ def run_falsification_2_identity() -> None:
     src2_id = "source_ep2"
 
     store_broken.insert_subject(Subject(subject_id=subj_id, display_name="David Sacks"))
-    store_broken.insert_source(Source(
-        source_id=src1_id,
-        title="Episode 1",
-        publisher="All-In",
-        canonical_url="https://youtube.com/watch?v=ep1",
-        artifact_hash="hash_ep1",
-        recorded_at="2024-01-01T00:00:00Z",
-    ))
-    store_broken.insert_source(Source(
-        source_id=src2_id,
-        title="Episode 2",
-        publisher="All-In",
-        canonical_url="https://youtube.com/watch?v=ep2",
-        artifact_hash="hash_ep2",
-        recorded_at="2024-06-01T00:00:00Z",
-    ))
+    store_broken.insert_source(
+        Source(
+            source_id=src1_id,
+            title="Episode 1",
+            publisher="All-In",
+            canonical_url="https://youtube.com/watch?v=ep1",
+            artifact_hash="hash_ep1",
+            recorded_at="2024-01-01T00:00:00Z",
+        )
+    )
+    store_broken.insert_source(
+        Source(
+            source_id=src2_id,
+            title="Episode 2",
+            publisher="All-In",
+            canonical_url="https://youtube.com/watch?v=ep2",
+            artifact_hash="hash_ep2",
+            recorded_at="2024-06-01T00:00:00Z",
+        )
+    )
 
     utt1 = Utterance(
         utterance_id="utt_broken_1",
@@ -168,14 +172,18 @@ def run_falsification_2_identity() -> None:
     print(f"  Claim B (<X> oppose) : '{prop_broken_b}' -> proposition_id={pid_broken_b}")
     assert pid_broken_a != pid_broken_b, "Proposition IDs must differ when <X> varies!"
 
-    store_broken.insert_proposition(Proposition(
-        proposition_id=pid_broken_a,
-        canonical_text=prop_broken_a,
-    ))
-    store_broken.insert_proposition(Proposition(
-        proposition_id=pid_broken_b,
-        canonical_text=prop_broken_b,
-    ))
+    store_broken.insert_proposition(
+        Proposition(
+            proposition_id=pid_broken_a,
+            canonical_text=prop_broken_a,
+        )
+    )
+    store_broken.insert_proposition(
+        Proposition(
+            proposition_id=pid_broken_b,
+            canonical_text=prop_broken_b,
+        )
+    )
 
     cid_broken_a = compute_claim_id(utt1.utterance_id, pid_broken_a, "support", "test:v1.8:s1")
     cid_broken_b = compute_claim_id(utt2.utterance_id, pid_broken_b, "oppose", "test:v1.8:s1")
@@ -224,38 +232,46 @@ def run_falsification_2_identity() -> None:
     print("  Result when <X> varies:")
     print(f"    Examined pairs: {eval_broken.total_pairs_examined}")
     print(f"    Accepted pairs: {eval_broken.candidates_accepted}")
-    assert eval_broken.total_pairs_examined == 0, "Self-join must find 0 candidate pairs when <X> varies!"
+    assert eval_broken.total_pairs_examined == 0, (
+        "Self-join must find 0 candidate pairs when <X> varies!"
+    )
     print("  -> Falsification CONFIRMED: self-join loses the candidate reversal when <X> varies.\n")
 
     # 2. Preserved identity: byte-identical <X>
     store_identical = Storage(":memory:")
     store_identical.insert_subject(Subject(subject_id=subj_id, display_name="David Sacks"))
-    store_identical.insert_source(Source(
-        source_id=src1_id,
-        title="Episode 1",
-        publisher="All-In",
-        canonical_url="https://youtube.com/watch?v=ep1",
-        artifact_hash="hash_ep1",
-        recorded_at="2024-01-01T00:00:00Z",
-    ))
-    store_identical.insert_source(Source(
-        source_id=src2_id,
-        title="Episode 2",
-        publisher="All-In",
-        canonical_url="https://youtube.com/watch?v=ep2",
-        artifact_hash="hash_ep2",
-        recorded_at="2024-06-01T00:00:00Z",
-    ))
+    store_identical.insert_source(
+        Source(
+            source_id=src1_id,
+            title="Episode 1",
+            publisher="All-In",
+            canonical_url="https://youtube.com/watch?v=ep1",
+            artifact_hash="hash_ep1",
+            recorded_at="2024-01-01T00:00:00Z",
+        )
+    )
+    store_identical.insert_source(
+        Source(
+            source_id=src2_id,
+            title="Episode 2",
+            publisher="All-In",
+            canonical_url="https://youtube.com/watch?v=ep2",
+            artifact_hash="hash_ep2",
+            recorded_at="2024-06-01T00:00:00Z",
+        )
+    )
     store_identical.insert_utterance(utt1)
     store_identical.insert_utterance(utt2)
 
     prop_identical = "federal licensing of frontier AI models"
     pid_identical = compute_proposition_id(prop_identical)
 
-    store_identical.insert_proposition(Proposition(
-        proposition_id=pid_identical,
-        canonical_text=prop_identical,
-    ))
+    store_identical.insert_proposition(
+        Proposition(
+            proposition_id=pid_identical,
+            canonical_text=prop_identical,
+        )
+    )
 
     cid_ident_a = compute_claim_id(utt1.utterance_id, pid_identical, "support", "test:v1.8:s1")
     cid_ident_b = compute_claim_id(utt2.utterance_id, pid_identical, "oppose", "test:v1.8:s1")
@@ -305,7 +321,9 @@ def run_falsification_2_identity() -> None:
     print(f"  Shared proposition_id: {pid_identical}")
     print(f"  Examined pairs: {eval_ident.total_pairs_examined}")
     print(f"  Accepted pairs: {eval_ident.candidates_accepted}")
-    assert eval_ident.total_pairs_examined == 1, "Self-join must find 1 candidate pair with byte-identical <X>!"
+    assert eval_ident.total_pairs_examined == 1, (
+        "Self-join must find 1 candidate pair with byte-identical <X>!"
+    )
     print("  -> Identity rule CONFIRMED: self-join successfully pairs the opposing claims.\n")
 
 

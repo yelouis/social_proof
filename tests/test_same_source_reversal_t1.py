@@ -165,15 +165,37 @@ def test_baseline_five_same_source_pairs_disqualified_and_routed(test_store: Sto
         # Insert claim A and claim B
         ca_data = case["claim_a"]
         cb_data = case["claim_b"]
-        _seed_claim(test_store, sid, src_id, prop_id, ca_data["stance"], ca_data["text"], ca_data["start_ms"], rec_at)
-        _seed_claim(test_store, sid, src_id, prop_id, cb_data["stance"], cb_data["text"], cb_data["start_ms"], rec_at)
+        _seed_claim(
+            test_store,
+            sid,
+            src_id,
+            prop_id,
+            ca_data["stance"],
+            ca_data["text"],
+            ca_data["start_ms"],
+            rec_at,
+        )
+        _seed_claim(
+            test_store,
+            sid,
+            src_id,
+            prop_id,
+            cb_data["stance"],
+            cb_data["text"],
+            cb_data["start_ms"],
+            rec_at,
+        )
 
     detector = TensionDetector(test_store, disqualify_same_source=True)
 
     # 1. Denominator check via evaluate_candidate_pairs
     report = detector.evaluate_candidate_pairs()
-    assert report.total_pairs_examined == 5, f"Expected 5 examined pairs, got {report.total_pairs_examined}"
-    assert report.candidates_accepted == 0, f"Expected 0 accepted candidates, got {report.candidates_accepted}"
+    assert report.total_pairs_examined == 5, (
+        f"Expected 5 examined pairs, got {report.total_pairs_examined}"
+    )
+    assert report.candidates_accepted == 0, (
+        f"Expected 0 accepted candidates, got {report.candidates_accepted}"
+    )
     assert report.rejections_by_reason == {"same_source_stance_conflict": 5}
 
     # 2. Tension detection produces zero unacknowledged_reversals
@@ -216,8 +238,26 @@ def test_falsification_loop2_same_source_toggle(test_store: Storage) -> None:
 
         ca_data = case["claim_a"]
         cb_data = case["claim_b"]
-        _seed_claim(test_store, sid, src_id, prop_id, ca_data["stance"], ca_data["text"], ca_data["start_ms"], rec_at)
-        _seed_claim(test_store, sid, src_id, prop_id, cb_data["stance"], cb_data["text"], cb_data["start_ms"], rec_at)
+        _seed_claim(
+            test_store,
+            sid,
+            src_id,
+            prop_id,
+            ca_data["stance"],
+            ca_data["text"],
+            ca_data["start_ms"],
+            rec_at,
+        )
+        _seed_claim(
+            test_store,
+            sid,
+            src_id,
+            prop_id,
+            cb_data["stance"],
+            cb_data["text"],
+            cb_data["start_ms"],
+            rec_at,
+        )
 
     # Disable same-source disqualification -> candidate pairs reappear
     detector_falsified = TensionDetector(test_store, disqualify_same_source=False)
@@ -229,7 +269,9 @@ def test_falsification_loop2_same_source_toggle(test_store: Storage) -> None:
 
     tensions_falsified = detector_falsified.detect_all_tensions()
     reversals_falsified = [t for t in tensions_falsified if t.type == "unacknowledged_reversal"]
-    assert len(reversals_falsified) == 5, f"Falsification expected 5 reversals, got {len(reversals_falsified)}"
+    assert len(reversals_falsified) == 5, (
+        f"Falsification expected 5 reversals, got {len(reversals_falsified)}"
+    )
 
     # Re-enable same-source disqualification -> returns strictly to 0
     detector_normal = TensionDetector(test_store, disqualify_same_source=True)
@@ -248,7 +290,9 @@ def test_synthetic_cross_episode_accepted(test_store: Storage) -> None:
     A synthetic cross-episode pair with opposing stances on one proposition is accepted
     as a candidate and produces a published unacknowledged_reversal.
     """
-    case = next(c for c in _load_t1_cases() if c["case_id"] == "t1_synthetic_cross_episode_accepted")
+    case = next(
+        c for c in _load_t1_cases() if c["case_id"] == "t1_synthetic_cross_episode_accepted"
+    )
     sid = case["subject_id"]
     p_text = case["proposition_text"]
     prop_id = compute_proposition_id(p_text)
@@ -270,8 +314,26 @@ def test_synthetic_cross_episode_accepted(test_store: Storage) -> None:
 
     ca_data = case["claim_a"]
     cb_data = case["claim_b"]
-    _seed_claim(test_store, sid, src_a_id, prop_id, ca_data["stance"], ca_data["text"], ca_data["start_ms"], rec_a)
-    _seed_claim(test_store, sid, src_b_id, prop_id, cb_data["stance"], cb_data["text"], cb_data["start_ms"], rec_b)
+    _seed_claim(
+        test_store,
+        sid,
+        src_a_id,
+        prop_id,
+        ca_data["stance"],
+        ca_data["text"],
+        ca_data["start_ms"],
+        rec_a,
+    )
+    _seed_claim(
+        test_store,
+        sid,
+        src_b_id,
+        prop_id,
+        cb_data["stance"],
+        cb_data["text"],
+        cb_data["start_ms"],
+        rec_b,
+    )
 
     detector = TensionDetector(test_store, disqualify_same_source=True)
 
@@ -299,11 +361,15 @@ def test_synthetic_cross_episode_accepted(test_store: Storage) -> None:
 def test_cross_episode_same_date_and_gap_enforcement(test_store: Storage) -> None:
     """Distinct sources on the same date or with insufficient time gap are rejected."""
     # 1. Same date rejection
-    case_same_date = next(c for c in _load_t1_cases() if c["case_id"] == "t1_synthetic_cross_episode_same_date")
+    case_same_date = next(
+        c for c in _load_t1_cases() if c["case_id"] == "t1_synthetic_cross_episode_same_date"
+    )
     sid = "subj_same_date_test"
     p_text = case_same_date["proposition_text"]
     prop_id = compute_proposition_id(p_text)
-    test_store.insert_proposition(Proposition(proposition_id=prop_id, canonical_text=p_text, subject_ids=[sid]))
+    test_store.insert_proposition(
+        Proposition(proposition_id=prop_id, canonical_text=p_text, subject_ids=[sid])
+    )
 
     src_a = compute_source_id(case_same_date["source_a_id"])
     rec_a = case_same_date["recorded_at_a"]
@@ -315,8 +381,26 @@ def test_cross_episode_same_date_and_gap_enforcement(test_store: Storage) -> Non
 
     ca_data = case_same_date["claim_a"]
     cb_data = case_same_date["claim_b"]
-    _seed_claim(test_store, sid, src_a, prop_id, ca_data["stance"], ca_data["text"], ca_data["start_ms"], rec_a)
-    _seed_claim(test_store, sid, src_b, prop_id, cb_data["stance"], cb_data["text"], cb_data["start_ms"], rec_b)
+    _seed_claim(
+        test_store,
+        sid,
+        src_a,
+        prop_id,
+        ca_data["stance"],
+        ca_data["text"],
+        ca_data["start_ms"],
+        rec_a,
+    )
+    _seed_claim(
+        test_store,
+        sid,
+        src_b,
+        prop_id,
+        cb_data["stance"],
+        cb_data["text"],
+        cb_data["start_ms"],
+        rec_b,
+    )
 
     detector = TensionDetector(test_store, min_reversal_gap_days=0.0)
     report = detector.evaluate_candidate_pairs(subject_id=sid)
@@ -325,11 +409,15 @@ def test_cross_episode_same_date_and_gap_enforcement(test_store: Storage) -> Non
     assert report.rejections_by_reason == {"same_recorded_date": 1}
 
     # 2. Gap threshold enforcement (Parameter 032)
-    case_gap = next(c for c in _load_t1_cases() if c["case_id"] == "t1_synthetic_cross_episode_insufficient_gap")
+    case_gap = next(
+        c for c in _load_t1_cases() if c["case_id"] == "t1_synthetic_cross_episode_insufficient_gap"
+    )
     sid2 = "subj_gap_test"
     p_text2 = case_gap["proposition_text"]
     prop_id2 = compute_proposition_id(p_text2)
-    test_store.insert_proposition(Proposition(proposition_id=prop_id2, canonical_text=p_text2, subject_ids=[sid2]))
+    test_store.insert_proposition(
+        Proposition(proposition_id=prop_id2, canonical_text=p_text2, subject_ids=[sid2])
+    )
 
     src2_a = compute_source_id(case_gap["source_a_id"])
     rec2_a = case_gap["recorded_at_a"]
@@ -341,8 +429,26 @@ def test_cross_episode_same_date_and_gap_enforcement(test_store: Storage) -> Non
 
     ca2_data = case_gap["claim_a"]
     cb2_data = case_gap["claim_b"]
-    _seed_claim(test_store, sid2, src2_a, prop_id2, ca2_data["stance"], ca2_data["text"], ca2_data["start_ms"], rec2_a)
-    _seed_claim(test_store, sid2, src2_b, prop_id2, cb2_data["stance"], cb2_data["text"], cb2_data["start_ms"], rec2_b)
+    _seed_claim(
+        test_store,
+        sid2,
+        src2_a,
+        prop_id2,
+        ca2_data["stance"],
+        ca2_data["text"],
+        ca2_data["start_ms"],
+        rec2_a,
+    )
+    _seed_claim(
+        test_store,
+        sid2,
+        src2_b,
+        prop_id2,
+        cb2_data["stance"],
+        cb2_data["text"],
+        cb2_data["start_ms"],
+        rec2_b,
+    )
 
     # With min_reversal_gap_days=7.0 (gap between 2024-05-01 and 2024-05-02 is 1 day), must be rejected
     detector_gap = TensionDetector(test_store, min_reversal_gap_days=7.0)
@@ -373,9 +479,13 @@ def test_live_corpus_zero_reversals_with_exact_denominator() -> None:
     detector = TensionDetector(live_store, disqualify_same_source=True)
 
     report = detector.evaluate_candidate_pairs()
-    assert report.total_pairs_examined >= 0, f"Expected examined pairs >= 0, got {report.total_pairs_examined}"
+    assert report.total_pairs_examined >= 0, (
+        f"Expected examined pairs >= 0, got {report.total_pairs_examined}"
+    )
     # Under D1/D4: 4 accepted; under D2: 6 accepted; under D6: 0 accepted; under X2: 1 accepted (David Sacks growth reversal).
-    assert report.candidates_accepted in (0, 1, 4, 6), f"Expected 0 (pre-D1/D6), 1 (post-X2), 4 (post-D1), or 6 (post-D2) accepted candidates, got {report.candidates_accepted}"
+    assert report.candidates_accepted in (0, 1, 4, 6), (
+        f"Expected 0 (pre-D1/D6), 1 (post-X2), 4 (post-D1), or 6 (post-D2) accepted candidates, got {report.candidates_accepted}"
+    )
     if report.total_pairs_examined > 0 and report.candidates_accepted == 0:
         assert sum(report.rejections_by_reason.values()) == report.total_pairs_examined
         assert report.rejections_by_reason.get("same_source_stance_conflict", 0) > 0

@@ -52,15 +52,23 @@ class YouTubeAdapter(SourceAdapter):
         role_id = compute_role_id(source_id, subject.subject_id)
 
         channel_handle = subject.handles.get("youtube", "")
-        is_own = bool(channel_handle and (channel_handle in ref.locator or ref.extra.get("channel_owner") == subject.subject_id))
+        is_own = bool(
+            channel_handle
+            and (
+                channel_handle in ref.locator
+                or ref.extra.get("channel_owner") == subject.subject_id
+            )
+        )
 
-        venue_type: Literal["own_channel", "guest", "institutional", "authored", "self_published_text"] = (
-            ref.extra.get("venue_type") or ("own_channel" if is_own else "guest")
+        venue_type: Literal[
+            "own_channel", "guest", "institutional", "authored", "self_published_text"
+        ] = ref.extra.get("venue_type") or ("own_channel" if is_own else "guest")
+        tier: Literal["A", "B", "C", "D", "E"] = ref.extra.get("tier") or (
+            "B" if venue_type == "own_channel" else "C"
         )
-        tier: Literal["A", "B", "C", "D", "E"] = ref.extra.get("tier") or ("B" if venue_type == "own_channel" else "C")
-        audience_stance: Literal["friendly", "neutral", "adversarial", "unknown"] = (
-            ref.extra.get("audience_stance") or ("friendly" if venue_type == "own_channel" else "neutral")
-        )
+        audience_stance: Literal["friendly", "neutral", "adversarial", "unknown"] = ref.extra.get(
+            "audience_stance"
+        ) or ("friendly" if venue_type == "own_channel" else "neutral")
         is_adversarial = bool(ref.extra.get("is_adversarial", False))
 
         return SourceSubjectRole(

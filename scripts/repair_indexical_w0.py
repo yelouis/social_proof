@@ -83,7 +83,10 @@ def repair_indexical_propositions(db_path: str = "social_proof.duckdb") -> None:
             failing_props.add(pid)
             affected_utterance_info[uid] = (subj_id, rec_at)
 
-    print(f"Found {len(failing_claim_ids)} claims across {len(failing_props)} indexical propositions.", flush=True)
+    print(
+        f"Found {len(failing_claim_ids)} claims across {len(failing_props)} indexical propositions.",
+        flush=True,
+    )
     print(f"Unique utterances to re-extract: {len(affected_utterance_info)}", flush=True)
 
     reset_rejection_counts()
@@ -128,9 +131,15 @@ def repair_indexical_propositions(db_path: str = "social_proof.duckdb") -> None:
         re_extracted_claims_count += len(extracted)
         if idx % 25 == 0 or idx == len(affected_utterance_info):
             elapsed = time.perf_counter() - t_reextract_start
-            print(f"  [{idx}/{len(affected_utterance_info)}] Extracted: {re_extracted_claims_count} new claims ({elapsed:.1f}s)", flush=True)
+            print(
+                f"  [{idx}/{len(affected_utterance_info)}] Extracted: {re_extracted_claims_count} new claims ({elapsed:.1f}s)",
+                flush=True,
+            )
 
-    print(f"\nRe-extraction complete: {re_extracted_claims_count} new valid claims produced.", flush=True)
+    print(
+        f"\nRe-extraction complete: {re_extracted_claims_count} new valid claims produced.",
+        flush=True,
+    )
     print("Rejection counts during re-extraction:", get_rejection_counts(), flush=True)
 
     # Re-sync claim_count on all surviving propositions
@@ -154,7 +163,10 @@ def repair_indexical_propositions(db_path: str = "social_proof.duckdb") -> None:
     print(f"  Total survivor propositions: {dedup_results['surviving_propositions']}", flush=True)
     print(f"  Merged away: {dedup_results['merged_away_propositions']}", flush=True)
     print(f"  Claims re-pointed: {dedup_results['repointed_propositions_count']}", flush=True)
-    print(f"  Multi-source diff-date propositions: {dedup_results['multi_source_diff_date_propositions']}", flush=True)
+    print(
+        f"  Multi-source diff-date propositions: {dedup_results['multi_source_diff_date_propositions']}",
+        flush=True,
+    )
     print(f"  Candidate pairs: {dedup_results['candidate_pairs']}", flush=True)
 
     # 6. Re-run Tension Detection, Principle Detection, Rubric Engine
@@ -179,20 +191,32 @@ def repair_indexical_propositions(db_path: str = "social_proof.duckdb") -> None:
     print(f"\nCandidate pairs considered across all subjects: {len(cand_pairs)}")
     for r in cand_pairs:
         cid_a, cid_b, pid, ptext, s_id, st_a, st_b, dt_a, dt_b = r
-        cand_outcome = "opposing_stance (tension candidate)" if st_a != st_b else "concordant_stances (no tension)"
-        print(f"  Pair: ({cid_a[:8]}, {cid_b[:8]}) | Subject: {s_id} | Prop: \"{ptext[:60]}...\" | Stances: {st_a} vs {st_b} ({cand_outcome})")
+        cand_outcome = (
+            "opposing_stance (tension candidate)"
+            if st_a != st_b
+            else "concordant_stances (no tension)"
+        )
+        print(
+            f'  Pair: ({cid_a[:8]}, {cid_b[:8]}) | Subject: {s_id} | Prop: "{ptext[:60]}..." | Stances: {st_a} vs {st_b} ({cand_outcome})'
+        )
 
     # Run detection per subject
-    subjects = store.con.execute("SELECT subject_id FROM subjects WHERE enrollment_ref IS NOT NULL").fetchall()
+    subjects = store.con.execute(
+        "SELECT subject_id FROM subjects WHERE enrollment_ref IS NOT NULL"
+    ).fetchall()
     total_detected = 0
     for (s_id,) in subjects:
         t_list = detector.detect_tensions_for_subject(s_id)
         total_detected += len(t_list)
 
     print(f"Tension detection complete: {total_detected} total tensions in store.")
-    pub_t_row = store.con.execute("SELECT count(*) FROM tensions WHERE status = 'published'").fetchone()
+    pub_t_row = store.con.execute(
+        "SELECT count(*) FROM tensions WHERE status = 'published'"
+    ).fetchone()
     pub_t = pub_t_row[0] if pub_t_row is not None else 0
-    quar_t_row = store.con.execute("SELECT count(*) FROM tensions WHERE status = 'quarantined'").fetchone()
+    quar_t_row = store.con.execute(
+        "SELECT count(*) FROM tensions WHERE status = 'quarantined'"
+    ).fetchone()
     quar_t = quar_t_row[0] if quar_t_row is not None else 0
     print(f"  Published tensions: {pub_t} | Quarantined tensions: {quar_t}")
 
@@ -217,7 +241,9 @@ def repair_indexical_propositions(db_path: str = "social_proof.duckdb") -> None:
 
     # 7. Final Verification
     print("\n=== Post-Repair Verification ===")
-    remaining_props = store.con.execute("SELECT proposition_id, canonical_text FROM propositions").fetchall()
+    remaining_props = store.con.execute(
+        "SELECT proposition_id, canonical_text FROM propositions"
+    ).fetchall()
     failing_remaining = []
     for pid, text in remaining_props:
         dummy = ExtractedClaim(
@@ -240,7 +266,7 @@ def repair_indexical_propositions(db_path: str = "social_proof.duckdb") -> None:
         print("PASS: Zero propositions match indexical patterns!")
 
     total_time = time.perf_counter() - t_start
-    print(f"\nW0 Repair complete in {total_time:.2f}s ({total_time/60:.2f}m).")
+    print(f"\nW0 Repair complete in {total_time:.2f}s ({total_time / 60:.2f}m).")
 
 
 if __name__ == "__main__":

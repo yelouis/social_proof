@@ -109,7 +109,9 @@ def test_assertion_c_drawn_eval_set_confusion_matrix() -> None:
 
     # Assertion (c): false-flip rate in support -> oppose direction must be 0 on drawn set
     total_support = confusion["true_support_ended_support"] + confusion["true_support_ended_oppose"]
-    false_flip_rate = confusion["true_support_ended_oppose"] / total_support if total_support > 0 else 0.0
+    false_flip_rate = (
+        confusion["true_support_ended_oppose"] / total_support if total_support > 0 else 0.0
+    )
 
     assert confusion["true_support_ended_oppose"] == 0, (
         f"False flip failure: {confusion['true_support_ended_oppose']} support claims falsely flipped to oppose"

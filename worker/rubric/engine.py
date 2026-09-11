@@ -170,13 +170,21 @@ class RubricEngine:
                 "consistency": {
                     "score": res_consistency["score"],
                     "n": res_consistency["n"],
-                    **({"reason": res_consistency["reason"]} if res_consistency.get("reason") else {}),
+                    **(
+                        {"reason": res_consistency["reason"]}
+                        if res_consistency.get("reason")
+                        else {}
+                    ),
                 },
                 "specificity": {
                     "score": res_specificity["score"],
                     "n": res_specificity["n"],
                     "checkable": res_specificity.get("checkable", 0),
-                    **({"reason": res_specificity["reason"]} if res_specificity.get("reason") else {}),
+                    **(
+                        {"reason": res_specificity["reason"]}
+                        if res_specificity.get("reason")
+                        else {}
+                    ),
                 },
                 "update_integrity": {
                     "score": res_update["score"],

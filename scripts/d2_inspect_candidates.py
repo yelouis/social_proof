@@ -23,9 +23,7 @@ def inspect_threshold(t: float) -> None:
         JOIN propositions p ON pe.proposition_id = p.proposition_id
         WHERE p.status = 'active'
     """).fetchall()
-    embs: dict[str, np.ndarray] = {
-        r[0]: np.array(r[1], dtype=np.float32) for r in emb_rows
-    }
+    embs: dict[str, np.ndarray] = {r[0]: np.array(r[1], dtype=np.float32) for r in emb_rows}
     texts: dict[str, str] = {r[0]: r[2] for r in emb_rows}
 
     # 2. Fetch claims
@@ -96,7 +94,9 @@ def inspect_threshold(t: float) -> None:
 
     print("\n==================================================")
     print(f"CANDIDATES AT T_dedup = {t:.3f}")
-    print(f"Total propositions after merge: {len(claims_by_mapped)} (merges: {len([k for k, v in mapping.items() if k != v])})")
+    print(
+        f"Total propositions after merge: {len(claims_by_mapped)} (merges: {len([k for k, v in mapping.items() if k != v])})"
+    )
     print("==================================================")
 
     cand_count = 0
@@ -127,10 +127,10 @@ def inspect_threshold(t: float) -> None:
                     print(f"Cluster Representative: '{rep_text}'")
                     print(f"Support Claim: id={s[0][:10]}, date={s[6]}, episode='{s[9][:40]}'")
                     print(f"  Orig Prop: '{s_orig_text}' (sim to rep: {sim_s_rep:.4f})")
-                    print(f"  Quote: \"{s[7]}\"")
+                    print(f'  Quote: "{s[7]}"')
                     print(f"Oppose Claim:  id={o[0][:10]}, date={o[6]}, episode='{o[9][:40]}'")
                     print(f"  Orig Prop: '{o_orig_text}' (sim to rep: {sim_o_rep:.4f})")
-                    print(f"  Quote: \"{o[7]}\"")
+                    print(f'  Quote: "{o[7]}"')
 
     print(f"\nTotal candidate pairs at {t:.3f}: {cand_count}")
     con.close()

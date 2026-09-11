@@ -262,7 +262,9 @@ def test_live_corpus_coverage_and_date_invariants() -> None:
 
             dt_pub = datetime.fromisoformat(s.published_at)
             dt_ing = datetime.fromisoformat(s.ingested_at)
-            assert 2023 <= dt_pub.year <= 2026, f"Source {s.source_id} year {dt_pub.year} not in 2023-2026"
+            assert 2023 <= dt_pub.year <= 2026, (
+                f"Source {s.source_id} year {dt_pub.year} not in 2023-2026"
+            )
 
             diff_sec = abs((dt_ing - dt_pub).total_seconds())
             assert diff_sec > 60, (
@@ -280,4 +282,3 @@ def test_live_corpus_coverage_and_date_invariants() -> None:
         assert res.status == "PASS"
     finally:
         store.close()
-

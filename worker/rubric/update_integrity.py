@@ -19,7 +19,8 @@ class UpdateIntegrityCalculator:
     def calculate(self, tensions: list[Tension]) -> dict[str, Any]:
         """Calculates update integrity score or returns sufficiency gate failure."""
         changes = [
-            t for t in tensions
+            t
+            for t in tensions
             if t.type in ("acknowledged_update", "unacknowledged_reversal")
             and t.status == "published"
         ]

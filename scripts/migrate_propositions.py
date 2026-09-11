@@ -41,7 +41,9 @@ def run_migration(db_path: str = "social_proof.duckdb") -> dict[str, int]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Migrate propositions table (D0)")
-    parser.add_argument("--db", type=str, default="social_proof.duckdb", help="Path to DuckDB database")
+    parser.add_argument(
+        "--db", type=str, default="social_proof.duckdb", help="Path to DuckDB database"
+    )
     args = parser.parse_args()
     run_migration(args.db)
 

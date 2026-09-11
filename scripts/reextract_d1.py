@@ -55,8 +55,12 @@ def run_d1_reextraction(db_path: str = "social_proof.duckdb") -> None:
     # Snapshot existing tables inside DuckDB for auditability
     print("2. Archiving pre-D1 tables into claims_pre_d1 and propositions_pre_d1...")
     store.con.execute("CREATE TABLE IF NOT EXISTS claims_pre_d1 AS SELECT * FROM claims;")
-    store.con.execute("CREATE TABLE IF NOT EXISTS propositions_pre_d1 AS SELECT * FROM propositions;")
-    store.con.execute("CREATE TABLE IF NOT EXISTS proposition_embeddings_pre_d1 AS SELECT * FROM proposition_embeddings;")
+    store.con.execute(
+        "CREATE TABLE IF NOT EXISTS propositions_pre_d1 AS SELECT * FROM propositions;"
+    )
+    store.con.execute(
+        "CREATE TABLE IF NOT EXISTS proposition_embeddings_pre_d1 AS SELECT * FROM proposition_embeddings;"
+    )
     store.con.commit()
 
     # Identify candidate utterances to re-extract:
@@ -82,10 +86,14 @@ def run_d1_reextraction(db_path: str = "social_proof.duckdb") -> None:
     print(f"\n3. Selected {len(target_utts_rows)} candidate utterances across all sources.")
 
     # Clear active claims and non-quarantined propositions
-    print("\n4. Clearing active claims and active propositions (preserving quarantined db3ec63d33cf6f0a)...")
+    print(
+        "\n4. Clearing active claims and active propositions (preserving quarantined db3ec63d33cf6f0a)..."
+    )
     store.con.execute("DELETE FROM claims;")
     store.con.execute("DELETE FROM propositions WHERE proposition_id != 'db3ec63d33cf6f0a';")
-    store.con.execute("DELETE FROM proposition_embeddings WHERE proposition_id != 'db3ec63d33cf6f0a';")
+    store.con.execute(
+        "DELETE FROM proposition_embeddings WHERE proposition_id != 'db3ec63d33cf6f0a';"
+    )
     store.con.execute("DELETE FROM claim_entailment_cache;")
     store.con.commit()
 
@@ -136,10 +144,15 @@ def run_d1_reextraction(db_path: str = "social_proof.duckdb") -> None:
             el = time.perf_counter() - t0
             rate = idx / el if el > 0 else 0
             eta_m = (len(target_utts_rows) - idx) / rate / 60 if rate > 0 else 0
-            print(f"   [{idx}/{len(target_utts_rows)}] claims: {claims_total} | {rate:.2f} utts/s | ETA: {eta_m:.1f}m", flush=True)
+            print(
+                f"   [{idx}/{len(target_utts_rows)}] claims: {claims_total} | {rate:.2f} utts/s | ETA: {eta_m:.1f}m",
+                flush=True,
+            )
 
     elapsed = time.perf_counter() - t0
-    print(f"\nExtraction completed in {elapsed:.1f}s ({elapsed/60:.2f}m). Total claims: {claims_total}.")
+    print(
+        f"\nExtraction completed in {elapsed:.1f}s ({elapsed / 60:.2f}m). Total claims: {claims_total}."
+    )
 
     # Step 6: Proposition Deduplication & Re-resolution
     print("\n7. Re-running proposition deduplication consolidation at T_dedup = 0.86...")
@@ -163,10 +176,14 @@ def run_d1_reextraction(db_path: str = "social_proof.duckdb") -> None:
     store.con.commit()
 
     # Backfill missing embeddings
-    active_props = store.con.execute("SELECT proposition_id, canonical_text FROM propositions WHERE status = 'active'").fetchall()
+    active_props = store.con.execute(
+        "SELECT proposition_id, canonical_text FROM propositions WHERE status = 'active'"
+    ).fetchall()
     missing_emb = 0
     for pid, txt in active_props:
-        has_emb = store.con.execute("SELECT 1 FROM proposition_embeddings WHERE proposition_id = ?", [pid]).fetchone()
+        has_emb = store.con.execute(
+            "SELECT 1 FROM proposition_embeddings WHERE proposition_id = ?", [pid]
+        ).fetchone()
         if not has_emb:
             emb = embedder.embed_document(txt)
             store.insert_proposition_embedding(pid, emb)
@@ -203,7 +220,9 @@ def run_d1_reextraction(db_path: str = "social_proof.duckdb") -> None:
 
     # Step 5 & 6 Invariant verification
     print("\n=== D1 Verification Summary ===")
-    r_prop = store.con.execute("SELECT count(*) FROM propositions WHERE status = 'active'").fetchone()
+    r_prop = store.con.execute(
+        "SELECT count(*) FROM propositions WHERE status = 'active'"
+    ).fetchone()
     c_prop = int(r_prop[0]) if r_prop else 0
     r_claim = store.con.execute("SELECT count(*) FROM claims").fetchone()
     c_claim = int(r_claim[0]) if r_claim else 0
@@ -237,9 +256,15 @@ def run_d1_reextraction(db_path: str = "social_proof.duckdb") -> None:
     finite_verb_pct = (finite_verb_props / c_prop * 100) if c_prop > 0 else 0.0
 
     # Polarity check across all active propositions
-    props_all = [r[0] for r in store.con.execute("SELECT canonical_text FROM propositions WHERE status = 'active'").fetchall()]
+    props_all = [
+        r[0]
+        for r in store.con.execute(
+            "SELECT canonical_text FROM propositions WHERE status = 'active'"
+        ).fetchall()
+    ]
     polarity_violations = []
     from worker.extract.schema import ExtractedClaim
+
     for ptext in props_all:
         ec = ExtractedClaim(
             proposition_text=ptext,
@@ -255,15 +280,20 @@ def run_d1_reextraction(db_path: str = "social_proof.duckdb") -> None:
 
     # Sources with zero claims check
     sources_zero_claims = [
-        sid for sid in [r[0] for r in store.con.execute("SELECT source_id FROM sources").fetchall()]
+        sid
+        for sid in [r[0] for r in store.con.execute("SELECT source_id FROM sources").fetchall()]
         if claims_per_source[sid] == 0
     ]
 
     print(f"Total active propositions: {c_prop}")
     print(f"Total claims: {c_claim}")
     print(f"Singletons: {c_single} ({single_pct:.2f}%) [baseline: 95.4%]")
-    print(f"Propositions spanning 2+ episodes: {multi_ep_props} ({multi_ep_pct:.2f}%) [baseline: 1.8%]")
-    print(f"Full-clauses (finite verbs): {finite_verb_props} ({finite_verb_pct:.2f}%) [baseline: 75.2%]")
+    print(
+        f"Propositions spanning 2+ episodes: {multi_ep_props} ({multi_ep_pct:.2f}%) [baseline: 1.8%]"
+    )
+    print(
+        f"Full-clauses (finite verbs): {finite_verb_props} ({finite_verb_pct:.2f}%) [baseline: 75.2%]"
+    )
     print(f"Polarity violations across entire table: {len(polarity_violations)} (must be 0)")
     print(f"Sources with zero claims: {len(sources_zero_claims)} (must be 0)")
     print(f"Validator rejections snapshot: {get_rejection_counts()}")

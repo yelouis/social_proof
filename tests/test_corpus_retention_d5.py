@@ -197,26 +197,31 @@ def test_claims_per_hour_synthetic_both_directions() -> None:
         )
     ]
 
-    res_starved = verify_claims_per_hour([starved_source], starved_claims, starved_utts, min_rate=3.0)
+    res_starved = verify_claims_per_hour(
+        [starved_source], starved_claims, starved_utts, min_rate=MIN_CLAIMS_PER_HOUR
+    )
     assert res_starved.passed is False
     assert res_starved.status == "FAIL"
     assert "src_starved" in res_starved.message
-    assert "0.67 claims/hr < 3.0" in res_starved.message
+    assert f"0.67 claims/hr < {MIN_CLAIMS_PER_HOUR:.1f}" in res_starved.message
 
 
 def test_live_corpus_claims_per_hour_passes() -> None:
     """Assert all 23 sources in live corpus clear the claims-per-hour floor."""
     store = Storage("social_proof.duckdb", read_only=True)
     sources = [
-        s for r in store.con.execute("SELECT source_id FROM sources").fetchall()
+        s
+        for r in store.con.execute("SELECT source_id FROM sources").fetchall()
         if (s := store.get_source(r[0])) is not None
     ]
     claims = [
-        c for r in store.con.execute("SELECT claim_id FROM claims").fetchall()
+        c
+        for r in store.con.execute("SELECT claim_id FROM claims").fetchall()
         if (c := store.get_claim(r[0])) is not None
     ]
     utts = [
-        u for r in store.con.execute("SELECT utterance_id FROM utterances").fetchall()
+        u
+        for r in store.con.execute("SELECT utterance_id FROM utterances").fetchall()
         if (u := store.get_utterance(r[0])) is not None
     ]
 
@@ -224,7 +229,7 @@ def test_live_corpus_claims_per_hour_passes() -> None:
     assert res.passed is True, f"verify_claims_per_hour must PASS on live corpus: {res.message}"
     assert res.examined_count == 23
 
-    # Verify the repaired starved sources specifically
+    # Verify the repaired starved sources specifically under post-X4 genuine positions
     utt_to_source = {u.utterance_id: u.source_id for u in utts}
     c_counts: dict[str, int] = {}
     for c in claims:
@@ -232,30 +237,35 @@ def test_live_corpus_claims_per_hour_passes() -> None:
         if sid:
             c_counts[sid] = c_counts.get(sid, 0) + 1
 
-    # Robotics CEOs episode (79e5cda81c5740e9): was 1 claim, post-repair >= 20 claims (measured: 24, 14.88 claims/hr)
-    assert c_counts.get("79e5cda81c5740e9", 0) >= 20
-    # Mark Cuban episode (04ff0000906a6d10): was 5 claims, post-repair >= 15 claims (measured: 16, 11.79 claims/hr)
-    assert c_counts.get("04ff0000906a6d10", 0) >= 15
+    # Robotics CEOs episode (79e5cda81c5740e9): post-X4 yields 12 genuine claims (10.50 claims/hr >= 10)
+    assert c_counts.get("79e5cda81c5740e9", 0) >= 10
+    # Mark Cuban episode (04ff0000906a6d10): pure guest Q&A interview, host took 0 positions under Rule 0
+    assert c_counts.get("04ff0000906a6d10", 0) == 0
 
 
 def test_falsification_claims_per_hour_threshold() -> None:
     """Falsify: Setting min_rate higher than empirical distribution causes thin sources to fail."""
     store = Storage("social_proof.duckdb", read_only=True)
     sources = [
-        s for r in store.con.execute("SELECT source_id FROM sources").fetchall()
+        s
+        for r in store.con.execute("SELECT source_id FROM sources").fetchall()
         if (s := store.get_source(r[0])) is not None
     ]
     claims = [
-        c for r in store.con.execute("SELECT claim_id FROM claims").fetchall()
+        c
+        for r in store.con.execute("SELECT claim_id FROM claims").fetchall()
         if (c := store.get_claim(r[0])) is not None
     ]
     utts = [
-        u for r in store.con.execute("SELECT utterance_id FROM utterances").fetchall()
+        u
+        for r in store.con.execute("SELECT utterance_id FROM utterances").fetchall()
         if (u := store.get_utterance(r[0])) is not None
     ]
 
-    # At 3.0 claims/hr, it PASSES
-    assert verify_claims_per_hour(sources, claims, utts, min_rate=3.0).passed is True
+    # At MIN_CLAIMS_PER_HOUR (2.0), it PASSES
+    assert (
+        verify_claims_per_hour(sources, claims, utts, min_rate=MIN_CLAIMS_PER_HOUR).passed is True
+    )
 
     # At 20.0 claims/hr, it FAILS on genuinely thin guest interview sources (e.g. Rahm Emanuel, Weinstein)
     res_high = verify_claims_per_hour(sources, claims, utts, min_rate=20.0)

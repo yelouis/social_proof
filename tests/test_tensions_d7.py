@@ -57,7 +57,9 @@ def test_d7_step1_process_finding_candidates_vs_written() -> None:
         # Under D6 repaired table: bare topic candidates eliminated (0 examined, 0 accepted).
         # Under X2 prompt v1.8 (at 0.84): 3 examined, 1 accepted, 1 quarantined, 1 rejected.
         # Under D8 prompt v1.8 (at 0.96): 1 examined, 0 accepted, 1 rejected by same_source.
-        assert examined in (0, 1, 3, 7), f"Expected 0, 1, 3, or 7 examined candidates, got {examined}"
+        assert examined in (0, 1, 3, 7), (
+            f"Expected 0, 1, 3, or 7 examined candidates, got {examined}"
+        )
         assert accepted in (0, 1, 6), f"Expected 0, 1, or 6 accepted candidates, got {accepted}"
 
         # Check existing tensions in live store
@@ -69,8 +71,12 @@ def test_d7_step1_process_finding_candidates_vs_written() -> None:
         quarantined_rows = [r for r in all_tensions if r[1] == "quarantined"]
 
         assert total_rows >= 3, f"Expected >= 3 total tension rows, got {total_rows}"
-        assert len(published_rows) in (0, 1, 6), f"Expected 0, 1, or 6 published tension rows, got {len(published_rows)}"
-        assert len(quarantined_rows) >= 3, f"Expected >= 3 quarantined rows, got {len(quarantined_rows)}"
+        assert len(published_rows) in (0, 1, 6), (
+            f"Expected 0, 1, or 6 published tension rows, got {len(published_rows)}"
+        )
+        assert len(quarantined_rows) >= 3, (
+            f"Expected >= 3 quarantined rows, got {len(quarantined_rows)}"
+        )
 
     finally:
         store.close()
@@ -135,7 +141,9 @@ def test_d7_assertion_c_live_corpus() -> None:
         for r in published_rows:
             tid, _, status, reason = r
             assert status == "published"
-            assert reason is None, f"Published tension {tid} has non-None quarantine_reason: {reason}"
+            assert reason is None, (
+                f"Published tension {tid} has non-None quarantine_reason: {reason}"
+            )
 
     finally:
         store.close()
@@ -159,6 +167,7 @@ def test_d7_both_directions_clears_vs_fails_preconditions(tmp_path: Path) -> Non
 
     # Insert baseline source
     from worker.entities import Proposition, Source
+
     store.insert_source(
         Source(
             source_id="src_1",
@@ -378,10 +387,7 @@ def test_d7_verify_quarantine_not_rendered_passes_and_reports_rate() -> None:
         assert result.status == "PASS"
         assert result.examined_count >= 3
         assert "quarantine rate" in result.message
-        assert any(
-            x in result.message
-            for x in ("100.0%", "80.0%", "33.3%", "3/3", "4/5", "3/9")
-        )
+        assert any(x in result.message for x in ("100.0%", "80.0%", "33.3%", "3/3", "4/5", "3/9"))
 
     finally:
         store.close()
@@ -407,8 +413,12 @@ def test_d7_falsification_early_return_assertion_c_goes_red(tmp_path: Path) -> N
         if "position_frame" not in col_names:
             store.con.execute("ALTER TABLE claims_pre_d6 ADD COLUMN position_frame VARCHAR;")
         store.con.execute("DELETE FROM claims; INSERT INTO claims SELECT * FROM claims_pre_d6;")
-        store.con.execute("DELETE FROM propositions; INSERT INTO propositions SELECT * FROM propositions_pre_d6;")
-        store.con.execute("DELETE FROM tensions; INSERT INTO tensions SELECT * FROM tensions_pre_d6;")
+        store.con.execute(
+            "DELETE FROM propositions; INSERT INTO propositions SELECT * FROM propositions_pre_d6;"
+        )
+        store.con.execute(
+            "DELETE FROM tensions; INSERT INTO tensions SELECT * FROM tensions_pre_d6;"
+        )
 
     # 1. Simulating the bug / early return:
     # Delete published tensions from database so only 3 rows remain (the pre-repair drop)

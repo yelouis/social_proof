@@ -304,9 +304,16 @@ def populate_corpus() -> None:
         "UPDATE tensions SET status = 'quarantined', quarantine_reason = 'fabricated_proposition' WHERE tension_id = '0068adec4b1501c6'"
     )
     # 4. Ensure all live propositions have embeddings (D0)
-    for p_id in [r[0] for r in con.execute("SELECT proposition_id FROM propositions WHERE status = 'active'").fetchall()]:
+    for p_id in [
+        r[0]
+        for r in con.execute(
+            "SELECT proposition_id FROM propositions WHERE status = 'active'"
+        ).fetchall()
+    ]:
         prop = store.get_proposition(p_id)
-        has_emb = con.execute("SELECT 1 FROM proposition_embeddings WHERE proposition_id = ?", [p_id]).fetchone()
+        has_emb = con.execute(
+            "SELECT 1 FROM proposition_embeddings WHERE proposition_id = ?", [p_id]
+        ).fetchone()
         if prop and not has_emb:
             emb = embedder.embed_document(prop.canonical_text)
             store.insert_proposition_embedding(p_id, emb)

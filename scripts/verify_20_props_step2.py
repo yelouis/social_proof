@@ -27,7 +27,17 @@ def evaluate_position_test(prop: str) -> tuple[bool, str]:
         return False, f"Too short ({len(words)} words < 5), bare topic"
 
     lower = prop.lower()
-    for v in [" has been ", " have been ", " was ", " were ", " is now ", " are now ", " has developed ", " should ", " must "]:
+    for v in [
+        " has been ",
+        " have been ",
+        " was ",
+        " were ",
+        " is now ",
+        " are now ",
+        " has developed ",
+        " should ",
+        " must ",
+    ]:
         if v in lower:
             return False, f"Contains finite verb or modal '{v.strip()}', not canonical noun phrase"
 
@@ -83,9 +93,9 @@ def main() -> None:
             passed, explanation = evaluate_position_test(prop)
             idx = len(propositions_tested) + 1
             verdict = "PASS" if passed else "FAIL"
-            print(f"[{idx:2d}/20] [{verdict}] \"{prop}\"")
+            print(f'[{idx:2d}/20] [{verdict}] "{prop}"')
             print(f"       Speaker:  {speaker}")
-            print(f"       Quote:    \"{ec.quote_text}\"")
+            print(f'       Quote:    "{ec.quote_text}"')
             print(f"       Supports: Alice supports {prop}")
             print(f"       Opposes:  Alice opposes {prop}")
             print(f"       Verdict:  {explanation}\n")
@@ -99,8 +109,12 @@ def main() -> None:
     pass_count = sum(1 for _, passed, _ in propositions_tested if passed)
     total_count = len(propositions_tested)
     print(f"Total propositions audited: {total_count}")
-    print(f"Passed position test:       {pass_count} / {total_count} ({pass_count/total_count*100:.1f}%)")
-    assert pass_count >= 16, f"Failed Step 2 gate: expected >= 16/20, got {pass_count}/{total_count}"
+    print(
+        f"Passed position test:       {pass_count} / {total_count} ({pass_count / total_count * 100:.1f}%)"
+    )
+    assert pass_count >= 16, (
+        f"Failed Step 2 gate: expected >= 16/20, got {pass_count}/{total_count}"
+    )
     print("GATE PASS: >= 16/20 pass rate satisfied!")
     print("=" * 70)
 

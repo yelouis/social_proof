@@ -78,18 +78,24 @@ def run_sample_audit(
     sample_uids = [r[0] for r in target_utts_rows]
 
     # Pre-D1 and current Post-D1 claims in these 300 utterances
-    pre_claims_rows = store.con.execute("""
+    pre_claims_rows = store.con.execute(
+        """
         SELECT claim_id, utterance_id, proposition_id, stance, quote_text, is_own_assertion
         FROM claims_pre_d1
         WHERE utterance_id IN (SELECT unnest(?))
-    """, [sample_uids]).fetchall()
+    """,
+        [sample_uids],
+    ).fetchall()
     pre_claims_count = len(pre_claims_rows)
 
-    post_claims_rows = store.con.execute("""
+    post_claims_rows = store.con.execute(
+        """
         SELECT claim_id, utterance_id, proposition_id, stance, quote_text, is_own_assertion
         FROM claims
         WHERE utterance_id IN (SELECT unnest(?))
-    """, [sample_uids]).fetchall()
+    """,
+        [sample_uids],
+    ).fetchall()
     post_claims_count = len(post_claims_rows)
 
     shortfall = pre_claims_count - post_claims_count
@@ -128,7 +134,9 @@ def run_sample_audit(
     t0 = time.perf_counter()
     print(f"\nProcessing {len(target_utts_rows)} utterances...")
 
-    for idx, (uid, sid, _subj_id, name, _rec_at, _start_ms, _text) in enumerate(target_utts_rows, 1):
+    for idx, (uid, sid, _subj_id, name, _rec_at, _start_ms, _text) in enumerate(
+        target_utts_rows, 1
+    ):
         utt = store.get_utterance(uid)
         if not utt:
             continue
@@ -140,14 +148,16 @@ def run_sample_audit(
         gate_dec = gate.evaluate_text(utt.text_verbatim)
         if not gate_dec.should_extract:
             gate_rejections[gate_dec.reason] += 1
-            per_utt_audit.append({
-                "utterance_id": uid,
-                "pre_claims_count": utt_pre_count,
-                "gate_passed": False,
-                "gate_reason": gate_dec.reason,
-                "candidates_emitted": 0,
-                "passed_claims": 0,
-            })
+            per_utt_audit.append(
+                {
+                    "utterance_id": uid,
+                    "pre_claims_count": utt_pre_count,
+                    "gate_passed": False,
+                    "gate_reason": gate_dec.reason,
+                    "candidates_emitted": 0,
+                    "passed_claims": 0,
+                }
+            )
             continue
 
         gate_passed += 1
@@ -194,7 +204,9 @@ def run_sample_audit(
                         t_high=T_ENTAIL_HIGH,
                     )
                     if not res_entail.is_valid:
-                        rejection_reason = res_entail.rejection_reason or "quote_does_not_support_proposition"
+                        rejection_reason = (
+                            res_entail.rejection_reason or "quote_does_not_support_proposition"
+                        )
                         validator_stage = "3_entailment"
                     elif res_entail.status == "quarantined":
                         # Mark as quarantined
@@ -209,77 +221,96 @@ def run_sample_audit(
                             quote_embedding=res_entail.quote_embedding,
                         )
                         if not res_stance.is_valid:
-                            rejection_reason = res_stance.rejection_reason or "stance_direction_mismatch"
+                            rejection_reason = (
+                                res_stance.rejection_reason or "stance_direction_mismatch"
+                            )
                             validator_stage = "4_stance_direction"
                         else:
                             # 3.5 Polarity (Item D1)
                             res_pol = validate_polarity(ec)
                             if not res_pol.is_valid:
-                                rejection_reason = res_pol.rejection_reason or "proposition_carries_polarity"
+                                rejection_reason = (
+                                    res_pol.rejection_reason or "proposition_carries_polarity"
+                                )
                                 validator_stage = "5_polarity"
                             else:
                                 # 3.6 Speech Acts (Invariant I7)
                                 res_sa = validate_speech_acts(ec, utt)
                                 if not res_sa.is_valid:
-                                    rejection_reason = res_sa.rejection_reason or "speech_acts_failed"
+                                    rejection_reason = (
+                                        res_sa.rejection_reason or "speech_acts_failed"
+                                    )
                                     validator_stage = "6_speech_acts"
                                 else:
                                     # 3.7 Confidence Floor
                                     res_conf = validate_confidence_floor(ec, 0.70)
                                     if not res_conf.is_valid:
-                                        rejection_reason = res_conf.rejection_reason or "confidence_floor_failed"
+                                        rejection_reason = (
+                                            res_conf.rejection_reason or "confidence_floor_failed"
+                                        )
                                         validator_stage = "7_confidence_floor"
                                     else:
                                         # 3.8 Schema
                                         res_schema = validate_schema(ec)
                                         if not res_schema.is_valid:
-                                            rejection_reason = res_schema.rejection_reason or "schema_failed"
+                                            rejection_reason = (
+                                                res_schema.rejection_reason or "schema_failed"
+                                            )
                                             validator_stage = "8_schema"
 
             if rejection_reason is not None:
                 rejections_by_reason[rejection_reason] += 1
-                all_rejected_records.append(RejectedCandidateRecord(
-                    utterance_id=uid,
-                    source_id=sid,
-                    speaker_name=name,
-                    utterance_text=utt.text_verbatim,
-                    proposition_text=ec.proposition_text,
-                    quote_text=ec.quote_text,
-                    stance=ec.stance,
-                    hedging_level=ec.hedging_level,
-                    is_own_assertion=ec.is_own_assertion,
-                    exclusion_reason=ec.exclusion_reason,
-                    confidence=ec.confidence,
-                    rejection_reason=rejection_reason,
-                    validator_stage=validator_stage or "unknown",
-                ))
+                all_rejected_records.append(
+                    RejectedCandidateRecord(
+                        utterance_id=uid,
+                        source_id=sid,
+                        speaker_name=name,
+                        utterance_text=utt.text_verbatim,
+                        proposition_text=ec.proposition_text,
+                        quote_text=ec.quote_text,
+                        stance=ec.stance,
+                        hedging_level=ec.hedging_level,
+                        is_own_assertion=ec.is_own_assertion,
+                        exclusion_reason=ec.exclusion_reason,
+                        confidence=ec.confidence,
+                        rejection_reason=rejection_reason,
+                        validator_stage=validator_stage or "unknown",
+                    )
+                )
             else:
                 passed_claims_count += 1
                 utt_passed += 1
-                all_passed_records.append({
-                    "utterance_id": uid,
-                    "proposition_text": ec.proposition_text,
-                    "quote_text": ec.quote_text,
-                    "stance": ec.stance,
-                    "status": res_entail.status,
-                })
+                all_passed_records.append(
+                    {
+                        "utterance_id": uid,
+                        "proposition_text": ec.proposition_text,
+                        "quote_text": ec.quote_text,
+                        "stance": ec.stance,
+                        "status": res_entail.status,
+                    }
+                )
 
-        per_utt_audit.append({
-            "utterance_id": uid,
-            "pre_claims_count": utt_pre_count,
-            "gate_passed": True,
-            "candidates_emitted": candidates_in_utt,
-            "passed_claims": utt_passed,
-        })
+        per_utt_audit.append(
+            {
+                "utterance_id": uid,
+                "pre_claims_count": utt_pre_count,
+                "gate_passed": True,
+                "candidates_emitted": candidates_in_utt,
+                "passed_claims": utt_passed,
+            }
+        )
 
         if idx % 25 == 0 or idx == len(target_utts_rows):
             el = time.perf_counter() - t0
             rate = idx / el if el > 0 else 0
             eta_m = (len(target_utts_rows) - idx) / rate / 60 if rate > 0 else 0
-            print(f"  [{idx:3d}/{len(target_utts_rows)}] candidates: {total_candidates_emitted} | passed: {passed_claims_count} | rejected: {len(all_rejected_records)} | {rate:.2f} utts/s | ETA: {eta_m:.1f}m", flush=True)
+            print(
+                f"  [{idx:3d}/{len(target_utts_rows)}] candidates: {total_candidates_emitted} | passed: {passed_claims_count} | rejected: {len(all_rejected_records)} | {rate:.2f} utts/s | ETA: {eta_m:.1f}m",
+                flush=True,
+            )
 
     elapsed = time.perf_counter() - t0
-    print(f"\nCompleted 300 utterances in {elapsed:.1f}s ({elapsed/60:.2f}m).")
+    print(f"\nCompleted 300 utterances in {elapsed:.1f}s ({elapsed / 60:.2f}m).")
 
     # Summary of Rejection Counters
     print("\n=== VALIDATOR REJECTION COUNTERS ===")
@@ -300,14 +331,21 @@ def run_sample_audit(
     print(f"   Passed claims:            {passed_claims_count}")
     print(f"   Rejected candidates:      {total_rejections}")
     candidate_check = passed_claims_count + total_rejections
-    print(f"   Sum (passed + rejected):  {candidate_check} (Difference: {total_candidates_emitted - candidate_check})")
+    print(
+        f"   Sum (passed + rejected):  {candidate_check} (Difference: {total_candidates_emitted - candidate_check})"
+    )
 
     # Pre-D1 vs Post-D1 claim reconciliation
     lost_to_gate_claims = sum(u["pre_claims_count"] for u in per_utt_audit if not u["gate_passed"])
-    lost_to_empty_prompt_claims = sum(u["pre_claims_count"] for u in per_utt_audit if u["gate_passed"] and u["candidates_emitted"] == 0)
+    lost_to_empty_prompt_claims = sum(
+        u["pre_claims_count"]
+        for u in per_utt_audit
+        if u["gate_passed"] and u["candidates_emitted"] == 0
+    )
     prompt_candidate_shortfall = sum(
         max(0, u["pre_claims_count"] - u["candidates_emitted"])
-        for u in per_utt_audit if u["gate_passed"] and u["candidates_emitted"] > 0
+        for u in per_utt_audit
+        if u["gate_passed"] and u["candidates_emitted"] > 0
     )
     measured_shortfall = pre_claims_count - passed_claims_count
 

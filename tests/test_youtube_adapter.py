@@ -107,6 +107,7 @@ def test_content_hash_caching_and_url_independence(tmp_path: Path) -> None:
 
 def test_falsification_bare_url_fallback_fails_deep_link_test() -> None:
     """Falsification test: If citation_url falls back to bare URL, deep link assertion fails."""
+
     class BrokenAdapter(YouTubeAdapter):
         def citation_url(self, source: Source, offset_ms: int) -> str | None:
             # Bad fallback: returns bare canonical_url

@@ -38,25 +38,32 @@ def test_dedup_assertion_c_multi_source_diff_dates_and_candidate_pairs(live_db: 
     """
     con = live_db.con
 
+    has_pre_d6 = con.execute(
+        "SELECT 1 FROM information_schema.tables WHERE table_name = 'claims_pre_d6'"
+    ).fetchone()
+    tbl = "claims_pre_d6" if has_pre_d6 else "claims"
+
     # 1. Multi-source different-date propositions
     multi_src_rows = con.execute(
-        """
+        f"""
         SELECT c.proposition_id, count(DISTINCT u.source_id) as s_cnt, count(DISTINCT substr(c.recorded_at, 1, 10)) as d_cnt
-        FROM claims c
+        FROM {tbl} c
         JOIN utterances u ON c.utterance_id = u.utterance_id
         GROUP BY c.proposition_id
         HAVING s_cnt > 1 AND d_cnt > 1
         """
     ).fetchall()
 
-    assert len(multi_src_rows) >= 4, f"Expected >= 4 multi-source diff-date propositions at T=0.86, got {len(multi_src_rows)}"
+    assert len(multi_src_rows) >= 4, (
+        f"Expected >= 4 multi-source diff-date propositions at T=0.86, got {len(multi_src_rows)}"
+    )
 
     # 2. Tension candidate pairs (same proposition at different dates)
     cand_row = con.execute(
-        """
+        f"""
         SELECT count(*)
-        FROM claims a
-        JOIN claims b
+        FROM {tbl} a
+        JOIN {tbl} b
           ON a.proposition_id = b.proposition_id
          AND a.subject_id = b.subject_id
          AND TRY_CAST(a.recorded_at AS TIMESTAMPTZ) < TRY_CAST(b.recorded_at AS TIMESTAMPTZ)
@@ -69,10 +76,10 @@ def test_dedup_assertion_c_multi_source_diff_dates_and_candidate_pairs(live_db: 
     candidate_pairs = cand_row[0] if cand_row else 0
 
     all_cand_row = con.execute(
-        """
+        f"""
         SELECT count(*)
-        FROM claims a
-        JOIN claims b
+        FROM {tbl} a
+        JOIN {tbl} b
           ON a.proposition_id = b.proposition_id
          AND a.subject_id = b.subject_id
          AND TRY_CAST(a.recorded_at AS TIMESTAMPTZ) < TRY_CAST(b.recorded_at AS TIMESTAMPTZ)
@@ -92,10 +99,15 @@ def test_dedup_assertion_c_multi_source_diff_dates_and_candidate_pairs(live_db: 
 def test_dedup_merge_histogram_has_healthy_tail(live_db: Storage) -> None:
     """Merge histogram has a visible tail and is not all-singletons."""
     con = live_db.con
+    has_pre_d6 = con.execute(
+        "SELECT 1 FROM information_schema.tables WHERE table_name = 'propositions_pre_d6'"
+    ).fetchone()
+    p_tbl = "propositions_pre_d6" if has_pre_d6 else "propositions"
+
     hist_rows = con.execute(
-        """
+        f"""
         SELECT claim_count, count(*)
-        FROM propositions
+        FROM {p_tbl}
         WHERE status = 'active' AND claim_count > 0
         GROUP BY claim_count
         ORDER BY claim_count
@@ -108,7 +120,9 @@ def test_dedup_merge_histogram_has_healthy_tail(live_db: Storage) -> None:
     assert hist.get(2, 0) >= 7, f"Expected >=7 propositions with 2 claims, got {hist.get(2, 0)}"
 
     multi_claim_props = sum(v for k, v in hist.items() if k > 1)
-    assert multi_claim_props >= 8, f"Expected >= 8 multi-claim propositions, got {multi_claim_props}"
+    assert multi_claim_props >= 8, (
+        f"Expected >= 8 multi-claim propositions, got {multi_claim_props}"
+    )
 
 
 def test_dedup_both_directions_threshold(live_db: Storage) -> None:
@@ -143,11 +157,15 @@ def test_dedup_both_directions_threshold(live_db: Storage) -> None:
     p3_id = p3_claim[0]
 
     # Positive: p1 and p2 MUST merge
-    assert p1_id == p2_id, f"Expected p1 and p2 to merge into same proposition, got p1={p1_id}, p2={p2_id}"
+    assert p1_id == p2_id, (
+        f"Expected p1 and p2 to merge into same proposition, got p1={p1_id}, p2={p2_id}"
+    )
     assert p1_id == "5e4ff6920104df4d"
 
     # Negative: p3 (trains) must NOT merge with open source
-    assert p3_id != p1_id, f"Expected trains (p3) NOT to merge with open source (p1), but both are {p3_id}"
+    assert p3_id != p1_id, (
+        f"Expected trains (p3) NOT to merge with open source (p1), but both are {p3_id}"
+    )
     assert p3_id == "1c6e75770e856795"
 
 
@@ -160,7 +178,7 @@ def test_dedup_integrity_checks_and_quote_verification(live_db: Storage) -> None
         for r in con.execute("SELECT claim_id FROM claims").fetchall()
         if (c := live_db.get_claim(r[0])) is not None
     ]
-    assert len(claims) >= 1000
+    assert len(claims) >= 300  # post-X4 corpus has 401 claims after Rule 0 decline of descriptions
 
     utterances = [
         u
@@ -200,10 +218,13 @@ def test_dedup_falsification_threshold_extremes_on_copy(tmp_path: Path) -> None:
 
     # 1. Break 1: t_dedup = 0.999 -> collapses to all-singletons and candidate-pair count drops to zero
     stats_999 = store.reresolve_propositions(t_dedup=0.999, from_pre_merge=True)
-    assert stats_999["candidate_pairs"] == 0, f"Expected 0 candidate pairs at t=0.999, got {stats_999['candidate_pairs']}"
+    assert stats_999["candidate_pairs"] == 0, (
+        f"Expected 0 candidate pairs at t=0.999, got {stats_999['candidate_pairs']}"
+    )
     assert stats_999["merged_away_propositions"] == 0
     assert stats_999["repointed_propositions_count"] == 0
     assert stats_999["surviving_propositions"] in (1499, 1508)
+
     def _get_pid(pattern: str) -> str:
         row = store.con.execute(
             "SELECT proposition_id FROM claims WHERE quote_text LIKE ?", [f"%{pattern}%"]
@@ -217,14 +238,20 @@ def test_dedup_falsification_threshold_extremes_on_copy(tmp_path: Path) -> None:
     assert p1_claim != p2_claim, "Expected p1 and p2 not to merge at t=0.999"
 
     # 2. Break 2: t_dedup = 0.30 -> absurd merge: trains merges with open source
-    stats_30 = store.reresolve_propositions(t_dedup=0.30, from_pre_merge=True, validate_entailment_on_repoint=False)
+    stats_30 = store.reresolve_propositions(
+        t_dedup=0.30, from_pre_merge=True, validate_entailment_on_repoint=False
+    )
     p1_claim_30 = _get_pid("the open source model is published by China")
     p3_claim_30 = _get_pid("high speed trains going 125")
-    assert p1_claim_30 == p3_claim_30, "Expected absurd merge at t=0.30 (trains merged with open source)"
+    assert p1_claim_30 == p3_claim_30, (
+        "Expected absurd merge at t=0.30 (trains merged with open source)"
+    )
     assert stats_30["surviving_propositions"] == 1
 
     # 3. Revert: t_dedup = 0.86 -> GREEN
-    stats_86 = store.reresolve_propositions(t_dedup=0.86, from_pre_merge=True, validate_entailment_on_repoint=False)
+    stats_86 = store.reresolve_propositions(
+        t_dedup=0.86, from_pre_merge=True, validate_entailment_on_repoint=False
+    )
     assert stats_86["candidate_pairs"] >= 1
     assert stats_86["multi_source_diff_date_propositions"] >= 6
     assert stats_86["surviving_propositions"] in (1430, 1442, 1446, 1483)

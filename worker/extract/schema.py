@@ -47,6 +47,7 @@ class ExtractedClaim(BaseModel):
             "question",
             "quote_agreement_unclear",
             "entailment_ambiguous",
+            "reports_fact",
         ]
         | None
     ) = Field(

@@ -63,14 +63,16 @@ def fetch_20_contiguous_episodes() -> list[dict[str, Any]]:
         m = re.search(r"traffic\.libsyn\.com/([^?]+)", raw_url)
         clean_url = f"https://traffic.libsyn.com/{m.group(1)}" if m else raw_url.split("?")[0]
         sid = compute_source_id(clean_url)
-        episodes.append({
-            "source_id": sid,
-            "title": ep["title"],
-            "pub_date": ep["pub_date"],
-            "duration_ms": ep["duration_ms"],
-            "url": clean_url,
-            "raw_url": raw_url,
-        })
+        episodes.append(
+            {
+                "source_id": sid,
+                "title": ep["title"],
+                "pub_date": ep["pub_date"],
+                "duration_ms": ep["duration_ms"],
+                "url": clean_url,
+                "raw_url": raw_url,
+            }
+        )
 
     return episodes
 
@@ -90,7 +92,8 @@ def ingest_episode(
     existing_src = store.get_source(sid)
     if existing_src is not None and existing_src.audio_deleted_at is not None:
         utts = [
-            u for (uid,) in store.con.execute(
+            u
+            for (uid,) in store.con.execute(
                 "SELECT utterance_id FROM utterances WHERE source_id = ?", [sid]
             ).fetchall()
             if (u := store.get_utterance(uid)) is not None
@@ -129,13 +132,16 @@ def ingest_episode(
     assert source is not None, f"Source {sid} not found after ingest"
 
     utts = [
-        u for (uid,) in store.con.execute(
+        u
+        for (uid,) in store.con.execute(
             "SELECT utterance_id FROM utterances WHERE source_id = ?", [sid]
         ).fetchall()
         if (u := store.get_utterance(uid)) is not None
     ]
 
-    print(f"  Completed audio ingest in {elapsed:.1f}s ({elapsed/60:.2f}m): {len(utts)} utterances.")
+    print(
+        f"  Completed audio ingest in {elapsed:.1f}s ({elapsed / 60:.2f}m): {len(utts)} utterances."
+    )
 
     # Enforce role enrolment for all 4 hosts (Trap 40: compute_role_id)
     for subj in subjects:
@@ -161,12 +167,15 @@ def extract_claims_for_source(
 ) -> tuple[int, float]:
     """Extracts claims from high-confidence utterances of enrolled subjects."""
     t0 = time.perf_counter()
-    utts = store.con.execute("""
+    utts = store.con.execute(
+        """
         SELECT utterance_id, subject_id, text_verbatim
         FROM utterances
         WHERE source_id = ? AND subject_id LIKE 'subj_%' AND attribution_confidence = 'high'
         ORDER BY start_ms
-    """, [source.source_id]).fetchall()
+    """,
+        [source.source_id],
+    ).fetchall()
 
     print(f"  Extracting claims from {len(utts)} high-confidence candidate utterances...")
     claims_count = 0
@@ -187,10 +196,14 @@ def extract_claims_for_source(
 
         if idx % 50 == 0 or idx == len(utts):
             el = time.perf_counter() - t0
-            print(f"    [{idx}/{len(utts)}] claims extracted: {claims_count} | {idx/el:.1f} utts/s")
+            print(
+                f"    [{idx}/{len(utts)}] claims extracted: {claims_count} | {idx / el:.1f} utts/s"
+            )
 
     elapsed = time.perf_counter() - t0
-    print(f"  Extraction for {source.source_id} finished in {elapsed:.1f}s ({elapsed/60:.2f}m): {claims_count} claims.")
+    print(
+        f"  Extraction for {source.source_id} finished in {elapsed:.1f}s ({elapsed / 60:.2f}m): {claims_count} claims."
+    )
     return claims_count, elapsed
 
 
@@ -211,10 +224,14 @@ def recompute_downstream(store: Storage) -> None:
 
     # 2. Backfill embeddings for any active proposition missing one
     embedder = Embedder()
-    active_props = store.con.execute("SELECT proposition_id, canonical_text FROM propositions WHERE status = 'active'").fetchall()
+    active_props = store.con.execute(
+        "SELECT proposition_id, canonical_text FROM propositions WHERE status = 'active'"
+    ).fetchall()
     missing_emb = 0
     for pid, txt in active_props:
-        has_emb = store.con.execute("SELECT 1 FROM proposition_embeddings WHERE proposition_id = ?", [pid]).fetchone()
+        has_emb = store.con.execute(
+            "SELECT 1 FROM proposition_embeddings WHERE proposition_id = ?", [pid]
+        ).fetchone()
         if not has_emb:
             emb = embedder.embed_document(txt)
             store.insert_proposition_embedding(pid, emb)
@@ -278,7 +295,9 @@ def report_corpus_metrics(store: Storage) -> None:
     utt_cnt = r_utt[0] if r_utt else 0
     r_clm = store.con.execute("SELECT count(*) FROM claims").fetchone()
     claim_cnt = r_clm[0] if r_clm else 0
-    r_prp = store.con.execute("SELECT count(*) FROM propositions WHERE status = 'active'").fetchone()
+    r_prp = store.con.execute(
+        "SELECT count(*) FROM propositions WHERE status = 'active'"
+    ).fetchone()
     prop_cnt = r_prp[0] if r_prp else 0
     r_rol = store.con.execute("SELECT count(*) FROM source_roles").fetchone()
     role_cnt = r_rol[0] if r_rol else 0
@@ -344,7 +363,9 @@ def run_expansion(limit: int | None = None, db_path: str = "social_proof.duckdb"
     adapter = PodcastRSSAdapter()
 
     # Load subjects
-    subj_rows = store.con.execute("SELECT subject_id, display_name, enrollment_ref FROM subjects").fetchall()
+    subj_rows = store.con.execute(
+        "SELECT subject_id, display_name, enrollment_ref FROM subjects"
+    ).fetchall()
     subjects = [Subject(subject_id=r[0], display_name=r[1], enrollment_ref=r[2]) for r in subj_rows]
 
     # Initialize live extraction pipeline
@@ -388,12 +409,15 @@ def run_expansion(limit: int | None = None, db_path: str = "social_proof.duckdb"
         total_ingest_time += t_ingest
 
         # 2. Extract claims if source has no claims yet
-        claim_count_row = store.con.execute("""
+        claim_count_row = store.con.execute(
+            """
             SELECT count(*)
             FROM claims c
             JOIN utterances u ON c.utterance_id = u.utterance_id
             WHERE u.source_id = ?
-        """, [source.source_id]).fetchone()
+        """,
+            [source.source_id],
+        ).fetchone()
         existing_claims = claim_count_row[0] if claim_count_row else 0
 
         if existing_claims == 0:
@@ -406,10 +430,14 @@ def run_expansion(limit: int | None = None, db_path: str = "social_proof.duckdb"
             if new_claims == 0:
                 print(f"  WARNING: Source {source.source_id} yielded 0 claims!")
         else:
-            print(f"  [Skip Extraction] Source {source.source_id} already has {existing_claims} claims.")
+            print(
+                f"  [Skip Extraction] Source {source.source_id} already has {existing_claims} claims."
+            )
 
-    print(f"\nTotal audio ingest time: {total_ingest_time:.1f}s ({total_ingest_time/60:.2f}m)")
-    print(f"Total claim extraction time: {total_extract_time:.1f}s ({total_extract_time/60:.2f}m)")
+    print(f"\nTotal audio ingest time: {total_ingest_time:.1f}s ({total_ingest_time / 60:.2f}m)")
+    print(
+        f"Total claim extraction time: {total_extract_time:.1f}s ({total_extract_time / 60:.2f}m)"
+    )
 
     # 3. Recompute downstream layers
     recompute_downstream(store)
@@ -420,8 +448,12 @@ def run_expansion(limit: int | None = None, db_path: str = "social_proof.duckdb"
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Chronological Corpus Expansion (Item C1)")
-    parser.add_argument("--limit", type=int, default=None, help="Limit number of episodes to process")
-    parser.add_argument("--db", type=str, default="social_proof.duckdb", help="Path to DuckDB database")
+    parser.add_argument(
+        "--limit", type=int, default=None, help="Limit number of episodes to process"
+    )
+    parser.add_argument(
+        "--db", type=str, default="social_proof.duckdb", help="Path to DuckDB database"
+    )
     args = parser.parse_args()
 
     run_expansion(limit=args.limit, db_path=args.db)

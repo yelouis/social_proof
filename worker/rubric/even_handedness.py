@@ -28,8 +28,7 @@ class EvenHandednessCalculator:
         Evidence conflicts are always returned even when the pattern is not significant.
         """
         conflicts = [
-            t for t in tensions
-            if t.type == "principle_conflict" and t.status == "published"
+            t for t in tensions if t.type == "principle_conflict" and t.status == "published"
         ]
         evidence_ids = [t.tension_id for t in conflicts]
 

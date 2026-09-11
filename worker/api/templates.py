@@ -589,13 +589,13 @@ def render_index_page(
             f"""
             <div class="sp-card">
               <div class="sp-episode-header">
-                <a href="/episode/{sid}{t_q}" class="sp-episode-title">{html.escape(ep['title'])}</a>
-                <span class="sp-badge">{ep['claim_count']} claims</span>
+                <a href="/episode/{sid}{t_q}" class="sp-episode-title">{html.escape(ep["title"])}</a>
+                <span class="sp-badge">{ep["claim_count"]} claims</span>
               </div>
               <div class="sp-episode-meta">
-                <span>{ep['date_formatted']}</span>
+                <span>{ep["date_formatted"]}</span>
                 <span>·</span>
-                <span>Duration: {ep['duration_formatted']}</span>
+                <span>Duration: {ep["duration_formatted"]}</span>
                 <span>·</span>
                 <a href="/episode/{sid}{t_q}" style="color: var(--sp-color-accentCite); text-decoration: none;">Examine claims →</a>
               </div>
@@ -609,8 +609,8 @@ def render_index_page(
         persons_html.append(
             f"""
             <a href="/person/{sub_id}{t_q}" class="sp-person-card">
-              <div class="sp-person-name">{html.escape(subj['display_name'])}</div>
-              <div class="sp-person-stats">{subj['claim_count']} claims across {subj['episode_count']} episode(s)</div>
+              <div class="sp-person-name">{html.escape(subj["display_name"])}</div>
+              <div class="sp-person-stats">{subj["claim_count"]} claims across {subj["episode_count"]} episode(s)</div>
             </a>
             """
         )
@@ -623,12 +623,12 @@ def render_index_page(
 
     <div class="sp-section-heading">Episodes (Newest First)</div>
     <div class="sp-card-list">
-      {''.join(episodes_html)}
+      {"".join(episodes_html)}
     </div>
 
     <div class="sp-section-heading" id="persons">Persons in Corpus</div>
     <div class="sp-person-grid">
-      {''.join(persons_html)}
+      {"".join(persons_html)}
     </div>
     """
     return render_base_layout("Corpus Evidence Record", content, token)
@@ -644,9 +644,7 @@ def render_episode_page(episode: dict[str, Any], token: str | None = None) -> st
         p_claim_cards: list[str] = []
         for c in p_claims:
             cid = c["claim_id"]
-            stance_badge_cls = (
-                "sp-badge-support" if c["stance"] == "support" else "sp-badge-oppose"
-            )
+            stance_badge_cls = "sp-badge-support" if c["stance"] == "support" else "sp-badge-oppose"
             cite_html = (
                 f'<a href="{c["cite_url"]}" target="_blank" rel="noreferrer" class="sp-cite-link">▸ cite {c["timestamp_formatted"]}</a>'
                 if c["cite_url"]
@@ -655,12 +653,12 @@ def render_episode_page(episode: dict[str, Any], token: str | None = None) -> st
             p_claim_cards.append(
                 f"""
                 <div class="sp-card" style="margin-bottom: 8px;">
-                  <blockquote class="sp-quote-verbatim">"{html.escape(c['quote_text'])}"</blockquote>
+                  <blockquote class="sp-quote-verbatim">"{html.escape(c["quote_text"])}"</blockquote>
                   <div class="sp-claim-meta-bar">
-                    <span class="sp-badge {stance_badge_cls}">{c['stance']}</span>
-                    <span>offset {c['timestamp_formatted']}</span>
+                    <span class="sp-badge {stance_badge_cls}">{c["stance"]}</span>
+                    <span>offset {c["timestamp_formatted"]}</span>
                     <span>·</span>
-                    <span>hedging {c['hedging_level']:.2f}</span>
+                    <span>hedging {c["hedging_level"]:.2f}</span>
                     <span>·</span>
                     {cite_html}
                     <span style="margin-left: auto;">
@@ -679,7 +677,7 @@ def render_episode_page(episode: dict[str, Any], token: str | None = None) -> st
                 <a href="/person/{sub_id}{t_q}" style="font-size: 11px; color: var(--sp-color-textSecondary); text-decoration: none;">All claims by {html.escape(s_name)} →</a>
               </div>
               <div class="sp-card-list">
-                {''.join(p_claim_cards)}
+                {"".join(p_claim_cards)}
               </div>
             </div>
             """
@@ -687,21 +685,21 @@ def render_episode_page(episode: dict[str, Any], token: str | None = None) -> st
 
     content = f"""
     <div class="sp-breadcrumbs">
-      <a href="/{t_q}">Archive</a> &gt; <span>{html.escape(episode['title'])}</span>
+      <a href="/{t_q}">Archive</a> &gt; <span>{html.escape(episode["title"])}</span>
     </div>
     <div class="sp-page-title-block">
-      <h1 class="sp-page-title">{html.escape(episode['title'])}</h1>
+      <h1 class="sp-page-title">{html.escape(episode["title"])}</h1>
       <div class="sp-episode-meta">
-        <span>Recorded: {episode['date_formatted']}</span>
+        <span>Recorded: {episode["date_formatted"]}</span>
         <span>·</span>
-        <span>Duration: {episode['duration_formatted']}</span>
+        <span>Duration: {episode["duration_formatted"]}</span>
         <span>·</span>
-        <span>{episode['total_claims']} verbatim claims recorded</span>
+        <span>{episode["total_claims"]} verbatim claims recorded</span>
       </div>
     </div>
 
     <div class="sp-section-heading">Claims Grouped by Speaker (Timestamp Order)</div>
-    {''.join(persons_sections) if persons_sections else '<div class="sp-null-banner">No claims recorded for this episode.</div>'}
+    {"".join(persons_sections) if persons_sections else '<div class="sp-null-banner">No claims recorded for this episode.</div>'}
     """
     return render_base_layout(episode["title"], content, token)
 
@@ -714,9 +712,7 @@ def render_claim_panel_page(panel: dict[str, Any], token: str | None = None) -> 
     subj_id = c["subject_id"]
     source_id = c["source_id"]
 
-    stance_badge_cls = (
-        "sp-badge-support" if c["stance"] == "support" else "sp-badge-oppose"
-    )
+    stance_badge_cls = "sp-badge-support" if c["stance"] == "support" else "sp-badge-oppose"
     cite_html = (
         f'<a href="{c["cite_url"]}" target="_blank" rel="noreferrer" class="sp-cite-link">▸ cite {c["timestamp_formatted"]}</a>'
         if c["cite_url"]
@@ -727,9 +723,7 @@ def render_claim_panel_page(panel: dict[str, Any], token: str | None = None) -> 
     timeline_nodes: list[str] = []
     for t_claim in panel["timeline"]:
         is_current = t_claim["is_current"]
-        t_stance_cls = (
-            "sp-badge-support" if t_claim["stance"] == "support" else "sp-badge-oppose"
-        )
+        t_stance_cls = "sp-badge-support" if t_claim["stance"] == "support" else "sp-badge-oppose"
         t_cite = (
             f'<a href="{t_claim["cite_url"]}" target="_blank" rel="noreferrer" class="sp-cite-link">▸ cite {t_claim["timestamp_formatted"]}</a>'
             if t_claim["cite_url"]
@@ -743,13 +737,13 @@ def render_claim_panel_page(panel: dict[str, Any], token: str | None = None) -> 
         timeline_nodes.append(
             f"""
             <div class="sp-timeline-node">
-              <div class="sp-timeline-dot {'current' if is_current else ''}"></div>
-              <div class="sp-timeline-content {'current' if is_current else ''}">
+              <div class="sp-timeline-dot {"current" if is_current else ""}"></div>
+              <div class="sp-timeline-content {"current" if is_current else ""}">
                 <div style="display: flex; justify-content: space-between; font-family: var(--sp-font-mono); font-size: 11px; color: var(--sp-color-textSecondary); margin-bottom: 4px;">
-                  <span>{t_claim['date_formatted']} · {html.escape(t_claim['source_title'])}</span>
-                  <span class="sp-badge {t_stance_cls}">{t_claim['stance']}</span>
+                  <span>{t_claim["date_formatted"]} · {html.escape(t_claim["source_title"])}</span>
+                  <span class="sp-badge {t_stance_cls}">{t_claim["stance"]}</span>
                 </div>
-                <blockquote class="sp-quote-verbatim" style="margin: 4px 0;">"{html.escape(t_claim['quote_text'])}"</blockquote>
+                <blockquote class="sp-quote-verbatim" style="margin: 4px 0;">"{html.escape(t_claim["quote_text"])}"</blockquote>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
                   {t_cite}
                   {t_link}
@@ -773,13 +767,13 @@ def render_claim_panel_page(panel: dict[str, Any], token: str | None = None) -> 
     )
     axes_html = f"""
     <div class="sp-axes-grid">
-      {render_axis('Consistency', axes_data.get('consistency'))}
-      {render_axis('Specificity', axes_data.get('specificity'))}
-      {render_axis('Update Integrity', axes_data.get('update_integrity'))}
-      {render_axis('Even-handedness', axes_data.get('even_handedness'))}
+      {render_axis("Consistency", axes_data.get("consistency"))}
+      {render_axis("Specificity", axes_data.get("specificity"))}
+      {render_axis("Update Integrity", axes_data.get("update_integrity"))}
+      {render_axis("Even-handedness", axes_data.get("even_handedness"))}
     </div>
     <div style="font-family: var(--sp-font-mono); font-size: 11px; color: var(--sp-color-textMuted); margin-top: 8px;">
-      rubric {panel.get('rubric_version', 'v1.0')} · {evidence_count} evidence references tracked in assessment
+      rubric {panel.get("rubric_version", "v1.0")} · {evidence_count} evidence references tracked in assessment
     </div>
     """
 
@@ -792,8 +786,8 @@ def render_claim_panel_page(panel: dict[str, Any], token: str | None = None) -> 
                 f"""
                 <div class="sp-tension-card">
                   <div class="sp-tension-header">
-                    <span>┌─ {html.escape(t['type'].replace('_', ' ').upper())}</span>
-                    <span>severity {t['severity']:.2f} ─┐</span>
+                    <span>┌─ {html.escape(t["type"].replace("_", " ").upper())}</span>
+                    <span>severity {t["severity"]:.2f} ─┐</span>
                   </div>
                   <div class="sp-null-banner">Claim conflict detected across recorded timeline.</div>
                 </div>
@@ -817,26 +811,26 @@ def render_claim_panel_page(panel: dict[str, Any], token: str | None = None) -> 
     content = f"""
     <div class="sp-breadcrumbs">
       <a href="/{t_q}">Archive</a> &gt;
-      <a href="/episode/{source_id}{t_q}">{html.escape(c['source_title'])}</a> &gt;
+      <a href="/episode/{source_id}{t_q}">{html.escape(c["source_title"])}</a> &gt;
       <span>Claim {cid}</span>
     </div>
 
     <div class="sp-proposition-header">
       <div style="font-family: var(--sp-font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--sp-color-accentCite); text-transform: uppercase; margin-bottom: 4px;">Proposition</div>
-      <div class="sp-proposition-text">{html.escape(c['proposition_text'])}</div>
-      <div class="sp-speaker-info">Asserted by <a href="/person/{subj_id}{t_q}" style="color: var(--sp-color-textPrimary); font-weight: 600; text-decoration: underline;">{html.escape(c['subject_name'])}</a> in <em>{html.escape(c['source_title'])}</em></div>
+      <div class="sp-proposition-text">{html.escape(c["proposition_text"])}</div>
+      <div class="sp-speaker-info">Asserted by <a href="/person/{subj_id}{t_q}" style="color: var(--sp-color-textPrimary); font-weight: 600; text-decoration: underline;">{html.escape(c["subject_name"])}</a> in <em>{html.escape(c["source_title"])}</em></div>
     </div>
 
     <div class="sp-section-heading">Verbatim Record &amp; Citation</div>
     <div class="sp-card">
-      <blockquote class="sp-quote-verbatim">"{html.escape(c['quote_text'])}"</blockquote>
+      <blockquote class="sp-quote-verbatim">"{html.escape(c["quote_text"])}"</blockquote>
       <div class="sp-claim-meta-bar">
-        <span class="sp-badge {stance_badge_cls}">{c['stance']}</span>
-        <span>recorded {c['date_formatted']}</span>
+        <span class="sp-badge {stance_badge_cls}">{c["stance"]}</span>
+        <span>recorded {c["date_formatted"]}</span>
         <span>·</span>
-        <span>offset {c['timestamp_formatted']}</span>
+        <span>offset {c["timestamp_formatted"]}</span>
         <span>·</span>
-        <span>hedging {c['hedging_level']:.2f}</span>
+        <span>hedging {c["hedging_level"]:.2f}</span>
         <span>·</span>
         {cite_html}
       </div>
@@ -844,7 +838,7 @@ def render_claim_panel_page(panel: dict[str, Any], token: str | None = None) -> 
 
     <div class="sp-section-heading">Timeline of Verbatim Claims (Primary Artifact)</div>
     <div class="sp-timeline">
-      {''.join(timeline_nodes)}
+      {"".join(timeline_nodes)}
     </div>
     {timeline_footer}
 
@@ -869,16 +863,14 @@ def render_person_page(person: dict[str, Any], token: str | None = None) -> str:
         c_cards: list[str] = []
         for sc in ep["claims"]:
             cid = sc["claim_id"]
-            s_cls = (
-                "sp-badge-support" if sc["stance"] == "support" else "sp-badge-oppose"
-            )
+            s_cls = "sp-badge-support" if sc["stance"] == "support" else "sp-badge-oppose"
             c_cards.append(
                 f"""
                 <div class="sp-card" style="margin-bottom: 6px;">
-                  <blockquote class="sp-quote-verbatim">"{html.escape(sc['quote_text'])}"</blockquote>
+                  <blockquote class="sp-quote-verbatim">"{html.escape(sc["quote_text"])}"</blockquote>
                   <div class="sp-claim-meta-bar">
-                    <span class="sp-badge {s_cls}">{sc['stance']}</span>
-                    <span>offset {sc['timestamp_formatted']}</span>
+                    <span class="sp-badge {s_cls}">{sc["stance"]}</span>
+                    <span>offset {sc["timestamp_formatted"]}</span>
                     <span>·</span>
                     <a href="/claim/{cid}{t_q}" style="color: var(--sp-color-accentCite); text-decoration: none;">Social Proof Panel →</a>
                   </div>
@@ -890,11 +882,11 @@ def render_person_page(person: dict[str, Any], token: str | None = None) -> str:
             f"""
             <div style="margin-top: 16px;">
               <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                <a href="/episode/{ep['source_id']}{t_q}" style="font-weight: 600; font-size: 14px; color: var(--sp-color-textPrimary); text-decoration: underline;">{html.escape(ep['title'])}</a>
-                <span style="font-size: 11px; color: var(--sp-color-textSecondary);">{ep['date_formatted']} · {len(ep['claims'])} claims</span>
+                <a href="/episode/{ep["source_id"]}{t_q}" style="font-weight: 600; font-size: 14px; color: var(--sp-color-textPrimary); text-decoration: underline;">{html.escape(ep["title"])}</a>
+                <span style="font-size: 11px; color: var(--sp-color-textSecondary);">{ep["date_formatted"]} · {len(ep["claims"])} claims</span>
               </div>
               <div class="sp-card-list">
-                {''.join(c_cards)}
+                {"".join(c_cards)}
               </div>
             </div>
             """
@@ -902,15 +894,15 @@ def render_person_page(person: dict[str, Any], token: str | None = None) -> str:
 
     content = f"""
     <div class="sp-breadcrumbs">
-      <a href="/{t_q}">Archive</a> &gt; <span>{html.escape(person['display_name'])}</span>
+      <a href="/{t_q}">Archive</a> &gt; <span>{html.escape(person["display_name"])}</span>
     </div>
 
     <div class="sp-page-title-block">
-      <h1 class="sp-page-title">{html.escape(person['display_name'])}</h1>
-      <p class="sp-page-subtitle">{person['total_claims']} verbatim claims recorded across {person['total_episodes']} episode(s).</p>
+      <h1 class="sp-page-title">{html.escape(person["display_name"])}</h1>
+      <p class="sp-page-subtitle">{person["total_claims"]} verbatim claims recorded across {person["total_episodes"]} episode(s).</p>
     </div>
 
     <div class="sp-section-heading">All Claims by Episode</div>
-    {''.join(ep_sections)}
+    {"".join(ep_sections)}
     """
     return render_base_layout(person["display_name"], content, token)

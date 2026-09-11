@@ -67,7 +67,7 @@ def compute_step1_distribution(con: duckdb.DuckDBPyConnection) -> dict[str, Any]
 
     print("\n1-NN Similarity Distribution Deciles:")
     for p, v in zip(percentiles, decile_values, strict=True):
-        label = "Min (0%)" if p == 0 else ("Max (100%)" if p == 100 else f"D{p//10} ({p}%)")
+        label = "Min (0%)" if p == 0 else ("Max (100%)" if p == 100 else f"D{p // 10} ({p}%)")
         print(f"  {label:<12}: {v:.4f}")
 
     mean_val = float(np.mean(one_nn_sims))
@@ -81,7 +81,9 @@ def compute_step1_distribution(con: duckdb.DuckDBPyConnection) -> dict[str, Any]
     print("\n1-NN Histogram:")
     for i in range(len(hist)):
         bar = "#" * int(hist[i] / n * 80)
-        print(f"  [{bin_edges[i]:.2f}, {bin_edges[i+1]:.2f}): {hist[i]:4d} ({hist[i]/n*100:4.1f}%) {bar}")
+        print(
+            f"  [{bin_edges[i]:.2f}, {bin_edges[i + 1]:.2f}): {hist[i]:4d} ({hist[i] / n * 100:4.1f}%) {bar}"
+        )
 
     return {
         "n": n,
@@ -132,7 +134,9 @@ def compute_step2_frame_evaluation(con: duckdb.DuckDBPyConnection) -> None:
     raw_texts = [raw_props[pid] for pid in raw_pids]
 
     # Check if we can reuse existing embeddings from proposition_embeddings table
-    existing_embs = dict(con.execute("SELECT proposition_id, embedding FROM proposition_embeddings").fetchall())
+    existing_embs = dict(
+        con.execute("SELECT proposition_id, embedding FROM proposition_embeddings").fetchall()
+    )
 
     raw_embs_list: list[np.ndarray] = []
     missing_texts: list[str] = []
@@ -194,7 +198,9 @@ def compute_step2_frame_evaluation(con: duckdb.DuckDBPyConnection) -> None:
     # Sweep candidate thresholds
     thresholds = [0.80, 0.82, 0.84, 0.85, 0.86, 0.87, 0.88, 0.89, 0.90, 0.92, 0.95, 0.98, 0.999]
     print("\n" + "=" * 105)
-    print(f"{'T_dedup':<8} | {'Props':<6} | {'Merges':<6} | {'Endorsed':<8} | {'Contradicted':<12} | {'SO_Props':<8} | {'SO_Clean':<8} | {'Named Bad Merges':<20}")
+    print(
+        f"{'T_dedup':<8} | {'Props':<6} | {'Merges':<6} | {'Endorsed':<8} | {'Contradicted':<12} | {'SO_Props':<8} | {'SO_Clean':<8} | {'Named Bad Merges':<20}"
+    )
     print("=" * 105)
 
     for t in thresholds:
@@ -232,7 +238,10 @@ def compute_step2_frame_evaluation(con: duckdb.DuckDBPyConnection) -> None:
                         q_text = (c[7] or "").strip()
                         if q_text:
                             q_vec = np.array(embedder.embed_document(q_text), dtype=np.float32)
-                            entail_sim = float(np.dot(q_vec, cand_vec) / (np.linalg.norm(q_vec) * np.linalg.norm(cand_vec)))
+                            entail_sim = float(
+                                np.dot(q_vec, cand_vec)
+                                / (np.linalg.norm(q_vec) * np.linalg.norm(cand_vec))
+                            )
                             if entail_sim < 0.70:
                                 merge_allowed = False
                                 break
@@ -287,7 +296,11 @@ def compute_step2_frame_evaluation(con: duckdb.DuckDBPyConnection) -> None:
             if "support" in stances and "oppose" in stances:
                 so_props += 1
                 # Check if all frames in this SO proposition have identical <X>
-                so_matters = set(normalize_canonical_text(extract_matter_from_frame(c[8])) for c in c_list if c[5] and c[4] in ("support", "oppose"))
+                so_matters = set(
+                    normalize_canonical_text(extract_matter_from_frame(c[8]))
+                    for c in c_list
+                    if c[5] and c[4] in ("support", "oppose")
+                )
                 if len(so_matters) == 1:
                     so_clean += 1
 
@@ -301,7 +314,9 @@ def compute_step2_frame_evaluation(con: duckdb.DuckDBPyConnection) -> None:
                     bad_merged.append(name)
 
         bad_str = ", ".join(bad_merged) if bad_merged else "none (all clean!)"
-        print(f"{t:<8.3f} | {total_props:<6} | {merges:<6} | {endorsed_clusters:<8} | {contradicted_clusters:<12} | {so_props:<8} | {so_clean:<8} | {bad_str}")
+        print(
+            f"{t:<8.3f} | {total_props:<6} | {merges:<6} | {endorsed_clusters:<8} | {contradicted_clusters:<12} | {so_props:<8} | {so_clean:<8} | {bad_str}"
+        )
 
 
 def main() -> None:

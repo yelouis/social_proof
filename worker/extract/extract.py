@@ -67,20 +67,25 @@ class ClaimExtractionPipeline:
             if ec.position_frame:
                 frame = ec.position_frame.strip().rstrip(".")
                 frame_lower = frame.lower()
-                if "the speaker is for " in frame_lower and "the speaker is against " in frame_lower:
+                if (
+                    "the speaker is for " in frame_lower
+                    and "the speaker is against " in frame_lower
+                ):
                     ec.stance = "mixed"
                     if not ec.proposition_text:
                         idx = frame_lower.find("the speaker is for ")
-                        rest = frame[idx + len("the speaker is for "):]
+                        rest = frame[idx + len("the speaker is for ") :]
                         ec.proposition_text = rest.split(" and ")[0].strip().rstrip(".")
                     ec.position_frame = f"the speaker is FOR {ec.proposition_text} in one respect and the speaker is AGAINST {ec.proposition_text} in another"
                 elif frame_lower.startswith("the speaker is for "):
                     ec.stance = "support"
-                    ec.proposition_text = frame[len("the speaker is for "):].strip().rstrip(".")
+                    ec.proposition_text = frame[len("the speaker is for ") :].strip().rstrip(".")
                     ec.position_frame = f"the speaker is FOR {ec.proposition_text}"
                 elif frame_lower.startswith("the speaker is against "):
                     ec.stance = "oppose"
-                    ec.proposition_text = frame[len("the speaker is against "):].strip().rstrip(".")
+                    ec.proposition_text = (
+                        frame[len("the speaker is against ") :].strip().rstrip(".")
+                    )
                     ec.position_frame = f"the speaker is AGAINST {ec.proposition_text}"
             elif ec.proposition_text:
                 prop = ec.proposition_text.strip().rstrip(".")
@@ -106,7 +111,7 @@ class ClaimExtractionPipeline:
             span = outcome.resolved_quote_span
             is_quarantined = outcome.status == "quarantined"
 
-            verbatim_quote = utterance.text_verbatim[span[0]:span[1]]
+            verbatim_quote = utterance.text_verbatim[span[0] : span[1]]
 
             # 4. Resolve or create Proposition entity via semantic deduplication (Parameter 008)
             dedup_decision = self.canonicalizer.canonicalise_and_dedup(
@@ -133,7 +138,9 @@ class ClaimExtractionPipeline:
                 stance=ec.stance,
                 hedging_level=ec.hedging_level,
                 is_own_assertion=False if is_quarantined else ec.is_own_assertion,
-                exclusion_reason=outcome.rejection_reason if is_quarantined else ec.exclusion_reason,
+                exclusion_reason=outcome.rejection_reason
+                if is_quarantined
+                else ec.exclusion_reason,
                 confidence=ec.confidence,
                 quote_span=span,
                 extraction_model=self.runtime.model_id,

@@ -22,7 +22,11 @@ from typing import Any
 def render_axis_py(axis_name: str, axis_data: Mapping[str, Any] | None) -> str:
     """Python reference mirror of SocialProofRenderer.renderAxis."""
     if not axis_data or axis_data.get("score") is None:
-        reason = str(axis_data.get("reason") or "insufficient data").replace("_", " ") if axis_data else "insufficient data"
+        reason = (
+            str(axis_data.get("reason") or "insufficient data").replace("_", " ")
+            if axis_data
+            else "insufficient data"
+        )
         return f'<div class="sp-axis-row sp-axis-null" data-axis="{axis_name}"><span class="sp-axis-label">{axis_name}</span><span class="sp-axis-null-indicator">─── {reason} ───</span></div>'
 
     score_val = float(axis_data["score"])
@@ -32,7 +36,9 @@ def render_axis_py(axis_name: str, axis_data: Mapping[str, Any] | None) -> str:
 def render_overlay_py(data: Mapping[str, Any]) -> str:
     """Python reference mirror of SocialProofRenderer.renderOverlay."""
     assessment = data.get("assessment")
-    axes_data: Mapping[str, Any] = assessment.get("axes", {}) if isinstance(assessment, dict) else {}
+    axes_data: Mapping[str, Any] = (
+        assessment.get("axes", {}) if isinstance(assessment, dict) else {}
+    )
 
     axes_html = ""
     for name, key in [
@@ -52,7 +58,11 @@ def render_overlay_py(data: Mapping[str, Any]) -> str:
         source_title = str(quote_data.get("source_title", "Direct Record"))
         venue_type = str(quote_data.get("venue_type", "first-hand"))
         source_url = str(quote_data.get("source_url", ""))
-        cite_html = f'<a href="{source_url}" class="sp-cite-link">▸ cite</a>' if source_url else '<span class="sp-cite-disabled">cite unavailable</span>'
+        cite_html = (
+            f'<a href="{source_url}" class="sp-cite-link">▸ cite</a>'
+            if source_url
+            else '<span class="sp-cite-disabled">cite unavailable</span>'
+        )
         quote_html = f'<div class="sp-quote-card"><div class="sp-quote-meta">{date_str} · {source_title} · {venue_type}</div><blockquote class="sp-quote-text">"{quote_text}"</blockquote>{cite_html}</div>'
 
     rubric_ver = assessment.get("rubric_version") if isinstance(assessment, dict) else ""
@@ -86,13 +96,16 @@ def test_null_axis_renders_as_reason_never_zero_or_empty_bar() -> None:
 
 def test_falsification_rendering_null_through_numeric_path_fails() -> None:
     """Falsification test: Rendering a null axis through a numeric formatter fails."""
+
     def buggy_numeric_render(axis_name: str, axis_data: Mapping[str, Any]) -> str:
         score = axis_data.get("score")
         numeric_val = 0.0 if score is None else float(score)
         return f'<span class="score">{numeric_val:.2f}</span>'
 
     # The buggy render outputs "0.00" for a null axis
-    rendered_buggy = buggy_numeric_render("Update Integrity", {"score": None, "reason": "no_updates_detected"})
+    rendered_buggy = buggy_numeric_render(
+        "Update Integrity", {"score": None, "reason": "no_updates_detected"}
+    )
 
     # Falsification check: The strict null assertion detects the forbidden numeric output
     assert "0.00" in rendered_buggy  # Confirms that naive numeric rendering violates Assertion c
@@ -154,7 +167,9 @@ def test_no_composite_score_in_extension() -> None:
     for f in js_files:
         content = f.read_text()
         for pat in forbidden_patterns:
-            assert not pat.search(content), f"Forbidden composite pattern '{pat.pattern}' found in {f}"
+            assert not pat.search(content), (
+                f"Forbidden composite pattern '{pat.pattern}' found in {f}"
+            )
 
 
 def test_dom_immutability_before_after_overlay() -> None:
@@ -163,7 +178,9 @@ def test_dom_immutability_before_after_overlay() -> None:
     initial_page_dom = "<html><head><title>News Article</title></head><body><article><p>Article content here.</p></article></body></html>"
 
     # Simulate mounting custom element host
-    host_element = "<social-proof-overlay-host style='position: absolute'></social-proof-overlay-host>"
+    host_element = (
+        "<social-proof-overlay-host style='position: absolute'></social-proof-overlay-host>"
+    )
     active_page_dom = initial_page_dom.replace("</body>", f"{host_element}</body>")
 
     assert active_page_dom != initial_page_dom

@@ -43,7 +43,7 @@ def main() -> None:
         stats = runtime.generate_constrained(text, context)
         claims = stats.parsed_result.claims
 
-        print(f"\n[{i:2d}/20] ({speaker}) \"{text[:75]}...\"")
+        print(f'\n[{i:2d}/20] ({speaker}) "{text[:75]}..."')
         valid_props = []
         for ec in claims:
             outcome = validate_extracted_claim(
@@ -55,11 +55,13 @@ def main() -> None:
             if outcome.is_valid and ec.is_own_assertion:
                 valid_props.append(ec.proposition_text)
             else:
-                reason = outcome.rejection_reason or (ec.exclusion_reason if not ec.is_own_assertion else "unknown")
-                print(f"   [REJECTED by validator: {reason}] \"{ec.proposition_text}\"")
+                reason = outcome.rejection_reason or (
+                    ec.exclusion_reason if not ec.is_own_assertion else "unknown"
+                )
+                print(f'   [REJECTED by validator: {reason}] "{ec.proposition_text}"')
 
         for p in valid_props:
-            print(f"   -> Valid Proposition: \"{p}\"")
+            print(f'   -> Valid Proposition: "{p}"')
             propositions_tested.append((uid, speaker, p, text))
 
     print("\n" + "=" * 70)

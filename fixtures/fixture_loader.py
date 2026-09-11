@@ -13,7 +13,14 @@ from worker.entities import (
 from worker.storage import compute_role_id
 
 
-def load_valid_fixtures() -> tuple[list[Source], list[Utterance], list[Claim], list[Tension], list[Assessment], list[SourceSubjectRole]]:
+def load_valid_fixtures() -> tuple[
+    list[Source],
+    list[Utterance],
+    list[Claim],
+    list[Tension],
+    list[Assessment],
+    list[SourceSubjectRole],
+]:
     """Loads a fully valid entity graph that satisfies all 9 integrity checks."""
     source_1 = Source(
         source_id="src_valid_01",

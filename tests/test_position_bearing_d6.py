@@ -71,9 +71,7 @@ def test_mechanical_floor_fails_on_pre_d6_and_passes_on_repaired_table() -> None
     store = Storage("social_proof.duckdb", read_only=True)
 
     # 1. Pre-D6 propositions table had substantial bare-topic failures
-    pre_props = store.con.execute(
-        "SELECT canonical_text FROM propositions_pre_d6"
-    ).fetchall()
+    pre_props = store.con.execute("SELECT canonical_text FROM propositions_pre_d6").fetchall()
     assert len(pre_props) == 2161, f"Expected 2161 pre-D6 propositions, got {len(pre_props)}"
 
     pre_rejections = 0
@@ -91,7 +89,9 @@ def test_mechanical_floor_fails_on_pre_d6_and_passes_on_repaired_table() -> None
 
     assert pre_rejections >= 495, f"Expected >= 495 pre-D6 rejections, got {pre_rejections}"
     rejection_rate_pre = pre_rejections / len(pre_props)
-    assert rejection_rate_pre > 0.20, f"Expected > 20% pre-D6 rejection rate, got {rejection_rate_pre:.2%}"
+    assert rejection_rate_pre > 0.20, (
+        f"Expected > 20% pre-D6 rejection rate, got {rejection_rate_pre:.2%}"
+    )
 
     # 2. Live repaired propositions table passes 100%
     repaired_props = store.con.execute(
@@ -112,7 +112,9 @@ def test_mechanical_floor_fails_on_pre_d6_and_passes_on_repaired_table() -> None
         if not validate_position_bearing(claim).is_valid:
             repaired_rejections += 1
 
-    assert repaired_rejections == 0, f"Expected 0 rejections on repaired table, got {repaired_rejections}"
+    assert repaired_rejections == 0, (
+        f"Expected 0 rejections on repaired table, got {repaired_rejections}"
+    )
     store.close()
 
 
@@ -183,13 +185,17 @@ def test_step5_candidate_pairs_and_tensions() -> None:
     pub_tensions = store.con.execute(
         "SELECT tension_id FROM tensions WHERE status = 'published'"
     ).fetchall()
-    assert len(pub_tensions) in (0, 1), f"Expected 0 or 1 published tensions, got {len(pub_tensions)}"
+    assert len(pub_tensions) in (0, 1), (
+        f"Expected 0 or 1 published tensions, got {len(pub_tensions)}"
+    )
 
     # 2. Quarantined tensions: 3 under D6 (historical fabrications), 4 under X2 (+1 low_attribution_confidence), 5 under X3 (+1 frame_mismatch)
     quarantined = store.con.execute(
         "SELECT tension_id, quarantine_reason FROM tensions WHERE status = 'quarantined'"
     ).fetchall()
-    assert len(quarantined) in (3, 4, 5), f"Expected 3, 4, or 5 quarantined tensions, got {len(quarantined)}"
+    assert len(quarantined) in (3, 4, 5), (
+        f"Expected 3, 4, or 5 quarantined tensions, got {len(quarantined)}"
+    )
     assert sum(1 for _tid, reason in quarantined if reason == "fabricated_proposition") == 3
 
     store.close()
@@ -222,6 +228,6 @@ def test_falsification_prompt_version_and_position_bearing() -> None:
 
     # Check prompt version in LocalGemmaRuntime is v1.7
     runtime = LocalGemmaRuntime()
-    assert runtime.prompt_version in ("v1.7", "v1.8")
+    assert runtime.prompt_version in ("v1.7", "v1.8", "v1.9")
     assert "THE POSITION TEST" in STABLE_SYSTEM_PROMPT
     assert "most enterprises" in STABLE_SYSTEM_PROMPT

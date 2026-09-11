@@ -10,12 +10,14 @@ from worker.storage import Storage, compute_utterance_id
 from worker.transcribe.reconciler import WordTimestamp
 
 TERMINAL_PUNCTUATION: frozenset[str] = frozenset([".", "?", "!"])
-ABBREVIATIONS: frozenset[str] = frozenset(["mr.", "mrs.", "ms.", "dr.", "u.s.", "vs.", "e.g.", "i.e."])
+ABBREVIATIONS: frozenset[str] = frozenset(
+    ["mr.", "mrs.", "ms.", "dr.", "u.s.", "vs.", "e.g.", "i.e."]
+)
 
 
 def is_terminal_word(word_str: str) -> bool:
     """Returns True if the word ends with terminal sentence punctuation (. ? !)."""
-    clean = word_str.rstrip('"\'”’)')
+    clean = word_str.rstrip("\"'”’)")
     if not clean:
         return False
     if clean.lower() in ABBREVIATIONS:
@@ -81,7 +83,11 @@ def segment_words_into_utterances(
             if (
                 pause_ms >= 400
                 or current_duration >= 10000
-                or (next_w and next_w.word and (next_w.word[0].isupper() or next_w.word[0] in ('"', "'", '“', '‘')))
+                or (
+                    next_w
+                    and next_w.word
+                    and (next_w.word[0].isupper() or next_w.word[0] in ('"', "'", "“", "‘"))
+                )
             ):
                 should_split = True
         elif pause_ms > max_pause_ms:
@@ -96,9 +102,9 @@ def segment_words_into_utterances(
 
         if should_split:
             # Clean leading chopped hyphen fragments from audio slicing artifacts
-            while (
-                len(current_words) > 1
-                and (current_words[0].word.startswith("-") or not any(c.isalnum() for c in current_words[0].word))
+            while len(current_words) > 1 and (
+                current_words[0].word.startswith("-")
+                or not any(c.isalnum() for c in current_words[0].word)
             ):
                 current_words.pop(0)
                 if current_words:
@@ -115,7 +121,9 @@ def segment_words_into_utterances(
                 text_verbatim = text_verbatim.lstrip("-— \t\n")
                 if text_verbatim and text_verbatim[0].islower():
                     text_verbatim = text_verbatim[0].upper() + text_verbatim[1:]
-                if text_verbatim and not any(text_verbatim.rstrip('"\'”’').endswith(t) for t in TERMINAL_PUNCTUATION):
+                if text_verbatim and not any(
+                    text_verbatim.rstrip("\"'”’").endswith(t) for t in TERMINAL_PUNCTUATION
+                ):
                     text_verbatim = text_verbatim + "."
 
             parquet_hash = None

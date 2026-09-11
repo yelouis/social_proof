@@ -93,7 +93,7 @@ def test_falsification_disabled_polarity_validator() -> None:
 def test_prompt_v1_6_canonical_specification() -> None:
     """4. Prompt v1.6/v1.7 specifies canonical noun-phrase form."""
     runtime = LocalGemmaRuntime()
-    assert runtime.prompt_version in ("v1.6", "v1.7", "v1.8")
+    assert runtime.prompt_version in ("v1.6", "v1.7", "v1.8", "v1.9")
     assert "CANONICAL PROPOSITION FORM" in STABLE_SYSTEM_PROMPT
     assert "NOUN PHRASE" in STABLE_SYSTEM_PROMPT
     assert "federal licensing of frontier AI models" in STABLE_SYSTEM_PROMPT
@@ -103,12 +103,19 @@ def test_assertion_c_live_corpus_metrics() -> None:
     """5. Assertion (c): Singleton rate, multi-episode propositions, and zero polarity in DuckDB."""
     storage = Storage("social_proof.duckdb", read_only=True)
 
-    r_prop = storage.con.execute("SELECT count(*) FROM propositions WHERE status = 'active'").fetchone()
+    r_prop = storage.con.execute(
+        "SELECT count(*) FROM propositions WHERE status = 'active'"
+    ).fetchone()
     c_prop = int(r_prop[0]) if r_prop else 0
     assert c_prop > 0, "Expected non-zero active propositions"
 
     # Zero polarity in table
-    props = [r[0] for r in storage.con.execute("SELECT canonical_text FROM propositions WHERE status = 'active'").fetchall()]
+    props = [
+        r[0]
+        for r in storage.con.execute(
+            "SELECT canonical_text FROM propositions WHERE status = 'active'"
+        ).fetchall()
+    ]
     for ptext in props:
         claim = ExtractedClaim(
             proposition_text=ptext,

@@ -45,7 +45,9 @@ def test_entailment_w1_assertion_c_fails_on_unrepaired_merge(tmp_path: Path) -> 
         from_pre_merge=True,
         validate_entailment_on_repoint=False,
     )
-    assert stats["repointed_propositions_count"] in (67, 74), "Pre-repair merge re-pointed 67 or 74 claims"
+    assert stats["repointed_propositions_count"] in (67, 74), (
+        "Pre-repair merge re-pointed 67 or 74 claims"
+    )
 
     # Run verify_entailment_holds over the un-repaired state
     claims = [
@@ -156,8 +158,12 @@ def test_entailment_w1_repoint_strictly_fewer_and_clears_floor(tmp_path: Path) -
     ).fetchall()
 
     expected_ungated_limit = 74 if DEFAULT_T_DEDUP == 0.86 else 130
-    assert len(repointed_claims) < expected_ungated_limit, f"Expected strictly fewer than {expected_ungated_limit} re-pointed claims, got {len(repointed_claims)}"
-    assert len(repointed_claims) in (1, 50, 57, 69, 117), f"Expected 1, 50, 57, 69 or 117 re-pointed claims, got {len(repointed_claims)}"
+    assert len(repointed_claims) < expected_ungated_limit, (
+        f"Expected strictly fewer than {expected_ungated_limit} re-pointed claims, got {len(repointed_claims)}"
+    )
+    assert len(repointed_claims) in (1, 50, 57, 69, 117), (
+        f"Expected 1, 50, 57, 69 or 117 re-pointed claims, got {len(repointed_claims)}"
+    )
 
     # Check that each re-pointed claim clears T_ENTAIL_HIGH
     embedder = get_embedder()
@@ -169,6 +175,7 @@ def test_entailment_w1_repoint_strictly_fewer_and_clears_floor(tmp_path: Path) -
             q_vec = embedder.embed_document(qtext.strip())
             p_vec = embedder.embed_document(ptext.strip())
             from worker.extract.dedup import cosine_similarity
+
             sim = cosine_similarity(q_vec, p_vec)
         assert sim >= DEFAULT_T_ENTAIL_HIGH, (
             f"Re-pointed claim {cid} failed T_ENTAIL_HIGH ({DEFAULT_T_ENTAIL_HIGH}): sim={sim:.4f}"
@@ -207,7 +214,9 @@ def test_entailment_w1_falsification_loop_2(tmp_path: Path) -> None:
     store = Storage(str(temp_db_path))
 
     # 1. Break: validate_entailment_on_repoint=False at 0.86 -> RED
-    store.reresolve_propositions(t_dedup=0.86, from_pre_merge=True, validate_entailment_on_repoint=False)
+    store.reresolve_propositions(
+        t_dedup=0.86, from_pre_merge=True, validate_entailment_on_repoint=False
+    )
     claims_broken = [
         c
         for r in store.con.execute("SELECT claim_id FROM claims").fetchall()
@@ -219,12 +228,16 @@ def test_entailment_w1_falsification_loop_2(tmp_path: Path) -> None:
         if (p := store.get_proposition(r[0])) is not None
     ]
     res_broken = verify_entailment_holds(claims_broken, props_broken, embedder=get_embedder())
-    assert res_broken.passed is False, "Falsification: Broken merge must go RED on verify_entailment_holds"
+    assert res_broken.passed is False, (
+        "Falsification: Broken merge must go RED on verify_entailment_holds"
+    )
     assert res_broken.status == "FAIL"
     assert "failed entailment" in res_broken.message
 
     # 2. Revert: validate_entailment_on_repoint=True -> GREEN
-    store.reresolve_propositions(t_dedup=0.86, from_pre_merge=True, validate_entailment_on_repoint=True)
+    store.reresolve_propositions(
+        t_dedup=0.86, from_pre_merge=True, validate_entailment_on_repoint=True
+    )
     claims_fixed = [
         c
         for r in store.con.execute("SELECT claim_id FROM claims").fetchall()
@@ -236,7 +249,9 @@ def test_entailment_w1_falsification_loop_2(tmp_path: Path) -> None:
         if (p := store.get_proposition(r[0])) is not None
     ]
     cache = store.get_entailment_cache()
-    res_fixed = verify_entailment_holds(claims_fixed, props_fixed, embedder=get_embedder(), cache=cache)
+    res_fixed = verify_entailment_holds(
+        claims_fixed, props_fixed, embedder=get_embedder(), cache=cache
+    )
     assert res_fixed.passed is True, "Revert: Fixed merge must go GREEN on verify_entailment_holds"
     assert res_fixed.status == "PASS"
 

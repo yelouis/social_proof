@@ -144,6 +144,7 @@ def test_phase_2_gate_behaviour_fixtures_regression() -> None:
 
 def test_falsification_dropping_sarcasm_guard_fails_n1_fixture() -> None:
     """Falsification test: Dropping sarcasm detection causes N1 behaviour fixture to fail."""
+
     class BrokenSarcasmDetector(VerifiedRuleDetector):
         def evaluate_behaviour_case(self, case: BehaviourCase) -> dict[str, Any]:
             if case.type == "N1":

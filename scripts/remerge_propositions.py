@@ -87,13 +87,15 @@ def run_remerge(
                 reason = "low_attribution_confidence"
             else:
                 reason = "evaluated_by_detector"
-            candidates_considered.append({
-                "subject_id": subj_id,
-                "claim_a": c_a,
-                "claim_b": c_b,
-                "proposition_id": p_id,
-                "reason": reason,
-            })
+            candidates_considered.append(
+                {
+                    "subject_id": subj_id,
+                    "claim_a": c_a,
+                    "claim_b": c_b,
+                    "proposition_id": p_id,
+                    "reason": reason,
+                }
+            )
 
     print(f"Candidate pairs considered across all subjects: {len(candidates_considered)}")
     rejection_counter = Counter(c["reason"] for c in candidates_considered)
@@ -102,7 +104,9 @@ def run_remerge(
 
     print(f"Published/Quarantined tensions detected: {len(all_tensions)}")
     for t in all_tensions:
-        print(f"  Tension {t.tension_id[:8]}: type={t.type}, status={t.status}, severity={t.severity:.2f}")
+        print(
+            f"  Tension {t.tension_id[:8]}: type={t.type}, status={t.status}, severity={t.severity:.2f}"
+        )
 
     # 3. Re-run P5 Principle Conflict Detection
     print("\n--- P5 Principle Conflict Detection ---")
@@ -122,7 +126,9 @@ def run_remerge(
             a = re.assess_subject_topic(subj_id, top_id, persist=True)
             assessments.append(a)
             scores = {k: v.get("score") for k, v in a.axes.items()}
-            print(f"  Assessment {subj_id[:20]} ({top_id}): passed={a.sufficiency.get('passed')}, scores={scores}")
+            print(
+                f"  Assessment {subj_id[:20]} ({top_id}): passed={a.sufficiency.get('passed')}, scores={scores}"
+            )
 
     store.close()
     return {
@@ -136,10 +142,21 @@ def run_remerge(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Re-resolve proposition deduplication at threshold T_dedup.")
-    parser.add_argument("--db", type=str, default="social_proof.duckdb", help="Path to DuckDB database")
-    parser.add_argument("--threshold", type=float, default=DEFAULT_T_DEDUP, help="Deduplication threshold (Parameter 008)")
-    parser.add_argument("--from-pre-merge", action="store_true", help="Restore from pre-merge tables first")
+    parser = argparse.ArgumentParser(
+        description="Re-resolve proposition deduplication at threshold T_dedup."
+    )
+    parser.add_argument(
+        "--db", type=str, default="social_proof.duckdb", help="Path to DuckDB database"
+    )
+    parser.add_argument(
+        "--threshold",
+        type=float,
+        default=DEFAULT_T_DEDUP,
+        help="Deduplication threshold (Parameter 008)",
+    )
+    parser.add_argument(
+        "--from-pre-merge", action="store_true", help="Restore from pre-merge tables first"
+    )
     args = parser.parse_args()
 
     if not Path(args.db).exists():

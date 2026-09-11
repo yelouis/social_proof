@@ -30,7 +30,6 @@ def live_db() -> Storage:
     return Storage("social_proof.duckdb", read_only=True)
 
 
-
 def _make_dummy_claim(prop_text: str) -> ExtractedClaim:
     return ExtractedClaim(
         quote_text="dummy verbatim quote for test",
@@ -60,12 +59,16 @@ def test_w2_bound_pronoun_regression() -> None:
     """2. No regression: bound pronoun ('Moderna patented its mRNA technology') passes."""
     moderna_claim = _make_dummy_claim("Moderna patented its mRNA technology")
     outcome = validate_self_contained(moderna_claim)
-    assert outcome.is_valid is True, f"Moderna claim rejected unexpectedly: {outcome.rejection_reason}"
+    assert outcome.is_valid is True, (
+        f"Moderna claim rejected unexpectedly: {outcome.rejection_reason}"
+    )
     assert outcome.status == "passed"
 
     google_claim = _make_dummy_claim("Google is attempting to develop its own silicon for chips.")
     outcome_google = validate_self_contained(google_claim)
-    assert outcome_google.is_valid is True, f"Google claim rejected unexpectedly: {outcome_google.rejection_reason}"
+    assert outcome_google.is_valid is True, (
+        f"Google claim rejected unexpectedly: {outcome_google.rejection_reason}"
+    )
     assert outcome_google.status == "passed"
 
 
@@ -99,7 +102,9 @@ def test_w2_behaviour_fixtures() -> None:
         outcome = validate_self_contained(claim)
 
         if expected_beh == "passed":
-            assert outcome.is_valid is True, f"Case '{cid}' ('{prop_text}') failed: {outcome.rejection_reason}"
+            assert outcome.is_valid is True, (
+                f"Case '{cid}' ('{prop_text}') failed: {outcome.rejection_reason}"
+            )
         else:
             assert outcome.is_valid is False, f"Case '{cid}' ('{prop_text}') unexpectedly passed"
             assert outcome.rejection_reason == expected_reason, (
@@ -110,7 +115,9 @@ def test_w2_behaviour_fixtures() -> None:
 def test_w2_validator_fails_on_unrepaired_corpus(live_db: Storage) -> None:
     """5. Validator fails on un-repaired corpus naming ~130 propositions."""
     con = live_db.con
-    rows = con.execute("SELECT proposition_id, canonical_text FROM propositions WHERE status = 'active'").fetchall()
+    rows = con.execute(
+        "SELECT proposition_id, canonical_text FROM propositions WHERE status = 'active'"
+    ).fetchall()
 
     failing = []
     for pid, text in rows:
@@ -130,7 +137,9 @@ def test_w2_assertion_c_zero_unbound_propositions(live_db: Storage) -> None:
     Asserts the property over the whole propositions table using the exact validator predicate.
     """
     con = live_db.con
-    rows = con.execute("SELECT proposition_id, canonical_text FROM propositions WHERE status = 'active'").fetchall()
+    rows = con.execute(
+        "SELECT proposition_id, canonical_text FROM propositions WHERE status = 'active'"
+    ).fetchall()
 
     unbound_propositions = []
     for pid, text in rows:

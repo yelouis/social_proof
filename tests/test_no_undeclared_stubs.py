@@ -43,7 +43,9 @@ def test_all_external_contracts_are_either_declared_or_stubbed() -> None:
         module = importlib.import_module(module_path)
 
         # Check if declared in pyproject.toml
-        pkg_declared = (pkg_name in pyproject_text) or (pkg_name.replace("_", "-") in pyproject_text)
+        pkg_declared = (pkg_name in pyproject_text) or (
+            pkg_name.replace("_", "-") in pyproject_text
+        )
 
         # Check if importable
         pkg_importable = False
@@ -71,9 +73,17 @@ def test_all_external_contracts_are_either_declared_or_stubbed() -> None:
         is_stubbed = module_path in STUB_REGISTRY
         if is_stubbed:
             # Concrete implementation must announce itself as Mock* or Stub*
-            symbols = [name for name in dir(module) if name.startswith("Mock") or name.startswith("Stub") or name.startswith("stub_")]
-            assert len(symbols) > 0, f"Module {module_path} is registered in STUB_REGISTRY but has no Mock*/Stub* symbols"
-            assert not is_declared_and_real, f"Module {module_path} is declared as real but still registered in STUB_REGISTRY"
+            symbols = [
+                name
+                for name in dir(module)
+                if name.startswith("Mock") or name.startswith("Stub") or name.startswith("stub_")
+            ]
+            assert len(symbols) > 0, (
+                f"Module {module_path} is registered in STUB_REGISTRY but has no Mock*/Stub* symbols"
+            )
+            assert not is_declared_and_real, (
+                f"Module {module_path} is declared as real but still registered in STUB_REGISTRY"
+            )
         else:
             # Must be declared and real
             assert is_declared_and_real, (
@@ -90,8 +100,13 @@ def test_falsification_shrinking_external_contracts_causes_failure() -> None:
 
 def test_falsification_plausibly_named_stub_without_mock_prefix_fails() -> None:
     """Falsification test: A stub not named Mock* or Stub* fails stub symbol validation."""
+
     class FakeModule:
         DeterministicVectorizer = object()
 
-    symbols = [name for name in dir(FakeModule) if name.startswith("Mock") or name.startswith("Stub") or name.startswith("stub_")]
+    symbols = [
+        name
+        for name in dir(FakeModule)
+        if name.startswith("Mock") or name.startswith("Stub") or name.startswith("stub_")
+    ]
     assert len(symbols) == 0  # Falsification confirmed!

@@ -29,7 +29,9 @@ def test_behaviour_fixtures_load_and_run_binary_regression() -> None:
 
     # Full report verification
     report = generate_full_report(detector, behaviour_cases=cases, golden_cases=[])
-    fixture_section = report.split("BEHAVIOUR FIXTURES (regression only — never a quality measure)")[1].split("GOLDEN CORPUS METRICS")[0]
+    fixture_section = report.split(
+        "BEHAVIOUR FIXTURES (regression only — never a quality measure)"
+    )[1].split("GOLDEN CORPUS METRICS")[0]
 
     # Assert NO percentage (%) or decimal rate appears in the fixture regression block
     assert "%" not in fixture_section
@@ -108,7 +110,7 @@ def test_loader_rejects_thin_corpus_case_with_fewer_than_six_utterances(tmp_path
             "utterances": [
                 {
                     "text": f"Claim number {i}",
-                    "recorded_at": f"2024-0{i+1}-01T10:00:00Z",
+                    "recorded_at": f"2024-0{i + 1}-01T10:00:00Z",
                     "span": [0, 14],
                 }
                 for i in range(5)
@@ -161,6 +163,7 @@ def test_golden_corpus_empty_reports_not_measured_never_zero_or_one() -> None:
 
 def test_per_class_floor_of_five_enforced() -> None:
     """Rates are only printable when a class has at least 5 cases."""
+
     def make_case(cid: str, cls: str) -> GoldenCase:
         return GoldenCase(
             case_id=cid,

@@ -44,7 +44,11 @@ def test_podcast_rss_adapter_feed_and_citation(tmp_path: Path) -> None:
     assert source.duration_ms == 5801000
     assert source.published_at == "2024-01-15T10:00:00+00:00"
 
-    subject = Subject(subject_id="subj_pod_01", display_name="Podcaster", handles={"podcast_rss": "https://cdn.podcasts.example.com/feed.xml"})
+    subject = Subject(
+        subject_id="subj_pod_01",
+        display_name="Podcaster",
+        handles={"podcast_rss": "https://cdn.podcasts.example.com/feed.xml"},
+    )
     role = adapter.role(ref, subject)
 
     assert not hasattr(source, "tier")

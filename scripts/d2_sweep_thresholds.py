@@ -23,9 +23,7 @@ def simulate_dedup(
         JOIN propositions p ON pe.proposition_id = p.proposition_id
         WHERE p.status = 'active'
     """).fetchall()
-    embs: dict[str, np.ndarray] = {
-        r[0]: np.array(r[1], dtype=np.float32) for r in emb_rows
-    }
+    embs: dict[str, np.ndarray] = {r[0]: np.array(r[1], dtype=np.float32) for r in emb_rows}
 
     # 2. Fetch claims
     claim_rows = con.execute("""
@@ -91,18 +89,20 @@ def simulate_dedup(
     for r in claim_rows:
         cid, uid, pid, sid, stance, is_own, rec_at, quote, src_id = r
         mapped_pid = mapping.get(pid, pid)
-        mapped_claims.append({
-            "claim_id": cid,
-            "utterance_id": uid,
-            "orig_pid": pid,
-            "mapped_pid": mapped_pid,
-            "subject_id": sid,
-            "stance": stance,
-            "is_own_assertion": is_own,
-            "recorded_at": rec_at,
-            "quote_text": quote,
-            "source_id": src_id,
-        })
+        mapped_claims.append(
+            {
+                "claim_id": cid,
+                "utterance_id": uid,
+                "orig_pid": pid,
+                "mapped_pid": mapped_pid,
+                "subject_id": sid,
+                "stance": stance,
+                "is_own_assertion": is_own,
+                "recorded_at": rec_at,
+                "quote_text": quote,
+                "source_id": src_id,
+            }
+        )
 
     # Group claims by mapped_pid
     claims_by_mapped_pid: dict[str, list[dict[str, Any]]] = {}
@@ -161,7 +161,9 @@ def main() -> None:
     embedder = get_embedder()
 
     thresholds = [0.999, 0.90, 0.88, 0.86, 0.84, 0.82, 0.80, 0.78, 0.75, 0.30]
-    print(f"{'T_dedup':<8} | {'Props':<6} | {'Singletons':<10} | {'Singl%':<7} | {'Multi-Ep':<8} | {'Multi%':<7} | {'Merges':<6} | {'CandPairs':<10}")
+    print(
+        f"{'T_dedup':<8} | {'Props':<6} | {'Singletons':<10} | {'Singl%':<7} | {'Multi-Ep':<8} | {'Multi%':<7} | {'Merges':<6} | {'CandPairs':<10}"
+    )
     print("-" * 85)
 
     results = []
@@ -170,8 +172,8 @@ def main() -> None:
         results.append(res)
         print(
             f"{res['t_dedup']:<8.3f} | {res['total_propositions']:<6} | "
-            f"{res['singleton_propositions']:<10} | {res['singleton_rate']*100:<6.1f}% | "
-            f"{res['multi_episode_propositions']:<8} | {res['multi_episode_rate']*100:<6.1f}% | "
+            f"{res['singleton_propositions']:<10} | {res['singleton_rate'] * 100:<6.1f}% | "
+            f"{res['multi_episode_propositions']:<8} | {res['multi_episode_rate'] * 100:<6.1f}% | "
             f"{res['mapping_merges']:<6} | {res['candidate_pairs_count']:<10}"
         )
 
@@ -181,7 +183,9 @@ def main() -> None:
         cands = res["candidates"]
         if cands and t >= 0.75:
             for pid, subj, s, o in cands[:5]:
-                p_row = con.execute("SELECT canonical_text FROM propositions WHERE proposition_id = ?", [pid]).fetchone()
+                p_row = con.execute(
+                    "SELECT canonical_text FROM propositions WHERE proposition_id = ?", [pid]
+                ).fetchone()
                 p_text = str(p_row[0]) if p_row is not None else pid
                 print(f"  Subject: {subj}, Prop: '{p_text}'")
                 print(f"    Support ({s['source_id'][:10]}): '{s['quote_text'][:80]}'")

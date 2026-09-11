@@ -22,7 +22,10 @@ class GeneralityCalibrator:
     def check_cluster_size(self, member_count: int) -> tuple[bool, str | None]:
         """Asserts cluster size does not exceed generality ceiling."""
         if member_count > self.max_cluster_size:
-            return False, f"Principle cluster size {member_count} exceeds ceiling of {self.max_cluster_size} (over-general)"
+            return (
+                False,
+                f"Principle cluster size {member_count} exceeds ceiling of {self.max_cluster_size} (over-general)",
+            )
         return True, None
 
     def validate_canonical_text(self, canonical_text: str) -> ValidationResult:
@@ -37,7 +40,10 @@ class GeneralityCalibrator:
             )
 
         # Must start with generic slot or generic subject
-        if not any(clean.startswith(prefix) for prefix in ("an ", "a ", "any ", "one who ", "someone who ", "an official who ")):
+        if not any(
+            clean.startswith(prefix)
+            for prefix in ("an ", "a ", "any ", "one who ", "someone who ", "an official who ")
+        ):
             return ValidationResult(
                 is_valid=False,
                 reason="Principle canonical text must state a general rule with actor as slot",

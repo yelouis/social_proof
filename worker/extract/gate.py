@@ -10,19 +10,36 @@ from worker.entities import Utterance
 
 # Conversational filler patterns that never contain testable policy/factual claims
 FILLER_PATTERNS: list[re.Pattern[str]] = [
-    re.compile(r"^(?:yeah|yes|yep|nope|no|right|exactly|totally|sure|okay|ok|uh-huh|mm-hmm)[\s,.!]*$", re.IGNORECASE),
-    re.compile(r"^(?:yeah|yes|yep|right|totally|sure|okay),?\s*(?:absolutely|exactly|totally|mm-hmm|thanks).*", re.IGNORECASE),
+    re.compile(
+        r"^(?:yeah|yes|yep|nope|no|right|exactly|totally|sure|okay|ok|uh-huh|mm-hmm)[\s,.!]*$",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"^(?:yeah|yes|yep|right|totally|sure|okay),?\s*(?:absolutely|exactly|totally|mm-hmm|thanks).*",
+        re.IGNORECASE,
+    ),
     re.compile(r".*(?:thanks (?:so much )?for having me|welcome to the show).*", re.IGNORECASE),
-    re.compile(r".*(?:check (?:my|the) calendar|next (?:monday|tuesday|wednesday|thursday|friday)|take a quick break|we'll be right back).*", re.IGNORECASE),
+    re.compile(
+        r".*(?:check (?:my|the) calendar|next (?:monday|tuesday|wednesday|thursday|friday)|take a quick break|we'll be right back).*",
+        re.IGNORECASE,
+    ),
     re.compile(r".*(?:sound check|one two three|testing (?:one|microphone)).*", re.IGNORECASE),
-    re.compile(r"^(?:good morning|good afternoon|good evening|welcome back)[\s,.!]*$", re.IGNORECASE),
+    re.compile(
+        r"^(?:good morning|good afternoon|good evening|welcome back)[\s,.!]*$", re.IGNORECASE
+    ),
 ]
 
 # Claim indicator cues (boosters)
 CLAIM_INDICATORS: list[re.Pattern[str]] = [
-    re.compile(r"\b(?:must|should|ought|need to|have to|require|mandate|ban|prohibit)\b", re.IGNORECASE),
-    re.compile(r"\b(?:think|believe|argue|contend|maintain|assert|convinced|disagree)\b", re.IGNORECASE),
-    re.compile(r"\b(?:always|never|fundamentally|essential|impossible|catastrophic)\b", re.IGNORECASE),
+    re.compile(
+        r"\b(?:must|should|ought|need to|have to|require|mandate|ban|prohibit)\b", re.IGNORECASE
+    ),
+    re.compile(
+        r"\b(?:think|believe|argue|contend|maintain|assert|convinced|disagree)\b", re.IGNORECASE
+    ),
+    re.compile(
+        r"\b(?:always|never|fundamentally|essential|impossible|catastrophic)\b", re.IGNORECASE
+    ),
     re.compile(r"\b(?:used to|changed my mind|looking back|in retrospect)\b", re.IGNORECASE),
     re.compile(r"\b(?:if|unless|provided that|assuming)\b", re.IGNORECASE),
     re.compile(r"\b(?:percent|rate|tax|dollar|billion|million|inflation|deficit)\b", re.IGNORECASE),

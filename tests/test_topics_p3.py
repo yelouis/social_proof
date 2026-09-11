@@ -152,13 +152,37 @@ def test_free_text_resolution_with_cluster_expansion(test_store: Storage) -> Non
     p2 = compute_proposition_id("mandatory cluster compute registration")
     p3 = compute_proposition_id("releasing open weight models")
 
-    test_store.insert_proposition(Proposition(proposition_id=p1, canonical_text="federal licensing for frontier compute", subject_ids=[subject.subject_id]))
-    test_store.insert_proposition(Proposition(proposition_id=p2, canonical_text="mandatory cluster compute registration", subject_ids=[subject.subject_id]))
-    test_store.insert_proposition(Proposition(proposition_id=p3, canonical_text="releasing open weight models", subject_ids=[subject.subject_id]))
+    test_store.insert_proposition(
+        Proposition(
+            proposition_id=p1,
+            canonical_text="federal licensing for frontier compute",
+            subject_ids=[subject.subject_id],
+        )
+    )
+    test_store.insert_proposition(
+        Proposition(
+            proposition_id=p2,
+            canonical_text="mandatory cluster compute registration",
+            subject_ids=[subject.subject_id],
+        )
+    )
+    test_store.insert_proposition(
+        Proposition(
+            proposition_id=p3,
+            canonical_text="releasing open weight models",
+            subject_ids=[subject.subject_id],
+        )
+    )
 
-    test_store.insert_proposition_embedding(p1, embedder.embed_document("federal licensing for frontier compute"))
-    test_store.insert_proposition_embedding(p2, embedder.embed_document("mandatory cluster compute registration"))
-    test_store.insert_proposition_embedding(p3, embedder.embed_document("releasing open weight models"))
+    test_store.insert_proposition_embedding(
+        p1, embedder.embed_document("federal licensing for frontier compute")
+    )
+    test_store.insert_proposition_embedding(
+        p2, embedder.embed_document("mandatory cluster compute registration")
+    )
+    test_store.insert_proposition_embedding(
+        p3, embedder.embed_document("releasing open weight models")
+    )
 
     # Put p1 and p2 in a cluster topic
     topic = Topic(
@@ -195,8 +219,16 @@ def test_below_threshold_query_yields_no_coverage(test_store: Storage) -> None:
     embedder = MockSemanticEmbedder()
 
     pid = compute_proposition_id("federal licensing for frontier compute")
-    test_store.insert_proposition(Proposition(proposition_id=pid, canonical_text="federal licensing for frontier compute", subject_ids=[subject.subject_id]))
-    test_store.insert_proposition_embedding(pid, embedder.embed_document("federal licensing for frontier compute"))
+    test_store.insert_proposition(
+        Proposition(
+            proposition_id=pid,
+            canonical_text="federal licensing for frontier compute",
+            subject_ids=[subject.subject_id],
+        )
+    )
+    test_store.insert_proposition_embedding(
+        pid, embedder.embed_document("federal licensing for frontier compute")
+    )
 
     resolver = TopicResolver(storage=test_store, embedder=embedder, similarity_threshold=0.85)
 
@@ -219,8 +251,16 @@ def test_falsification_embedding_model_bump_causes_cache_miss(test_store: Storag
     embedder_v1 = MockSemanticEmbedder(model_name="nomic-ai/nomic-embed-text-v1.5")
 
     pid = compute_proposition_id("releasing open weight models")
-    test_store.insert_proposition(Proposition(proposition_id=pid, canonical_text="releasing open weight models", subject_ids=[subject.subject_id]))
-    test_store.insert_proposition_embedding(pid, embedder_v1.embed_document("releasing open weight models"))
+    test_store.insert_proposition(
+        Proposition(
+            proposition_id=pid,
+            canonical_text="releasing open weight models",
+            subject_ids=[subject.subject_id],
+        )
+    )
+    test_store.insert_proposition_embedding(
+        pid, embedder_v1.embed_document("releasing open weight models")
+    )
 
     resolver_v1 = TopicResolver(storage=test_store, embedder=embedder_v1)
     key_v1, props_v1, status_v1 = resolver_v1.resolve_topic(subject.subject_id, "open weights")
@@ -236,7 +276,9 @@ def test_falsification_embedding_model_bump_causes_cache_miss(test_store: Storag
 
     # Resolution key must change
     norm_q = normalize_query("open weights")
-    key_v2 = compute_resolution_key(subject.subject_id, norm_q, "nomic-ai/nomic-embed-text-v2.0", "v1.0")
+    key_v2 = compute_resolution_key(
+        subject.subject_id, norm_q, "nomic-ai/nomic-embed-text-v2.0", "v1.0"
+    )
     assert key_v2 != key_v1
 
     # Before resolving under v2, key_v2 MUST be a cache miss
@@ -271,7 +313,9 @@ def test_separate_process_resolution_determinism_assertion_c(tmp_path: Path) -> 
     for text in prop_texts:
         pid = compute_proposition_id(text)
         p_ids.append(pid)
-        store.insert_proposition(Proposition(proposition_id=pid, canonical_text=text, subject_ids=[subject.subject_id]))
+        store.insert_proposition(
+            Proposition(proposition_id=pid, canonical_text=text, subject_ids=[subject.subject_id])
+        )
         store.insert_proposition_embedding(pid, stub_hash_embedding(text))
 
     topic = Topic(
@@ -340,10 +384,16 @@ def test_topic_drift_guard() -> None:
     is_wide_1, years_1 = guard.check_date_gap("2022-01-01T00:00:00Z", "2023-07-01T00:00:00Z")
     assert is_wide_1 is False
     assert 1.4 <= years_1 <= 1.6
-    assert guard.should_route_to_update_integrity("2022-01-01T00:00:00Z", "2023-07-01T00:00:00Z") is False
+    assert (
+        guard.should_route_to_update_integrity("2022-01-01T00:00:00Z", "2023-07-01T00:00:00Z")
+        is False
+    )
 
     # 2. Wide gap (8 years): 2016 to 2024
     is_wide_2, years_2 = guard.check_date_gap("2016-03-01T00:00:00Z", "2024-03-01T00:00:00Z")
     assert is_wide_2 is True
     assert 7.9 <= years_2 <= 8.1
-    assert guard.should_route_to_update_integrity("2016-03-01T00:00:00Z", "2024-03-01T00:00:00Z") is True
+    assert (
+        guard.should_route_to_update_integrity("2016-03-01T00:00:00Z", "2024-03-01T00:00:00Z")
+        is True
+    )

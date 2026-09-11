@@ -12,15 +12,43 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Literal, cast
 
-PAIR_TYPE_CLASSES: frozenset[str] = frozenset({
-    "P1", "P2", "P3", "P4",
-    "N5", "N6", "N7", "N8", "N9", "N11", "N12",
-})
+PAIR_TYPE_CLASSES: frozenset[str] = frozenset(
+    {
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "N5",
+        "N6",
+        "N7",
+        "N8",
+        "N9",
+        "N11",
+        "N12",
+    }
+)
 
-ALL_BEHAVIOUR_CLASSES: frozenset[str] = frozenset({
-    "P1", "P2", "P3", "P4",
-    "N1", "N2", "N3", "N4", "N5", "N6", "N7", "N8", "N9", "N10", "N11", "N12", "N13",
-})
+ALL_BEHAVIOUR_CLASSES: frozenset[str] = frozenset(
+    {
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "N1",
+        "N2",
+        "N3",
+        "N4",
+        "N5",
+        "N6",
+        "N7",
+        "N8",
+        "N9",
+        "N10",
+        "N11",
+        "N12",
+        "N13",
+    }
+)
 
 
 @dataclass
@@ -46,8 +74,23 @@ class BehaviourUtterance:
 class BehaviourCase:
     case_id: str
     type: Literal[
-        "P1", "P2", "P3", "P4",
-        "N1", "N2", "N3", "N4", "N5", "N6", "N7", "N8", "N9", "N10", "N11", "N12", "N13",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "N1",
+        "N2",
+        "N3",
+        "N4",
+        "N5",
+        "N6",
+        "N7",
+        "N8",
+        "N9",
+        "N10",
+        "N11",
+        "N12",
+        "N13",
     ]
     subject_id: str
     source_locator: str
@@ -73,7 +116,9 @@ class BehaviourCase:
         return asdict(self)
 
 
-def load_behaviour_cases(fixture_file: Path | str = "fixtures/behaviour/cases.json") -> list[BehaviourCase]:
+def load_behaviour_cases(
+    fixture_file: Path | str = "fixtures/behaviour/cases.json",
+) -> list[BehaviourCase]:
     """Loads regression behaviour fixtures.
 
     Rejects:
@@ -163,4 +208,3 @@ def load_self_contained_fixtures(
     if not path.exists():
         return []
     return cast(list[dict[str, Any]], json.loads(path.read_text(encoding="utf-8")))
-

@@ -18,7 +18,7 @@ Claim {
   hedging_level     # 0.0 flat assertion … 1.0 pure hedge
   is_own_assertion  # false ⇒ excluded from scoring, retained for review
   exclusion_reason  # reported_speech | hypothetical | sarcasm | steelman
-                    # | joke | question | quote_agreement_unclear | null
+                    # | joke | question | quote_agreement_unclear | reports_fact | null
   quote_span        # [start_char, end_char] into utterance.text_verbatim
   condition         # text of the "if…" clause, or null (§5)
   prior_stance_reported   # §4 — the Update Integrity signal
@@ -304,6 +304,7 @@ There is no `output_config.format` here. A local model asked politely for JSON w
    Invariant I7 requires that only a subject's genuine first-person assertions enter scoring. Extracted claims framing another speaker's views, asking questions, or exploring hypotheticals must have `is_own_assertion: false`.
    - **Interrogatives:** Patterns such as `"So you're saying..."`, `"Are you..."`, `"Can you..."`, or terminal question marks are classified as `exclusion_reason: "question"`.
    - **Rhetorical / Hypothetical Setups:** Openers such as `"You can say, okay..."` or `"They'd argue..."` are classified as `exclusion_reason: "hypothetical"`.
+   - **Factual Reports / Non-Position Statements:** Observations that report facts, product features, statistics, or historical metrics without advocating a normative side are declined to `{"claims": []}`, or if extracted, classified as `exclusion_reason: "reports_fact"` with `is_own_assertion: false` (Item X4, §11).
    - **Exclusion Rate as a First-Class Metric:** Monitored via `get_exclusion_rate()`. The exclusion rate is calibrated above a floor of 5% (measured at 7.78% on live corpus; previously a blind 0.66%).
 
 **Segmentation is a precondition for all validators.** Utterances split on length rather than sentence boundaries produce fragments that begin and end mid-word (`"...as it is bullsh-sh-"`). Asking a model to find a *position* in a fragment that cannot hold one is what invites fabrication in the first place. **Segment on sentence and pause boundaries; a validator is defence in depth, not a substitute for coherent input.**

@@ -27,7 +27,9 @@ def test_gate_filters_conversational_filler_n13() -> None:
         "Thanks for having me.",
         "Sound check one two three.",
     ]
-    rejected_count = sum(1 for phrase in filler_phrases if not gate.evaluate_text(phrase).should_extract)
+    rejected_count = sum(
+        1 for phrase in filler_phrases if not gate.evaluate_text(phrase).should_extract
+    )
     assert rejected_count >= len(filler_phrases) - 1
 
 

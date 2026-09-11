@@ -72,7 +72,9 @@ def test_phase_0_gate_journey_j1_and_j11(tmp_path: Path) -> None:
     store.insert_source(source)
 
     # 2. Transcribe & Segment into Utterances
-    speech_text = "We should establish mandatory safety audits for all frontier machine learning clusters."
+    speech_text = (
+        "We should establish mandatory safety audits for all frontier machine learning clusters."
+    )
     words = []
     curr_ms = 10000
     for w in speech_text.split():
@@ -96,7 +98,9 @@ def test_phase_0_gate_journey_j1_and_j11(tmp_path: Path) -> None:
     assert idx != -1
     quote_span = (idx, idx + len(target_quote))
 
-    claim_id = compute_claim_id(utt.utterance_id, "prop_safety_audits", "support", "gemma-3-27b-it:v1.0:s1")
+    claim_id = compute_claim_id(
+        utt.utterance_id, "prop_safety_audits", "support", "gemma-3-27b-it:v1.0:s1"
+    )
     claim = Claim(
         claim_id=claim_id,
         subject_id=subject.subject_id,
@@ -145,7 +149,9 @@ def test_phase_0_gate_journey_j1_and_j11(tmp_path: Path) -> None:
     assert count_claims_before == count_claims_after == 1
 
 
-def test_falsification_corrupt_text_verbatim_fails_verify_quotes_on_real_data(tmp_path: Path) -> None:
+def test_falsification_corrupt_text_verbatim_fails_verify_quotes_on_real_data(
+    tmp_path: Path,
+) -> None:
     """Falsification step for U4: Corrupting stored text_verbatim by one character
 
     causes verify_quotes to fail on real data.

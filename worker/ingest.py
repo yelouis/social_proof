@@ -242,11 +242,7 @@ class IngestionEngine:
         ref: SourceRef,
         subjects: list[Subject],
         media_file_override: Path | None = None,
-        mock_claims_by_subject: (
-            dict[str, list[dict[str, Any]]]
-            | Any
-            | None
-        ) = None,
+        mock_claims_by_subject: (dict[str, list[dict[str, Any]]] | Any | None) = None,
         panel_segments: list[AudioSegment] | None = None,
     ) -> IngestJob:
         """Runs the full ingest pipeline for a multi-speaker panel source across multiple subjects."""

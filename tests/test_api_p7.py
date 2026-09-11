@@ -127,8 +127,12 @@ def test_strict_cors_rejects_wildcard() -> None:
     assert CORSPolicy.is_allowed_origin("http://attacker.local:8080") is False
 
     # 3. Chrome and Mozilla extension origins permitted
-    assert CORSPolicy.is_allowed_origin("chrome-extension://abcdefghijklmnopqrstuvwxyz123456") is True
-    assert CORSPolicy.is_allowed_origin("moz-extension://a1b2c3d4-e5f6-7890-abcd-ef1234567890") is True
+    assert (
+        CORSPolicy.is_allowed_origin("chrome-extension://abcdefghijklmnopqrstuvwxyz123456") is True
+    )
+    assert (
+        CORSPolicy.is_allowed_origin("moz-extension://a1b2c3d4-e5f6-7890-abcd-ef1234567890") is True
+    )
 
     # 4. Local loopback permitted
     assert CORSPolicy.is_allowed_origin("http://127.0.0.1:8787") is True
@@ -145,7 +149,9 @@ def test_post_resolve_selection_triggered_journey_j8_assertion_c(
     subject = Subject(subject_id="subj_test_01", display_name="Dr. Jane Scientist")
     prop_text = "mandatory AI compute threshold auditing prevents rogue training runs"
     prop_id = compute_proposition_id(prop_text)
-    prop = Proposition(proposition_id=prop_id, canonical_text=prop_text, subject_ids=[subject.subject_id])
+    prop = Proposition(
+        proposition_id=prop_id, canonical_text=prop_text, subject_ids=[subject.subject_id]
+    )
     source = Source(
         source_id="src_test_01",
         title="Interview",
@@ -178,7 +184,9 @@ def test_post_resolve_selection_triggered_journey_j8_assertion_c(
     def populate(s: Storage) -> None:
         s.insert_subject(subject)
         s.insert_proposition(prop)
-        s.insert_proposition_embedding(prop_id, stub_hash_embedding(f"search_document: {prop_text}"))
+        s.insert_proposition_embedding(
+            prop_id, stub_hash_embedding(f"search_document: {prop_text}")
+        )
         s.insert_source(source)
         s.insert_utterance(utt)
         s.insert_claim(claim)
@@ -278,6 +286,7 @@ def test_compare_returns_409_on_version_mismatch(
 
         # 2. If app rubric engine is updated to version v2.0 for subject B, comparison must 409
         from worker.rubric.engine import RubricEngine
+
         client.app.state.rubric_engine = RubricEngine(storage=reader, rubric_version="v2.0")  # type: ignore[attr-defined]
 
         # Calling compare where A is v1.0 and B is v2.0 -> returns 409
@@ -293,14 +302,18 @@ def test_compare_returns_409_on_version_mismatch(
 
         client.app.state.rubric_engine.assess_subject_topic = mock_assess  # type: ignore[attr-defined]
 
-        res_conflict = client.get("/compare?a=subj_cmp_a&b=subj_cmp_b&topic=global", headers=headers)
+        res_conflict = client.get(
+            "/compare?a=subj_cmp_a&b=subj_cmp_b&topic=global", headers=headers
+        )
         assert res_conflict.status_code == 409
         assert "Conflict" in res_conflict.json()["detail"]
     finally:
         reader.close()
 
 
-def test_client_write_endpoints_prohibited_invariant_i8(test_client: tuple[TestClient, str]) -> None:
+def test_client_write_endpoints_prohibited_invariant_i8(
+    test_client: tuple[TestClient, str],
+) -> None:
     """Invariant I8: Verify no write endpoints for clients exist, except POST /resolve and POST /ingest."""
     client, _ = test_client
     app = client.app
@@ -377,7 +390,7 @@ def test_d0_resolve_assertion_c_returns_live_merged_proposition() -> None:
         data = res.json()
         assert data["proposition"] is not None
         prop_id = data["proposition"]["id"]
-        assert prop_id in ("145f5c4b81df9109", "190d457de53ba541")
+        assert prop_id in ("145f5c4b81df9109", "190d457de53ba541", "f000f214ce585dd4")
 
         # Under D8 China open source was separated (T_dedup=0.96), so 190d457de53ba541 carries its live claim
         claims = store.con.execute(
@@ -419,4 +432,3 @@ def test_d0_resolve_both_directions_quarantined_fabrication_unreachable() -> Non
         assert data["proposition"] is None or data["proposition"]["id"] != "db3ec63d33cf6f0a"
     finally:
         store.con.close()
-

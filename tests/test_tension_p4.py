@@ -315,7 +315,9 @@ def test_falsification_narrow_acknowledgement_to_later_utterance(test_store: Sto
     narrow_tensions = narrow_detector.detect_tensions_for_subject(subject.subject_id)
 
     reversals = [t for t in narrow_tensions if t.type == "unacknowledged_reversal"]
-    assert len(reversals) > 0, "Falsification failed: narrow search did not flip update to unacknowledged_reversal"
+    assert len(reversals) > 0, (
+        "Falsification failed: narrow search did not flip update to unacknowledged_reversal"
+    )
 
     # 2. Restore full-interval acknowledgement search (GREEN)
     full_detector = TensionDetector(storage=test_store, full_interval_search=True)
@@ -355,7 +357,9 @@ def test_fixture_p4_audience_divergence(test_store: Storage) -> None:
         )
         test_store.insert_source(source)
 
-        aud_stance: Literal["friendly", "neutral", "adversarial", "unknown"] = "friendly" if i == 0 else "adversarial"
+        aud_stance: Literal["friendly", "neutral", "adversarial", "unknown"] = (
+            "friendly" if i == 0 else "adversarial"
+        )
         role = SourceSubjectRole(
             role_id=compute_role_id(src_id, subject.subject_id),
             source_id=src_id,
@@ -570,11 +574,13 @@ def test_precondition_negation_uncertain_quarantined(test_store: Storage) -> Non
     test_store.insert_subject(subject)
 
     prop_id = compute_proposition_id("scientific consensus test")
-    test_store.insert_proposition(Proposition(proposition_id=prop_id, canonical_text="scientific consensus test"))
+    test_store.insert_proposition(
+        Proposition(proposition_id=prop_id, canonical_text="scientific consensus test")
+    )
 
     for i in (0, 1):
         src_id = f"src_neg_{i}"
-        rec = f"2023-0{i+1}-01T10:00:00Z"
+        rec = f"2023-0{i + 1}-01T10:00:00Z"
         test_store.insert_source(
             Source(
                 source_id=src_id,
@@ -646,7 +652,9 @@ def test_reversal_detector_runs_in_duckdb_sql_plan(test_store: Storage) -> None:
     ).fetchall()
 
     plan_str = " ".join(str(row) for row in plan)
-    assert "JOIN" in plan_str or "SCAN" in plan_str, "Query plan must execute in DuckDB relational engine"
+    assert "JOIN" in plan_str or "SCAN" in plan_str, (
+        "Query plan must execute in DuckDB relational engine"
+    )
 
 
 def test_tension_integrity_checks_pass(test_store: Storage) -> None:
@@ -655,13 +663,15 @@ def test_tension_integrity_checks_pass(test_store: Storage) -> None:
     test_store.insert_subject(subject)
 
     prop_id = compute_proposition_id("integrity test proposition")
-    test_store.insert_proposition(Proposition(proposition_id=prop_id, canonical_text="integrity test proposition"))
+    test_store.insert_proposition(
+        Proposition(proposition_id=prop_id, canonical_text="integrity test proposition")
+    )
 
     claims = []
     utts = []
     for i in (0, 1):
         src_id = f"src_integ_{i}"
-        rec = f"2023-0{i+1}-01T10:00:00Z"
+        rec = f"2023-0{i + 1}-01T10:00:00Z"
         test_store.insert_source(
             Source(
                 source_id=src_id,

@@ -19,7 +19,10 @@ def test_smoke_test_prefix_reuse_and_prefill_count(capsys: pytest.CaptureFixture
     # Assert no numeric throughput or projection appears in stdout
     captured = capsys.readouterr()
     assert "Inference Throughput:            NOT MEASURED — no model backend loaded" in captured.out
-    assert "Projected 300hr Ingest Time:     NOT MEASURED — requires measured throughput" in captured.out
+    assert (
+        "Projected 300hr Ingest Time:     NOT MEASURED — requires measured throughput"
+        in captured.out
+    )
 
 
 def test_stub_runtime_tokens_per_second_is_none() -> None:
@@ -100,7 +103,9 @@ def test_falsification_interpolating_subject_into_system_prompt_breaks_caching()
 
     invalidates the cached prefix, causing prefill tokens per call to jump > 200.
     """
-    broken_runtime = LocalGemmaRuntime(system_prompt=STABLE_SYSTEM_PROMPT + "\nDynamic subject: Dr. Jane Doe")
+    broken_runtime = LocalGemmaRuntime(
+        system_prompt=STABLE_SYSTEM_PROMPT + "\nDynamic subject: Dr. Jane Doe"
+    )
     broken_runtime.kv_prefix_cached = False  # Cache broken by dynamic prefix!
 
     stats = broken_runtime.generate_constrained("Sample utterance")
@@ -125,4 +130,6 @@ def test_falsification_fake_throughput_fails_not_measured_assertion() -> None:
     """
     fake_throughput_str = "Inference Throughput:            35.0 tokens/sec"
     # When fake throughput is printed instead of NOT MEASURED:
-    assert "NOT MEASURED — no model backend loaded" not in fake_throughput_str  # Falsification confirmed!
+    assert (
+        "NOT MEASURED — no model backend loaded" not in fake_throughput_str
+    )  # Falsification confirmed!

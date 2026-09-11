@@ -119,64 +119,78 @@ def test_idempotent_duplicate_writes_produce_one_row(tmp_path: Path) -> None:
     # Insert same source twice
     store.insert_source(sources[0])
     store.insert_source(sources[0])
-    cnt_sources = store.con.execute("SELECT count(*) FROM sources WHERE source_id = ?", [sources[0].source_id]).fetchone()
+    cnt_sources = store.con.execute(
+        "SELECT count(*) FROM sources WHERE source_id = ?", [sources[0].source_id]
+    ).fetchone()
     assert cnt_sources is not None and cnt_sources[0] == 1
 
     # Insert subject and insert same role twice
     store.insert_subject(Subject(subject_id=roles[0].subject_id, display_name="Role Subject"))
     store.insert_source_role(roles[0])
     store.insert_source_role(roles[0])
-    cnt_role = store.con.execute("SELECT count(*) FROM source_roles WHERE role_id = ?", [roles[0].role_id]).fetchone()
+    cnt_role = store.con.execute(
+        "SELECT count(*) FROM source_roles WHERE role_id = ?", [roles[0].role_id]
+    ).fetchone()
     assert cnt_role is not None and cnt_role[0] == 1
 
     # Insert same utterance twice
     store.insert_utterance(utterances[0])
     store.insert_utterance(utterances[0])
-    cnt_utt = store.con.execute("SELECT count(*) FROM utterances WHERE utterance_id = ?", [utterances[0].utterance_id]).fetchone()
+    cnt_utt = store.con.execute(
+        "SELECT count(*) FROM utterances WHERE utterance_id = ?", [utterances[0].utterance_id]
+    ).fetchone()
     assert cnt_utt is not None and cnt_utt[0] == 1
 
     # Insert same claim twice
     store.insert_claim(claims[0])
     store.insert_claim(claims[0])
-    cnt_claim = store.con.execute("SELECT count(*) FROM claims WHERE claim_id = ?", [claims[0].claim_id]).fetchone()
+    cnt_claim = store.con.execute(
+        "SELECT count(*) FROM claims WHERE claim_id = ?", [claims[0].claim_id]
+    ).fetchone()
     assert cnt_claim is not None and cnt_claim[0] == 1
 
 
 def test_source_role_idempotence_and_canonical_ids_prevent_duplicates(tmp_path: Path) -> None:
-    store = Storage(db_path=str(tmp_path / "test_roles.duckdb"), artifact_dir=tmp_path / "artifacts")
+    store = Storage(
+        db_path=str(tmp_path / "test_roles.duckdb"), artifact_dir=tmp_path / "artifacts"
+    )
     all_source_ids = ["src_1", "src_2"]
     all_subject_ids = ["subj_1", "subj_2"]
     for sid in all_source_ids:
-        store.insert_source(Source(
-            source_id=sid,
-            title=sid,
-            publisher="test_pub",
-            canonical_url=f"http://{sid}",
-            artifact_hash=sid,
-            citation_url_template="",
-            interlocutor=None,
-            recorded_at="2024-01-01T00:00:00Z",
-            published_at="2024-01-01T00:00:00Z",
-            transcription_model="whisper",
-            ingested_at="2024-01-01T00:00:00Z",
-            audio_deleted_at="",
-            duration_ms=1000,
-        ))
+        store.insert_source(
+            Source(
+                source_id=sid,
+                title=sid,
+                publisher="test_pub",
+                canonical_url=f"http://{sid}",
+                artifact_hash=sid,
+                citation_url_template="",
+                interlocutor=None,
+                recorded_at="2024-01-01T00:00:00Z",
+                published_at="2024-01-01T00:00:00Z",
+                transcription_model="whisper",
+                ingested_at="2024-01-01T00:00:00Z",
+                audio_deleted_at="",
+                duration_ms=1000,
+            )
+        )
     for subj_id in all_subject_ids:
         store.insert_subject(Subject(subject_id=subj_id, display_name=subj_id))
 
     def write_roles() -> None:
         for sid in all_source_ids:
             for subj_id in all_subject_ids:
-                store.insert_source_role(SourceSubjectRole(
-                    role_id=compute_role_id(sid, subj_id),
-                    source_id=sid,
-                    subject_id=subj_id,
-                    tier="B",
-                    venue_type="own_channel",
-                    audience_stance="friendly",
-                    is_adversarial=False,
-                ))
+                store.insert_source_role(
+                    SourceSubjectRole(
+                        role_id=compute_role_id(sid, subj_id),
+                        source_id=sid,
+                        subject_id=subj_id,
+                        tier="B",
+                        venue_type="own_channel",
+                        audience_stance="friendly",
+                        is_adversarial=False,
+                    )
+                )
 
     write_roles()
     cnt_1 = store.con.execute("SELECT count(*) FROM source_roles").fetchone()
@@ -249,12 +263,14 @@ def test_three_hour_episode_word_timestamps_parquet_in_artifact_store(tmp_path: 
     words = []
     current_ms = 0
     for i in range(30000):
-        words.append({
-            "word": f"word_{i}",
-            "start_ms": current_ms,
-            "end_ms": current_ms + 300,
-            "confidence": 0.95,
-        })
+        words.append(
+            {
+                "word": f"word_{i}",
+                "start_ms": current_ms,
+                "end_ms": current_ms + 300,
+                "confidence": 0.95,
+            }
+        )
         current_ms += 360  # ~3 hours total = ~10,800,000 ms
 
     parquet_hash = artifacts.put_word_timestamps(words)
@@ -397,20 +413,36 @@ def test_falsification_non_deterministic_uuid_breaks_idempotency(tmp_path: Path)
     # Ingesting same canonical content twice with UUID produces 2 rows
     insert_random_source("https://youtube.com/watch?v=same_url")
     insert_random_source("https://youtube.com/watch?v=same_url")
-    cnt = store.con.execute("SELECT count(*) FROM sources WHERE canonical_url = 'https://youtube.com/watch?v=same_url'").fetchone()
+    cnt = store.con.execute(
+        "SELECT count(*) FROM sources WHERE canonical_url = 'https://youtube.com/watch?v=same_url'"
+    ).fetchone()
     assert cnt is not None and cnt[0] == 2  # Falsification confirmed: duplicate rows created!
 
 
 def test_normalize_canonical_text() -> None:
     """Canonical form for content-derived IDs strips terminal punctuation and whitespace only."""
     # Terminal punctuation stripped
-    assert normalize_canonical_text("China is optimistic about AI.") == "china is optimistic about ai"
-    assert normalize_canonical_text("China is optimistic about AI!") == "china is optimistic about ai"
-    assert normalize_canonical_text("China is optimistic about AI?") == "china is optimistic about ai"
-    assert normalize_canonical_text("China is optimistic about AI…") == "china is optimistic about ai"
-    assert normalize_canonical_text('China is optimistic about AI"') == "china is optimistic about ai"
-    assert normalize_canonical_text("China is optimistic about AI'") == "china is optimistic about ai"
-    assert normalize_canonical_text("China is optimistic about AI.”") == "china is optimistic about ai"
+    assert (
+        normalize_canonical_text("China is optimistic about AI.") == "china is optimistic about ai"
+    )
+    assert (
+        normalize_canonical_text("China is optimistic about AI!") == "china is optimistic about ai"
+    )
+    assert (
+        normalize_canonical_text("China is optimistic about AI?") == "china is optimistic about ai"
+    )
+    assert (
+        normalize_canonical_text("China is optimistic about AI…") == "china is optimistic about ai"
+    )
+    assert (
+        normalize_canonical_text('China is optimistic about AI"') == "china is optimistic about ai"
+    )
+    assert (
+        normalize_canonical_text("China is optimistic about AI'") == "china is optimistic about ai"
+    )
+    assert (
+        normalize_canonical_text("China is optimistic about AI.”") == "china is optimistic about ai"
+    )
 
     # Whitespace collapsed and lowercased
     assert normalize_canonical_text("  China   has   optimism.  ") == "china has optimism"
@@ -577,4 +609,3 @@ def test_migration_idempotence_and_zero_changes(tmp_path: Path) -> None:
     hash2 = hashlib.sha256(open(db_path, "rb").read()).hexdigest()
 
     assert hash1 == hash2, "DB hash changed on idempotent second run!"
-

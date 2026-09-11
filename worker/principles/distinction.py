@@ -19,10 +19,22 @@ class StatedDistinctionDetector:
     """Detects stated distinctions between different actors under the same principle."""
 
     CONTRASTIVE_PATTERNS = [
-        re.compile(r"the difference between\s+(?P<actor1>[^,\.]+?)\s+and\s+(?P<actor2>[^,\.]+?)\s+is\s+(?P<reason>[^;\.]+)", re.IGNORECASE),
-        re.compile(r"unlike\s+(?P<actor1>[^,\.]+?),\s*(?P<actor2>[^,\.]+?)\s+(?P<reason>[^;\.]+)", re.IGNORECASE),
-        re.compile(r"whereas\s+(?P<actor1>[^,\.]+?)\s+(?P<clause1>[^,]+?),\s*(?P<actor2>[^,\.]+?)\s+(?P<clause2>[^;\.]+)", re.IGNORECASE),
-        re.compile(r"distinction between\s+(?P<actor1>[^,\.]+?)\s+and\s+(?P<actor2>[^,\.]+?)\s+is\s+(?P<reason>[^;\.]+)", re.IGNORECASE),
+        re.compile(
+            r"the difference between\s+(?P<actor1>[^,\.]+?)\s+and\s+(?P<actor2>[^,\.]+?)\s+is\s+(?P<reason>[^;\.]+)",
+            re.IGNORECASE,
+        ),
+        re.compile(
+            r"unlike\s+(?P<actor1>[^,\.]+?),\s*(?P<actor2>[^,\.]+?)\s+(?P<reason>[^;\.]+)",
+            re.IGNORECASE,
+        ),
+        re.compile(
+            r"whereas\s+(?P<actor1>[^,\.]+?)\s+(?P<clause1>[^,]+?),\s*(?P<actor2>[^,\.]+?)\s+(?P<clause2>[^;\.]+)",
+            re.IGNORECASE,
+        ),
+        re.compile(
+            r"distinction between\s+(?P<actor1>[^,\.]+?)\s+and\s+(?P<actor2>[^,\.]+?)\s+is\s+(?P<reason>[^;\.]+)",
+            re.IGNORECASE,
+        ),
     ]
 
     def detect_stated_distinction(

@@ -24,9 +24,9 @@ class CongressionalRecordAdapter(SourceAdapter):
     def role(self, ref: SourceRef, subject: Subject) -> SourceSubjectRole:
         source_id = compute_source_id(ref.locator)
         role_id = compute_role_id(source_id, subject.subject_id)
-        venue_type: Literal["own_channel", "guest", "institutional", "authored", "self_published_text"] = (
-            ref.extra.get("venue_type") or "institutional"
-        )
+        venue_type: Literal[
+            "own_channel", "guest", "institutional", "authored", "self_published_text"
+        ] = ref.extra.get("venue_type") or "institutional"
         tier: Literal["A", "B", "C", "D", "E"] = ref.extra.get("tier") or "D"
         audience_stance: Literal["friendly", "neutral", "adversarial", "unknown"] = (
             ref.extra.get("audience_stance") or "adversarial"
@@ -57,7 +57,10 @@ class CongressionalRecordAdapter(SourceAdapter):
         ]
 
     def fetch(self, ref: SourceRef, mocked_text: str | None = None) -> RawSource:
-        text = mocked_text or "Transcript of Senate testimony regarding frontier artificial intelligence."
+        text = (
+            mocked_text
+            or "Transcript of Senate testimony regarding frontier artificial intelligence."
+        )
         content_hash = hashlib.sha256(text.encode()).hexdigest()
         metadata = {
             "title": ref.title or "Congressional Record Transcript",
@@ -96,7 +99,9 @@ class CongressionalRecordAdapter(SourceAdapter):
             ingest_job_id=None,
             transcription_model="official_transcript",
             ingested_at=datetime.now(UTC).isoformat(),
-            audio_deleted_at=datetime.now(UTC).isoformat(),  # Official transcripts have no retained audio
+            audio_deleted_at=datetime.now(
+                UTC
+            ).isoformat(),  # Official transcripts have no retained audio
         )
 
         text_content = raw.content_bytes.decode() if raw.content_bytes else ""
@@ -143,8 +148,8 @@ class CongressionalRecordAdapter(SourceAdapter):
                 word_timestamps_ref=None,
                 language="en",
                 transcription_pass_count=2,  # Set explicitly to clear integrity check
-                dual_pass_agreement=True,    # Set explicitly, never by defaulting
-                negation_uncertain=False,    # Set explicitly, never by defaulting
+                dual_pass_agreement=True,  # Set explicitly, never by defaulting
+                negation_uncertain=False,  # Set explicitly, never by defaulting
             )
             utts.append(utt)
         return utts
@@ -154,9 +159,9 @@ class SECFilingAdapter(SourceAdapter):
     def role(self, ref: SourceRef, subject: Subject) -> SourceSubjectRole:
         source_id = compute_source_id(ref.locator)
         role_id = compute_role_id(source_id, subject.subject_id)
-        venue_type: Literal["own_channel", "guest", "institutional", "authored", "self_published_text"] = (
-            ref.extra.get("venue_type") or "institutional"
-        )
+        venue_type: Literal[
+            "own_channel", "guest", "institutional", "authored", "self_published_text"
+        ] = ref.extra.get("venue_type") or "institutional"
         tier: Literal["A", "B", "C", "D", "E"] = ref.extra.get("tier") or "D"
         audience_stance: Literal["friendly", "neutral", "adversarial", "unknown"] = (
             ref.extra.get("audience_stance") or "neutral"
@@ -187,7 +192,10 @@ class SECFilingAdapter(SourceAdapter):
         ]
 
     def fetch(self, ref: SourceRef, mocked_text: str | None = None) -> RawSource:
-        text = mocked_text or "Item 1A. Risk Factors. Frontier technology regulatory compliance statements."
+        text = (
+            mocked_text
+            or "Item 1A. Risk Factors. Frontier technology regulatory compliance statements."
+        )
         content_hash = hashlib.sha256(text.encode()).hexdigest()
         metadata = {
             "title": ref.title or "SEC Filing",
@@ -229,7 +237,9 @@ class SECFilingAdapter(SourceAdapter):
             audio_deleted_at=datetime.now(UTC).isoformat(),
         )
 
-        return NormalizedSource(source=source, normalized_text=raw.content_bytes.decode() if raw.content_bytes else "")
+        return NormalizedSource(
+            source=source, normalized_text=raw.content_bytes.decode() if raw.content_bytes else ""
+        )
 
     def provenance(self, ref: SourceRef) -> Provenance:
         return Provenance(

@@ -245,7 +245,9 @@ def test_fixture_n6_distinction_excluded_from_scoring(test_store: Storage) -> No
     assert "subpoena" in str(d["distinction"]).lower()
 
 
-def test_falsification_disabling_stated_distinction_causes_n6_to_publish_conflict(test_store: Storage) -> None:
+def test_falsification_disabling_stated_distinction_causes_n6_to_publish_conflict(
+    test_store: Storage,
+) -> None:
     """Falsification test: Disabling stated distinction detection causes N6 to flip to a published conflict (RED).
 
     Re-enabling it restores distinguished status (GREEN).
@@ -258,7 +260,13 @@ def test_falsification_disabling_stated_distinction_causes_n6_to_publish_conflic
 
     principle_text = "an official who knowingly misleads oversight should resign"
     principle_id = compute_principle_id(principle_text)
-    test_store.insert_principle(Principle(principle_id=principle_id, canonical_text=principle_text, subject_ids=[subject.subject_id]))
+    test_store.insert_principle(
+        Principle(
+            principle_id=principle_id,
+            canonical_text=principle_text,
+            subject_ids=[subject.subject_id],
+        )
+    )
 
     distinction_text = n6.utterances[2].stated_distinction
 
@@ -306,7 +314,12 @@ def test_falsification_disabling_stated_distinction_causes_n6_to_publish_conflic
             )
         )
 
-        app_id = compute_application_id(claim_id, principle_id, "Alvarez" if i == 0 else "Hayes", "applies" if i == 0 else "does_not_apply")
+        app_id = compute_application_id(
+            claim_id,
+            principle_id,
+            "Alvarez" if i == 0 else "Hayes",
+            "applies" if i == 0 else "does_not_apply",
+        )
         test_store.insert_principle_application(
             PrincipleApplication(
                 application_id=app_id,
@@ -321,14 +334,20 @@ def test_falsification_disabling_stated_distinction_causes_n6_to_publish_conflic
         )
 
     # 1. Disable stated distinction detection -> flips to published principle_conflict (RED)
-    disabled_detector = PrincipleConflictDetector(storage=test_store, enable_stated_distinction=False)
+    disabled_detector = PrincipleConflictDetector(
+        storage=test_store, enable_stated_distinction=False
+    )
     conflicts_disabled, _ = disabled_detector.detect_conflicts_for_subject(subject.subject_id)
-    assert len(conflicts_disabled) == 1, "Falsification failed: disabling distinction did not publish conflict"
+    assert len(conflicts_disabled) == 1, (
+        "Falsification failed: disabling distinction did not publish conflict"
+    )
     assert conflicts_disabled[0].type == "principle_conflict"
 
     # 2. Re-enable stated distinction detection -> restores distinguished (GREEN)
     enabled_detector = PrincipleConflictDetector(storage=test_store, enable_stated_distinction=True)
-    conflicts_enabled, distinguished_enabled = enabled_detector.detect_conflicts_for_subject(subject.subject_id)
+    conflicts_enabled, distinguished_enabled = enabled_detector.detect_conflicts_for_subject(
+        subject.subject_id
+    )
     assert len(conflicts_enabled) == 0, "Failed to exclude distinguished pair when enabled"
     assert len(distinguished_enabled) == 1
 
@@ -340,11 +359,25 @@ def test_unresolved_actor_never_enters_conflict(test_store: Storage) -> None:
 
     principle_text = "an institution that conceals safety audit findings should lose accreditation"
     principle_id = compute_principle_id(principle_text)
-    test_store.insert_principle(Principle(principle_id=principle_id, canonical_text=principle_text, subject_ids=[subject.subject_id]))
+    test_store.insert_principle(
+        Principle(
+            principle_id=principle_id,
+            canonical_text=principle_text,
+            subject_ids=[subject.subject_id],
+        )
+    )
 
     for i in (0, 1):
         src_id = f"src_unk_{i}"
-        test_store.insert_source(Source(source_id=src_id, title=f"S{i}", publisher="Press", canonical_url=f"url_{i}", artifact_hash=f"hash_{i}"))
+        test_store.insert_source(
+            Source(
+                source_id=src_id,
+                title=f"S{i}",
+                publisher="Press",
+                canonical_url=f"url_{i}",
+                artifact_hash=f"hash_{i}",
+            )
+        )
         utt_id = f"utt_unk_{i}"
         test_store.insert_utterance(
             Utterance(
@@ -415,11 +448,15 @@ def test_generality_calibrator_canonical_text_discipline() -> None:
     calibrator = GeneralityCalibrator()
 
     # 1. Valid canonical text
-    valid_res = calibrator.validate_canonical_text("an elected official who misleads oversight should resign")
+    valid_res = calibrator.validate_canonical_text(
+        "an elected official who misleads oversight should resign"
+    )
     assert valid_res.is_valid is True
 
     # 2. Invalid: mentions specific named person entity
-    invalid_res = calibrator.validate_canonical_text("Senator Alvarez who misleads oversight should resign")
+    invalid_res = calibrator.validate_canonical_text(
+        "Senator Alvarez who misleads oversight should resign"
+    )
     assert invalid_res.is_valid is False
     assert "must not mention specific actors" in str(invalid_res.reason)
 
@@ -441,11 +478,21 @@ def test_tension_detector_integration_with_principles(test_store: Storage) -> No
 
     p_text = "an official who knowingly misleads oversight should resign"
     p_id = compute_principle_id(p_text)
-    test_store.insert_principle(Principle(principle_id=p_id, canonical_text=p_text, subject_ids=[subject.subject_id]))
+    test_store.insert_principle(
+        Principle(principle_id=p_id, canonical_text=p_text, subject_ids=[subject.subject_id])
+    )
 
     for i in (0, 1):
         src_id = f"src_td_{i}"
-        test_store.insert_source(Source(source_id=src_id, title=f"S{i}", publisher="Press", canonical_url=f"url_{i}", artifact_hash=f"hash_{i}"))
+        test_store.insert_source(
+            Source(
+                source_id=src_id,
+                title=f"S{i}",
+                publisher="Press",
+                canonical_url=f"url_{i}",
+                artifact_hash=f"hash_{i}",
+            )
+        )
         utt_id = f"utt_td_{i}"
         test_store.insert_utterance(
             Utterance(

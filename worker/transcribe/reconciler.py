@@ -7,46 +7,48 @@ import difflib
 from dataclasses import dataclass
 from typing import Any
 
-NEGATION_CUES: frozenset[str] = frozenset([
-    "not",
-    "n't",
-    "never",
-    "no",
-    "none",
-    "without",
-    "hardly",
-    "barely",
-    "fails to",
-    "rather than",
-    "unless",
-    "neither",
-    "nor",
-    "dont",
-    "don't",
-    "doesnt",
-    "doesn't",
-    "didnt",
-    "didn't",
-    "wont",
-    "won't",
-    "cant",
-    "can't",
-    "cannot",
-    "shouldnt",
-    "shouldn't",
-    "wouldnt",
-    "wouldn't",
-    "couldnt",
-    "couldn't",
-    "isnt",
-    "isn't",
-    "arent",
-    "aren't",
-    "wasnt",
-    "wasn't",
-    "werent",
-    "weren't",
-])
+NEGATION_CUES: frozenset[str] = frozenset(
+    [
+        "not",
+        "n't",
+        "never",
+        "no",
+        "none",
+        "without",
+        "hardly",
+        "barely",
+        "fails to",
+        "rather than",
+        "unless",
+        "neither",
+        "nor",
+        "dont",
+        "don't",
+        "doesnt",
+        "doesn't",
+        "didnt",
+        "didn't",
+        "wont",
+        "won't",
+        "cant",
+        "can't",
+        "cannot",
+        "shouldnt",
+        "shouldn't",
+        "wouldnt",
+        "wouldn't",
+        "couldnt",
+        "couldn't",
+        "isnt",
+        "isn't",
+        "arent",
+        "aren't",
+        "wasnt",
+        "wasn't",
+        "werent",
+        "weren't",
+    ]
+)
 
 
 @dataclass
@@ -156,7 +158,7 @@ def reconcile_dual_pass(
         if touches_cue:
             negation_uncertain = True
 
-    dual_pass_agreement = (differing_regions == 0)
+    dual_pass_agreement = differing_regions == 0
 
     return ReconciliationResult(
         text_verbatim=pass1.text,

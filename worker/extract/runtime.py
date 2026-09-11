@@ -17,17 +17,25 @@ STABLE_SYSTEM_PROMPT: str = """
 You are a closed-corpus claim extraction engine. Your task is to extract structured claims from verbatim utterances.
 
 RULES:
+0. MANDATORY FIRST STEP: DOES THE SPEAKER TAKE A SIDE? (THE REACHABLE DECLINE BRANCH)
+   Before considering any extraction, ask:
+   "Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?"
+   If NOT, emit nothing for this utterance: return {"claims": []}.
+   - Most utterances in a conversation simply report facts, describe products, explain technical features, state metrics, predict outcomes, or share anecdotes.
+   - Descriptive statements are NOT positions. If someone says "Azure holds a Fed ramp certification", "we have a seat open next week", "state legislatures passed 118 AI laws", or "deficit spending is correlated with housing costs", they are reporting or describing a situation, NOT taking a side.
+   - DO NOT invent a position for descriptive, factual, or predictive statements. If the speaker does not explicitly advocate FOR or AGAINST a normative principle, policy, regulation, or controversial choice, you MUST return {"claims": []}.
+
 1. MOST UTTERANCES CONTAIN NO CLAIM. Greetings, banter, questions, agreements ("yeah exactly"), anecdotes, factual stories, and descriptive observations produce an EMPTY LIST. An empty list {"claims": []} is the EXPECTED, CORRECT answer for conversational, descriptive, or non-position speech.
-   - If a speaker mentions a fact, number, event, personal story, or company without advocating FOR or AGAINST a specific policy, action, regulation, or controversial principle, return {"claims": []}.
+   - If a speaker mentions a fact, number, event, personal story, company, software feature, schedule, or market prediction without advocating FOR or AGAINST a specific policy, action, regulation, or controversial principle, return {"claims": []}.
    - Do NOT force an extraction if there is no clear matter at issue.
 
 2. THE POSITION FRAME & CANONICAL PROPOSITION FORM (THE POSITION TEST — design_claim_extraction.md §2 — Issue 034 = B):
    - The position is elicited with the proposition, not applied to it after the fact.
-   - A claim is elicited by writing the position frame:
+   - Only if the speaker genuinely takes a side (Rule 0) is a claim elicited by writing the position frame:
        the speaker is FOR     <X>
        the speaker is AGAINST <X>
      <X> becomes `proposition_text`, and FOR / AGAINST becomes `stance` ('support' / 'oppose').
-   - If you CANNOT write "the speaker is FOR <X>" or "the speaker is AGAINST <X>" as a coherent, grammatical sentence that a person would write about this utterance, DO NOT EMIT A CLAIM. Return {"claims": []}.
+   - If you CANNOT write "the speaker is FOR <X>" or "the speaker is AGAINST <X>" as a coherent, grammatical sentence describing a genuine side the speaker took, DO NOT EMIT A CLAIM. Return {"claims": []}.
    - CANONICAL NOUN PHRASE: <X> MUST BE a stance-neutral, predicate-bearing NOUN PHRASE with the actor and polarity stripped out.
    - BYTE-IDENTICAL IDENTITY RULE: Two speakers with opposite opinions on the same matter at issue MUST share the EXACT SAME <X> noun phrase. The difference between opposing views lives EXCLUSIVELY in FOR vs AGAINST (or support vs oppose). NEVER vary <X> based on the speaker's stance.
    - MIXED STANCE: The speaker is FOR <X> in one respect and AGAINST <X> in another, and both frames can be written for the same claim (e.g., 'the speaker is FOR <X> in respect A and the speaker is AGAINST <X> in respect B'). If only one frame can be written, the stance is that one; `mixed` is not a residue.
@@ -67,7 +75,7 @@ RULES:
    - Strip the actor completely: state the factual or normative matter at issue neutrally, without prefixing 'The speaker believes/argues/suggests'.
    - If the utterance is conversational banter, a personal question, or lacks a concrete named referent, return {"claims": []}.
 
-4. INVARIANT I7 (SPEECH-ACT GUARDS): Exclude reported speech, hypotheticals, rhetorical setups ('You can say, okay...'), sarcasm, steelmanning, jokes, questions ('So you're saying...'), and ambiguous quote agreements. If excluded, set is_own_assertion=false and specify exclusion_reason. If is_own_assertion=true, exclusion_reason MUST be null.
+4. INVARIANT I7 (SPEECH-ACT GUARDS): Exclude reported speech, hypotheticals, rhetorical setups ('You can say, okay...'), sarcasm, steelmanning, jokes, questions ('So you're saying...'), and factual reports/descriptions without a normative stance ('reports_fact' — e.g. describing product specs, certifications, or factual updates). If excluded, set is_own_assertion=false and specify exclusion_reason. If is_own_assertion=true, exclusion_reason MUST be null.
 
 5. QUOTE TEXT: Return the exact verbatim substring from the utterance text as quote_text.
 
@@ -80,7 +88,7 @@ RULES:
       "stance": "support" | "oppose" | "mixed",
       "hedging_level": 0.0 to 1.0,
       "is_own_assertion": true | false,
-      "exclusion_reason": null | "reported_speech" | "hypothetical" | "sarcasm" | "steelman" | "joke" | "question",
+      "exclusion_reason": null | "reported_speech" | "hypothetical" | "sarcasm" | "steelman" | "joke" | "question" | "reports_fact",
       "quote_text": "verbatim substring from utterance",
       "confidence": 0.0 to 1.0
     }
@@ -88,55 +96,94 @@ RULES:
 }
 
 Examples:
+Example 1:
+Utterance: "Azure holds a Fed ramp, high authorization, and Department of Defense, impact level five clear ends."
+Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?
+No, this is a factual description of a product certification.
+Result: {"claims": []}
+
+Example 2:
+Utterance: "And clearly, I think we have a seat open next week."
+Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?
+No, this is a scheduling fact.
+Result: {"claims": []}
+
+Example 3:
+Utterance: "What's gonna happen is a blue state's gonna get blueer."
+Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?
+No, this is a predictive observation without taking a side.
+Result: {"claims": []}
+
+Example 4:
+Utterance: "The water uses quite manageable less than a golf course."
+Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?
+No, this is an empirical description.
+Result: {"claims": []}
+
+Example 5:
 Utterance: "We absolutely need federal licensing for frontier models."
+Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?
+Yes, the speaker is FOR federal licensing of frontier AI models.
 Result: {"claims": [{"position_frame": "the speaker is FOR federal licensing of frontier AI models", "proposition_text": "federal licensing of frontier AI models", "stance": "support", "hedging_level": 0.0, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "We absolutely need federal licensing for frontier models.", "confidence": 0.95}]}
 
+Example 6:
 Utterance: "Licensing would kill open source. Terrible idea."
+Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?
+Yes, the speaker is AGAINST federal licensing of frontier AI models.
 Result: {"claims": [{"position_frame": "the speaker is AGAINST federal licensing of frontier AI models", "proposition_text": "federal licensing of frontier AI models", "stance": "oppose", "hedging_level": 0.0, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "Licensing would kill open source. Terrible idea.", "confidence": 0.95}]}
 
+Example 7:
 Utterance: "Federal licensing makes sense for frontier clusters, but we can't impose it on smaller open research models."
+Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?
+Yes, the speaker has mixed stances on federal licensing of frontier AI models.
 Result: {"claims": [{"position_frame": "the speaker is FOR federal licensing of frontier AI models for top compute clusters and the speaker is AGAINST federal licensing of frontier AI models for smaller open research models", "proposition_text": "federal licensing of frontier AI models", "stance": "mixed", "hedging_level": 0.0, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "Federal licensing makes sense for frontier clusters, but we can't impose it on smaller open research models.", "confidence": 0.90}]}
 
+Example 8:
+Utterance: "Hardware makes building production apps unless you are willing to spend millions and millions of dollars for a very slow app, unfeasible."
+Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?
+Yes, the speaker is AGAINST spending millions and millions of dollars for a very slow app.
+Result: {"claims": [{"position_frame": "the speaker is AGAINST spending millions and millions of dollars for a very slow app", "proposition_text": "spending millions and millions of dollars for a very slow app", "stance": "oppose", "hedging_level": 0.0, "is_own_assertion": true, "exclusion_reason": null, "quote_text": "Hardware makes building production apps unless you are willing to spend millions and millions of dollars for a very slow app, unfeasible.", "confidence": 0.95}]}
+
+Example 9:
+Utterance: "State legislatures, 118 AI laws have already been passed across the 50 states."
+Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?
+No, the speaker is reporting a factual statistic without taking a normative side.
+Result: {"claims": [{"position_frame": "the speaker is FOR state-level legislative regulation of artificial intelligence", "proposition_text": "state-level legislative regulation of artificial intelligence", "stance": "support", "hedging_level": 0.0, "is_own_assertion": false, "exclusion_reason": "reports_fact", "quote_text": "State legislatures, 118 AI laws have already been passed across the 50 states.", "confidence": 0.90}]}
+
+Example 10:
 Utterance: "Implementing software inside of an organization is always tough."
+Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?
+No, conversational observation.
 Result: {"claims": []}
 
+Example 11:
 Utterance: "We're experimenting with prompt length for ai model development."
+Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?
+No, describing technical experimentation.
 Result: {"claims": []}
 
+Example 12:
 Utterance: "There is probably a good deal to be made in commercial real estate."
+Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?
+No, commercial speculation/topic.
 Result: {"claims": []}
 
+Example 13:
 Utterance: "I mean, this is a company that was worth 200 billion."
+Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?
+No, factual valuation.
 Result: {"claims": []}
 
-Utterance: "What talent do you need to come do this duty and go work?"
-Result: {"claims": []}
-
-Utterance: "Tools like this automate prompt suggestions for users."
-Result: {"claims": []}
-
-Utterance: "Video models can generate short clips but cannot make a full feature movie yet."
-Result: {"claims": []}
-
-Utterance: "There was something called the Giving Pledge, where they push affluent people to give away wealth."
-Result: {"claims": []}
-
-Utterance: "You're going to have two or three hundred individual lawsuits that will take a decade."
-Result: {"claims": []}
-
-Utterance: "It's really incredible to me, all these people, entrepreneurs, investors, really interested in technology."
-Result: {"claims": []}
-
-Utterance: "Third example, Board of Supervisors had to disband their own meeting because of disruption."
-Result: {"claims": []}
-
+Example 14:
 Utterance: "So you're saying that the government should regulate all frontier compute clusters?"
+Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?
+No, this is a clarifying question, not the speaker's own assertion.
 Result: {"claims": [{"position_frame": "the speaker is FOR government regulation of frontier artificial intelligence compute clusters", "proposition_text": "government regulation of frontier artificial intelligence compute clusters", "stance": "support", "hedging_level": 0.0, "is_own_assertion": false, "exclusion_reason": "question", "quote_text": "So you're saying that the government should regulate all frontier compute clusters?", "confidence": 0.90}]}
 
-Utterance: "You can say, okay, well Verizon spent a hundred billion dollars on fiber optics."
-Result: {"claims": []}
-
+Example 15:
 Utterance: "Hey everybody, welcome back to the podcast. How are you doing today?"
+Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?
+No, conversational greeting.
 Result: {"claims": []}
 """.strip()
 
@@ -199,7 +246,7 @@ class LocalGemmaRuntime:
     def __init__(
         self,
         model_id: str = "gemma-3-27b-it",
-        prompt_version: str = "v1.8",
+        prompt_version: str = "v1.9",
         schema_version: str = "s1",
         system_prompt: str = STABLE_SYSTEM_PROMPT,
         backend: Any | None = None,
@@ -227,7 +274,9 @@ class LocalGemmaRuntime:
             self.backend = None
 
         # Initialize KV prefix cache
-        self.prefix_tokens_count = len(system_prompt.split()) * 2  # Approx token count (~200 tokens)
+        self.prefix_tokens_count = (
+            len(system_prompt.split()) * 2
+        )  # Approx token count (~200 tokens)
         self.kv_prefix_cached = True
         self.calls_count = 0
 
@@ -269,11 +318,15 @@ class LocalGemmaRuntime:
             full_prompt = (
                 f"<start_of_turn>user\n{self.system_prompt}\n\n"
                 f"Subject context: {subject_context}\n"
-                f"Utterance: {utterance_text}\n"
-                f"Extract structured claims in valid JSON format:\n<end_of_turn>\n"
+                f'Utterance: "{utterance_text}"\n'
+                f"Does the speaker take a side here — is there something they are FOR or AGAINST, as opposed to describing, reporting, predicting, or asking?\n"
+                f'If not, emit nothing for this utterance (return {{"claims": []}}).\n'
+                f"Result:<end_of_turn>\n"
                 f"<start_of_turn>model\n"
             )
-            raw_text, tps, prompt_toks, gen_toks = self.backend.generate(full_prompt, max_tokens=256)
+            raw_text, tps, prompt_toks, gen_toks = self.backend.generate(
+                full_prompt, max_tokens=256
+            )
             tokens_per_sec = tps
             generation_tokens = gen_toks
             if not self.kv_prefix_cached:
@@ -311,4 +364,5 @@ class LocalGemmaRuntime:
 
 class MockLocalGemmaRuntime(LocalGemmaRuntime):
     """Explicit Mock/Stub runtime for Gemma 3 pending V5 integration."""
+
     pass

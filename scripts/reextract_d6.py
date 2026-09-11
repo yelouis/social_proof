@@ -61,13 +61,23 @@ def run_d6_reextraction(db_path: str = "social_proof.duckdb") -> None:
     # Snapshot existing tables inside DuckDB for auditability
     print("2. Archiving pre-D6 tables into claims_pre_d6 and propositions_pre_d6...")
     store.con.execute("CREATE TABLE IF NOT EXISTS claims_pre_d6 AS SELECT * FROM claims;")
-    store.con.execute("CREATE TABLE IF NOT EXISTS propositions_pre_d6 AS SELECT * FROM propositions;")
-    store.con.execute("CREATE TABLE IF NOT EXISTS proposition_embeddings_pre_d6 AS SELECT * FROM proposition_embeddings;")
+    store.con.execute(
+        "CREATE TABLE IF NOT EXISTS propositions_pre_d6 AS SELECT * FROM propositions;"
+    )
+    store.con.execute(
+        "CREATE TABLE IF NOT EXISTS proposition_embeddings_pre_d6 AS SELECT * FROM proposition_embeddings;"
+    )
     store.con.execute("CREATE TABLE IF NOT EXISTS tensions_pre_d6 AS SELECT * FROM tensions;")
     store.con.commit()
 
-    pre_claims_count = r[0] if (r := store.con.execute("SELECT count(*) FROM claims_pre_d6").fetchone()) else 0
-    pre_props_count = r[0] if (r := store.con.execute("SELECT count(*) FROM propositions_pre_d6").fetchone()) else 0
+    pre_claims_count = (
+        r[0] if (r := store.con.execute("SELECT count(*) FROM claims_pre_d6").fetchone()) else 0
+    )
+    pre_props_count = (
+        r[0]
+        if (r := store.con.execute("SELECT count(*) FROM propositions_pre_d6").fetchone())
+        else 0
+    )
     print(f"   Pre-D6 baseline: {pre_claims_count} claims, {pre_props_count} propositions.")
 
     # Candidate utterances: all utterances in pre-D6 claims plus host utterances for low-claim sources
@@ -91,10 +101,14 @@ def run_d6_reextraction(db_path: str = "social_proof.duckdb") -> None:
     print(f"\n3. Selected {len(target_utts_rows)} candidate utterances across all 23 sources.")
 
     # Clear active claims and non-quarantined propositions
-    print("\n4. Clearing active claims and active propositions (preserving quarantined db3ec63d33cf6f0a)...")
+    print(
+        "\n4. Clearing active claims and active propositions (preserving quarantined db3ec63d33cf6f0a)..."
+    )
     store.con.execute("DELETE FROM claims;")
     store.con.execute("DELETE FROM propositions WHERE proposition_id != 'db3ec63d33cf6f0a';")
-    store.con.execute("DELETE FROM proposition_embeddings WHERE proposition_id != 'db3ec63d33cf6f0a';")
+    store.con.execute(
+        "DELETE FROM proposition_embeddings WHERE proposition_id != 'db3ec63d33cf6f0a';"
+    )
     store.con.execute("DELETE FROM claim_entailment_cache;")
     store.con.commit()
 
@@ -145,10 +159,15 @@ def run_d6_reextraction(db_path: str = "social_proof.duckdb") -> None:
             el = time.perf_counter() - t0
             rate = idx / el if el > 0 else 0
             eta_m = (len(target_utts_rows) - idx) / rate / 60 if rate > 0 else 0
-            print(f"   [{idx:4d}/{len(target_utts_rows)}] claims: {claims_total:4d} | {rate:.2f} utts/s | ETA: {eta_m:.1f}m", flush=True)
+            print(
+                f"   [{idx:4d}/{len(target_utts_rows)}] claims: {claims_total:4d} | {rate:.2f} utts/s | ETA: {eta_m:.1f}m",
+                flush=True,
+            )
 
     elapsed = time.perf_counter() - t0
-    print(f"\nExtraction completed in {elapsed:.1f}s ({elapsed/60:.2f}m). Total claims: {claims_total}.")
+    print(
+        f"\nExtraction completed in {elapsed:.1f}s ({elapsed / 60:.2f}m). Total claims: {claims_total}."
+    )
 
     # Step 4 Verify: Claim count within 20% of 2,261
     min_claim_bound = int(2261 * 0.80)  # 1808
@@ -191,10 +210,14 @@ def run_d6_reextraction(db_path: str = "social_proof.duckdb") -> None:
     store.con.commit()
 
     # Backfill missing embeddings
-    active_props = store.con.execute("SELECT proposition_id, canonical_text FROM propositions WHERE status = 'active'").fetchall()
+    active_props = store.con.execute(
+        "SELECT proposition_id, canonical_text FROM propositions WHERE status = 'active'"
+    ).fetchall()
     missing_emb = 0
     for pid, txt in active_props:
-        has_emb = store.con.execute("SELECT 1 FROM proposition_embeddings WHERE proposition_id = ?", [pid]).fetchone()
+        has_emb = store.con.execute(
+            "SELECT 1 FROM proposition_embeddings WHERE proposition_id = ?", [pid]
+        ).fetchone()
         if not has_emb:
             emb = embedder.embed_document(txt)
             store.insert_proposition_embedding(pid, emb)
@@ -239,6 +262,7 @@ def run_d6_reextraction(db_path: str = "social_proof.duckdb") -> None:
     if tensions:
         for tid, _sid, sname, ttype, cids_json, _sstatus in tensions:
             import json
+
             cids = json.loads(cids_json) if isinstance(cids_json, str) else cids_json
             c1 = store.get_claim(cids[0])
             c2 = store.get_claim(cids[1])
@@ -249,10 +273,12 @@ def run_d6_reextraction(db_path: str = "social_proof.duckdb") -> None:
             st1 = c1.stance if c1 else ""
             st2 = c2.stance if c2 else ""
             print(f"\n   Tension {tid} ({ttype}) for {sname}:")
-            print(f"     Proposition: \"{p_text}\"")
-            print(f"     Claim A ({st1}): \"{q1}\"")
-            print(f"     Claim B ({st2}): \"{q2}\"")
-            print(f"     Position sentence: \"{sname} takes position {st1} on '{p_text}', and takes position {st2} on '{p_text}'\"")
+            print(f'     Proposition: "{p_text}"')
+            print(f'     Claim A ({st1}): "{q1}"')
+            print(f'     Claim B ({st2}): "{q2}"')
+            print(
+                f"     Position sentence: \"{sname} takes position {st1} on '{p_text}', and takes position {st2} on '{p_text}'\""
+            )
     else:
         print("   No published tensions detected (0 accepted pairs).")
 
@@ -261,7 +287,12 @@ def run_d6_reextraction(db_path: str = "social_proof.duckdb") -> None:
     # Run Integrity Checks
     print("\n12. Running Core Integrity Checks...")
     results = run_integrity_corpus(db_path)
-    core_names = {"verify_quotes", "verify_canonical_ids", "verify_entailment_holds", "verify_claims_per_hour"}
+    core_names = {
+        "verify_quotes",
+        "verify_canonical_ids",
+        "verify_entailment_holds",
+        "verify_claims_per_hour",
+    }
     for res in results:
         if res.name in core_names:
             print(f"   {res.name:<26}: {res.status} ({res.message})")
@@ -272,7 +303,12 @@ def run_d6_reextraction(db_path: str = "social_proof.duckdb") -> None:
 def run_d6_verification(db_path: str = "social_proof.duckdb") -> None:
     print(f"Running Integrity Verification on {db_path}...")
     results = run_integrity_corpus(db_path)
-    core_names = {"verify_quotes", "verify_canonical_ids", "verify_entailment_holds", "verify_claims_per_hour"}
+    core_names = {
+        "verify_quotes",
+        "verify_canonical_ids",
+        "verify_entailment_holds",
+        "verify_claims_per_hour",
+    }
     for res in results:
         if res.name in core_names:
             print(f"   {res.name:<26}: {res.status} ({res.message})")
@@ -281,7 +317,9 @@ def run_d6_verification(db_path: str = "social_proof.duckdb") -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Re-extract corpus for Item D6")
     parser.add_argument("--db", default="social_proof.duckdb", help="Path to database")
-    parser.add_argument("--verify-only", action="store_true", help="Run only step 12 integrity checks")
+    parser.add_argument(
+        "--verify-only", action="store_true", help="Run only step 12 integrity checks"
+    )
     args = parser.parse_args()
     if args.verify_only:
         run_d6_verification(args.db)

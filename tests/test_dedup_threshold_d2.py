@@ -105,7 +105,9 @@ def test_canonical_both_directions_at_chosen_threshold() -> None:
 def test_nearest_neighbour_distribution_deciles() -> None:
     """Verifies that 1-NN similarity distribution has been calculated, recorded, and has structure."""
     fixture_path = Path("fixtures/behaviour/d2_dedup_distribution.json")
-    assert fixture_path.exists(), "Distribution fixture fixtures/behaviour/d2_dedup_distribution.json must exist"
+    assert fixture_path.exists(), (
+        "Distribution fixture fixtures/behaviour/d2_dedup_distribution.json must exist"
+    )
 
     with open(fixture_path) as f:
         data = json.load(f)

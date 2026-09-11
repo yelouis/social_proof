@@ -151,9 +151,7 @@ def create_app(
 
     @app.get("/subjects", response_model=list[SubjectSummary])
     def get_subjects(q: str = Query(default="")) -> list[SubjectSummary]:
-        rows = storage.con.execute(
-            "SELECT subject_id, display_name FROM subjects"
-        ).fetchall()
+        rows = storage.con.execute("SELECT subject_id, display_name FROM subjects").fetchall()
         results: list[SubjectSummary] = []
         q_clean = q.strip().lower()
         for sid, name in rows:
@@ -203,9 +201,7 @@ def create_app(
         full_context = f"{req.context_before} {text} {req.context_after}".lower()
 
         # 1. Match candidates by subject name/display_name in selection or context
-        all_subjs = storage.con.execute(
-            "SELECT subject_id, display_name FROM subjects"
-        ).fetchall()
+        all_subjs = storage.con.execute("SELECT subject_id, display_name FROM subjects").fetchall()
         matched_subjs: list[SubjectSummary] = []
         for sid, name in all_subjs:
             tokens = [tok.lower() for tok in name.split() if len(tok) >= 3]
@@ -257,9 +253,7 @@ def create_app(
                 target_sid, text, expand_clusters=True
             )
             if status_str == "ok" and pids:
-                resolved_topics.append(
-                    ResolvedTopic(query_string=text, confidence=0.85)
-                )
+                resolved_topics.append(ResolvedTopic(query_string=text, confidence=0.85))
 
         return ResolveResponse(
             subjects=matched_subjs,
@@ -433,6 +427,7 @@ def create_app(
     @app.get("/ingest/{job_id}/stream")
     async def stream_ingest(job_id: str) -> StreamingResponse:
         """SSE progress stream for long-running ingest jobs."""
+
         async def event_generator() -> Any:
             for _ in range(5):
                 job = storage.get_ingest_job(job_id)
@@ -453,6 +448,7 @@ def run_server(
 ) -> None:
     """Entrypoint to run the local API server via uvicorn on loopback only."""
     import uvicorn
+
     validate_host(host)
     app = create_app(storage=storage, token=token, host=host)
     uvicorn.run(app, host=host, port=port)

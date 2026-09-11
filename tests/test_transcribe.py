@@ -19,7 +19,7 @@ def test_vad_gate_drops_silence_spans(tmp_path: Path) -> None:
     pipeline = TranscriptionPipeline(storage=store, vad_energy_threshold=0.05)
 
     segments = [
-        AudioSegment(start_ms=0, end_ms=30000, energy=0.0),      # 30s leading silence
+        AudioSegment(start_ms=0, end_ms=30000, energy=0.0),  # 30s leading silence
         AudioSegment(start_ms=30000, end_ms=45000, energy=0.01),  # background noise below threshold
         AudioSegment(start_ms=45000, end_ms=60000, energy=0.85),  # actual speech
     ]
@@ -143,7 +143,13 @@ def test_audio_disposal_on_success_and_preservation_on_error(tmp_path: Path) -> 
 
     audio1 = tmp_path / "audio_success.wav"
     audio1.write_bytes(b"AUDIO_DATA_1")
-    job1 = IngestJob(job_id="job_01", subject_id="subj_01", adapter="YouTube", status="running", stage="transcribe")
+    job1 = IngestJob(
+        job_id="job_01",
+        subject_id="subj_01",
+        adapter="YouTube",
+        status="running",
+        stage="transcribe",
+    )
 
     pipeline.transcribe_source(source1, "subj_01", audio1, [seg], job=job1)
     assert not audio1.exists(), "Audio file must be deleted after successful transcription"
@@ -163,7 +169,13 @@ def test_audio_disposal_on_success_and_preservation_on_error(tmp_path: Path) -> 
 
     audio2 = tmp_path / "audio_fail.wav"
     audio2.write_bytes(b"AUDIO_DATA_2")
-    job2 = IngestJob(job_id="job_02", subject_id="subj_01", adapter="YouTube", status="running", stage="transcribe")
+    job2 = IngestJob(
+        job_id="job_02",
+        subject_id="subj_01",
+        adapter="YouTube",
+        status="running",
+        stage="transcribe",
+    )
 
     with pytest.raises(RuntimeError, match="Simulated transcription failure"):
         pipeline.transcribe_source(source2, "subj_01", audio2, [seg], job=job2, force_error=True)
@@ -247,7 +259,13 @@ def test_real_whisper_pipeline_execution_and_audio_disposal(tmp_path: Path) -> N
     store.insert_source(source)
 
     seg = AudioSegment(start_ms=0, end_ms=3000, energy=0.8)
-    job = IngestJob(job_id="job_whisper_01", subject_id="subj_01", adapter="YouTube", status="running", stage="transcribe")
+    job = IngestJob(
+        job_id="job_whisper_01",
+        subject_id="subj_01",
+        adapter="YouTube",
+        status="running",
+        stage="transcribe",
+    )
 
     utterances = pipeline.transcribe_source(source, "subj_01", test_audio, [seg], job=job)
 

@@ -33,11 +33,26 @@ def test_x3_extract_matter_from_frame() -> None:
     """Test extract_matter_from_frame parser."""
     assert extract_matter_from_frame(None) == ""
     assert extract_matter_from_frame("") == ""
-    assert extract_matter_from_frame("the speaker is FOR federal licensing of frontier AI models") == "federal licensing of frontier AI models"
-    assert extract_matter_from_frame("the speaker is AGAINST federal licensing of frontier AI models") == "federal licensing of frontier AI models"
-    assert extract_matter_from_frame("the speaker is AMBIVALENT ABOUT interest rates") == "interest rates"
-    assert extract_matter_from_frame("the speaker has NO STANCE ON tariff policies") == "tariff policies"
-    assert extract_matter_from_frame("federal licensing of frontier AI models") == "federal licensing of frontier AI models"
+    assert (
+        extract_matter_from_frame("the speaker is FOR federal licensing of frontier AI models")
+        == "federal licensing of frontier AI models"
+    )
+    assert (
+        extract_matter_from_frame("the speaker is AGAINST federal licensing of frontier AI models")
+        == "federal licensing of frontier AI models"
+    )
+    assert (
+        extract_matter_from_frame("the speaker is AMBIVALENT ABOUT interest rates")
+        == "interest rates"
+    )
+    assert (
+        extract_matter_from_frame("the speaker has NO STANCE ON tariff policies")
+        == "tariff policies"
+    )
+    assert (
+        extract_matter_from_frame("federal licensing of frontier AI models")
+        == "federal licensing of frontier AI models"
+    )
 
 
 def test_x3_red_first_pre_repair_named_12a7503f8c27b24d() -> None:

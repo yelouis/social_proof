@@ -68,7 +68,9 @@ class TopicResolver:
 
         Returns (resolution_key, proposition_ids, status) where status is 'ok' or 'no_coverage'.
         """
-        threshold = similarity_threshold if similarity_threshold is not None else self.similarity_threshold
+        threshold = (
+            similarity_threshold if similarity_threshold is not None else self.similarity_threshold
+        )
         norm_query = normalize_query(query)
         res_key = compute_resolution_key(
             subject_id=subject_id,

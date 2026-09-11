@@ -64,7 +64,9 @@ def repair_starved_sources(db_path: str = "social_proof.duckdb") -> None:
     new_claims_count = 0
     for idx, (uid, _sid, _subj_id, name, rec_at, _start_ms, _text) in enumerate(target_utts, 1):
         # Check if this utterance already has claims in live table
-        row_existing = store.con.execute("SELECT count(*) FROM claims WHERE utterance_id = ?", [uid]).fetchone()
+        row_existing = store.con.execute(
+            "SELECT count(*) FROM claims WHERE utterance_id = ?", [uid]
+        ).fetchone()
         existing = int(row_existing[0]) if row_existing else 0
         if existing > 0:
             continue
@@ -97,10 +99,14 @@ def repair_starved_sources(db_path: str = "social_proof.duckdb") -> None:
     print(f"  Dedup stats: {dedup_stats}")
 
     # Backfill missing embeddings for any newly created active propositions
-    active_props = store.con.execute("SELECT proposition_id, canonical_text FROM propositions WHERE status = 'active'").fetchall()
+    active_props = store.con.execute(
+        "SELECT proposition_id, canonical_text FROM propositions WHERE status = 'active'"
+    ).fetchall()
     missing_emb = 0
     for pid, txt in active_props:
-        has_emb = store.con.execute("SELECT 1 FROM proposition_embeddings WHERE proposition_id = ?", [pid]).fetchone()
+        has_emb = store.con.execute(
+            "SELECT 1 FROM proposition_embeddings WHERE proposition_id = ?", [pid]
+        ).fetchone()
         if not has_emb:
             emb = embedder.embed_document(txt)
             store.insert_proposition_embedding(pid, emb)
@@ -121,22 +127,29 @@ def repair_starved_sources(db_path: str = "social_proof.duckdb") -> None:
 
     row_after = store.con.execute("SELECT count(*) FROM claims").fetchone()
     claims_after = int(row_after[0]) if row_after else 0
-    row_props = store.con.execute("SELECT count(*) FROM propositions WHERE status = 'active'").fetchone()
+    row_props = store.con.execute(
+        "SELECT count(*) FROM propositions WHERE status = 'active'"
+    ).fetchone()
     props_after = int(row_props[0]) if row_props else 0
-    print(f"\nTotal claims AFTER repair: {claims_after} (net change: +{claims_after - claims_before})")
+    print(
+        f"\nTotal claims AFTER repair: {claims_after} (net change: +{claims_after - claims_before})"
+    )
     print(f"Total active propositions AFTER repair: {props_after}")
 
     # Display new claims per hour for starved sources
     print("\nUpdated rates for starved sources:")
     for sid in starved_sids:
-        r = store.con.execute("""
+        r = store.con.execute(
+            """
             SELECT s.title, s.duration_ms / 1000.0 / 3600.0, count(c.claim_id)
             FROM sources s
             LEFT JOIN utterances u ON s.source_id = u.source_id
             LEFT JOIN claims c ON u.utterance_id = c.utterance_id
             WHERE s.source_id = ?
             GROUP BY s.source_id, s.title, s.duration_ms
-        """, [sid]).fetchone()
+        """,
+            [sid],
+        ).fetchone()
         if r is not None:
             rate = float(r[2]) / float(r[1]) if r[1] and float(r[1]) > 0 else 0.0
             print(f"  '{r[0]}' ({sid}): {r[2]} claims in {r[1]:.2f}h ({rate:.2f} claims/hr)")

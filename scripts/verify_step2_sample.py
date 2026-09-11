@@ -30,7 +30,18 @@ def evaluate_position_test(prop: str) -> tuple[bool, str]:
 
     lower = prop.lower()
     # Check for finite verbs acting as main clauses
-    for v in [" has been ", " have been ", " was ", " were ", " is now ", " are now ", " has developed ", " have developed ", " should ", " must "]:
+    for v in [
+        " has been ",
+        " have been ",
+        " was ",
+        " were ",
+        " is now ",
+        " are now ",
+        " has developed ",
+        " have developed ",
+        " should ",
+        " must ",
+    ]:
         if v in lower:
             return False, f"Contains finite verb or modal '{v.strip()}', not canonical noun phrase"
 
@@ -77,7 +88,7 @@ def main() -> None:
         stats = runtime.generate_constrained(text, context)
         claims = stats.parsed_result.claims
 
-        print(f"[{i:2d}/20] ({speaker}): \"{text[:70]}...\"")
+        print(f'[{i:2d}/20] ({speaker}): "{text[:70]}..."')
         if not claims:
             print("   -> No claims emitted (banter/non-position)")
             continue
@@ -91,14 +102,16 @@ def main() -> None:
                 embedder=embedder,
             )
             if not outcome.is_valid or not ec.is_own_assertion:
-                reason = outcome.rejection_reason or (ec.exclusion_reason if not ec.is_own_assertion else "unknown")
-                print(f"   [Validator Rejected: {reason}] \"{ec.proposition_text}\"")
+                reason = outcome.rejection_reason or (
+                    ec.exclusion_reason if not ec.is_own_assertion else "unknown"
+                )
+                print(f'   [Validator Rejected: {reason}] "{ec.proposition_text}"')
                 continue
 
             prop = ec.proposition_text
             passed, explanation = evaluate_position_test(prop)
             verdict = "PASS" if passed else "FAIL"
-            print(f"   [{verdict}] \"{prop}\"")
+            print(f'   [{verdict}] "{prop}"')
             print(f"          Supports: Alice supports {prop}")
             print(f"          Opposes:  Alice opposes {prop}")
             print(f"          Reason:   {explanation}")
@@ -112,7 +125,11 @@ def main() -> None:
     pass_count = sum(1 for _, passed, _ in propositions_tested if passed)
     total_count = len(propositions_tested)
     print(f"Total valid propositions produced: {total_count}")
-    print(f"Passed position test:             {pass_count} / {total_count} ({pass_count/total_count*100:.1f}%)" if total_count > 0 else "0")
+    print(
+        f"Passed position test:             {pass_count} / {total_count} ({pass_count / total_count * 100:.1f}%)"
+        if total_count > 0
+        else "0"
+    )
     print("=" * 70)
 
 

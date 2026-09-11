@@ -37,7 +37,9 @@ def clean_ingest_env(tmp_path: Path) -> tuple[Storage, IngestionEngine, PodcastR
     return store, engine, adapter
 
 
-def test_single_speaker_ingest_end_to_end_and_integrity(clean_ingest_env: tuple[Storage, IngestionEngine, PodcastRSSAdapter], tmp_path: Path) -> None:
+def test_single_speaker_ingest_end_to_end_and_integrity(
+    clean_ingest_env: tuple[Storage, IngestionEngine, PodcastRSSAdapter], tmp_path: Path
+) -> None:
     store, engine, adapter = clean_ingest_env
 
     # 1. Setup Subject (Chamath Palihapitiya) and enrollment
@@ -99,12 +101,16 @@ def test_single_speaker_ingest_end_to_end_and_integrity(clean_ingest_env: tuple[
     assert job.metrics["extracted_claims_count"] >= 1.0
 
     # 3. Validation: Verify Utterances in Storage
-    src_row = store.con.execute("SELECT source_id FROM sources WHERE canonical_url = ?", [enclosure_url]).fetchone()
+    src_row = store.con.execute(
+        "SELECT source_id FROM sources WHERE canonical_url = ?", [enclosure_url]
+    ).fetchone()
     assert src_row is not None
     source_id = str(src_row[0])
     stored_source = store.get_source(source_id)
     assert stored_source is not None
-    assert stored_source.audio_deleted_at is not None, "audio_deleted_at must be set upon successful ingest"
+    assert stored_source.audio_deleted_at is not None, (
+        "audio_deleted_at must be set upon successful ingest"
+    )
 
     stored_utts = store.get_utterances_for_source(source_id)
     assert len(stored_utts) >= 1
@@ -170,7 +176,9 @@ def test_single_speaker_ingest_end_to_end_and_integrity(clean_ingest_env: tuple[
     print(f"Verified Citation URL: {cite_url} for utterance starting at {first_utt.start_ms}ms")
 
 
-def test_reingest_idempotency_zero_new_rows_zero_retranscription(clean_ingest_env: tuple[Storage, IngestionEngine, PodcastRSSAdapter]) -> None:
+def test_reingest_idempotency_zero_new_rows_zero_retranscription(
+    clean_ingest_env: tuple[Storage, IngestionEngine, PodcastRSSAdapter],
+) -> None:
     """Journey J11: Re-running ingest on same source yields zero new rows and skips work."""
     store, engine, adapter = clean_ingest_env
     audio_fixture = Path("fixtures/enrollment/chamath_palihapitiya.wav")
@@ -183,7 +191,9 @@ def test_reingest_idempotency_zero_new_rows_zero_retranscription(clean_ingest_en
     )
 
     # Pass 1: Initial ingest
-    job1 = engine.ingest_single_speaker_source(adapter, ref, subject, media_file_override=audio_fixture)
+    job1 = engine.ingest_single_speaker_source(
+        adapter, ref, subject, media_file_override=audio_fixture
+    )
     assert job1.status == "completed"
 
     row_s1 = store.con.execute("SELECT count(*) FROM sources").fetchone()
@@ -195,7 +205,9 @@ def test_reingest_idempotency_zero_new_rows_zero_retranscription(clean_ingest_en
     count_utts_1 = int(row_u1[0])
 
     # Pass 2: Re-ingest same source
-    job2 = engine.ingest_single_speaker_source(adapter, ref, subject, media_file_override=audio_fixture)
+    job2 = engine.ingest_single_speaker_source(
+        adapter, ref, subject, media_file_override=audio_fixture
+    )
     assert job2.status == "completed"
     assert job2.metrics.get("reingest_skipped") == 1.0, "Re-ingest must skip transcription"
 
@@ -211,7 +223,9 @@ def test_reingest_idempotency_zero_new_rows_zero_retranscription(clean_ingest_en
     assert count_utts_1 == count_utts_2, "Zero new utterance rows on re-ingest"
 
 
-def test_falsification_corrupt_text_verbatim_fails_verify_quotes_on_real_data(clean_ingest_env: tuple[Storage, IngestionEngine, PodcastRSSAdapter]) -> None:
+def test_falsification_corrupt_text_verbatim_fails_verify_quotes_on_real_data(
+    clean_ingest_env: tuple[Storage, IngestionEngine, PodcastRSSAdapter],
+) -> None:
     """Falsification test for I0.2: Corrupting stored text_verbatim by 1 character
 
     causes verify_quotes to go RED on real data.
@@ -238,7 +252,9 @@ def test_falsification_corrupt_text_verbatim_fails_verify_quotes_on_real_data(cl
         }
     ]
 
-    engine.ingest_single_speaker_source(adapter, ref, subject, media_file_override=audio_fixture, mock_claims=mock_claims)
+    engine.ingest_single_speaker_source(
+        adapter, ref, subject, media_file_override=audio_fixture, mock_claims=mock_claims
+    )
 
     claim_rows = store.con.execute("SELECT claim_id FROM claims").fetchall()
     claims: list[Claim] = []
@@ -267,7 +283,9 @@ def test_falsification_corrupt_text_verbatim_fails_verify_quotes_on_real_data(cl
     corrupted_utt.text_verbatim = corrupted_text
 
     # verify_quotes must go RED (fail)
-    all_utts_corrupted = [corrupted_utt if u.utterance_id == corrupted_utt.utterance_id else u for u in utts]
+    all_utts_corrupted = [
+        corrupted_utt if u.utterance_id == corrupted_utt.utterance_id else u for u in utts
+    ]
     res_corrupted = verify_quotes(claims, all_utts_corrupted)
     assert res_corrupted.passed is False
     assert res_corrupted.status == "FAIL"  # Falsification confirmed!

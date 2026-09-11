@@ -195,8 +195,12 @@ def test_falsification_plain_negation_quote_labels_oppose() -> None:
     # 2. Break instrument: simulate legacy embedding-only test without syntactic analysis
     # Under legacy embedding test, sim_neg > sim_pos + 0.05 is never satisfied, so support survives (RED)
     v_prop = embedder.embed_document("federal licensing of frontier AI models")
-    v_neg = embedder.embed_document("It is not the case that federal licensing of frontier AI models")
-    v_quote = embedder.embed_document("We should not have federal licensing for frontier AI models.")
+    v_neg = embedder.embed_document(
+        "It is not the case that federal licensing of frontier AI models"
+    )
+    v_quote = embedder.embed_document(
+        "We should not have federal licensing for frontier AI models."
+    )
     from worker.extract.dedup import cosine_similarity
 
     sim_pos = cosine_similarity(v_quote, v_prop)

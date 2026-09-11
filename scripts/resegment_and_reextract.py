@@ -45,38 +45,47 @@ def main() -> None:
     print("Quarantined fabricated tension 0068adec4b1501c6.")
 
     # 2. Extract word streams and speaker mapping per source from existing database
-    sources = conn.execute("SELECT source_id, title, canonical_url, recorded_at FROM sources").fetchall()
+    sources = conn.execute(
+        "SELECT source_id, title, canonical_url, recorded_at FROM sources"
+    ).fetchall()
     source_words_map = {}
     source_speaker_spans = {}
 
     for s_id, title, _url, _rec_at in sources:
-        old_utts = conn.execute("""
+        old_utts = conn.execute(
+            """
             SELECT utterance_id, start_ms, end_ms, subject_id, speaker_label, attribution_confidence, attribution_method, word_timestamps_ref
             FROM utterances
             WHERE source_id = ?
             ORDER BY start_ms
-        """, [s_id]).fetchall()
+        """,
+            [s_id],
+        ).fetchall()
 
         words: list[WordTimestamp] = []
         spans = []
         for u in old_utts:
-            spans.append({
-                "start_ms": u[1],
-                "end_ms": u[2],
-                "subject_id": u[3],
-                "speaker_label": u[4],
-                "attribution_confidence": u[5],
-                "attribution_method": u[6],
-            })
+            spans.append(
+                {
+                    "start_ms": u[1],
+                    "end_ms": u[2],
+                    "subject_id": u[3],
+                    "speaker_label": u[4],
+                    "attribution_confidence": u[5],
+                    "attribution_method": u[6],
+                }
+            )
             w_list = store.artifacts.get_word_timestamps(u[7])
             if w_list is not None:
                 for w in w_list:
-                    words.append(WordTimestamp(
-                        word=w["word"],
-                        start_ms=w["start_ms"],
-                        end_ms=w["end_ms"],
-                        confidence=w.get("confidence", 1.0),
-                    ))
+                    words.append(
+                        WordTimestamp(
+                            word=w["word"],
+                            start_ms=w["start_ms"],
+                            end_ms=w["end_ms"],
+                            confidence=w.get("confidence", 1.0),
+                        )
+                    )
 
         source_words_map[s_id] = words
         source_speaker_spans[s_id] = spans
@@ -112,7 +121,9 @@ def main() -> None:
             best_overlap = -1
 
             for span in spans:
-                overlap = max(0, min(nu.end_ms, span["end_ms"]) - max(nu.start_ms, span["start_ms"]))
+                overlap = max(
+                    0, min(nu.end_ms, span["end_ms"]) - max(nu.start_ms, span["start_ms"])
+                )
                 if overlap > best_overlap:
                     best_overlap = overlap
                     best_subj = span["subject_id"]
@@ -231,13 +242,17 @@ def main() -> None:
             continue
 
         prop_id = compute_proposition_id(cs["proposition"])
-        store.insert_proposition(Proposition(
-            proposition_id=prop_id,
-            canonical_text=cs["proposition"],
-            subject_ids=[cs["subject_id"]],
-        ))
+        store.insert_proposition(
+            Proposition(
+                proposition_id=prop_id,
+                canonical_text=cs["proposition"],
+                subject_ids=[cs["subject_id"]],
+            )
+        )
 
-        claim_id = compute_claim_id(matching_utt.utterance_id, prop_id, cs["stance"], extraction_ver)
+        claim_id = compute_claim_id(
+            matching_utt.utterance_id, prop_id, cs["stance"], extraction_ver
+        )
         claim = Claim(
             claim_id=claim_id,
             subject_id=cs["subject_id"],
@@ -268,18 +283,21 @@ def main() -> None:
     ]
     for s_id, _title, _url, _rec_at in sources:
         for subj_id in all_subject_ids:
-            store.insert_source_role(SourceSubjectRole(
-                role_id=compute_role_id(s_id, subj_id),
-                source_id=s_id,
-                subject_id=subj_id,
-                tier="B",
-                venue_type="own_channel",
-                audience_stance="friendly",
-                is_adversarial=False,
-            ))
+            store.insert_source_role(
+                SourceSubjectRole(
+                    role_id=compute_role_id(s_id, subj_id),
+                    source_id=s_id,
+                    subject_id=subj_id,
+                    tier="B",
+                    venue_type="own_channel",
+                    audience_stance="friendly",
+                    is_adversarial=False,
+                )
+            )
 
     # 7. Recompute assessments for all subjects
     from worker.rubric.engine import RubricEngine
+
     rubric_engine = RubricEngine(store)
     assessments = []
     for subj_id in all_subject_ids:
@@ -291,8 +309,12 @@ def main() -> None:
     for a in assessments:
         for axis_name, t_ids in a.axis_evidence.items():
             overlap = set(t_ids).intersection(quarantined_tensions)
-            assert not overlap, f"Assessment {a.assessment_id} axis {axis_name} contains quarantined tensions: {overlap}"
-    print(f"Verified {len(assessments)} assessments have zero quarantined tensions in axis_evidence.")
+            assert not overlap, (
+                f"Assessment {a.assessment_id} axis {axis_name} contains quarantined tensions: {overlap}"
+            )
+    print(
+        f"Verified {len(assessments)} assessments have zero quarantined tensions in axis_evidence."
+    )
 
     # 8. Validation check: Zero utterances begin or end mid-word
     terminal_punct = (".", "?", "!", '."', '?"', '!"', ".'", "?'", "!'", ".”", "?”", "!”")

@@ -102,7 +102,9 @@ def test_x1_all_live_claims_pass() -> None:
         ).fetchall()
     finally:
         store.close()
-    assert len(claim_rows) == 9, f"Expected 9 hand-verified live claims in DB, got {len(claim_rows)}"
+    assert len(claim_rows) == 9, (
+        f"Expected 9 hand-verified live claims in DB, got {len(claim_rows)}"
+    )
 
     for cid, quote_text, prop_text in claim_rows:
         assert quote_text is not None and quote_text.strip()
@@ -152,10 +154,14 @@ def test_x1_prefix_mismatch_sensitivity_trap_7() -> None:
     diff = abs(sim_doc_doc - sim_query_doc)
     # The difference must be materially non-zero (measured delta is ~0.056)
     assert diff > 0.03, f"Expected material difference between prefixes, got {diff:.4f}"
-    assert sim_doc_doc > sim_query_doc, "Doc-to-doc similarity should be higher than mismatched query-doc"
+    assert sim_doc_doc > sim_query_doc, (
+        "Doc-to-doc similarity should be higher than mismatched query-doc"
+    )
 
 
-def test_x1_ambiguous_band_quarantined_not_published_and_not_in_axis_evidence(tmp_path: Path) -> None:
+def test_x1_ambiguous_band_quarantined_not_published_and_not_in_axis_evidence(
+    tmp_path: Path,
+) -> None:
     """A claim scoring inside the ambiguous band [T_ENTAIL_LOW, T_ENTAIL_HIGH) is quarantined.
 
     It must:
@@ -207,6 +213,7 @@ def test_x1_ambiguous_band_quarantined_not_published_and_not_in_axis_evidence(tm
     # Return two vectors whose cosine similarity is exactly 0.65 (middle of [0.60, 0.70))
     # Let vec1 = [1, 0, ...], vec2 = [0.65, sqrt(1 - 0.65^2), ...]
     import numpy as np
+
     v1 = np.zeros(768, dtype=np.float32)
     v1[0] = 1.0
     v2 = np.zeros(768, dtype=np.float32)
@@ -215,7 +222,9 @@ def test_x1_ambiguous_band_quarantined_not_published_and_not_in_axis_evidence(tm
 
     mock_embedder.embed_document.side_effect = [v1.tolist(), v2.tolist()]
 
-    outcome = validate_entailment(claim_input, embedder=mock_embedder, min_quote_tokens=5, t_low=t_low, t_high=t_high)
+    outcome = validate_entailment(
+        claim_input, embedder=mock_embedder, min_quote_tokens=5, t_low=t_low, t_high=t_high
+    )
     assert outcome.is_valid is True
     assert outcome.status == "quarantined"
     assert outcome.rejection_reason == "entailment_ambiguous"

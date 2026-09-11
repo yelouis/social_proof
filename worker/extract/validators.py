@@ -94,7 +94,9 @@ RHETORICAL_SPEECH_ACT_PATTERNS: list[re.Pattern[str]] = [
 # Banned polarity tokens in proposition_text (must live exclusively in stance, Item D1 / §13u)
 POLARITY_BANNED_PATTERNS: list[re.Pattern[str]] = [
     re.compile(r"\b(?:should not|shouldn't|must not|mustn't|cannot|can't)\b", re.IGNORECASE),
-    re.compile(r"\b(?:never|oppose|opposing|against|prohibit|prohibiting|illegal)\b", re.IGNORECASE),
+    re.compile(
+        r"\b(?:never|oppose|opposing|against|prohibit|prohibiting|illegal)\b", re.IGNORECASE
+    ),
     re.compile(r"\b(?:is bad|is harmful|is evil|is wrong)\b", re.IGNORECASE),
     # Positive and modal polarity (D1 Step 1)
     re.compile(r"\b(?:should|must|ought)\b", re.IGNORECASE),
@@ -150,7 +152,10 @@ INDEXICAL_BANNED_ANYWHERE: list[re.Pattern[str]] = [
 ]
 
 COMPARATIVE_NO_RELATUM: list[re.Pattern[str]] = [
-    re.compile(r"\bthe\s+same\b(?!\s+(?:as|time|day|year|quarter|month|week|way|manner|room|sentiment)\b)", re.IGNORECASE),
+    re.compile(
+        r"\bthe\s+same\b(?!\s+(?:as|time|day|year|quarter|month|week|way|manner|room|sentiment)\b)",
+        re.IGNORECASE,
+    ),
     re.compile(r"\bsuch\s+(?!as\b)", re.IGNORECASE),
     re.compile(r"\bthe\s+other\b(?!\s+(?:hand|side)\b)", re.IGNORECASE),
 ]
@@ -172,6 +177,7 @@ VALID_EXCLUSIONS: set[str] = {
     "question",
     "quote_agreement_unclear",
     "entailment_ambiguous",
+    "reports_fact",
 }
 
 
@@ -326,7 +332,11 @@ def validate_self_contained(claim: ExtractedClaim) -> ValidationOutcome:
             )
     for pat in COMPARATIVE_NO_RELATUM:
         if pat.search(prop_text):
-            if "at the same time" in prop_text.lower() or "as such" in prop_text.lower() or "each other" in prop_text.lower():
+            if (
+                "at the same time" in prop_text.lower()
+                or "as such" in prop_text.lower()
+                or "each other" in prop_text.lower()
+            ):
                 continue
             VALIDATOR_REJECTION_COUNTERS["proposition_not_self_contained"] += 1
             return ValidationOutcome(
@@ -359,7 +369,9 @@ SYNTACTIC_NEGATION_PATTERNS: list[re.Pattern[str]] = [
         r"\b(?:terrible|disastrous|unnecessary|unneeded|unjustified|harmful|unaffordable|bankrupt|ridiculous|mistake|kill|unfeasible|unworkable|dangerous)\b",
         re.IGNORECASE,
     ),
-    re.compile(r"\b(?:does not face|will not|would not|should not|must not|cannot)\b", re.IGNORECASE),
+    re.compile(
+        r"\b(?:does not face|will not|would not|should not|must not|cannot)\b", re.IGNORECASE
+    ),
 ]
 
 DISCOURSE_NEGATION_PREFIX: re.Pattern[str] = re.compile(
@@ -472,7 +484,7 @@ def _stem_word(w: str) -> str:
     s = w.lower().strip(".,!?;:'\"")
     for suffix in ["ation", "izing", "tion", "ing", "ed", "es", "ly", "s"]:
         if len(s) > len(suffix) + 2 and s.endswith(suffix):
-            return s[:-len(suffix)]
+            return s[: -len(suffix)]
     return s
 
 
@@ -508,7 +520,21 @@ def has_syntactic_negation(text: str, prop: str = "") -> bool:
         governed: list[str] = []
         for j in range(i + 1, min(i + 5, len(tokens))):
             w = tokens[j]
-            if w in {"a", "an", "the", "to", "be", "been", "being", "have", "has", "had", "any", "that", "this"}:
+            if w in {
+                "a",
+                "an",
+                "the",
+                "to",
+                "be",
+                "been",
+                "being",
+                "have",
+                "has",
+                "had",
+                "any",
+                "that",
+                "this",
+            }:
                 continue
             governed.append(w)
 
@@ -667,37 +693,112 @@ def validate_polarity(claim: ExtractedClaim) -> ValidationOutcome:
     prop_text = claim.proposition_text or ""
     for pat in POLARITY_BANNED_PATTERNS:
         if pat.search(prop_text):
-            return ValidationOutcome(
-                False, "proposition_carries_polarity", status="rejected"
-            )
+            return ValidationOutcome(False, "proposition_carries_polarity", status="rejected")
     return ValidationOutcome(True, status="passed")
 
 
 # Relational prepositions and comparative markers indicating predicate-bearing matter at issue (Item D6)
 RELATIONAL_PREPOSITIONS: set[str] = {
-    "of", "for", "in", "on", "at", "to", "from", "with", "by", "about", "against",
-    "between", "into", "through", "during", "before", "after", "above", "below",
-    "under", "over", "across", "toward", "towards", "upon", "within", "without",
-    "regarding", "concerning", "versus", "vs",
+    "of",
+    "for",
+    "in",
+    "on",
+    "at",
+    "to",
+    "from",
+    "with",
+    "by",
+    "about",
+    "against",
+    "between",
+    "into",
+    "through",
+    "during",
+    "before",
+    "after",
+    "above",
+    "below",
+    "under",
+    "over",
+    "across",
+    "toward",
+    "towards",
+    "upon",
+    "within",
+    "without",
+    "regarding",
+    "concerning",
+    "versus",
+    "vs",
 }
 
 COMPARATIVE_MARKERS: set[str] = {
-    "than", "versus", "vs", "compared", "relative",
+    "than",
+    "versus",
+    "vs",
+    "compared",
+    "relative",
 }
 
 FINITE_ROOT_VERBS: set[str] = {
-    "is", "are", "was", "were", "has", "have", "had", "will", "would", "should", "must",
-    "went", "uses", "used", "got", "came", "can", "could", "need", "needs",
+    "is",
+    "are",
+    "was",
+    "were",
+    "has",
+    "have",
+    "had",
+    "will",
+    "would",
+    "should",
+    "must",
+    "went",
+    "uses",
+    "used",
+    "got",
+    "came",
+    "can",
+    "could",
+    "need",
+    "needs",
 }
 
 REL_PRONOUNS: set[str] = {
-    "that", "which", "who", "whom", "whose", "where", "when", "if", "because",
+    "that",
+    "which",
+    "who",
+    "whom",
+    "whose",
+    "where",
+    "when",
+    "if",
+    "because",
 }
 
 BARE_VERB_OPENERS: set[str] = {
-    "have", "has", "had", "support", "supports", "bolt", "disrupt", "disrupts",
-    "take", "takes", "make", "makes", "run", "runs", "do", "does", "get", "gets",
-    "put", "puts", "went", "stop", "stops",
+    "have",
+    "has",
+    "had",
+    "support",
+    "supports",
+    "bolt",
+    "disrupt",
+    "disrupts",
+    "take",
+    "takes",
+    "make",
+    "makes",
+    "run",
+    "runs",
+    "do",
+    "does",
+    "get",
+    "gets",
+    "put",
+    "puts",
+    "went",
+    "stop",
+    "stops",
 }
 
 UNBOUND_TRAILING_PRONOUN_PAT: re.Pattern[str] = re.compile(
@@ -752,34 +853,20 @@ def validate_position_bearing(claim: ExtractedClaim) -> ValidationOutcome:
     text = (claim.proposition_text or "").strip()
     words = text.split()
     if len(words) < MIN_PROPOSITION_WORDS:
-        return ValidationOutcome(
-            False, "proposition_not_position_bearing", status="rejected"
-        )
+        return ValidationOutcome(False, "proposition_not_position_bearing", status="rejected")
     if not has_proposition_relation(text):
-        return ValidationOutcome(
-            False, "proposition_not_position_bearing", status="rejected"
-        )
+        return ValidationOutcome(False, "proposition_not_position_bearing", status="rejected")
     first_word = words[0].lower() if words else ""
     if first_word in BARE_VERB_OPENERS:
-        return ValidationOutcome(
-            False, "proposition_not_position_bearing", status="rejected"
-        )
+        return ValidationOutcome(False, "proposition_not_position_bearing", status="rejected")
     if QUESTION_OPENER_PAT.search(text):
-        return ValidationOutcome(
-            False, "proposition_not_position_bearing", status="rejected"
-        )
+        return ValidationOutcome(False, "proposition_not_position_bearing", status="rejected")
     if UNBOUND_TRAILING_PRONOUN_PAT.search(text):
-        return ValidationOutcome(
-            False, "proposition_not_position_bearing", status="rejected"
-        )
+        return ValidationOutcome(False, "proposition_not_position_bearing", status="rejected")
     if DEICTIC_OR_VALUATION_PAT.search(text):
-        return ValidationOutcome(
-            False, "proposition_not_position_bearing", status="rejected"
-        )
+        return ValidationOutcome(False, "proposition_not_position_bearing", status="rejected")
     if has_finite_root_verb(text):
-        return ValidationOutcome(
-            False, "proposition_not_position_bearing", status="rejected"
-        )
+        return ValidationOutcome(False, "proposition_not_position_bearing", status="rejected")
     return ValidationOutcome(True, status="passed")
 
 
@@ -890,7 +977,9 @@ def validate_extracted_claim(
     # 2b. Position-Bearing Matter at Issue (Item D6)
     res_pos = validate_position_bearing(claim)
     if not res_pos.is_valid:
-        VALIDATOR_REJECTION_COUNTERS[res_pos.rejection_reason or "proposition_not_position_bearing"] += 1
+        VALIDATOR_REJECTION_COUNTERS[
+            res_pos.rejection_reason or "proposition_not_position_bearing"
+        ] += 1
         return res_pos
 
     # 3. Entailment (Validator 6) runs immediately after position-bearing check

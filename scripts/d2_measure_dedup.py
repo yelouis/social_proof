@@ -110,13 +110,17 @@ def main() -> None:
     for idx, pid, t in china_props[:10]:
         nn_idx = nearest_indices[idx]
         nn_sim = max_sims[idx]
-        print(f"  [{pid[:12]}] (NN sim={nn_sim:.4f} -> [{prop_ids[nn_idx][:12]}]: '{texts[nn_idx][:60]}') : '{t}'")
+        print(
+            f"  [{pid[:12]}] (NN sim={nn_sim:.4f} -> [{prop_ids[nn_idx][:12]}]: '{texts[nn_idx][:60]}') : '{t}'"
+        )
 
     print(f"\nFound {len(train_props)} train candidate propositions:")
     for idx, pid, t in train_props[:5]:
         nn_idx = nearest_indices[idx]
         nn_sim = max_sims[idx]
-        print(f"  [{pid[:12]}] (NN sim={nn_sim:.4f} -> [{prop_ids[nn_idx][:12]}]: '{texts[nn_idx][:60]}') : '{t}'")
+        print(
+            f"  [{pid[:12]}] (NN sim={nn_sim:.4f} -> [{prop_ids[nn_idx][:12]}]: '{texts[nn_idx][:60]}') : '{t}'"
+        )
 
     # Specifically check similarity between China open source and trains if found
     if china_props and train_props:
@@ -141,7 +145,9 @@ def main() -> None:
         },
         "fine_histogram": {
             f"[{b_start:.2f}, {b_end:.2f})": int(count)
-            for count, b_start, b_end in zip(fine_hist, fine_edges[:-1], fine_edges[1:], strict=True)
+            for count, b_start, b_end in zip(
+                fine_hist, fine_edges[:-1], fine_edges[1:], strict=True
+            )
         },
     }
     with open("fixtures/behaviour/d2_dedup_distribution.json", "w") as f:

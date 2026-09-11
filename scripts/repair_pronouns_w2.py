@@ -85,7 +85,10 @@ def repair_pronouns_w2(db_path: str = "social_proof.duckdb") -> None:
             failing_props.add(pid)
             affected_utterance_info[uid] = (subj_id, rec_at)
 
-    print(f"Found {len(failing_claim_ids)} claims across {len(failing_props)} failing propositions.", flush=True)
+    print(
+        f"Found {len(failing_claim_ids)} claims across {len(failing_props)} failing propositions.",
+        flush=True,
+    )
     print(f"Unique utterances to re-extract: {len(affected_utterance_info)}", flush=True)
 
     reset_rejection_counts()
@@ -133,7 +136,10 @@ def repair_pronouns_w2(db_path: str = "social_proof.duckdb") -> None:
                 flush=True,
             )
 
-    print(f"\nRe-extraction complete: {re_extracted_claims_count} new valid claims produced.", flush=True)
+    print(
+        f"\nRe-extraction complete: {re_extracted_claims_count} new valid claims produced.",
+        flush=True,
+    )
     print("Rejection counts during re-extraction:", get_rejection_counts(), flush=True)
 
     # Re-sync claim_count on all surviving propositions
@@ -157,7 +163,10 @@ def repair_pronouns_w2(db_path: str = "social_proof.duckdb") -> None:
     print(f"  Total survivor propositions: {dedup_results['surviving_propositions']}", flush=True)
     print(f"  Merged away: {dedup_results['merged_away_propositions']}", flush=True)
     print(f"  Claims re-pointed: {dedup_results['repointed_propositions_count']}", flush=True)
-    print(f"  Multi-source diff-date propositions: {dedup_results['multi_source_diff_date_propositions']}", flush=True)
+    print(
+        f"  Multi-source diff-date propositions: {dedup_results['multi_source_diff_date_propositions']}",
+        flush=True,
+    )
     print(f"  Candidate pairs: {dedup_results['candidate_pairs']}", flush=True)
 
     # 6. Re-run Tension Detection (with T1 same-source check)
@@ -167,16 +176,22 @@ def repair_pronouns_w2(db_path: str = "social_proof.duckdb") -> None:
     # Clean non-quarantined tensions before re-detecting
     store.con.execute("DELETE FROM tensions WHERE status != 'quarantined'")
 
-    subjects = store.con.execute("SELECT subject_id FROM subjects WHERE enrollment_ref IS NOT NULL").fetchall()
+    subjects = store.con.execute(
+        "SELECT subject_id FROM subjects WHERE enrollment_ref IS NOT NULL"
+    ).fetchall()
     total_detected = 0
     for (s_id,) in subjects:
         t_list = detector.detect_tensions_for_subject(s_id)
         total_detected += len(t_list)
 
     print(f"Tension detection complete: {total_detected} total tensions in store.")
-    pub_t_row = store.con.execute("SELECT count(*) FROM tensions WHERE status = 'published'").fetchone()
+    pub_t_row = store.con.execute(
+        "SELECT count(*) FROM tensions WHERE status = 'published'"
+    ).fetchone()
     pub_t = pub_t_row[0] if pub_t_row is not None else 0
-    quar_t_row = store.con.execute("SELECT count(*) FROM tensions WHERE status = 'quarantined'").fetchone()
+    quar_t_row = store.con.execute(
+        "SELECT count(*) FROM tensions WHERE status = 'quarantined'"
+    ).fetchone()
     quar_t = quar_t_row[0] if quar_t_row is not None else 0
     print(f"  Published tensions: {pub_t} | Quarantined tensions: {quar_t}")
 
@@ -201,7 +216,9 @@ def repair_pronouns_w2(db_path: str = "social_proof.duckdb") -> None:
 
     # 7. Final Verification
     print("\n=== Post-Repair Verification (Assertion c) ===")
-    remaining_props = store.con.execute("SELECT proposition_id, canonical_text FROM propositions WHERE status = 'active'").fetchall()
+    remaining_props = store.con.execute(
+        "SELECT proposition_id, canonical_text FROM propositions WHERE status = 'active'"
+    ).fetchall()
     failing_remaining = []
     for pid, text in remaining_props:
         dummy = ExtractedClaim(
@@ -221,10 +238,12 @@ def repair_pronouns_w2(db_path: str = "social_proof.duckdb") -> None:
         for pid, t in failing_remaining[:5]:
             print(f"  - {pid}: {t}")
     else:
-        print("PASS: Zero propositions contain unbound pronouns or deictics! (Assertion c satisfied)")
+        print(
+            "PASS: Zero propositions contain unbound pronouns or deictics! (Assertion c satisfied)"
+        )
 
     total_time = time.perf_counter() - t_start
-    print(f"\nW2 Repair complete in {total_time:.2f}s ({total_time/60:.2f}m).")
+    print(f"\nW2 Repair complete in {total_time:.2f}s ({total_time / 60:.2f}m).")
 
 
 if __name__ == "__main__":

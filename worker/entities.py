@@ -41,7 +41,9 @@ class SourceSubjectRole:
     source_id: str
     subject_id: str
     tier: Literal["A", "B", "C", "D", "E"]
-    venue_type: Literal["own_channel", "guest", "institutional", "authored", "self_published_text"] = "own_channel"
+    venue_type: Literal[
+        "own_channel", "guest", "institutional", "authored", "self_published_text"
+    ] = "own_channel"
     audience_stance: Literal["friendly", "neutral", "adversarial", "unknown"] = "unknown"
     is_adversarial: bool = False
 
@@ -83,6 +85,7 @@ class Claim:
             "question",
             "quote_agreement_unclear",
             "entailment_ambiguous",
+            "reports_fact",
         ]
         | str
         | None

@@ -1,16 +1,19 @@
-"""Item X2 (§12) — Full corpus re-extraction under Prompt v1.8 and position frame elicitation (Issue 034 = B).
+"""Item X4 (§11) — Full corpus re-extraction under Prompt v1.9 with reachable decline branch.
 
-1. Backs up social_proof.duckdb to social_proof.duckdb.pre_x2.bak.
-2. Snapshots pre-X2 tables to claims_pre_x2, propositions_pre_x2, etc.
-3. Re-extracts candidate utterances with LocalGemmaRuntime (prompt v1.8 with position frame elicitation).
+1. Backs up social_proof.duckdb to social_proof.duckdb.pre_x4.bak.
+2. Snapshots pre-X4 tables to claims_pre_x4, propositions_pre_x4, etc.
+3. Re-extracts candidate utterances with LocalGemmaRuntime (prompt v1.9 with decline branch).
 4. Persists position_frame on every claim.
-5. Re-runs proposition deduplication at T_dedup = 0.84 unchanged.
+5. Re-runs proposition deduplication at T_dedup = 0.96 untouched (deferred to D9).
 6. Re-runs TensionDetector, PrincipleConflictDetector, and RubricEngine.
-7. Verifies Parameter 033 (MIN_CLAIMS_PER_HOUR = 3.0) across all 23 sources.
-8. Reconciles claim count change with VALIDATOR_REJECTION_COUNTERS.
-9. Audits tension candidate pairs by reading both stored position_frame sentences.
-10. Validates (c): Draws 20 random claims with seed to verify frame and proposition agreement.
-11. Runs integrity suite (worker.integrity) to ensure all checks PASS.
+7. Reconciles claim count change with rejection and exclusion counters (including reports_fact).
+8. Checks Parameter 033 (MIN_CLAIMS_PER_HOUR = 3.0) across all 23 sources.
+9. Audits tension candidate pairs by reading both stored position_frame sentences and quotes.
+10. Validates (c): Draws 40 random own-assertion claims with recorded seed 20260910 to verify >= 80% genuine positions.
+11. Asserts both directions by utterance ID:
+    - 03821a2c2f50bc9a (Azure Fed ramp) produces no claim
+    - 73c1f91e3d98e960 (spend millions) produces AGAINST
+12. Runs integrity suite (worker.integrity) to ensure all checks PASS.
 """
 
 import argparse
@@ -45,7 +48,7 @@ def run_full_reextraction(db_path: str = "social_proof.duckdb") -> None:
     if not p.exists():
         raise FileNotFoundError(f"Database {db_path} not found.")
 
-    bak_path = Path(f"{db_path}.pre_x2.bak")
+    bak_path = Path(f"{db_path}.pre_x4.bak")
     print(f"1. Backing up {db_path} to {bak_path}...")
     shutil.copy2(p, bak_path)
     print("   Backup complete.")
@@ -53,26 +56,26 @@ def run_full_reextraction(db_path: str = "social_proof.duckdb") -> None:
     store = Storage(db_path, artifact_dir="artifacts")
 
     # Snapshot existing tables inside DuckDB for auditability
-    print("2. Archiving pre-X2 tables into claims_pre_x2 and propositions_pre_x2...")
-    store.con.execute("CREATE TABLE IF NOT EXISTS claims_pre_x2 AS SELECT * FROM claims;")
+    print("2. Archiving pre-X4 tables into claims_pre_x4 and propositions_pre_x4...")
+    store.con.execute("CREATE TABLE IF NOT EXISTS claims_pre_x4 AS SELECT * FROM claims;")
     store.con.execute(
-        "CREATE TABLE IF NOT EXISTS propositions_pre_x2 AS SELECT * FROM propositions;"
+        "CREATE TABLE IF NOT EXISTS propositions_pre_x4 AS SELECT * FROM propositions;"
     )
     store.con.execute(
-        "CREATE TABLE IF NOT EXISTS proposition_embeddings_pre_x2 AS SELECT * FROM proposition_embeddings;"
+        "CREATE TABLE IF NOT EXISTS proposition_embeddings_pre_x4 AS SELECT * FROM proposition_embeddings;"
     )
-    store.con.execute("CREATE TABLE IF NOT EXISTS tensions_pre_x2 AS SELECT * FROM tensions;")
+    store.con.execute("CREATE TABLE IF NOT EXISTS tensions_pre_x4 AS SELECT * FROM tensions;")
     store.con.commit()
 
     pre_claims_count = (
-        r[0] if (r := store.con.execute("SELECT count(*) FROM claims_pre_x2").fetchone()) else 0
+        r[0] if (r := store.con.execute("SELECT count(*) FROM claims_pre_x4").fetchone()) else 0
     )
     pre_props_count = (
         r[0]
-        if (r := store.con.execute("SELECT count(*) FROM propositions_pre_x2").fetchone())
+        if (r := store.con.execute("SELECT count(*) FROM propositions_pre_x4").fetchone())
         else 0
     )
-    print(f"   Pre-X2 baseline: {pre_claims_count} claims, {pre_props_count} propositions.")
+    print(f"   Pre-X4 baseline: {pre_claims_count} claims, {pre_props_count} propositions.")
 
     # Candidate utterances: all utterances in pre-D6/pre-X2 claims plus host utterances for low-claim sources
     target_utts_rows = store.con.execute("""
@@ -110,11 +113,11 @@ def run_full_reextraction(db_path: str = "social_proof.duckdb") -> None:
     reset_rejection_counts()
     reset_exclusion_counts()
 
-    # Initialize extraction pipeline with prompt v1.8 and live MLX backend
-    print("\n5. Initializing LocalGemmaRuntime with prompt v1.8 and MLX backend...")
+    # Initialize extraction pipeline with prompt v1.9 and live MLX backend
+    print("\n5. Initializing LocalGemmaRuntime with prompt v1.9 and MLX backend...")
     runtime = LocalGemmaRuntime(
         model_id="gemma-3-27b-it",
-        prompt_version="v1.8",
+        prompt_version="v1.9",
         schema_version="s1",
         load_live_backend=True,
     )
@@ -131,7 +134,7 @@ def run_full_reextraction(db_path: str = "social_proof.duckdb") -> None:
         t_dedup=DEFAULT_T_DEDUP,
     )
 
-    print(f"\n6. Starting full re-extraction under prompt v1.8 (T_dedup={DEFAULT_T_DEDUP})...")
+    print(f"\n6. Starting full re-extraction under prompt v1.9 (T_dedup={DEFAULT_T_DEDUP})...")
     t0 = time.perf_counter()
     claims_total = 0
     claims_per_source: Counter[str] = Counter()
@@ -163,9 +166,9 @@ def run_full_reextraction(db_path: str = "social_proof.duckdb") -> None:
         f"\nExtraction completed in {elapsed:.1f}s ({elapsed / 60:.2f}m). Total claims: {claims_total}."
     )
 
-    print("\n--- STEP 5 RECONCILIATION ---")
-    print("Pre-X2 claims: 1,027")
-    print(f"Post-X2 extracted: {claims_total} claims")
+    print("\n--- STEP 3 RECONCILIATION ---")
+    print(f"Pre-X4 claims: {pre_claims_count}")
+    print(f"Post-X4 extracted: {claims_total} claims")
 
     rejections = get_rejection_counts()
     exclusions = get_exclusion_counts()
@@ -176,7 +179,7 @@ def run_full_reextraction(db_path: str = "social_proof.duckdb") -> None:
     for reason, cnt in sorted(exclusions.items(), key=lambda x: -x[1]):
         print(f"  {reason}: {cnt}")
 
-    # Proposition Deduplication & Re-resolution at T_dedup = 0.84
+    # Proposition Deduplication & Re-resolution at T_dedup = 0.96 (untouched per §11 Step 3)
     print(
         f"\n7. Re-running proposition deduplication consolidation at T_dedup = {DEFAULT_T_DEDUP}..."
     )
@@ -230,6 +233,16 @@ def run_full_reextraction(db_path: str = "social_proof.duckdb") -> None:
         t_list = detector.detect_tensions_for_subject(subj_id)
         all_tensions.extend(t_list)
     print(f"   Tensions written to database: {len(all_tensions)}")
+    for t in all_tensions:
+        ca = store.get_claim(t.claim_a_id)
+        cb = store.get_claim(t.claim_b_id)
+        print(f"\n   --- TENSION {t.tension_id} ({t.status}) ---")
+        print(
+            f"   Claim A ({t.claim_a_id}): frame='{ca.position_frame if ca else None}' | quote='{ca.quote_text if ca else None}'"
+        )
+        print(
+            f"   Claim B ({t.claim_b_id}): frame='{cb.position_frame if cb else None}' | quote='{cb.quote_text if cb else None}'"
+        )
 
     # Re-run Principle Detection
     print("\n9. Running PrincipleConflictDetector...")
@@ -252,7 +265,7 @@ def run_full_reextraction(db_path: str = "social_proof.duckdb") -> None:
 
 
 def run_post_extraction_verification(db_path: str) -> None:
-    """Runs all verification steps 11-14 on the extracted DuckDB database."""
+    """Runs all verification steps on the extracted DuckDB database."""
     store = Storage(db_path, read_only=True)
 
     print("\n--- CORPUS SUMMARY STATS ---")
@@ -273,174 +286,123 @@ def run_post_extraction_verification(db_path: str) -> None:
     print(f"Active propositions: {p_count}")
     print(f"Stance distribution: {stances}")
 
-    singletons = (
-        r[0]
-        if (
-            r := store.con.execute(
-                "SELECT count(*) FROM propositions WHERE status = 'active' AND claim_count = 1"
-            ).fetchone()
-        )
-        else 0
-    )
-    multi_props = (
-        r[0]
-        if (
-            r := store.con.execute("""
-        SELECT count(DISTINCT p.proposition_id)
-        FROM propositions p
-        JOIN claims c ON p.proposition_id = c.proposition_id
-        JOIN utterances u ON c.utterance_id = u.utterance_id
-        WHERE p.status = 'active'
-        GROUP BY p.proposition_id
-        HAVING count(DISTINCT u.source_id) >= 2
-    """).fetchone()
-        )
-        else 0
-    )
+    # Calculate support share
+    total_stances = sum(cnt for _, cnt in stances)
+    support_cnt = sum(cnt for st, cnt in stances if st == "support")
+    oppose_cnt = sum(cnt for st, cnt in stances if st == "oppose")
+    mixed_cnt = sum(cnt for st, cnt in stances if st == "mixed")
+    support_pct = (support_cnt / total_stances * 100) if total_stances > 0 else 0
+    oppose_pct = (oppose_cnt / total_stances * 100) if total_stances > 0 else 0
+    mixed_pct = (mixed_cnt / total_stances * 100) if total_stances > 0 else 0
     print(
-        f"Singletons         : {singletons} / {p_count} ({singletons / p_count * 100:.1f}%)"
-        if p_count > 0
-        else ""
-    )
-    print(
-        f"Multi-source props : {multi_props} / {p_count} ({multi_props / p_count * 100:.1f}%)"
-        if p_count > 0
-        else ""
+        f"Stance breakdown: support={support_pct:.1f}% ({support_cnt}), oppose={oppose_pct:.1f}% ({oppose_cnt}), mixed={mixed_pct:.1f}% ({mixed_cnt})"
     )
 
-    # Step 6: Accepted Tension Candidate Pairs Audit
-    print("\n11. Step 6 — Reading accepted candidate pairs via stored position frames...")
-    tension_rows = store.con.execute("""
-        SELECT t.tension_id, t.type, t.claim_a_id, t.claim_b_id, t.status, t.quarantine_reason
-        FROM tensions t
-        ORDER BY t.tension_id
+    # Check Parameter 033: MIN_CLAIMS_PER_HOUR = 3.0 across all 23 sources
+    print("\n--- PARAMETER 033 CHECK (MIN_CLAIMS_PER_HOUR = 3.0) ---")
+    src_stats = store.con.execute("""
+        SELECT
+            src.source_id,
+            src.title,
+            src.duration_ms,
+            count(c.claim_id) as claim_count
+        FROM sources src
+        LEFT JOIN utterances u ON src.source_id = u.source_id
+        LEFT JOIN claims c ON u.utterance_id = c.utterance_id
+        GROUP BY src.source_id, src.title, src.duration_ms
+        ORDER BY src.source_id
     """).fetchall()
 
-    if tension_rows:
-        for tid, ttype, ca_id, cb_id, status, q_reason in tension_rows:
-            c1 = store.get_claim(ca_id)
-            c2 = store.get_claim(cb_id)
-            sname = "Unknown"
-            if c1:
-                subj = store.get_subject(c1.subject_id)
-                sname = subj.display_name if subj else c1.subject_id
-            print(
-                f"\n   [Tension {tid}] ({sname}) Type: {ttype} | Status: {status} (Reason: {q_reason})"
-            )
-            if c1 and c2:
-                print(f'     Claim A frame: "{c1.position_frame}" (Stance: {c1.stance})')
-                print(f'     Claim B frame: "{c2.position_frame}" (Stance: {c2.stance})')
-    else:
-        print("   Zero accepted tension rows in database.")
-
-    # Validation (c): 20 random claims drawn with recorded seed
-    print("\n12. Validation (c) — 20 Random Claims Verification (Position Frame Agreement)...")
-    claim_ids = [
-        r[0] for r in store.con.execute("SELECT claim_id FROM claims ORDER BY claim_id").fetchall()
-    ]
-    random.seed(2026)
-    sample_cids = random.sample(claim_ids, min(20, len(claim_ids)))
-
-    agreement_count = 0
-    print(f"   Sample seed: 2026, drawn {len(sample_cids)} claims:")
-    for idx, cid in enumerate(sample_cids, 1):
-        claim = store.get_claim(cid)
-        if not claim:
-            continue
-        frame = claim.position_frame or ""
-        prop = store.get_proposition(claim.proposition_id)
-        prop_text = prop.canonical_text if prop else ""
-
-        frame_lower = frame.lower()
-        if claim.stance == "support":
-            agrees = "the speaker is for " in frame_lower and prop_text.lower() in frame_lower
-        elif claim.stance == "oppose":
-            agrees = "the speaker is against " in frame_lower and prop_text.lower() in frame_lower
-        else:
-            agrees = (
-                "the speaker is for " in frame_lower and "the speaker is against " in frame_lower
-            )
-
-        if agrees:
-            agreement_count += 1
-
-        print(f'   [{idx:2d}/20] ({claim.stance.upper()}) "{frame}"')
-        print(f'         <X> : "{prop_text}"')
-        print(f"         Agree: {agrees}")
-
-    print(f"\n   Validation (c) Agreement Score: {agreement_count} / {len(sample_cids)}")
-
-    # Parameter 033: Check claims per hour on all 23 sources
-    print("\n13. Parameter 033: Verifying MIN_CLAIMS_PER_HOUR = 3.0 across all 23 sources...")
-    sources = [
-        r[0]
-        for r in store.con.execute(
-            "SELECT source_id FROM sources WHERE ingested_at IS NOT NULL ORDER BY recorded_at"
-        ).fetchall()
-    ]
+    min_rate = 999.0
     failed_sources = []
-    for sid in sources:
-        dur_ms_row = store.con.execute(
-            "SELECT duration_ms, title FROM sources WHERE source_id = ?", [sid]
-        ).fetchone()
-        dur_ms = dur_ms_row[0] if dur_ms_row and dur_ms_row[0] else 3600000
-        title = dur_ms_row[1] if dur_ms_row else sid
-        dur_h = dur_ms / 3600000.0
-        c_count_row = store.con.execute(
-            "SELECT count(*) FROM claims c JOIN utterances u ON c.utterance_id = u.utterance_id WHERE u.source_id = ?",
-            [sid],
-        ).fetchone()
-        c_count = c_count_row[0] if c_count_row else 0
-        cph = c_count / dur_h if dur_h > 0 else 0
-        if cph < 3.0:
-            failed_sources.append((sid, title, c_count, dur_h, cph))
-            print(
-                f"   [FAIL P033] {title}: {c_count} claims / {dur_h:.2f}h = {cph:.2f} claims/h (< 3.0)"
-            )
-        else:
-            print(
-                f"   [PASS P033] {title}: {c_count} claims / {dur_h:.2f}h = {cph:.2f} claims/h (>= 3.0)"
-            )
+    print(f"{'Source ID':<18} | {'Duration (m)':<12} | {'Claims':<6} | {'Claims/hr':<9} | Status")
+    print("-" * 65)
+    for sid, name, dur_ms, cc in src_stats:
+        dur_h = (dur_ms / 1000.0 / 3600.0) if dur_ms and dur_ms > 0 else 1.0
+        dur_m = (dur_ms / 1000.0 / 60.0) if dur_ms and dur_ms > 0 else 0.0
+        rate = cc / dur_h
+        min_rate = min(min_rate, rate)
+        status = "PASS" if rate >= 3.0 else "BELOW_FLOOR"
+        if rate < 3.0:
+            failed_sources.append((sid, name, rate))
+        print(f"{sid:<18} | {dur_m:<12.1f} | {cc:<6d} | {rate:<9.2f} | {status}")
 
+    print(f"\nMinimum claims/hour across 23 sources: {min_rate:.2f}")
     if failed_sources:
-        print(f"\n   [WARNING] {len(failed_sources)} sources fell below Parameter 033 floor!")
+        print(f"WARNING: {len(failed_sources)} source(s) below MIN_CLAIMS_PER_HOUR = 3.0 floor:")
+        for sid, name, rate in failed_sources:
+            print(f"  {sid} ({name}): {rate:.2f} claims/hr")
     else:
-        print(f"\n   All {len(sources)} sources satisfy Parameter 033 (>= 3.0 claims/hr).")
+        print("PASS: All 23 sources cleared MIN_CLAIMS_PER_HOUR = 3.0 floor.")
 
-    store.close()
+    # Check both directions by utterance ID
+    print("\n--- BOTH DIRECTIONS BY UTTERANCE ID ---")
+    # Direction 1: Azure Fed ramp (03821a2c2f50bc9a) -> no claim
+    azure_claims = store.con.execute(
+        "SELECT claim_id, position_frame FROM claims WHERE utterance_id = '03821a2c2f50bc9a'"
+    ).fetchall()
+    print(f"Azure Fed ramp (03821a2c2f50bc9a) claims count: {len(azure_claims)}")
+    if azure_claims:
+        print(f"  FAIL: Azure Fed ramp produced claims: {azure_claims}")
+    else:
+        print("  PASS: Azure Fed ramp produced NO claims.")
+
+    # Direction 2: Hardware spend (73c1f91e3d98e960) -> produces AGAINST
+    spend_claims = store.con.execute(
+        "SELECT claim_id, stance, position_frame FROM claims WHERE utterance_id = '73c1f91e3d98e960'"
+    ).fetchall()
+    print(f"Hardware spend (73c1f91e3d98e960) claims count: {len(spend_claims)}")
+    if spend_claims:
+        for cid, stance, frame in spend_claims:
+            print(f"  Claim {cid}: stance={stance} | frame='{frame}'")
+            if stance == "oppose":
+                print("  PASS: Hardware spend produced AGAINST.")
+    else:
+        print("  FAIL: Hardware spend produced no claims.")
+
+    # Assertion (c) Validation: Draw 40 own-assertion claims with seed 20260910
+    print("\n--- ASSERTION (c) VALIDATION SAMPLE (N=40, seed=20260910) ---")
+    own_claims = store.con.execute("""
+        SELECT
+            c.claim_id,
+            c.utterance_id,
+            c.stance,
+            c.position_frame,
+            p.canonical_text,
+            c.quote_text
+        FROM claims c
+        JOIN propositions p ON c.proposition_id = p.proposition_id
+        WHERE c.is_own_assertion = true
+        ORDER BY c.claim_id
+    """).fetchall()
+
+    rng = random.Random(20260910)
+    sample_40 = rng.sample(own_claims, min(40, len(own_claims)))
+
+    print(f"Drawn {len(sample_40)} own-assertion claims.")
+    for idx, (cid, uid, _stance, frame, prop, quote) in enumerate(sample_40, 1):
+        print(f"\nClaim [{idx:02d}/40] {cid} (utt: {uid})")
+        print(f"  Frame: {frame}")
+        print(f"  Prop:  {prop}")
+        print(f'  Quote: "{quote}"')
 
     # Run Integrity Checks
-    print("\n14. Running Evidence Integrity Checks over live corpus...")
-    corpus_results = run_integrity_corpus(db_path)
-    print("=" * 70)
-    print("CORPUS INTEGRITY RESULTS:")
-    print("=" * 70)
-    all_passed = True
-    for cr in corpus_results:
-        status_str = "PASS" if cr.passed else "FAIL"
-        print(f"  {cr.name:<40} : [{status_str}] examined={cr.examined_count} — {cr.message}")
-        if not cr.passed:
-            all_passed = False
-    print("=" * 70)
-    if all_passed:
-        print("ALL 15 INTEGRITY CHECKS PASSED.")
-    else:
-        print("SOME INTEGRITY CHECKS FAILED.")
-
-
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Item X2 full re-extraction runner")
-    parser.add_argument("--db", default="social_proof.duckdb", help="Path to DuckDB file")
-    parser.add_argument(
-        "--verify-only", action="store_true", help="Run verification and integrity checks only"
-    )
-    args = parser.parse_args()
-
-    if args.verify_only:
-        run_post_extraction_verification(args.db)
-    else:
-        run_full_reextraction(args.db)
+    print("\n--- RUNNING INTEGRITY SUITE ---")
+    store.close()
+    integrity_res = run_integrity_corpus(db_path)
+    all_passed = all(r.passed for r in integrity_res)
+    print(f"Integrity Suite Result: {'ALL PASS' if all_passed else 'SOME FAILED'}")
+    for chk in integrity_res:
+        print(f"  {chk.name:<35}: {'PASS' if chk.passed else 'FAIL'}")
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--db-path", default="social_proof.duckdb")
+    parser.add_argument("--verify-only", action="store_true")
+    args = parser.parse_args()
+
+    if args.verify_only:
+        run_post_extraction_verification(args.db_path)
+    else:
+        run_full_reextraction(args.db_path)

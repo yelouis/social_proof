@@ -211,7 +211,11 @@ def test_verify_versions_present_rejects_missing_versions() -> None:
 def test_verify_role_coverage_fails_on_missing_role() -> None:
     _, utterances, _, _, _, roles = load_valid_fixtures()
     # Delete the role corresponding to the first utterance
-    filtered_roles = [r for r in roles if not (r.source_id == utterances[0].source_id and r.subject_id == utterances[0].subject_id)]
+    filtered_roles = [
+        r
+        for r in roles
+        if not (r.source_id == utterances[0].source_id and r.subject_id == utterances[0].subject_id)
+    ]
     res = verify_role_coverage(utterances, filtered_roles)
     assert res.passed is False
     assert res.status == "FAIL"
@@ -242,12 +246,20 @@ def test_integrity_pass_corpus_examined_counts_match_db_assertion_c() -> None:
         ),
         "verify_no_page_context": 0,
         "verify_no_suppressed_scores": count_query("SELECT count(*) FROM assessments"),
-        "verify_quarantine_not_rendered": count_query("SELECT count(*) FROM tensions WHERE status = 'quarantined'"),
-        "verify_attribution_floor": count_query("SELECT count(*) FROM tensions WHERE status = 'published'"),
-        "verify_negation_recheck": count_query("SELECT count(*) FROM tensions WHERE status = 'published'"),
+        "verify_quarantine_not_rendered": count_query(
+            "SELECT count(*) FROM tensions WHERE status = 'quarantined'"
+        ),
+        "verify_attribution_floor": count_query(
+            "SELECT count(*) FROM tensions WHERE status = 'published'"
+        ),
+        "verify_negation_recheck": count_query(
+            "SELECT count(*) FROM tensions WHERE status = 'published'"
+        ),
         "verify_versions_present": count_query("SELECT count(*) FROM assessments"),
         "verify_role_coverage": count_query("SELECT count(*) FROM utterances"),
-        "verify_source_productivity": count_query("SELECT count(*) FROM sources WHERE ingested_at IS NOT NULL"),
+        "verify_source_productivity": count_query(
+            "SELECT count(*) FROM sources WHERE ingested_at IS NOT NULL"
+        ),
         "verify_canonical_ids": (
             count_query("SELECT count(*) FROM propositions")
             + count_query("SELECT count(*) FROM principles")
@@ -258,8 +270,12 @@ def test_integrity_pass_corpus_examined_counts_match_db_assertion_c() -> None:
         ),
         "verify_assessment_subjects_exist": count_query("SELECT count(*) FROM assessments"),
         "verify_entailment_holds": count_query("SELECT count(*) FROM claims"),
-        "verify_claims_per_hour": count_query("SELECT count(*) FROM sources WHERE ingested_at IS NOT NULL"),
-        "verify_frame_identity": count_query("SELECT count(*) FROM tensions WHERE status = 'published'"),
+        "verify_claims_per_hour": count_query(
+            "SELECT count(*) FROM sources WHERE ingested_at IS NOT NULL"
+        ),
+        "verify_frame_identity": count_query(
+            "SELECT count(*) FROM tensions WHERE status = 'published'"
+        ),
     }
 
     try:
@@ -438,7 +454,6 @@ def test_verify_quarantined_propositions_unreachable() -> None:
     assert "references quarantined proposition" in res_fail.message
 
 
-
 def test_integrity_pass_both_directions_independent_verdict(tmp_path: Path) -> None:
     """Both directions: Corrupted corpus fails CORPUS run while FIXTURES still passes.
 
@@ -454,7 +469,9 @@ def test_integrity_pass_both_directions_independent_verdict(tmp_path: Path) -> N
 
     # Insert a claim whose quote does not appear in its utterance
     corrupt_store = Storage(str(corrupt_db))
-    first_utt = corrupt_store.con.execute("SELECT utterance_id, subject_id FROM utterances LIMIT 1").fetchone()
+    first_utt = corrupt_store.con.execute(
+        "SELECT utterance_id, subject_id FROM utterances LIMIT 1"
+    ).fetchone()
     assert first_utt is not None
     bad_claim = Claim(
         claim_id="c_bad_quote",
@@ -488,4 +505,3 @@ def test_integrity_pass_both_directions_independent_verdict(tmp_path: Path) -> N
     )
     assert proc.returncode == 1, f"Expected returncode 1, got {proc.returncode}"
     assert "FAIL: One or more integrity checks failed." in proc.stdout
-

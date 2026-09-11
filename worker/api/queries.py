@@ -139,9 +139,7 @@ def get_all_subjects(con: duckdb.DuckDBPyConnection) -> list[dict[str, Any]]:
     ]
 
 
-def get_episode_detail(
-    con: duckdb.DuckDBPyConnection, source_id: str
-) -> dict[str, Any] | None:
+def get_episode_detail(con: duckdb.DuckDBPyConnection, source_id: str) -> dict[str, Any] | None:
     """Return episode metadata and claims grouped by speaker in timestamp order."""
     src_row = con.execute(
         """
@@ -210,9 +208,7 @@ def get_episode_detail(
         if not cite_tmpl:
             cite_disabled_reason = "No citation URL template available for this source"
         elif start_ms is None or start_ms <= 0:
-            cite_disabled_reason = (
-                "Citation link disabled: offset is 00:00 (recording start)"
-            )
+            cite_disabled_reason = "Citation link disabled: offset is 00:00 (recording start)"
         else:
             cite_url = cite_tmpl.format(seconds=int(start_ms / 1000))
 
@@ -245,9 +241,7 @@ def get_episode_detail(
     }
 
 
-def get_claim_panel(
-    con: duckdb.DuckDBPyConnection, claim_id: str
-) -> dict[str, Any] | None:
+def get_claim_panel(con: duckdb.DuckDBPyConnection, claim_id: str) -> dict[str, Any] | None:
     """Return the complete Social Proof panel payload for Depth 2 view."""
     q_tensions, q_props = get_quarantined_ids(con)
 
@@ -303,9 +297,7 @@ def get_claim_panel(
     if not cite_tmpl:
         cite_disabled_reason = "No citation URL template available for this source"
     elif start_ms is None or start_ms <= 0:
-        cite_disabled_reason = (
-            "Citation link disabled: offset is 00:00 (recording start)"
-        )
+        cite_disabled_reason = "Citation link disabled: offset is 00:00 (recording start)"
     else:
         cite_url = cite_tmpl.format(seconds=int(start_ms / 1000))
 
@@ -343,9 +335,7 @@ def get_claim_panel(
 
     timeline: list[dict[str, Any]] = []
     for t_row in timeline_rows:
-        t_cid, t_stance, t_quote, t_rec_at, t_start_ms, t_src_title, t_cite_tmpl, t_verbatim = (
-            t_row
-        )
+        t_cid, t_stance, t_quote, t_rec_at, t_start_ms, t_src_title, t_cite_tmpl, t_verbatim = t_row
         if t_quote not in t_verbatim:
             raise RuntimeError(f"Timeline claim {t_cid} quote is not in verbatim text!")
 
@@ -387,15 +377,9 @@ def get_claim_panel(
     rubric_version = "v1.0"
     if ass_row:
         rubric_version = ass_row[0]
-        axes_data = (
-            json.loads(ass_row[2])
-            if isinstance(ass_row[2], str)
-            else (ass_row[2] or {})
-        )
+        axes_data = json.loads(ass_row[2]) if isinstance(ass_row[2], str) else (ass_row[2] or {})
         axis_evidence = (
-            json.loads(ass_row[3])
-            if isinstance(ass_row[3], str)
-            else (ass_row[3] or {})
+            json.loads(ass_row[3]) if isinstance(ass_row[3], str) else (ass_row[3] or {})
         )
 
     # Published tensions involving this claim
@@ -444,9 +428,7 @@ def get_claim_panel(
     }
 
 
-def get_person_detail(
-    con: duckdb.DuckDBPyConnection, subject_id: str
-) -> dict[str, Any] | None:
+def get_person_detail(con: duckdb.DuckDBPyConnection, subject_id: str) -> dict[str, Any] | None:
     """Return person metadata and claims across all episodes."""
     subj_row = con.execute(
         "SELECT subject_id, display_name FROM subjects WHERE subject_id = ?",

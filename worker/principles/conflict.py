@@ -95,19 +95,21 @@ class PrincipleConflictDetector:
 
             if has_distinction:
                 # Recorded as distinguished — excluded from hypocrisy scoring
-                distinguished_pairs.append({
-                    "app_a_id": app_a_id,
-                    "app_b_id": app_b_id,
-                    "claim_a_id": claim_a_id,
-                    "claim_b_id": claim_b_id,
-                    "principle_id": principle_id,
-                    "actor_a": actor_a,
-                    "actor_b": actor_b,
-                    "verdict_a": verdict_a,
-                    "verdict_b": verdict_b,
-                    "distinction": distinction_reason,
-                    "status": "distinguished",
-                })
+                distinguished_pairs.append(
+                    {
+                        "app_a_id": app_a_id,
+                        "app_b_id": app_b_id,
+                        "claim_a_id": claim_a_id,
+                        "claim_b_id": claim_b_id,
+                        "principle_id": principle_id,
+                        "actor_a": actor_a,
+                        "actor_b": actor_b,
+                        "verdict_a": verdict_a,
+                        "verdict_b": verdict_b,
+                        "distinction": distinction_reason,
+                        "status": "distinguished",
+                    }
+                )
                 # Optionally write dismissed tension
                 tension_id = compute_tension_id(claim_a_id, claim_b_id, "principle_conflict")
                 dismissed_tension = Tension(

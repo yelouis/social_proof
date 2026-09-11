@@ -15,7 +15,9 @@ from worker.extract.validators import (
 from worker.storage import Storage
 
 
-def make_sample_utterance(text: str = "We must mandate federal licensing for all large frontier models.") -> Utterance:
+def make_sample_utterance(
+    text: str = "We must mandate federal licensing for all large frontier models.",
+) -> Utterance:
     return Utterance(
         utterance_id="utt_val_01",
         source_id="src_val_01",
@@ -202,4 +204,6 @@ def test_falsification_disabled_polarity_validator_leaks_banned_tokens() -> None
     )
     # With active validator:
     res = validate_polarity(banned_claim)
-    assert res.is_valid is False  # Falsification confirmed: validator successfully catches violation!
+    assert (
+        res.is_valid is False
+    )  # Falsification confirmed: validator successfully catches violation!

@@ -63,7 +63,9 @@ def run_full_extraction() -> dict[str, Any]:
     )
 
     # 1. Inspect sources and utterances
-    sources = store.con.execute("SELECT source_id, title, recorded_at FROM sources ORDER BY recorded_at").fetchall()
+    sources = store.con.execute(
+        "SELECT source_id, title, recorded_at FROM sources ORDER BY recorded_at"
+    ).fetchall()
     print(f"Loaded {len(sources)} sources from database:")
     for sid, title, rec_at in sources:
         print(f"  - {sid}: {title} (recorded: {rec_at})")
@@ -100,7 +102,9 @@ def run_full_extraction() -> dict[str, Any]:
     print("\nBeginning extraction pass across candidate utterances...")
     batch_start = time.perf_counter()
 
-    for _idx, (uid, sid, subj_id, attr_conf, _start_ms, _end_ms, _text) in enumerate(all_utterance_rows, 1):
+    for _idx, (uid, sid, subj_id, attr_conf, _start_ms, _end_ms, _text) in enumerate(
+        all_utterance_rows, 1
+    ):
         evaluated_utterances += 1
 
         # We evaluate the gate on all utterances
@@ -146,12 +150,16 @@ def run_full_extraction() -> dict[str, Any]:
         if evaluated_utterances % 200 == 0 or evaluated_utterances == total_utterances:
             elapsed = time.perf_counter() - batch_start
             rate = evaluated_utterances / elapsed
-            print(f"  [{evaluated_utterances}/{total_utterances}] ({evaluated_utterances/total_utterances:.1%}) "
-                  f"Gate passed: {gate_passed} | Extracted: {claims_extracted_new} claims | "
-                  f"Rate: {rate:.1f} utts/sec | Elapsed: {elapsed:.1f}s")
+            print(
+                f"  [{evaluated_utterances}/{total_utterances}] ({evaluated_utterances / total_utterances:.1%}) "
+                f"Gate passed: {gate_passed} | Extracted: {claims_extracted_new} claims | "
+                f"Rate: {rate:.1f} utts/sec | Elapsed: {elapsed:.1f}s"
+            )
 
     wall_clock_extraction = time.perf_counter() - batch_start
-    print(f"\nExtraction completed in {wall_clock_extraction:.2f}s ({wall_clock_extraction/60:.2f}m).")
+    print(
+        f"\nExtraction completed in {wall_clock_extraction:.2f}s ({wall_clock_extraction / 60:.2f}m)."
+    )
 
     # 2. Re-sync claim counts on propositions
     store.con.execute("""
@@ -170,8 +178,12 @@ def run_full_extraction() -> dict[str, Any]:
     total_claims_seen = claims_extracted_new + total_rejections
     print("\n--- VALIDATOR REJECTION COUNTERS ---")
     print(f"Total claims attempted: {total_claims_seen}")
-    print(f"Total passed: {claims_extracted_new} ({claims_extracted_new / max(1, total_claims_seen):.1%})")
-    print(f"Total rejected/quarantined: {total_rejections} ({total_rejections / max(1, total_claims_seen):.1%})")
+    print(
+        f"Total passed: {claims_extracted_new} ({claims_extracted_new / max(1, total_claims_seen):.1%})"
+    )
+    print(
+        f"Total rejected/quarantined: {total_rejections} ({total_rejections / max(1, total_claims_seen):.1%})"
+    )
     for reason, cnt in rejection_counts.items():
         rate = cnt / max(1, total_claims_seen)
         print(f"  - {reason}: {cnt} ({rate:.2%})")
@@ -182,11 +194,14 @@ def run_full_extraction() -> dict[str, Any]:
     for sid, title, _rec_at in sources:
         cnt = claims_by_source[sid]
         # Also count existing claims for this source
-        row = store.con.execute("""
+        row = store.con.execute(
+            """
             SELECT count(*) FROM claims c
             JOIN utterances u ON c.utterance_id = u.utterance_id
             WHERE u.source_id = ?
-        """, [sid]).fetchone()
+        """,
+            [sid],
+        ).fetchone()
         existing_cnt = row[0] if row else 0
         print(f"  Source {sid} ({title[:35]}): new={cnt}, total_in_db={existing_cnt}")
 
@@ -203,15 +218,17 @@ def run_full_extraction() -> dict[str, Any]:
     for sid in all_source_ids:
         for subj_id in all_subject_ids:
             role_id = compute_role_id(sid, subj_id)
-            store.insert_source_role(SourceSubjectRole(
-                role_id=role_id,
-                source_id=sid,
-                subject_id=subj_id,
-                tier="B",
-                venue_type="own_channel",
-                audience_stance="friendly",
-                is_adversarial=False,
-            ))
+            store.insert_source_role(
+                SourceSubjectRole(
+                    role_id=role_id,
+                    source_id=sid,
+                    subject_id=subj_id,
+                    tier="B",
+                    venue_type="own_channel",
+                    audience_stance="friendly",
+                    is_adversarial=False,
+                )
+            )
 
     tension_detector = TensionDetector(store, full_interval_search=True)
     all_detected_tensions = []
@@ -222,7 +239,8 @@ def run_full_extraction() -> dict[str, Any]:
         all_detected_tensions.extend(tensions)
 
         # Inspect candidate pairs considered for this subject
-        candidates = store.con.execute("""
+        candidates = store.con.execute(
+            """
             SELECT
                 a.claim_id AS claim_a_id,
                 b.claim_id AS claim_b_id,
@@ -241,7 +259,9 @@ def run_full_extraction() -> dict[str, Any]:
             JOIN utterances ua ON a.utterance_id = ua.utterance_id
             JOIN utterances ub ON b.utterance_id = ub.utterance_id
             WHERE a.subject_id = ?
-        """, [subj_id]).fetchall()
+        """,
+            [subj_id],
+        ).fetchall()
 
         for c_row in candidates:
             c_a, c_b, p_id, st_a, st_b, rec_a, rec_b, attr_a, attr_b = c_row
@@ -254,17 +274,21 @@ def run_full_extraction() -> dict[str, Any]:
                 reason = "low_attribution_confidence"
             else:
                 reason = "evaluated_by_detector"
-            candidates_considered.append({
-                "subject_id": subj_id,
-                "claim_a": c_a,
-                "claim_b": c_b,
-                "proposition_id": p_id,
-                "reason": reason,
-            })
+            candidates_considered.append(
+                {
+                    "subject_id": subj_id,
+                    "claim_a": c_a,
+                    "claim_b": c_b,
+                    "proposition_id": p_id,
+                    "reason": reason,
+                }
+            )
 
     print(f"P4 Tensions detected: {len(all_detected_tensions)}")
     for t in all_detected_tensions:
-        print(f"  Tension {t.tension_id}: type={t.type}, status={t.status}, sev={t.severity:.2f}, reason={t.quarantine_reason}")
+        print(
+            f"  Tension {t.tension_id}: type={t.type}, status={t.status}, sev={t.severity:.2f}, reason={t.quarantine_reason}"
+        )
 
     print(f"Candidate pairs considered across all subjects: {len(candidates_considered)}")
     rejection_reasons_counter = Counter(c["reason"] for c in candidates_considered)
@@ -290,7 +314,9 @@ def run_full_extraction() -> dict[str, Any]:
     for a in assessments:
         suff_passed = a.sufficiency.get("passed")
         scores = {k: v.get("score") for k, v in a.axes.items()}
-        print(f"  Assessment {a.assessment_id[:8]} ({a.subject_id[:18]}, {a.topic_id}): suff={suff_passed}, scores={scores}")
+        print(
+            f"  Assessment {a.assessment_id[:8]} ({a.subject_id[:18]}, {a.topic_id}): suff={suff_passed}, scores={scores}"
+        )
 
     # 6. Parameter 026 Measurement Summary
     print("\n--- PARAMETER 026 EMPIRICAL MEASUREMENTS ---")
@@ -307,10 +333,14 @@ def run_full_extraction() -> dict[str, Any]:
         mean_tokens = sum(token_counts) / len(token_counts)
         print(f"Quote Token Length (n={len(token_counts)}):")
         print(f"  Min: {min_tokens} | Max: {max_tokens} | Mean: {mean_tokens:.1f}")
-        print(f"  Margin to MIN_QUOTE_TOKENS ({MIN_QUOTE_TOKENS}): {min_tokens - MIN_QUOTE_TOKENS:+d}")
+        print(
+            f"  Margin to MIN_QUOTE_TOKENS ({MIN_QUOTE_TOKENS}): {min_tokens - MIN_QUOTE_TOKENS:+d}"
+        )
 
     total_wall_clock = time.perf_counter() - t_start
-    print(f"\nTotal N0 execution wall-clock time: {total_wall_clock:.2f}s ({total_wall_clock/60:.2f}m)")
+    print(
+        f"\nTotal N0 execution wall-clock time: {total_wall_clock:.2f}s ({total_wall_clock / 60:.2f}m)"
+    )
 
     return {
         "evaluated_utterances": evaluated_utterances,

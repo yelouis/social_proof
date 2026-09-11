@@ -47,7 +47,8 @@ def remerge_d8(db_path: str = "social_proof.duckdb", threshold: float = DEFAULT_
         r[0] for r in store.con.execute("SELECT proposition_id FROM propositions").fetchall()
     )
     existing_embs = set(
-        r[0] for r in store.con.execute("SELECT proposition_id FROM proposition_embeddings").fetchall()
+        r[0]
+        for r in store.con.execute("SELECT proposition_id FROM proposition_embeddings").fetchall()
     )
 
     new_embs_count = 0
@@ -71,9 +72,15 @@ def remerge_d8(db_path: str = "social_proof.duckdb", threshold: float = DEFAULT_
     print(f"4. Populated missing raw propositions; generated {new_embs_count} new embeddings.")
 
     # 5. Snapshot pre-merge tables with the clean unmerged v1.8 distribution
-    store.con.execute("DROP TABLE IF EXISTS claims_pre_merge; CREATE TABLE claims_pre_merge AS SELECT * FROM claims;")
-    store.con.execute("DROP TABLE IF EXISTS propositions_pre_merge; CREATE TABLE propositions_pre_merge AS SELECT * FROM propositions;")
-    store.con.execute("DROP TABLE IF EXISTS proposition_embeddings_pre_merge; CREATE TABLE proposition_embeddings_pre_merge AS SELECT * FROM proposition_embeddings;")
+    store.con.execute(
+        "DROP TABLE IF EXISTS claims_pre_merge; CREATE TABLE claims_pre_merge AS SELECT * FROM claims;"
+    )
+    store.con.execute(
+        "DROP TABLE IF EXISTS propositions_pre_merge; CREATE TABLE propositions_pre_merge AS SELECT * FROM propositions;"
+    )
+    store.con.execute(
+        "DROP TABLE IF EXISTS proposition_embeddings_pre_merge; CREATE TABLE proposition_embeddings_pre_merge AS SELECT * FROM proposition_embeddings;"
+    )
 
     # 6. Run reresolve_propositions at threshold
     t0 = time.perf_counter()
@@ -88,7 +95,9 @@ def remerge_d8(db_path: str = "social_proof.duckdb", threshold: float = DEFAULT_
     print(f"     Surviving propositions: {stats['surviving_propositions']}")
     print(f"     Merged away: {stats['merged_away_propositions']}")
     print(f"     Merge histogram: {stats['merge_histogram']}")
-    print(f"     Multi-source diff date propositions: {stats['multi_source_diff_date_propositions']}")
+    print(
+        f"     Multi-source diff date propositions: {stats['multi_source_diff_date_propositions']}"
+    )
 
     # 7. Clean up claim counts and prune any dead propositions
     store.con.execute("""
@@ -100,7 +109,9 @@ def remerge_d8(db_path: str = "social_proof.duckdb", threshold: float = DEFAULT_
         );
     """)
     store.con.execute("DELETE FROM propositions WHERE claim_count = 0 AND status = 'active';")
-    store.con.execute("DELETE FROM proposition_embeddings WHERE proposition_id NOT IN (SELECT proposition_id FROM propositions);")
+    store.con.execute(
+        "DELETE FROM proposition_embeddings WHERE proposition_id NOT IN (SELECT proposition_id FROM propositions);"
+    )
     store.close()
 
     # 8. Run integrity pass over updated database

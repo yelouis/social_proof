@@ -202,9 +202,7 @@ class TensionDetector:
 
             # 1. Same-source check (Item T1 / §17o)
             if source_a_id == source_b_id:
-                review_id = compute_review_id(
-                    claim_a_id, claim_b_id, "same_source_stance_conflict"
-                )
+                review_id = compute_review_id(claim_a_id, claim_b_id, "same_source_stance_conflict")
                 rev = StanceConflictReview(
                     review_id=review_id,
                     subject_id=subject_id,
@@ -305,9 +303,7 @@ class TensionDetector:
             elif prop_id:
                 prop_obj = self.storage.get_proposition(prop_id)
                 if prop_obj and prop_obj.status == "quarantined":
-                    quarantine_reason = (
-                        prop_obj.quarantine_reason or "fabricated_proposition"
-                    )
+                    quarantine_reason = prop_obj.quarantine_reason or "fabricated_proposition"
                 elif prop_obj:
                     dummy_claim = ExtractedClaim(
                         proposition_text=prop_obj.canonical_text,
@@ -320,8 +316,7 @@ class TensionDetector:
                     outcome_sc = validate_self_contained(dummy_claim)
                     if not outcome_sc.is_valid:
                         quarantine_reason = (
-                            outcome_sc.rejection_reason
-                            or "proposition_not_self_contained"
+                            outcome_sc.rejection_reason or "proposition_not_self_contained"
                         )
 
             # 4. Acknowledgement Window Search (Trap 2)
@@ -356,27 +351,15 @@ class TensionDetector:
                           OR prior_stance_reported IS NOT NULL
                       );
                 """
-                ack_count = self.storage.con.execute(
-                    ack_query, [claim_b_id]
-                ).fetchone()
+                ack_count = self.storage.con.execute(ack_query, [claim_b_id]).fetchone()
                 if ack_count and ack_count[0] > 0:
                     is_acknowledged = True
 
             # 5. Determine Tension Type and Severity
-            tension_type = (
-                "acknowledged_update"
-                if is_acknowledged
-                else "unacknowledged_reversal"
-            )
-            severity = float(
-                max(0.0, min(1.0, (1.0 - hedging_a) * (1.0 - hedging_b)))
-            )
-            status = (
-                "quarantined" if quarantine_reason is not None else "published"
-            )
-            tension_id = compute_tension_id(
-                claim_a_id, claim_b_id, tension_type
-            )
+            tension_type = "acknowledged_update" if is_acknowledged else "unacknowledged_reversal"
+            severity = float(max(0.0, min(1.0, (1.0 - hedging_a) * (1.0 - hedging_b))))
+            status = "quarantined" if quarantine_reason is not None else "published"
+            tension_id = compute_tension_id(claim_a_id, claim_b_id, tension_type)
 
             existing_t = self.storage.get_tension(tension_id)
             if existing_t and existing_t.status == "quarantined":
@@ -534,10 +517,7 @@ class TensionDetector:
                     )
                     continue
                 gap_sec = abs((dt_b - dt_a).total_seconds())
-                if (
-                    self.min_reversal_gap_days > 0
-                    and gap_sec < self.min_reversal_gap_days * 86400
-                ):
+                if self.min_reversal_gap_days > 0 and gap_sec < self.min_reversal_gap_days * 86400:
                     rejections["insufficient_time_gap"] += 1
                     details.append(
                         {
@@ -636,8 +616,7 @@ class TensionDetector:
                     outcome_sc = validate_self_contained(dummy_claim)
                     if not outcome_sc.is_valid:
                         quar_reason = (
-                            outcome_sc.rejection_reason
-                            or "proposition_not_self_contained"
+                            outcome_sc.rejection_reason or "proposition_not_self_contained"
                         )
                         rejections[quar_reason] += 1
                         details.append(
@@ -757,7 +736,9 @@ class TensionDetector:
                     )
                     outcome_sc = validate_self_contained(dummy_claim)
                     if not outcome_sc.is_valid:
-                        quarantine_reason = outcome_sc.rejection_reason or "proposition_not_self_contained"
+                        quarantine_reason = (
+                            outcome_sc.rejection_reason or "proposition_not_self_contained"
+                        )
 
             tension_type = "audience_divergence"
             severity = float(max(0.0, min(1.0, (1.0 - hedging_a) * (1.0 - hedging_b))))

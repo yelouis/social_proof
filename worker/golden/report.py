@@ -106,9 +106,15 @@ def evaluate_behaviour_fixtures(
         res = det.evaluate_behaviour_case(c)
         passed = True
         if c.type in ["P1", "P2", "P3", "P4"]:
-            passed = res.get("detected_finding_type") == c.expected_behaviour and res.get("is_own_assertion") is True
+            passed = (
+                res.get("detected_finding_type") == c.expected_behaviour
+                and res.get("is_own_assertion") is True
+            )
         elif c.type in ["N1", "N2", "N3", "N4", "N10"]:
-            passed = res.get("is_own_assertion") is False and res.get("exclusion_reason") == c.expected_exclusion_reason
+            passed = (
+                res.get("is_own_assertion") is False
+                and res.get("exclusion_reason") == c.expected_exclusion_reason
+            )
         elif c.type == "N13":
             passed = res.get("flagged_as_claim") is False
         else:
@@ -154,7 +160,25 @@ def evaluate_golden_corpus(
     recall_by_class: dict[str, float | None] = {}
     n1_to_n4_breakdown: dict[str, dict[str, Any]] = {}
 
-    all_classes = ["P1", "P2", "P3", "P4", "N1", "N2", "N3", "N4", "N5", "N6", "N7", "N8", "N9", "N10", "N11", "N12", "N13"]
+    all_classes = [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "N1",
+        "N2",
+        "N3",
+        "N4",
+        "N5",
+        "N6",
+        "N7",
+        "N8",
+        "N9",
+        "N10",
+        "N11",
+        "N12",
+        "N13",
+    ]
 
     for cls in all_classes:
         cls_cases = by_class.get(cls, [])
@@ -187,7 +211,9 @@ def evaluate_golden_corpus(
         if len(g_cases) < min_floor:
             n1_to_n4_breakdown[g] = {"count": len(g_cases), "accuracy": None}
         else:
-            correct = sum(1 for c in g_cases if det.evaluate_golden_case(c).get("is_own_assertion") is False)
+            correct = sum(
+                1 for c in g_cases if det.evaluate_golden_case(c).get("is_own_assertion") is False
+            )
             n1_to_n4_breakdown[g] = {"count": len(g_cases), "accuracy": correct / len(g_cases)}
 
     # Aggregate precision only printable if ALL active classes meet floor and total >= min_floor
@@ -280,10 +306,18 @@ def generate_full_report(
     n11_c = metrics.cases_by_class.get("N11", 0)
     n7_c = metrics.cases_by_class.get("N7", 0)
 
-    lines.append(f"  004 T_high / T_low  {'MEASURED' if n9_c >= 5 else 'NOT MEASURABLE'} — need 5 N9 cases, have {n9_c}")
-    lines.append(f"  008 T_dedup         {'MEASURED' if dedup_c >= 5 else 'NOT MEASURABLE'} — need 5 dedup pairs, have {dedup_c}   [provisional 0.96]")
-    lines.append(f"  012 sufficiency     {'MEASURED' if n11_c >= 5 else 'NOT MEASURABLE'} — need 5 N11 cases, have {n11_c}")
-    lines.append(f"  016 H_max           {'MEASURED' if n7_c >= 5 else 'NOT MEASURABLE'} — need 5 hedge-boundary cases, have {n7_c}")
+    lines.append(
+        f"  004 T_high / T_low  {'MEASURED' if n9_c >= 5 else 'NOT MEASURABLE'} — need 5 N9 cases, have {n9_c}"
+    )
+    lines.append(
+        f"  008 T_dedup         {'MEASURED' if dedup_c >= 5 else 'NOT MEASURABLE'} — need 5 dedup pairs, have {dedup_c}   [provisional 0.96]"
+    )
+    lines.append(
+        f"  012 sufficiency     {'MEASURED' if n11_c >= 5 else 'NOT MEASURABLE'} — need 5 N11 cases, have {n11_c}"
+    )
+    lines.append(
+        f"  016 H_max           {'MEASURED' if n7_c >= 5 else 'NOT MEASURABLE'} — need 5 hedge-boundary cases, have {n7_c}"
+    )
     lines.append("=" * 60)
 
     return "\n".join(lines)

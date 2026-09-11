@@ -60,18 +60,20 @@ def main() -> None:
         claims = stats.parsed_result.claims
 
         print(f"\n[{i:2d}/20] ({speaker}) Utterance ID: {uid}")
-        print(f"     Verbatim: \"{text}\"")
+        print(f'     Verbatim: "{text}"')
 
         if not claims:
             print("     Result: [NO CLAIMS EMITTED]")
-            results.append({
-                "index": i,
-                "uid": uid,
-                "speaker": speaker,
-                "text": text,
-                "claims": [],
-                "has_claims": False,
-            })
+            results.append(
+                {
+                    "index": i,
+                    "uid": uid,
+                    "speaker": speaker,
+                    "text": text,
+                    "claims": [],
+                    "has_claims": False,
+                }
+            )
             continue
 
         item_claims = []
@@ -82,20 +84,25 @@ def main() -> None:
             if ec.position_frame:
                 frame = ec.position_frame.strip().rstrip(".")
                 frame_lower = frame.lower()
-                if "the speaker is for " in frame_lower and "the speaker is against " in frame_lower:
+                if (
+                    "the speaker is for " in frame_lower
+                    and "the speaker is against " in frame_lower
+                ):
                     ec.stance = "mixed"
                     if not ec.proposition_text:
                         idx = frame_lower.find("the speaker is for ")
-                        rest = frame[idx + len("the speaker is for "):]
+                        rest = frame[idx + len("the speaker is for ") :]
                         ec.proposition_text = rest.split(" and ")[0].strip().rstrip(".")
                     ec.position_frame = f"the speaker is FOR {ec.proposition_text} in one respect and the speaker is AGAINST {ec.proposition_text} in another"
                 elif frame_lower.startswith("the speaker is for "):
                     ec.stance = "support"
-                    ec.proposition_text = frame[len("the speaker is for "):].strip().rstrip(".")
+                    ec.proposition_text = frame[len("the speaker is for ") :].strip().rstrip(".")
                     ec.position_frame = f"the speaker is FOR {ec.proposition_text}"
                 elif frame_lower.startswith("the speaker is against "):
                     ec.stance = "oppose"
-                    ec.proposition_text = frame[len("the speaker is against "):].strip().rstrip(".")
+                    ec.proposition_text = (
+                        frame[len("the speaker is against ") :].strip().rstrip(".")
+                    )
                     ec.position_frame = f"the speaker is AGAINST {ec.proposition_text}"
             elif ec.proposition_text:
                 prop = ec.proposition_text.strip().rstrip(".")
@@ -123,30 +130,36 @@ def main() -> None:
             )
 
             print(f"     Claim #{c_idx}:")
-            print(f"       Position Frame : \"{ec.position_frame}\"")
-            print(f"       <X> (Prop Text): \"{ec.proposition_text}\"")
+            print(f'       Position Frame : "{ec.position_frame}"')
+            print(f'       <X> (Prop Text): "{ec.proposition_text}"')
             print(f"       Stance         : {ec.stance}")
-            print(f"       Quote Text     : \"{ec.quote_text}\"")
+            print(f'       Quote Text     : "{ec.quote_text}"')
             print(f"       Validator 2b   : {v2b_status}")
-            print(f"       Pipeline Valid : {outcome.is_valid} (status: {outcome.status}, reason: {outcome.rejection_reason})")
+            print(
+                f"       Pipeline Valid : {outcome.is_valid} (status: {outcome.status}, reason: {outcome.rejection_reason})"
+            )
 
-            item_claims.append({
-                "frame": ec.position_frame,
-                "x": ec.proposition_text,
-                "stance": ec.stance,
-                "quote": ec.quote_text,
-                "v2b": v2b_status,
-                "valid": outcome.is_valid,
-            })
+            item_claims.append(
+                {
+                    "frame": ec.position_frame,
+                    "x": ec.proposition_text,
+                    "stance": ec.stance,
+                    "quote": ec.quote_text,
+                    "v2b": v2b_status,
+                    "valid": outcome.is_valid,
+                }
+            )
 
-        results.append({
-            "index": i,
-            "uid": uid,
-            "speaker": speaker,
-            "text": text,
-            "claims": item_claims,
-            "has_claims": True,
-        })
+        results.append(
+            {
+                "index": i,
+                "uid": uid,
+                "speaker": speaker,
+                "text": text,
+                "claims": item_claims,
+                "has_claims": True,
+            }
+        )
 
     store.close()
 
