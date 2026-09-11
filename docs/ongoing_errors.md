@@ -8,13 +8,66 @@
 - **Once selected, a decision moves out of §1.** Its consequence is written into the design doc that owns it, and it becomes one row in §4. The full option text stays in git history — this file is a queue, not an archive.
 - Recommendations are marked. A recommendation is not a decision.
 
-**Status: 26 decisions made, 0 open.** Live work is queued in `agent_execution_guide.md` §6.
+**Status: 25 decisions made, 1 open (035).** Live work is queued in `agent_execution_guide.md` §6.
 
 ---
 
 ## 1. OPEN — awaiting your selection
 
-*Newest first. Nothing is open right now.*
+*Newest first.*
+
+### 035 — Five extraction-format iterations have failed the same way, and Issue 007's revisit trigger is met
+
+**Blocks:** all further extraction work. **Filed:** September 11, 2026, from a live query at `c214e52`.
+
+**Issue 007 chose local Gemma for extraction and said "revisit only with data."** The data now exists.
+
+| pass | what it fixed | what it produced | corpus |
+|---|---|---|---|
+| **W0 / W2** | indexical templates | full clauses | 3,669 |
+| **D1** | full clauses | bare topics | 2,174 |
+| **D6** | bare topics | positions nobody took | 1,027 |
+| **X2** | judgement → format | frames fabricated onto descriptions | 1,517 |
+| **X4** | a decline branch | **`reports_fact` fired 3 times in 401 claims** | **401** |
+
+**X4's decline branch did not take.** The corpus fell 74% (1,517 → 401) and **only 3 of those claims are attributed to `reports_fact`**; the rest have no attribution. The `support` share **rose**, 83.9% → 86.3%, where X4's own validation said it must fall — a binary that resolves to `FOR` when there is no side to find is still resolving to `FOR`. Reading 16 real rows at random (seed `20260911`), **about 5 are positions the speaker actually took**: *"the speaker is FOR federal moratorium on state AI regulation"* comes from *"There was a federal moratorium on state AI regulation"*, and *"FOR commercial platforms with trust and safety teams"* from *"the platforms that are commercializing these tools do have trust and safety teams"*. Both are plain descriptions.
+
+**Zero real contradictions have ever been found. Five of five published tensions were fabrications.** The corpus is now 401 claims with 401 propositions — nothing merges, nothing recurs, nothing can be compared.
+
+**Read this before choosing.** The task is *"did this speaker take a position, and on what"* over disfluent conversational speech. That is a pragmatics problem, not a formatting one, and five formats have not moved it. **But nobody has yet tested whether a stronger model does better on the same utterances** — so the honest next step may be an experiment rather than a migration.
+
+*(Separately: X4's assertion (c) evidence does not resolve against the store — see `agent_execution_guide.md` §11. That is a verification-integrity problem and is being fixed there; it does not change the measurements above, all of which I took from the database myself.)*
+
+---
+
+**Option A — A stronger local model.** Keep everything on the Mac; swap `gemma-3-27b` for a larger or better-reasoning local model.
+
+- **Pro:** preserves the project's founding property — no cloud, no API costs, nothing leaves the machine — which is load-bearing for a tool that reads what named people said.
+- **Pro:** no change to the pipeline; `LocalGemmaRuntime` is already behind an interface (§10, accepted equivalents).
+- **Con:** a 27B model is already near what this Mac runs comfortably; the headroom is small and inference time is already 97 minutes for a full pass.
+- **Con:** it assumes the ceiling is model size, which nobody has measured.
+
+**Option B — Measure the ceiling before deciding: run one frontier API model over a fixed sample.** ← **recommended**
+
+Do not migrate. Take **100 utterances already extracted**, run them through a frontier model with the v1.9 prompt unchanged, and score both outputs with the same hand-read test. **If the frontier model reaches 80% genuine positions where Gemma reaches ~31%, the ceiling is the model. If it reaches 40%, the ceiling is the task**, and Option C is the answer rather than a bigger model.
+
+- **Pro:** it answers the question that four of the last five items have implicitly guessed at, for the cost of 100 API calls.
+- **Pro:** it is reversible and commits to nothing. A sample leaving the machine once, for a measurement, is a different decision from moving ingest to the cloud.
+- **Con:** it does put 100 utterances of real people's speech through a third party — a real change in posture even at this size, and yours to weigh.
+- **Con:** if the answer is "the model is the ceiling", the follow-on decision is the expensive one and you will still have to make it.
+
+**Option C — Narrow the product to what works.** Drop contradiction detection from the MVP. Ship the review site over the timeline, the quotes, the deep links and Specificity — which is a deterministic rate over features and needs no positions at all.
+
+- **Pro:** everything in that list is real today, verbatim-verified and rendering. 1,517 claims before X4's shrink were largely honest *descriptions* — which is a usable product, just not the one described.
+- **Pro:** it stops spending re-extractions on a target that five passes have not moved.
+- **Con:** contradiction detection is the differentiator; without it this is a searchable transcript with citations.
+- **Con:** P4, P5 and P6 stay unvalidated as behaviour permanently, which has been true for the whole build.
+
+**Recommendation: B, and note it is an experiment, not a migration.** The last five items each assumed the format was the problem and each was wrong in a new way; the cheapest thing to buy now is the answer to *which* ceiling you are hitting. **If you would not put any utterance through a third party under any circumstances, that is a legitimate answer and it makes this A-or-C** — say so and I will file it that way, because that constraint is more important than the experiment.
+
+Your selection: _____
+
+---
 
 > **For the agent filing a new one:** insert it at the **top** of this section, not the bottom, and use the next free number. Include what is blocked, what you already tried, 2–3 options with honest pros *and* cons, a marked recommendation, and a final `Your selection: _____` line. Then set `blocked_on` in the guide's queue. Never fill the line in.
 

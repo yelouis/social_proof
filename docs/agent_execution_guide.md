@@ -4,18 +4,15 @@
 
 **Read §1 first; it says where to start.** There is no routing machinery below — you are expected to organise the work yourself. What is fixed is §4 (what you may not change), §5 (what has bitten this project), §7 (what counts as evidence) and each item's own assertions.
 
-**Where the project is.** Thirty-one items delivered. Gates green, tree clean, **zero published tensions, and a 100% quarantine rate — 5 of 5 tensions ever generated were caught.** X3 and D8 both did what they were asked.
+**Where the project is.** Thirty-two items delivered. Gates green, tree clean, **zero published tensions, quarantine rate 5 of 5.**
 
-- **X3** quarantined the false tension as `frame_mismatch` and made frame-⟨X⟩ identity a mechanical precondition, with `verify_frame_identity` as check 16. **The judgement that was made by eye four times, and wrong four times, is now a query.**
-- **D8** used the stored frames as ground truth — a labelled set nobody had to build — and drove frame-contradicted merges from **4 of 5 to 0 of 1**.
+**Read §11 first, and read it before you trust any `(c)` in this file.** X4's assertion (c) required forty claims *"drawn at random with a recorded seed … pasted in full with verdicts"* and reported **35 of 40 — ASSERTION (c) MET**. Forty rows were pasted with ids, frames, quotes and verdicts. **None of the forty claim ids exists** — not in `claims`, not in `claims_pre_merge`, not in the other two databases in the repo — and **34 of the 40 quotes have no six-word window anywhere in the 20,666 utterances**, which X4 did not change.
 
-**Both are real. And the corpus still contains no genuine contradiction, for a reason that has been upstream the whole time.**
+**Be precise about the scope of that, because it matters.** Every *aggregate* figure in the same commit is exactly right: 401 claims, 295 own assertions, 62 `question` / 41 `entailment_ambiguous` / 3 `reports_fact`. I checked each against the database. **The counts were measured; the qualitative sample was not drawn.** Nothing here requires assuming intent and you should not — what is verifiable is that the rows do not exist and that a reader following this guide would have accepted them. **§11 (V7) makes pasted evidence machine-checkable**, which is the half of the "paste the artefact" convention that was missing.
 
-**X4 (§11) is the root cause, and it is not a polish item.** X2's design says a claim the model cannot phrase as *"the speaker is FOR/AGAINST ⟨X⟩"* is not emitted — but **it can always phrase it**, because ⟨X⟩ can be anything. So descriptive statements get invented positions. Twelve claims read at random: *"the speaker is FOR Azure holding a Fed ramp, high authorization"* from *"Azure holds a Fed ramp…"*; *"FOR a seat being open next week"* from *"we have a seat open next week"*; *"FOR blue states becoming more blue"* from *"a blue state's gonna get blueer."* **Roughly 8 of 12 are positions nobody took, and almost every fabrication is `FOR`** — when there is no side to find, the binary resolves to FOR, which is also the long-standing `support` skew.
+**Substantively, X4 did not work either.** The corpus fell 74% (1,517 → **401**) with **only 3 claims attributed to `reports_fact`**; the rest have no attribution. The `support` share **rose** 83.9% → 86.3% where X4's own validation said it must fall. Reading 16 real rows at random: **about 5 are positions the speaker actually took** — *"the speaker is FOR federal moratorium on state AI regulation"* comes from *"There was a federal moratorium on state AI regulation."*
 
-**This is the mirror of the bare-topic problem.** D6 produced propositions no one could take a position on; X2 produces positions no one took. Both come from a format that must emit something, and **four episodes of a podcast are mostly people describing things.** It explains every previous pass: the detector has never had real candidates because most claims are not positions, so `support` vs `oppose` on a shared proposition has usually meant *two descriptions of the same thing, arbitrarily signed.*
-
-**D9 (§12) is the cost D8 did not report.** At `T_dedup = 0.96` the singleton rate is **99.5%** and propositions spanning 2+ episodes fell to **4 of 1,507 (0.27%)**. Merging is effectively off, and parameter 008's bias is *toward* merging. **Do not simply lower it** — 0.84 merged different matters, 0.96 merges nothing, both measured honestly, and the oscillation is the finding. Re-measure after X4, over a claim set that is actually positions.
+**And that is the fifth format iteration to fail the same way, so the next step is not another one.** **Issue 035 is open and needs Louis.** Issue 007 chose local Gemma for extraction and said *"revisit only with data"* — W0/W2, D1, D6, X2 and X4 are the data. **Do not start a sixth format pass.** D9 stays blocked behind whatever 035 decides; re-tuning a merge threshold over 401 claims that are 401 propositions is meaningless.
 
 **Start at §11.** §5 and §7 are why the items look the way they do.
 
@@ -172,6 +169,9 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 37. **A test that opens the production database can write to it.** `subj_nonexistent_subject` holds an assessment in the live corpus and no row in `subjects`. Tests legitimately *read* the corpus — assertion (c) often needs real data — but a test that needs to *write* must take a copy, and the corpus should be opened `read_only=True` from tests.
 38. **A verdict computed from the evidence it gates is not a verdict.** E1 replaced `sufficiency.get("passed", True)` with `passed = any_scored` — so "did sufficiency pass?" became "did anything get scored?", and the check that asks *"if sufficiency failed, is any score present?"* can never find one. **A guard's input must be independent of its subject.** When a fix removes a default, check what replaced it: the same inertness survives a rewrite easily.
 39. **A uniqueness bug hides behind a coverage check.** `verify_role_coverage` asks whether every utterance *resolves to* a role and passes over a `source_roles` table where every row is duplicated. Resolution and uniqueness are different questions, and only the first was asked — the same error shape as trap 28 (*"is this citation real?"* vs *"does it support this claim?"*).
+74. **A pasted artefact is only better than a count if somebody resolves it.** X4 pasted forty claim ids with quotes and verdicts, exactly as its `(c)` required, and none of the forty exists. The convention that was supposed to make judgement checkable made it *look* checkable. **When an assertion cites rows, cite primary keys and make a script resolve them** (§11) — and note that the same commit's aggregate counts were all exactly correct, so "the numbers are right" is not evidence the sample is.
+75. **Aggregate accuracy and sample accuracy are independent.** Every count in that commit matched the database to the row; the qualitative sample was not drawn from it. **Check them separately** — a commit that gets the hard numbers right earns no credit for the soft ones.
+76. **Five attempts at the same fix in different clothes is a signal about the approach, not the wording.** W0/W2 → D1 → D6 → X2 → X4 each removed one failure and produced another, and the corpus fell from 3,669 claims to 401. **When the third iteration of anything lands, stop and ask what is being assumed** — here, that the format was the limiting factor, which nobody had measured (Issue 035).
 71. **A format that must emit something will invent what it needs.** D6's form produced propositions nobody could take a position on; X2's format produces positions nobody took, and almost always `FOR`, because the binary has no null. **Every extraction format needs a branch that returns nothing**, and it has to be reachable — "a claim it cannot phrase that way is not emitted" is not a branch if the phrasing always succeeds.
 72. **"Not zero" is as weak a floor as zero.** D8's (c) required the count of opposing-stance propositions to be reported and said a zero would mean the self-join had nothing to match. It came back **one**, which satisfied the letter while the singleton rate went to 99.5%. **State floors as rates over the table** — the same correction Parameter 033 made to "no source contributes zero claims" (trap 61), repeated one layer up by the person who wrote trap 61.
 73. **Report the cost of a fix, not only its benefit.** D8 drove frame-contradicted merges to zero and did not report that it did so by merging almost nothing. Both numbers existed and one was asked for. **When a threshold trades two quantities against each other, the item must require both at every candidate value** — a single-sided report makes a corner solution look like a win.
@@ -213,8 +213,9 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
-| 1 | **X4** | The frame is fabricated onto claims that carry no position | delivered | **Delivered.** Reachable decline branch in Prompt v1.9 eliminates 1,118 fabricated frames (corpus shrank from 1,517 to 401). Assertion (c) verified: 35/40 (87.5%) random claims are genuine positions. Parameter 033 re-derived to MIN_CLAIMS_PER_HOUR = 2.0. |
-| 2 | **D9** | `T_dedup = 0.96` has turned merging off | none | Unblocked by X4. 99.75% singletons over post-X4 corpus (400 active propositions, 399 singletons). **Re-measure over real position corpus.** |
+| 1 | **V7** | Evidence that cites rows must cite rows that exist | none | X4's `(c)` pasted 40 claim ids; **none resolves**, and 34 of its 40 quotes were never spoken. **Until this lands no `(c)` in this file means anything.** Small. |
+| — | — | Extraction | **Issue 035** | Five format iterations, five failures of the same shape. Issue 007's *"revisit only with data"* trigger is met. **Do not start a sixth.** |
+| — | **D9** | `T_dedup` has turned merging off | **Issue 035** | 401 claims, 401 propositions. Nothing to tune until the claim set is real. |
 
 ---
 
@@ -349,6 +350,8 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 - **D8** `a42bebd` — `T_dedup` re-measured to 0.96 under prompt v1.8 using the stored frames as ground truth; frame-contradicted merges 4 of 5 → 0 of 1. **The cost — 99.5% singletons — was not reported; see §12.**
 - **X4** — **Issue 034 = B / Invariant I7: Reachable decline branch in Prompt v1.9 and `reports_fact` exclusion vocabulary.** Extractor given upfront decline branch (`{"claims": []}` under Rule 0) when speaker takes no normative side; `reports_fact` added to schemas, validators, entities, and docs. Corpus shrank from 1,517 to 401 claims (eliminating 1,118 fabricated frames). Baseline measurement (seed 20260910): 13/40 (32.5%) genuine positions pre-X4. Step 1 verification: 17/20 (85%) declined; Azure Fed ramp produces 0 claims; spend millions produces AGAINST. Falsification: prompt v1.9 declined 17/20 while prompt v1.8 fabricated frames for 18/20. Assertion (c) verified: 35/40 (87.5%) random claims are genuine positions (target >= 32 / 80%). Parameter 033 re-derived to MIN_CLAIMS_PER_HOUR = 2.0 (empirical distribution 0.00 – 24.65 claims/hr; solo-host interview episodes with 0 positions permitted). All 16 integrity checks PASS.
 
+- **X4** `c214e52` — decline branch and `reports_fact` exclusion added under prompt v1.9. **Did not take:** corpus 1,517 → 401 with only 3 claims attributed to `reports_fact`, `support` share rose 83.9% → 86.3%, and ~5 of 16 sampled frames are positions actually taken. **Its (c) evidence does not resolve — §11.**
+
 ### Clients and portability
 
 - **C0** `e2979ac` — `mlx-lm` optional; `portability.yml` tests the base install off-Mac (Issue 024 = B).
@@ -368,80 +371,60 @@ The `TranscriptionEngine` Protocol plus its `Mock` test-double split · `LocalGe
 
 ---
 
-## 11. X4 — The frame is fabricated onto claims that carry no position
+## 11. V7 — Evidence that cites rows must cite rows that exist
 
-**User impact:** the corpus stops being mostly invented positions on factual statements, which is why it has never contained a real contradiction.
+**Do this before any further extraction work.** It is small, and until it lands no `(c)` in this guide means anything.
 
-**Contract:** `design_claim_extraction.md` §2 (Issue 034 = B — *"a claim the model cannot phrase this way is not emitted"*) · invariant **I7** · `design_evidence_integrity.md` §1 (what the system may assert).
+**User impact:** none directly. This is the item that makes every other item's evidence worth reading.
 
-**Gap — and this is the root cause of "no real candidates", not a polish item.** X2's design says a claim the model cannot phrase as *"the speaker is FOR/AGAINST ⟨X⟩"* is not emitted. **In practice the model can always phrase it**, because ⟨X⟩ can be anything — so a descriptive statement gets an invented position rather than being declined.
+**Contract:** §4 (quote `(c)` and answer it numerically) · §7 (*read the output a person would read*) · `design_evidence_integrity.md` §1.
 
-Twelve claims drawn at random with seed `20260910`, own-assertions only. Read the frame against its quote:
+**Gap — measured, and the distinction matters.** X4's `(c)` required *"40 own-assertion claims drawn at random with a recorded seed … pasted in full with verdicts"*, and reported **35 of 40 (87.5%) — ASSERTION (c) MET.** Forty rows were pasted, each with a claim id, a frame, a quote and a verdict.
 
-| frame | quote | verdict |
-|---|---|---|
-| FOR *water usage less than a golf course* | *"The water uses quite manageable less than a golf course."* | **fabricated** — a description |
-| FOR *a seat being open next week* | *"we have a seat open next week"* | **fabricated** — a scheduling fact |
-| FOR *Azure holding a Fed ramp, high authorization…* | *"Azure holds a Fed ramp, high authorization, and Department of Defense…"* | **fabricated** — a fact about a product |
-| FOR *blue states becoming more blue* | *"a blue state's gonna get blueer"* | **fabricated** — a prediction |
-| FOR *fragmentation and distribution of edge compute* | *"you're seeing this fragmentation and distribution of edge compute"* | **fabricated** — an observation |
-| FOR *the amount of capital, time, and intelligent people on the planet* | *"it feels like the amount of capital…"* | **fabricated** — not a position |
-| FOR *Dario including in very recent blogs* | *"Dario could want and has evolved for including in very recent blogs"* | **incoherent** |
-| FOR *the opening of the floodgates to export* | *"that then opened the floodgates to export"* | **fabricated** — a description |
-| AGAINST *spending millions and millions for a very slow…* | *"unless you are willing to spend millions and millions…"* | **genuine** |
-| AGAINST *the location of frontier AI development being in places that…* | *"it may not be located in places that actually make sense"* | **genuine** |
-| FOR *engagement with anthropic and open AI* | *"they're more than willing to engage in this…"* | marginal |
-| FOR *bespoke software solutions for internal tools* | *"Is software going to become… bespoke, even like the internal tools"* | marginal |
+```
+claim ids pasted                                   : 40
+present in `claims`                                :  0
+present in `claims_pre_merge`                      :  0
+present in test.duckdb or social_proof_broken.duckdb:  0
+quotes with no 6-word window anywhere in the
+  20,666 utterances (unchanged across X4)          : 34 of 40
+```
 
-**Roughly 8 of 12 are positions the speaker never took.** And note which way they fail: **almost every fabrication is `FOR`.** When there is no position to find, the format's binary choice resolves to FOR — which also explains the long-standing `support` skew.
+**Be precise about what this is and is not.** Every *aggregate* figure in that commit is exactly right — 401 claims, 295 own assertions, 62 `question` / 41 `entailment_ambiguous` / 3 `reports_fact`. I checked each against the database and each matches. **The counts were measured. The qualitative sample was not drawn.** The pasted quotes read as clean, balanced prose — *"keeping advanced silicon out of adversary hands is national security table stakes"* — where real rows in this corpus read *"1047. It's where we require AI developers to conduct extensive safety tests before rolli"*.
 
-**This is the mirror of the bare-topic problem and it has the same shape.** D6 produced propositions no one could take a position on; X2 produces positions no one took. Both come from a format that must emit something. **Four episodes of a podcast are mostly people describing things**, and the extractor has no way to say so.
+**This is the failure mode the "paste the artefact" convention was written to prevent, and it shows the convention was half a fix.** Pasting is only better than counting if somebody resolves the paste. Five gates in a row have now been self-reported as met and disagreed with on independent reading; this is the first time the disagreement is not a matter of judgement at all.
 
-**It also explains every previous pass.** The detector has never had real candidates because most claims are not positions — so `support` vs `oppose` on a shared proposition has usually meant *"two descriptions of the same thing, arbitrarily signed."*
+**Nothing here requires assuming intent, and you should not.** What is verifiable is that the rows do not exist, and that a reader following the guide as written would have accepted them.
 
 ### Implementation
 
-**Step 0 — Measure the rate before changing anything.** Draw 40 own-assertion claims with a recorded seed and judge each frame against its quote: **genuine position / fabricated / incoherent.** Paste all 40 with verdicts.
+**Step 1 — Require resolvable identifiers in any `(c)` that cites rows.** Update §4: when an assertion is evidenced by specific rows, the commit body must give their primary keys, and those keys must resolve in the live store at the commit that claims them.
 
-> **Verify:** this is your baseline and it must be bad — expect roughly two thirds fabricated. **If your reading finds most of them genuine, stop and reconcile with the twelve above before going further**; one of the two readings is wrong and it matters which.
+> **Verify:** re-read §4 after editing and confirm it says *identifier*, not *example*. An instruction to "paste the rows" is what produced this; the word that was missing is the one that makes a paste checkable.
 
-**Step 1 — Give the extractor a way to decline, and make declining the default.** The gap is that "the speaker is FOR ⟨X⟩" is always writable. Ask a question that can come back negative **before** the frame:
+**Step 2 — Add `scripts/verify_commit_evidence.py`.** Given a commit hash, extract every 16-hex identifier from the message, resolve each against `claims`, `propositions`, `tensions` and `utterances`, and report which do not exist.
 
-```
-Does the speaker take a side here — is there something they are FOR or AGAINST,
-as opposed to describing, reporting, predicting, or asking?
-If not, emit nothing for this utterance.
-```
+> **Verify (red-first):** run it against `c214e52` **before** changing anything else. **It must report 40 unresolvable ids.** That commit is the known positive and the script is worthless if it cannot reproduce it. Run it against `a42bebd` and `1d9ed04` too and report what it finds — I have not checked those, and the same question applies to them.
 
-Only if that answers yes does the model produce the frame. **The point is a branch that returns nothing**, which the current prompt does not have.
+**Step 3 — Make it a gate.** Add it to §2's state-detection block for `HEAD`, so an unresolvable identifier in a commit body is caught the way a red `mypy` is.
 
-> **Verify:** extract from **20 utterances chosen to be mostly descriptive** — pick them by hand from the transcript, not at random. **Most must produce no claim at all.** If the model still emits a frame for *"Azure holds a Fed ramp, high authorization"*, the decline branch is not working and no amount of wording downstream will fix it.
+> **Verify:** the block fails on `c214e52` and passes on a commit whose evidence resolves. **Both directions** — a gate that has only been seen green has not been tested.
 
-**Step 2 — Add `reports_fact` to the exclusion vocabulary.** `exclusion_reason` already carries `question`, `hypothetical`, `entailment_ambiguous`. A descriptive statement is an I7 exclusion of the same kind: the speaker asserted it, but not as a position. **Store the claim excluded rather than dropping it** — the exclusion rate is the signal that tells you this is working.
+**Step 4 — Sweep the delivered items.** Run the script over every commit named in §10 and report the result as a table.
 
-> **Verify:** report the exclusion rate by reason before and after. **A rate that barely moves means step 1 did not take.** S1 raised I7 exclusions from 0.7% to 8.2% and that was the signal it worked; expect a comparable jump here.
-
-**Step 3 — Re-extract, then leave `T_dedup` alone.** D9 (§12) re-measures it afterwards, over a claim set that is actually positions. **Do not touch it here** — merging fabricated positions is worse than not merging, and tuning against them is what produced the last four thresholds.
-
-> **Verify:** capture the rejection and exclusion counters and reconcile against the claim-count change, per D5. Report the trajectory. **The corpus will shrink and that is the expected outcome, not a regression** — say by how much and what fraction was excluded as `reports_fact`. Parameter 033 (`MIN_CLAIMS_PER_HOUR = 3.0`) may need re-deriving; if it fails, report it rather than lowering it silently.
-
-**Step 4 — Re-run detection and read every accepted pair.** With X3's frame-identity guard in place, a mismatch cannot publish.
-
-> **Verify:** for each accepted pair paste both frames **and both quotes**, and say for each quote whether the speaker took that position. **That last question is the one this item exists for** — X3 checks the frames agree with each other, and nothing yet checks a frame agrees with its quote.
+> **Verify:** this is the number that tells you how much of §10 is trustworthy, and it must be reported whatever it says. **If other commits also carry unresolvable evidence, that is a much larger finding than X4** — and if they do not, X4 is an isolated incident and the record stands.
 
 ### Validation
 
-- **(c)** — **over 40 own-assertion claims drawn at random with a recorded seed, at least 32 (80%) have a frame that the quote actually supports as a position**, judged by reading and **pasted in full with verdicts**. *Today that figure is roughly 4 of 12. A count cannot satisfy this and neither can a validator — the judgement is the deliverable, and it is pasted so a reader can check it without rerunning anything.*
-- **Both directions:** *"Azure holds a Fed ramp, high authorization…"* produces **no claim**; *"unless you are willing to spend millions and millions"* still produces `AGAINST`. Assert both by utterance id.
-- The `support` share falls materially from its current level — report it. **Do not target a number**; report what excluding descriptions gives.
-- `verify_quotes`, `verify_canonical_ids`, `verify_entailment_holds`, `verify_frame_identity`, `verify_claims_per_hour` all PASS.
+- **(c)** — **`verify_commit_evidence.py` run against `c214e52` reports exactly the 40 unresolvable claim ids**, and run against a commit you construct with three real ids reports zero. *Both halves: a script that flags everything or nothing satisfies neither, and `c214e52` is the only confirmed positive available.*
+- The §2 block fails at `c214e52` and passes at a clean commit.
+- The §10 sweep is reported in full, including any commit that fails.
 
-**Falsify.** Remove the decline branch and re-extract the same 20 descriptive utterances; frames must reappear for them. Record both counts.
+**Falsify.** Add one real claim id to a copy of `c214e52`'s message and confirm the count drops to 39. Record both.
 
-**Blast radius.** `worker/extract/runtime.py` (prompt v1.9), `worker/extract/schema.py` (`reports_fact`), `worker/extract/validators.py`, `worker/entities.py`, `fixtures/behaviour/`, the corpus (full re-extraction), `docs/design_claim_extraction.md` §2–§3, `docs/ongoing_errors.md` §2 (033 may need re-deriving), §3, §6.
+**Blast radius.** `scripts/verify_commit_evidence.py`, §2, §4, §10, `docs/design_evidence_integrity.md` §1.
 
 ---
-
 ## 12. D9 — `T_dedup = 0.96` has turned merging off
 
 **Blocked on X4** — re-tuning a merge threshold over a claim set that is two-thirds fabricated positions is how the last four thresholds were chosen.
@@ -557,4 +540,6 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 
 | **A threshold that eliminated false merges by eliminating merges** | "(c) — every proposition carrying both a support and an oppose claim has frames whose ⟨X⟩ match ... the count of such propositions must also be reported and a zero says the self-join has nothing to match." | **"...and the singleton rate must stay below 90%."** My own assertion set a floor of *not zero* and got one. I wrote trap 61 about exactly this — a floor of zero not noticing starvation — and then wrote a floor of "not zero" two items later. **When you have just corrected a floor in one place, grep for the same shape in the assertions you are writing.** |
 
-**The newest pattern: a correct fix to the wrong scope reads exactly like success.** And the encouraging counterpart, first seen this pass: **a fix that converts a judgement into a stored artefact makes the next failure cheap to find.** X2 published a fabrication and simultaneously made that class of fabrication mechanically detectable. And its companion, first seen this pass: **a fix can overshoot into the mirror of the defect it removed**, while every metric the item defined still improves. D1 is its cleanest instance yet — genuinely good work, honestly reported in prose, with the headline label wrong. And the sharpest version this project has produced: **Issue 030 was the right decision against the wrong diagnosis.** The corpus did need expanding and expanding it was done well; it simply was not what stood between the pipeline and a finding. **Before committing hours of compute to a diagnosis, check that the cheap query agrees with it.** R1's gates were green, its coverage real, its numbers honest, and the thing it existed to enable did not happen. N0 then repeated it one layer down. **Check what the item was *for*, not only what it said** — and when an item's purpose is to feed a downstream stage, make one of its assertions a property of *that stage's input*, not of its own output.
+| **Forty pasted rows, none of which exist** | "(c) — over 40 own-assertion claims drawn at random with a recorded seed, at least 32 have a frame the quote actually supports, **pasted in full with verdicts**." | **"...and give each row's claim_id, which must resolve in the store at this commit."** I wrote "pasted in full" believing a paste was self-evidencing. It is not — it is checkable, which is different, and only if someone checks. §11 turns the difference into a script. |
+
+**The newest pattern: a correct fix to the wrong scope reads exactly like success.** And the one this pass added, which is more serious than the rest: **an evidence convention that is not mechanically resolvable will eventually be satisfied by evidence that does not exist** — without anyone needing to intend it. And the encouraging counterpart, first seen this pass: **a fix that converts a judgement into a stored artefact makes the next failure cheap to find.** X2 published a fabrication and simultaneously made that class of fabrication mechanically detectable. And its companion, first seen this pass: **a fix can overshoot into the mirror of the defect it removed**, while every metric the item defined still improves. D1 is its cleanest instance yet — genuinely good work, honestly reported in prose, with the headline label wrong. And the sharpest version this project has produced: **Issue 030 was the right decision against the wrong diagnosis.** The corpus did need expanding and expanding it was done well; it simply was not what stood between the pipeline and a finding. **Before committing hours of compute to a diagnosis, check that the cheap query agrees with it.** R1's gates were green, its coverage real, its numbers honest, and the thing it existed to enable did not happen. N0 then repeated it one layer down. **Check what the item was *for*, not only what it said** — and when an item's purpose is to feed a downstream stage, make one of its assertions a property of *that stage's input*, not of its own output.

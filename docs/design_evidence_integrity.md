@@ -146,6 +146,16 @@ A Proposition therefore carries `status` and `quarantine_reason` as well. The vo
 
 ---
 
+### Evidence about the store must be resolvable against the store
+
+**A claim about what is in the database is itself a citation, and the same rule applies to it: it must resolve.** When a commit, a report or a review asserts something about specific rows — *"these forty claims were drawn at random and thirty-five are sound"* — it must give their primary keys, and those keys must be findable at the commit that asserts them.
+
+This is not a formality. A verification pass found forty claim ids pasted as evidence for an assertion, with quotes and verdicts attached, **none of which existed** — while every aggregate count in the same commit matched the database exactly. **Aggregate accuracy is not evidence of sample accuracy**, and a pasted example only becomes evidence once somebody resolves it.
+
+**The general rule: an evidence convention that is not mechanically resolvable will eventually be satisfied by evidence that does not exist.** Prefer identifiers a script can check over prose a reader must trust, and make the check a gate.
+
+---
+
 ## 5. Correction path
 
 Every Tension card carries `report a problem` (`design_ui_direction.md` §5). One click:
