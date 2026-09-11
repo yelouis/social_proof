@@ -2,39 +2,124 @@
 
 **You are an engineering agent with no memory of this project.**
 
-**Read §1 first; it says where to start.** There is no routing machinery below — you are expected to organise the work yourself. What is fixed is §4 (what you may not change), §5 (what has bitten this project), §7 (what counts as evidence) and each item's own assertions.
+**Read §1 first; it says where to start.** There is no routing machinery below — you are expected to organise the work yourself. What is fixed is §5 (what you may not change), §6 (what has bitten this project), §8 (what counts as evidence) and each item's own assertions.
 
-**Where the project is.** Thirty-two items delivered. Gates green, tree clean, **zero published tensions, quarantine rate 5 of 5.**
+**Where the project is.** Thirty-two items delivered. Gates green, tree clean, zero published tensions, **quarantine rate 5 of 5.** **Issue 035 is selected: B.**
 
-**Read §11 first, and read it before you trust any `(c)` in this file.** X4's assertion (c) required forty claims *"drawn at random with a recorded seed … pasted in full with verdicts"* and reported **35 of 40 — ASSERTION (c) MET**. Forty rows were pasted with ids, frames, quotes and verdicts. **None of the forty claim ids exists** — not in `claims`, not in `claims_pre_merge`, not in the other two databases in the repo — and **34 of the 40 quotes have no six-word window anywhere in the 20,666 utterances**, which X4 did not change.
+**§2 is new — read it first.** It is the pipeline end to end, with the place the product actually dies marked on it. Five consecutive extraction items each repaired one stage and broke the next, and the reason is visible in one arrow: a reversal needs **one proposition, two episodes, opposing stances**, and the store holds **401 claims against 401 propositions**. Nothing merges, so nothing recurs, so the self-join has nothing to join — while every stage-local guard passes.
 
-**Be precise about the scope of that, because it matters.** Every *aggregate* figure in the same commit is exactly right: 401 claims, 295 own assertions, 62 `question` / 41 `entailment_ambiguous` / 3 `reports_fact`. I checked each against the database. **The counts were measured; the qualitative sample was not drawn.** Nothing here requires assuming intent and you should not — what is verifiable is that the rows do not exist and that a reader following this guide would have accepted them. **§11 (V7) makes pasted evidence machine-checkable**, which is the half of the "paste the artefact" convention that was missing.
+**Two items, in order.**
 
-**Substantively, X4 did not work either.** The corpus fell 74% (1,517 → **401**) with **only 3 claims attributed to `reports_fact`**; the rest have no attribution. The `support` share **rose** 83.9% → 86.3% where X4's own validation said it must fall. Reading 16 real rows at random: **about 5 are positions the speaker actually took** — *"the speaker is FOR federal moratorium on state AI regulation"* comes from *"There was a federal moratorium on state AI regulation."*
+1. **V7 (§12)** — X4's `(c)` pasted forty claim ids with quotes and verdicts and **none of the forty exists**; 34 of its 40 quotes have no six-word window in the 20,666 utterances. Every *aggregate* figure in that same commit is exactly right, which is the point: **the counts were measured, the sample was not drawn.** Until V7 lands no `(c)` in this file means anything.
+2. **M1 (§13)** — Issue 035 = B. **An experiment, not a migration.** 100 already-extracted utterances through one frontier model, prompt byte-identical, both outputs scored by the same hand-read test. It answers what the last five items each guessed: whether the ceiling is the format or the model. **Both answers are deliverable** — if the frontier model does no better, five format passes were never going to work and Issue 035's Option C becomes the honest answer, which is the more valuable of the two results because it stops work rather than starting it.
 
-**And that is the fifth format iteration to fail the same way, so the next step is not another one.** **Issue 035 is open and needs Louis.** Issue 007 chose local Gemma for extraction and said *"revisit only with data"* — W0/W2, D1, D6, X2 and X4 are the data. **Do not start a sixth format pass.** D9 stays blocked behind whatever 035 decides; re-tuning a merge threshold over 401 claims that are 401 propositions is meaningless.
+**Do not start a sixth format iteration, and do not re-extract anything.** M1 changes nothing under `worker/` and leaves the corpus byte-identical. D9 stays blocked behind its outcome: tuning a merge threshold over 401 claims that are 401 propositions is meaningless.
 
-**Start at §11.** §5 and §7 are why the items look the way they do.
+**Start at §12.** §6 and §8 are why the items look the way they do.
 
 **Items now carry per-step checks, written as `> **Verify:**` after the step they belong to.** Run each before starting the next step. Several are **red-first**: they tell you to run something and *watch it fail* before you fix anything, because a check that has only ever been green on repaired data has not been tested.
 
-**Every number, threshold, field name and literal string in the design docs is deliberate. Implement as written.** Where a doc says a value must be *measured* (`ongoing_errors.md` §2), measure it.
+**Every number, threshold, field name and literal string in the design docs is deliberate. Implement as written.** Where a doc says a value must be *measured* (`ongoing_errors.md` §3), measure it.
 
 ---
 
 ## 1. Where to start
 
-**Run §2's state-detection block and read its output.** Then read §3, §5, §7 and §6 — the baseline, the traps, the validation standard, and the queue. Then read your item's own section **and every contract doc it cites, in full.** The guide points; the design docs specify. Reading only the guide has produced three of this project's published fabrications.
+**Run §3's state-detection block and read its output.** Then read §4, §6, §8 and §7 — the baseline, the traps, the validation standard, and the queue. Then read your item's own section **and every contract doc it cites, in full.** The guide points; the design docs specify. Reading only the guide has produced three of this project's published fabrications.
 
-**§6 holds only outstanding work — take the first row.** If the tree is dirty, deal with that first — someone stopped mid-item and half-finished work is not a base to build on. If a gate §3 records as passing comes back red, that outranks the queue.
+**§7 holds only outstanding work — take the first row.** If the tree is dirty, deal with that first — someone stopped mid-item and half-finished work is not a base to build on. If a gate §4 records as passing comes back red, that outranks the queue.
 
-**You are trusted to organise your own work.** There is no prescribed routine below beyond §8, which is short. Sequence, batching and when to commit are yours to judge. What is *not* yours to judge is in §4, and what counts as evidence is in §5.
+**You are trusted to organise your own work.** There is no prescribed routine below beyond §9, which is short. Sequence, batching and when to commit are yours to judge. What is *not* yours to judge is in §5, and what counts as evidence is in §6.
 
-**The one thing to internalise before anything else:** every item in §6 is here because a previous agent's work passed all its gates and was still wrong. Not careless work — *good* work, measured against assertions that could not tell the difference. §5 exists to make that less likely, and §15 records each specific way it has happened.
+**The one thing to internalise before anything else:** every item in §7 is here because a previous agent's work passed all its gates and was still wrong. Not careless work — *good* work, measured against assertions that could not tell the difference. §6 exists to make that less likely, and §17 records each specific way it has happened.
 
 ---
 
-## 2. State detection
+## 2. The pipeline, end to end
+
+**Read this before your first item.** Five consecutive extraction items each repaired one stage and broke the next, and the reason is visible here: **the guards are local and the failure modes are not.** A claim that survives extraction can still be meaningless to the detector three stages later.
+
+```mermaid
+flowchart TD
+    subgraph IN["① INGEST — worker/ingest.py · design_source_acquisition.md"]
+        A1["discover / fetch<br/>RSS · itunes:duration"] --> A2["normalize"]
+        A2 --> A3["transcribe<br/>faster-whisper, DUAL PASS"]
+        A3 --> A4["diarize<br/>pyannote + ECAPA"]
+        A4 --> A5["attribute to subject<br/>param 004 · precision-biased"]
+        A5 --> A6["segment on sentence<br/>and pause boundaries"]
+        A6 --> A7[["AUDIO DELETED<br/>Issue 003 = C — irreversible"]]
+        A7 --> A8[("utterances · 20,666")]
+    end
+
+    subgraph EX["② EXTRACT — worker/extract/ · design_claim_extraction.md §2"]
+        A8 --> B1["gate<br/>which utterances reach the LLM"]
+        B1 --> B2["LLM: local Gemma 27B, prompt v1.9<br/>emits: the speaker is FOR/AGAINST ⟨X⟩"]
+        B2 --> B3{{"7 validators, in order"}}
+        B3 --> B4[("claims · 401<br/>+ position_frame")]
+    end
+
+    subgraph OR["③ ORGANISE — dedup + topics"]
+        B4 --> C1["canonicalise<br/>proposition_id = sha256 normalised ⟨X⟩"]
+        C1 --> C2["dedup<br/>T_dedup — param 008"]
+        C2 --> C3[("propositions · 401")]
+        C3 --> C4["topic model · HDBSCAN"]
+    end
+
+    subgraph DE["④ DETECT — worker/tension/ · design_rubric_engine.md"]
+        C3 --> D1["self-join: same subject,<br/>same proposition, opposing stance"]
+        D1 --> D2{"frames name<br/>same ⟨X⟩?"}
+        D2 -->|no| DQ["quarantine<br/>frame_mismatch"]
+        D2 -->|yes| D3{"6 preconditions<br/>attribution · negation · condition · span"}
+        D3 -->|fail| DQ2["quarantine + reason"]
+        D3 -->|pass| D4[("published tension")]
+    end
+
+    subgraph SC["⑤ SCORE — worker/rubric/"]
+        D4 --> E1["4 axes: consistency · specificity<br/>update_integrity · even_handedness"]
+        C3 --> E1
+        E1 --> E2{"sufficiency<br/>param 012"}
+        E2 -->|below floor| E3["insufficient_corpus<br/>no score"]
+        E2 -->|clears| E4[("assessment")]
+    end
+
+    subgraph SV["⑥ SERVE — worker/api/ · design_ui_direction.md §6b"]
+        E4 --> F1["local API, read-only DuckDB"]
+        D4 --> F1
+        B4 --> F1
+        F1 --> F2["review site<br/>episodes → claims → Social Proof"]
+        F1 --> F3["extension · /resolve"]
+    end
+
+    B3 -.->|rejected / excluded| BR[["counters: quote_verbatim ·<br/>not_self_contained · not_position_bearing ·<br/>entailment · stance · polarity · speech_acts"]]
+
+    classDef gone fill:#4a1010,stroke:#f88,color:#fff
+    classDef store fill:#12305a,stroke:#7ab,color:#fff
+    classDef bad fill:#5a3a10,stroke:#fb4,color:#fff
+    class A7 gone
+    class A8,B4,C3,D4,E4 store
+    class DQ,DQ2,E3 bad
+```
+
+**The seven validators, in the order they run** (`worker/extract/validators.py`): quote verbatim → self-contained → position-bearing → entailment → stance direction → polarity → speech acts → confidence floor. **Each is local to one claim.** None can see whether the claim will ever share a proposition with another, which is the property the product actually needs.
+
+### Where it is broken today, and why the shape matters
+
+**Stages ① and ⑥ are sound and verified.** 20,666 utterances at 99.7–100% coverage, quotes verbatim, deep links resolving, the review site sweeping 1,288 routes with no quarantined id reachable.
+
+**The product dies between ② and ④, and the arrow that matters is `C3 → D1`.** A reversal requires **one proposition, two episodes, opposing stances**. Today the store holds **401 claims against 401 propositions** — nothing merges, so nothing recurs, so the self-join has nothing to join. Every guard in ② passes and the corpus still cannot express a contradiction.
+
+| what each stage has cost | |
+|---|---|
+| ② emits positions nobody took | ~5 of 16 sampled frames are genuine (Issue 035) |
+| ③ merges nothing at `T_dedup = 0.96` | 401 propositions for 401 claims |
+| ④ has never published a true finding | 5 of 5 tensions ever generated were quarantined |
+| ⑤ scores nothing that depends on ④ | consistency and update_integrity are permanently `None` |
+
+**This is why §7 insists on reading the output a person would see.** A stage-local guard cannot tell you the corpus has stopped being able to contain the thing you are looking for.
+
+---
+
+## 3. State detection
 
 ```bash
 #!/usr/bin/env bash          # run under bash: compgen is a bash builtin
@@ -72,21 +157,21 @@ grep -c "^Your selection: _____" docs/ongoing_errors.md   # anchored — unancho
 
 | Signal | Means |
 |---|---|
-| dirty tree | Someone stopped mid-item → §9 |
+| dirty tree | Someone stopped mid-item → §10 |
 | `STUB_REGISTRY` non-empty | A V-item regressed. Should be `EMPTY`. |
 | `NO DATABASE` | **I0 not delivered.** Nothing real has been processed. |
 | a phase module `MISSING` | Its P-item is outstanding, whatever any commit says. |
 | `golden/cases.json: 0` | Every corpus metric is `NOT MEASURED`. Expected until subjects are ingested. |
 | pytest under ~5s | Impossible now — real models are loaded. Under 5s means something got mocked out. |
-| open selections > 0 | A blocker appeared. It is at the **top** of `ongoing_errors.md` §1 — read it there, then check §6 for which rows it blocks. |
+| open selections > 0 | A blocker appeared. It is at the **top** of `ongoing_errors.md` §1 — read it there, then check §7 for which rows it blocks. |
 
 **The filesystem and `STUB_REGISTRY` are the authority.** Not this guide's prose, not commit messages, not the baseline table.
 
 ---
 
-## 3. Verified baseline
+## 4. Verified baseline
 
-Measured **September 5, 2026** at `0301265`, by querying the live system rather than reading status rows. Re-run via §2 before trusting.
+Measured **September 5, 2026** at `0301265`, by querying the live system rather than reading status rows. Re-run via §3 before trusting.
 
 | Gate | Result | Note |
 |---|---|---|
@@ -97,10 +182,10 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 | `worker.integrity --all` | **PASS — 16 checks, independent populations, active sufficiency verdicts, referential integrity, entailment validation, claims-per-hour rate check, and frame identity** | G1, E1, N0, P0, W1, W0, S1, C1, D1, D4, D5, D7, X2, X3, D8 & X4 delivered: 16 checks (Check #16: `verify_frame_identity`), FIXTURES and CORPUS reported separately with no union; `verify_quarantine_not_rendered` reports quarantine rate 100.0% (5/5) derivable from table alone; 0 published tensions; `verify_frame_identity` passes on both FIXTURES (1 published tension verified) and CORPUS (0 published tensions, zero rows); all 16 checks PASS across 401 claims, 401 propositions (400 active, 1 quarantined), 20,666 utterances, 23 sources. |
 | `worker.golden.report` | **PASS** | Fixtures 20/20 (all 17 classes). Corpus metrics `NOT MEASURED — n=0`. Correct and honest. |
 | **Working tree** | **CLEAN** | All gates pass; D7, G2, X2, X3, D8 & X4 delivered and verified live from DuckDB. |
-| **Review site** | **DELIVERED (U1 DELIVERED)** | Served live from DuckDB on local API (`/`, `/episode/{source_id}`, `/claim/{claim_id}`, `/person/{subject_id}`) with `read_only=True` connection guarantee. Static export and `site/` deleted (Issue 033). Assertion (c) full sweep verified (200 OK, verbatim quotes verified, zero quarantined IDs). Empty sections render with honest reasons (§4). Zero links to offset 00:00. |
+| **Review site** | **DELIVERED (U1 DELIVERED)** | Served live from DuckDB on local API (`/`, `/episode/{source_id}`, `/claim/{claim_id}`, `/person/{subject_id}`) with `read_only=True` connection guarantee. Static export and `site/` deleted (Issue 033). Assertion (c) full sweep verified (200 OK, verbatim quotes verified, zero quarantined IDs). Empty sections render with honest reasons (§5). Zero links to offset 00:00. |
 | **Site read-only guarantee** | **DELIVERED · VERIFIED (A0 DELIVERED)** | Deleted silent fallback to `storage.con.cursor()`. When `Storage` is writable and holding the lock, `create_app` raises `RuntimeError` naming the cause, strictly enforcing the read-only guarantee. Assertion (c) verified in `test_review_site_u1.py`; falsification verified (restoring fallback fails assertion (c)). |
 | **Proposition form** | **STORED POSITION FRAMES (ITEM X2 DELIVERED · VERIFIED)** | Canonical noun-phrase *matter at issue* elicited with position frame under prompt `v1.9` (`gemma-3-27b-it:v1.9:s1`). Stored in `claims.position_frame`. 20/20 random claims pass byte-identical agreement with proposition and stance. Across all active propositions: **0 finite verbs (0.00%)** and **0 polarity violations**. Item X2. |
-| **Merge rate** | **RE-MEASURED UNDER ITEM D8 (0.96), MERGING OFF OVER POST-X4 CORPUS** | At calibrated $T_{\text{dedup}} = 0.96$ left untouched in Item X4 per §11 Step 3, active propositions stand at 400 (399 singletons, 99.75%; 1 multi-claim proposition, 0 support/oppose propositions), ready for D9 (§12) re-calibration. |
+| **Merge rate** | **RE-MEASURED UNDER ITEM D8 (0.96), MERGING OFF OVER POST-X4 CORPUS** | At calibrated $T_{\text{dedup}} = 0.96$ left untouched in Item X4 per §12 Step 3, active propositions stand at 400 (399 singletons, 99.75%; 1 multi-claim proposition, 0 support/oppose propositions), ready for D9 (§14) re-calibration. |
 | **Stance direction** | **SCOPE-AWARE & BIDIRECTIONAL (D4 & X2 DELIVERED · VERIFIED)** | Stance elicited directly from position frame (FOR $\to$ support, AGAINST $\to$ oppose, both $\to$ mixed) and certified via Validator 7 with scope-aware negation detection (`has_syntactic_negation`). Re-measured under Item X2 over drawn sample from live corpus (80 claims, seed 168, 75 support / 5 oppose): 0/75 false flips in support $\to$ oppose (0.00% false-flip rate); True Oppose: 5/5 (100.0%) ended Oppose; zero confusion errors across all 80 cases. All 4 canonical quotes end as `support`. |
 | **`hedge`** | **RETIRED (D3 DELIVERED)** | Enum standardised to `support\|oppose\|mixed` across entities, schema, prompt and scripts; the single legacy claim migrated to `support` with `hedging_level=0.7`. **0 claims carry `hedge`.** Verified. |
 | **Corpus overlap** | **MULTI-EPISODE CLUSTERS (D2 & D8 DELIVERED)** | Multi-episode noun-phrase propositions span up to 5 episodes. Top clusters verified as single matters at issue without topic blurring. |
@@ -113,20 +198,20 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 | **Corpus — claims** | **401 CLAIMS (ITEM X4 DELIVERED · VERIFIED)** | Re-extracted under prompt `v1.9` (`gemma-3-27b-it:v1.9:s1`) with Rule 0 reachable decline branch and `reports_fact` exclusion vocabulary. Eliminates 1,118 fabricated frames (1,517 down to 401). Assertion (c) verified: 35/40 (87.5%) random claims are genuine positions (target >= 32 / 80%). |
 | **Assessments** | **EVALUATED, REFERENTIALLY GUARDED** | 8 rows across 2 topics (`top_ai_reg`, `global`). Sufficiency verdict `passed: True` across all 4 enrolled hosts. |
 | **Published tensions** | **0 PUBLISHED · 5 QUARANTINED (ITEM X3 & D8 DELIVERED)** | Quarantine rate: 100.0% (5/5) reported as first-class metric derivable from table alone. All 16 integrity checks PASS. |
-| **Candidate pairs** | **0 EXAMINED · 0 ACCEPTED · 0 REJECTED (ITEM X4 DELIVERED)** | At $T_{\text{dedup}} = 0.96$ over 401 genuine claims, candidate pairs examined: 0; accepted: 0; unblocking D9 (§12). |
+| **Candidate pairs** | **0 EXAMINED · 0 ACCEPTED · 0 REJECTED (ITEM X4 DELIVERED)** | At $T_{\text{dedup}} = 0.96$ over 401 genuine claims, candidate pairs examined: 0; accepted: 0; unblocking D9 (§14). |
 | **Reversals — same-source disqualification** | **DELIVERED · VERIFIED (T1 DELIVERED)** | Same-source opposing claims automatically disqualified from `unacknowledged_reversal` and routed to `stance_conflict_reviews` with reason `same_source_stance_conflict`. Parameter 032 `MIN_REVERSAL_GAP_DAYS = 0.0` (provisional). Candidate evaluation reports exact denominator. Item T1 delivered. |
 | **`stance`** | **VALIDATED (S1 DELIVERED)** | Validator 7 (`validate_stance_direction`) certifies directional alignment ($P$ vs $\neg P$) with margin $\delta = 0.05$. Inverted oppose claims corrected to support. Genuine oppose claims survive. |
 | **`is_own_assertion`** | **295 OWN ASSERTIONS / 106 EXCLUDED (ITEM X4 DELIVERED)** | Descriptive/factual utterances decline to `{"claims": []}` under Rule 0 or are excluded as `reports_fact` (26.4% exclusion rate). |
 | **Propositions — residual indexicals** | **0% — ZERO UNBOUND PRONOUNS / DEICTICS (W2 DELIVERED)** | Extended validator to enforce the principle of self-containment against the property: rejects sentence-initial pronouns/deictics, unbound third-person pronouns (`they/their`, `he/his/him`), and comparatives without relata (`the same`, `such`, `the other`). Preserves bound pronouns with internal antecedents (`Moderna patented its mRNA technology`). Pre-repair RED state verified (132 failing propositions across 139 claims). Re-extracted under `v1.5` prompt; active store contains exactly 0 unbound propositions (Assertion c). Both target false candidate pairs eliminated. Item W2 delivered. |
 | **Entailment after merge** | **DELIVERED · VERIFIED (W1 DELIVERED)** | Re-pointing strictly validates entailment (`T_ENTAIL_HIGH = 0.70`); refuses merge when quote does not entail target proposition. Check #14 `verify_entailment_holds` asserts entailment holds across all stored claims against current propositions (PASS on 401 claims). Falsification verified. |
 | **Propositions — indexical** | **0% — ZERO INDEXICAL PROPOSITIONS (W0 DELIVERED)** | 192 indexical propositions across 204 claims identified and repaired. Fixed prompt `v1.3` with Rule 3 explicitly prohibiting indexical frames; added `validate_self_contained` validator (`proposition_not_self_contained`); Precondition 6 in tension detector. Cleaned live corpus contains exactly 0 indexical propositions. Item W0 delivered. |
-| **`t_dedup`** | **DELIVERED · VERIFIED (ITEM D8 DELIVERED)** | $T_{\text{dedup}} = 0.96$ left untouched per §11 Step 3, yielding 400 active propositions (399 singletons), unblocking Item D9 (§12) for empirical re-tuning over real positions. |
+| **`t_dedup`** | **DELIVERED · VERIFIED (ITEM D8 DELIVERED)** | $T_{\text{dedup}} = 0.96$ left untouched per §12 Step 3, yielding 400 active propositions (399 singletons), unblocking Item D9 (§14) for empirical re-tuning over real positions. |
 
 ---
 
-## 4. Standing constraints
+## 5. Standing constraints
 
-- **One item = one commit**, the *why* in the body. Too big → split it (§9).
+- **One item = one commit**, the *why* in the body. Too big → split it (§10).
 - **Never fill in a `Your selection: _____` line.**
 - **A stub is not a delivery.** Real dependency runs, or it isn't done.
 - **Dependencies land in `pyproject.toml` in the same commit.**
@@ -135,14 +220,14 @@ Measured **September 5, 2026** at `0301265`, by querying the live system rather 
 - **Quote the item's `(c)` verbatim in the commit body and answer it with a number, next to its target.** Not "assertion (c) verified" — the sentence, then the measurement. **If a test carries `assertion_c` in its name, re-read the item's `(c)` and confirm the test asserts *that sentence*; the name is not the contract** (trap 60). D1 reported its real numbers honestly in prose and separately recorded "(c) verified" about a test asserting the table was non-empty. Both were written in good faith and the label was still wrong.
 - **`(c)` failing is a legitimate outcome. Concealing it is not.** Several items here explicitly license a negative result — *"if it has not moved, stop and report that."* Report it as `(c) NOT MET`, with the numbers. **An item that lands with `(c)` honestly unmet is worth more than one that lands with `(c)` relabelled**, because only the first tells the next agent where the problem actually is.
 - **Every `> **Verify:**` step is answered in the commit body — including the ones you skipped, marked as skipped, with the reason.** A per-step check that is silently passed over is indistinguishable from one that passed. D1's step-5 check would have caught a 41% loss of the corpus; it was not run and not mentioned.
-- **A guard that has never failed has not been tested.** Falsification is mandatory (§7, §8 step 6).
+- **A guard that has never failed has not been tested.** Falsification is mandatory (§8, §9 step 6).
 - **All writes go through the worker** (I8). **No LLM at scoring time.** **Audio deleted after transcription** (Issue 003). **DuckDB is the only store** (Issue 015).
 - **Update every doc your change invalidates, in the same commit.**
-- **This file and `ongoing_errors.md` are queues, not archives.** §6 holds only outstanding work; a delivered item becomes one line in §10 naming its commit, and the spec lives in git. File new issues at the **top** of `ongoing_errors.md` §1. When one is selected, move it out: write the consequence into the design doc that owns it, add a row to §4, delete the option text. Git history keeps the reasoning.
+- **This file and `ongoing_errors.md` are queues, not archives.** §7 holds only outstanding work; a delivered item becomes one line in §11 naming its commit, and the spec lives in git. File new issues at the **top** of `ongoing_errors.md` §1. When one is selected, move it out: write the consequence into the design doc that owns it, add a row to §5, delete the option text. Git history keeps the reasoning.
 
 ---
 
-## 5. Traps
+## 6. Traps
 
 Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writing in their layer. The ones that have already bitten:
 
@@ -156,7 +241,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 24. **A corpus can be skewed without being thin, and nothing catches that.** Invariant I5 gates on *volume* — too few claims, no score. It says nothing about *composition*. A subject whose primary medium is excluded (Musk without X) yields plenty of claims, passes the gate, and renders a confident score over a systematically unrepresentative slice. Issue 023.
 25. **"Ingested" is not the same as "produced anything."** Three sources were stamped `ingested_at` *and* `audio_deleted_at` while yielding zero utterances. Every integrity check verifies that pointers *resolve* — none verified that the pipeline *emitted* anything. **Success must be defined as output, not as absence of exception**, and any irreversible step (audio deletion) must be gated on that definition.
 26. **A detector finding nothing over a corpus that cannot contain the thing is not a true negative — it is an untested detector.** Every claim in the store is from one day with one stance, so a reversal is impossible by construction. P4/P5/P6 report zero and are green; they have never met data capable of contradicting itself.
-27. **Local green does not mean CI green.** §2's block checks the local battery and has no CI signal at all, so CI stayed red across several commits unnoticed (Issue 024).
+27. **Local green does not mean CI green.** §3's block checks the local battery and has no CI signal at all, so CI stayed red across several commits unnoticed (Issue 024).
 28. **A real quote does not make a real claim.** `verify_quotes` proves the words were said. It never proves they said *that*. A published tension was traced to two genuine quotes carrying a wholly invented proposition, and all five extraction validators passed. **"Is this citation real?" and "does this citation support this claim?" are different questions, and only the first was ever asked.**
 29. **A parameter that is declared, defaulted, and never referenced is not a check.** `verify_source_productivity(min_ratio=0.05)` never uses `min_ratio` — and could not, since no media duration is stored. The function reads as a coverage check and is a non-emptiness check. Grep for the parameter in the body, not just the signature.
 30. **Fragmentary input invites fabrication.** Utterances split on length rather than sentence boundaries end mid-word. Asking a model to find a *position* in a fragment that cannot hold one is how invented propositions get attached to real words. Fix the segmentation before blaming the extractor.
@@ -169,14 +254,14 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 37. **A test that opens the production database can write to it.** `subj_nonexistent_subject` holds an assessment in the live corpus and no row in `subjects`. Tests legitimately *read* the corpus — assertion (c) often needs real data — but a test that needs to *write* must take a copy, and the corpus should be opened `read_only=True` from tests.
 38. **A verdict computed from the evidence it gates is not a verdict.** E1 replaced `sufficiency.get("passed", True)` with `passed = any_scored` — so "did sufficiency pass?" became "did anything get scored?", and the check that asks *"if sufficiency failed, is any score present?"* can never find one. **A guard's input must be independent of its subject.** When a fix removes a default, check what replaced it: the same inertness survives a rewrite easily.
 39. **A uniqueness bug hides behind a coverage check.** `verify_role_coverage` asks whether every utterance *resolves to* a role and passes over a `source_roles` table where every row is duplicated. Resolution and uniqueness are different questions, and only the first was asked — the same error shape as trap 28 (*"is this citation real?"* vs *"does it support this claim?"*).
-74. **A pasted artefact is only better than a count if somebody resolves it.** X4 pasted forty claim ids with quotes and verdicts, exactly as its `(c)` required, and none of the forty exists. The convention that was supposed to make judgement checkable made it *look* checkable. **When an assertion cites rows, cite primary keys and make a script resolve them** (§11) — and note that the same commit's aggregate counts were all exactly correct, so "the numbers are right" is not evidence the sample is.
+74. **A pasted artefact is only better than a count if somebody resolves it.** X4 pasted forty claim ids with quotes and verdicts, exactly as its `(c)` required, and none of the forty exists. The convention that was supposed to make judgement checkable made it *look* checkable. **When an assertion cites rows, cite primary keys and make a script resolve them** (§12) — and note that the same commit's aggregate counts were all exactly correct, so "the numbers are right" is not evidence the sample is.
 75. **Aggregate accuracy and sample accuracy are independent.** Every count in that commit matched the database to the row; the qualitative sample was not drawn from it. **Check them separately** — a commit that gets the hard numbers right earns no credit for the soft ones.
 76. **Five attempts at the same fix in different clothes is a signal about the approach, not the wording.** W0/W2 → D1 → D6 → X2 → X4 each removed one failure and produced another, and the corpus fell from 3,669 claims to 401. **When the third iteration of anything lands, stop and ask what is being assumed** — here, that the format was the limiting factor, which nobody had measured (Issue 035).
 71. **A format that must emit something will invent what it needs.** D6's form produced propositions nobody could take a position on; X2's format produces positions nobody took, and almost always `FOR`, because the binary has no null. **Every extraction format needs a branch that returns nothing**, and it has to be reachable — "a claim it cannot phrase that way is not emitted" is not a branch if the phrasing always succeeds.
 72. **"Not zero" is as weak a floor as zero.** D8's (c) required the count of opposing-stance propositions to be reported and said a zero would mean the self-join had nothing to match. It came back **one**, which satisfied the letter while the singleton rate went to 99.5%. **State floors as rates over the table** — the same correction Parameter 033 made to "no source contributes zero claims" (trap 61), repeated one layer up by the person who wrote trap 61.
 73. **Report the cost of a fix, not only its benefit.** D8 drove frame-contradicted merges to zero and did not report that it did so by merging almost nothing. Both numbers existed and one was asked for. **When a threshold trades two quantities against each other, the item must require both at every candidate value** — a single-sided report makes a corner solution look like a win.
 69. **Storing the judgement turns the next check into code.** Three fabrications needed a careful read of quotes to spot. The fourth is a two-line diff of `position_frame`, because X2 persisted the sentence the model wrote instead of only its conclusion. **When a step depends on a judgement, store the artefact the judgement was made from** — the next person gets a query instead of an opinion.
-70. **A parameter measured on a distribution that a later item replaces is stale on the day that item lands.** `T_dedup = 0.84` was measured over v1.7 propositions and merged *"60 to 80 percent growth"* with *"10x growth for ever"* on v1.8 output. X2 correctly refused to retune it in the same commit; **the cost of that discipline is a follow-up item, and it must actually be filed** (§12).
+70. **A parameter measured on a distribution that a later item replaces is stale on the day that item lands.** `T_dedup = 0.84` was measured over v1.7 propositions and merged *"60 to 80 percent growth"* with *"10x growth for ever"* on v1.8 output. X2 correctly refused to retune it in the same commit; **the cost of that discipline is a follow-up item, and it must actually be filed** (§14).
 66. **An item whose effect is to publish must be checked against what it will publish.** D7 was told to make every accepted candidate produce a tension row, and did — publishing six findings that the same guide, two sections below, documented as false. The spec was followed exactly. **Before running an item that writes user-visible output, read what is currently in its input.**
 67. **A judgement gate is scored generously unless the judgement is written down.** Three times now a gate has been recorded as met while an independent reading disagreed — six false pairs "hand-read and verified", a failed (c) recorded verified, and a position test reported at 18/20 that a seeded redraw scores 9–13/20. **Require the artefact, not the count**: paste the two sentences, quote the pair, show the working. A number is not checkable; a sentence is.
 68. **A repair loop that shrinks its subject on every pass is not converging.** Three extraction-form passes took the corpus from 3,669 claims to 1,027 and the candidate set from 0 to 6 to 0. **Track the trajectory across passes, not the delta within one** — each pass improved its own metric and the sequence went nowhere.
@@ -204,22 +289,22 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 41. **A validator's guarantee expires the moment its subject is mutated.** X1 checked quote↔proposition at extraction. A later merge re-pointed the claim to different text and nothing re-checked, so 74 propositions' worth of claims carry conclusions validated against sentences they no longer reference. **An extraction-time validator needs an integrity-pass twin, or it certifies a snapshot and not the store.**
 42. **A proposition with an unbound indexical is a template, and templates are embedding attractors.** *"The speaker believes they created the subject matter"* names nobody. Similarity between two such strings measures the shared frame, not the content, so they merge at any threshold and drag unrelated claims together. **Reject them at extraction; no downstream parameter can compensate.**
 43. **Topic is not proposition.** *"DNA sequencing involves chopping up DNA"* absorbed *"…is relatively inexpensive"*; *"Moderna's mRNA was patented"* absorbed *"…should be directly injected into the body"*. Both merges are about one subject and are not the same assertion. `design_topic_model.md` owns grouping-by-subject; the proposition layer must stay narrower than it.
-44. **A constant documented in one module and re-defaulted in a caller's signature runs at the caller's value.** `dedup.py` and `ongoing_errors.md` §2 both record `T_dedup = 0.86`; `extract.py:26` defaults 0.85 and wins. **Grep for the parameter name across every signature, not just its definition** — the measurement is worthless if it describes a value that never executes.
+44. **A constant documented in one module and re-defaulted in a caller's signature runs at the caller's value.** `dedup.py` and `ongoing_errors.md` §3 both record `T_dedup = 0.86`; `extract.py:26` defaults 0.85 and wins. **Grep for the parameter name across every signature, not just its definition** — the measurement is worthless if it describes a value that never executes.
 40. **Deterministic IDs only hold while every writer uses the helper.** Two `scripts/` build `f"role_{sid}_{subj_id}"` by hand instead of calling `compute_role_id`, so the primary key sees two different ids for one pair and the "every write is an upsert" guarantee silently becomes "every run inserts again." **Grep for hand-built id strings, not just for the helper's callers** — and note that `scripts/` is where this happened, because `scripts/` is outside every gate.
 
 ---
 
-## 6. Queue
+## 7. Queue
 
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
-| 1 | **V7** | Evidence that cites rows must cite rows that exist | none | X4's `(c)` pasted 40 claim ids; **none resolves**, and 34 of its 40 quotes were never spoken. **Until this lands no `(c)` in this file means anything.** Small. |
-| — | — | Extraction | **Issue 035** | Five format iterations, five failures of the same shape. Issue 007's *"revisit only with data"* trigger is met. **Do not start a sixth.** |
-| — | **D9** | `T_dedup` has turned merging off | **Issue 035** | 401 claims, 401 propositions. Nothing to tune until the claim set is real. |
+| 1 | **V7** | Evidence that cites rows must cite rows that exist | none | X4's `(c)` pasted 40 claim ids; **none resolves**. Until this lands no `(c)` in this file means anything. Small. |
+| 2 | **M1** | Measure the ceiling: one frontier model over a fixed sample (**Issue 035 = B**) | V7 | **An experiment, not a migration.** Answers whether five format failures were the format or the model. Its whole product is a pasted comparison, which is why V7 goes first. |
+| — | **D9** | `T_dedup` has turned merging off | **M1** | 401 claims, 401 propositions. Nothing to tune until the claim set is real. |
 
 ---
 
-## 7. Validation standard
+## 8. Validation standard
 
 **This section is the difference between an item that lands and one that comes back.** Every rule below was paid for.
 
@@ -245,7 +330,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 **Prove the threshold is doing the work.** Set it to a value that must fail, watch the assertion go red, restore it. Record both outputs in the commit body. A repair with no falsification is a guess.
 
-**Re-run every gate yourself before trusting §3.** This file has recorded a gate result that did not match reality more than once.
+**Re-run every gate yourself before trusting §4.** This file has recorded a gate result that did not match reality more than once.
 
 **Report zero with its denominator.** "No tensions found" over an empty candidate set and "no tensions found" over 400 examined pairs look identical in a status table and mean opposite things.
 
@@ -255,7 +340,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 8. The loop
+## 9. The loop
 
 Not a routine to execute mechanically. It is the shortest description of what a finished item looks like here; adapt the order to the work.
 
@@ -285,23 +370,23 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 
 ---
 
-## 9. When the situation is unusual
+## 10. When the situation is unusual
 
-**A gate §3 records as passing comes back red.** It outranks the queue. Find the commit that turned it, then decide: the code is wrong (fix the code), the test is wrong (fix the test **and say so explicitly in the commit body** — this is the only circumstance in which a test may change to reach green), or §3 is stale (correct §3 and note the drift). **Never weaken an assertion, delete a test, or narrow a scope to reach green.** If that looks like the answer, it is a question for Louis.
+**A gate §4 records as passing comes back red.** It outranks the queue. Find the commit that turned it, then decide: the code is wrong (fix the code), the test is wrong (fix the test **and say so explicitly in the commit body** — this is the only circumstance in which a test may change to reach green), or §4 is stale (correct §4 and note the drift). **Never weaken an assertion, delete a test, or narrow a scope to reach green.** If that looks like the answer, it is a question for Louis.
 
 **The tree is dirty.** Someone stopped mid-item. Read the diff, decide whether it is worth finishing or reverting, and say which you did. Do not build on top of it.
 
 **The item is too big for one commit.** Split it into sub-items that each land with a coherent message and their own validation, and tick them in the same commit. Say in the commit body which sub-item this is and what remains.
 
-**The item needs a decision that is Louis's.** File it at the **top** of `ongoing_errors.md` §1 with what is blocked, what you already tried, 2–3 options with honest pros *and* cons, a marked recommendation, and a final `Your selection: _____` line. **Never fill that line in.** Then set `Blocked` in §6 and stop; do not guess and proceed.
+**The item needs a decision that is Louis's.** File it at the **top** of `ongoing_errors.md` §1 with what is blocked, what you already tried, 2–3 options with honest pros *and* cons, a marked recommendation, and a final `Your selection: _____` line. **Never fill that line in.** Then set `Blocked` in §7 and stop; do not guess and proceed.
 
 **The item's spec looks wrong.** Say so, in the commit body or as a new issue, and record what you did instead. **Several items here were implemented exactly as written and were still wrong, because the spec was.** Being right about that is worth more than being compliant.
 
 ---
 
-## 10. Already delivered — do NOT rework
+## 11. Already delivered — do NOT rework
 
-**Each line names the commit that carries the full specification, the implementation and the falsification.** `git show <hash>` when you need the reasoning; this file keeps only what is still to be done. That is the same rule §4 states for `ongoing_errors.md`, applied here — it was not, which is why this guide reached 2,283 lines.
+**Each line names the commit that carries the full specification, the implementation and the falsification.** `git show <hash>` when you need the reasoning; this file keeps only what is still to be done. That is the same rule §5 states for `ongoing_errors.md`, applied here — it was not, which is why this guide reached 2,283 lines.
 
 **Verified by re-running gates bare, querying the live database, and reading output by hand — not by trusting the commit messages.**
 
@@ -314,7 +399,7 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 - **S1** `b902797` — validator 7 (stance direction) and I7 speech-act sensitivity; exclusion rate 0.7% → 8.2%.
 - **D3** `6563d1a` — validator 7 made bidirectional; `hedge` retired to `hedging_level`, enum and data both.
 - **D4** `783ab28` — **scope-aware negation. Drawn evaluation set of 80, recorded seed, labels assigned before the run, red-first baseline: false-flip rate 100% → 0% on negation claims.** The strongest single piece of work in this log.
-- **D1** `95c586d` — canonical noun-phrase form and extended polarity validation. Polarity violations 393 → **0**; full clauses 75.2% → 21.3%. **(c) NOT MET** — singletons rose to 97.7% against a target below 95%. Overshot into topics; see §12.
+- **D1** `95c586d` — canonical noun-phrase form and extended polarity validation. Polarity violations 393 → **0**; full clauses 75.2% → 21.3%. **(c) NOT MET** — singletons rose to 97.7% against a target below 95%. Overshot into topics; see §14.
 - **P0** `0cb8481` · **D2** `da82f7e` — proposition dedup wired, then `T_dedup` re-measured to **0.84** over the current distribution with deciles, n and date.
 - **D6** `3100a48` — mechanical position floor (`validate_position_bearing`) + prompt v1.7; 495 of 2,161 old propositions rejected (22.9%), ≤5-word share 25.8% → 17.4%, claim loss 2,261 → 1,027 reported and reconciled, Parameter 033 still met on all 23 sources. **(c) NOT MET on an independent draw** — reported 18/20, a fresh seeded sample scores **9/20 strict / 13/20 charitable** against a 16/20 gate. Issue 034.
 - **X2** `2c3c5a4` — elicit position with proposition (Issue 034 = B): prompt `v1.8` writes the position frame (`the speaker is FOR/AGAINST ⟨X⟩`), stored directly in `claims.position_frame`; 1,517 claims across 1,464 active propositions; (c) verified on 20/20 random claims drawn with seed 2026; Validator 2b alarm drop 22.2% → 11.1%; dual falsification verified (identity rule + prompt v1.7 reversion).
@@ -342,15 +427,15 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 - **D7** `1866d7a` — every accepted candidate now writes a tension row; quarantine rate reported as a first-class metric derivable from the table. **It also published 6 tensions, all of them fabrications**, because the six accepted candidates were already known to be false when it ran. D6's re-extraction later removed them; the store now holds 3 rows, 0 published.
 
 - **G2** `6111c21` — `mypy scripts/` red gate repaired; `reextract_d6.py`'s four dead integrity calls given real arguments and shown to execute.
-- **X2** `2c3c5a4` — **Issue 034 = B: the position elicited with the proposition.** `position_frame` stored on all 1,517 claims (0 unparseable, 0 stance disagreements, 96.3% ⟨X⟩ identity), prompt v1.8, validator 2b fire rate 22.9% → 11.1%. **The corpus grew for the first time in the sequence, 1,027 → 1,517.** It also published one false tension whose frames disagree — §11.
+- **X2** `2c3c5a4` — **Issue 034 = B: the position elicited with the proposition.** `position_frame` stored on all 1,517 claims (0 unparseable, 0 stance disagreements, 96.3% ⟨X⟩ identity), prompt v1.8, validator 2b fire rate 22.9% → 11.1%. **The corpus grew for the first time in the sequence, 1,027 → 1,517.** It also published one false tension whose frames disagree — §12.
 - **X3** `1d9ed04` — **Frame-⟨X⟩ identity mechanical precondition in `TensionDetector` and Check #16 `verify_frame_identity` in integrity pass.** Pre-repair false tension `12a7503f8c27b24d` quarantined with `quarantine_reason='frame_mismatch'`; affected David Sacks assessment recomputed; quarantine rate 100.0% (5/5 ever generated); dual falsification verified (synthetic identical ⟨X⟩ frames publish; real growth pair quarantined; disabling guard breaks Assertion (c)).
 - **D8** — **Re-measure `T_dedup = 0.96` against the v1.8 distribution and stored frames ground truth.** Parameter 008 calibrated at 0.96 (superseding 0.84) using stored position frames as ground truth, unblocked by X3. 1-NN similarity deciles reported (median 0.7522, D90 0.8425, max 0.9843); all 4 named defect pairs separated (< 0.96); 1/1 support/oppose propositions cleanly match frames (100%); DuckDB store re-resolved to 1,507 active propositions (1,499 singletons, 99.47%); dual falsification verified (0.999 collapses to 1,508 singletons, 0.60 spikes frame contradictions to 451). All 16 integrity checks PASS.
 
 - **X3** `1d9ed04` — frame-⟨X⟩ identity as a mechanical precondition in the detector plus `verify_frame_identity` (check 16); the false tension `12a7503f8c27b24d` quarantined as `frame_mismatch`. **Quarantine rate 5 of 5.**
-- **D8** `a42bebd` — `T_dedup` re-measured to 0.96 under prompt v1.8 using the stored frames as ground truth; frame-contradicted merges 4 of 5 → 0 of 1. **The cost — 99.5% singletons — was not reported; see §12.**
+- **D8** `a42bebd` — `T_dedup` re-measured to 0.96 under prompt v1.8 using the stored frames as ground truth; frame-contradicted merges 4 of 5 → 0 of 1. **The cost — 99.5% singletons — was not reported; see §14.**
 - **X4** — **Issue 034 = B / Invariant I7: Reachable decline branch in Prompt v1.9 and `reports_fact` exclusion vocabulary.** Extractor given upfront decline branch (`{"claims": []}` under Rule 0) when speaker takes no normative side; `reports_fact` added to schemas, validators, entities, and docs. Corpus shrank from 1,517 to 401 claims (eliminating 1,118 fabricated frames). Baseline measurement (seed 20260910): 13/40 (32.5%) genuine positions pre-X4. Step 1 verification: 17/20 (85%) declined; Azure Fed ramp produces 0 claims; spend millions produces AGAINST. Falsification: prompt v1.9 declined 17/20 while prompt v1.8 fabricated frames for 18/20. Assertion (c) verified: 35/40 (87.5%) random claims are genuine positions (target >= 32 / 80%). Parameter 033 re-derived to MIN_CLAIMS_PER_HOUR = 2.0 (empirical distribution 0.00 – 24.65 claims/hr; solo-host interview episodes with 0 positions permitted). All 16 integrity checks PASS.
 
-- **X4** `c214e52` — decline branch and `reports_fact` exclusion added under prompt v1.9. **Did not take:** corpus 1,517 → 401 with only 3 claims attributed to `reports_fact`, `support` share rose 83.9% → 86.3%, and ~5 of 16 sampled frames are positions actually taken. **Its (c) evidence does not resolve — §11.**
+- **X4** `c214e52` — decline branch and `reports_fact` exclusion added under prompt v1.9. **Did not take:** corpus 1,517 → 401 with only 3 claims attributed to `reports_fact`, `support` share rose 83.9% → 86.3%, and ~5 of 16 sampled frames are positions actually taken. **Its (c) evidence does not resolve — §12.**
 
 ### Clients and portability
 
@@ -363,7 +448,7 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 
 **P4** `365896e` tension detection · **P3** `4c24312` topic model · **P5** `b3db6ce` principle extraction · **P6** `0a6b4b6` rubric engine.
 
-They pass their fixture tests and have **never produced a true finding over the live corpus.** Every zero they have reported has had a cause upstream of them — an empty corpus, then an unrepresentable one, then propositions that could not carry a position. **Do not read their green status as evidence the detectors work.** §11 is what makes the question answerable.
+They pass their fixture tests and have **never produced a true finding over the live corpus.** Every zero they have reported has had a cause upstream of them — an empty corpus, then an unrepresentable one, then propositions that could not carry a position. **Do not read their green status as evidence the detectors work.** §12 is what makes the question answerable.
 
 ### Accepted equivalents — do NOT "fix" these back
 
@@ -371,13 +456,13 @@ The `TranscriptionEngine` Protocol plus its `Mock` test-double split · `LocalGe
 
 ---
 
-## 11. V7 — Evidence that cites rows must cite rows that exist
+## 12. V7 — Evidence that cites rows must cite rows that exist
 
 **Do this before any further extraction work.** It is small, and until it lands no `(c)` in this guide means anything.
 
 **User impact:** none directly. This is the item that makes every other item's evidence worth reading.
 
-**Contract:** §4 (quote `(c)` and answer it numerically) · §7 (*read the output a person would read*) · `design_evidence_integrity.md` §1.
+**Contract:** §5 (quote `(c)` and answer it numerically) · §8 (*read the output a person would read*) · `design_evidence_integrity.md` §1.
 
 **Gap — measured, and the distinction matters.** X4's `(c)` required *"40 own-assertion claims drawn at random with a recorded seed … pasted in full with verdicts"*, and reported **35 of 40 (87.5%) — ASSERTION (c) MET.** Forty rows were pasted, each with a claim id, a frame, a quote and a verdict.
 
@@ -398,38 +483,99 @@ quotes with no 6-word window anywhere in the
 
 ### Implementation
 
-**Step 1 — Require resolvable identifiers in any `(c)` that cites rows.** Update §4: when an assertion is evidenced by specific rows, the commit body must give their primary keys, and those keys must resolve in the live store at the commit that claims them.
+**Step 1 — Require resolvable identifiers in any `(c)` that cites rows.** Update §5: when an assertion is evidenced by specific rows, the commit body must give their primary keys, and those keys must resolve in the live store at the commit that claims them.
 
-> **Verify:** re-read §4 after editing and confirm it says *identifier*, not *example*. An instruction to "paste the rows" is what produced this; the word that was missing is the one that makes a paste checkable.
+> **Verify:** re-read §5 after editing and confirm it says *identifier*, not *example*. An instruction to "paste the rows" is what produced this; the word that was missing is the one that makes a paste checkable.
 
 **Step 2 — Add `scripts/verify_commit_evidence.py`.** Given a commit hash, extract every 16-hex identifier from the message, resolve each against `claims`, `propositions`, `tensions` and `utterances`, and report which do not exist.
 
 > **Verify (red-first):** run it against `c214e52` **before** changing anything else. **It must report 40 unresolvable ids.** That commit is the known positive and the script is worthless if it cannot reproduce it. Run it against `a42bebd` and `1d9ed04` too and report what it finds — I have not checked those, and the same question applies to them.
 
-**Step 3 — Make it a gate.** Add it to §2's state-detection block for `HEAD`, so an unresolvable identifier in a commit body is caught the way a red `mypy` is.
+**Step 3 — Make it a gate.** Add it to §3's state-detection block for `HEAD`, so an unresolvable identifier in a commit body is caught the way a red `mypy` is.
 
 > **Verify:** the block fails on `c214e52` and passes on a commit whose evidence resolves. **Both directions** — a gate that has only been seen green has not been tested.
 
-**Step 4 — Sweep the delivered items.** Run the script over every commit named in §10 and report the result as a table.
+**Step 4 — Sweep the delivered items.** Run the script over every commit named in §11 and report the result as a table.
 
-> **Verify:** this is the number that tells you how much of §10 is trustworthy, and it must be reported whatever it says. **If other commits also carry unresolvable evidence, that is a much larger finding than X4** — and if they do not, X4 is an isolated incident and the record stands.
+> **Verify:** this is the number that tells you how much of §11 is trustworthy, and it must be reported whatever it says. **If other commits also carry unresolvable evidence, that is a much larger finding than X4** — and if they do not, X4 is an isolated incident and the record stands.
 
 ### Validation
 
 - **(c)** — **`verify_commit_evidence.py` run against `c214e52` reports exactly the 40 unresolvable claim ids**, and run against a commit you construct with three real ids reports zero. *Both halves: a script that flags everything or nothing satisfies neither, and `c214e52` is the only confirmed positive available.*
-- The §2 block fails at `c214e52` and passes at a clean commit.
-- The §10 sweep is reported in full, including any commit that fails.
+- The §3 block fails at `c214e52` and passes at a clean commit.
+- The §11 sweep is reported in full, including any commit that fails.
 
 **Falsify.** Add one real claim id to a copy of `c214e52`'s message and confirm the count drops to 39. Record both.
 
-**Blast radius.** `scripts/verify_commit_evidence.py`, §2, §4, §10, `docs/design_evidence_integrity.md` §1.
+**Blast radius.** `scripts/verify_commit_evidence.py`, §3, §5, §11, `docs/design_evidence_integrity.md` §1.
 
 ---
-## 12. D9 — `T_dedup = 0.96` has turned merging off
+## 13. M1 — Measure the ceiling: one frontier model over a fixed sample · *Issue 035 = B*
+
+**Blocked on V7** — V7 makes pasted evidence resolvable, and this item's entire output is a pasted comparison. Running it first would produce exactly the artefact V7 exists to make checkable.
+
+**This is an experiment, not a migration.** Nothing in the pipeline changes. No prompt is rewritten, no corpus is re-extracted, no model is swapped. **The deliverable is a number and the decision it unblocks.**
+
+**User impact:** none yet. It answers the question the last five items each guessed at.
+
+**Contract:** `ongoing_errors.md` Issue 035 = B · Issue 007 (*local Gemma for extraction; revisit only with data*) · `design_claim_extraction.md` §2 · §7.
+
+### The question, stated so it can come back either way
+
+Five format iterations — W0/W2, D1, D6, X2, X4 — each removed one failure and produced another, while the corpus fell from 3,669 claims to 401. Each assumed **the format was the limiting factor**. Nobody measured whether **the model** was.
+
+> On the same utterances, with the same prompt, does a frontier model produce materially more genuine positions than `gemma-3-27b` does?
+
+**Both answers are deliverable and neither is a failure:**
+
+- **Frontier ≈ 80%, Gemma ≈ 31%** → the ceiling is the model. The follow-on decision is Louis's and is expensive; file it, do not start it.
+- **Frontier ≈ 40%** → the ceiling is the **task**, five format passes were never going to fix it, and Issue 035's Option C — narrow the product to the timeline, quotes, deep links and Specificity — becomes the honest answer. **Say so plainly; that is the more valuable result of the two.**
+
+### Scope limits — read before running anything
+
+- **100 utterances leave the machine, once, for a measurement.** That is the whole of what Issue 035 = B authorises. **Do not send more, do not send a second batch, and do not wire an API into the pipeline.** If you conclude the experiment needs to be bigger, stop and say so rather than growing it.
+- **Do not modify `worker/`.** This lives entirely in `scripts/` and writes nothing to `social_proof.duckdb`.
+- Use **one** frontier model. Comparing several turns a measurement into a procurement exercise and answers a question nobody asked.
+
+### Implementation
+
+**Step 1 — Draw the sample and freeze it.** 100 utterances that **already produced a claim** under v1.9, drawn with a recorded seed, committed as `fixtures/model_ceiling/sample_100.json` with each `utterance_id`, its `text_verbatim`, and the existing claim's `claim_id`, `position_frame` and `stance`.
+
+> **Verify:** every `utterance_id` and `claim_id` in the file resolves in the live store — run V7's script against it. **This sample is the entire experiment; if it does not resolve, nothing downstream means anything.** Record the seed and the query in the file itself.
+
+**Step 2 — Hand-label the Gemma baseline first, before any API call.** For each of the 100, read the frame against its quote and mark **genuine position / fabricated / incoherent**. Commit as labels alongside the sample.
+
+> **Verify:** label before you see the frontier output, and say in the commit body that you did. **Labelling after seeing both invites scoring the one you expect to win.** Expect roughly 30% genuine — if your baseline comes out near 80%, reconcile with the sixteen rows quoted in Issue 035 before continuing, because one of the two readings is wrong and which one matters more than this experiment.
+
+**Step 3 — Run the same 100 through one frontier model with the v1.9 prompt byte-identical.** Same system prompt, same schema, same instructions. **Change nothing** — a prompt tweak makes the comparison meaningless and reintroduces the variable this item exists to hold still.
+
+> **Verify:** diff the prompt you sent against `STABLE_SYSTEM_PROMPT` and paste the diff, which must be empty. Record the model id and date — `claude-opus-5`, or whichever you use — because the answer is only meaningful with the model named.
+
+**Step 4 — Label the frontier output by the same test, and paste both sets in full.** Every one of the 100, both outputs, both verdicts, with `utterance_id`s.
+
+> **Verify:** V7's script resolves every identifier in the commit body. **This is the item where that matters most** — its entire product is a pasted comparison, and the last such comparison did not resolve.
+
+**Step 5 — Report the two rates and say which ceiling you hit.** Also report the disagreements: utterances where Gemma was genuine and frontier was not, and the reverse. **Those are more informative than the totals** — they say whether the models fail on the same material or on different material.
+
+> **Verify:** state the conclusion as a sentence, not a table: *"the ceiling is the model"* or *"the ceiling is the task"*, with the two rates beside it. If the gap is small and ambiguous — say 31% vs 45% — **say it is ambiguous** rather than resolving it in the direction that implies more work.
+
+### Validation
+
+- **(c)** — **both rates are reported over the same 100 utterances, every identifier resolves under V7's script, and the Gemma labels were committed before the frontier run.** *Three conditions because each removes a different way to get a comfortable answer: a different sample, unresolvable evidence, or labels fitted to the result. The commit history proves the third — the baseline labels must appear in an earlier commit than the frontier output.*
+- The prompt diff is empty and pasted.
+- The disagreement sets are listed by `utterance_id`.
+- **Nothing under `worker/` changed and `social_proof.duckdb` is byte-identical before and after.** Assert the file hash.
+
+**Falsify.** Score 20 of the 100 blind — frames shuffled, source hidden — and check your verdicts match what you recorded when you knew which model produced them. **Report the agreement rate.** If it is poor, the measurement is your reading rather than the models, and that is the finding.
+
+**Blast radius.** `scripts/` (the runner), `fixtures/model_ceiling/`, `docs/ongoing_errors.md` §4 (the outcome becomes a decision row), §3, §6. **No changes under `worker/`, none to the corpus.**
+
+---
+## 14. D9 — `T_dedup = 0.96` has turned merging off
 
 **Blocked on X4** — re-tuning a merge threshold over a claim set that is two-thirds fabricated positions is how the last four thresholds were chosen.
 
-**Contract:** `ongoing_errors.md` §2 parameter 008 — *bias toward merging, because over-splitting hides every contradiction silently.*
+**Contract:** `ongoing_errors.md` §3 parameter 008 — *bias toward merging, because over-splitting hides every contradiction silently.*
 
 **Gap.** D8 did what it was asked and did it honestly: it used the stored frames as ground truth, reported its deciles, and drove frame-contradicted merges from 4 of 5 to **0 of 1**. **The cost was not reported, and it is large:**
 
@@ -453,7 +599,7 @@ quotes with no 6-word window anywhere in the
 2. Use the stored frames as ground truth, as D8 did — that method was right and should be kept.
    > **Verify:** at each candidate threshold report **both** numbers: frame-contradicted merges **and** the singleton rate. D8 reported the first and not the second, which is how 0.96 looked like a clean win.
 3. Choose, record with n, date and prompt version, and state what it supersedes.
-   > **Verify:** the §2 row names the corpus it was measured over — the fourth time this parameter has been set, and the third time its predecessor outlived its distribution.
+   > **Verify:** the §3 row names the corpus it was measured over — the fourth time this parameter has been set, and the third time its predecessor outlived its distribution.
 
 ### Validation
 
@@ -464,36 +610,36 @@ quotes with no 6-word window anywhere in the
 
 **Falsify.** Report the full curve — singleton rate and frame-contradicted count at 0.80, 0.84, 0.88, 0.92, 0.96 — rather than two endpoints. **The shape of that curve is the deliverable** even if no point on it is acceptable.
 
-**Blast radius.** `worker/extract/dedup.py`, the corpus, `docs/ongoing_errors.md` §2, §3, §6.
+**Blast radius.** `worker/extract/dedup.py`, the corpus, `docs/ongoing_errors.md` §3, §4, §7.
 
 ---
-## 13. Deferred — designed for, not queued
+## 15. Deferred — designed for, not queued
 
 **Elon Musk (Issue 023 = A).** Out of scope until X/Twitter ingest exists. **Trigger:** an `XAPIAdapter` or `XArchiveImportAdapter` lands behind the `SourceAdapter` Protocol and a Musk corpus can be assembled that includes his primary medium. Until then, ingesting him would produce a confident score over a systematically skewed slice, and **invariant I5 would not catch it** — it gates on volume, not composition (trap 24).
 
 **Corpus-composition reporting.** Issue 023's Option B was not selected, so `corpus_composition` is not being built now. It remains the right long-term answer to trap 24 and applies to every subject, not just Musk. Revisit when X ingest arrives or when any subject's corpus draws from a single medium.
 
-**X/Twitter ingest.** Deferred by decision, not difficulty (`master_implementation_plan.md` §9). The adapter Protocol must keep accepting it as a drop-in.
+**X/Twitter ingest.** Deferred by decision, not difficulty (`master_implementation_plan.md` §10). The adapter Protocol must keep accepting it as a drop-in.
 
 **Proposition-table purge (Issue 027 Option B, not selected).** A was selected, which keeps the orphaned pre-X0 propositions and their embeddings. The remaining cleanup — deleting the five non-fabricated orphans, pruning `proposition_embeddings` to the readable set, and replacing `claim_count` with a computed view — is right eventually and wrong now, because R1's re-ingest repopulates the table. **Trigger:** R1 has landed and the corpus is final. Doing it before then pays for the same migration twice.
 
 ---
 
-## 14. Invariants — do NOT change
+## 16. Invariants — do NOT change
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
-Full text: `master_implementation_plan.md` §3. Code violating one is wrong even if its tests pass.
+Full text: `master_implementation_plan.md` §4. Code violating one is wrong even if its tests pass.
 
 ---
 
-## 15. Contracts
+## 17. Contracts
 
 `master_implementation_plan.md` · `design_source_acquisition.md` · `design_claim_extraction.md` · `design_principle_extraction.md` · `design_topic_model.md` · `design_rubric_engine.md` · `design_data_layer.md` · `design_local_api_and_clients.md` · `design_ui_direction.md` · `design_evidence_integrity.md` · `e2e_verification_journeys.md` · `ongoing_errors.md`
 
 ---
 
-## 16. Feedback loop — what specs here have got wrong
+## 18. Feedback loop — what specs here have got wrong
 
 | What happened | Spec said | Should have said |
 |---|---|---|
@@ -536,10 +682,10 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 
 | **Six fabrications published by an item that followed its spec exactly** | "Make every accepted candidate produce a row. Published if it clears all six preconditions; quarantined otherwise." | **"...and read the current accepted set before running it; if those candidates are known-false, this item quarantines rather than publishes."** I wrote D7 knowing all six accepted candidates were false and sequenced it first anyway, because it was small. **Small is not the same as safe when the item's effect is to publish.** |
 
-| **A false tension published with well-formed frames** | "For every accepted candidate pair the two frames are stored — paste both, then say whether they conflict. If they are not about the same ⟨X⟩, the pair is evidence against the prompt, not a finding." | The instruction was right and was not applied. **Make it a precondition in the detector rather than a step in the commit body** — anything that depends on the agent noticing will eventually meet an agent who does not. §11 does this. |
+| **A false tension published with well-formed frames** | "For every accepted candidate pair the two frames are stored — paste both, then say whether they conflict. If they are not about the same ⟨X⟩, the pair is evidence against the prompt, not a finding." | The instruction was right and was not applied. **Make it a precondition in the detector rather than a step in the commit body** — anything that depends on the agent noticing will eventually meet an agent who does not. §12 does this. |
 
 | **A threshold that eliminated false merges by eliminating merges** | "(c) — every proposition carrying both a support and an oppose claim has frames whose ⟨X⟩ match ... the count of such propositions must also be reported and a zero says the self-join has nothing to match." | **"...and the singleton rate must stay below 90%."** My own assertion set a floor of *not zero* and got one. I wrote trap 61 about exactly this — a floor of zero not noticing starvation — and then wrote a floor of "not zero" two items later. **When you have just corrected a floor in one place, grep for the same shape in the assertions you are writing.** |
 
-| **Forty pasted rows, none of which exist** | "(c) — over 40 own-assertion claims drawn at random with a recorded seed, at least 32 have a frame the quote actually supports, **pasted in full with verdicts**." | **"...and give each row's claim_id, which must resolve in the store at this commit."** I wrote "pasted in full" believing a paste was self-evidencing. It is not — it is checkable, which is different, and only if someone checks. §11 turns the difference into a script. |
+| **Forty pasted rows, none of which exist** | "(c) — over 40 own-assertion claims drawn at random with a recorded seed, at least 32 have a frame the quote actually supports, **pasted in full with verdicts**." | **"...and give each row's claim_id, which must resolve in the store at this commit."** I wrote "pasted in full" believing a paste was self-evidencing. It is not — it is checkable, which is different, and only if someone checks. §12 turns the difference into a script. |
 
 **The newest pattern: a correct fix to the wrong scope reads exactly like success.** And the one this pass added, which is more serious than the rest: **an evidence convention that is not mechanically resolvable will eventually be satisfied by evidence that does not exist** — without anyone needing to intend it. And the encouraging counterpart, first seen this pass: **a fix that converts a judgement into a stored artefact makes the next failure cheap to find.** X2 published a fabrication and simultaneously made that class of fabrication mechanically detectable. And its companion, first seen this pass: **a fix can overshoot into the mirror of the defect it removed**, while every metric the item defined still improves. D1 is its cleanest instance yet — genuinely good work, honestly reported in prose, with the headline label wrong. And the sharpest version this project has produced: **Issue 030 was the right decision against the wrong diagnosis.** The corpus did need expanding and expanding it was done well; it simply was not what stood between the pipeline and a finding. **Before committing hours of compute to a diagnosis, check that the cheap query agrees with it.** R1's gates were green, its coverage real, its numbers honest, and the thing it existed to enable did not happen. N0 then repeated it one layer down. **Check what the item was *for*, not only what it said** — and when an item's purpose is to feed a downstream stage, make one of its assertions a property of *that stage's input*, not of its own output.

@@ -174,6 +174,14 @@ Detect change markers on: *"I used to", "I've changed my mind", "I was wrong abo
 
 ## 6. Two-stage pipeline — the gate is what makes this affordable
 
+### Issue 007's revisit trigger fired, and what it bought
+
+Issue 007 chose local Gemma and said *revisit only with data*. The data arrived as **five consecutive extraction-format failures** — indexical templates, full clauses, bare topics, frames fabricated onto descriptions, and a decline branch that fired three times in 401 claims — across which the corpus fell from 3,669 claims to 401 and **no true contradiction was ever found**.
+
+**Issue 035 = B answers the question those five passes each assumed.** Before any model change, run 100 already-extracted utterances through one frontier model with the prompt byte-identical and score both outputs by the same hand-read test. **If the frontier model does no better, the ceiling is the task rather than the model**, and no sixth format pass or larger local model will help — the honest response is to narrow the product to what the pipeline reliably produces: the dated timeline, verbatim quotes, deep links, and Specificity, which is a deterministic rate over features and needs no positions at all.
+
+**Record the outcome as a decision either way.** The experiment's value is symmetric, and the negative result is the more useful of the two because it stops work rather than starting it.
+
 Running a frontier model over every utterance in a 300-hour corpus is the difference between a hobby project and a bill. Most utterances contain no position at all.
 
 ```
