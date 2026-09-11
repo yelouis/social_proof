@@ -80,6 +80,10 @@ A proposition that fails it is a **topic**, and topics are `design_topic_model.m
 
 **`mixed` has a definition now rather than a residue:** the speaker is FOR ⟨X⟩ in one respect and AGAINST it in another, and **both frames can be written for the same claim.** If only one can be written, the stance is that one.
 
+**The frame needs a reachable null, or it invents one.** *"The speaker is FOR ⟨X⟩"* is writable for any ⟨X⟩, so an extractor asked only to produce it will produce it — turning *"Azure holds a Fed ramp, high authorization"* into *"the speaker is FOR Azure holding a Fed ramp"*. **Ask first whether the speaker takes a side at all** — as opposed to describing, reporting, predicting or asking — and emit nothing when they do not. A descriptive statement is an **I7 exclusion** (`reports_fact`), recorded rather than dropped, because the exclusion rate is how you know the branch is working.
+
+**Watch which way the fabrications fall.** When there is no side to find, a binary choice resolves to one end — in practice `FOR`. A `support` share far above the `oppose` share is the signal that the null branch is not being taken.
+
 **Store the frame sentence.** `position_frame` is persisted next to the claim, so the position test is answerable by reading a column instead of re-deriving a judgement. Every time this test has been applied as a judgement it has been scored generously — six false pairs recorded as *"hand-read and verified"*, a position gate reported at 18/20 that a seeded redraw scored 9/20. **A stored sentence is checkable by anyone, later, without rerunning anything.** Attaching `support` and `oppose` to one does not produce a contradiction — it produces two claims about the same subject area, which is how six false candidate pairs were once read as verified reversals.
 
 **This bound is as load-bearing as the polarity rule above it, and it was learned the same way.** Removing finite verbs to satisfy the canonical form drove a quarter of the proposition table below it.

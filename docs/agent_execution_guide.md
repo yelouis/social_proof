@@ -4,24 +4,20 @@
 
 **Read §1 first; it says where to start.** There is no routing machinery below — you are expected to organise the work yourself. What is fixed is §4 (what you may not change), §5 (what has bitten this project), §7 (what counts as evidence) and each item's own assertions.
 
-**Where the project is.** Thirty-one items delivered — §10 lists them with the commit carrying each full spec. Gates green, tree clean, `mypy scripts/` repaired.
+**Where the project is.** Thirty-one items delivered. Gates green, tree clean, **zero published tensions, and a 100% quarantine rate — 5 of 5 tensions ever generated were caught.** X3 and D8 both did what they were asked.
 
-**X2 worked, and the thing it added is why this pass is short.** Issue 034 = B moved the position test out of judgement and into the output format. Every one of **1,517 claims** now carries a `position_frame` — *"the speaker is FOR/AGAINST ⟨X⟩"* — **0 unparseable, 0 stance disagreements, ⟨X⟩ matching `proposition_text` on 96.3%** of them under the store's own normalisation. Validator 2b's fire rate halved, 22.9% → 11.1%. **And the corpus grew for the first time in this whole sequence: 1,027 → 1,517 claims.** Three form iterations shrank it by 72%; the format change reversed that.
+- **X3** quarantined the false tension as `frame_mismatch` and made frame-⟨X⟩ identity a mechanical precondition, with `verify_frame_identity` as check 16. **The judgement that was made by eye four times, and wrong four times, is now a query.**
+- **D8** used the stored frames as ground truth — a labelled set nobody had to build — and drove frame-contradicted merges from **4 of 5 to 0 of 1**.
 
-**X2 also published one tension, and it is false — the fourth this system has published.** But read how it fails:
+**Both are real. And the corpus still contains no genuine contradiction, for a reason that has been upstream the whole time.**
 
-```
-  A  support  the speaker is FOR      60 to 80 percent growth year over year
-  B  oppose   the speaker is AGAINST  10x year over year growth for ever
-```
+**X4 (§11) is the root cause, and it is not a polish item.** X2's design says a claim the model cannot phrase as *"the speaker is FOR/AGAINST ⟨X⟩"* is not emitted — but **it can always phrase it**, because ⟨X⟩ can be anything. So descriptive statements get invented positions. Twelve claims read at random: *"the speaker is FOR Azure holding a Fed ramp, high authorization"* from *"Azure holds a Fed ramp…"*; *"FOR a seat being open next week"* from *"we have a seat open next week"*; *"FOR blue states becoming more blue"* from *"a blue state's gonna get blueer."* **Roughly 8 of 12 are positions nobody took, and almost every fabrication is `FOR`** — when there is no side to find, the binary resolves to FOR, which is also the long-standing `support` skew.
 
-**⟨X⟩ differs.** Sacks being pleased with 60–80% growth and holding that 10x forever is impossible are not a reversal. **The previous three fabrications took a careful read of quotes to spot. This one is a two-line diff of a stored column** — which is exactly what `position_frame` was added to make possible, and it means the check can now be code instead of judgement.
+**This is the mirror of the bare-topic problem.** D6 produced propositions no one could take a position on; X2 produces positions no one took. Both come from a format that must emit something, and **four episodes of a podcast are mostly people describing things.** It explains every previous pass: the detector has never had real candidates because most claims are not positions, so `support` vs `oppose` on a shared proposition has usually meant *two descriptions of the same thing, arbitrarily signed.*
 
-**The prompt is not at fault.** Both frames are well-formed and match their quotes. **Dedup merged two different matters** at `T_dedup = 0.84` — a threshold D2 measured against a distribution X2 has since replaced. Four of the store's five support/oppose proposition groups are dedup artefacts.
+**D9 (§12) is the cost D8 did not report.** At `T_dedup = 0.96` the singleton rate is **99.5%** and propositions spanning 2+ episodes fell to **4 of 1,507 (0.27%)**. Merging is effectively off, and parameter 008's bias is *toward* merging. **Do not simply lower it** — 0.84 merged different matters, 0.96 merges nothing, both measured honestly, and the oscillation is the finding. Re-measure after X4, over a claim set that is actually positions.
 
-**X3 (§11) and D8 (§12) delivered.** X3 quarantined the false tension and made frame-⟨X⟩ identity a mechanical precondition, so a mismatch can never publish again. D8 re-measured `T_dedup = 0.96` against the v1.8 distribution and stored frames ground truth (superseding 0.84), separating all 4 defect pairs, with 100% clean frame identity on support/oppose propositions (1,507 propositions, 1,499 singletons).
-
-**§5 and §7 are why the items look the way they do.**
+**Start at §11.** §5 and §7 are why the items look the way they do.
 
 **Items now carry per-step checks, written as `> **Verify:**` after the step they belong to.** Run each before starting the next step. Several are **red-first**: they tell you to run something and *watch it fail* before you fix anything, because a check that has only ever been green on repaired data has not been tested.
 
@@ -176,6 +172,9 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 37. **A test that opens the production database can write to it.** `subj_nonexistent_subject` holds an assessment in the live corpus and no row in `subjects`. Tests legitimately *read* the corpus — assertion (c) often needs real data — but a test that needs to *write* must take a copy, and the corpus should be opened `read_only=True` from tests.
 38. **A verdict computed from the evidence it gates is not a verdict.** E1 replaced `sufficiency.get("passed", True)` with `passed = any_scored` — so "did sufficiency pass?" became "did anything get scored?", and the check that asks *"if sufficiency failed, is any score present?"* can never find one. **A guard's input must be independent of its subject.** When a fix removes a default, check what replaced it: the same inertness survives a rewrite easily.
 39. **A uniqueness bug hides behind a coverage check.** `verify_role_coverage` asks whether every utterance *resolves to* a role and passes over a `source_roles` table where every row is duplicated. Resolution and uniqueness are different questions, and only the first was asked — the same error shape as trap 28 (*"is this citation real?"* vs *"does it support this claim?"*).
+71. **A format that must emit something will invent what it needs.** D6's form produced propositions nobody could take a position on; X2's format produces positions nobody took, and almost always `FOR`, because the binary has no null. **Every extraction format needs a branch that returns nothing**, and it has to be reachable — "a claim it cannot phrase that way is not emitted" is not a branch if the phrasing always succeeds.
+72. **"Not zero" is as weak a floor as zero.** D8's (c) required the count of opposing-stance propositions to be reported and said a zero would mean the self-join had nothing to match. It came back **one**, which satisfied the letter while the singleton rate went to 99.5%. **State floors as rates over the table** — the same correction Parameter 033 made to "no source contributes zero claims" (trap 61), repeated one layer up by the person who wrote trap 61.
+73. **Report the cost of a fix, not only its benefit.** D8 drove frame-contradicted merges to zero and did not report that it did so by merging almost nothing. Both numbers existed and one was asked for. **When a threshold trades two quantities against each other, the item must require both at every candidate value** — a single-sided report makes a corner solution look like a win.
 69. **Storing the judgement turns the next check into code.** Three fabrications needed a careful read of quotes to spot. The fourth is a two-line diff of `position_frame`, because X2 persisted the sentence the model wrote instead of only its conclusion. **When a step depends on a judgement, store the artefact the judgement was made from** — the next person gets a query instead of an opinion.
 70. **A parameter measured on a distribution that a later item replaces is stale on the day that item lands.** `T_dedup = 0.84` was measured over v1.7 propositions and merged *"60 to 80 percent growth"* with *"10x growth for ever"* on v1.8 output. X2 correctly refused to retune it in the same commit; **the cost of that discipline is a follow-up item, and it must actually be filed** (§12).
 66. **An item whose effect is to publish must be checked against what it will publish.** D7 was told to make every accepted candidate produce a tension row, and did — publishing six findings that the same guide, two sections below, documented as false. The spec was followed exactly. **Before running an item that writes user-visible output, read what is currently in its input.**
@@ -212,7 +211,10 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ## 6. Queue
 
-*Queue is empty — all queued items delivered. See §10 for delivered items and §13 for deferred items.*
+| Order | ID | Item | Blocked | Why here |
+|---|---|---|---|---|
+| 1 | **X4** | The frame is fabricated onto claims that carry no position | none | **The root cause of "no real candidates".** ~8 of 12 sampled frames are positions nobody took, almost all `FOR`. The extractor has no way to decline, so descriptions become positions. |
+| 2 | **D9** | `T_dedup = 0.96` has turned merging off | X4 | 99.5% singletons, cross-episode propositions down to 0.27%. Parameter 008's bias is toward merging. **Re-measure after X4** — tuning over fabricated positions is how the last four thresholds were chosen. |
 
 ---
 
@@ -343,6 +345,9 @@ Not a routine to execute mechanically. It is the shortest description of what a 
 - **X3** `1d9ed04` — **Frame-⟨X⟩ identity mechanical precondition in `TensionDetector` and Check #16 `verify_frame_identity` in integrity pass.** Pre-repair false tension `12a7503f8c27b24d` quarantined with `quarantine_reason='frame_mismatch'`; affected David Sacks assessment recomputed; quarantine rate 100.0% (5/5 ever generated); dual falsification verified (synthetic identical ⟨X⟩ frames publish; real growth pair quarantined; disabling guard breaks Assertion (c)).
 - **D8** — **Re-measure `T_dedup = 0.96` against the v1.8 distribution and stored frames ground truth.** Parameter 008 calibrated at 0.96 (superseding 0.84) using stored position frames as ground truth, unblocked by X3. 1-NN similarity deciles reported (median 0.7522, D90 0.8425, max 0.9843); all 4 named defect pairs separated (< 0.96); 1/1 support/oppose propositions cleanly match frames (100%); DuckDB store re-resolved to 1,507 active propositions (1,499 singletons, 99.47%); dual falsification verified (0.999 collapses to 1,508 singletons, 0.60 spikes frame contradictions to 451). All 16 integrity checks PASS.
 
+- **X3** `1d9ed04` — frame-⟨X⟩ identity as a mechanical precondition in the detector plus `verify_frame_identity` (check 16); the false tension `12a7503f8c27b24d` quarantined as `frame_mismatch`. **Quarantine rate 5 of 5.**
+- **D8** `a42bebd` — `T_dedup` re-measured to 0.96 under prompt v1.8 using the stored frames as ground truth; frame-contradicted merges 4 of 5 → 0 of 1. **The cost — 99.5% singletons — was not reported; see §12.**
+
 ### Clients and portability
 
 - **C0** `e2979ac` — `mlx-lm` optional; `portability.yml` tests the base install off-Mac (Issue 024 = B).
@@ -362,102 +367,120 @@ The `TranscriptionEngine` Protocol plus its `Mock` test-double split · `LocalGe
 
 ---
 
-## 11. X3 — A tension may only publish when both frames name the same ⟨X⟩ (DELIVERED · VERIFIED)
+## 11. X4 — The frame is fabricated onto claims that carry no position
 
-**User impact:** the check that has been made by judgement four times, and got it wrong four times, becomes a line of SQL.
+**User impact:** the corpus stops being mostly invented positions on factual statements, which is why it has never contained a real contradiction.
 
-**Contract:** `design_claim_extraction.md` §2 (*"the few-shot examples must show the same ⟨X⟩ under both frames"*) · `design_data_layer.md` §4 (the proposition self-join) · `design_evidence_integrity.md` §4–§5 (quarantine first).
+**Contract:** `design_claim_extraction.md` §2 (Issue 034 = B — *"a claim the model cannot phrase this way is not emitted"*) · invariant **I7** · `design_evidence_integrity.md` §1 (what the system may assert).
 
-**Gap.** X2 published one tension. **It is false, and its own stored frames say so in two lines:**
+**Gap — and this is the root cause of "no real candidates", not a polish item.** X2's design says a claim the model cannot phrase as *"the speaker is FOR/AGAINST ⟨X⟩"* is not emitted. **In practice the model can always phrase it**, because ⟨X⟩ can be anything — so a descriptive statement gets an invented position rather than being declined.
 
-```
-  A  support  the speaker is FOR      60 to 80 percent growth year over year
-              "And now if it's going from 60 to 80 percent growth year over year, you're happy."
-  B  oppose   the speaker is AGAINST  10x year over year growth for ever
-              "It's not physically possible to grow 10x year over year for ever."
-```
+Twelve claims drawn at random with seed `20260910`, own-assertions only. Read the frame against its quote:
 
-**⟨X⟩ differs.** *60–80% growth* and *10x growth forever* are different matters, and Sacks's two statements are perfectly compatible — being pleased with 60–80% growth and holding that 10x forever is impossible are not a reversal. Dedup merged the two propositions at `T_dedup = 0.84` and the detector joined on the merged id.
+| frame | quote | verdict |
+|---|---|---|
+| FOR *water usage less than a golf course* | *"The water uses quite manageable less than a golf course."* | **fabricated** — a description |
+| FOR *a seat being open next week* | *"we have a seat open next week"* | **fabricated** — a scheduling fact |
+| FOR *Azure holding a Fed ramp, high authorization…* | *"Azure holds a Fed ramp, high authorization, and Department of Defense…"* | **fabricated** — a fact about a product |
+| FOR *blue states becoming more blue* | *"a blue state's gonna get blueer"* | **fabricated** — a prediction |
+| FOR *fragmentation and distribution of edge compute* | *"you're seeing this fragmentation and distribution of edge compute"* | **fabricated** — an observation |
+| FOR *the amount of capital, time, and intelligent people on the planet* | *"it feels like the amount of capital…"* | **fabricated** — not a position |
+| FOR *Dario including in very recent blogs* | *"Dario could want and has evolved for including in very recent blogs"* | **incoherent** |
+| FOR *the opening of the floodgates to export* | *"that then opened the floodgates to export"* | **fabricated** — a description |
+| AGAINST *spending millions and millions for a very slow…* | *"unless you are willing to spend millions and millions…"* | **genuine** |
+| AGAINST *the location of frontier AI development being in places that…* | *"it may not be located in places that actually make sense"* | **genuine** |
+| FOR *engagement with anthropic and open AI* | *"they're more than willing to engage in this…"* | marginal |
+| FOR *bespoke software solutions for internal tools* | *"Is software going to become… bespoke, even like the internal tools"* | marginal |
 
-**X2's own step-6 check named this exact case:** *"If the two frames are not about the same ⟨X⟩, that is a step-2 failure and the pair is evidence against the prompt, not a finding."* The pair was published anyway. **This is the fourth fabrication this system has published.**
+**Roughly 8 of 12 are positions the speaker never took.** And note which way they fail: **almost every fabrication is `FOR`.** When there is no position to find, the format's binary choice resolves to FOR — which also explains the long-standing `support` skew.
 
-**But something changed, and it is the reason this item is small.** The previous three required reading quotes and reasoning about aboutness. This one is visible in a two-line diff of a stored column — **X2's `position_frame` did exactly what it was added to do.** The judgement is now an artefact, and an artefact can be checked in code.
+**This is the mirror of the bare-topic problem and it has the same shape.** D6 produced propositions no one could take a position on; X2 produces positions no one took. Both come from a format that must emit something. **Four episodes of a podcast are mostly people describing things**, and the extractor has no way to say so.
 
-**The prompt is not at fault here.** Both frames are well-formed, both name a real matter, both match their quote. **The defect is in dedup**, which is D8's subject — X3 stops the bad pair reaching a reader, D8 stops it being created.
+**It also explains every previous pass.** The detector has never had real candidates because most claims are not positions — so `support` vs `oppose` on a shared proposition has usually meant *"two descriptions of the same thing, arbitrarily signed."*
 
 ### Implementation
 
-**Step 1 — Quarantine `12a7503f8c27b24d` first.** `status='quarantined'`, `quarantine_reason='frame_mismatch'`. Recompute the affected assessment without it. **Do not fix the merge here** — `design_evidence_integrity.md` §5 is quarantine first, investigate second, and this row is the evidence X3 and D8 are measured against.
+**Step 0 — Measure the rate before changing anything.** Draw 40 own-assertion claims with a recorded seed and judge each frame against its quote: **genuine position / fabricated / incoherent.** Paste all 40 with verdicts.
 
-> **Verify:** zero published tensions remain. The quarantine rate is now **4 of 5** ever generated; report it, do not bury it.
+> **Verify:** this is your baseline and it must be bad — expect roughly two thirds fabricated. **If your reading finds most of them genuine, stop and reconcile with the twelve above before going further**; one of the two readings is wrong and it matters which.
 
-**Step 2 — Add the guard to the detector, before the six preconditions.** For a candidate pair, parse ⟨X⟩ out of each claim's `position_frame` and require them to match under the same normalisation `compute_proposition_id` uses (`worker/storage.py` — lowercase, collapse whitespace, strip terminal punctuation). Mismatch → **quarantine** with reason `frame_mismatch`, never drop (D7 established that; §10).
+**Step 1 — Give the extractor a way to decline, and make declining the default.** The gap is that "the speaker is FOR ⟨X⟩" is always writable. Ask a question that can come back negative **before** the frame:
 
-> **Verify (red-first):** run the guard over today's corpus **before** wiring it in, and confirm it flags `12a7503f8c27b24d`. **If it does not fire on that pair, the parse or the normalisation is wrong** — that pair is the one known positive and it must be reproducible.
+```
+Does the speaker take a side here — is there something they are FOR or AGAINST,
+as opposed to describing, reporting, predicting, or asking?
+If not, emit nothing for this utterance.
+```
 
-**Step 3 — Decide how strict the match is, and say why.** Exact-after-normalisation is the safe default and will also reject near-identical pairs such as *"30 years at 5% interest rate"* vs *"a 30-year at 5.2 interest rate"* — which **should** be rejected, since 5% and 5.2% are different claims.
+Only if that answers yes does the model produce the frame. **The point is a branch that returns nothing**, which the current prompt does not have.
 
-> **Verify:** report how many of the store's existing support/oppose proposition groups survive the guard. **Today four of five have mismatched frames** — the only clean one is *"companies moving out of California"*, where both frames are byte-identical. If your guard passes more than one or two, it is too loose; if it passes none, check it against that pair specifically.
+> **Verify:** extract from **20 utterances chosen to be mostly descriptive** — pick them by hand from the transcript, not at random. **Most must produce no claim at all.** If the model still emits a frame for *"Azure holds a Fed ramp, high authorization"*, the decline branch is not working and no amount of wording downstream will fix it.
 
-**Step 4 — Add `verify_frame_identity` to the integrity pass.** No published tension may have mismatched frames. This is the standing version of step 2.
+**Step 2 — Add `reports_fact` to the exclusion vocabulary.** `exclusion_reason` already carries `question`, `hypothetical`, `entailment_ambiguous`. A descriptive statement is an I7 exclusion of the same kind: the speaker asserted it, but not as a position. **Store the claim excluded rather than dropping it** — the exclusion rate is the signal that tells you this is working.
 
-> **Verify:** it FAILS on the corpus as it stands today (before step 1), naming `12a7503f8c27b24d`. Run it in that order — a check first seen green on repaired data has not been tested.
+> **Verify:** report the exclusion rate by reason before and after. **A rate that barely moves means step 1 did not take.** S1 raised I7 exclusions from 0.7% to 8.2% and that was the signal it worked; expect a comparable jump here.
+
+**Step 3 — Re-extract, then leave `T_dedup` alone.** D9 (§12) re-measures it afterwards, over a claim set that is actually positions. **Do not touch it here** — merging fabricated positions is worse than not merging, and tuning against them is what produced the last four thresholds.
+
+> **Verify:** capture the rejection and exclusion counters and reconcile against the claim-count change, per D5. Report the trajectory. **The corpus will shrink and that is the expected outcome, not a regression** — say by how much and what fraction was excluded as `reports_fact`. Parameter 033 (`MIN_CLAIMS_PER_HOUR = 3.0`) may need re-deriving; if it fails, report it rather than lowering it silently.
+
+**Step 4 — Re-run detection and read every accepted pair.** With X3's frame-identity guard in place, a mismatch cannot publish.
+
+> **Verify:** for each accepted pair paste both frames **and both quotes**, and say for each quote whether the speaker took that position. **That last question is the one this item exists for** — X3 checks the frames agree with each other, and nothing yet checks a frame agrees with its quote.
 
 ### Validation
 
-- **(c)** — **no published tension exists whose two claims' frames name different ⟨X⟩**, asserted by a query over the live store that parses both frames and compares them normalised; **and the guard, run against today's pre-repair corpus, flags exactly `12a7503f8c27b24d`.** *Both halves are needed: the first alone is satisfiable by publishing nothing, which is today's state and proves nothing.*
-- **Both directions:** a synthetic pair with byte-identical ⟨X⟩ and opposing FOR/AGAINST passes the guard and reaches the six preconditions; the growth pair does not.
-- Every rejected candidate writes a `quarantined` row with `frame_mismatch` — none is dropped (§10, D7).
-- `worker.integrity --all` green on both populations, with the quarantine rate reported.
+- **(c)** — **over 40 own-assertion claims drawn at random with a recorded seed, at least 32 (80%) have a frame that the quote actually supports as a position**, judged by reading and **pasted in full with verdicts**. *Today that figure is roughly 4 of 12. A count cannot satisfy this and neither can a validator — the judgement is the deliverable, and it is pasted so a reader can check it without rerunning anything.*
+- **Both directions:** *"Azure holds a Fed ramp, high authorization…"* produces **no claim**; *"unless you are willing to spend millions and millions"* still produces `AGAINST`. Assert both by utterance id.
+- The `support` share falls materially from its current level — report it. **Do not target a number**; report what excluding descriptions gives.
+- `verify_quotes`, `verify_canonical_ids`, `verify_entailment_holds`, `verify_frame_identity`, `verify_claims_per_hour` all PASS.
 
-**Falsify.** Remove the guard and re-run detection; `12a7503f8c27b24d` must return as published and (c) must go red. Revert; record both.
+**Falsify.** Remove the decline branch and re-extract the same 20 descriptive utterances; frames must reappear for them. Record both counts.
 
-**Blast radius.** `worker/tension/detect.py`, `worker/integrity.py`, `worker/storage.py`, `tests/`, the corpus (one row quarantined), `docs/design_evidence_integrity.md` §4, `docs/design_data_layer.md` §4, §3, §6.
+**Blast radius.** `worker/extract/runtime.py` (prompt v1.9), `worker/extract/schema.py` (`reports_fact`), `worker/extract/validators.py`, `worker/entities.py`, `fixtures/behaviour/`, the corpus (full re-extraction), `docs/design_claim_extraction.md` §2–§3, `docs/ongoing_errors.md` §2 (033 may need re-deriving), §3, §6.
 
 ---
 
-## 12. D8 — Re-measure `T_dedup` against the v1.8 distribution (DELIVERED · VERIFIED)
+## 12. D9 — `T_dedup = 0.96` has turned merging off
 
-**Blocked on X3** — X3 stops the bad pair reaching a reader; this stops it being created. Do them in that order so the guard exists while you are changing what dedup emits.
+**Blocked on X4** — re-tuning a merge threshold over a claim set that is two-thirds fabricated positions is how the last four thresholds were chosen.
 
-**Contract:** `ongoing_errors.md` §2 parameter 008 · `design_claim_extraction.md` §2 (Deduplication) · trap 57.
+**Contract:** `ongoing_errors.md` §2 parameter 008 — *bias toward merging, because over-splitting hides every contradiction silently.*
 
-**Gap — this is the deferred half of X2, now due.** X2 step 5 said explicitly: *"Do not retune `t_dedup` in this commit; D2 measured 0.84 against a distribution this step replaces, and changing form and threshold together makes neither attributable. Re-measuring it is a separate item, filed after this one lands."* That was right, and it has landed.
+**Gap.** D8 did what it was asked and did it honestly: it used the stored frames as ground truth, reported its deciles, and drove frame-contradicted merges from 4 of 5 to **0 of 1**. **The cost was not reported, and it is large:**
 
-**0.84 is now merging different matters.** The published fabrication is the proof: *"60 to 80 percent growth year over year"* and *"10x year over year growth for ever"* were merged into one proposition. So were *"the FDA's involvement in drug approval process"* and *"the approval process for drugs that influence the body"*, and *"China's push on open source"* and *"the open source model being published by China"*. **Four of the store's five support/oppose proposition groups are dedup artefacts rather than genuine shared matters.**
+| | at 0.84 | at 0.96 |
+|---|---|---|
+| singleton rate | ~93% | **99.5%** (1,499 of 1,507) |
+| propositions carrying >1 claim | — | **8** |
+| propositions spanning 2+ episodes | 21 (2.1%) | **4 (0.27%)** |
+| frame-contradicted merges | 4 of 5 | **0 of 1** |
 
-**The corpus it was measured on no longer exists.** D2 measured 0.84 over 2,191 propositions from prompt v1.7. The store now holds **1,465 propositions from v1.8**, and — for the first time in this sequence — the corpus **grew**: 1,027 → **1,517 claims**. Different text, different length distribution, different similarity structure.
+**Merging is effectively off.** Parameter 008's bias is *toward* merging precisely because over-splitting hides contradictions silently, and 0.96 is maximal over-split. The self-join has 8 propositions to work with in a corpus of 1,517 claims.
 
-**Read this before choosing a number.** Parameter 008's bias is *toward merging*, because over-splitting hides contradictions silently while over-merging produces visible, fixable false positives. **That bias was written before the frames existed and it should now be re-read, not reapplied.** With `position_frame` stored and X3's guard in place, an over-merge is caught mechanically at publish time — which makes over-merging much cheaper than it was, and the bias arguably *more* correct than before. Say which way you read it and why.
+**My (c) for D8 had a loophole and I should name it.** It said the count of support/oppose propositions *"must also be reported and a zero says the self-join has nothing to match"* — so **one** satisfied it. *"Not zero"* is as weak a floor as *"not zero claims per source"* was before Parameter 033 replaced it with a rate (trap 61). It should have been a rate over the table.
+
+**Do not simply lower it back.** The oscillation is the finding: 0.84 merged different matters, 0.96 merges nothing, and both were measured honestly. **After X4, measure whether any threshold separates restatement from difference on a corpus of real positions** — and if none does, D8's step-1 clause applies: say so, and the instrument changes rather than the number.
 
 ### Implementation
 
-**Step 1 — Measure before choosing.** Embed all 1,465 propositions, compute the 1-NN similarity distribution, and report the deciles.
-
-> **Verify:** paste the deciles. **If the distribution is unimodal there is no threshold to find**, and the honest delivery is to say so and report that similarity over proposition text cannot separate restatement from difference at this size — a legitimate result, not a failure.
-
-**Step 2 — Use the frames as ground truth, which is new.** For every currently-merged proposition carrying more than one claim, the stored frames say whether the merge was right. **This is a labelled set you did not have to build.**
-
-> **Verify:** report, at the candidate threshold, how many existing merges the frames endorse and how many they contradict. **The four named above must be contradicted.** This is the first time this parameter can be measured against something other than a judgement — use it.
-
-**Step 3 — Choose, record with n and date, supersede 0.84 explicitly.**
-
-> **Verify:** `ongoing_errors.md` §2's row names the corpus — claim count, proposition count, prompt version, date — so the next reader can tell when it has expired. That is what 0.86 lacked, and it outlived two corpora.
-
-**Step 4 — Re-resolve propositions and re-run detection.**
-
-> **Verify:** report the candidate denominator — examined, accepted, rejected, with reasons — and **paste both frames for every accepted pair.** With X3 in place a frame mismatch cannot publish, but it can still be created, and its rate is how you tell whether the new threshold is right.
+1. After X4, recompute the 1-NN similarity distribution over the new proposition set and report the deciles.
+   > **Verify:** paste them. **If the distribution is unimodal there is no threshold to find** — that is a legitimate delivery and it redirects the work to the instrument.
+2. Use the stored frames as ground truth, as D8 did — that method was right and should be kept.
+   > **Verify:** at each candidate threshold report **both** numbers: frame-contradicted merges **and** the singleton rate. D8 reported the first and not the second, which is how 0.96 looked like a clean win.
+3. Choose, record with n, date and prompt version, and state what it supersedes.
+   > **Verify:** the §2 row names the corpus it was measured over — the fourth time this parameter has been set, and the third time its predecessor outlived its distribution.
 
 ### Validation
 
-- **(c)** — **at the chosen threshold, every proposition carrying both a `support` and an `oppose` claim has frames whose ⟨X⟩ match after normalisation.** Today that is **1 of 5**. *This is measurable from the store with no judgement, which is the whole reason `position_frame` exists — and it cannot be satisfied by merging nothing, because the count of such propositions must also be reported and a zero says the self-join has nothing to match.*
-- Both directions at the chosen threshold: two genuine restatements of one matter merge; the growth pair and the FDA pair do not.
-- Merge histogram and singleton rate reported before and after.
-- `verify_frame_identity` (X3) PASSes; `verify_quotes`, `verify_canonical_ids`, `verify_entailment_holds`, `verify_claims_per_hour` PASS.
+- **(c)** — **at the chosen threshold, the singleton rate is below 90% AND zero merges are frame-contradicted.** *Both, in one number each. D8 achieved the second alone by turning merging off, and 0.84 achieved neither; a threshold that cannot do both on a corpus of real positions is the finding, and saying so is a delivery.*
+- Propositions spanning 2+ episodes reported as a **rate over the table**, not a count.
+- Both directions: two genuine restatements of one matter merge; the growth pair and the FDA pair do not.
+- `verify_frame_identity` PASSes; detection reports its candidate denominator.
 
-**Falsify.** Set `t_dedup = 0.999` and confirm the histogram collapses to singletons; set it to 0.60 and confirm the frame-contradicted merge count climbs sharply. Record all three, with the frame-contradiction count at each — that number, not the histogram, is the one that now decides this parameter.
+**Falsify.** Report the full curve — singleton rate and frame-contradicted count at 0.80, 0.84, 0.88, 0.92, 0.96 — rather than two endpoints. **The shape of that curve is the deliverable** even if no point on it is acceptable.
 
-**Blast radius.** `worker/extract/dedup.py`, the corpus (proposition re-resolution), `docs/ongoing_errors.md` §2, `docs/design_claim_extraction.md` §2, §3, §6.
+**Blast radius.** `worker/extract/dedup.py`, the corpus, `docs/ongoing_errors.md` §2, §3, §6.
 
 ---
 ## 13. Deferred — designed for, not queued
@@ -530,5 +553,7 @@ Full text: `master_implementation_plan.md` §3. Code violating one is wrong even
 | **Six fabrications published by an item that followed its spec exactly** | "Make every accepted candidate produce a row. Published if it clears all six preconditions; quarantined otherwise." | **"...and read the current accepted set before running it; if those candidates are known-false, this item quarantines rather than publishes."** I wrote D7 knowing all six accepted candidates were false and sequenced it first anyway, because it was small. **Small is not the same as safe when the item's effect is to publish.** |
 
 | **A false tension published with well-formed frames** | "For every accepted candidate pair the two frames are stored — paste both, then say whether they conflict. If they are not about the same ⟨X⟩, the pair is evidence against the prompt, not a finding." | The instruction was right and was not applied. **Make it a precondition in the detector rather than a step in the commit body** — anything that depends on the agent noticing will eventually meet an agent who does not. §11 does this. |
+
+| **A threshold that eliminated false merges by eliminating merges** | "(c) — every proposition carrying both a support and an oppose claim has frames whose ⟨X⟩ match ... the count of such propositions must also be reported and a zero says the self-join has nothing to match." | **"...and the singleton rate must stay below 90%."** My own assertion set a floor of *not zero* and got one. I wrote trap 61 about exactly this — a floor of zero not noticing starvation — and then wrote a floor of "not zero" two items later. **When you have just corrected a floor in one place, grep for the same shape in the assertions you are writing.** |
 
 **The newest pattern: a correct fix to the wrong scope reads exactly like success.** And the encouraging counterpart, first seen this pass: **a fix that converts a judgement into a stored artefact makes the next failure cheap to find.** X2 published a fabrication and simultaneously made that class of fabrication mechanically detectable. And its companion, first seen this pass: **a fix can overshoot into the mirror of the defect it removed**, while every metric the item defined still improves. D1 is its cleanest instance yet — genuinely good work, honestly reported in prose, with the headline label wrong. And the sharpest version this project has produced: **Issue 030 was the right decision against the wrong diagnosis.** The corpus did need expanding and expanding it was done well; it simply was not what stood between the pipeline and a finding. **Before committing hours of compute to a diagnosis, check that the cheap query agrees with it.** R1's gates were green, its coverage real, its numbers honest, and the thing it existed to enable did not happen. N0 then repeated it one layer down. **Check what the item was *for*, not only what it said** — and when an item's purpose is to feed a downstream stage, make one of its assertions a property of *that stage's input*, not of its own output.
