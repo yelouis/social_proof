@@ -108,9 +108,9 @@ Louis read V1's output and made three calls. **They are not provisional and they
 
 ---
 
-## 6. B2 — Label one episode by hand
+## 6. B2 — Label one episode by hand · **DELIVERED**
 
-**Blocked on B1.** This is the item V1 never had, and its absence is why five rewrites were each scored against the model's own output.
+**Blocked on B1.** DELIVERED. Unblocks B3.
 
 **User impact:** every threshold, prompt and gate after this becomes measurable instead of self-reported.
 

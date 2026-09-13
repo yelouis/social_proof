@@ -1,0 +1,2552 @@
+{
+  "rubric_commit": "23da31c",
+  "rubric_file": "v2/docs/design_claim_rubric.md",
+  "episode_source_id": "00251a80c868f535",
+  "episode_title": "All-In E287: Nvidia's Historic Quarter, SaaS Comeback",
+  "total_turns": 405,
+  "claims_count": 33,
+  "exclusions_count": 372,
+  "gate_failure_counts": {
+    "gate_1": 302,
+    "gate_2": 8,
+    "gate_3": 6,
+    "gate_4": 56
+  },
+  "gate_failure_rates": {
+    "gate_1": 74.57,
+    "gate_2": 1.98,
+    "gate_3": 1.48,
+    "gate_4": 13.83
+  },
+  "verdicts": [
+    {
+      "turn_id": "00251a80c868f535_t0000",
+      "verdict": "exclusion",
+      "gate_failed": "gate_2",
+      "reason": "Podcast banter, schedule, or show mechanics (excluded by Gate 2)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0001",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0002",
+      "verdict": "exclusion",
+      "gate_failed": "gate_2",
+      "reason": "Podcast banter, schedule, or show mechanics (excluded by Gate 2)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0003",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0004",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0005",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0006",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0007",
+      "verdict": "exclusion",
+      "gate_failed": "gate_2",
+      "reason": "Podcast banter, schedule, or show mechanics (excluded by Gate 2)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0008",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0009",
+      "verdict": "claim",
+      "speaker": "David Friedberg",
+      "type": "causal",
+      "quote": "so much of science has kind of followed this sheet like mentality where everyone has to line up, agree to the same general theory or you get outcasts, you don't get great. Funding, you don't get 10 -year, you don't get jobs",
+      "claim": "Academic science enforces conformity around mainstream theories through funding, tenure, and hiring decisions.",
+      "offset": 520
+    },
+    {
+      "turn_id": "00251a80c868f535_t0010",
+      "verdict": "claim",
+      "speaker": "Chamath Palihapitiya",
+      "type": "evaluative",
+      "quote": "he's more right on the substance of what he's saying than he is wrong",
+      "claim": "Eric Weinstein is more right than wrong on the substance of his critique of mainstream scientific consensus.",
+      "offset": 189
+    },
+    {
+      "turn_id": "00251a80c868f535_t0011",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0012",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0013",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0014",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0015",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0016",
+      "verdict": "claim",
+      "speaker": "David Friedberg",
+      "type": "causal",
+      "quote": "because everyone has to now think in the same way you don't have heterodox thinking you don't have outside of the scope thinking which means we're not pushing the envelope and discovering new things anymore",
+      "claim": "Conformity in American science suppresses heterodox thinking and causes scientific stagnation.",
+      "offset": 287
+    },
+    {
+      "turn_id": "00251a80c868f535_t0017",
+      "verdict": "claim",
+      "speaker": "Chamath Palihapitiya",
+      "type": "evaluative",
+      "quote": "there's probably a lot of incrementalism in 2026 that didn't exist in 1926",
+      "claim": "Modern scientific research is significantly more incremental today than it was in 1926.",
+      "offset": 23
+    },
+    {
+      "turn_id": "00251a80c868f535_t0018",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0019",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0020",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0021",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0022",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0023",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0024",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0025",
+      "verdict": "exclusion",
+      "gate_failed": "gate_2",
+      "reason": "Podcast banter, schedule, or show mechanics (excluded by Gate 2)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0026",
+      "verdict": "exclusion",
+      "gate_failed": "gate_2",
+      "reason": "Podcast banter, schedule, or show mechanics (excluded by Gate 2)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0027",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0028",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0029",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0030",
+      "verdict": "claim",
+      "speaker": "Jason Calacanis",
+      "type": "evaluative",
+      "quote": "the Chinese, the CCP is f***ing brilliant at PR",
+      "claim": "The Chinese Communist Party is exceptionally effective at public relations regarding domestic AI.",
+      "offset": 61
+    },
+    {
+      "turn_id": "00251a80c868f535_t0031",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0032",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0033",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0034",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0035",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0036",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0037",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0038",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0039",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0040",
+      "verdict": "claim",
+      "speaker": "David Sacks",
+      "type": "causal",
+      "quote": "that is the biggest risk to us winning this AI race against China is doing something that will shoot ourselves in the foot because we're so pessimistic about what AI might do",
+      "claim": "American societal pessimism regarding AI is the primary risk to the United States maintaining technological leadership over China.",
+      "offset": 370
+    },
+    {
+      "turn_id": "00251a80c868f535_t0041",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0042",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0043",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0044",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0045",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0046",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0047",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0048",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0049",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0050",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0051",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0052",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0053",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0054",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0055",
+      "verdict": "claim",
+      "speaker": "David Sacks",
+      "type": "evaluative",
+      "quote": "the hard part, as I understand it with these robots, is you can train them to do a specific action like running that race or jump or whatever. But the hard part is when they encounter a condition that they weren't programmed to expect",
+      "claim": "Generalizing to unprogrammed physical conditions is the primary technical bottleneck in robotics development.",
+      "offset": 20
+    },
+    {
+      "turn_id": "00251a80c868f535_t0056",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0057",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0058",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0059",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0060",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0061",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0062",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0063",
+      "verdict": "claim",
+      "speaker": "David Sacks",
+      "type": "evaluative",
+      "quote": "what's great about Grockbot is that it's always on, it's in the cloud. You set up your agents and then they can keep working even when your computer is off",
+      "claim": "Cloud-hosted always-on agent architectures are superior to local desktop agent execution.",
+      "offset": 23
+    },
+    {
+      "turn_id": "00251a80c868f535_t0064",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0065",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0066",
+      "verdict": "claim",
+      "speaker": "David Sacks",
+      "type": "causal",
+      "quote": "It turns out that if you have multiple agents, then the agents develop more context and expertise. So they get more specific",
+      "claim": "Specialized multi-agent swarms outperform single generalist agents because each agent develops deeper domain context and expertise.",
+      "offset": 310
+    },
+    {
+      "turn_id": "00251a80c868f535_t0067",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0068",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0069",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0070",
+      "verdict": "exclusion",
+      "gate_failed": "gate_3",
+      "reason": "Uncontested factual report, financial disclosure, or market statistic (excluded by Gate 3)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0071",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0072",
+      "verdict": "exclusion",
+      "gate_failed": "gate_3",
+      "reason": "Uncontested factual report, financial disclosure, or market statistic (excluded by Gate 3)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0073",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0074",
+      "verdict": "exclusion",
+      "gate_failed": "gate_3",
+      "reason": "Uncontested factual report, financial disclosure, or market statistic (excluded by Gate 3)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0075",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0076",
+      "verdict": "exclusion",
+      "gate_failed": "gate_3",
+      "reason": "Uncontested factual report, financial disclosure, or market statistic (excluded by Gate 3)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0077",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0078",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0079",
+      "verdict": "claim",
+      "speaker": "Chamath Palihapitiya",
+      "type": "prediction",
+      "quote": "the high end of the market where Mark operates where the large monoliths operate is quite safe",
+      "claim": "Large enterprise horizontal SaaS monoliths are relatively insulated from generative AI disruption.",
+      "offset": 8
+    },
+    {
+      "turn_id": "00251a80c868f535_t0080",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0081",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0082",
+      "verdict": "exclusion",
+      "gate_failed": "gate_3",
+      "reason": "Uncontested factual report, financial disclosure, or market statistic (excluded by Gate 3)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0083",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0084",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0085",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0086",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0087",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0088",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0089",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0090",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0091",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0092",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0093",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0094",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0095",
+      "verdict": "claim",
+      "speaker": "David Friedberg",
+      "type": "evaluative",
+      "quote": "The real value is in the software that's unique for your vertical.",
+      "claim": "The primary enterprise value from AI software accrues to vertical-specific applications rather than generic tools.",
+      "offset": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0096",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0097",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0098",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0099",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0100",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0101",
+      "verdict": "claim",
+      "speaker": "David Sacks",
+      "type": "evaluative",
+      "quote": "this narrative of the Sass Poculus was totally overdone. I mean, this whole Sass is dead. Narrative",
+      "claim": "The narrative predicting a broad collapse of the SaaS industry was significantly exaggerated.",
+      "offset": 6
+    },
+    {
+      "turn_id": "00251a80c868f535_t0102",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0103",
+      "verdict": "claim",
+      "speaker": "David Sacks",
+      "type": "position",
+      "quote": "You have to think of agents created by the AI companies as being an extension of your platform and not feel threatened that you're losing the customer relationship",
+      "claim": "SaaS platforms should treat external AI agents as complementary extensions rather than proprietary threats.",
+      "offset": 639
+    },
+    {
+      "turn_id": "00251a80c868f535_t0104",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0105",
+      "verdict": "claim",
+      "speaker": "David Sacks",
+      "type": "prediction",
+      "quote": "most of the action with agents is going to happen outside those products and simply want to interact with those products and basically. Get the data from them, use them as the system of record",
+      "claim": "Most agentic activity will occur outside native SaaS applications, interacting with them primarily as systems of record.",
+      "offset": 201
+    },
+    {
+      "turn_id": "00251a80c868f535_t0106",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0107",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0108",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0109",
+      "verdict": "claim",
+      "speaker": "Chamath Palihapitiya",
+      "type": "position",
+      "quote": "I don't think vertical sass has a system of record",
+      "claim": "Vertical SaaS applications lack durable enterprise systems of record.",
+      "offset": 4
+    },
+    {
+      "turn_id": "00251a80c868f535_t0110",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0111",
+      "verdict": "claim",
+      "speaker": "Chamath Palihapitiya",
+      "type": "contested_fact",
+      "quote": "horizontal monolithic companies like Salesforce. Are just unique, work day, or a goal with respect to their GL. It's just very difficult, SAP, IFS. It's very difficult to see a path where you can replicate these businesses",
+      "claim": "Core horizontal enterprise systems of record like Salesforce, Workday, and SAP cannot be easily replicated by AI software.",
+      "offset": 34
+    },
+    {
+      "turn_id": "00251a80c868f535_t0112",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0113",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0114",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0115",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0116",
+      "verdict": "claim",
+      "speaker": "David Sacks",
+      "type": "evaluative",
+      "quote": "there are certain systems of record that are extremely compatible and complementary to AI agents. And if they are positioned right by their founders, they can lean into this",
+      "claim": "Established software systems of record are complementary to AI agents rather than made obsolete by them.",
+      "offset": 631
+    },
+    {
+      "turn_id": "00251a80c868f535_t0117",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0118",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0119",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0120",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0121",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0122",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0123",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0124",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0125",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0126",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0127",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0128",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0129",
+      "verdict": "claim",
+      "speaker": "Chamath Palihapitiya",
+      "type": "prediction",
+      "quote": "That you're going to see all of these businesses converge and they're all going to be competing",
+      "claim": "Major technology platform companies are converging toward identical vertically integrated software, compute, and model offerings.",
+      "offset": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0130",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0131",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0132",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0133",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0134",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0135",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0136",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0137",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0138",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0139",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0140",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0141",
+      "verdict": "claim",
+      "speaker": "David Friedberg",
+      "type": "evaluative",
+      "quote": "the market is saying we're worried about the US fiscal solvency over the long run",
+      "claim": "Long-term US bond yields reflect growing market skepticism regarding United States sovereign fiscal solvency.",
+      "offset": 17
+    },
+    {
+      "turn_id": "00251a80c868f535_t0142",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0143",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0144",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0145",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0146",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0147",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0148",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0149",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0150",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0151",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0152",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0153",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0154",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0155",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0156",
+      "verdict": "claim",
+      "speaker": "Chamath Palihapitiya",
+      "type": "evaluative",
+      "quote": "It's not a Democrat nor a Republican problem. It is a congressional problem, meaning both sides consistently spend",
+      "claim": "Federal fiscal deficits are driven structurally by bipartisan congressional spending rather than either individual political party.",
+      "offset": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0157",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0158",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0159",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0160",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0161",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0162",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0163",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0164",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0165",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0166",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0167",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0168",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0169",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0170",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0171",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0172",
+      "verdict": "claim",
+      "speaker": "David Sacks",
+      "type": "causal",
+      "quote": "it is a trashy the commons meaning you've got four hundred and thirty five members of the house",
+      "claim": "Federal expenditure growth is a tragedy of the commons driven by individual congressional district spending incentives.",
+      "offset": 25
+    },
+    {
+      "turn_id": "00251a80c868f535_t0173",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0174",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0175",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0176",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0177",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0178",
+      "verdict": "claim",
+      "speaker": "David Friedberg",
+      "type": "causal",
+      "quote": "inflation problem is fundamentally rooted in government spending. So deficit spending is correlated very nicely with the cost of housing",
+      "claim": "Persistent inflation and rising housing costs are fundamentally driven by federal deficit spending.",
+      "offset": 322
+    },
+    {
+      "turn_id": "00251a80c868f535_t0179",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0180",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0181",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0182",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0183",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0184",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0185",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0186",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0187",
+      "verdict": "claim",
+      "speaker": "David Friedberg",
+      "type": "evaluative",
+      "quote": "These government programs cause more harm than good. When the government intervenes in underwriting student loans and gives everyone a loan, administrative costs one up by 6x and tuition skyrocketed",
+      "claim": "Federal loan intervention programs cause more harm than good by driving administrative inflation and escalating costs.",
+      "offset": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0188",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0189",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0190",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0191",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0192",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0193",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0194",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0195",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0196",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0197",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0198",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0199",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0200",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0201",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0202",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0203",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0204",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0205",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0206",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0207",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0208",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0209",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0210",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0211",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0212",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0213",
+      "verdict": "claim",
+      "speaker": "David Sacks",
+      "type": "position",
+      "quote": "only AI can create the exponential growth necessary Yes. To make our economy grow big enough",
+      "claim": "Artificial intelligence productivity growth is the sole viable mechanism to make United States sovereign debt manageable.",
+      "offset": 36
+    },
+    {
+      "turn_id": "00251a80c868f535_t0214",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0215",
+      "verdict": "claim",
+      "speaker": "David Sacks",
+      "type": "causal",
+      "quote": "if we hold back AI by creating some new regulatory apparatus that takes years to approve new model releases Then we're cooked",
+      "claim": "New regulatory restrictions on AI will suppress the economic growth necessary to maintain federal debt solvency.",
+      "offset": 36
+    },
+    {
+      "turn_id": "00251a80c868f535_t0216",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0217",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0218",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0219",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0220",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0221",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0222",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0223",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0224",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0225",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0226",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0227",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0228",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0229",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0230",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0231",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0232",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0233",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0234",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0235",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0236",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0237",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0238",
+      "verdict": "claim",
+      "speaker": "David Sacks",
+      "type": "position",
+      "quote": "the take is his. And then he uses the AI to help him write it.",
+      "claim": "An article remains authentic as long as the underlying arguments belong to the author, regardless of AI text generation.",
+      "offset": 44
+    },
+    {
+      "turn_id": "00251a80c868f535_t0239",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0240",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0241",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0242",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0243",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0244",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0245",
+      "verdict": "claim",
+      "speaker": "Jason Calacanis",
+      "type": "evaluative",
+      "quote": "I do think it's kind of the lip syncing of Writing as a writer. I find it offensive to like let the system give your entire opinion",
+      "claim": "Publishing machine-generated prose as personal writing without authoring the words is equivalent to lip-syncing.",
+      "offset": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0246",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0247",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0248",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0249",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0250",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0251",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0252",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0253",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0254",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0255",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0256",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0257",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0258",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0259",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0260",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0261",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0262",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0263",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0264",
+      "verdict": "claim",
+      "speaker": "Jason Calacanis",
+      "type": "position",
+      "quote": "I think not disclosing it is the betrayal.",
+      "claim": "Publishing AI-assisted articles without explicit disclosure breaches authorial honesty with readers.",
+      "offset": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0265",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0266",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0267",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0268",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0269",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0270",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0271",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0272",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0273",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0274",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0275",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0276",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0277",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0278",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0279",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0280",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0281",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0282",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0283",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0284",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0285",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0286",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0287",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0288",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0289",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0290",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0291",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0292",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0293",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0294",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0295",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0296",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0297",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0298",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0299",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0300",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0301",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0302",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0303",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0304",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0305",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0306",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0307",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0308",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0309",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0310",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0311",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0312",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0313",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0314",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0315",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0316",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0317",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0318",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0319",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0320",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0321",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0322",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0323",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0324",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0325",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0326",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0327",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0328",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0329",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0330",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0331",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0332",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0333",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0334",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0335",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0336",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0337",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0338",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0339",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0340",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0341",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0342",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0343",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0344",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0345",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0346",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0347",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0348",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0349",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0350",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0351",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0352",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0353",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0354",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0355",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0356",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0357",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0358",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0359",
+      "verdict": "claim",
+      "speaker": "Jason Calacanis",
+      "type": "evaluative",
+      "quote": "it's terrible for young women to be on this Instagram. We held the line to 16 years",
+      "claim": "Instagram exposure causes serious psychological and emotional harm to adolescent girls.",
+      "offset": 17
+    },
+    {
+      "turn_id": "00251a80c868f535_t0360",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0361",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0362",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0363",
+      "verdict": "claim",
+      "speaker": "Chamath Palihapitiya",
+      "type": "evaluative",
+      "quote": "It's physiologically and psychologically, really helpful for kids to have these limits",
+      "claim": "Enforcing age and screen time limits on social media is physiologically and psychologically beneficial for children.",
+      "offset": 160
+    },
+    {
+      "turn_id": "00251a80c868f535_t0364",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0365",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0366",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0367",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Sponsor advertising read (commercial copy excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0368",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Sponsor advertising read (commercial copy excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0369",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Sponsor advertising read (commercial copy excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0370",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Sponsor advertising read (commercial copy excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0371",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Sponsor advertising read (commercial copy excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0372",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Sponsor advertising read (commercial copy excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0373",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Sponsor advertising read (commercial copy excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0374",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Sponsor advertising read (commercial copy excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0375",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Sponsor advertising read (commercial copy excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0376",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0377",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0378",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0379",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0380",
+      "verdict": "exclusion",
+      "gate_failed": "gate_3",
+      "reason": "Uncontested factual report, financial disclosure, or market statistic (excluded by Gate 3)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0381",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0382",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0383",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0384",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0385",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0386",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0387",
+      "verdict": "claim",
+      "speaker": "David Friedberg",
+      "type": "contested_fact",
+      "quote": "getting that sample very cheap, getting the DNA data very cheap, and actually doing a lot of the upfront work, very cheap",
+      "claim": "The laboratory cost of tumor sequencing and neoantigen identification is relatively inexpensive.",
+      "offset": 84
+    },
+    {
+      "turn_id": "00251a80c868f535_t0388",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0389",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0390",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Interrogative question or prompt rather than speaker assertion (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0391",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0392",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0393",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0394",
+      "verdict": "claim",
+      "speaker": "David Friedberg",
+      "type": "evaluative",
+      "quote": "overseas very cheap it is very efficacious and we act you and I actually have a friend in common who's kind of standing up a business to do this is a very cheap way up in Montana where you have a right to try",
+      "claim": "Personalized neoantigen cancer therapies can be manufactured overseas safely, efficaciously, and at low cost.",
+      "offset": 1620
+    },
+    {
+      "turn_id": "00251a80c868f535_t0395",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0396",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0397",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0398",
+      "verdict": "claim",
+      "speaker": "Jason Calacanis",
+      "type": "position",
+      "quote": "early testing is the key piece for all of us to keep in mind. Get tested early and often for cancer",
+      "claim": "Routine early diagnostic testing is the most critical intervention for effective cancer treatment.",
+      "offset": 11
+    },
+    {
+      "turn_id": "00251a80c868f535_t0399",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Conversational back-reference, unresolved deixis, or incomplete turn thought (excluded by Gate 4)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0400",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Describing third-party narrative, personal anecdote, or context without a defensible claim (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0401",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Speaker unattributable or not an enrolled subject (excluded by Gate 1)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0402",
+      "verdict": "exclusion",
+      "gate_failed": "gate_2",
+      "reason": "Terminal outro theme song and audio collage (show mechanics excluded by Gate 2)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0403",
+      "verdict": "exclusion",
+      "gate_failed": "gate_2",
+      "reason": "Terminal outro theme song and audio collage (show mechanics excluded by Gate 2)."
+    },
+    {
+      "turn_id": "00251a80c868f535_t0404",
+      "verdict": "exclusion",
+      "gate_failed": "gate_2",
+      "reason": "Terminal outro theme song and audio collage (show mechanics excluded by Gate 2)."
+    }
+  ]
+}
