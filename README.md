@@ -2,7 +2,13 @@
 
 **A closed-corpus self-consistency engine.** It builds a dated timeline of what a person has actually said about a topic — from first-hand sources only — and scores how well their own record holds together.
 
-> **Status: design only.** There is no code in this repository yet. What's here is a complete implementation specification: twelve design contracts, a decision log, a verification plan, and a build guide written for an engineering agent with no prior context.
+> **Repository Status: `v2/` is the live rebuild; `v1/` is reference only.**
+>
+> - **`v2/` is the live build directory.** Claim extraction is being rebuilt from the unit up. The single engineering source of truth and active work queue live at [`v2/docs/agent_execution_guide.md`](v2/docs/agent_execution_guide.md).
+> - **`v1/` is the reference implementation.** It ingested 23 episodes, produced 401 claims, and established the core invariants and failure modes across 5 format rewrites. It is reference material and is not being extended. See the [three root causes](v2/docs/agent_execution_guide.md#1-what-v1-established-and-what-it-cost) that motivate V2:
+>   1. [Extraction unit is one line of ASR rather than a speaking turn](v2/docs/agent_execution_guide.md#1-what-v1-established-and-what-it-cost)
+>   2. [Absence of a human-labelled gold standard](v2/docs/agent_execution_guide.md#1-what-v1-established-and-what-it-cost)
+>   3. [Attribution confidence gaps and unexcluded sponsor/guest/reported speech](v2/docs/agent_execution_guide.md#1-what-v1-established-and-what-it-cost)
 
 ---
 
@@ -18,7 +24,7 @@ The defining constraint — **no news, no commentary, no secondary sources** —
 
 That claim needs no journalism and no editorial position, and a reader can check it in about ten seconds because both quotes are on screen with links.
 
-**Explicit non-goals:** fact-checking, prediction scoring, a single composite "trust score," face recognition, scoring private individuals from thin corpora, and share cards that strip a number from its evidence. Each is rejected for a stated reason in [`docs/master_implementation_plan.md`](docs/master_implementation_plan.md) §8.
+**Explicit non-goals:** fact-checking, prediction scoring, a single composite "trust score," face recognition, scoring private individuals from thin corpora, and share cards that strip a number from its evidence. Each is rejected for a stated reason in [`v1/docs/master_implementation_plan.md`](v1/docs/master_implementation_plan.md) §8 (carried forward in [`v2/docs/agent_execution_guide.md`](v2/docs/agent_execution_guide.md) §8).
 
 ---
 
@@ -33,7 +39,7 @@ That claim needs no journalism and no editorial position, and a reader can check
 
 Scores are always per `(subject, topic)`. There is no "trustworthiness of a person" — the product does not support the question.
 
-**No language model runs at scoring time.** The only generative model in the system is the claim extractor; everything above it is arithmetic over structured rows. That is what makes any score reproducible byte-for-byte and recomputable by hand. See [`docs/design_rubric_engine.md`](docs/design_rubric_engine.md) §0.
+**No language model runs at scoring time.** The only generative model in the system is the claim extractor; everything above it is arithmetic over structured rows. That is what makes any score reproducible byte-for-byte and recomputable by hand. See [`v1/docs/design_rubric_engine.md`](v1/docs/design_rubric_engine.md) §0.
 
 ---
 
@@ -55,17 +61,17 @@ Python owns ingestion and analysis (Whisper, pyannote, local Gemma, embeddings).
 
 ---
 
-## Running the review site
+## Running the V1 review site
 
 ```bash
-.venv/bin/python scripts/serve_site.py
+cd v1 && .venv/bin/python scripts/serve_site.py
 ```
 
 It prints a URL with a bearer token: `http://127.0.0.1:8787/?token=…`. The first request sets an `sp_token` cookie, so links afterwards work without it. Four routes — episodes, one episode's claims grouped by speaker, the Social Proof panel for a claim, and one person across all episodes.
 
 **Loopback only, and the database is opened read-only.** If a writing worker already holds `social_proof.duckdb`, startup fails with a message saying so rather than quietly taking a writable connection — stop the worker and retry.
 
-**What it shows today.** 23 episodes, 20,666 utterances, 401 claims, every quote verbatim-verified against its transcript with a deep link to the source at its offset. **Specificity is the only axis producing a number.** Consistency, Update Integrity and Even-handedness all render as explicit absence, because no contradiction has yet survived verification — five of five tensions ever generated were quarantined as fabrications. That is the honest state of the pipeline, not a rendering bug; `docs/agent_execution_guide.md` §2 has the diagram showing where it breaks.
+**What it shows today.** 23 episodes, 20,666 utterances, 401 claims, every quote verbatim-verified against its transcript with a deep link to the source at its offset. **Specificity is the only axis producing a number.** Consistency, Update Integrity and Even-handedness all render as explicit absence, because no contradiction has yet survived verification — five of five tensions ever generated were quarantined as fabrications. That is the honest state of the pipeline, not a rendering bug; `v1/docs/agent_execution_guide.md` §2 has the diagram showing where it breaks.
 
 ## Evidence discipline
 
@@ -78,27 +84,32 @@ The system makes claims about real, named people, so the integrity rules are loa
 - Quoting someone to disagree, hypotheticals, steelmanning, and sarcasm are excluded — and the exclusion is *recorded*, so the false-exclusion rate is measurable.
 - One conflicting pair is never reported as hypocrisy. Only a pattern that survives a significance test is.
 
-Full contract: [`docs/design_evidence_integrity.md`](docs/design_evidence_integrity.md).
+Full contract: [`v1/docs/design_evidence_integrity.md`](v1/docs/design_evidence_integrity.md) (carried forward into [`v2/docs/agent_execution_guide.md`](v2/docs/agent_execution_guide.md) §9).
 
 ---
 
 ## Documentation
 
+### V2 — Live Rebuild
+- [`v2/docs/agent_execution_guide.md`](v2/docs/agent_execution_guide.md) — Zero-context execution guide, active work queue, carried-forward traps, validation standards, and invariants.
+
+### V1 — Reference Contracts (Archived)
+
 | Doc | Covers |
 |---|---|
-| [`master_implementation_plan.md`](docs/master_implementation_plan.md) | Invariants, system shape, phases, non-goals |
-| [`agent_execution_guide.md`](docs/agent_execution_guide.md) | Zero-context build guide: known traps, work items, validation, falsification |
-| [`ongoing_errors.md`](docs/ongoing_errors.md) | Decision log — options, trade-offs, selections, and parameters that must be *measured* rather than chosen |
-| [`design_source_acquisition.md`](docs/design_source_acquisition.md) | The first-hand boundary, ingest pipeline, transcription safeguards |
-| [`design_claim_extraction.md`](docs/design_claim_extraction.md) | Utterance → proposition + stance; speech-act guards |
-| [`design_principle_extraction.md`](docs/design_principle_extraction.md) | The even-handedness machinery |
-| [`design_topic_model.md`](docs/design_topic_model.md) | Clustering and free-text topic resolution |
-| [`design_rubric_engine.md`](docs/design_rubric_engine.md) | Axis formulas, tension types, sufficiency gates |
-| [`design_data_layer.md`](docs/design_data_layer.md) | Schema, deterministic IDs, versioning |
-| [`design_local_api_and_clients.md`](docs/design_local_api_and_clients.md) | API contract, security, the news-as-index boundary |
-| [`design_ui_direction.md`](docs/design_ui_direction.md) | Timelines, tension cards, rendering absence |
-| [`design_evidence_integrity.md`](docs/design_evidence_integrity.md) | What the system may and may not assert |
-| [`e2e_verification_journeys.md`](docs/e2e_verification_journeys.md) | Golden corpus and end-to-end journeys |
+| [`v1/docs/master_implementation_plan.md`](v1/docs/master_implementation_plan.md) | Invariants, system shape, phases, non-goals |
+| [`v1/docs/agent_execution_guide.md`](v1/docs/agent_execution_guide.md) | V1 execution guide, 23-episode history, failure modes |
+| [`v1/docs/ongoing_errors.md`](v1/docs/ongoing_errors.md) | V1 decision log — options, trade-offs, selections |
+| [`v1/docs/design_source_acquisition.md`](v1/docs/design_source_acquisition.md) | The first-hand boundary, ingest pipeline, transcription safeguards |
+| [`v1/docs/design_claim_extraction.md`](v1/docs/design_claim_extraction.md) | Utterance → proposition + stance; speech-act guards |
+| [`v1/docs/design_principle_extraction.md`](v1/docs/design_principle_extraction.md) | The even-handedness machinery |
+| [`v1/docs/design_topic_model.md`](v1/docs/design_topic_model.md) | Clustering and free-text topic resolution |
+| [`v1/docs/design_rubric_engine.md`](v1/docs/design_rubric_engine.md) | Axis formulas, tension types, sufficiency gates |
+| [`v1/docs/design_data_layer.md`](v1/docs/design_data_layer.md) | Schema, deterministic IDs, versioning |
+| [`v1/docs/design_local_api_and_clients.md`](v1/docs/design_local_api_and_clients.md) | API contract, security, the news-as-index boundary |
+| [`v1/docs/design_ui_direction.md`](v1/docs/design_ui_direction.md) | Timelines, tension cards, rendering absence |
+| [`v1/docs/design_evidence_integrity.md`](v1/docs/design_evidence_integrity.md) | What the system may and may not assert |
+| [`v1/docs/e2e_verification_journeys.md`](v1/docs/e2e_verification_journeys.md) | Golden corpus and end-to-end journeys |
 
 ---
 
