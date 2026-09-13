@@ -1,0 +1,2990 @@
+{
+  "source_id": "79e5cda81c5740e9",
+  "title": "The $1/Hour Worker: Four Robotics CEOs on Humanoids at Home, China's Threat, and the End of Dangerous Jobs",
+  "metrics": {
+    "source_id": "79e5cda81c5740e9",
+    "title": "The $1/Hour Worker: Four Robotics CEOs on Humanoids at Home, China's Threat, and the End of Dangerous Jobs",
+    "utterance_count": 902,
+    "turn_count": 148,
+    "retained_turn_count": 145,
+    "stripped_turn_count": 3,
+    "question_anchored_count": 23,
+    "question_anchored_pct": 15.54
+  },
+  "turns": [
+    {
+      "turn_id": "79e5cda81c5740e9_t0000",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 0,
+      "end_ms": 9000,
+      "text": "Hey everybody, it's your boy Jake Al, I'm here in Paris, France at a conference called Makina, basically AI in the real world.",
+      "word_count": 23,
+      "utterance_ids": [
+        "bfa9e23a9bd601ce"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0001",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 15020,
+      "end_ms": 19840,
+      "text": "Pardon my robot. Thanks for tuning in, and let's get started.",
+      "word_count": 11,
+      "utterance_ids": [
+        "e3fb1d5ca097e7e1",
+        "02e80ccd6ccd73d5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0002",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 20000,
+      "end_ms": 22980,
+      "text": "I'm doing all of you.",
+      "word_count": 5,
+      "utterance_ids": [
+        "4b7563328963fb9c"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0003",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 23460,
+      "end_ms": 56020,
+      "text": "App Loving started with an $8 domain and no VC funding and became one of the largest ad platforms in the world. Now that same engine, Paris App Loving adds for e -commerce. Your ads run inside mobile games, reaching over a billion people with full -screen distraction free attention. The platform. find spires and optimizes for profit. You set the target, it does the rest. One cook where brand went from $4 million to $16 million. Turned profitable and is on pace for 80 million this year. Visit apploving .com slash all in to launch your first campaign today.",
+      "word_count": 100,
+      "utterance_ids": [
+        "9f67570796ba43f1",
+        "b9ffbd9879183e4c",
+        "7333c8525edbcb2a",
+        "033c55e837579f2d",
+        "8d17aafb5e3a0ef5",
+        "b800e6d1a370ad80",
+        "42af2487c1ca1199",
+        "9012d41d22ce32a4"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0004",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 57700,
+      "end_ms": 75360,
+      "text": "Alright everybody, our interviews! with. The number one companies in robotics today continue here in Paris. Really excited to have Dr. Peter Funkhouser on the program. You're the co -founder and CEO of any robotics. You make the anymo get it.",
+      "word_count": 41,
+      "utterance_ids": [
+        "43db5eed917f7747",
+        "10183d3c3e347586",
+        "4a29e2864816bf92",
+        "c8f4e21c0089d455",
+        "6c8f1386b951529b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0005",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 75540,
+      "end_ms": 82640,
+      "text": "A lot of you have puns, but you've been working in this space for cl - Most of 20 years, the company's been around for 10.",
+      "word_count": 26,
+      "utterance_ids": [
+        "33f319352b919ff5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0006",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 82900,
+      "end_ms": 144280,
+      "text": "First five years, kind of a research lab. Last five years, your, what do you call these? Dog -based robots? It's an inspection solution, right? Exactly. Asia, collection, and understanding, and critically infrastructure. But the form factor is... A four -legged robot. A four -legged robot. A four -legged robot. We like... to call it a dog, but why did that dog format become the standard? You're not the only person making it. There's many people making it now. Why does that one become the first one to hit relative scale and for a deployment. Yeah. And that's it. You know, a lot of animals have four legs. So this is your lesson to that. So for sure, you have a great mobility. You can climb stairs. You can go anywhere a person can go. So the next is mobility and balance. Mobility, right? Balance but also stability. Four legs if you white foot print, a lot of foot holes hold onto, because we work in nasty environments. Slippery force, there's, you know, rain farming. this snow falling down, the grass growing, got it. So four legs is a real good format.",
+      "word_count": 192,
+      "utterance_ids": [
+        "19333e94c1abcf9d",
+        "78da59c89f4b0423",
+        "39eea8dd88b3822f",
+        "7b13177fe81f7ba5",
+        "76f932284f7f9d8b",
+        "cb70ef1623a4b41d",
+        "fb83b0299d146415",
+        "ce8f3ee2e58dbe43",
+        "7d240b8dc5a1e8b7",
+        "e56404572d16d20b",
+        "3cb0161b0a768bc1",
+        "c000aea80df63182",
+        "483db5f2cf558d8f",
+        "69e917ac7cdbbe29",
+        "2a3538cd39d43fd8",
+        "928ac69a11be1cb8",
+        "ec4c0015bb00a4a7",
+        "deef727264e47646",
+        "14dc3a9003295c59",
+        "431df0e6c8d0e2db",
+        "297c2598fda86102",
+        "f48533ba858da124",
+        "938b61ffa437a36a",
+        "818aa9184903af2e",
+        "5e575f79c4ca2ae1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0007",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 144720,
+      "end_ms": 164880,
+      "text": "Well, now this is a silly question, but why don't we make senators for the human versions. When people are making the optimist, the Neo, the Atlas from Boston Dynamics, those stand up robots with two legs, the concern is they're always good. fall over, they constantly fall over in demos, and if they fall over, they're going to break somebody's ankle.",
+      "word_count": 62,
+      "utterance_ids": [
+        "b8f9db1b6bd5e5ee",
+        "771d44686a7521ca"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0008",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 165220,
+      "end_ms": 192580,
+      "text": "Why not put four legs on those? You could absolutely, and it really depends on the use guys. If you need to work, bring, you know, I don't know, in a coffee shop, bring it to you, and there's not always spaces, right? You want to work an eye level. Maybe you want to know it is better. In the facilities that we work, four legs. ability. There's enough space to go around. Yeah, it's the perfect form. I don't buy it. I think all the cafes should have, are they, were they sanitars in a Greek mythology? Yeah, it's a sentence for four legs and yeah, I think that should be the new standard.",
+      "word_count": 115,
+      "utterance_ids": [
+        "6fae57bf4ce579b9",
+        "8faf2b097974135f",
+        "643c2bfa4362fad6",
+        "1b6babcb2c88b72c",
+        "451489d8261d82d7",
+        "9f58c7a5079bddc8",
+        "c34fca8fbc42257a",
+        "b9e971a05dc98d74",
+        "822965f7c5533dd3",
+        "d6f02f21ffc569db",
+        "6fbdd876f4b8af41"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0009",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 192980,
+      "end_ms": 204940,
+      "text": "You found a really effective first use case, which is inspecting really important in for sure. structure, and now you have thousands of these, hundreds of these for hundreds.",
+      "word_count": 29,
+      "utterance_ids": [
+        "e3e0830c9f063a98"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0010",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 205120,
+      "end_ms": 219980,
+      "text": "Hundreds for deployed over the last five years. These are expensive. They're low hundreds of thousands of dollars to buy them. Yep. And to operate them, I'm assuming tens of thousands of years in service contracts. So they're not.",
+      "word_count": 39,
+      "utterance_ids": [
+        "b33f41a7ed70d0dd",
+        "5ad474432794ba11",
+        "f9ee7b1543ecf0ac",
+        "1d3afc5c450d83eb",
+        "4f85067da482a4fd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0011",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 220000,
+      "end_ms": 225820,
+      "text": "But for home use, these are industrial, and they have a lot of sensors on them.",
+      "word_count": 16,
+      "utterance_ids": [
+        "fdb5bdd8708823a5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0012",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 226100,
+      "end_ms": 282020,
+      "text": "So if you were going to inspect, I don't know, a pipeline with natural gas in it, right? These things can go out in any weather, and they can sense things on that pipeline, that a human. Can't correct. Yeah, that's right. For us it's not about labor replacement, right? It's what can we do better? What can we do superhuman? Inspection is a great example. Our eyes and ears don't perceive all the singles. Micro gas leakages, temperature, equipment overheating. With the cameras on the robot, thermal cameras, acoustic, you know, microphones, gas concentrations, and all of that, we pack it full. sensors in AI, and you can go way beyond what a human can do. So the monetary benefit is avoiding downtime. These assets, if they stop, they lose revenues in a hundred to thousands per hour. So I would remain at every hour we can save them, essentially pay for the robots, and that's why we can afford having really expensive sensors, really expensive GPUs on top of powerful compute on them.",
+      "word_count": 175,
+      "utterance_ids": [
+        "afe1150a7501a865",
+        "e291a3bbbe588e36",
+        "98e09b3f02eb6812",
+        "d271fe8db4b0614d",
+        "ab19022d46d945d4",
+        "ee92dcc326c172cb",
+        "d20b15497cd4cfa2",
+        "c523a070b2f907f0",
+        "62f64b3457544dc1",
+        "1e2cd1c914c2ce69",
+        "8e4a1f56e7f0f202",
+        "b65609d27d344ba4",
+        "06e328227da11802",
+        "d296d377227d96c8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0013",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 282420,
+      "end_ms": 285660,
+      "text": "Right. And they have to have a significant battery power then.",
+      "word_count": 11,
+      "utterance_ids": [
+        "b88c0b47bea86f97"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0014",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 285660,
+      "end_ms": 323680,
+      "text": "So these things can do a mission of what an hour or two. Two hours. But now a ducking station to come back charge. But they do this over and over. Some of the customers run these missions 40 times a day. 14, 45, 40. 40. They're interested in a specific point. Wow, the electric art furnace goes up. They want to know in that minute. What's happening? Two dangers to send in the person. Thermal cameras burned. They need a robot that's right at that moment. God, and they have to charge not hot swapping the batteries. No, you won't hands -free autonomy. Nobody should even be bothered that there's a robot. They don't care about the robot. Actually, they don't even want the robot. They want the data. They want the ins. The robot is a mean swim end to collect the data precisely.",
+      "word_count": 146,
+      "utterance_ids": [
+        "9f33bc55be90a78e",
+        "ea8abd2cff91620d",
+        "85919253375519f2",
+        "1fe38f3a25cdfe08",
+        "629007f6d865e890",
+        "48094cf16add7ba7",
+        "730c547f50fb1f21",
+        "53329c4eda84f00a",
+        "4715472e1dd4e351",
+        "338e8720f4b4cbb8",
+        "0c2edb4168b8f35e",
+        "d517f110031a5b4f",
+        "628a983bdf09b15c",
+        "b62bed39f938f9d2",
+        "a5878509b847ad1c",
+        "3940fc8385ac69c9",
+        "7da43b5aa5e9f37a",
+        "23bf09f1bf180637",
+        "8f98cd11f3f61069",
+        "6a1f13acf33d2ee6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0015",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 323860,
+      "end_ms": 329840,
+      "text": "But I can you upload the very power hungry compute and put it in the cloud.",
+      "word_count": 16,
+      "utterance_ids": [
+        "a3ab15bf2d4abe36"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0016",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 330080,
+      "end_ms": 372600,
+      "text": "We also do that. There's always two parts. This part that need to run real time on the robot, because you also can out the guarantee connectivity, obstacle avoidance, data quality, making sure you have the right. Yeah, if you upload the blurry image for the cloud, it's too late. Yeah, but in the cloud, of course you do contextual analysis, historic downtime analysis, etc. Are people asking for these to be able to operate for 24 hours yet or 12 hours? No, for sure. So the maximum is in the i8 hour range. So it has enough time for charging. If you need to go beyond that, that's rare. This diminishing rate. to more frequently do it, but you have to manage. They do it manually today, maybe once or twice a day, and they get eight, 15, 20 times now. So it's already the frequency goes massively up. Yeah, without putting people into harm's way, plus the quality is so much higher.",
+      "word_count": 164,
+      "utterance_ids": [
+        "e020915ed5d09471",
+        "cc578d3809827960",
+        "195e60ad32d1fe54",
+        "25ea21d09ddffd24",
+        "72920f24b7024986",
+        "fa92af2de18f6259",
+        "bcd2b95403a9af85",
+        "bf8e6c02d8570932",
+        "ece64cf1a7640ffb",
+        "d62e4fcbb141dec4",
+        "a69f5cd210c9ad04",
+        "fe83302746c006d8",
+        "36406380f8f63a7c",
+        "dfdbd9374cddd124"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0017",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 372680,
+      "end_ms": 379520,
+      "text": "What's the most fascinating science fiction deployment you have currently with these?",
+      "word_count": 12,
+      "utterance_ids": [
+        "23e61661517f6bf4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0018",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 379840,
+      "end_ms": 397200,
+      "text": "Yeah. I mean what's really exciting anything offshore like people fly out with helicopters every helicopter flight costs in the tens of thousands So but if you're offshore, it's very tricky, right? It needs to work. There's almost no people around. It needs to be floaters. These are oil rigs, oil and wind energy offshore as well. Ah, yeah.",
+      "word_count": 59,
+      "utterance_ids": [
+        "df046f5d70d7064e",
+        "47b8714fe7ebefb3",
+        "14df650b75c8af01",
+        "9151a77aae82899a",
+        "43c4f15e70d692da",
+        "0dc39fa88068497b"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0019",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 397260,
+      "end_ms": 399800,
+      "text": "Wait a second, these things don't operate in the waters.",
+      "word_count": 10,
+      "utterance_ids": [
+        "de57b4cf9c24e2fa"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0020",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 400000,
+      "end_ms": 414000,
+      "text": "So how do they work with windmills in the ocean? There's windmills around hundreds of them. They come together to a transformer station. That transforms to ACDD, so before it turns out, that's a man's facility, typically. Got it. They convert to all this is where the robot operates. Got it.",
+      "word_count": 51,
+      "utterance_ids": [
+        "c3562e20c46958a6",
+        "8215ab0bcc24f76f",
+        "3623dd7a5f3d3ce2",
+        "ed1b3efa205cefca",
+        "5db11a9525063164",
+        "9097082951962c6a",
+        "bb2c4f6d5be19a41"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0021",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 414040,
+      "end_ms": 419560,
+      "text": "Can they operate in severe conditions like the NRNIC and stuff like that and have you deployed them in the area?",
+      "word_count": 21,
+      "utterance_ids": [
+        "58edbec5cef7be95"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0022",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 420000,
+      "end_ms": 466760,
+      "text": "In Norway for sure. So that's my 2020 degree in deserts plus 456 degree, right? So that's exactly the point where you want to send in the robot. Temperatures, dust, humidity. Most importantly, we have a robot now that goes into explosive atmospheres, which is, you know, in oil and gas and chemicals, methane in the air. You're not allowed to, you know, garbage. spark. So it feels a special robot that's guaranteed enough to create a spark. This is what you don't want to have people, but for a machine that's a perfect case, right? Dangerous environments. This is where we're sending robots in. That's fascinating. So if you're in the Permian Basin and something leaking, that is one of the most dangerous these oil rigs. Least. This is where people seriously die. And you don't want you want to know when it's happening. Yeah, you don't want to create a problem. So that's a perfect thing.",
+      "word_count": 158,
+      "utterance_ids": [
+        "a75a3960b4ac8f43",
+        "75d27884744f27f0",
+        "62f7197f95e5f9ea",
+        "1e638c6251f231ed",
+        "d2c450b3c1b92aaa",
+        "a82005912e143d79",
+        "031c648be6c70718",
+        "0e77a63eff943235",
+        "eccb49831d98c308",
+        "17904a5477832ce4",
+        "b4d0de07c372e7bb",
+        "5851319bbfeb6c6e",
+        "19a2e6f6e8e5564c",
+        "60185db46d4a42c9",
+        "c51fdaf7f2c3a8ee",
+        "4df9f73262537edb"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0023",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 466780,
+      "end_ms": 472940,
+      "text": "I mean, I'm going to keep going sci -fi, but dropping these things into the bottom of the ocean seems like a no -brainer at some point.",
+      "word_count": 27,
+      "utterance_ids": [
+        "3df9e2f10dbe6e6f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0024",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 472980,
+      "end_ms": 496560,
+      "text": "Well, there's something that means, right? We don't do that right now, but I agree, right? Robots should work in environments where people shouldn't be dangerous remotes, right? pouring repetitive tasks, but this is what we, that's a different form factor right now, but there are people creating on the surface and then under the surface right robots that are doing essentially not inspections, but monitoring systems for obviously the military,.",
+      "word_count": 71,
+      "utterance_ids": [
+        "d6cda3b53e60d07f",
+        "49bad029924f6e70",
+        "3725963aa15c2983"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0025",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 498540,
+      "end_ms": 516160,
+      "text": "Well if you're out there inspecting and there's a gathleague and it's dangerous to send humans out there when are you going to put some equipment on these to fix the goddamn leaf while you're out there and that must be the holy row is it not?",
+      "word_count": 47,
+      "utterance_ids": [
+        "89cd8ff0934079ca"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0026",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 516400,
+      "end_ms": 593500,
+      "text": "Yeah once you can detect a problem because the mess can you solve it can you fix it you Turn not today. Okay. You know in a demo, yes, but in reality getting it to 99 .9 % reliability and explosive atmosphere That's still in development First step this closed -level is open cabinets. Eventually, you won't have by manual manipulation. Maybe three four arms. Yeah, extra machine, right? That's so you know, hey, I will help us. That's a lot of work ahead of us. It's a lot of the demos you see a few more It's folding laundry. That's a very controlled environment. Once you're outdoor in a hailstorm, right? Freezing temperatures. It's different also for perception. But eventually we foresee the future that this will be solved. What percentage of your robot is sourced from China? Zero. So that's zero percent. And is that because in the EU and Norway? way, it's banned or that's a choice. That happens just historically that we source locally and you get chips from the US, et cetera. And for some of our customers, it's important. And we built a lot ourselves, right? Because we start to 10 years ago. So a lot of the architecture nowadays, you get cheaper components around the globe. So it's about being smart where you get components from, which one, active, which one are just metals. So for sure, it's a whole world to navigate, but tapping into the commoditization of certain hardware. That makes sense for us, called devices. Who's specializing in that outside of China now? Is it Vietnam, India, Taiwan?",
+      "word_count": 268,
+      "utterance_ids": [
+        "4fce4a0e7b4a6eda",
+        "65e1fc449b1e829e",
+        "6520da7c1ed6a43d",
+        "642d0a61c2d74899",
+        "41d9dcbe1e7fe557",
+        "11f5d410b9f59887",
+        "b1d9ae1b814b2a3b",
+        "fcca6b8d589b3590",
+        "a8280b085c0bda35",
+        "4e6a7a590d802336",
+        "b919f3684cbcac53",
+        "52a7de8b11626757",
+        "888331469d65060c",
+        "d7da2dcdadd42651",
+        "91a42b304716ad54",
+        "f8921d0440c2ee3a",
+        "1817c875453ad51e",
+        "2a6bb39948df7863",
+        "d816af93e7b9e43b",
+        "7fc18a8d3090805c",
+        "7fd710eb14283d1a",
+        "070e3cc5c86cb5dc",
+        "a0e5680d4ef6995c",
+        "e7d70032ce9a3a16",
+        "229f22e96f4704a2",
+        "ce8c474ce7bb86b1"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0027",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 593980,
+      "end_ms": 597500,
+      "text": "Where can you source the actuators and a lot of this stuff?",
+      "word_count": 12,
+      "utterance_ids": [
+        "5bee86ab7cc26f42"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0028",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 597500,
+      "end_ms": 611660,
+      "text": "One short, China's number one pushing. Companies in Europe right on the US as well. So these three regions which if it's just about labor assembly you can go elsewhere as well. But you want to get the core expertise somebody who builds that component. Got it.",
+      "word_count": 47,
+      "utterance_ids": [
+        "a24af37990e57c14",
+        "d5f7f9977224b3fa",
+        "824ace08237901e0",
+        "59bf519427271df4",
+        "6f9983632159ea26"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0029",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 611980,
+      "end_ms": 614600,
+      "text": "And how do you look at China now?",
+      "word_count": 8,
+      "utterance_ids": [
+        "3a87717fdb8c784b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0030",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 614740,
+      "end_ms": 618580,
+      "text": "They've been stealing the IP. I'm assuming they've stolen yours already.",
+      "word_count": 11,
+      "utterance_ids": [
+        "24e485fb8063a583",
+        "6a135095fe9056cb"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0031",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 619740,
+      "end_ms": 631040,
+      "text": "And... certainly other people's IP is being stolen at scale in China, and they're building robots that are going to be 80 % cheaper and they're going to try to deploy them to the same customer base.",
+      "word_count": 37,
+      "utterance_ids": [
+        "b787976608851ddd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0032",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 631300,
+      "end_ms": 632020,
+      "text": "I am certain.",
+      "word_count": 3,
+      "utterance_ids": [
+        "9996d211f5408ebc"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0033",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 632460,
+      "end_ms": 634860,
+      "text": "How are you thinking about the threat of Chinese robotics?",
+      "word_count": 10,
+      "utterance_ids": [
+        "eb374a0c5eee7eda"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0034",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 635900,
+      "end_ms": 663420,
+      "text": "If you look at the robot from China today, that device is a piece of hardware that I can walk beautifully. Dright engineering love it do back flips. Yeah, but they're not solving a problem our customers don't compare a platform to the full solution now Yeah, do you need autonomy inspection intelligence the word flow integration is so much more, right? It's just a hardware difference. So the harness the wrapper the services around it. They're not providing. Yeah, I did the trust in the data All right, we collect very sensitive data. We have eyes certification for cyber security, all these topics, right? So that's how we compete.",
+      "word_count": 110,
+      "utterance_ids": [
+        "ed8ab5e759da2145",
+        "611d97852f71a7db",
+        "e0a883650bd7f1a7",
+        "6bc9adeb34168ebd",
+        "c5d7e722ffde8d56",
+        "fc66075b49a3afa4",
+        "df948fd54eae114f",
+        "c480263c5e7d9166",
+        "37ee37ff8154e239"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0035",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 663600,
+      "end_ms": 671820,
+      "text": "So you might not want to send the nuclear power plants, latest data to the Chinese Communist party, you're saying.",
+      "word_count": 20,
+      "utterance_ids": [
+        "7aa735effb2bbd8d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0036",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 671840,
+      "end_ms": 699980,
+      "text": "You don't want to have 15 cameras in critical infrastructure. Yeah, somebody else controls. Yeah, I'm being a bit busitious, but it's happening today. But it's. there's data leakage. Talk to me about military applications. Yeah, they know is having to arm itself. I apologize on behalf of the United States for our stance with NATO. But you guys have to pay up and pay your fair share. You've agreed to do that. But I think there's a perception in Europe. You can tell me if I'm wrong in a NATO.",
+      "word_count": 91,
+      "utterance_ids": [
+        "9f64370bbce7c5b7",
+        "41799dd45e83f341",
+        "02ce1a93f878400b",
+        "82b33d49d6319633",
+        "07882f9767125e3a",
+        "8ac38f71e1db2ba1",
+        "638c0da42526161d",
+        "a5bb9cc57ebb75dc",
+        "1ede803087b332f4",
+        "1c86481746a3b2c7",
+        "1ac8261c827de84f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0037",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 700000,
+      "end_ms": 717280,
+      "text": "So that you may have to go it, maybe without the United States, you may need to build your own military products and services. Do you not need to be in the military space and do you not to take the same applications and build military applications and are you doing that yet?",
+      "word_count": 53,
+      "utterance_ids": [
+        "602abb1bbfda9f9a",
+        "bd10d134bfa411ab"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0038",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 718580,
+      "end_ms": 826000,
+      "text": "So I think there's a response to - ability in Europe to build technologies, to be able to, you believe that personally. Yes, however, for antibiotics, we built and we went down one track, this tremendous pulse, so today we're not doing it, not intended to do it, right? And it's also a different product at that stage probably, right? It sounds very easy, just take four legs and do military, you need to go couple of steps for what exactly you're doing, different communication. different autonomy. So we're not doing it. But I mean, I think there's a responsibility to do it for all of this. Is it never say never for you? Or is it your debt set on like you have a mission? You're not going to build military. No, it's so they the mission is clear. We started with non -military. This is where we headed. Got it. But if the EU asks you and you were they got it. And we get, you know, oh, you do get the last request, but it's also honest with are we solving actually the problem just shipping a robot to the military doesn't solve the problem We really need to go deep so you wouldn't need a different team to do that RT really you need a different team Well, it seems like you could do the same team and build military app. No autonomy is very different, right? So for example So we do autonomy, you have time to set up a robot and does inspections all of that. The military is about millisecond being in right, remote control due when in the loop the communication is different of autonomy than everything on top application software. Very different. Yes, you could lose it for like a robot also going to a house. That's about it, right? The rest is different. How do you think about it? Robots that are armed clearly China has done demonstrations of these same type of, you know, four -legged robots with guns on them And obviously with AI these terminators scenarios are here. Yeah, they're being built in China already. Yeah, we've seen drones on the battlefield in Ukraine nor was is not far away from Russia, it's not that close, but it's not that far away either.",
+      "word_count": 386,
+      "utterance_ids": [
+        "bfb310341ce619f6",
+        "fe248fa7cf7702bb",
+        "35ecabb8f879325f",
+        "047c9696368d5619",
+        "5d7185442f8f82ef",
+        "37729c3a384d28dc",
+        "2e1f524675450b5a",
+        "7e906bac04b42eb6",
+        "b2f5fa51f5d248d3",
+        "8069b15fe87ba19a",
+        "36fe9c2dd0e4ec39",
+        "db7aa554655d7306",
+        "1913362946d23201",
+        "8db48ed6fbe95bbc",
+        "b9713c7b8d8c13db",
+        "3f641b09cc40f946",
+        "45cb1ccada335d20",
+        "fcac0235c27b181f",
+        "8d359a8154b51114",
+        "ac3c822ce3a4aede",
+        "168669b14cb09882",
+        "70dbae20c2090c79",
+        "11745e4fa8e87827",
+        "51e3f26947cd9eb4",
+        "f323ca08c6e52a6d",
+        "cca916993f12cafd"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0039",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 826380,
+      "end_ms": 949500,
+      "text": "How do you think about the fact that communist countries are building these robots that have weapons on them, Bill? I personally don't like it. I hate it. I think you're concerned, right? I mean, that's an engineer you should have pride. to build technology for good defenses one part the active attack putting a gun on it it's risky these technologies getting mature but done not that mature that you would put it somebody else in harm's way yeah it is the enemy we're gonna be faced is going to do this and we need to monitor what is the buzz inside the end history about this when you're out with other people in the industry, you know, what do you know that we don't know about what's happening in those authoritarian countries with robotics and the military. I think these are all very early tests. If I look at those videos, these are demonstrations. God, I've not seen these types of robot. I can drones, yes. Ukraine that came out of necessity, that was a mature category that was used. In robotic issues with the people I speak to, I mean, four years ago, we wrote a letter to get it with our friends, a bus dynamics and all this right, who condemned the weaponization of robots. For exactly that reason, that as engineers, we don't want to see it being used, and we think it's just dangerous and risking stupid. Yeah. All right, listen, continued success. All right, everybody, really excited to have Bird Bornick here. He is the founder and CEO of 1X. If you know 1X, they make the Neo. The Neo is a household robot. You've sold a lot of pre -orders and you guaranteed people. This would make it. ship in 2026 into their homes. What is it cost and are you going to hit yourself and hose deadline? You've got to keep your promises. Okay. So we will ship in 2026. Okay. Now, expectation managing here will be slow in the beginning. We want to do it right. Yes. Well, there will be a handful of customers. I guess they're Neo in 2020 to 26 and I'm so excited and I can't wait. What is the cost of the Neo? So that's an interesting one because it depends a bit.",
+      "word_count": 388,
+      "utterance_ids": [
+        "913259effd55d485",
+        "296a882b2cf5be60",
+        "289df060a129b3de",
+        "4f34630af777ad63",
+        "26349d1c8ec67b25",
+        "0b73c9fa0870bcf6",
+        "97784ea87e66e343",
+        "5a793f70ba2f2a04",
+        "384ac54eea64b690",
+        "0b3b96039f4029c7",
+        "85048835411cba47",
+        "2ce7fd37086d6864",
+        "3a0798ae25a6da72",
+        "00106f0a25ffe4dc",
+        "20262f9f70f9fc9c",
+        "e8ef734a79f3f70e",
+        "cd6c5b5bb3501ef3",
+        "1765bdcc9fe883bc",
+        "f492e0a179ddf387",
+        "98fe18603d8e9ac7",
+        "c41dad273fad15fe",
+        "752a4240e1c7d83b",
+        "fc7ea251eca0bb92",
+        "e7e0d07a78b2fe75",
+        "8e524eb751e480a8",
+        "97e6d9f4b2b340d2",
+        "4d1f54cf1204ae67",
+        "b0bb9d485219afa2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0040",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 950560,
+      "end_ms": 988220,
+      "text": "I mean when we launched a pre -order we had two different payment bottles. We had a kind of like early adopter upfront full payment and then we had a subscription fee. And the product, of course, is going through a lot of development. So how this subscription model will look in these things, it's kind of like still evolving. Got it. And we want to figure that out also bit together with our customers in the beginning. But another big one now is we haven't read that announced this yet. But I've dripped it in a bit. Got it. Which is we are going to allow a lot of people to build on the O. So we are also launching Neo as a platform. Yeah, that is I don't think he's like an ass store of such a skilled store.",
+      "word_count": 141,
+      "utterance_ids": [
+        "621093f1758e9db1",
+        "6f580dd838239f41",
+        "fc8918007c9985b4",
+        "1a7375f5368daa85",
+        "c5c020c7301b9971",
+        "593faada79d4aa68",
+        "abd18fcc1fde4bde",
+        "7aa353ca6a95b394",
+        "61da4165f2aa94df",
+        "3810b755fa15ebea",
+        "efaf22337a380fb3",
+        "a65cf02e58bdcc37"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0041",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 988600,
+      "end_ms": 997980,
+      "text": "So if I have it in my home and I want to make a salad, you as a hacker could make the salad skill and I can buy and subscribe to your salad skill.",
+      "word_count": 34,
+      "utterance_ids": [
+        "5ded4a519b853eb7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0042",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 998380,
+      "end_ms": 1062800,
+      "text": "Yeah, that will be part of it. To me, Neo and Onex is about so much more than just a consumer, right? Yeah, so consumer is an incredibly important market. But Onex has always been about how do we create an abundance of labor across society through these humanoids. And I sincerely believe that we have a platform now, which is so uniquely capable and so well -situated. That allowing people to build on this will open up how to use Neo across all of our society and not just in homes Right, but it will also benefit the consumer because this will mean there will be more things developed on Neo And part of that will be an app store target towards consumer which we're very excited about but also it will just be in general how do you a bigger ecosystem that can just accelerate your autonomy and accelerate the path to actually having a fully autonomous agent at home. What was the pre -order 20k or something? And we haven't given out official numbers but it's pretty significant. We sold out the first 10k in the first days. Oh, so people put a deposit down for that.",
+      "word_count": 200,
+      "utterance_ids": [
+        "bc77c985dadf8a71",
+        "35c106c49ced7bac",
+        "073d6eea9e4f5578",
+        "3244310e16b6e329",
+        "d025809d27a66ada",
+        "65f57b889df4ba85",
+        "7373c94ea626f36e",
+        "30b9b7d0fcc30e19",
+        "5d4ad111cfacbe33",
+        "da69af216225592a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0043",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1062880,
+      "end_ms": 1071560,
+      "text": "They'll have the ability to fully, uh, sort of like the Tesla $500 deposit, or 500 a month, a thousand a month, something in that range.",
+      "word_count": 26,
+      "utterance_ids": [
+        "0fab0174d6ff8c40"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0044",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1071860,
+      "end_ms": 1139380,
+      "text": "Yeah, 500 a month, plus 500 a month. So this is for, if I were to think of a parallel, Google Glass is, or the vision pro, this is for high end folks, who are the Vanguard, who are the earliest of the earlier doctors, yeah? I don't understand. I mean, we tried to be very transparent about this. Getting a home humanoid in 2021 to six is going to be rough around the edges. Right, they're going to fall. They're going to fall. Right. But I am very... happy to say that I think we will actually be able to ship something that's very close to full autonomy, which we did not want to promise when we launched this because it was too early. But and I'm not going to fully promise it yet, but the way it's trending now, it looks like we will be able to ship an experience that it's fully autonomous and that is still quite useful. Now, if you want everything to just work out of the box day one, then there will be some teleportation involved or some guidance of the system. But I think it really excites me these days, it's that we're seeing the path now to actually shipping something that if you want it, can be a fully autonomous experience and it's getting pretty darn good. The teleoperating is fascinating to me.",
+      "word_count": 232,
+      "utterance_ids": [
+        "f4c3b6383c69efc5",
+        "6028dbfc037c0c2e",
+        "c7189515a357d3a8",
+        "5f5cecfc523fbf2c",
+        "fa6ea308e20a8e51",
+        "6ae54e72e724df47",
+        "21d3f086f76c60f7",
+        "7cb7195385383093",
+        "290c25cdf94b0dd1",
+        "045797e9e9452f14",
+        "ca871f1c6e14f720",
+        "688bebde5b8fd5b3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0045",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1139460,
+      "end_ms": 1158420,
+      "text": "I don't know if you saw this, but in New York there was a chicken sandwich shop, couldn't find a cashier. So they hired somebody in Manila in the Philippines for $3 an hour, which is a huge salary for a cashier from the Philippines, and they had her on a Zoom call.",
+      "word_count": 53,
+      "utterance_ids": [
+        "13a5105410f4021d",
+        "8f16bd4384b1ea72"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0046",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1158500,
+      "end_ms": 1159580,
+      "text": "They just popped up Zoom.",
+      "word_count": 5,
+      "utterance_ids": [
+        "e04be4bcc1a444d3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0047",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1161160,
+      "end_ms": 1165740,
+      "text": "And you could order and if you had a customer service issue, you just talked to her and she was like, hey, I'm right here.",
+      "word_count": 25,
+      "utterance_ids": [
+        "c3d6a54f1897d20e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0048",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1166520,
+      "end_ms": 1169540,
+      "text": "That is in some ways what you'll be able to do with your robot.",
+      "word_count": 14,
+      "utterance_ids": [
+        "ba26d6ae8240b877"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0049",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1169660,
+      "end_ms": 1183640,
+      "text": "You'll have somebody in the Philippines who you'll be able to tap into. We'll be able to turn it on and when you say, hey, pour me a glass of orange juice. That person will be able to remotely do that. test is, that what I'm envisioning here correctly or incorrectly?",
+      "word_count": 51,
+      "utterance_ids": [
+        "e12907baabaad887",
+        "92c04e83bd7b0a64",
+        "08c108cf4c92769e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0050",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1184200,
+      "end_ms": 1272780,
+      "text": "I think it will all happen. So back to how the platform works, right? So let me just back up and spend like two minutes on that. So if you think about Neo as a platform, so if you want to build your orange shop or promise or is your shop that, okay, you buy a bunch of Neo's, you get Neo's. get the robot operating system with a fleet management and all that. You also get the data collection equipment, which is gloves that have the same tactile sensors, the same vision system, and you can gather data in your shop. Find you in our model within our system where we kind of like, we do all the caps, then's captioning. of the data for we do all that. You find to in your model you deploy this and you get this working and now you have a fully automated shop and you're very happy. That's one path. Maybe that's quite work. So you say, I'm going to have someone intervene sometimes in tellel and then your data gets better. That's one way of doing it, right? Yeah, there's many ways of gathering. data, or maybe you're just saying like you know what, this is super complicated, I just wanted fully tell you, that's also fine, depends on how you want to apply this. And the platform goals all the way from these kind of developers that just want to automate their workflow all the way to the more foundation labs that wants... to deploy their models. So there's also a world where you can run someone else's model on Neo. We're going to allow that. I think so you're going to be an open platform. You'll be in a way, headless to the knowledge inside of it.",
+      "word_count": 299,
+      "utterance_ids": [
+        "01227ecfa07e981e",
+        "5ea2dbac1fea25d4",
+        "f7b20388aea49a98",
+        "07b6668c9a039c78",
+        "fd406122193e2e8b",
+        "38bdb3546d20b46a",
+        "3bc320cefcab1e21",
+        "0ceaaac7a03c58d4",
+        "5ee301addc7b85f4",
+        "976c055a35cc74c6",
+        "e2f8e2b06c025693",
+        "725426f0cd9e1ff3",
+        "5b0c6740c2e41bad",
+        "287ba0e38992f238",
+        "658ddfbe8b01ffed",
+        "b7d81f8c6eb80291",
+        "bf18d143da427c2c"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0051",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1272780,
+      "end_ms": 1282300,
+      "text": "You'll be able to plug in if open AI has the world model or clawed or some of the other independent world models. still be able to be plugged in, yeah? 100 %.",
+      "word_count": 33,
+      "utterance_ids": [
+        "2efcfec311ade049"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0052",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1282600,
+      "end_ms": 1353460,
+      "text": "Now, I sincerely believe that our model will be the best one. Sure, and I believe in competition. So if we, that actually control everything from the manufacturing, all the way up to the product, I can't make the best model, then we kind of failed. Yeah. But will we allow other people to build on this? 100%. and one of the big reasons for this is that currently if you look at where the field is, there is no one general model that solves everything for robotics, it's not there yet, right? And if we are stuck in our customers, kind of like backyards, helping them integrate towards ERP solutions and everything else, the next couple of years, are not going to get there. What we want to do is to work on the general problem. How do we solve embodied AGI? So we can actually create an abundance of labor. And this requires us to focus on the general problem. And then allow other people to also help apply what is available today and help build the ecosystem, right? If we get this. enormous robotic ecosystem we all benefit of. Yeah, and I'm, I should see some applications where one Teller operator, let's say this was a convenience store robot. That just helped you carry stuff out to your car.",
+      "word_count": 222,
+      "utterance_ids": [
+        "627c390d26cb3b98",
+        "677eb7633d0b2020",
+        "a5a4da31b9e3e794",
+        "361bf029a0082060",
+        "24f851e91e0bc14f",
+        "b5b778060d063748",
+        "cbfa40194dd0d816",
+        "1ab27729fe4faa57",
+        "f1b2bc244b83d1c7",
+        "065018ae3c68e696",
+        "6e80a608f0f02e36",
+        "d83232cfbeab0d58",
+        "8a0d9fec17337727",
+        "fd4224987fd3db74"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0053",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1354100,
+      "end_ms": 1368880,
+      "text": "That might only happen once every hour. You could have one teller operator or maybe you have 10 of them. that are monitoring 30, 40 neos and they control them remotely and help people move the groceries to their car.",
+      "word_count": 40,
+      "utterance_ids": [
+        "3f10f3a1107a2f64",
+        "6984ea3f0b0da760"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0054",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1369180,
+      "end_ms": 1475540,
+      "text": "Yeah, personally actually, I'm like, I might have a use case for neo, okay, in Telio, which is I'm part of the time in Norway, mostly in San Francisco area now, but part of the time in Norway. And I'm also... kind of like conventions like this, right? And when I'm out traveling, I want to be able to be present and run my company through Neo. Yes, but I don't Neo, I am Neo. And that's actually pretty magical. And you can, I can go around, I can pick up the parts, I can look at the parts, I can talk to people, I can be in the meetings, right? And so that's one application. of teleportation that I think actually will never go away. Like no matter how good your autonomous, that will still be there. Yeah, your avatar at your factory in Shenzhen. 100 % yeah. And you know, there are other applications like this where remote power stations, where there's no one within like an hour of driving. You have a robot stand. in the closet and something goes wrong and you go out and you're like flipped the old switches and you do the things like you're likely not going to automate that because it's kind of like a one -off thing that happens every few months, right? Right. So, but it's worth having that robot in that space out in the middle of the forest near, you know, those power lines, for power converters, they can go out within, you know, minutes and, we're essentially like, well, used to be called like expert in place, like this concept of like, you can take the world's best expert and teleport them to anywhere in the world to help solve a situation. Like, I surgeon. Yeah. Yeah. It's, super useful. I do think that what we've experienced. over the last year is, first of all,. That Neo has become so capable, especially with the new hands, that teleportation does not fully use the hardware, like you're not able to get the teleportation to be good enough to fully utilize the hardware.",
+      "word_count": 355,
+      "utterance_ids": [
+        "ab955da9fb301215",
+        "e64eb938bdc1fff7",
+        "b068b55d2abd1329",
+        "28836d6e53ba3aaa",
+        "e5c73b24b06abf93",
+        "2b891a6de292e114",
+        "379d85b66a9b0990",
+        "4183dbcf68aca289",
+        "b6fd90d18bf49f9a",
+        "1505ad351cff0cba",
+        "ff98f38a7be1e9d7",
+        "ff6f794bf5e4c789",
+        "296eda55a0e1e42a",
+        "a0a492ca6bdd8b0e",
+        "178ba4a5cc3c7bba",
+        "8508288b2b279860",
+        "cd5c57bba3e29812"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0055",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1475860,
+      "end_ms": 1479940,
+      "text": "So the fidelity of the hand is greater than a teller operator is able to leverage.",
+      "word_count": 16,
+      "utterance_ids": [
+        "a1bfe1e0af1e29df"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0056",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1480000,
+      "end_ms": 1529800,
+      "text": "Yes, right to tell operator will not feel the same as the robot is feeling for example, right? Then you need to build full -haptic systems and they're gonna slow you down and be slow and clunky and like So we're increasing the seeing that gathering data with Humans just wearing the sensors of the robot in us transparent a manner as possible, so like they should not disturb what you are doing, right? That's the most useful data to solve kind of baseline dexterity on the robot, but even more importantly, the big bat that we made, which is this decade long bat of one X, is if you get the robot to be similar enough to a human, then you can try on all the available video data out there of humans. And we're starting to see some very good pr... that this is actually working incredibly well. And that's the reason we started the Walnut's World Mall Lab, because we now finally have the scaling loss on that. And we're seeing that distance inside that. Take us inside the lab.",
+      "word_count": 183,
+      "utterance_ids": [
+        "7c774cb9586e2d1d",
+        "b87ef2ca2a822b1e",
+        "158c9adde8c33749",
+        "1f1edc1d150943f0",
+        "6440192ad00eb2d9",
+        "e2e364e2e92d3099",
+        "bffa882db2bad871"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0057",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1530160,
+      "end_ms": 1536379,
+      "text": "You are you having people in factories where glass is where your hands and do their tasks over and over again.",
+      "word_count": 21,
+      "utterance_ids": [
+        "7711da01e58eebc5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0058",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1536840,
+      "end_ms": 1539600,
+      "text": "Are you working with the micro ones of the world?",
+      "word_count": 10,
+      "utterance_ids": [
+        "ab50f76b8ee91d06"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0059",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1540000,
+      "end_ms": 1550820,
+      "text": "To go do real world stuff and outsourcing like unique proprietary data that you can have that other companies don't, how does the world model get built at scale?",
+      "word_count": 29,
+      "utterance_ids": [
+        "e5d332e83425664c"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0060",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1551640,
+      "end_ms": 1673580,
+      "text": "So, for a little, yes, we do that. And if you, but that's not the main point. So I think ultimately, it's very simple, right? The model is gonna be as good as the data. Yeah, and if you think about the data pyramids, then on the top, you have like tell operation data, very high quality, small fine tuned data set, where actually what we do is you will have the operator try to do the task very well and very fast and they will also fail and then just try again. And then we picked the good samples where they did the task ask you to see human one, right? Yes. We don't need a lot on that data. It's just a line or model. Then you have the data which is what you're talking about. We'd like to put the sensors on the human and go and get our data. Yeah. You have more of that and it's very close to the robot, but it's not the robot. The teleplader is the robot. This is not the robot. But it's close. Then you have equals centric video, video from humans point of view. So that is further away from the robot, but it's still quite close. Because the robot hands is the same as human hands and it looks the same and it's quite close. And then you have general video data. Yes, out the world, all the world in general, people, right? And because Neo is so similar to a human, we can actually utilize all that data. Now the bottom layer in the pyramid, which is this video data, general video data, is absolutely ludicrously immense compared to anything you do, but it's everything. So, if you look at what is needed to actually achieve true intelligence. You need multiple orders of magnitude more data than anyone is even close to collecting over the next two years with the ecosystem or with this sensor data. And all of the major breakthroughs that we've seen as far as I'm aware of in AI. Have been because someone figured out how to use a huge new data source that previously we were not able to use. You unlock some new set of data and now your model came in ability greatly improved. We've got a lot of people out there trying to find data.",
+      "word_count": 397,
+      "utterance_ids": [
+        "102f5e9c19635354",
+        "7ad0df819a6ed183",
+        "c006b5818051650e",
+        "b8f8de93e28d2509",
+        "bb589617d0734959",
+        "15eb48242d906332",
+        "d9a4092eedae540b",
+        "11d0cac7f6bdbb09",
+        "95a51210cb25317f",
+        "3b46bdaf4f39a0ae",
+        "fc550733fbf715a6",
+        "5632eaa850a6efc6",
+        "f16d966563b5b778",
+        "45c1683cf145d8b8",
+        "96b9af837d49b0b3",
+        "38770ee56f6144c0",
+        "8aefbd48df61c661",
+        "80f85feee22167d6",
+        "28ec90c88d33cff0",
+        "6005c06a49afce41",
+        "f4e1dd58478cdda3",
+        "4b66de2a0095e046",
+        "985ff2111464bde7",
+        "c4e3256f6a6139d8",
+        "5a4aac8f8603d9e6",
+        "e076f3fcca938d13",
+        "b6fbdc71a58eea3d"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0061",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1673880,
+      "end_ms": 1703460,
+      "text": "Like, that is, like, whatever it is, it's like a catch 22. So our big bet is you have to be able to utilize the general video data out there, and the only way to do that is you have to care about every single tiny detail of the robot to be asked goes to humanist possible. You know, like the flesh and tissue in skin is highly non -linear, so like how much force free to deform. What's the friction? What is the impact energy when touching the table? And people have different size hands.",
+      "word_count": 96,
+      "utterance_ids": [
+        "f704b3c8abe2f6af",
+        "710480cc7a416efc",
+        "149a9835c1c3e7c4",
+        "f0dd54f6e34f6177",
+        "c4cb31cc4692320c",
+        "0a079e1aac04e0cf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0062",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1703580,
+      "end_ms": 1717440,
+      "text": "I mean, literally in the NBA, there's a wingspan as a concept in people with a wide wingspan, longer arms than the average person, get paid 20 % more for having that extra two or three inches of wingspan.",
+      "word_count": 39,
+      "utterance_ids": [
+        "f1b5f985720e16ce"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0063",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1717560,
+      "end_ms": 1769640,
+      "text": "It's pretty fascinating when you think about it. That's a really good thing. way of saying it, wingspan. We've always called it for the gorilla coefficient. Yes, long arms. Yeah. Yeah, if you want to know what anyway. My point is, yes, we do all of these things, but ultimately, what differentiates one X from all the other robotics companies is that we are all in on pre -training our own models on this video data. Internet? Yes. And that our cross embodiment is not another robot, our cross embodiment is the human. Right. And we want to be as close to as possible because that solves the catch 22. In the end, all the data will be robotics data because a robotic data has it has the actions, it has the tactile, it has the forces, it's better. But the only way to get all of that data. is to create a base model that is good enough that you can deploy all these robots across society and they will do useful things that people pay for and also gather to data.",
+      "word_count": 183,
+      "utterance_ids": [
+        "609937f4f599b640",
+        "7639b7e9a9552d8e",
+        "6a419bb4e48b0e65",
+        "e46a7ac7253005fc",
+        "b4618b442521305e",
+        "20cbb31852372bf4",
+        "277dbbceec590f4c",
+        "94564abdf4b7cf19",
+        "a979144c7c051802",
+        "e91ce8cf6fc56371",
+        "c7cc5201c802a293"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0064",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1769760,
+      "end_ms": 1840560,
+      "text": "One of the robots become recursive in nature and they are teaching themselves building themselves and like we're seeing with large language models. Now, where people creating agents, instead of giving it prompts and instructions, we're now starting to say, well here are the goals, here's a loop, you are one agent that, you know, identifies for a business, potential customers. Okay, you're the agent that does customer success, and here's what that looks like. you're the agent that you know does pricing of products and those agents start working in concert we're starting to see that in knowledge work when does that come to robotics where you don't have to actually worry about making the robots better they're sent in enough to use the word perhaps not accurate but they know what their mission is you've given them the goal hey you're working in a Michelin -starred restaurant your goal is to make the most delightful food with this level of fidelity and perfection and here are the outcomes and it says okay I've just got to get better at you know poaching these eggs to really be great at this It's.",
+      "word_count": 193,
+      "utterance_ids": [
+        "cc079970c8d82c3c",
+        "f20f1000d80e0adc",
+        "bbc389dd37e1ac7e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0065",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1840560,
+      "end_ms": 1950820,
+      "text": "Not, it's not sci -fi, it's actually something we think a lot about, but it's also incredibly hard to answer because, you know, the development now is going like this and you're here on the curb. So when you ask me a year ago, I was way more bearish on how far along we would be today on the AI. And like every time... I kind of sample things I've moved faster than I think. So it's easy to get like carried away, right? But I think if I try to answer it broadly, I am extremely sure that we're less than a decade away from hard takeoff. And when I say hard takeoff, I mean, robots building robots, the data centers, the chipfabs, doing the mining and refining, actually, and a true abundance of labor, a self -sufficient system that is just 10 to 10 years, 10 to 10 years. My current bet would be three years, got it. But if it takes 10, in a history of humanity, it's still like a blip. It's not really a matter. So that gets back to like what is one next, right? Because when you scroll this, it just reach out to hard launch, or... Hard take off hard take over take off. We'll take over hard going to do it right so it's going to be hard take off hard take over yes but you know That hurt the term right this is the industry term hard take on yeah, and you can't really get this without the physical part right like the digital intelligence can never create its own substrate You need the fist particle part. Right. And I think also this is going to have an incredible impact on humanity with respect to, for example, progressing science. Like a lot of the demand that we're seeing now on our platform is people who want to automate lab work. Because if your AI model can't actually build and carry out his experiments and I'm... of the results, how are they going to progress science, right? So all of these things will happen in the coming years as AI becomes physical. And exact timeline is a bit hard, but it's the years, no decades.",
+      "word_count": 374,
+      "utterance_ids": [
+        "a7508de860812c5a",
+        "d8b27b75ff9bcd93",
+        "d3f6c2a4b44dca89",
+        "207929c4cc114db9",
+        "cbf30facc338982c",
+        "09319a225365e2e5",
+        "8c6347e08a889a89",
+        "7c466f0306cc8335",
+        "a6afa3291461bf87",
+        "f7068a3c129dfdd7",
+        "104117fbe9f54470",
+        "24d3e5fd893f05ca",
+        "a5a8b9b6e9c77b90",
+        "d5a0a0785c49b6e9",
+        "ac97ff0fbe83af35",
+        "ca27dd9778d5a92b",
+        "51a51aaaa314f78a",
+        "2a39ab6ac30a0123",
+        "51e11516d1c59793"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0066",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1951660,
+      "end_ms": 1967080,
+      "text": "Yeah, I mean, if you, if you believe it's 3 in, I know you're an optimist, you have to do what you're doing, a crazy optimist for sure, and you, think the outer, you know, estimate is 10, you know, well, we'll be fine with 5, 6, or 7.",
+      "word_count": 49,
+      "utterance_ids": [
+        "d2b9357afe9d8399"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0067",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1967620,
+      "end_ms": 1997540,
+      "text": "Burnt, you've got to catch a flight, this is amazing, continue to success if people want to order a Neo and give you $500 a month to be part of this absolute lunacy that you're doing, what do they do? How did they get in? Well, you go to our website on the order of Neo. That's him, and that's simple. It's not simple. It's 20 -20 -6, it should be that simple. It kind of shouldn't, right? You can order a Tesla online, you can order any of our lines. Trust -burned pricing. I like it. Bird, continue to success. I'm doing all of you.",
+      "word_count": 106,
+      "utterance_ids": [
+        "1884f704df7d8d4a",
+        "a2d3577e76b42b60",
+        "4b0aa85bdcab94cb",
+        "462b339cf69b9880",
+        "df94dde1e594f247",
+        "cfffcb6760f021a9",
+        "eabba8529f0512dc",
+        "1657a6c774c6000d",
+        "ccbcde2782bd981c",
+        "ff0edac3a9c68297",
+        "8901c976ae31194b",
+        "af05c957d9f283c2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0068",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2000919,
+      "end_ms": 2019760,
+      "text": "In your world, the exact words matter, the number on the diligence call, the commitment in the board meeting, plot captures a conversation, and turns it into searchable intelligence you can pull up in seconds. Ask plot a question and get the answer, with no receipt. Stop scrolling recordings or trusting your memory, capture the conversation, keep the signal.",
+      "word_count": 59,
+      "utterance_ids": [
+        "09a87f54d7027a32",
+        "141e95bd6b539c1c",
+        "6d885d00a9709143"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0069",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2020000,
+      "end_ms": 2022340,
+      "text": "That's plot. Learn more at plot .ai.",
+      "word_count": 7,
+      "utterance_ids": [
+        "b26af65aded4e25a",
+        "5fbbcadaab7a4684"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0070",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2024919,
+      "end_ms": 2032840,
+      "text": "All right, everybody, we're really lucky. We have Amanda McMaster here, not McMaster. McMaster, just McMaster.",
+      "word_count": 16,
+      "utterance_ids": [
+        "879ede6c86d5355d",
+        "25706a1e08ac0d96",
+        "cfad90ff97e169ad"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0071",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2033020,
+      "end_ms": 2048920,
+      "text": "Just McMaster, no McMaster, you're the interim CEO of Boston Dynamics, the OG, the original room. the robotics company, the robots we've seen for decades doing backflips, doing kung fu, getting kicked and beaten, and getting back up.",
+      "word_count": 38,
+      "utterance_ids": [
+        "0535d8aea7786ea8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0072",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2049200,
+      "end_ms": 2059360,
+      "text": "We have been having a hard time remembering who owns this company now because it was an independent company venture back, then Sergey and Larry bought it. It was part of Google.",
+      "word_count": 32,
+      "utterance_ids": [
+        "a0e3009b0b73205c",
+        "578b681894e5a61a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0073",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2059700,
+      "end_ms": 2065240,
+      "text": "Then it got - So I think Masi Yoshisano did at some point, but I believe Hyundai owns it now.",
+      "word_count": 20,
+      "utterance_ids": [
+        "e286473493eb6658"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0074",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2065240,
+      "end_ms": 2074620,
+      "text": "That's correct Did I get that whole history correct? You nailed it. Okay, so apparently I read way too much industry news But now you're in charge of this.",
+      "word_count": 29,
+      "utterance_ids": [
+        "6a8a683e93737562",
+        "806875d27773ac46",
+        "600c3eb346e8d2c2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0075",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2074780,
+      "end_ms": 2099080,
+      "text": "Yes, it's changed hands many times and you went from being essentially one of one really in humanoid robotics to one of many we're here at this machina summit in Paris and you see many contemporaries now so what is Boston Dynamics working on now is it still a research project or are you going into the real world and applying these robots?",
+      "word_count": 63,
+      "utterance_ids": [
+        "8372fcb0aa7ddefd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0076",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2099080,
+      "end_ms": 2099980,
+      "text": "Let's get started!",
+      "word_count": 3,
+      "utterance_ids": [
+        "ab94153c691eaba7"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0077",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2100000,
+      "end_ms": 2105580,
+      "text": "I think you guys got there early, but you have to now deal with fierce competition, yeah?",
+      "word_count": 17,
+      "utterance_ids": [
+        "38ca69194e18dedf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0078",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2105860,
+      "end_ms": 2163820,
+      "text": "Yeah. We are a big on -point robot. So it's no longer an AI lab, and it's not a experiment. It's not a research development company anymore. We're now focused on real world's blimants. So we started with our spot robot, which many people know, that's our mobile. quadriben in industrial. Famously in black mirror chasing people down, not yours. You know, right? There's always going to be a dystopian version and a utopian version you're obviously pursuing the utopian, but that is a really cool robot that has been for deployed. Yes. It has been deployed in real customer society. It's prepped providing really custom -revalue at this point. We have over 500 customers over 46 countries. Wow. It is the it is the mobile autonomous robot that's used more than any other on the planet right now So it is the most deployed and most utilized. Yes, so really why and who's what is the number one use case for it. Like, is it security as it inspections?",
+      "word_count": 170,
+      "utterance_ids": [
+        "de97a58fd6235c3c",
+        "4809f579ffd70479",
+        "70b7fcccb81357b8",
+        "b243afbb13238900",
+        "04cb280c33ee1626",
+        "b3febe08ca02e5b3",
+        "c0b7c0cf2d2df23e",
+        "2fd0ebe67d4c99a7",
+        "50a4b74aefdff709",
+        "4f06cd2541c0720b",
+        "488cd8cf57607a60",
+        "fd9ce713418ae89b",
+        "2d5e3ca6ab254c5e",
+        "f201b80610d533e0"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0079",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2164220,
+      "end_ms": 2166940,
+      "text": "What are people use that dog format for?",
+      "word_count": 8,
+      "utterance_ids": [
+        "2bfe5fa0c52d701d"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0080",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2167040,
+      "end_ms": 2213600,
+      "text": "Yes. Or pony. What do you like to call? How many dogs? We like to think of it as a dog. I love it. I think it moves like that. But, you know, we're using this customers are finding a lot of value in industrial inspection. So, they're using it for both. You know, acoustic, gauge reading, vibration detection. So assets that they have expensive assets and their facility and they want to monitor them, this allows for them to do that. Now, I can do that during the day, and then it can do security perimeter work at nine. So the answer is yes, we do all of that. And the real inflection Void Liz customer ROI. I want customers to find value in this, to do really useful work. It's not just about, yes, it's cuten of dances, but it's long cast -dancing at this point. It's now doing real work, and customers need to see your ROI in under two years.",
+      "word_count": 164,
+      "utterance_ids": [
+        "5ce8f1cf3a8f11cf",
+        "091c1892d499f941",
+        "3b11b1fec259eb1c",
+        "2b71cd88d05932a5",
+        "cfe879c59182c9a6",
+        "88e0eb5c09193bd8",
+        "45c8d900d5c5d6cf",
+        "ff02e083117c4faf",
+        "624afcd48dbd22e4",
+        "c8160671f2407f62",
+        "c0cf57edab77ee06",
+        "5d034b57f7e10754",
+        "2cb6384587b573a8",
+        "b51a2777ab123ae6",
+        "03019573d16dfe41",
+        "d9e1a54b887f417c"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0081",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2214180,
+      "end_ms": 2218900,
+      "text": "And those inspections, if they were even being done, were being done by humans.",
+      "word_count": 14,
+      "utterance_ids": [
+        "dac7a4aa7d3c6450"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0082",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2219780,
+      "end_ms": 2223160,
+      "text": "Humans. as we all know, being them are fallible. We make mistakes.",
+      "word_count": 12,
+      "utterance_ids": [
+        "a38e15b99fc17c26",
+        "ff6ab238b8dece33"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0083",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2224019,
+      "end_ms": 2233220,
+      "text": "And these ones were just out there now, as little puppies running around a water treatment facility, a bridge, whatever it happens to be in infrastructure pipelines.",
+      "word_count": 27,
+      "utterance_ids": [
+        "20343a33087a6204"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0084",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2233980,
+      "end_ms": 2239740,
+      "text": "And it can record many different sensors, video, obviously vibration.",
+      "word_count": 10,
+      "utterance_ids": [
+        "5a64549b3a86ef8b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0085",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2240000,
+      "end_ms": 2247180,
+      "text": "And so radar, I'm assuming all different types of acoustic you mentioned, what are those robots costs?",
+      "word_count": 17,
+      "utterance_ids": [
+        "88fe83a27b78e8da"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0086",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2247200,
+      "end_ms": 2259360,
+      "text": "What's the range of the hardware costs? And then what's your business model with these? People buy them and rent the brain. They rent it by the hour. What do you think of as the CEO will be the business model?",
+      "word_count": 41,
+      "utterance_ids": [
+        "a3bee946ea74ca82",
+        "2c61087cef2a8b90",
+        "0332ca814c4875c9",
+        "864fc816f7215d00",
+        "7b6c37d779ed4f22"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0087",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2259460,
+      "end_ms": 2264620,
+      "text": "And what is the... business model with these hundreds or dozens of customers deploying hundreds of these.",
+      "word_count": 17,
+      "utterance_ids": [
+        "fb12ca4c22888675"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0088",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2264920,
+      "end_ms": 2305180,
+      "text": "Yeah, so we went with a capex model to start with spot. We'll be doing it probably a robot as a service model likely with that list. We understand, though the humanoid corn factor folks may want to spin up at different times and then have the ability to decrease. Increase. With spot, it's been pretty effective in capex. It's the way these industrial customers think about industrial tools. So they generally want to spend capex for this. It depends on their configuration. You know, it ranges anywhere between 100 ,000 dollars for the base robot. All the way up to 300 ,000 one where fully loaded with services. integration. So it's a price of a Tesla to a Ferrari depending on how you equip it.",
+      "word_count": 126,
+      "utterance_ids": [
+        "8dd1d0b38feed497",
+        "8607e3aae4c96bb0",
+        "e67f6ce59c43d6bb",
+        "65e49e5ead7b92c4",
+        "8fb248399cacca69",
+        "a17fb76edf413641",
+        "13b622667db0528a",
+        "1e44f38edc4972e2",
+        "a4fc8a83dc0cc701",
+        "a99432409861cc0b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0089",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2305680,
+      "end_ms": 2312080,
+      "text": "But what people each understand is the lifespan of these is greater than five years I was saying like these are you're known for industrial.",
+      "word_count": 25,
+      "utterance_ids": [
+        "f4a1177efbc256d7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0090",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2312820,
+      "end_ms": 2379700,
+      "text": "So if it can run I'm assuming you run 20 hours a day, 22 hours a day with charging. So we're at, we think about in terms of means. between intervention and we're at over 3 ,000 hours. Okay. Well, the couple times a year, it is a human app to be involved and it has a charging station. So battery runs for about 90 minutes. Usually we'd have to. Comes back, sits sounds and charges and the next one can take over. Does it automatically swap the batteries? Or it just sits down onto its charging supply. Yes, it has swapples of batteries. Yes, but that the hot swapp is a human has to do it No, Atlas doesn't itself. Oh, it doesn't go Atlas will have two batteries who turns its torso around and you replace one and put it with the other one And always has a back of it. So about a real lifetime stuff for the humanoid one It can do it itself, obviously, and the dog gets charged. So realistically, they could be in the field for close to 24 hours, maybe 8 to 10. Yeah, 20s. And so that puts the operations at a couple of dollars an hour and has that changed how people look at the use case, the dramatic lowering of cost because I'm assuming union workers inspecting.",
+      "word_count": 228,
+      "utterance_ids": [
+        "d89b803451f78c25",
+        "088ab2fee8401b84",
+        "17d4af87c45bbf2a",
+        "ef78db3613613ead",
+        "c4eddc2732b7544c",
+        "c11d728c61a10da7",
+        "4ae8a085517eeb74",
+        "d8eb583ff9d1184f",
+        "321f60d7239411af",
+        "7913532e53ac22f3",
+        "a580bdd8deb63a2c",
+        "3b49b4e79ffae2d7",
+        "044e9ab760e81853",
+        "4187c2a374ff429d",
+        "307c8bfcc4f6e971"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0091",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2380000,
+      "end_ms": 2387600,
+      "text": "You know, pipelines, they're getting paid 40, 50, 60 bucks an hour, fully baked with their benefits, their pension, whatever else, it is quite expensive.",
+      "word_count": 25,
+      "utterance_ids": [
+        "cd57b696f6289754"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0092",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2387780,
+      "end_ms": 2425920,
+      "text": "We haven't necessarily looked at labor replacement for spot on, while that is a metric you might look at. We thought about, you know, how do we bring spots in there to all of them, even labor one, humans weren't doing the task, even if they were tasked with it. they weren't actually doing it. And to like, we're just trying to figure out ways that humans can do more, you know, knowledge worker task as opposed to going into an inspection. So, yes, one of the metrics that customers look like by look like for ROI is labor replacement. We're leaning more into how much you may save you. So, you we found an air leak in your facility. That was a, would have been $3 million a day. Yeah, the outcome is matter. Yes. So what is the value that we're driving?",
+      "word_count": 144,
+      "utterance_ids": [
+        "607d65187e7add00",
+        "15876ad1f744b540",
+        "3c88377c07ed3203",
+        "a00831e55a82f013",
+        "57bdebff95c13410",
+        "3ffa690ee9f8dde2",
+        "6c7a6efdf1f724ad",
+        "70844913cb0726c7",
+        "1a28afd2475ff58e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0093",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2426140,
+      "end_ms": 2430660,
+      "text": "But it's, still delicate in the industry to talk about labor replacement.",
+      "word_count": 12,
+      "utterance_ids": [
+        "d2f974159a0b488f"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0094",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2430920,
+      "end_ms": 2465060,
+      "text": "So you have to be very thoughtful about that in this part of talk. And let's be honest, I mean, there's going to be an element of labor replacement for this. It adds a metric because it's easy. Yeah. How many bodies are in the world and how can you imagine a total addressable market relative to that? I just don't think it's the only conversation I should be having, right? Just an element of it. And hopefully we're getting rid of the dangerous jobs. And the ones people might find oppressive. Dold, dirty, dangerous. Are you dangerous. Yeah, we don't want to hurt your body. Yeah. We only get one human body.",
+      "word_count": 113,
+      "utterance_ids": [
+        "aa57be9c939fbebe",
+        "50fa2443fcc3cabd",
+        "5c914c1121077930",
+        "dcc0d184e108f4e4",
+        "84de593613f60045",
+        "59ca5c2364d07c92",
+        "1848b4255531b0b1",
+        "0ee1bc846b7939b4",
+        "691a0e8fd06ef854",
+        "5f51607ce3ecfef6",
+        "11425cf2e6bbb3fd",
+        "a0b33f3aae439b71"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0095",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2465760,
+      "end_ms": 2475080,
+      "text": "Yeah. The Atlas, how do you think about onboard compute versus remote when you put the amount of brains of my understanding as you have the brains on the robot?",
+      "word_count": 30,
+      "utterance_ids": [
+        "b889e9f047f6cb0f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0096",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2475560,
+      "end_ms": 2492620,
+      "text": "Yep. That means crazy battery What are you doing? Think about the option of having, you know, the, a brains in the cloud and having these be more light waste if they're in an area that has extremely high speed Wi -Fi, etc.",
+      "word_count": 43,
+      "utterance_ids": [
+        "283e2a5e003d5c44",
+        "69f9320e518c4111"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0097",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2493060,
+      "end_ms": 2499980,
+      "text": "And do you offer that yet or is it all, hey, you got to have a robot with a lot of brains on it because that's what the customer.",
+      "word_count": 29,
+      "utterance_ids": [
+        "d3ecc33c1fe9c958"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0098",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2500000,
+      "end_ms": 2571300,
+      "text": "And that seems to be a paradigm shift that's occurring now. How do you rock that? We think about it. We think about two brains. My simplified version of telling the stories are two brains. There's the brain that controls the physicality of the robot, which is what Boston dynamics is known for. The dynamic movement, reliability, the way of manipulate things in the... world, that lives on the robot. The reasoning layer that gives you the semantic understanding of its environment, that can be in the cloud. That's things that we might partner with, who will define it, we may partner with other AR partners or we'll fill it some of this ourselves. And then the wrapper around all of that is the very specific information that a particular customer needs around their own way. You know, the way that they think about the job processes that they have and the tools that exist in their facility and how this robot will interact with it. That's going to live somewhere in Much Beach. So it could be on robot if you needed it too. It could be in the cloud. I'm welfare your other wrapper for that. What percentage of the robot is built in the United States? or outside of China and Taiwan today. On the percent of the 100%. So there's no issue with the sovereignty of robots in the United States. We're seeing a lot of cheap robots coming out of China.",
+      "word_count": 246,
+      "utterance_ids": [
+        "237b664c04de1a85",
+        "97650b7a0c2d1b67",
+        "65c57f1a1722c157",
+        "0e330e8d38b64b88",
+        "7a6ff2951891bbcb",
+        "df6fba32d895fa75",
+        "117841f87e0fd604",
+        "25d2aae5dc7a1bb3",
+        "a128396ab22ac0ea",
+        "f817af1c566f05e6",
+        "852c620404ff8bf6",
+        "d4b79549a71d916c",
+        "4f37f85f54fb3445",
+        "5a242d7c494b2515",
+        "9a41ed203b14fec9",
+        "e0bcaf8dbd429c0e",
+        "97ab6a55e022606f",
+        "28d15075de2326f1",
+        "3c3fe0cb75b58896"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0099",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2572380,
+      "end_ms": 2581020,
+      "text": "Your personal opinion as the CEO of this company and as an American under any circumstances, should we allow the humanoid robotics from... trying in the United States?",
+      "word_count": 28,
+      "utterance_ids": [
+        "7c3398986c6c02ea"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0100",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2581800,
+      "end_ms": 2622980,
+      "text": "No. why? It's not safe, right? We've already heard about leaks that are happening with some of the quadrupeds that you're seeing in the United States and being back channeled back to China. Isn't we? We have seen what happens if we let China win in the semiconductor space. You know, we can't do that with robotics. So we need to... have a concerted effort to protect our IP, to make sure that we are bringing manufacturing of this ecosystem into the United States or into our allied countries. And that means that we need to take our national robotics strategy, we're lucky enough that we get to sit at the table and some of these discussions, I'm hoping that more companies in the US join us in taking... Up this mission? Yeah, we have to be pretty serious about this.",
+      "word_count": 141,
+      "utterance_ids": [
+        "85683239be5d7c4b",
+        "b4a38c61a61f2f6c",
+        "629fd9d604370230",
+        "04c6c8db777861b0",
+        "d093947a6c717410",
+        "0d111df87372947c",
+        "4e0bbd66ccdc3bbc",
+        "e4da02bf86af0f94",
+        "701b203b01e57047",
+        "d17d08e8c0ff1e25"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0101",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2623260,
+      "end_ms": 2633020,
+      "text": "It's an existential issue because these not only do we have to win this, we have to make sure that the rest of the world uses our platform rather than China's.",
+      "word_count": 31,
+      "utterance_ids": [
+        "19c58804f9849154"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0102",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2633140,
+      "end_ms": 2698100,
+      "text": "How do you think about the military application of these military is, you know, the... The field has just been changed with drones in a way and out of velocity, no pun intended, that I don't think anybody had anticipated because of what's happened in Ukraine and now we see in the Middle East with the war with Iran. How do you think about Atlas and Spot in the battle field? Where are they at? in terms of deployment in the military. Yeah, so we've been pretty public about the fact that we have an anti -webansation stance. But what? I think that for what we're trying to do right now in industrial use cases is a distraction for our business. So focus. It's focus. It's not the list offer. I mean. It depends on who you ask in there, as the CFO CEO, you know, I'm going to look at this and say, I'm all about focus right now. We need to be focused on the markets that we think we're going to win in. And certainly we have great ties with the government and we're happy to do any non -leaponization work with them. And then we do that today.",
+      "word_count": 202,
+      "utterance_ids": [
+        "a483f8f20d852d4b",
+        "5d28e22e6a0cd229",
+        "1fd10da866f7bfba",
+        "618f949e6ac847d6",
+        "882a7946725266d3",
+        "2746098f079eb8f6",
+        "8b39bf622f7c2dd5",
+        "b503f4b6017698d4",
+        "f7ecc7087598246b",
+        "a438af99aa7ddb19",
+        "4d00d7215657cc45",
+        "d14992971fb64c5c",
+        "9beaacf8f5a67b8f",
+        "2b69597d73d605c6",
+        "3bcadfde92dabac8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0103",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2698420,
+      "end_ms": 2708520,
+      "text": "Okay, so you'll have them in or you... have them in the field, maybe if it had to go collect a soldier or bring a med pack, you'd be okay with that, disarming a bomb, you're okay with that.",
+      "word_count": 39,
+      "utterance_ids": [
+        "2c1ae4813f6dc5c1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0104",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2708940,
+      "end_ms": 2813660,
+      "text": "We, EOD is one of, you know, explosive ordinance disposal is something that's a great use case for robots. And you're doing that currently. We do that currently. So, we're okay with that on what we don't on is terminator robots, right? Not good for it. the market. But China is building them. So if China is building them and we don't, you're kind of obligated if you're boss and dynamics to build them. So if China puts these into the field, will you build them to protect America? I think that's a tough question and I think we're going to have to answer it when the time comes and hopefully it never comes. The time is going to come. I can assure you and I can assure you what your answer will be when President Trump calls You will say sir or else your company will be naturalized. I mean, this is the reality of it I mean, I'm being a little facetious and playful with you, but They're going to deploy these and they're going to deploy them and they already have show and you've seen them put AK -47's on these. Yes, I know. Not on our robots. Not on yours. I'm there. Yes. And listen, it's terrifying. I think, listen, I know that we have the best robot in the most capable robot in the world. You know, if and when that time came, that we had to make a tough decision, we would make the right one. But today we don't have to make that decision. And so. I'm going to keep everyone focused on the application space that makes a lot of sense for us to make money. I'm going to tell you. Don't tell anybody. The CIA, the FBI and the Department of War have many of your robots with many weapons attached to them currently. Don't tell anybody. All right, listen. I know you got to go. Continue success. this is such an important American company and I hope you take the job and become full -time. I know you're interim right now. So I wish you great luck with it. If people want to come work at Boston Dynamics, please tell me. Where are you base?",
+      "word_count": 375,
+      "utterance_ids": [
+        "fb7eaa65a4aebd03",
+        "a379e534534757f3",
+        "96245102b86dab95",
+        "741dbbb450b08f4e",
+        "e5bd4010d5f49460",
+        "adee94d0a1033c59",
+        "d33ccd3f246269c9",
+        "fc0ed05cedc6277f",
+        "441cea96a0770573",
+        "aacb48215fd41e6c",
+        "fd50f6de8cdbe903",
+        "df1cca643dc0428e",
+        "a457e7b5521bf5ef",
+        "fa4eed78ff83c511",
+        "d45adbe18110dd8e",
+        "d9fce7c12a1db24f",
+        "4316b9ea18c04ef3",
+        "0e8b4aad7b92645a",
+        "9b78cda6f98420d9",
+        "dd09c3eafbf03277",
+        "f1b84e73d0fc20a5",
+        "2211fdf416dd369e",
+        "066bc51203167af8",
+        "bc0e76acd3a24ba8",
+        "e2f2a25c74f90642",
+        "f010839780503b77",
+        "f82c4dc492b776d0",
+        "75d681ab91bd078c",
+        "dde249263473db32",
+        "3e20cb531ed1534c",
+        "8e54d306d6520027",
+        "9b962de45708f0e1",
+        "506f9afda7d15ddd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0105",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2814040,
+      "end_ms": 2858960,
+      "text": "So we're in Waltham, so we're right outside of Boston, but we're open to some remote -book work and I'm working -citerate. coming to the West Coast. I was about to say, you know, I know it's in the name Boston Dynamics, but I assume with all that talent accumulating in the Bay Area, you're going to need to pop up a space area. Yeah, we're considering it. All right, listen, continue to success. Thank you so much. All right, everybody, our next guest is Professor Jonathan Hirsch. He's the co -founder and. chief robotic officer chief robot officer at agility robotics. You have a PhD in robotics from 2008. Yeah. So you've been at this for over 20 years. Well over 20 years. Things seem to have heated up in the last 36 months.",
+      "word_count": 135,
+      "utterance_ids": [
+        "bef8b356febf4aa2",
+        "f546ec5a606cb0cf",
+        "4cc5e4b5326690b0",
+        "6599d43e07817ae7",
+        "2fdfb41492a8bfe1",
+        "bf1ec1f96f0bb607",
+        "66b36f403bd63478",
+        "070177f73070adb6",
+        "1edbdf971ab6d84d",
+        "9ba6209d4cbc8b13",
+        "bc2d19a5148ddea5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0106",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2859100,
+      "end_ms": 2871240,
+      "text": "Maybe you could for the Before we get into your product line, level set what you've seen in the past 20 years and how the last two years compare to the previous 20.",
+      "word_count": 33,
+      "utterance_ids": [
+        "9078979dea29edba"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0107",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2871740,
+      "end_ms": 2925280,
+      "text": "I mean, 20 years ago when we were doing this, it really was an unknown industry, right? Robotics was more about automation system. Yeah, and in the research community, we're doing things like humanoid robots, like autonomous, you know, mobile robots Really trying to build the intelligence and then build the hardware that can keep it be make it capable And that's really started to break through now into the real world and do having direct impact beyond being a research topic Yeah, and then the universities have seen this demand and this growth. And people love robots. There's a lot of demand from students who want to do it. So the number of programs has grown and it's just exponentially growing very, exciting, very exciting. We've had a lot of full starts with humanoid robotics, which you're specializing in. And AI. And AI. Winters, you know? Yes, multiple ones. This time is real. Yeah. Quite obviously.",
+      "word_count": 157,
+      "utterance_ids": [
+        "b286de4d10c3a0b1",
+        "b4e2bd97f60f2ddb",
+        "4745c69ca1478ba1",
+        "94ef6c232cef9daf",
+        "cd34cdb326610cd7",
+        "fca80b17580d3544",
+        "2bcda84dc5e82fd0",
+        "141d9f3b5676bd52",
+        "bbcdf4f0c664ba8d",
+        "6bc6dac3433d1fb7",
+        "1967cde28119f2a5",
+        "a01567f561aa1b6d",
+        "5b789a523ca77def"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0108",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2925660,
+      "end_ms": 2945100,
+      "text": "Explained to the audience why this time is different and why you believe this time we're going to see robotics and humanoid robotics specifically deployed at a scale that I think we could And both agree it will be maybe in the next 20, 30 years, one to one with humans on the planet.",
+      "word_count": 54,
+      "utterance_ids": [
+        "2cea0a67ed119f07"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0109",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2945160,
+      "end_ms": 2969920,
+      "text": "Very impactful. Yeah, why? Why is this time different? Well, I would say generally it is very easy to make a robot that looks like a person. Okay. That's why we've seen human rights for a hundred years and one. It's very hard to make a robot that can do useful things in human spaces. And we're starting to see that today, and that's the difference. So even if it doesn't look exactly like a human, but maybe a little bit humanoid, but it's doing useful work, that's where the impact matters.",
+      "word_count": 92,
+      "utterance_ids": [
+        "f80b3cc85c252350",
+        "713f7da70ceee4bb",
+        "84db9e48d173fdd9",
+        "a909e8e0e64bc430",
+        "9c5b78ab04d4eafe",
+        "f30b9d3ffb9e94bd",
+        "2b8fcfa12b36275b",
+        "1521de86fa690709"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0110",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2970780,
+      "end_ms": 2985320,
+      "text": "And because of large language models, a lot of things have now become free. When these robots look at a table here, and you... say, what's on the table, it knows that's a phone, it knows this is paper, tea, water.",
+      "word_count": 41,
+      "utterance_ids": [
+        "c227b9a2c09df437",
+        "483871db071d612f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0111",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2985740,
+      "end_ms": 2987620,
+      "text": "It probably knows how many ounces are in each.",
+      "word_count": 9,
+      "utterance_ids": [
+        "1dae28ecc9344b3a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0112",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2988160,
+      "end_ms": 2993820,
+      "text": "Yeah. If we were sitting here three or four years ago, it wouldn't actually know what was in the world.",
+      "word_count": 20,
+      "utterance_ids": [
+        "86c79df7610025b8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0113",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2994280,
+      "end_ms": 3024000,
+      "text": "You would have to program it in a very narrow way, yeah? Yeah, perception was incredibly difficult. And the fact that perception... is all but solved at this point is a really, huge inflection point. I mean, I said yes robots doing useful things, but also people can now see the future of generality. AI is really enabling that much more broad context awareness for these robots. So people can see that this is going to be useful generally doing many useful things. So there's perception. The robot has to understand the world.",
+      "word_count": 93,
+      "utterance_ids": [
+        "3ca070fa4911534e",
+        "2f0ffb6464118b6c",
+        "b1c5c10b3610e8a5",
+        "0ae73976774434cf",
+        "5a587e79b62283c5",
+        "3fa7afff2355a803",
+        "bb2b5093f7cf70dd",
+        "fb66edeb05e98240"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0114",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3024700,
+      "end_ms": 3072060,
+      "text": "But then there always seemed to be this blocker with getting the robot out of a very confined narrow task like you know in a factory and I My perception is it was the communication and the training level maybe we on pack that a bit, because my understanding was previously, it basically had to hard -code the robot. If you were going to make a cup of coffee, we have a company I invested in Cafe X, and it is a robotic arm, it makes a cup of coffee, perfectly every time, can draft a beer, all that stuff, but it had to be manually coded. Now, the instruction set, because of perception, because of language models, having trained on every video on the internet, every coffee recipe, that also seems to be for free.",
+      "word_count": 136,
+      "utterance_ids": [
+        "3342d622858fc47f",
+        "9f5f5d2cacee1f21",
+        "6cfa199cbbe60ff4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0115",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3072120,
+      "end_ms": 3136740,
+      "text": "Am I wrong or not yet? It's actually quite different. So language models, think of it like, it's now becoming kind of a commodity like the internet. It's available. everybody says amazing rising tide, but these language models are trained off of the entire data on the internet. And that data does not exist for robot control. You know, what's the example for your robot? Of all the torques, all the torque commands to every motor, given all the sensor input. There's no training set of data. So you have to generate and create that somehow. And there's a lot of different approaches and ways people are going about this. And some of these AI tools, again, think of AI not as a black box, but as a big tent of many, you different, very different, useful computational tools. Right. On a road to control a robot, you can do these things by learning from demonstration. You can tell you operate the robot. Start to train from that data. You can give an animation input or motion. for doing a number of different things, but that's also got a real hard limit, because the person controlling a robot is not really getting to what the robot can do if it were optimal and how it's behavior to work. That of a robot needs to practice, you know, and that's where you get into world models and seem to real transfer and all of these kinds of things.",
+      "word_count": 247,
+      "utterance_ids": [
+        "b83e88fd852c1b87",
+        "fea5572e99bc24d2",
+        "04a62cb5578e9e9b",
+        "8e2e073a57e7c244",
+        "045faaa1dd399a44",
+        "d9764a0d9e264351",
+        "558358dbc6316c58",
+        "c814982df3a92053",
+        "c4ca10b932441de9",
+        "37a7fbfb63a5f52d",
+        "6f330da106935bea",
+        "5e32c5c5e2baf3f1",
+        "cfa8981549d213b8",
+        "03288a665ed424d6",
+        "5ad9ae2165de6545",
+        "2bc107b42b5dbbe9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0116",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3136740,
+      "end_ms": 3156440,
+      "text": "And world models are the next run. here. People are literally putting gloves on humans and having them control robots remotely to actually chop and make a salad to pour water. And that's being done today by many different companies.",
+      "word_count": 40,
+      "utterance_ids": [
+        "eef0eaec2a71a4d4",
+        "1f6a4a36c5cd9a3d",
+        "ca3e24ac22c758c0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0117",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3157000,
+      "end_ms": 3201520,
+      "text": "The world models will solve this problem. or they are part of the part of the solution. As with all of these things, there is no silver bullet. Right. So the world models as I understand it are, you know, can you model an entire warehouse and all of the physics of all of the objects inside of it so that then simulations of these robots can go practice in the world model without breaking things in the world and, you know, can you build a world and, you know, can you build a world and, you know, can you compress, so you can do, you know, a million iterations within days and computationally things like that. But there's always a massive sim to real gap. Things aren't simulated perfectly. And then, you know, as you pick up something in the real world and there's wave dynamics and there's condensation on the glass and the dynamics of the robot are not perfectly model. All these things are still very, difficult. That takes - real practice in real life with robots.",
+      "word_count": 180,
+      "utterance_ids": [
+        "2f02cdf1c1ea0c8d",
+        "b1e9a087f2196ac4",
+        "3561b4db9be12c9c",
+        "c78964dfdbf73388",
+        "65774d90754088a6",
+        "5b8d578e78deb4e5",
+        "e996778b2945f894",
+        "48692c0f013d19b2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0118",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3201800,
+      "end_ms": 3259080,
+      "text": "Yeah, so is there going to be a singularity or a crossing over moment where recursive learning, just putting the robot in the kitchen, letting it make it homestakes and then saying, do the next test, do the next test? Which is how we taught it how to win a chess or go, we didn't. tell it like here's how to castle we just brute force it and said try every computation and it was able to figure it out now with these recursive loops what will get us there quicker somebody built a world model says go get recursive puts the robots into a kitchen and you know breaks a lot of China Or is it going to be these world model companies very refinery working human alongside robot in a Michelin started you know kitchen to make that to play I mean that's it's not a very satisfying answer maybe but it's all of the tools got all of them right there's not.",
+      "word_count": 165,
+      "utterance_ids": [
+        "ea40cd81db1d2f30",
+        "836e7f91da020da3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0119",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3260000,
+      "end_ms": 3324960,
+      "text": "A silver bullet at all here. I don't believe that there's this singularity. I do believe that things are going to get better and better. Think of it more like a snowball picking up steam going down a hill. Got it. But the reason that it's snowballing like this is because people are putting money and resources and engineering time and engineering effort in as they explore everything and start to figure all of this stuff out. All right, show. Humans, for example, we've evolved. to learn. We are very good at learning. And it takes very little data to show us how to do something. And then we pack this and practice to iterate. Robots are not very good at learning yet. Robots take so much more data at so many more examples at a person. We're still figuring out how to teach Robots how to learn. But then one of the benefits that Robots have in the long run is they have Wi -Fi. You know, when you learn how to play the violin, you can't just blow that to somebody else and then they learn how to play the violin based on your learnings Robots will be one robot learns to play violin all robots know how to play violin Or all robots have that type know how to play the violin, right? And then minor variations for the next type in the next piece of hardware So you are actually deploying your... product is called Digit. Digit is, I think, 4 .0. You're in released 5 .0.",
+      "word_count": 261,
+      "utterance_ids": [
+        "4d5498bbf7ff34fc",
+        "1d8239b27180626d",
+        "d197acf8d3d0fcf6",
+        "a24d7720647d537d",
+        "b8fdcaa5e7d38b15",
+        "2bd7a2d3be04ce43",
+        "853748ee332bfb67",
+        "9d8f7287223dca23",
+        "d7147666bf86e1cb",
+        "384ba2f99cd1ef72",
+        "35cc6b19551b21b7",
+        "734208e0848dfadb",
+        "36e45f6ad2f10e53",
+        "029944a5399a8d40",
+        "544d76c54f3389cc",
+        "1cf16ed10cc36de5",
+        "8fc03bb1f1f37e01",
+        "ae67c05f5a398e72",
+        "02d8f14fd244456a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0120",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3325120,
+      "end_ms": 3337800,
+      "text": "You've got, let's say, dozens in different applications out there in the world. Give us an idea of what the Ford deploy looks like today and where you think it will be in a year or two.",
+      "word_count": 37,
+      "utterance_ids": [
+        "7ea8f00a8223c21f",
+        "683892ddb84de5a8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0121",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3338080,
+      "end_ms": 3416820,
+      "text": "So today, it's doing these sort of multi -purpose workflows that are still reasonably well -scoped by picking up bins and totes and carrying them around. And the reason we do that is because you need two arms to pick up big things. You need this whole body control to be dexterous and how you're manipulating and moving those. You need to be balancing to lift them the top of the tall shelf and aerospace so it kind of you need to lift the top of the tall shelf. The forefactor for this one use case, but the real useful aspect of humanoid is its versatility. So when we do the each picking and you know, fill a bin and carry it somewhere and palatizing and depalatizing and are expanding out into more and more use cases, that's what it really starts to escalate. And digit V5, which is coming out later this year, is the first time that a humanoid robot a robot was balancing can step out of a work cell and does not need a physical barrier between the robot and the person to maintain safety from this warehouse. So when did it be five's out there, that's kind of the scaling moment for us. Yeah, this is a key moment that maybe people don't appreciate. But if you've ever been to one of Elon's factories or Toyota's factories. trees. There are lines. There's a line. And if you cross that line, the everything shuts down. Everything shuts down. And I've taken many of these tourists with a lot. And they're like, seriously, please don't cross that line. It's just going to cost a million dollars if you do what does love factory. Because it's cranking.",
+      "word_count": 289,
+      "utterance_ids": [
+        "9f8edf6559c157a2",
+        "aca2a97809bb4eb4",
+        "02eaea8ff35af78f",
+        "1e7f838026fa1038",
+        "65e93ad4e388f86b",
+        "237376c0858d64e0",
+        "34dd5ad0a0e34478",
+        "ec10f7ea1cda55ca",
+        "405fbcd7d3364cf1",
+        "8ebd7f802123e31a",
+        "c76d8d9e3f1cd2ed",
+        "9e33a63218ea8e6b",
+        "c8343ad91143cbb8",
+        "b730d5d0e5f9da62",
+        "f4265faaff937e41",
+        "16574ce6523ca439",
+        "68ef0cd76eec3c53",
+        "4619223ae9f58efd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0122",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3416820,
+      "end_ms": 3423280,
+      "text": "Yeah. We're starting to feel comfortable enough that these robots are not going to fall over and break somebody's ankle.",
+      "word_count": 20,
+      "utterance_ids": [
+        "bcfa7fe788185b0f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0123",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3423620,
+      "end_ms": 3482620,
+      "text": "Well, it's been a very, intentional process of the past two or three years, where, you know, this is our experience with Amazon, when we deploy it in the robots are doing the task and they're like, great, you know, it solves all the R &D, you know, goals we had and we're like, great, let's go deploy them. Oh, no, we can't deploy. Because they don't meet our safety requirements. It's like, okay, how do we meet that? Well, it turns out, that's super hard. And so it's been a bottom to top design of this machine, holistic through the whole every system of the robot is touched to figure out how to make it safe. When we look at an industrial shrank robot like yours, Bill of materials, tens of thousands. of dollars each yeah I mean we're not discussing bills and materials we know that the costs are coming down and down and down over time we'll be selling robots you know in the vicinity of cost of cars and things like that the real like what is the value that they produce is the question to ask when you have a robot that's working 24 hours a day and the five year life You know, what's the value? It's quite a lot.",
+      "word_count": 216,
+      "utterance_ids": [
+        "801d7d4bb982e280",
+        "f496507340a41b87",
+        "15e3688b20cbc5ac",
+        "d03e5aa9e2ea029c",
+        "0699f55ee7e363ae",
+        "bc0ba777da0c79ed",
+        "6183518f2f56f7aa",
+        "4b2432821601ab65"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0124",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3483300,
+      "end_ms": 3493360,
+      "text": "Yeah, it would be if we were to think about it from first principles They can reasonably were on 20 22 hours a day and then after charge and just that's right.",
+      "word_count": 32,
+      "utterance_ids": [
+        "3e4307690359836f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0125",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3493360,
+      "end_ms": 3502780,
+      "text": "We tell you so we take 20 hours a day 30 25 20 out of 24 hours for a digital V5 robot Because of the very fast charge generation that's gone on this bad.",
+      "word_count": 34,
+      "utterance_ids": [
+        "1ac962f23b1654b4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0126",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3503000,
+      "end_ms": 3506340,
+      "text": "So we get we have 20 hours for just 65 days a year.",
+      "word_count": 13,
+      "utterance_ids": [
+        "6f724cb80d13a32e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0127",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3506540,
+      "end_ms": 3508900,
+      "text": "Yeah. You know, now you're in that 7, 8 ,000 hours a year.",
+      "word_count": 13,
+      "utterance_ids": [
+        "c940b196c14f7053"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0128",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3509020,
+      "end_ms": 3512880,
+      "text": "Let's put it at 8 ,000, five years, 40 ,000 hours of work.",
+      "word_count": 13,
+      "utterance_ids": [
+        "e07687316e00e584"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0129",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3512920,
+      "end_ms": 3585500,
+      "text": "It adds up. Yeah, and people tend to think these things are in a cost 20, 30, 40 ,000 dollars. If they will at some point. Yeah. going to need to go through the scaling and have 100 ,000 robots out there before that actually is real. So that's a dollar an hour. These people are being paid in factories currently $40 an hour. Maybe in some other countries $10 an hour. But let's put it at 20 bucks an hour. You've got 90 % compression in costs. At some point when these things hit the market which gives you plenty of room to charge an Amazon, a Toyota other partners on an hourly basis. Is that the current plan to charge per hour of utilization you own the robot? They. We do both. We do a cap X for a customer. Is it prefer that? We also do robot as a service for customers. I believe we're that. It's really lower barrier to entry and lower risk for them. What's the price of a robot per hour? I'm not talking about that. That's talking about that. I will say like as obviously as the robots get better and better and better and better what they do, the value goes up and up and up and that's at the same time that the costs to build the robot are going down and the value for these robots is really set by the and what is it cost to pay people to do these jobs? So it's a very inelastic price for a very long time.",
+      "word_count": 265,
+      "utterance_ids": [
+        "50c7d2b20d0d2e62",
+        "e638a5a7076b0061",
+        "5eaccecb0ce701ee",
+        "d285e19185c9dd5e",
+        "7866fdbb9824648b",
+        "72b5b9b92c978b90",
+        "3e659f97cf82cb5c",
+        "b9d1e23dcc21d328",
+        "6ef38b86ac9abc24",
+        "d3ed85c9dcdc3074",
+        "0e94a065f553c5f4",
+        "f2457bc53e136b82",
+        "595650052d6fcf4e",
+        "308718a72286a933",
+        "07f6e3a62bffee62",
+        "2fa01ee8fc0a3d24",
+        "f2c5d046c140a7ba",
+        "3a7f2a52b91dfb80",
+        "d46beccaf0f062fc",
+        "5fb6b2778d577a2d",
+        "6ffe4086129a2030",
+        "7f83a0514e21f5d6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0130",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3585800,
+      "end_ms": 3599200,
+      "text": "So between a bill of materials, tens of thousands of dollars, currently people in factories getting paid 20, 30 or 40 dollars per hour in the western haphazphere in the modern world.",
+      "word_count": 32,
+      "utterance_ids": [
+        "c68996c730e77745"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0131",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3599300,
+      "end_ms": 3599980,
+      "text": "It's a pretty big market.",
+      "word_count": 5,
+      "utterance_ids": [
+        "58952dd4e6d672f3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0132",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3600000,
+      "end_ms": 3635260,
+      "text": "Yeah, a pretty big market plenty of room for you to save the money and for you to make enough profit Build an actual business, you know, build an actual business. Yeah, so let's take the conversation to What do you think the time frame is if I were to ask you in Amazon factories or if we want to take Amazon out because they're a partner and don't want to get you in trouble, but an Amazon or target -like company At what point will the majority of workers in a factory be robotic when will that flip happen to 51 % Knowing what you know Jonathan?",
+      "word_count": 108,
+      "utterance_ids": [
+        "032816e28f1533ae",
+        "d4bbd484ccab02bd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0133",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3635700,
+      "end_ms": 3669000,
+      "text": "I mean already in a lot of these applications the majority of the workers are robots Sure, right? There's a lot of AMRs, there's a lot of conveyor belts, there's a lot of industrial robots, and that's not changing, that's continuing to grow. Sure, and this is just a new form of automation, like all of the others, that's helping to increase and build that productivity. So like, how do we, and the United States anyway, how do we build our GDP? It's not a growing population. No, it's increased efficiency. and capability and the only way we could do that is more and more. Especially not with the anti -immigration vibes we have in the country right now or even in the Western Hemisphere.",
+      "word_count": 125,
+      "utterance_ids": [
+        "3e50e7f213e2d085",
+        "c3dcc28c3482705c",
+        "8a1e7955e6b98fc7",
+        "51205c1e4b7bfd7c",
+        "247eb561c4b86bbc",
+        "717e9aa7d879bf53",
+        "71585b595f45ebf8"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0134",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3670500,
+      "end_ms": 3679620,
+      "text": "Let me phrase the question another way. At one point, if there were a million people working in factory sorting packages, just it go down to 500 ,000.",
+      "word_count": 28,
+      "utterance_ids": [
+        "00d0ee1cf36d85e1",
+        "36e7e99cd73a6f0f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0135",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3680000,
+      "end_ms": 3741140,
+      "text": "Three, four, five year, I think we've already done that. Right, but looking for it, but with these dudes, you're going to just continue. Your Sunday, there's going to be an autonomous truck that drives up, and then you have a completely lights out autonomous package, sortation factory, and then, you know, a autonomous truck leaving again. And at that point, it's probably specialty automation doing those things, because it's just 20 - for seven doing it, and a humanoid doesn't make sense. It's not the most efficient thing for that specific task. A humanoid is useful for walking in the human environments doing human workflows. By the time this, one factory is entirely automated, there's also a whole bunch of other factories. It's still our legacy and still need automation where humans were. But then we're also working now in retail. and grocery stores and hospitals and construction sites and delivering packages to your front door, which is a forever human environment, right? And that kind of thing. That's going to be an interesting one. Because it's fairly obvious to anybody who has even looked at the latest generation of humanoid robots that the factories are going like. It's out.",
+      "word_count": 201,
+      "utterance_ids": [
+        "decc81a8e3ab9728",
+        "132d71589159df89",
+        "5bbee2fc4f7d514c",
+        "4f715a91b7ade10e",
+        "97c459cc3393916b",
+        "8cc2bdb94d6d7aa2",
+        "bb1a7243c9ce9572",
+        "b1aa42073dc08fe7",
+        "db833e9e4a9f3f51",
+        "6e9d7a5b69764e73",
+        "51a90059443b067e",
+        "a579f6ab1a73e66a",
+        "bf47f2c72e17f85f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0136",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3741540,
+      "end_ms": 3757160,
+      "text": "Most people are incapable at this point of imagining a Waymo Robotaxi and Uber Self -driving car and a robot getting out and bringing the packages to your doorstep.",
+      "word_count": 29,
+      "utterance_ids": [
+        "cf155fe45b95afad"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0137",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3757900,
+      "end_ms": 3792560,
+      "text": "That's going to happen. Absolutely. Are you working with folks on that you don't have to say who you know what that was one of our very first use cases It was called the Ford and there's a nice video online of our very first digit robot getting out of a vehicle Walking up to someone's front porch and dropping a package there yeah stairs and everything so we could do that like this was seven years ago Something like that but I don't I don't think it's the best first use case or the best first market. So it's on our road map for sure. But such a big market for deploying with what we're doing right now, we're going to start there. How do you, when you look at applications,.",
+      "word_count": 132,
+      "utterance_ids": [
+        "5f85eed994bc5b29",
+        "9d6f347ff83e597d",
+        "88ded2653b44cd23",
+        "7488d09baa63cd9d",
+        "f078c7ff5a88a25f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0138",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3794400,
+      "end_ms": 3809420,
+      "text": "We know applications that seem obvious to us not being in the industry, but knowing what you know. over two or three decades. What do you think is a use case or two that are non -obvious, but that would be incredibly world -positive?",
+      "word_count": 44,
+      "utterance_ids": [
+        "7a1022cfc55a3f19",
+        "037563566dfbab42"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0139",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3811040,
+      "end_ms": 3861560,
+      "text": "I don't know what to say what's non -obvious. I mean, just picking up stuff and putting them somewhere else is such a huge use case that frees people from the classic - three days of robotics, the dull, dirty, dangerous kind of stuff, dull, dirty, and dangerous. The three days of robotics. Yeah. And I really hope that we look, you know, like our children look back on now and look at some of the jobs that people are doing today that I really think of this robot jobs. The same way we look back on like coal miners in the 1900s and say I can't believe people. did that work. And, you know, the number of roles and things that people do today are so much better. The quality of life is so much better. The jobs that people have today that you couldn't have imagined in 1900 often are just so much better. I think that that's how the future is going to look for us. You're still a professor. I have robotics. Yes. You have hundreds of people in this graduate program world. over 100. Yes, we do.",
+      "word_count": 192,
+      "utterance_ids": [
+        "eb14da57c6f5e52f",
+        "14d993ec82226b0f",
+        "f1a6e7e9908a96c8",
+        "77d0924f4509cc72",
+        "1da61acd45c013a4",
+        "c639258902524364",
+        "06e852e6d088ee9d",
+        "42aaa94d5feb8ffe",
+        "351347e49c31b932",
+        "052f860570353fa5",
+        "104b9e6f28da177f",
+        "4cba6251d76077d5",
+        "1447eb1749d0a015"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0140",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3862220,
+      "end_ms": 3872360,
+      "text": "For young people who are listening to this, who are worried about their future in careers, this seems like an incredible career path.",
+      "word_count": 23,
+      "utterance_ids": [
+        "37d0222bc69f407d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0141",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3872400,
+      "end_ms": 3905280,
+      "text": "It's a massive opportunity. We live in a time of change. Anytime there's a time of change like this, students coming out have an advantage because all the - People have this 20, 30 -year career and have no other way things were done. They have to learn how the way things are coming up now too, so students have an advantage. And it's hard to predict exactly all the things that people, you know, the way the careers are going to look in 10 years, but if students just build some of the core skill sets around engineering. It's going to be applicable in use for. So there's the PhD master's version of robotics.",
+      "word_count": 115,
+      "utterance_ids": [
+        "11c28f291572ee4f",
+        "50c0c3066fd5c78d",
+        "8fcd9eb86d733d78",
+        "7c40ff77682888ee",
+        "ef5658de71d0ab73",
+        "0a0864f915681edd",
+        "9d82e223aa5d318e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0142",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3906300,
+      "end_ms": 3918140,
+      "text": "Is there another version that is let's say a little more generation tool belt, blue collar, the equivalent of being an electrician, or working on HVAC, or a carpenter, or a contractor?",
+      "word_count": 32,
+      "utterance_ids": [
+        "22b83658e16b5a36"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0143",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3918560,
+      "end_ms": 4034040,
+      "text": "Yes, absolutely. What is that? And what will that be? Robot operators, assembling and building robots. The robots can't assemble all themselves yet, you know? So there's a lot of manufacturing. And again, your robot operations and deployments, there's a lot. Maintenance, clunker, maintenance. Is clunker a derogatory term? I don't know, it's a Disney trademark. So is it really? Probably final question. I think we're of the same gen X. You know, General Grievous Show them the Star Wars characters. Yeah, you trained in the Jedi dark arts by Count Ducco able to yield three or four a six lightsabers at a time Is it half serious question? Why not have four or six arms facing all directions? Good question. So, I would say that, you know, as we think about the first principles of what how to make the simplest possible robot to do the tasks, right? One arm is not quite enough to pick up big things. You can only pick up small things. Two arms now you can pick up big things, adding a third arm is hard to see. The a knock utility to make it worth fitting it in and then, you know, go to four to five. There's a lot to coordinate and a lot of extra complexity, but what else does it make you do? I don't know. Yeah. Maybe we'll see that, but it's going to have to be driven by a real need. All right. Favorite robot in science fiction history? Probably walley. Walley. I love kind of that vision of these robots just continuing to try and build and create and do what they were designed to do Yeah, I love Baymax too. Baymax is pretty fantastic. Wait who's Baymax? Baymax from one of the San Francisco from Oh, yes, of course. Yeah, I do know this robot that's very clearly there to help and I love how they kind of show that it does what it's programmed to do. I mean at one point, they remove all its memory, and it turns red and now it's dangerous. Well, that's very real. You know, you're soft, you have to have the safeguards in place. You gotta have the east up on these things. So you think about the prime directives? Yeah, basically.",
+      "word_count": 383,
+      "utterance_ids": [
+        "934c42040e20e3f8",
+        "a9b5eef383248996",
+        "c1cd4ebc6535674d",
+        "954d392821c01921",
+        "db34b15ef5c49dcf",
+        "eb2cf632368d0b50",
+        "02ae806a44cec336",
+        "ae5d7299b9013a32",
+        "a01bcba238677959",
+        "af083a707d1ae09c",
+        "d9d7daac9f999cc1",
+        "bfe5110664636c8b",
+        "8474ef481aa95b5a",
+        "ca10ecf9a8542296",
+        "c3e765c0d8cce383",
+        "5cba74d4f116fbf6",
+        "a2e7f8e1e119b245",
+        "8b9f80da207b10a0",
+        "a14a17492571563e",
+        "df62bb6653625e5c",
+        "18f9811d06419105",
+        "f9f67e58e0fcd5e0",
+        "561e24c3e4cf9e40",
+        "73d0821fc9a386e2",
+        "2cb4cb472cb51498",
+        "52baa15356f6df8b",
+        "7fc6b605009547d6",
+        "8eab65dc34ff96e2",
+        "0b1d75a8a9c3a0e4",
+        "1b58a1257d0b9f4a",
+        "6dc31f8390ec73e6",
+        "941009fda517afdb",
+        "6ca97c8dc4d4d8ff",
+        "871b2ab79e79afe6",
+        "dd3ccac0b8aaab7b",
+        "a74bd9806820183b",
+        "7c940a284711c8c3",
+        "6f1009945003f28b",
+        "9e16a65a19200064"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0144",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4034580,
+      "end_ms": 4082900,
+      "text": "How do you make sure that these things going through kind of the industrial safety process to make sure that? You know, you have to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have the right to have Boy, there's a supervisory circuit. There's a east up on every robot all of these things that make a robot So they can just really never harm a human. Jonathan, I know you're hiring agility robotics is the company And if people are looking for a gig one place to work agility is great and we have location in Salem, Oregon where we started where I am We have a new facility we're opening in Fremont, California, which is just a beautiful place And that's where we're doing a lot of robot behavior development So there will be robots working all day long and easy to come in and be working on And we have a Pittsburgh location as well Oh right, yeah Kind of email it Amazing, yeah three great centers. So if you're a young person or you're in the robotics field. Pretty great place to work.",
+      "word_count": 391,
+      "utterance_ids": [
+        "051da1e95b757d3e",
+        "7fdc6652be9141ef",
+        "28666192e6ab69b8",
+        "19f45e9692976741",
+        "744f01b52b50fe1e",
+        "dd8566a1e24f86ad"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0145",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 4083580,
+      "end_ms": 4090800,
+      "text": "And if you're worried a little bit about your future, go get a PhD or a master's in robotics, skate to where the puck is going, folks.",
+      "word_count": 27,
+      "utterance_ids": [
+        "9866d12df3327ebf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0146",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4090980,
+      "end_ms": 4093860,
+      "text": "Right. Great to have met you, and thank you for sharing all your knowledge.",
+      "word_count": 14,
+      "utterance_ids": [
+        "a6f133c9f1285563"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79e5cda81c5740e9_t0147",
+      "source_id": "79e5cda81c5740e9",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4109679,
+      "end_ms": 4112820,
+      "text": "I'm doing all of it!",
+      "word_count": 5,
+      "utterance_ids": [
+        "7f9e409da02d275a"
+      ],
+      "is_question_anchored": false,
+      "stripped": "outro"
+    }
+  ]
+}

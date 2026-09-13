@@ -1,0 +1,2129 @@
+{
+  "source_id": "8550481c62a4fddf",
+  "title": "The Trillion-Dollar Industries AI Is Disrupting: Voice, Law & the End of the Billable Hour",
+  "metrics": {
+    "source_id": "8550481c62a4fddf",
+    "title": "The Trillion-Dollar Industries AI Is Disrupting: Voice, Law & the End of the Billable Hour",
+    "utterance_count": 503,
+    "turn_count": 115,
+    "retained_turn_count": 106,
+    "stripped_turn_count": 9,
+    "question_anchored_count": 22,
+    "question_anchored_pct": 19.13
+  },
+  "turns": [
+    {
+      "turn_id": "8550481c62a4fddf_t0000",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 0,
+      "end_ms": 4059,
+      "text": "You're on a bit of a heater, huh? It's, the best time to be building.",
+      "word_count": 15,
+      "utterance_ids": [
+        "cb4ae11cffcff34a",
+        "f09a48e59a008191"
+      ],
+      "is_question_anchored": false,
+      "stripped": "cold_open"
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0001",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 5620,
+      "end_ms": 11720,
+      "text": "And revenue has surged, but you face really intense competition.",
+      "word_count": 10,
+      "utterance_ids": [
+        "b968109633ec2475"
+      ],
+      "is_question_anchored": false,
+      "stripped": "cold_open"
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0002",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 12440,
+      "end_ms": 14300,
+      "text": "Let's go right at that to start.",
+      "word_count": 7,
+      "utterance_ids": [
+        "ec0982602ecfff76"
+      ],
+      "is_question_anchored": false,
+      "stripped": "cold_open"
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0003",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 16040,
+      "end_ms": 22100,
+      "text": "If you were building a global financial system from first principles today, you wouldn't build it on 50 -year -old legacy rails.",
+      "word_count": 22,
+      "utterance_ids": [
+        "5b31fa6ab6cbf529"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0004",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 22360,
+      "end_ms": 23240,
+      "text": "You'd build airwlocks.",
+      "word_count": 3,
+      "utterance_ids": [
+        "0e12fe5fa661a408"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0005",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 23680,
+      "end_ms": 60840,
+      "text": "One AI native platform for global accounts, cards, and payments is designed to make the entire world feel like a local market. Others are bolting AI onto broken infrastructure, but airwlocks was built for the intelligent era from day one. Stop paying the legacy tax and start building the future at airwlocks. dot com slash all in air wallets built for the future three hundred fifty million and what two with three years and I'm hearing numbers five or six hundred million now tell us about the revenue ramp of the company from the moment you release the software to today that the products been in market for forty months fifty months you tell me spot on.",
+      "word_count": 117,
+      "utterance_ids": [
+        "759e3762c89640d0",
+        "1ec6f417b793be3f",
+        "7762ab70c80b12dc"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0006",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 61100,
+      "end_ms": 91240,
+      "text": "We started company 2022. First year was all about building the research and the product to really kick start a work. We bailed the first a text to speech model that finally could sound human. Release it in 2023 beginning of 2023. Then it took us roughly 20 months to get to the first 100 million in ARR. roughly 10 months to get to 200, 5 months to get to 300, and that's how we close at the end of the last year, and now we are at the 100.",
+      "word_count": 90,
+      "utterance_ids": [
+        "c987aed319f1f7f8",
+        "e46d83ea4b77a806",
+        "a0dc695408e5e871",
+        "cecf094a49a6f04d",
+        "0ad27fe8d4a8f4fc"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0007",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 91680,
+      "end_ms": 119980,
+      "text": "You're at $600 million in revenue, which is extraordinary. How many employees now, because the company is obviously hit in credit? valuable valuations, but you have to fill in that valuation and you're competing at a very high level for talent. So tell us about how many employees you have now and how you maintain the culture of the company when revenue is ripping, investors are throwing money at you, showing up at your doorstep, I'm quite lucky.",
+      "word_count": 78,
+      "utterance_ids": [
+        "2c2f957e1c9b5be3",
+        "32c1d6cf29ade130",
+        "49e892daf5607811"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0008",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 121059,
+      "end_ms": 125000,
+      "text": "But you've got to run the company. You've got to build a culture.",
+      "word_count": 13,
+      "utterance_ids": [
+        "5a015de299a6ac6e",
+        "c5005f6639c3cb5f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0009",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 125240,
+      "end_ms": 130660,
+      "text": "So how many employees now and how are you dealing with these competing priorities?",
+      "word_count": 14,
+      "utterance_ids": [
+        "54d26e12babd611e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0010",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 132040,
+      "end_ms": 224900,
+      "text": "Yeah, that's the key element of how you offer us the element of how we can maintain the culture despite the quick growth. Critical and how we optimize both the interview cycle, how we are bringing people in board, how we onboard them with 600 people today. So also very quick growth on that people side. And as a company, we combine research and product. So we are building a communication platform for AI. On the research side, this includes everything across audio. generating speech, transcribing speech, or just trading speech for interactions. On the product, this is how we can complete the entirety of the customer journey. From marketing and creating assets and localizing them internationally, through customer support with voice agents, to proactive enablement of how voice agents can help in operations, training, and sales. So this requires a lot of different... talent and a part of that revenue growth is actually a reflection of the functions we've grown over time. So from the original team, very research, very engineering -heavy. From the first 10 people, we had zero attribution, everybody is still at the company from those core research and you're in talent building together with us. So, I think they're common thread and I'm credit to my co -founder, who is incredible researcher himself. We've been able to assemble the team that is truly excited about solving audio, solving interaction and building that research. And if they are looking for an opportunity out there and looking for a company to join solved that we are one of the leading place to do that.",
+      "word_count": 267,
+      "utterance_ids": [
+        "40ce4ef8ce8eb794",
+        "8cd345e4e39f22b2",
+        "e076ad9eee69f6a2",
+        "e7a797f6762410b2",
+        "056c56af5c47ecc6",
+        "d92966fdab020f3b",
+        "bc47868cea8d638e",
+        "a132e8be6ebf4797",
+        "d0080d0f0e5bb40d",
+        "d90639fc4f4fca4f",
+        "77b8b862710aba87",
+        "306dd2c2d371ff64",
+        "685ec5c0a8e4c749",
+        "f0e47fadd4e643cf"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0011",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 225200,
+      "end_ms": 243080,
+      "text": "And you started before AI was so impactful at making software. So when you were starting four years ago, five years ago, and working on this, building software was limited to low percentage. of the population of planet Earth.",
+      "word_count": 39,
+      "utterance_ids": [
+        "5f32c14cc8846274",
+        "919ebd17ed1784fe"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0012",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 243320,
+      "end_ms": 244460,
+      "text": "Number of people could write code.",
+      "word_count": 6,
+      "utterance_ids": [
+        "ae5f1b40801f2ee4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0013",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 244920,
+      "end_ms": 275900,
+      "text": "And now here we are, you know, went from vibe, we had a no code moment than vibe coding. And now we actually have people building production code who are not developers. You have developers going 10x and token maxing. How? has building software changed internally and how do you deal with making sure that the code is really high quality because people are paying you this money but they're going to demand really high quality product since they're spending so much money with you.",
+      "word_count": 85,
+      "utterance_ids": [
+        "6d967666045ee013",
+        "857486c0c9430ef2",
+        "397136d867e7919b",
+        "190c96569c632bb5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0014",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 276239,
+      "end_ms": 376620,
+      "text": "Yeah, it's also true that 2022 is still the year where topics of the day were crypto. And metaphors. So the building there was also the best time to start because we could actually take a bit of time to focus on what we thought is the future. But the way we are structured is a lot of small teams, especially across the product engineering, but also in how we think about go to market up to my specific... industries, telco, financial services, health care. So every unit is very tightly in it together. And we do that across the company. So it's usually 5 to 10 people teams that run ahead. And inside of each of those teams, the decision we took, which is slightly different than how it's usually structured, we embedded engineers in every. replace. And even in the places which aren't engineering, so our talent team will have an engineer, our legal team will have an engineer, our revenue engineering or go to market engineering, have engineers embedded all across. And those people will have tools. One is, of course, creating automations and bringing the software inside of that team. But second is actually help. everything everybody else do what you said which is make sure that people are adopting AI but also there's a security check for everything they deploy because ultimately if you're not using a lot of the coding software a lot of the co -working software then you're probably in the wrong spot if you're using too much of it that is also a flag because you maybe are not doing that in the right way. Way. And of course, as you start bringing that into the sites of the organizations that never were exposed, they frequently can create, but not necessarily review whether that's actually doing behind the scenes all the secure ways or everything. So that's an essential role in the company.",
+      "word_count": 322,
+      "utterance_ids": [
+        "b76048c0f98284eb",
+        "168290bce9b55f58",
+        "d26bf67adb8fb603",
+        "1d2d333ac8850c73",
+        "d423f6eea54ce2e8",
+        "af98747045032ad9",
+        "2ebc3d8523b90e32",
+        "29b5b0c4d2eed423",
+        "d5be1d4fc1a3a41a",
+        "a4bbcef4020a3fde",
+        "68e94c4b386116d1",
+        "46531926b0d605ea",
+        "db9707da217cbb11",
+        "3aafa1b758cd2a7a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0015",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 376860,
+      "end_ms": 419060,
+      "text": "Yeah, we, it's fantastic that everyone. can build software until you put it into production and you have a leak or that person leaves the company and people forget they built that software and it's just deprecating on its own. The other thing that seems to have changed is management when you had 10 developers in your pod or six you had a U .S. designer, you might have a pure graphic designer, you'd have a product manager, they rolled up. And then suddenly, you know, we watched over the past three years, oh, hey, this is pretty good at summarizing what happened on the call. Oh, it is actually creating action items, and it's telling us what to do next.",
+      "word_count": 121,
+      "utterance_ids": [
+        "569871560391c969",
+        "cc377bf1e16d9d11",
+        "866d3daa7f165a13",
+        "dfb1c408e2788288"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0016",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 419360,
+      "end_ms": 419980,
+      "text": "Oh, and it's...",
+      "word_count": 3,
+      "utterance_ids": [
+        "b233fb5f5a78217e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0017",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 420000,
+      "end_ms": 431120,
+      "text": "You know, doing all the different stories in our con bond board, and now how do you think about product managers and management as the CEO and as the co -founder?",
+      "word_count": 31,
+      "utterance_ids": [
+        "17540964aaad02da"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0018",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 432040,
+      "end_ms": 533580,
+      "text": "Yeah, we so we don't fire them all right. We don't we don't have any PM's right. Did you ever or did you have never you never did or never did thought that's it's A little bit of what you mentioned, I was also before the tree, I impact started, it was ideal person in that role, can code, can understand the customer, can understand the design. Of course, that's very hard to find. There is no truly that many people that are experts in any all of those fields at the same time. So we optimize for profiles that are experts. not least one of those fields, but understand at least one other field really well. To your point, what we are saying now, there is if you can do a little bit of all with AI, you can maybe step change from being an amateur to being a advanced level, maybe not an expert level. So suddenly you are not bottlenecked on all the other functions to do your work in, um, in growth, phenomenal fire. We're growth engineering. The present can design experiment, ship an experiment. It's working and bringing it back. Um, we also have the privilege where we are using a lot of our product ourselves. So, to be able to do that ultimately to help everybody else create voice agents. We ourselves need to create voice agents too. Um, so, um, so, uh, so, uh, so, uh, so, uh, so, uh, so, uh, so, uh, so, uh, so, uh, We're seeing that also in the non -traditional functions, even go to market, like you need to be able to create a version of that if we are offering that to the customers too. And then we do, we created our inbound AISDR agent that's in addition to the form that you fill on the website, you have an agent that you can call. And people are, of course, you can give all the information a much easier and quicker way. But the second thing that happens is people also leave a lot more information, so you can get connected to the right problem and right person a lot quicker.",
+      "word_count": 365,
+      "utterance_ids": [
+        "ecadeeb3457231f9",
+        "a955c1051a2e0815",
+        "cd820e5e19ff7773",
+        "65aaf378d445e9b7",
+        "40212bc670a49d63",
+        "ec13474e801cfce5",
+        "5be37044b05b6c91",
+        "d3174f8fc47c3390",
+        "d29058291f43a457",
+        "e0b8dac93241756b",
+        "f5fcfd2f06bdfe35",
+        "13b9225a2cfd6adb",
+        "3f350fbfa969a88c",
+        "1f12f3ec95b69b6a",
+        "37d6a0d69dd30aa8",
+        "4e5e07161a5d7445",
+        "f8da931c624a0db7",
+        "e254ec452aeceee7"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0019",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 534260,
+      "end_ms": 544720,
+      "text": "So we are seeing that kind of phenomenon all the time, where actually using a lot of tooling makes you yourself. tell better in your job overall and in 11 laps in our specific tooling that we are solving for us.",
+      "word_count": 41,
+      "utterance_ids": [
+        "aed4e5513aa807e3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0020",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 544940,
+      "end_ms": 580360,
+      "text": "Yeah, it seems like the use case of calling on the phone and talking to a computer or previously going through voice gel and it was incredibly arduous and painful and annoying and it made you just say opera. And hit the zero button, like as fast as possible. But now it seems to have turned a corner where talking to a human, I almost feel bad talking to a human, where I'm like, I am so sorry I'm wasting your time with this. And the AI is just so much more precise, and the fidelity is so great that when you tell them what you're looking to do and you cut them off, you don't feel... bad.",
+      "word_count": 118,
+      "utterance_ids": [
+        "f3558a7bc9829a06",
+        "0b61c2d2ab0468b5",
+        "1d60dddddd6f607d",
+        "455f601de552231e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0021",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 580500,
+      "end_ms": 581640,
+      "text": "You don't have to make small talk.",
+      "word_count": 7,
+      "utterance_ids": [
+        "62ca542853a3dd73"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0022",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 582080,
+      "end_ms": 598460,
+      "text": "Is that what you're seeing in your customer base in terms of the ability in real time to interrupt the agent, to interrupt the, you know, conversation and just move faster has made consumers and companies basically embrace the technology?",
+      "word_count": 40,
+      "utterance_ids": [
+        "d7dc81a4e6ba2d41"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0023",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 599200,
+      "end_ms": 675680,
+      "text": "Yeah, it's slowly become - that you will be asking for, I give me an AI agent effect. It gives you an AI operator. But we are seeing a transition. We're suddenly,. And the biggest fuel of the recent growth for us is enterprises, sales team, just doing incredible work. But then finally the product, combines the reliability that's core, with... The orchestration for a lot of the AI models. But also the knowledge and the integrations to provide you the right experience. And yeah, I think it was a step -tension in the last 12 months, and especially in the last 6 of how good that experience became. It's like this golden era of consumer for the consumers out there. Customers and animacustomers is Canada. where you're going to actually open a website and call an agent and have the agent have information from your past interactions and deliver that help. And I think we'll see this kind of interesting phenomenon combining your previous question in this where now of course you are reaching frequently when you have a problem and you're asking for help but ultimately A, the whole int. Their face will change and more, depending on how you are operating with that end -frame interface with voice being helping you in the background find that information. It will shift from reactive to proactive to help you get that help before you potentially ask for it. And we are seeing those examples. Those examples do.",
+      "word_count": 248,
+      "utterance_ids": [
+        "d4804536f314ae32",
+        "ffc5413e740fe5b4",
+        "30cd5d0a2fbe3c98",
+        "9d506ef1a4834bbd",
+        "96c303ffe548ef9c",
+        "f3b867ac1f639387",
+        "e222d7e84f3c26fe",
+        "f1321b1b7c795343",
+        "850a7971ce2fcfb3",
+        "bfedf490eae095fb",
+        "bdb6b20ad1bafa49",
+        "f4a6fc895ae8ab1d",
+        "f41694653354f9b0",
+        "e4b9dc8875baa503",
+        "fd06195c60f66d71",
+        "c567fa346c678361"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0024",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 675680,
+      "end_ms": 703820,
+      "text": "It seemed to me that speech to text had a major... locker. Again, in fidelity, 10 years ago lawyers would put on drag and dictate if you remember that terrible software they're going to headset. And it seemed like the big blocker was, you felt like an idiot talking to a computer in an office, right? And so people who did quietly in their office, you know, they... kind of got away with it. But now we see something very different.",
+      "word_count": 81,
+      "utterance_ids": [
+        "791ea7f893807797",
+        "a65fb1873a991cc8",
+        "b490c8d787ea6ea2",
+        "ee3c7bd684ef9bba",
+        "61d07a97fef7cce9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0025",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 704500,
+      "end_ms": 706420,
+      "text": "The whisper in the office.",
+      "word_count": 5,
+      "utterance_ids": [
+        "8d390a03946c8978"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0026",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 706600,
+      "end_ms": 717620,
+      "text": "People very quietly talking to their computer, giving it a prompt and talking to their agents. And now there's a ring out, you can press it. And I use a really cool product called whisper flow.",
+      "word_count": 36,
+      "utterance_ids": [
+        "6243365eeb9add28",
+        "31c43b8e337b8b63",
+        "148f99f1e7ced6ef"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0027",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 717840,
+      "end_ms": 726000,
+      "text": "I don't know if they use 11 lips on the back end. They use us, and then if you utter as well, they are doing phenomenal work.",
+      "word_count": 27,
+      "utterance_ids": [
+        "90e8eaf127bc9389",
+        "138242b74cdfc5ab"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0028",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 726140,
+      "end_ms": 738140,
+      "text": "Whisper flow is just a tremendous product, and then I got a pedal. Does anybody here use a pedal on their computer razor hand if you're a there's one or two dorks?",
+      "word_count": 32,
+      "utterance_ids": [
+        "2dcd836a3068dbb3",
+        "d39c36bd7a2b2f8f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0029",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 738500,
+      "end_ms": 781060,
+      "text": "Any others? Razor. Hi. Oh, she's half -dork. Okay, so there's about three and a half -dorks here. Next year, this is going to be, do you have a pedal? I don't. I have, I have, I have, I have, you consider the pedal. I, should consider the pedal. I love the devices that you can wear. I have the plot. It's in creative. Blood, pocket, phenomenal, like, so good. And especially in events like that. like this, I feel if you pre -preempted that you are recording, of course. But how incredible would it be to all the signal and the conversations that otherwise is appear, you may be top few notes here and there to try to get signal afterwards, if you can just have that automatically fill your specific notes and make sure you're follow -ups, if not all right. So let me make the - case for the pedal.",
+      "word_count": 153,
+      "utterance_ids": [
+        "169b22cdd1db71b4",
+        "77d7f73a77f61f6b",
+        "613be2d8462ac98a",
+        "6ca3efe2b5c2954a",
+        "abba8868cece2830",
+        "2b9aea38b48461e7",
+        "0f401d46fb6fce0d",
+        "d310e1617e87fc8f",
+        "29c568d82603e505",
+        "56db6e85412bf4cc",
+        "72ea7fc7b600e705",
+        "c2b5f2437d2c86ca",
+        "ccac16f0f483a9cc",
+        "9ff2cb3f7fae9497",
+        "15271af3a0bf8c10"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0030",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 782500,
+      "end_ms": 822840,
+      "text": "I have three pedals under the desk, and I think I'm trying to figure out what the company is, but with whisper flow, you press down, it turns on, and you talk, and then you let it go. And one of the annoying parts of working with an LLM is... typing and you're kind of like exhausted when you're giving it the prompt so you stop prompting. But if you're a professional bullsh**t artist like me and a talker, this is like incredible because when I press the pedal down, I just give a stream of consciousness now and it turns out with these LLMs actually do really well with. It's too... making a massive stream of consciousness.",
+      "word_count": 118,
+      "utterance_ids": [
+        "1c77df8af7791824",
+        "10e5827d8fcaca4c",
+        "99ceb4fd5f0db367",
+        "8bfb5158a04e1cfb"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0031",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 823480,
+      "end_ms": 825520,
+      "text": "We just keep talking and talking and talking.",
+      "word_count": 8,
+      "utterance_ids": [
+        "2edbc4f9f8082adf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0032",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 825740,
+      "end_ms": 828540,
+      "text": "So I'll give it a one to two minute prompt.",
+      "word_count": 10,
+      "utterance_ids": [
+        "ec93275fce6ebb3f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0033",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 829060,
+      "end_ms": 832680,
+      "text": "Then I let go. And it has changed everything.",
+      "word_count": 9,
+      "utterance_ids": [
+        "0a009620f8e11c73",
+        "02cdf0e6c322685a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0034",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 835220,
+      "end_ms": 860340,
+      "text": "It's a, you know, like the whole experience is changing so much. It's similar version of what we see. happen is you know how you have you want to say a thought and then you're like okay I actually want to change and say something else now you have those two context combined and the experience you get us an answer is so much better yeah so we already see that as an experience but even the previous example of like people are adjusting how they speak to AI versus how they speak human.",
+      "word_count": 94,
+      "utterance_ids": [
+        "6b92c72efbf55c38",
+        "5b4fcfe4e967422e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0035",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 861480,
+      "end_ms": 874420,
+      "text": "How should you speak to the LLM? We saw Sergei Bryn say threatened it with bodily harm. It's a very effective technique if you haven't tried it. But what are the things that are different when you're talking to the LLM?",
+      "word_count": 41,
+      "utterance_ids": [
+        "0be586428f91dc89",
+        "bf30b720e2ed4855",
+        "0927aef92e024423",
+        "0d2e022d75336af7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0036",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 874960,
+      "end_ms": 940420,
+      "text": "The specific emotional example, we work with a lot of financial services companies, uh, uh, revolute, clarnout, pack bank. And some of the frequent case, not all of them is of course, how you remind people about payment or they you think that that, from the people that aren't answering and frequently people would naturally feel ashamed of, yeah, telling the real situation. With AI, people that are much more open to share what actually right and give information and suddenly this emotional block of like in front of other human, I don't want to be able to say all of that is very different. So that's different. Usually people are more snappy with AI, voice agent, it's like quick responses. Yeah, you don't mind cutting it off. Exactly, so you can like kind of go through to the point you want much quicker Which you need it to like change a little bit of the interaction model too, which are which is working But we'll look in the pedal and whether we should a little bit about Celebrities on the platform you have some celebrities who are on there.",
+      "word_count": 190,
+      "utterance_ids": [
+        "a5123d42856d6a24",
+        "1c06bfa2285150d7",
+        "e8b11a231488325e",
+        "946c7e73b3f9495e",
+        "1270cb8d4485d9b7",
+        "678782d46279b9fe",
+        "d5fb98ec5296a8a8"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0037",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 941000,
+      "end_ms": 950880,
+      "text": "You also have an issue with impersonation. I know this because somebody was like, oh my god, I love your bulldog videos.",
+      "word_count": 22,
+      "utterance_ids": [
+        "b3e8b2ce1e6cd19c",
+        "281b9e7a471bc5ac"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0038",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 951360,
+      "end_ms": 954440,
+      "text": "Many people know I'm a big fan of bulldogs. I currently have three.",
+      "word_count": 13,
+      "utterance_ids": [
+        "13acdd06f493c7e0",
+        "754efc7a5a76d9ce"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0039",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 955760,
+      "end_ms": 957020,
+      "text": "And I said, I'm sorry.",
+      "word_count": 5,
+      "utterance_ids": [
+        "7c3798de19a1d15c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0040",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 957080,
+      "end_ms": 957840,
+      "text": "I don't know what you're talking about.",
+      "word_count": 7,
+      "utterance_ids": [
+        "aef6ba56b68a6d58"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0041",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 957940,
+      "end_ms": 992180,
+      "text": "And they sent me a channel where something... somebody had created a bunch of dogs telling jokes and they made one and I guess they were looking for a podcast or so they used the this week and startups archive and 11 lab to create my voice and do this huge channel and I contacted them and I said oh my god it's very flattering how did you do this? This is like a year or two ago and they said, oh, I used 11 labs. So I think I emailed you about it. I'm like, how do you protect against this? In advertising in the law in the United States, I'm not sure about here in France.",
+      "word_count": 118,
+      "utterance_ids": [
+        "9fddf543c83fa1ab",
+        "1bc702d84ea7e965",
+        "25e2257bc0d48382",
+        "8413e69a49fa9cac",
+        "3d448e5af1d6bc98"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0042",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 992700,
+      "end_ms": 1017240,
+      "text": "I'm sure they have 17 laws for this. We have one. Because of great regulations and less no offense. The French guy over here is like, oh, Mondo, shagal, um, the, that's my French angry developer. I cannot smoke in the Louvre. Um, this is crazy. Um, and so, uh,.",
+      "word_count": 50,
+      "utterance_ids": [
+        "df0a59ff4cf931e8",
+        "937ad6c88f91b6fe",
+        "3e74aa3b0652d158",
+        "cdcab6f08c6b52d3",
+        "4bc3106e0b4460bc",
+        "285f021ee19f9d80",
+        "56ec4c68a5604eb7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0043",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1018760,
+      "end_ms": 1041120,
+      "text": "Is super, like interesting um with this right to privacy and I think you've got a quick education on this because you've had a couple people I'm sure right you a legal letter what it basically means is you can't take somebody's voice and use it to you know do commerce in the world you can use it for parry there is fair use I can do a Donald Trump impersonation up here if I like.",
+      "word_count": 76,
+      "utterance_ids": [
+        "276c5df69234094d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0044",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1042320,
+      "end_ms": 1062100,
+      "text": "We're going to take about 5 % of 11 left stock. Is it okay with you a bit of a Trump accounts? Sounds good, okay. And for that you have to come to the White House. Great, okay, thank you. Um, nasty guy wouldn't give 5%. Love socialism, but not America. It's the problem with the Nordics,.",
+      "word_count": 57,
+      "utterance_ids": [
+        "3825c82b8f60995d",
+        "33176bf12be8bb58",
+        "fba2520562512412",
+        "fa0f469c42b56305",
+        "d3ef1f0736232d1b",
+        "35c98c06f8c929ff",
+        "585d0026298c4786",
+        "e0e0fb3e04789421"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0045",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1064680,
+      "end_ms": 1065720,
+      "text": "Nasty, nasty socialism.",
+      "word_count": 3,
+      "utterance_ids": [
+        "58ed5fe15f03ed8a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0046",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1066460,
+      "end_ms": 1103320,
+      "text": "Then I noticed when my guys wanted to clone my voice, so that they could fix the ads where I mispronounce something or I do the wrong promo code, use the code, jk20. They were like, it's 25 dummy, and I'm like, okay, I have dyslexia. then they read it and it was like, I'm sorry, you cannot clone Jason's voice and then it's like, I have to go in there and do it and you put a bunch of protections in there. So explain what's happening in that regard in terms of people's concerns around this and then the other side, which is the opportunity because I think you got Jamie Foxx and some other folks. That you paid for their voices.",
+      "word_count": 123,
+      "utterance_ids": [
+        "a8535749f5b2dd42",
+        "80dc070d2dc03c03",
+        "0efee8f3ecafca49",
+        "4cd3b8aaa73b0d06"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0047",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1104200,
+      "end_ms": 1219980,
+      "text": "Yeah, the voice is identity and IP. It's like, you know, when you speak a certain way, people recognize it can feel that emotion. And, you know, to some extent, it was a... It could be a problem, it could be a opportunity before. I mean, as you did in personation of the President Trump, it's, of course, similarly, something that is possible even for a human, not specifically AI. But for us, on the safeguard side, over the last years, we took the role as we are leading another development. also need to lead on all of the same. So that's like a critical element. We do free things. One trace everything that's generated, so we can take action when needed. Two, now we moderate both on the voice and text level. So if you were to input something that would be commercial in nature or would try to scam someone that gets flagged, we can block it. And now free, because over the last years, if you've seen that the... lotment of those models more broadly, how can you create systems for the wider world so people can applaud a sample and get information whether it's AI or not immediately. And we do it for 11 loves, but we also do it for other open source models. The interesting part given that is such a good IP and part of your or your element, it opens up in the opportunity. So we partnered with Matthew McConaughey on creating a world carado, a rye, a rye, a hand across languages. And it's the first time I've paid a lot of money for these independent films, but oh, 11 lab stock is juicy. Yeah, yeah, could you do it, could you do it in Spanish? It's a fugazia, What the f***? But the crazy thing with the AI technology open is that now the voice can be not only English, but also in Spanish and Italian and Portuguese, and you can still have exactly that element of emotions coming through. So that's kind of a good example there, but we've seen that with Master. What are you pay these guys? What is it question again?",
+      "word_count": 365,
+      "utterance_ids": [
+        "bba58305f5fa1760",
+        "9a3f083cb7c53344",
+        "33803d6e23f05435",
+        "008829eb08dbd03a",
+        "f5ec3f0197a17692",
+        "f558dabd2d433e52",
+        "e97a276e8320dbe1",
+        "865eb7e8ea74e0e1",
+        "58d0c8cfee29acc3",
+        "26f9dfdb56d8e6df",
+        "547f5c8965117c68",
+        "065bd3b529cef9d0",
+        "e6b8cc263ecf1d7d",
+        "85c8a86eb4d79f4b",
+        "dea8aa8872510c64",
+        "012c3799725955f6",
+        "01627c5427b8e64b",
+        "65ce2bb5fba830e3",
+        "c5a58781b0204070",
+        "4ab7488d36b05204",
+        "92accd50914535f9",
+        "4e5d2493b25ab2f8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0048",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1220000,
+      "end_ms": 1223700,
+      "text": "Matthew McCarrner is just like an eight figure deal, seven figure deal. You give me a little equity.",
+      "word_count": 18,
+      "utterance_ids": [
+        "abdbe56b854d3f51",
+        "16f1ead76c9a269b"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0049",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1224100,
+      "end_ms": 1248220,
+      "text": "Always depends. So like, you know, the master class, for example, is a good example where they work with talent directly. And here you have previously a static content that you would learn from. Now you have interactive content. So you have Gordon Ramsey teaching you how to how to cook in the kitchen, he can scream at you if you're not doing a f***ing raw! I'm scallops of raw! So that is definitely out of the way.",
+      "word_count": 78,
+      "utterance_ids": [
+        "08559cf00b99ef8d",
+        "b9746d18f1e3e573",
+        "bcf4366e5f936a02",
+        "dd24853906db813e",
+        "aa0b4aa373ecb42b",
+        "4862e10b2074c886",
+        "d5091dbb96f8ef5c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0050",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1248220,
+      "end_ms": 1254980,
+      "text": "So they're doing characters now, or AI instance is using 11 labs so you can interact with them as part of your subscription.",
+      "word_count": 23,
+      "utterance_ids": [
+        "fa80c0e0f6f067f0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0051",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1255500,
+      "end_ms": 1268560,
+      "text": "Exactly, but us the company, what's we now do in this from the beginning, we created the marketplace. People can create their voice. We authenticated. You can share it and you're in money. Today, we paid back over $22 million back to the community of talent.",
+      "word_count": 46,
+      "utterance_ids": [
+        "6f0e5e8616103479",
+        "15c3155b64e065af",
+        "283ac289d88f8fc7",
+        "7831ac610e84edc6",
+        "a4ccc00354bc248d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0052",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1269160,
+      "end_ms": 1285940,
+      "text": "Really? So those voiceover actors now who got paid as hourly workers. Sometimes they get a little back end if they were doing a commercial or something. Now they can... and spend an hour reading, create an 11 -lbs voice, and then lightens it out. 100 % and then...",
+      "word_count": 49,
+      "utterance_ids": [
+        "58dd27cd2d4a6cac",
+        "3e9cd3eaf9e31d31",
+        "7712711eca908259"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0053",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1285940,
+      "end_ms": 1363860,
+      "text": "Did they get to pick their price or you picked the price? The depends on the model, we do buff. So you can either give it a default that lets us distribute that slightly more optimally, or you can pick your sender, use cases going to be different. And like I said, open up a set of... incredible opportunities in the dynamic context and other languages, but maybe the last one on that voice is such a big part of identity and probably our most important work was actually working with people that lost their voice due to a less, due to fraud cancer and working on bringing that voice back. So you work with Congresswoman in the U .S. for Western who lost it and wanted to continue inspire others that you can do incredible work to inspire that and was the first speech delivered in Congress or more recently I think this was the most heart warming story there was this woman that wanted to get married, lost her voice before she could get married. Oh wow. And then they decided to redo the marriage together. Do the vows again? I do the vows. And you could see the whole family just for the first time hearing the vows. It was just there. You could you could feel that emotions that you couldn't see in any other in other way because the voices. I thought you're connecting thing. Yeah, and you've done it for some iconic voices.",
+      "word_count": 249,
+      "utterance_ids": [
+        "4968a54aecc7036d",
+        "e17259daff56065c",
+        "b55d7047d7c368c5",
+        "3a4feaa7c5e16d3a",
+        "c041ada866b652b1",
+        "238f04a51694e26c",
+        "6a6a5e4a14f6f88a",
+        "08261ac597110f82",
+        "20392f90fa79d217",
+        "61c1c633bb46bc86",
+        "e996317ef9b0d178",
+        "51b376e3d723f246",
+        "967cf4ebf7abd024",
+        "7317de010c0c392b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0054",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1364000,
+      "end_ms": 1371680,
+      "text": "My understanding is the estate of James Earl Jones. I'm not sure if they did he pass his James Earl Jones alive, can somebody pass?",
+      "word_count": 25,
+      "utterance_ids": [
+        "54ef127f7453f15e",
+        "9bf0b2a5a89de2ba"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0055",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1371960,
+      "end_ms": 1372620,
+      "text": "He'd be passed, right?",
+      "word_count": 4,
+      "utterance_ids": [
+        "d26a47e077799f7e"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0056",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1373460,
+      "end_ms": 1390820,
+      "text": "But before he passed, I think he did a deal with Disney. And he said, listen, for my... family, I would like to license the Darth Vader voice for all time to Disney. They gave him some incredible deal, and then they were left with, well, how do we actually do this?",
+      "word_count": 52,
+      "utterance_ids": [
+        "eb0b1f0f66bc9d45",
+        "6d9e38f517053e4f",
+        "58e71035f3aec081"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0057",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1390960,
+      "end_ms": 1396280,
+      "text": "Do we get a voice impersonator? But instead they went to you, talk a little bit about that deal and how it went down.",
+      "word_count": 24,
+      "utterance_ids": [
+        "d606859529550521",
+        "52cb98fcad49112f"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0058",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1396740,
+      "end_ms": 1407720,
+      "text": "And is that what they use recently, you know, in, Some of the new films with Darth Vader. There's a new Darth Maul series Where they have Darth Vader and did you power that?",
+      "word_count": 34,
+      "utterance_ids": [
+        "f95d35eac1fcbf9b",
+        "479e9f229bf5322d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0059",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1408140,
+      "end_ms": 1465180,
+      "text": "I don't know what I can say about the new things But definitely the big use case that did that big Completing your experience was in a gaming space where oh, yes, uh fortnight So epic games not a game fortnight launched Darth Vader, which people and players could interact with live. In partnership with this state, in partnership with Disney, so every player, after reaching a certain stage, could have a Darth Vader interact and help you solve the missions. And we are seeing that kind of mode coming up more and more often of how you can... And effectively, extend your likeness, your like you said, life of this city into interactive use cases, bring it across the world up together. So that was exactly that model. And now we are working on one of the public one is headspace. So headspace has a great meditation. Yes, this is the second. Greatest meditation at rip behind calm which you are in vester. Oh, I am calm.",
+      "word_count": 168,
+      "utterance_ids": [
+        "27b644f963fd9c39",
+        "5cb166d3cea33341",
+        "f4c0709692ab1970",
+        "39412ffc1f63fc6e",
+        "83aaf1ce77498e51",
+        "0fd58771abe86246",
+        "58a8a711b449b841",
+        "7364e88f414f8c90",
+        "1e00005421922c45",
+        "b1d29a14a4601bd7"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0060",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1465180,
+      "end_ms": 1474640,
+      "text": "I didn't realize you're right I did But it was a four million dollar company thought calm isn't credible There they team, but anyway, you were you were working with the side space exactly.",
+      "word_count": 34,
+      "utterance_ids": [
+        "8b02e1373544b785"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0061",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1474640,
+      "end_ms": 1505600,
+      "text": "Yeah, so they did I'm not exactly the second but exactly to that working part of the day. So they are luckily love the content and calm. I think it's trying some of the interactive elements. Could you have a meditation lesson that's personalized to you, which we would love to tell. That would be amazing. And like imagine just, you know, how many voices? David Sacks is defending Trump. Take a deep breath. then, breathe out, breathe in, breathe out. Maybe you should listen to the voice to come.",
+      "word_count": 90,
+      "utterance_ids": [
+        "c42ae492a1f281ec",
+        "52265719fd54598b",
+        "bb6c2f4b969891c3",
+        "7b97fd0f8cead3a1",
+        "9cab23675b2ea7b7",
+        "50fdaa68405a2f6f",
+        "d50517d5024b7a79",
+        "47a2da80bb9faf3b",
+        "0923007c2f0ca42f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0062",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1505980,
+      "end_ms": 1539600,
+      "text": "I mean, that would be interesting. Let's talk a little bit about being up against some of the greatest entrepreneurs ever who want to take your business from you specifically, Darryl. And then Propic, Sam from OpenAI, they want your business, they've been pretty clear about it. And I think you have used the frontier models in your product, but you must be thinking, my Lord, am I enabling my own demise by partnering with them?",
+      "word_count": 76,
+      "utterance_ids": [
+        "75ba5aecbdab5dd9",
+        "c829173204b7ef5f",
+        "3ded8bdca741ea54",
+        "e2abcf5c99182713"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0063",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1540000,
+      "end_ms": 1541460,
+      "text": "And there's always open source models,.",
+      "word_count": 6,
+      "utterance_ids": [
+        "2a618ccbb4e65d24"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0064",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1543060,
+      "end_ms": 1551040,
+      "text": "So how do you think about your partnerships with those type of frontier models and the fact that they want to kill your company?",
+      "word_count": 24,
+      "utterance_ids": [
+        "cdbdb8a970e10ecb"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0065",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1552440,
+      "end_ms": 1676540,
+      "text": "So on the first part, the given we create a platform, we try to provide all other lamps out there. our customers can take on traffic, opening eye, open source, Google models. And that agnostic being agnostic to the specific models is actually helpful because customers can make sure that they build the harness, build their agent orchestration, create a voice element of how that agent interacts with the world, how the marketing will interact to the world, but they're not the panel anymore. Model. So for us, that part is actually good because we can provide that to the customers. On the second big part of, course, the spaces overlapping, increasingly models are platform application. Everything is becoming a little bit more easy for us, that's. still the defining piece was focusing on that one layer of how does interaction look like, how does communication look like? And we've been able to help compete them on voice models, both on text to speech, to text, on the turn -taking on music. And we've been here that we research team as a set of magicians that are able to continue. do it time and time again and I think part of the reason is it's on the research side is the architecture .meters not the scale. You really need to change how the model operates too. You need very specific data that there's of course a wide set of data out there but it's unlabeled data and where we spend a lot of time so you build it. internal team of over 1 ,000 contractors that label all those audio assets to make them to make them good. So that's on the research side. And then as you think about the rest of product stack, we want to create a fully verticalized solution for that communication angle. The product understanding the right workflow and financial services is very different to tell us. We spend all of our product team. to figure out how that works and those companies done. And then ultimately last piece is the ecosystem. Can you build the wider self -integrations voices that you use templates for the agent authentication that you can benefit from instead of starting from scratch and so far we've been we've been able to create a new model for that.",
+      "word_count": 388,
+      "utterance_ids": [
+        "98643312c1ef2c41",
+        "d0003db85de15853",
+        "33deb6d74564b6a0",
+        "45cc4554c80b92ba",
+        "9da65f36d55ce315",
+        "d21448739aeb5b49",
+        "90d2a98fdea2d144",
+        "9f4db3ec4cd09f13",
+        "b82c5e00b109cee0",
+        "6b61fbc647b29f2d",
+        "8baa743fb2753e15",
+        "b0ec6c10d254d5a3",
+        "793e989ff712725d",
+        "33610250db33c692",
+        "f30262f2f5f0b535"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0066",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1676720,
+      "end_ms": 1699980,
+      "text": "Certainly, though, you must be concerned about... Hey, the reinforcement learning, the data leakage, they say they're not using your data, but they're kind of using your data, and so do you have an open source project internally as the like in case of glass, we got to break this, and when do you think you'll be able to discontinue?",
+      "word_count": 60,
+      "utterance_ids": [
+        "46bd28a7b8f8dcd8",
+        "b175a518d5f4e9cc"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0067",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1700000,
+      "end_ms": 1766560,
+      "text": "Working with them if you had to. We know that some companies are continuously trying to figure out how to distill and use the data. So that is an existing problem and we have a few But on the open source question, or creating our own versions, we are looking at how we could use our expertise of how we want focus on knowledge work. We want focus on coding, but any interaction and how we can combine all those pieces together. sure this is this is great yeah we want to on so we are spending more time there but it's also just great to be in the arena and compete with those guys and and every self and show that we can do it and do it better yeah it's pretty clear in my estimation that that's where you will wind up and the ability to make your own language model today, especially with all these great models out there that are now open sourced,.",
+      "word_count": 167,
+      "utterance_ids": [
+        "ae1ff6a780a4c39a",
+        "babfff308aefa6ee",
+        "d88d91a6889064bb",
+        "16ae02552df83f70"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0068",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1766800,
+      "end_ms": 1779980,
+      "text": "It's going to be a pretty easy for a company with your level of resources, so why wouldn't you, at least offering it as an option, and then I guess there's cost, I mean, you must be shipping tens of millions of dollars to the front.",
+      "word_count": 46,
+      "utterance_ids": [
+        "8e9e46839793a539"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0069",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1780000,
+      "end_ms": 1823560,
+      "text": "Your models every year? Ship good amount, we are good partners with them, but it's ultimately showing up in the value we can create. So like a lot of what we spoke at the beginning of how we can elevate ourselves as our organization too is definitely helpful. So I think they've done tremendous work on building. It's almost crazy that each of us has a curing, if you were to chat with an agent now, it feels like the curing test would be completed. It's us, smart us and other human. And we hope this year we'll do the same thing for. voice, where any conversation feels like you're speaking with another human.",
+      "word_count": 114,
+      "utterance_ids": [
+        "ce36f6d9121e3ba2",
+        "b239ab9fc4bf54f6",
+        "ca6fbc4f70846e9c",
+        "4b00e338c151a6c7",
+        "fd28d60af59a6e95",
+        "4925383bc48f8439",
+        "d9a118ffa2c8ace5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0070",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1823820,
+      "end_ms": 1857260,
+      "text": "I think you're there, it just depends on the application and like what question you have, but it definitely passes. I mean, if we were to look at the tests that were created to define artificial general intelligence or just to define artificial intelligence, we all of those. These were tests that were created 30 or 40 years ago. We need a new set of tests right now. I think the new test is like, can this be more intelligent than every single person on the planet times 10? And if we get anything less than that, we're kind of like, oh yeah, it's not smart.",
+      "word_count": 106,
+      "utterance_ids": [
+        "c9b47d104ab48da1",
+        "aadb902ed101ac04",
+        "c512ea06c643acf1",
+        "2c5fd3b45377f556",
+        "0a514596dbbe6eed",
+        "6e645a7b845f375c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0071",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1857580,
+      "end_ms": 1859980,
+      "text": "I mean, these things, we're kind of there on a...",
+      "word_count": 10,
+      "utterance_ids": [
+        "81bc666212c07d76"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0072",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1860000,
+      "end_ms": 1862260,
+      "text": "I don't you think that we've kind of achieved it.",
+      "word_count": 10,
+      "utterance_ids": [
+        "f8b0b09aef12f551"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0073",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1862300,
+      "end_ms": 1874100,
+      "text": "We just haven't deployed it. I am there definitely the places where we did achieve it. Yeah, for sure. All right. Continue to success. Let's give it up for Mati from 11 left. Well done. Thank you for coming out.",
+      "word_count": 40,
+      "utterance_ids": [
+        "b567320a7f617537",
+        "290c18ae87cfbde2",
+        "b801f56dee15b2a0",
+        "96b12d7102674dad",
+        "fced2f14fd55aaa0",
+        "3401fffd6aefe960",
+        "3ea25e725a640a9b",
+        "f0e76ab874cb14d9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0074",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1877160,
+      "end_ms": 1894500,
+      "text": "The AI company is building the future run on. Oracle Cloud Infrastructure, training and deploying at scale on one of the world's largest AI infrastructures. The same Oracle AI platform gives enterprises access to leading models AI grounded in their own data and the security to move from pilot to production.",
+      "word_count": 51,
+      "utterance_ids": [
+        "74f6673a113549c9",
+        "69f5e4b77d342610",
+        "30fa82f7a0d0e6a5"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0075",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1894720,
+      "end_ms": 1902120,
+      "text": "Learn more at oracle .com slash AI or experience it live at Oracle AI. experience life.",
+      "word_count": 16,
+      "utterance_ids": [
+        "025c17bce65d95c5"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0076",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1903840,
+      "end_ms": 1933740,
+      "text": "You're growing also at a very significant clip. Exponentially. Is it exponential now? It's not exponential. Oh, it's a 50 % 50 % quarter of a quarter for the last seven quarters. 50 % quarter of a quarter last seven quarters. Yeah, that's... I think we actually just became as of the close last week on Tuesday one of the fastest enterprise company with the direct sales motion to go from one to one hundred and fifty building Sierra with one quarter.",
+      "word_count": 82,
+      "utterance_ids": [
+        "c4d8dd5afff00d8a",
+        "4022a264073b3bbd",
+        "846a6d25d4a62438",
+        "969319eaf7e27144",
+        "44ec4b3faa5d22ad",
+        "c6fed8a1cfda0e7b",
+        "7d9e17f254cc4d3d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0077",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1933960,
+      "end_ms": 1961680,
+      "text": "Amazing and so people, I mean there's a couple of things in life. that people really hate, and paying lawyers is like, way up on the top of the list. With your tools, obviously, you got your contemporary in Harvey and people, it's a small company in the States, and then you also have, I guess, clawed in other folks. Also want to be in your business.",
+      "word_count": 67,
+      "utterance_ids": [
+        "71e29a2f9ccc40ea",
+        "22098a71f12b8cf3",
+        "0877d88987b6a539"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0078",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1961840,
+      "end_ms": 1963880,
+      "text": "So this is a big prize.",
+      "word_count": 6,
+      "utterance_ids": [
+        "bb98ca9d45ef1056"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0079",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1965800,
+      "end_ms": 1998100,
+      "text": "Two, take, I don't know, 80 % of what we pay lawyers for and compress it by 90%. Like what is the realistic power law here in terms of? Making for startups in the audience your legal bills dramatically drop in cost yeah and i'm seeing it already in the start of space i had it i had a one firm one start up that hit a million in revenue they had close multiple rounds of funding uh...",
+      "word_count": 78,
+      "utterance_ids": [
+        "9ad2408442c672b0",
+        "067bfde2d719d9a3",
+        "67979e9a6adcbea9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0080",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1998100,
+      "end_ms": 2003040,
+      "text": "Multiple obviously large number of more So decent couple doesn't employees. They didn't have a corporate lawyer.",
+      "word_count": 17,
+      "utterance_ids": [
+        "02baedd4791356d2",
+        "72814317a1e59531"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0081",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2003700,
+      "end_ms": 2011680,
+      "text": "No, and I said well, well well, you think I had a million dollars in revenue like somebody should review the contracts and with like chat GP2, bro.",
+      "word_count": 28,
+      "utterance_ids": [
+        "d7cac239945af0da"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0082",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2012000,
+      "end_ms": 2024340,
+      "text": "Yeah, and I'm like what about the cap table? They're like chat GPD, bro, and I was like okay, and HR and they're like same thing, bro, and I'm like, okay, I have fun diligence target one day. Well, that's what I said.",
+      "word_count": 43,
+      "utterance_ids": [
+        "d6ea090d8dd9428b",
+        "bd24d3fbcc00520f",
+        "6592dc12798a96fc"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0083",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2024460,
+      "end_ms": 2034080,
+      "text": "I said, hey, you know, when you do the series, hey, they're gonna ask that, like some of the stuff we reviewed, like do you guys have like IP assignments?",
+      "word_count": 30,
+      "utterance_ids": [
+        "abff27af171f46f8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0084",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2034220,
+      "end_ms": 2036340,
+      "text": "They're like, yeah, I'm like, how did you know to do IP assignments?",
+      "word_count": 13,
+      "utterance_ids": [
+        "cab951b1090d1548"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0085",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2036500,
+      "end_ms": 2046360,
+      "text": "First time founders, like we asked chat, GPT, and I'm like, okay, wow, I've just turned into... Like, I guess, yeah, so take us through what you think is happening out there.",
+      "word_count": 32,
+      "utterance_ids": [
+        "700c99f380955d2d",
+        "dc369ab3ebc389e0"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0086",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2046500,
+      "end_ms": 2164880,
+      "text": "This is not uncommon, right? What I'm saying. But a seed -stage startup operates very differently from, you know, one of the biggest banks in the U .S. And so the way to think about the market or at least the way that we like to is. You have this enormous bucket of legal services, which today is being done manually. It's a trillion dollars every year into legal services, which is very fragmented. But the software spend into legal technology is about 40 billion. So it means there's 4 % software, 96 % service, which is... bananas. The software piece should be much bigger than that. And so the software piece naturally will grow into the service revenue, but also legal is a very supply -constrained market. The demand for legal services is much larger than what there are. lawyers or legal services available, and so many of the legal service providers are now using technology to serve new use cases, new market segments, and to actually package new products. And you will not make what's an example of that. So in example of that is. Started serving startup founders directly with a sort of software platform that you just log onto the platform, they've pumped it full with their material and their precedent, and then you have the startup material there, and they've embedded workflows that reviews the contracts. And what I think is interesting by that is It starts to break this model where you charge out associates for very high hourly rates and you have a billable hour model. And actually if you look in law firms, the way that business model works is you overcharge for the associates. And you actually undercharge for the... partners. I don't know if they're under charge. I mean, I got a Nobel recently, but it was 1800 an hour.",
+      "word_count": 310,
+      "utterance_ids": [
+        "185ae2f74040dc14",
+        "c911d371c78c8943",
+        "00b2970aa4c367bd",
+        "0b3e8624aebdf5de",
+        "473c9ee5859a1153",
+        "74a2471563aed8ca",
+        "c65a98d5357eadc9",
+        "908fefa2382e936a",
+        "c73c46da3307e4b8",
+        "0aa3492765a666a3",
+        "cddeffc39c08793d",
+        "99d024ad5573d3d7",
+        "6a45a02d33fe6084",
+        "bc57c858303c54a6",
+        "8edc2a47af6ce0ac",
+        "44a7d81f253dcdf1",
+        "23a8204353690b58",
+        "1f1a00639aa9e159",
+        "ebbe028adde31ba5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0087",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2164920,
+      "end_ms": 2168420,
+      "text": "Right. But for a senior person, I think the associates were 800.",
+      "word_count": 12,
+      "utterance_ids": [
+        "0ea424a0b4991063"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0088",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2168540,
+      "end_ms": 2220640,
+      "text": "Well, you know, Kirkland can go up to 4 ,000 an hour. But the thing is, when they, when a Kirkland, so let's say, you know, 30 minutes of a Kirkland partners' time when it really matters. Can be worth a lot more than that like a lot more than that if it's bet the company litigation or Yeah, you avoid a pitfall that would have costed the company tens of millions of dollars Well worth it. Yeah, right exactly and but the only way they know how to price that is to overcharge for the associates But as you're saying the enterprises are looking at this and they're going We're spending a lot of dollars on legal services. Let's take this in -house. Oh, really? Absolutely. I mean, we're doing this part of the Atlegora. We acquired four businesses so far this year. We did the diligence in -house with our own two. And the fastest transaction with it was 12 days from L .O .I. to closing.",
+      "word_count": 169,
+      "utterance_ids": [
+        "bb72aa318c4e8c8f",
+        "00b1e1d242bb3480",
+        "124eba495339ec69",
+        "1d1d9b7b7bd0c0cc",
+        "6c4c7e52a3c77532",
+        "1941fd64d2f76903",
+        "e75d97d3b1dba2e3",
+        "2db9d4ba6e5481f0",
+        "10c89be704f86a9a",
+        "8bab657b3baa5638"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0089",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2221400,
+      "end_ms": 2235480,
+      "text": "Because your motivation as the founder is to get the deal done. Right. The motivation of the lawyer is to not have you sue them if they f**k up the deal. Right. And to make as much money as possible, which means to drag it out.",
+      "word_count": 46,
+      "utterance_ids": [
+        "9a754a304d716a4e",
+        "7eebb639be1945ac",
+        "9187935a218f155a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0090",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2235540,
+      "end_ms": 2267160,
+      "text": "Which means there incentive is to, even if they don't say it explicitly, it is to drag. you're incentive is to close it as quick as possible yeah and so you know I think a lot of law firms are also experimenting with different pricing models where you do a fixed fee for a transaction or for fund race in litigation you can take a part of the success fee when you win the deal yeah or win the case and so I think it's just very interesting how, you know, one of the biggest industries in the world out is being completely transformed and reshaped as a consequence of the tech.",
+      "word_count": 112,
+      "utterance_ids": [
+        "c2b3988f4a4a8676"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0091",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2268100,
+      "end_ms": 2278240,
+      "text": "And are those law firms feeling like they're being disrupted or this is a huge opportunity? And did that switch at a certain point in time or as it's switched for them?",
+      "word_count": 32,
+      "utterance_ids": [
+        "d39d8d5201a4c976",
+        "9bb757a65fbc7f81"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0092",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2279240,
+      "end_ms": 2341920,
+      "text": "There's a lot of... Anxiety and a lot of fear and you know these law firms are enormously profitable and big businesses. Kirkland Ellis turns around $10 billion a year. How many lawyers did it have? $45 ,000. Wow. I mean, per partner, they make it between five and 10 million. every year in profits. And so, when something like AI comes along, that poses existential threats and existential opportunity. And that's actually a big part of my job to help articulate with the leadership teams that we work with, because we will only be us. successful as our customers are. And so we're going to have a very unique role at the Gore as well, which is called the legal engineer. So in the same way that Palantir has forward deployed engineers, we have forward deployed lawyers. And their job is to sit down with the Kirkland partners and help them transform their business from a pre - A .I. to a post -A .I. world.",
+      "word_count": 167,
+      "utterance_ids": [
+        "bd61bfdf94be1a8d",
+        "f49ce875e128e102",
+        "02878d0a466eecad",
+        "5fef61039a888a5e",
+        "4987f53086523e50",
+        "2e01f8262841ee16",
+        "6d3ee0f27dbb17fc",
+        "f1fd3bfd99633610",
+        "5fde47f39f045f92",
+        "a37f3ae963f4100d"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0093",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2342700,
+      "end_ms": 2358300,
+      "text": "And it's sort of like document management and PC's were, but when you're 30 years ago, when they were printing out and keeping drafts in a library and in a storage facility and they had to sort of walk them through and handle that.",
+      "word_count": 44,
+      "utterance_ids": [
+        "e3bddb7de952c722"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0094",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2358320,
+      "end_ms": 2379300,
+      "text": "Absolutely. But I think the difference. The difference is those were, you know, mild productivity gains, this can do a lot of the work. And so it's really reshaping what it also means to be a junior lawyer going into this occupation. What does it mean? Are those jobs going to still exist?",
+      "word_count": 53,
+      "utterance_ids": [
+        "bd5c1be2fcf16d2d",
+        "e3796eb1926ff4b1",
+        "34095f29b740a42b",
+        "7321b05c7cd49e18",
+        "873744c13a89ec3a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0095",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2380000,
+      "end_ms": 2385100,
+      "text": "A lot of the lawyers who are coming out of school going, oh my god, was this a good idea or a bad idea?",
+      "word_count": 24,
+      "utterance_ids": [
+        "d679c5a07bd80139"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0096",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2385740,
+      "end_ms": 2426380,
+      "text": "The job will exist, the tasks will be different, right? And in order to have a partner -driven model, you need to bring people up the racks, right? And the same way as you do with software engineers, you need to have junior engineers so that one day you can have senior engineers and other doing. But the way to get there is very different. The way of getting there today will not be lock yourself in the physical data room, read through every single document, mark the errors, and you know, go fax it, right? It's and it's no longer just look in the virtual data room and control F. It's orchestrating the agent that will be doing that work.",
+      "word_count": 121,
+      "utterance_ids": [
+        "01d99be1bc04479d",
+        "b841206e1374b5fc",
+        "dd338c267d7a5cda",
+        "6d54cccbba5d66a0",
+        "72ccf7accaac11c0",
+        "f55039924f98319f",
+        "1a0388b1a4c2d87c"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0097",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2428000,
+      "end_ms": 2433200,
+      "text": "And when you look at that work, you have a global backdrop.",
+      "word_count": 12,
+      "utterance_ids": [
+        "112e4eb4b70b4f45"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0098",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2439380,
+      "end_ms": 2472920,
+      "text": "Attorney's attorneys who can operate across borders in a way that didn't exist and you're starting to see that and is that something that's built into the product so when you're doing even in the United States It's a it's a state -level certification obviously and Doing the non -compete in the northeast is very different than doing it in California. They're not very enforceable or enforceable at all in California as people know, but they're quite enforceable if you're in Boston. So, talk about that because that seems to be a place where there could be massive gains from AI.",
+      "word_count": 101,
+      "utterance_ids": [
+        "0e0f9e9971833f40",
+        "797614eefc61d359",
+        "f29d74db967fe163"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0099",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2472940,
+      "end_ms": 2550880,
+      "text": "Out of some. And it's really two things. I mean, the data that Legora sits on top of is on one hand side. firms and enterprises own data. They're precedent, they're organizational data. And secondly, we do the hard work of gathering all the cases, all the legislation, all the regulatory updates for every jurisdiction in the world. And that is very painful. But once you start to do that at scale, it builds a real... data mode. And so in the system, if you are the GC of a company in California and you just landed your first customer in South Africa, right? Legora can be adapted to the local legislation in South Africa. And we actually had a case of this where, you know, instead of having to call a lawyer. who then knows a lawyer in that region who will respond to the query, they can get an 80 % accurate response immediately that they can start working off out of. And the better that gets,. The more interesting things I believe you can do, because this data is really nice. been structured before, and there's so many people who are working with setting policy and billing regulation, and this is a enormous inefficiency in society.",
+      "word_count": 209,
+      "utterance_ids": [
+        "11433f2d74d95539",
+        "724601978f841f89",
+        "4c0ddd4b16b01cc2",
+        "eeffeef5067374a5",
+        "950e062570ca44b3",
+        "09740633446f88d1",
+        "7ed848f44aac60e2",
+        "ec44a2d3fbae3ec7",
+        "193e5b29df5d691e",
+        "ef7a31cb47b28187",
+        "9ca82d2338d09f43",
+        "d23309e3d78efb5b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0100",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2552200,
+      "end_ms": 2604480,
+      "text": "And Lexus Nexus has been a juggernaut and the legacy player in all the case law and regulations, they have a massive data mode. But they only make a couple of billion dollars a year. And if you put your revenue and Harvey's revenue together, you guys are probably already just that the two of you, you're both making hundreds of millions of dollars. So they must be looking in their review mirror. at you, like the round of service wrecks in Jurassic Park and going holy sh**. Like are they coming for our business and then here you are in stage saying hey we're doing all the manual hard work of getting that information into our what I assume is a proprietary language model that we get to that in a second. Are you going to just Try and buy Lexus next to say no, it's part of a larger enterprise or are you just going to kill it?",
+      "word_count": 160,
+      "utterance_ids": [
+        "45e3248aa3523913",
+        "f31bb489bad0d568",
+        "1d69a8934c8a8f3a",
+        "77bfe4f20eb66917",
+        "6c3ca0d57fea049a",
+        "206663271626515e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0101",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2605220,
+      "end_ms": 2678220,
+      "text": "Well, I think that some of the existing providers and the sort of legacy players have a really hard time pivoting into becoming a I native businesses sure and they have a really hard time meeting and catching up to the tempo that we run at. They can't get the talent, they don't work our hours, and they're so political in their organizations, that it's just hard to move. And I think at the outset of AI, many believed and made a bet that those organizations were all they did. data was going to be the winners. As we're starting to see in the market, that's no longer the case. I think there's a real opportunity for us to partner with content providers. And we're already doing this in many of this smaller jurisdictions, like in Germany, in France, in Spain. The US is peculiar because it's so... to do wobbly on legal research, as is West laws, the other one, West law and Lexus next, it's exactly. But yeah, if you look at how their stock is doing, I think, they're oh, are they getting priced in with the AI? Well, certainty. Yeah, that's one way of putting it. Yeah, they're getting crushed.",
+      "word_count": 204,
+      "utterance_ids": [
+        "6044c3e7de55d4ab",
+        "716500121be6d675",
+        "b3f84b51aac67067",
+        "c5645a5fb8bce312",
+        "61f8f13090d056de",
+        "e7e6e3486eb364df",
+        "1e817a5474f727c9",
+        "bfba4fe4d1aa2d73",
+        "014fbf42f0279e80",
+        "323bf4b14af4691f",
+        "94eb250b8b99b5b6"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0102",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2679400,
+      "end_ms": 2702580,
+      "text": "And I would assume there's some power law here, you know, they might have an incredible breath of, you know, old case law that they scanned in and went to the courthouses and did all that work on sent to India to be double blind typed in, like they literally were like, you're right, that's what you have to do. Yeah, they would literally had two different people typing. in the cases, or OCR, them then check them.",
+      "word_count": 78,
+      "utterance_ids": [
+        "de52b2a36211d71f",
+        "6ce7ed1a165854ec"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0103",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2702740,
+      "end_ms": 2703400,
+      "text": "Look for the differences.",
+      "word_count": 4,
+      "utterance_ids": [
+        "c39cd050b888ea77"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0104",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2703920,
+      "end_ms": 2711100,
+      "text": "I mean, because you can't get it wrong. Oh, but today with the AI tools, the AI tools are really good at doing what they did manually.",
+      "word_count": 27,
+      "utterance_ids": [
+        "2d46fc1e87401ae4",
+        "dc5a56300b12499a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0105",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2711760,
+      "end_ms": 2768320,
+      "text": "Yes, you still have to ship the books because you have to physically scan. This is very strange in the US, but West law basically has a monopoly with the American government to report on the cases, so they're not owned by the public in a way, they're owned by a company. You guys are very good at capitalism. Sometimes too good, but there is too good, I mean Harvard has a project, there's the listener, they're trying. that it doesn't work or rather put it this way. You cannot build a legal research solution that doesn't have all of the data because if you go to walk -tell and a litigator at walk -tell the best law from in the world says I'm going to use this to, you know, go out. After Elon or, do a billion dollar case, you better make sure you have all the cases. So, it's the opposite of the power law.",
+      "word_count": 158,
+      "utterance_ids": [
+        "66ef934128800457",
+        "09f13e20dd9b5ab8",
+        "4b333d0e63f6bd97",
+        "e672a45ea96291f9",
+        "677ad8fc7af0afa2",
+        "3b9c98cea1d25627",
+        "3dcd37b06880e1cc"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0106",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2768560,
+      "end_ms": 2777860,
+      "text": "You don't just need the top 80 % and you actually need all of it, all of it. Which means you have to go to court houses and ask them for a copy to print it out and pay them 10 cents a page?",
+      "word_count": 44,
+      "utterance_ids": [
+        "3cc3b7958c0331d6",
+        "83b408fb4dbc9723"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0107",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2778740,
+      "end_ms": 2846060,
+      "text": "Well, there's other ways of, Men det \u00e4r en praktisk... Ja. Nu har du fissigt att det \u00e4r buggs. Alla \u00e4r du in det. You need to open dem, you need to scan dem, Come on, you need to get what's called page citations. I never thought in college. I will get this nerdy about legal data. But here we are. And what's... interesting is that these previous generation of databases were very much search in the database, find the case, and then the lawyer does their work. Right. What's really interesting about especially the agents following the release of intelligent case strategy and they can actually start to combine the witness statements, the cases, and they can really do end -to -end work which is I think moving us from a world where AI is just augmenting, to AI is actually really doing it. Things and your job becomes to orchestrate and to manage those agents as we're seeing in coding.",
+      "word_count": 162,
+      "utterance_ids": [
+        "6280e84aa7bd7a81",
+        "0b95427dafee60b5",
+        "15cbc1f80789e2c2",
+        "a203842e1e29545a",
+        "30bd8718ec5f6485",
+        "d5b3ede324e18bff",
+        "e5301fd9180c3557",
+        "99bbd1afc87f22eb",
+        "9f4e6094f198a07f",
+        "8bc4931adda7a25e"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0108",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2846820,
+      "end_ms": 2862420,
+      "text": "And so you have partnerships with I'm assuming anthropic and open AI, yes, to in you spend millions or 10, millions of dollars on two rights. Absolutely. And they are. also competing with you on the margins?",
+      "word_count": 37,
+      "utterance_ids": [
+        "e9afa0197379d8dc",
+        "19089035903b88ad"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0109",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2863780,
+      "end_ms": 2903580,
+      "text": "They're not competing in our product category at all. From now, well, from the outside, Claude has a legal offering, which is basically a bundling of markdown skills files and a couple of... Integrations. And so I think what's really helpful about that is that it illustrates to everyone how applicable AI is in law. And what it also does is it drives a lot of initial usage there and then you hit the ceiling or you understand how shallow it is. And then you call us. Right. actually a big pipeline generator for us. So they start experimenting,.",
+      "word_count": 99,
+      "utterance_ids": [
+        "1333c5e27f0602a6",
+        "da3baab80cd6980e",
+        "e2de8e4e3aa656bc",
+        "ff358dcc749d8f3d",
+        "24d3438f1e5a4203",
+        "20a44766a45746d7",
+        "d13d82cc2f33ec5a"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0110",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2905440,
+      "end_ms": 2927560,
+      "text": "We're just talking with the CEO of 11 labs about, hey, building your own models is pretty doable these days and every six months. Gets easier and easier. So are you working on your own models using open source to then fork it and make your own model?",
+      "word_count": 48,
+      "utterance_ids": [
+        "db8ff49d79869e67",
+        "9bd2aa5ed997d556",
+        "c054298da917f4d2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0111",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2927720,
+      "end_ms": 2974800,
+      "text": "Is that the future for your firm? So I don't believe in fine tuning or building any general intelligence models. I think that's in very narrow models for narrow use cases that you also drive a lot of scaling so you can drive both cost and latency down. An example of this for us is we have a big feature called tabular review which is basically the number of documents times the number of prompts. So 100 prompts, 10 ,000 -8. I call it. If you make a fine tune model at extracting contract data, it's very applicable there. But it doesn't make sense to build a general legal intelligence model like some of our competitors are attempting.",
+      "word_count": 118,
+      "utterance_ids": [
+        "33304ad39ca08239",
+        "b41aea733c4b209d",
+        "7abc050826e56c5d",
+        "564b606f013872db",
+        "75c297008e2ec831",
+        "c2d748120cecbf9b",
+        "cabd7e8d8da25bb1",
+        "986c028f0a5cd56f"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0112",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2975600,
+      "end_ms": 2999940,
+      "text": "Yeah. And how do you mitigate again? the data leakage issue with your customers, these, you know, are highly regulated industries with a lot of stake. So putting in, you know, this recent case you're working on in the litigation, if any of that were to seep into a language model and then come out the other end.",
+      "word_count": 58,
+      "utterance_ids": [
+        "993143e5467e57dc",
+        "65809e05c72c815e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0113",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3000000,
+      "end_ms": 3071740,
+      "text": "I mean, this is disastrous. You have a higher level of trust possibility. And compliance is our currency. And so it's actually one of the reasons why it's really hard to sell into law. There's a lot of legal AI companies and very few. are making it through. And not because it's hard to build stuff, it's actually quite easy to understand where you can build value, but getting it to the customer is very hard. But that's something we cracked pretty early on. And once you're in, it's much easier to expand. So that's also one of the driving forces behind our M &A strategy. But yeah, I mean, we're hosting national secrets, weapons manufacturers with their contracts on Legora. And we work with governments. Does that mean you have to put it on prem as well? We don't do on prem. Is that on the road map? No, I mean, you know, deploying in a VPC is very... time -consuming and it creates a lot of dependencies which slow down your road map and the execution forward. All right continue to success max. Thanks for taking some time for us.",
+      "word_count": 192,
+      "utterance_ids": [
+        "98a038ebe8661ebd",
+        "bcb5f9ec5f4a3fdc",
+        "f135d4e371677e8e",
+        "a4f8facec944b55f",
+        "f67fe69365853231",
+        "7f8f4199a77595ba",
+        "71fc3553a08d6820",
+        "cb620207338d3cb0",
+        "9521e974d13e2d8f",
+        "07284f23479fad89",
+        "c58df4da30ff5a62",
+        "143ff9a7755d88da",
+        "7c09dcdecdcf6de2",
+        "a1318ca9bbba3276",
+        "dfe877767b48a3de",
+        "314384450db4610c",
+        "7d6f0b347fe87731"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "8550481c62a4fddf_t0114",
+      "source_id": "8550481c62a4fddf",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3086959,
+      "end_ms": 3089600,
+      "text": "I'm doing all in!",
+      "word_count": 4,
+      "utterance_ids": [
+        "91f19e7fd4d4f964"
+      ],
+      "is_question_anchored": false,
+      "stripped": "outro"
+    }
+  ]
+}

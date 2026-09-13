@@ -1,0 +1,2927 @@
+{
+  "source_id": "6244e2a46bed1e89",
+  "title": "Open Source Wins, AGI Is Here, and Scorsese's AI Toolkit with CEOs of Cerebras & Black Forest Labs",
+  "metrics": {
+    "source_id": "6244e2a46bed1e89",
+    "title": "Open Source Wins, AGI Is Here, and Scorsese's AI Toolkit with CEOs of Cerebras & Black Forest Labs",
+    "utterance_count": 657,
+    "turn_count": 161,
+    "retained_turn_count": 156,
+    "stripped_turn_count": 5,
+    "question_anchored_count": 23,
+    "question_anchored_pct": 14.29
+  },
+  "turns": [
+    {
+      "turn_id": "6244e2a46bed1e89_t0000",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 0,
+      "end_ms": 19360,
+      "text": "We are in the race for super intelligence and Andrew Feldman is back and obviously CEO and founders Syrie Briss doing in friendships pioneered the space, had a successful IPO, we've talked about this a couple of times, we got to see each other in January at Davos, IPO happens.",
+      "word_count": 50,
+      "utterance_ids": [
+        "668403343fa892b4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0001",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 20000,
+      "end_ms": 25200,
+      "text": "The boys and I got to sit with you recently. That was fun at liquidity. That was really happy fun.",
+      "word_count": 20,
+      "utterance_ids": [
+        "290fd48fb968bb20",
+        "75cc02856670f111",
+        "198068bb306a8458"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0002",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 25320,
+      "end_ms": 42660,
+      "text": "I had a great discussion with the boys But I wanted to deep dive with you about a couple of topics. The first one is the buildout of AI We've never seen a buildout like this since You know, the great wall of China, who knows it.",
+      "word_count": 47,
+      "utterance_ids": [
+        "3e3934826bd6d9c6",
+        "59c2922b8efaf0e1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0003",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 42660,
+      "end_ms": 43400,
+      "text": "The pyramids?",
+      "word_count": 2,
+      "utterance_ids": [
+        "5903bdbf6c7ee4fe"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0004",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 43740,
+      "end_ms": 59480,
+      "text": "I mean, it feels like the amount of capital, time, and intelligent people on the planet, dedicating themselves to the build out of something. I can't think of anything in our lifetime with perhaps, you know, before our lifetimes.",
+      "word_count": 39,
+      "utterance_ids": [
+        "8dbd05b48ab02f75",
+        "87640663cfa8c7d1"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0005",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 59480,
+      "end_ms": 60740,
+      "text": "But... war effort.",
+      "word_count": 3,
+      "utterance_ids": [
+        "c07b898e5d6096ae"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0006",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 61240,
+      "end_ms": 75160,
+      "text": "This is a mobilization in a scale that we read about, we hear about, but you're actually doing it. You have customers who are building data centers and you're a key piece of doing all of it.",
+      "word_count": 37,
+      "utterance_ids": [
+        "27d7066a36c0bfca",
+        "6eaeba7e1b8324b3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0007",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 75460,
+      "end_ms": 94240,
+      "text": "At 11 started with an $8 domain and no VC funding and became one of the largest ad platforms in the world. Now that same engine, powers app love and ads for e -commerce. Your ads run inside mobile games, reaching over a billion people with full -screen distraction free attention. The platform finds buyers and optimizes for profit.",
+      "word_count": 59,
+      "utterance_ids": [
+        "2d4b17f9db7490a5",
+        "a1b96b766efe048a",
+        "dca923da8fe3d11a",
+        "354d7a5f23d31b2a"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0008",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 94540,
+      "end_ms": 96400,
+      "text": "You set the target? It does the rest.",
+      "word_count": 8,
+      "utterance_ids": [
+        "ae231da34b4497f2",
+        "248832a4e940ce46"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0009",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 96560,
+      "end_ms": 108080,
+      "text": "One cookware brand went from $4 million to $16 million. turned profitable and is on pace for 80 million this year. Visit apploving .com slash all in to launch your first campaign today.",
+      "word_count": 33,
+      "utterance_ids": [
+        "4a7ac7bc39c5ab36",
+        "ce476a876a42a1e4"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0010",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 109420,
+      "end_ms": 112360,
+      "text": "Maybe you could just enlighten us in 2026.",
+      "word_count": 8,
+      "utterance_ids": [
+        "5b6da3d2627411a2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0011",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 112820,
+      "end_ms": 119020,
+      "text": "What is cerebrus doing? And what is happening with this build out in Texas?",
+      "word_count": 14,
+      "utterance_ids": [
+        "7a9a3f68bf8d41c8",
+        "8de2b09922456e04"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0012",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 120000,
+      "end_ms": 179980,
+      "text": "Some gigantic, efforts. The size and scope of what is being built, the physical size and scope, usually when we talk about software, or we talk about hardware, we talk about chips and boxes, and they don't have the same sort of physical enormity, right? And what we're talking about now are data centers. that are in the next several years going to use more power than the previous 50 years on earth. Look, wow, right. We're talking about individual buildings, the size of football fields that have more power coming into them than mid -sized cities. And they're being built, they're being built across the U .S. They're being built across the U .S. being built in Canada, they're being built throughout the Nordics, they're being built here in Paris and throughout France, in Europe, in the Middle East, in nations that sort of weren't from the center and anybody's mind previously, you know, cause of Stan, to Jesus Stan or build a Georgia building out data centers of size, Armenia, everybody sort of...",
+      "word_count": 175,
+      "utterance_ids": [
+        "87061a95bac2c4d3",
+        "5a269e0d9e683260",
+        "ddad0d284f66713a",
+        "d4c6af018de35c34",
+        "987d941c18eb3c64",
+        "fa5a794b5fb6cd9f",
+        "52647e326b45f1e1"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0013",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 180000,
+      "end_ms": 212860,
+      "text": "Focused every country and every state obviously in America feels they need to participate in this and the people who are buying the capacity of the open AIC Anthropics, SpaceX,. SpaceX AI, the Googles, they are in station. right now. Yeah. And they're building how many years out. When you talk to them, they were ordering chips from cerebus before you were finished with the chips.",
+      "word_count": 66,
+      "utterance_ids": [
+        "54ace39d77957c54",
+        "6265f226f6d4dd05",
+        "dbbfbea8fe01c983",
+        "fa2172c3032cfc61"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0014",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 213000,
+      "end_ms": 263820,
+      "text": "They're putting orders in ahead of time. The irony is unlike many sort of exciting times in technology. They're trying to capture yesterday's demand, right? The demand is way out stripping our ability to build data centers and to fill them with hardware, all right? And so, you know, we have a $25 billion backlog, $25 billion backlog. And we are not alone in that opening. AI anthropic you go through this list of Google wants more data centers, Microsoft wants more data centers, AWS wants more data centers, right, all of these players are not chasing sort of if you build that they will come, they're chasing the demand is booked, right, how do we keep them from leaving, right? And that's extremely unusual. It's very unusual.",
+      "word_count": 128,
+      "utterance_ids": [
+        "3e0528e8cbe4af16",
+        "5595299d977d4dad",
+        "961d21dc66f98ce4",
+        "6a7432151d0fb09c",
+        "a125df782a44137b",
+        "515cf90f3b338495",
+        "6ffbe0630d90b89d",
+        "abc72a22a7828826",
+        "1b5bdbccb01a4903"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0015",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 264420,
+      "end_ms": 269260,
+      "text": "And now we have people who are, you know, we have a term for a token maxing.",
+      "word_count": 17,
+      "utterance_ids": [
+        "91fceda9045b5df1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0016",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 270240,
+      "end_ms": 271800,
+      "text": "And there's a great debate.",
+      "word_count": 5,
+      "utterance_ids": [
+        "32d6780ee22f765b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0017",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 272220,
+      "end_ms": 274600,
+      "text": "Is this actually creating value?",
+      "word_count": 5,
+      "utterance_ids": [
+        "884899fb549a4d44"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0018",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 275540,
+      "end_ms": 276920,
+      "text": "I'm curious where you stand.",
+      "word_count": 5,
+      "utterance_ids": [
+        "59ef97813a5b20d7"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0019",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 277860,
+      "end_ms": 289580,
+      "text": "You know, is it even possible that? this much demand could be created if value did not exist. There is clearly massive value happening yeah, but there's also massive experimentation.",
+      "word_count": 30,
+      "utterance_ids": [
+        "8f80b13a87596c2e",
+        "219f165b7d48e960"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0020",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 289940,
+      "end_ms": 378840,
+      "text": "Oh for sure, you know what, I like in this to when we first started with AWS and it was so good to get around. Your own IT organization, right? It's told every engineering, go ahead, put on your credit card, sign up. Yeah, right. And a lot of it was really useful. Some of it was like, God, I wish we didn't do that. And so for sure, there's experimentation. But it doesn't mean that the net value isn't enormous. It means. some of it is going to go nowhere. And you know, it was the same, I remember when Costco opened up in, in, the Palo Alto area in 1988 and people used to shop Costco like the shop safely that go down every aisle. That's a horrible way to shop Costco because you end up with four things you didn't need in each with $22. Right? And as people got more sort of accustomed to it, you go to the back to get the chickens, 18 cupcakes for the kids birthday party. Bang you were strategic and it's exactly the same. I think it first people opened up and said everybody as much tokens as you want. And the in enterprises there's no open loop. don't give sort of any resource, unconstrained to people. And now we're jumping on something whoa. All right, these guys should have as much as they need. They're enormously productive. Over here, we can use maybe an open source model, maybe a cheaper model over here. And now we're sort of running like a business.",
+      "word_count": 263,
+      "utterance_ids": [
+        "35b905f8e4349bd3",
+        "1efb5e8270e86645",
+        "0ff885d6b51ff17e",
+        "54f07e83c5a456ba",
+        "06f20f53ad82f94e",
+        "3552caccf415ecb7",
+        "61cf4f8c3cf5a56c",
+        "3b841ae80abee294",
+        "6ee862087c3be805",
+        "2ba0f0ee7df5e3c2",
+        "9ecb0896312a6893",
+        "a40305e8afe54966",
+        "76b76f92997f2ac2",
+        "a6d9eca3f27ed351",
+        "967b9ba9bdbdbc36",
+        "f046ab07378df120",
+        "8e0e9bfa49cb7321",
+        "9d58e8e8529f1565",
+        "6b5b765ea4c92260",
+        "ede4c0e7f86db59f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0021",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 380000,
+      "end_ms": 386580,
+      "text": "We're really seeing a certain type of person emerge who knows how to deploy this technology.",
+      "word_count": 16,
+      "utterance_ids": [
+        "6cdc31a44c8026d5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0022",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 387280,
+      "end_ms": 388560,
+      "text": "Systems thinking,.",
+      "word_count": 2,
+      "utterance_ids": [
+        "bd3137f4d90255a1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0023",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 390200,
+      "end_ms": 426280,
+      "text": "Which developers kind of have in eightly CEOs tend to be great strategists and understand systems, but the intelligence is getting... so much better, every step along the way that I'm watching individuals typically start up founders, but also venture capitalists and associates who work at my venture firm. They start playing with the tool and then the tool starts playing with them. They start to go, oh, I haven't clearly defined what my goal... is, I don't understand what a system is. I've never heard about making a required document.",
+      "word_count": 91,
+      "utterance_ids": [
+        "94e711ba4f68337f",
+        "893a02983fed80ca",
+        "b90147c560fabd04",
+        "e59d43d240bb22e3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0024",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 426920,
+      "end_ms": 489760,
+      "text": "And the software's like, do you have a requirement? It's document, what you're called? The AI starts telling people, you're token -matsing, and you need to get a little more focused here. One of my colleagues 20 years ago, a really smart computer scientists said, computers really dumb. They do exactly what you tell them. And at first prompting was like that. You modified your prompt a little bit and it changed the answer dramatically. Formatically. And increasingly, it's understanding what your intent was. And if you... If you have a chance to play with Fable or five six from Open AI, increasingly, you don't have to get the prompt just right. You don't have to be a prompt whisper. Instead, you ask it and it says, well, here are some things, and by the way, maybe you have the chart to go two ways, you want to align in a bar. And it's like, well, that's exactly what I wanted. I didn't ask for it, but that is better. And so it's understanding intent, and that's a huge leap.",
+      "word_count": 180,
+      "utterance_ids": [
+        "e7130296a837870e",
+        "f7979b159af3b0bc",
+        "de14ec41df8522ab",
+        "0b55a913190bda58",
+        "e978ac344965aa56",
+        "be998eaed747faa9",
+        "0758d8d26bcc7fe7",
+        "a223c64c8564a28c",
+        "37203535798b9784",
+        "4f7d73422d0dfee9",
+        "afb1d7e0a0038849",
+        "22c7cbae1b9ec52c",
+        "8065b91a2220fdeb",
+        "1d0bd6e8e49f344d",
+        "05a76c3e45aae038"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0025",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 490360,
+      "end_ms": 509700,
+      "text": "Which, if we were sitting here two years ago, with the idea, we would never have been able to predict in a short 24 months that we go from being... a great summarizer researcher of web results right to actually understanding your intent and then providing a solution and abstracting it all from you.",
+      "word_count": 54,
+      "utterance_ids": [
+        "26246d698f87b815"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0026",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 509860,
+      "end_ms": 511940,
+      "text": "That's right. Which is a very weird thing.",
+      "word_count": 8,
+      "utterance_ids": [
+        "82817126d7d7b02c",
+        "c22de331cba688cf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0027",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 512060,
+      "end_ms": 514480,
+      "text": "I don't know if you've played with the Irmese agent yet.",
+      "word_count": 11,
+      "utterance_ids": [
+        "99e3ba7005a37f76"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0028",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 514940,
+      "end_ms": 516040,
+      "text": "Yeah. Have you played with it yet?",
+      "word_count": 7,
+      "utterance_ids": [
+        "a449debb6a4efc33"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0029",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 516580,
+      "end_ms": 540740,
+      "text": "I mean, I asked it just this morning, and I was given a secret bit tensor project that has the new Z -A -I model 5 -2, and they gave G -L -M -5 -2, G -L -M -5 -2. So somebody in that bit tensor, I think you understand, bit tensor, you've heard of it, the distributed 3 -2, and 3 -2. crypto project.",
+      "word_count": 65,
+      "utterance_ids": [
+        "96978009517f4e4e",
+        "9cabed41fd439bf9"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0030",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 541420,
+      "end_ms": 550580,
+      "text": "And so they have all this extra capacity. I was a whisperer told me probably some capacity in China that is free energy. Okay, fine. So they gave me a limited capacity.",
+      "word_count": 32,
+      "utterance_ids": [
+        "0f16f22dcc5d6522",
+        "3775238115bf05da",
+        "ca2a8345f553432e",
+        "82839b1843b74974"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0031",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 550780,
+      "end_ms": 557860,
+      "text": "So I started having to choose some really crazy jobs when I was saying like every hour I want you to tell me what the trends in the world are.",
+      "word_count": 30,
+      "utterance_ids": [
+        "4ebc3b2ad71761ce"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0032",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 558280,
+      "end_ms": 559820,
+      "text": "That nobody else has identified yet.",
+      "word_count": 6,
+      "utterance_ids": [
+        "0d9cbb7654173ae4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0033",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 560000,
+      "end_ms": 576340,
+      "text": "And you can do whatever you want to do that, but my goal is to be the smartest trend hunter in the world. And I watched what it was doing in the background, and it started debating itself, but where it should find the things is, but we should probably go to hacker news and read it, and then it was like, yeah, but there's also social media and trends tend to manifest on Instagram.",
+      "word_count": 75,
+      "utterance_ids": [
+        "ede908ca1af7aebe",
+        "b2569f00d632f6f6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0034",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 576340,
+      "end_ms": 583600,
+      "text": "That's a reasoning model. You were watching a reasoning model work. out. Yeah. It's not interesting. I mean, that's amazing.",
+      "word_count": 20,
+      "utterance_ids": [
+        "1539f501ebcf3fef",
+        "0387b4f7255091c6",
+        "a2f24b36aa136df8",
+        "5d3da03b59f5631e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0035",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 584360,
+      "end_ms": 615480,
+      "text": "And it was collapsed. So as a civilian, right, who doesn't hit the uncollapsed moment. And if you were using Chatshi B3 .5 or you were using 4 .8, whatever it was, and you haven't used this new level. All right, reasoning and inference and unlimited compute essentially, it opened by eyes just this morning of what a world of unlimited tokens might look like, right? Because unlimited tokens, I believe, means unlimited reasoning.",
+      "word_count": 74,
+      "utterance_ids": [
+        "ba5fc99dabd07fec",
+        "3bcd77ceb2dd7836",
+        "5daf1a44d936c68c",
+        "73ffeecc9101acc7",
+        "f983b25f1e77aeab"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0036",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 616020,
+      "end_ms": 656560,
+      "text": "It does. What does that mean? Yeah. it's, I mean, if you run these for 25 or 48 hours, you get amazing things now. And what if by using three -breaths, we were 15 times faster, and then you ran it for 24 hours. And you got weeks of months worth of thinking. Is it is extraordinary. And I think one of the things is people like Ilia and Sam in the early days were saying this was coming. Right. And I think when you look back, you say to yourself, Holy crap, those guys they knew saw it.",
+      "word_count": 99,
+      "utterance_ids": [
+        "c4596f745923262f",
+        "4ce0d881b91c88cb",
+        "3e65a8883362c534",
+        "462f94d8bea7eaaf",
+        "57d894867333b668",
+        "322671cfac691464",
+        "3d0cb59cbb1e792a",
+        "03b98fa2d7ac46ac"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0037",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 656900,
+      "end_ms": 658240,
+      "text": "They could see around the corner.",
+      "word_count": 6,
+      "utterance_ids": [
+        "7a77766c559b5484"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0038",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 658280,
+      "end_ms": 658840,
+      "text": "That's right.",
+      "word_count": 2,
+      "utterance_ids": [
+        "5ee07e0dbc000ef2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0039",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 659000,
+      "end_ms": 701260,
+      "text": "And the bill was crazy. what I'm not sure it when we had Sam on all in at one point he and he said you know I'd love to come on at some point I said sure come on and he was talking about it he said you know I said what's next he said reasoning guys had unpacked that what does it mean so well understanding what your intent was just as you're saying And then figuring out a strategy and then maybe talking to other agents and other threads about like is this the right thing to do and vetting each other's work And I'm like,. Wow, we have come a long way from guess the next word right fill the sentence in you know that summarizes pdf Now cerebrus is at the center of this because this reasoning is inference.",
+      "word_count": 143,
+      "utterance_ids": [
+        "43611ada6c86bef9",
+        "0e1650a8a8d88167"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0040",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 701460,
+      "end_ms": 752860,
+      "text": "This reasoning is inference and it's computationally intensive, right? Right? And so fast compute makes this sort of work, the fast and sort of tractable. It doesn't cripple it by taking a huge amount of time to get a good answer. And so it's exactly the fact that this re... The reasoning consumes a huge amount of tokens internally that allows a blisteringly fast machine like ours. And I brought one because I have never far without, you know, when one costs half a billion to make, you bring it everywhere with you. We were tossing this back and forth at Davos. What's the model number of this one? This was in the first eight or ten. Got it. So this has a special place. This has a special place. I mean, my wife says it's like I'm a kid with a dirt bike for his eighth birthday. Within his bedroom at night, I carry him with me.",
+      "word_count": 158,
+      "utterance_ids": [
+        "27ecab53da53c030",
+        "925a8eef859b9772",
+        "ef7f2dea859ffb7e",
+        "f4196cf57f615029",
+        "e91b041485e4753e",
+        "d62212d864f3c715",
+        "b57230b39d9187f5",
+        "1044542b6f6f15ce",
+        "09816a6a348fcb9f",
+        "5b53de9ad6f3f407",
+        "08e505510f340f51",
+        "8b686c9d723d59a3",
+        "a2ad0781795bf292",
+        "70b4e87f5fd04b51"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0041",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 752980,
+      "end_ms": 759120,
+      "text": "I mean, when you have, you know, you're your next party at the house, I highly recommend just a little more dirt.",
+      "word_count": 22,
+      "utterance_ids": [
+        "45df4fbd461f6b8e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0042",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 759360,
+      "end_ms": 759980,
+      "text": "Just a little more dirt.",
+      "word_count": 5,
+      "utterance_ids": [
+        "5ce7b473fbb01f5b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0043",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 760000,
+      "end_ms": 786660,
+      "text": "I think it'd be like a great bet, but what we're looking at here is the ability to do that reasoning at scale. And what is Moore's law for inference and for cerebrist? Do you have something internal? you discuss as we're going to double this every next time period.",
+      "word_count": 50,
+      "utterance_ids": [
+        "0bd2ee4f93b6c475",
+        "0a9eec1217e08e37",
+        "ddd9f4c390c24b83"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0044",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 787360,
+      "end_ms": 844260,
+      "text": "So all chips prior to us in the process or world followed Moore's law. And we broke you. Doubling every 18 days. Doubling about every 18 months, done it. And we crushed it with this up and we've carved out a whole new trajectory and my view is in the next 18 months will be way over 2x interesting and so I think that early in an architecture you have room to do much better than what was traditionally. More as law. Now, if you've got a 20 -year -old architecture, like the GPU, it's much harder. Right. You have to rely on things like smaller geometry, right, going to the next fab node. But in a newer architecture, you have a huge amount of room still to learn about the work that there's being presented. and make optimizations that give you huge gains.",
+      "word_count": 144,
+      "utterance_ids": [
+        "2e17cc5200708e7f",
+        "d7c57327758b57a2",
+        "544d8b8c612c595d",
+        "62001f17b3635840",
+        "bbf2eb404b1a1efe",
+        "14df3b40904924ef",
+        "767edc352dde5ba2",
+        "f5871d3e03975c53",
+        "47f6f030c578dbca"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0045",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 844840,
+      "end_ms": 859680,
+      "text": "How do you run the company, like just being the CEO now, in the age of AI, you have $25 billion in demand, you have to deploy at an incredible blistering pace.",
+      "word_count": 32,
+      "utterance_ids": [
+        "2b278be78dd4d259"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0046",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 860000,
+      "end_ms": 898540,
+      "text": "You have to hire people. You have to create a roadmap. I don't mean to give you a panic attack here. You have to keep up with somebody like OpenAI who's moving so unbelievably quickly. Yes, right? And they're competitive. You got to keep up. Right? Right? You're hard where you're software, your deployments have to keep up with some of the fastest moving organizations in history. they're demanding customers,. They are not, they're not pushovers for sharing. Yeah. And also, potentially, competitors down the road, look, I think there is so much demand right now that there is no look in that we're going used.",
+      "word_count": 106,
+      "utterance_ids": [
+        "3c098d11232be59f",
+        "30fa44dae5cd1d13",
+        "eea0c5b97a9affd7",
+        "70a72f0dea255545",
+        "181ab3a3a47c340d",
+        "4690719a3f39b3e2",
+        "4323611177857930",
+        "eaf97535a50dac86",
+        "39d2f1d0d7432a56",
+        "375eeed643e170b9",
+        "6d91577b72bb2aae"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0047",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 899000,
+      "end_ms": 913060,
+      "text": "Yeah. But why? is an opening eye releasing jalapeno. Why is Amazon making their own chips? You see this reoccurring trend. Is it a way to let you know to let Jensen and Nvidia know?",
+      "word_count": 35,
+      "utterance_ids": [
+        "57cd6c304b9259b9",
+        "fbc03e5350994e87",
+        "9880292c49644b71",
+        "0e80f707a352373c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0048",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 913220,
+      "end_ms": 918220,
+      "text": "Hey, we can do this too. So we need good pricing. Is it a little bit of a flex that way?",
+      "word_count": 21,
+      "utterance_ids": [
+        "a9824462bb41f311",
+        "9229c0c276032e8a",
+        "4e27b381220f4607"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0049",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 918900,
+      "end_ms": 921880,
+      "text": "Or is that the future? that they're going to be in your business.",
+      "word_count": 13,
+      "utterance_ids": [
+        "07ec96c851f1e571"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0050",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 922700,
+      "end_ms": 971520,
+      "text": "No, I think nobody likes being dependent. And I think some of the lessons learned by the hyperscalers of the X86 world is they were dependent on Intel. And some of the lessons learned by... the GPU makers was they were dependent on a small number of hyperscalers and they wanted more customers and so they set about to help fund these new class. And so I think mostly it's about an opportunity to control at least an important part of your destiny. And I think that's a very reasonable thing. I think you don't have to sort of make the fastest chip. You just can't be entirely dependent on other people's chips. And that dependency is become a hot topic.",
+      "word_count": 121,
+      "utterance_ids": [
+        "5404192c4871025c",
+        "8b9bab5d3468c423",
+        "40987cc87aa9616b",
+        "397ac8af06770c24",
+        "705d65cabc352e84",
+        "1e947ada0cad3478",
+        "c56268a5bd7cf831",
+        "13ac3aa31eef8c51"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0051",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 971740,
+      "end_ms": 999520,
+      "text": "I'm not sure if you caught the episodes over the last two weeks, but we've been talking over the last year about open source. I've been championing that a lot. just because I was early into open claw and quickly started using kimi and was like wait a second I'm blowing out my claw tokens but this kimi I can't tell the difference and then we started smart routing it and suddenly this open source started to figure out reasoning and the gap.",
+      "word_count": 83,
+      "utterance_ids": [
+        "ebbc2334101e796c",
+        "76dca5d95b7afb8a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0052",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1000660,
+      "end_ms": 1079980,
+      "text": "Well, suddenly close this year, but you don't want to take your, Ferrari to the grocery store. There are times if you want to drive your fun car. Yeah. Right? And there are times if you want to throw the kids in and don't worry if their Cheerios on the floor. Minivan time. Right? There's minivan time. And I think that as the sort of sophistication of the user grows, you're going to have hard problems, and those are going to be front to your model problems. They're going to be open AI problems. They're going to be anthropic problems. Maybe jam and I problems. And behind that, they're going to be a lot of ordinary problems. If you think about a company, you know how much time. spent cutting things out of workday and getting it in a different cell for, yeah, I think about the cutting and pasting economy is real. That's right. And this doesn't need right, gold, metal mass. What this needs is sort of rock solid open source capabilities. Yeah. And if you think about what, I mean, when we've been thinking a lot about it in GNA, but a huge amount of GNA, all right, is not invention,. Right? And you may not need sort of the most sophisticated agents for this. And another card that...",
+      "word_count": 222,
+      "utterance_ids": [
+        "1179c41830184665",
+        "54922f905d5105ae",
+        "21b71125e3f58517",
+        "fb3f5871ba0d1377",
+        "e16c40dbabb47490",
+        "c76ee7c844ce4dd0",
+        "7d2d1720410f374b",
+        "3f72f6708a1eaa63",
+        "14f878510d1000e0",
+        "856758ec94958186",
+        "2c54f8e59aecc6f9",
+        "11f1f418c823f445",
+        "d999a285352d5517",
+        "21aee8c8cfb24b44",
+        "feef8ff8375f5755",
+        "9ea8bb9afb457acc",
+        "385684f780c7b696",
+        "aa35b246275a0f5a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0053",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1080000,
+      "end_ms": 1099980,
+      "text": "That's turned over recently is some folks, maybe half concerns with the ambition of the frontier models and maybe sharing their data, delete data leakage and sovereignty of intelligence and they're saying, hey, our company is going to choose, maybe we're going to regulate it industry finance.",
+      "word_count": 47,
+      "utterance_ids": [
+        "377c274001e56da0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0054",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1100000,
+      "end_ms": 1150440,
+      "text": "Health care, hip -up, you know, finrow, all kinds of different regulations. We need to have this on prem, and we want to have domestically, and we'd like an open source version where we have a little bit more control. I think, are you seeing that now? We are seeing that for sure, and I think, open air. I made a good call, releasing OSS 120B. Some months back, that was a good open source model. But I think in the US, we need more domestic open source models, we need to give the world a choice. If they want to run open source right now, it's OSS 120B or Chinese models. And video has seen the same. Opportunity to push open source models. I think giving them more power might be sort of... Well, I was about to, that was, you could cut me out with the past.",
+      "word_count": 149,
+      "utterance_ids": [
+        "75843d43e8d8964a",
+        "5a7ab238572d3902",
+        "9a8e4ef1ce284cb2",
+        "e2114b580e2c8ae7",
+        "01cea37df9728590",
+        "98dee995000c4cde",
+        "3c1d09cec903eef9",
+        "6a9a48c898b8515f",
+        "6a188ac11076b9b7",
+        "86d3ddd44faa1f92",
+        "b4c8c387dd163df1",
+        "63417582fb6d4d08"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0055",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1151060,
+      "end_ms": 1175380,
+      "text": "Like, my understanding with Jensen was like, hey, we, don't even want to talk about these open source models we have because our customers, right? We're now going to... be competing with Sam, Dario, Yuan, Sergei, like, do we want to be in that position? So, but we do need some more champions here, and it's open, so people can fork it. But that puts you in a more neutral position.",
+      "word_count": 71,
+      "utterance_ids": [
+        "1a47841e12008afb",
+        "d338867d9adcc961",
+        "fe2d7f0290615e3b",
+        "f4a56e743e239499"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0056",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1175740,
+      "end_ms": 1226500,
+      "text": "That's right. We run today, we run GLM, we run Kimmy, we run the... Cuencet set of models and we run open AI models, the closed source ones. We run models for say GlaxoSmithCline, which they wrote and developed. We run models for our partner in the UAE, G42, and MBZUAI, that are there. models that they designed. So we have a wide variety. So sovereignty is a trend. A sovereignty is a trend and I think the government's actions with regard to variable and five six where they should hold. Whoa, let's think. And then we can act, I think sort of particularly here in Europe was a bit of a wake -up call.",
+      "word_count": 115,
+      "utterance_ids": [
+        "339251cef5c49867",
+        "0f6805eabbba1bdf",
+        "d109bd82094808f1",
+        "1717f6f3bc4a4104",
+        "7943e13ff0c7d340",
+        "a7ab2ad754826b73",
+        "74f64775b01e18f7",
+        "8cb6cf6d95ced427",
+        "eaa044bd71440df0",
+        "cbeb3488b8f86019"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0057",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1227380,
+      "end_ms": 1233460,
+      "text": "And when you saw this going down, there's a layer of partisanship in our country right now.",
+      "word_count": 17,
+      "utterance_ids": [
+        "b73006759013dba9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0058",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1233600,
+      "end_ms": 1234580,
+      "text": "It's pretty fervent.",
+      "word_count": 3,
+      "utterance_ids": [
+        "6c0a5551007cc698"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0059",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1235640,
+      "end_ms": 1241460,
+      "text": "Dario is pretty explicitly, you know, not part of this administration. they've been very adversarial.",
+      "word_count": 15,
+      "utterance_ids": [
+        "8861477156407a4a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0060",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1241500,
+      "end_ms": 1244660,
+      "text": "Both sides have admitted that. They're starting to work it out now.",
+      "word_count": 12,
+      "utterance_ids": [
+        "fea5bc9baccab7f3",
+        "79ed1288bea01553"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0061",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1244980,
+      "end_ms": 1285920,
+      "text": "So it's hard, I think, for us, not being in the room with these parties to understand what's partisanship, what's gamesmanship here. But do you believe that what they released was truly dangerous for cyber warfare? cyber attacks, and that if you were to rate Dario's, not communication because he's a very effervescent communicator, I think is a diplomatic way to say it. But to have a scheduled world out release, we'll put aside the government's control of it. But... Do you think that is a wise thing for us to do at this point? And do you think there was actually a major threat there?",
+      "word_count": 106,
+      "utterance_ids": [
+        "8d5eba0c993b4e66",
+        "76f3615d726f004a",
+        "d289c7de500eb507",
+        "cd46d36168d7139d",
+        "0b32f17431f73e7d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0062",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1286460,
+      "end_ms": 1359660,
+      "text": "So what's interesting is I hadn't seen it before, right? And I think if we just step back and say, is it reasonable? I don't know whether this was the right time. But at a time, that a model is sufficiently creative in its thinking, that it poses a meaningful threat for the government to say we'd like you to roll it out in steps. Yeah, this doesn't seem unreasonable, too. Not at all, right? I mean, we do this with powerful pharmaceuticals, right? We... We'd like, I mean, certainly not encouraging seven years of trial in the amount of paperwork and all the garbage that has accrued to the FDA. But with a powerful new technology, it certainly doesn't seem unreasonable to say, hey guys, let's at least do some red teaming at the government. So we know our defenses can block this. Yeah, have we checked, have we checked? The infrastructure of the country, like of the NSA. Have we checked the infrastructure, right? And can you give us two or three weeks to patch any obvious holes that are found? This doesn't seem to be an unreasonable thing for the government to ask. Right. Okay.",
+      "word_count": 198,
+      "utterance_ids": [
+        "1ac1b2163882e3ab",
+        "62a573c2a2415d10",
+        "9c944a255822a6c0",
+        "5166500989e0a7c6",
+        "d1fc13baa6cfdf56",
+        "3072a42b00d1dd00",
+        "1e35e96944336c3c",
+        "272c2694c3a0ea7c",
+        "32218b5340fa432b",
+        "55e400c057dc0166",
+        "6da9a54aa363f5b3",
+        "a69edcbcf9406965",
+        "1b9ec1e6e1b1a33b",
+        "daf7304e8e503fc1",
+        "676f1c49e5b5b5a3",
+        "5cbba173d6dd9afe"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0063",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1360659,
+      "end_ms": 1365100,
+      "text": "But we in this very polarized time put on top of it.",
+      "word_count": 12,
+      "utterance_ids": [
+        "af8a615e37bec790"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0064",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1365320,
+      "end_ms": 1437880,
+      "text": "Well, oh my god, it's president Trump doing it and then you have to think well What if it was president always aOC or president anybody in between the two extremes I think the polarization hurts a great deal It hurts clear thinking Right it hurts clear thing and both sides are going to do some dumb things and some really smart things. Right, And in fact, what I found is that the people in the government are trying really hard. The rank and file, the rank and file are trying really hard. And this is moving fast. And I think that an ability to... set aside some of the polarization and say, how do we do this in a reasonable manner? I mean, we want Dario and Sam competing like crazy. We want the awesome to watch. It's awesome, right? It's good for the technology, it's good for entrepreneurs to see even with thousands of people. Well, this is what you can continue to achieve, right? Right. This can be what we ask them. Get sharper. Every week. Everybody got better because of that. We want that. And we certainly don't want to become sort of a region where the first thing we want is regulate it, right? But as it gets more powerful.",
+      "word_count": 215,
+      "utterance_ids": [
+        "12db92e6d9f55b78",
+        "e637eacb061bc1d3",
+        "2ead1029e79c02cf",
+        "e8f65842539a664f",
+        "bf0d7fc0beb5e50e",
+        "20cbb5b8e13ec128",
+        "a00ab10f9fa0c9b9",
+        "44915002eb1c4153",
+        "2b8cd5a82953ad5b",
+        "c8a2d34b6624d698",
+        "7018617675633de9",
+        "e88fb9c8e8dedb5e",
+        "30be20cfdd86ede8",
+        "9bfaf47d677577b9",
+        "d960f5eb9c513ab0",
+        "cd46ab1271c52352",
+        "92353651bb302edf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0065",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1440000,
+      "end_ms": 1450100,
+      "text": "Industry really should do a better job of regulating itself perhaps. And it did seem like they were starting that process, but then the communication was lacking.",
+      "word_count": 27,
+      "utterance_ids": [
+        "14cdd987f2fbc01a",
+        "3465d1b4d8ee5f42"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0066",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1450620,
+      "end_ms": 1510580,
+      "text": "Maybe. I think not only are they race and hard, but they're inventing this as they go to. Yeah, right? There's not a book, right? They're inventing the, we say, oh, I just put on guardrails. Well, they have to design the guardrails. Sure, right? The guardrails have an impact. You know, one of the things that fast does is it makes the guardrails less painful. And so that's, you know, we, you know, we discovered that in the last six weeks. Yeah. It is that the very guardrails can, time and make it feel slower. And so fast chips like ours can really help that. But so they're racing against competition. They're racing against their own sense of greatness. Which is maybe even the biggest driver here. And I think they're earnest trying to... Think about how I do the right thing and all of those are mixed in this bucket And sometimes you're on one side rather than the other.",
+      "word_count": 162,
+      "utterance_ids": [
+        "3059ab8197fa4a66",
+        "b400a21aea6c8368",
+        "5a075e7619a97185",
+        "fc7bbbb1df4b479f",
+        "6d48232500c5f02b",
+        "0056f6a3755fe566",
+        "b0d2f781609a20d7",
+        "c5a2ec55468fae50",
+        "69eb3aa52aca0c0f",
+        "213fe5a1cb30edad",
+        "8853fb7875fa8542",
+        "d73db72e0be2e815",
+        "ec555e9f4ad43694",
+        "5c4124e193acbdc2",
+        "2ba5c72464a92cbe",
+        "3584d0f84f5ac3f8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0067",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1510640,
+      "end_ms": 1530620,
+      "text": "Yeah, and as you're saying this is a first time right when we with 3 .5 came out It wasn't like we're using chat GPT 2 .5 3 .5 it was taking down networks, but in talking to Nikash, from Palo Alto networks, I asked him, like, hey, well, how would you grade this? And he said, we put it against our software.",
+      "word_count": 63,
+      "utterance_ids": [
+        "290558f48e44a564",
+        "e8677413e7247d76"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0068",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1531680,
+      "end_ms": 1562800,
+      "text": "And we found bugs. We were not aware of it. And he killed him. Yeah, he said, we had to stop everything we're doing and do patches for six weeks. Right. And, That's when you know, right? I mean, Nick Ashley's maybe the leading security software firm, right? And when it finds in an hour, right, tens of critical opens, you're like, whoa, this is a powerful tool. I mean, I need to think, and maybe you show it too. A group first, right?",
+      "word_count": 84,
+      "utterance_ids": [
+        "5733f55048aba3e3",
+        "2375c93f11225f17",
+        "68181ad0e546bde9",
+        "67619c657a77d6ea",
+        "435c43c3b1f98fdd",
+        "5f142d35ba44ece6",
+        "5775f9142df4fda4",
+        "bf7b941c7dbfa61f",
+        "f5a1564d9dc0d59e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0069",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1563140,
+      "end_ms": 1576600,
+      "text": "Maybe you, I don't know what the right thing is, but I'm in red teaming and we've always had just when you were releasing the new version of an operating system, you know, when you have your iPhone, you can say I want to be part of the beta.",
+      "word_count": 49,
+      "utterance_ids": [
+        "45dee057b5ad312e"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0070",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1576860,
+      "end_ms": 1577920,
+      "text": "That's right. You know, right.",
+      "word_count": 5,
+      "utterance_ids": [
+        "031c5cc8e53b4dbf",
+        "56b03af353c68b1e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0071",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1578360,
+      "end_ms": 1588700,
+      "text": "And there's like two other beta set, you know anything. even get the head chants to opt into as consumers and those ones are for security, those ones are for making sure you don't lose your data or data that's all the time.",
+      "word_count": 43,
+      "utterance_ids": [
+        "59f18bf8b41003eb"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0072",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1588720,
+      "end_ms": 1643840,
+      "text": "That's right, disappear, or leak, or corruption, any number of these things. I think we can also know that there will be a massive data leak. Of course, we know. this, right? And it's like Warren Buffett talked about the reinsurance industry that you know something bad is going to happen. You don't know when, but you got to save up for it, right? You put money away from the reinsurance, but there will be a tornado, there will be a massive earthquake. I mean, we know this, and we can do our best. plan, but they'll be a massive breach, and we have to steal ourselves in advance. And we have to think about it, think about the right response at the time, and sort of prepare ourselves for a future that is in specific unknown, but in general, we're pretty sure it's something's going to happen. Something will happen, right? And yeah, it's typically a blocks one, right? That's right.",
+      "word_count": 162,
+      "utterance_ids": [
+        "1a81003869df0a3d",
+        "3fff7634bdf5eea1",
+        "7da43cfd8e2f159d",
+        "ec34cb9ed63c212f",
+        "a9b24c52919ea3d6",
+        "2bbd26d3816e3be5",
+        "82e380719b0f80b2",
+        "63566aa8513789ec",
+        "27817bca4076b03b",
+        "c193cd4a02584205",
+        "ed44bc8a090c76f8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0073",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1643840,
+      "end_ms": 1648840,
+      "text": "By definition, it's going to be something we didn't consider or a question we didn't know to ask, right?",
+      "word_count": 19,
+      "utterance_ids": [
+        "213f632823b06aa2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0074",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1649140,
+      "end_ms": 1661400,
+      "text": "But even knowing that there's some unknown unknowns is a useful place to start. Yeah, what we're not asking ourselves. That's right. With reasoning, the AI is going to be able to tell us, hey, Schmuck. human. That's right.",
+      "word_count": 39,
+      "utterance_ids": [
+        "6920880b3169f78f",
+        "2b3f58fe36d3c494",
+        "3639efe4c81f068a",
+        "365264cb90e941cf",
+        "26b7db058fa17112"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0075",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1661900,
+      "end_ms": 1671780,
+      "text": "By the way, what you're not thinking about, this is now my closing sentence when I do my prompting is I need you to make me a prompt that will help me do this trend scouting.",
+      "word_count": 36,
+      "utterance_ids": [
+        "75538effd4c56e91"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0076",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1671980,
+      "end_ms": 1672540,
+      "text": "For example.",
+      "word_count": 2,
+      "utterance_ids": [
+        "af0151e2730988b8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0077",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1672800,
+      "end_ms": 1704600,
+      "text": "And then I always say at the end, please check your work. And then Tell me what I haven't considered in terms of my goals and give me some questions every time you run the job. And that has changed everything because it's like, I checked my work by the way, this was incorrect. And I'm wondering, hey, would you like me to also do this? And some of the tools like Proplexy do that automatically, they give you your next three prompts. But if you give it explicit instructions, my Lord is good at that.",
+      "word_count": 96,
+      "utterance_ids": [
+        "08e1802fb36f9e7a",
+        "bb2c7ab6bc52cd49",
+        "f9018876edbf6cae",
+        "de3bc061cf975de4",
+        "0ee761a27925f31c",
+        "d8f5aec45f07e858"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0078",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1705220,
+      "end_ms": 1739980,
+      "text": "So, you know, over the course of the last 10 years, as I was raising money, I thought, what are the smarter questions I got at the end of a conversation where someone asked, what was the smartest question you heard that it wasn't covered by what I asked? Incredible. Right? Now that's - That's somebody who's curious and how thinking and humble and trying to sort of use this to get a picture of the space, and to the extent that you can ask the AI that, and that it can sort of broaden your view, you know, maybe what question should I have asked to be an expert in this?",
+      "word_count": 112,
+      "utterance_ids": [
+        "1d970f65b894f3a7",
+        "8685c011e9040645",
+        "ab695d89035dde4d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0079",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1740000,
+      "end_ms": 1764100,
+      "text": "What would a PhD level a question or ask of this or a gold metal math I mean I think those are sort of questions that you know you don't even know how to ask which you know if you start thinking about GGI and super intelligence You know, they're just definitions, but They're important definitions.",
+      "word_count": 56,
+      "utterance_ids": [
+        "381132b5accad78c"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0080",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1764320,
+      "end_ms": 1768520,
+      "text": "I think to kind of keep in mind because they're waypoints. That's right.",
+      "word_count": 13,
+      "utterance_ids": [
+        "fb9104a0420d7292",
+        "82dec9e080b73e32"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0081",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1769000,
+      "end_ms": 1792400,
+      "text": "In AGI I think I suspect you'll agree with me that we've hit it. We just have an exactly deployed it fully we have artificial general intelligence out. It feels like when we're talking about these reasoning moments and you know, the ability for it to be as smart as any human, but let's talk about any definition we had 20 years ago, we've hit it.",
+      "word_count": 66,
+      "utterance_ids": [
+        "df98872c3df9ed36",
+        "87cb5b3177bde80b",
+        "d99130a96e911bd2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0082",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1792780,
+      "end_ms": 1808340,
+      "text": "Yes, right. I mean, if you think about all those turn tests blew it away. You think about that any period of time sort of 10, 15, 20, 30, 40, 50 years ago, we, we, any definition, we would have previously put forward, right? We've blown past it.",
+      "word_count": 48,
+      "utterance_ids": [
+        "5019712ae8fdb5d1",
+        "dda01e5845e761d9",
+        "20dcb3b1aea0c29b",
+        "12690821dd567d64"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0083",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1808500,
+      "end_ms": 1819640,
+      "text": "And so, which goes back to our previous point of like, do we know the questions asked? That's right. 20 years ago, science fiction authors, you know, had their say, and we answered all their questions, right?",
+      "word_count": 37,
+      "utterance_ids": [
+        "292ef23121574415",
+        "782ac014f22e7833"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0084",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1820000,
+      "end_ms": 1859520,
+      "text": "If they were to look at this today, they'd be like, well, I'm out of not a question. I'm out of question, sorry. That's where sort of the sort of listening to people who who sound sometimes like they're on the fringe, right? When I when I was talking 8 or 10 years ago I had the need for safety and then, you know. like, what? Dead right. Yeah, right. When Elon was talking about building rockets and driving the cost to near zero of a launch vehicle, what? There it is. And now you can see. And that's, I think that's why it's really fun to be a technologist now.",
+      "word_count": 111,
+      "utterance_ids": [
+        "dcf6abf8cde31c0e",
+        "5436fc19d6549975",
+        "f3635876b19482de",
+        "a6d50a50cbd151d2",
+        "95b8156ab7e4121d",
+        "d3f6697c3830096f",
+        "8db767bb4921fca6",
+        "95a8c59f1c6b8cba",
+        "1a1668eae5c96e16",
+        "f6e24904b5ad780f"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0085",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1860000,
+      "end_ms": 1869500,
+      "text": "Well, and with these tools specifically, you know, we're talking about building all these tools and then the tools are starting to build themselves in this recursive loop.",
+      "word_count": 28,
+      "utterance_ids": [
+        "4a63996caad86918"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0086",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1869720,
+      "end_ms": 1870520,
+      "text": "That's right.",
+      "word_count": 2,
+      "utterance_ids": [
+        "1e2d14855299c836"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0087",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1871500,
+      "end_ms": 1875860,
+      "text": "We're kind of just starting to see people apply loops.",
+      "word_count": 10,
+      "utterance_ids": [
+        "0984d906add313cb"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0088",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1876340,
+      "end_ms": 1881160,
+      "text": "In fact, loop -maxing became when I was doing my trend. Did my trend, right?",
+      "word_count": 15,
+      "utterance_ids": [
+        "0e5231e0c764a9c6",
+        "52962ff6d5069cac"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0089",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1881280,
+      "end_ms": 1911540,
+      "text": "It kept picking up looping and it kept picking up the maxing stuff and it created a buzzword for me, loop maxing, right? And then it magically people started talking about loop maxing and I was like, wow, this is really weird. It anticipated that this would other humans would come up with this word. But talk a little bit about recursive and then the road to super and tough. And do you have a way, Andrew, that you think about superintelligence and what it will mean for humanity and how we will define it and how we'll experience it.",
+      "word_count": 100,
+      "utterance_ids": [
+        "6347b8b1160a7a8b",
+        "776144b27a7b585b",
+        "18ae5de176d4fa07",
+        "6491ad752089a4ef",
+        "5940bc041699a485"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0090",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1911880,
+      "end_ms": 1918300,
+      "text": "Yeah. I think let's begin on loot magazine or sort of recursive learning. I think.",
+      "word_count": 15,
+      "utterance_ids": [
+        "d1291f04ff031544",
+        "8270dee54d24e348"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0091",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1921579,
+      "end_ms": 2037520,
+      "text": "I think what Samanilia and then later Dario and Danna Dennis saw six years ago or five years ago was that powerful recursive games exponential, right? You get better you do it again, and if you continue to get game,. The slope of that curve is so steep. Yeah, and that we're just beginning to see that now. Yeah, it's going to question you are from the results. Yeah, let's do it again. That results get better and more information is added, your answer gets better, you ask it to do again, it covers more material, and the sort of loops are producing sort of not a little bit better answers, but vastly better answers. Yeah, and that is enormously powerful because we don't quite know where it ends. Right, you keep throwing compute at it. I mean, how much better does the answer get? You know, we run out of tokens or our budget or, or, but, holy cow. I mean, when does the exponential stop? Or does the answer keep going up and up and up to the right? And that's sort of an enormously interesting intellectual question right now. Yeah, like when do we run out of problems to solve, and that's right, and when are the problems the longer sort of intellectual problems and they're now people problems? Yeah, right, how to organize people to get done with the AI asked for, right? I mean, as you know, and running your company, a lot of your problems aren't hard and intellectual problems. So people working together, problems. Right. And motivation. Motivation. You spend a lot of time as a leader in Spring, WD40 on your team. Right. Right. So friction is reduced.",
+      "word_count": 286,
+      "utterance_ids": [
+        "26b8af628848d903",
+        "9d97ea4de9442e49",
+        "4e8cb267776df67a",
+        "322d8e0336b6018c",
+        "018b52984270e971",
+        "1d5a4d95f4cbfc33",
+        "c54cefcb1990d495",
+        "47c37736e4b7997a",
+        "f19131dd7132fec8",
+        "4f83e32627add452",
+        "fac54d682c31f5a8",
+        "5a2ef50bcd483af5",
+        "96414cd4ab9259a7",
+        "fccb3a1f5eb3f171",
+        "2edfb86b38d0a7ed",
+        "ea28ecc0f2102a8b",
+        "21a8b38c35734afd",
+        "59c13ffe1f67b8f6",
+        "89221f271bcfb8ae",
+        "bb60776d2a152de7",
+        "1e3feed263ef596a",
+        "4fb6a4cdf497a7e3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0092",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2040000,
+      "end_ms": 2055940,
+      "text": "How do we learn about those from AI? How do we get behavioral insight from AI? And I think that's some of the things the world models are going to bring us as they begin to watch human behavior. Yeah, we didn't even get to that. This is going to be for another interview.",
+      "word_count": 54,
+      "utterance_ids": [
+        "b382cc7b3c279be9",
+        "cfc05cb56495426b",
+        "304087f7cbfdce32",
+        "b50ffe996c6ebd67",
+        "a18083deaa21d70e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0093",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2057160,
+      "end_ms": 2079980,
+      "text": "But when these things jump off the screen, right and they're in the real world and the recursiveness starts not trying to solve math problems and right you know humanity's most difficult ones but hey you know there's an incredible world out here and here's the palace of Versailles right you're just like now we're like make me a new version of Salesforce and we're like hey you know what?",
+      "word_count": 70,
+      "utterance_ids": [
+        "0e7a7c2517bd4a2b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0094",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2080000,
+      "end_ms": 2081180,
+      "text": "I'd like a Palace of Versailles.",
+      "word_count": 6,
+      "utterance_ids": [
+        "91446314dce0bc64"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0095",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2081200,
+      "end_ms": 2089520,
+      "text": "I've got 100 acres somewhere, Texas or Nevada. I'll just send a thousand optimists out there, make me the Palace of Versailles.",
+      "word_count": 22,
+      "utterance_ids": [
+        "b7c3aa12e80c2d70",
+        "089e96c2a2b63398"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0096",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2090839,
+      "end_ms": 2105500,
+      "text": "Sounds fantastical, but the Palace of Versailles would seem fantastical to people who lived a thousand years before it. And it was fantastic, I think, to the people who built it. So, I'd like a Palace of Versailles. Even to the builders, I think they were on at it as they built it.",
+      "word_count": 53,
+      "utterance_ids": [
+        "cd1b74b676ca886d",
+        "4519be79a1c4c31e",
+        "03eb643b8ff8ea64",
+        "25e32f9b517ed690"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0097",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2105620,
+      "end_ms": 2116480,
+      "text": "You know, they're compounding, they're compounding, recursive learning, that's right, and generations we talked about, you had a really such a great insight of, in building this place, you had generations of mason's.",
+      "word_count": 33,
+      "utterance_ids": [
+        "fa4f541b97e4cc65"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0098",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2116820,
+      "end_ms": 2151500,
+      "text": "Yeah, I think in all these large projects. Often they were families who were specialists who you and you you're apprentice on your father your uncle and when you had a project that took their 50 or 70 or 100 years you might have three or four generations of the same family right the same stone mason family working on the same structure and that's that on the learnings, new innovations, which is what we've modeled with this new, that's right, models and what you're building in the infrastructure.",
+      "word_count": 89,
+      "utterance_ids": [
+        "9c5aa81c291a1288",
+        "fe4a92bbccf70ea7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0099",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2152300,
+      "end_ms": 2154680,
+      "text": "It's pretty incredible when you think about it.",
+      "word_count": 8,
+      "utterance_ids": [
+        "ac3c5d2d37377d5b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0100",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2154700,
+      "end_ms": 2168200,
+      "text": "Especially when we're sitting here and put the place behind it. And that's what, I mean, I think the problem with human learning is it often moves it at the pace of a generation and.",
+      "word_count": 35,
+      "utterance_ids": [
+        "817cf145886d1347",
+        "629c9cbebbc500a9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0101",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2170420,
+      "end_ms": 2203420,
+      "text": "Like elephants and other large mammals, we don't have generations but every 15 or 20 years. And if you want to move really quickly across generations. You want them happening more like Dr. Softly, like food fly. You want to a day. Yeah, all right Then he see that in genetics. That's why we study them in genetics because learning in coded in the DNA You can study over thousands of generations and I think what we're getting is that equivalent in AI we're getting sort of learning So quickly, over the equivalent of thousands of generations.",
+      "word_count": 97,
+      "utterance_ids": [
+        "d8b466ebe33f29d4",
+        "7d432d65328185dc",
+        "9e543fc4981688cd",
+        "b7ff1e4b4115f1c3",
+        "2d3cc06c5367bfed",
+        "26d5699b6933966f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0102",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2203660,
+      "end_ms": 2239660,
+      "text": "Yeah, Darwin would be, you know, of this pace, of that version, and that's exactly right. You think about it as, remember when I was getting my psychology degree, and they were teaching us about paradigms, and I was like, I try to understand how, the paradigms shifted and the pressure set to me, Jason, which after understand is paradigms don't die. People do, that's right, and that's how the Troy, he gave us good, that's why he didn't skin her and young, like it took them dying.",
+      "word_count": 88,
+      "utterance_ids": [
+        "d245763b3abdd050",
+        "81a2fc3ad3051341",
+        "2b04fc42aae9e93b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0103",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2239700,
+      "end_ms": 2263860,
+      "text": "That's right. Right, for the new generation. The new generation. And that was 20 years. Yeah. Sometimes 40 years. Right. As their students maintain positions of leadership. Until someone said, maybe we could do it differently. And I think what you're seeing is this iteration is a shortening of the intergeneration. gap and the learning is so fast.",
+      "word_count": 58,
+      "utterance_ids": [
+        "c928b41b56263b5a",
+        "b3937be4ef536a91",
+        "db5820a7efb1a010",
+        "f7d9a83d9922e745",
+        "c6cb3a3c4b73b0e5",
+        "b1653442a5558a2f",
+        "4d19bafa05e2e22f",
+        "ab0110bff3618923"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0104",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2264880,
+      "end_ms": 2301480,
+      "text": "It's always so great to talk to you because one it's just intellectually so you're approach to it is so intellectually rigorous but also with so much doom in the world. I feel so good. that your such an optimist about the technology and you're building it with such thoughtfulness and I think for people who are hearing these horror stories about AI and job laws and everything, they need to understand there are people like yourself who are building this in an incredibly awful way and this is going to be a net benefit for humanity that just is unimaginable.",
+      "word_count": 101,
+      "utterance_ids": [
+        "7b36109d53c328cb",
+        "4bfedd2ce86a5ea9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0105",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2301760,
+      "end_ms": 2346100,
+      "text": "We have a shot with this technology. Not our children, or anyone they know dies of cancer. I mean, say it like that, there will be some dislocation in the economy. Sure, there will be. There was dislocation when cars came and it was a bad deal to be. a guy who's shoot horses, right, or build carriages, but you got to also against that, you know, make your tea, the cons and the pros. Yeah, right. There's a shot that are children. None of them nor their people, they level die cancer. And that's one. That's funny. Why we can work on with this technology and we will have. great purchase on and I think you begin listening those and then it's a more thoughtful discussion.",
+      "word_count": 127,
+      "utterance_ids": [
+        "7f284a76946902df",
+        "3dbac7b02dd2be0b",
+        "f9ff5112824a2995",
+        "8850606ccff65709",
+        "67175a7fb2ce575a",
+        "bb96a26aadb8e780",
+        "d1ed82ded48ba9a2",
+        "e07bcec59f28a53a",
+        "de3e27237871b72c",
+        "f55443d37a2e95aa",
+        "e377e3166565b41a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0106",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2346580,
+      "end_ms": 2353100,
+      "text": "Yeah unlimited energy, unlimited calories, unlimited knowledge, unlimited education, unlimited housing and how we do it.",
+      "word_count": 16,
+      "utterance_ids": [
+        "6095d4639c5ec856"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0107",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2353440,
+      "end_ms": 2398960,
+      "text": "We imagine, sort of, we know how to teach children and we don't do it, right? Aristotle... was a tutor, tell us, enter the great. Socrates was his tutor. We know that if you give a child a tutor and the tutor modifies the teaching for the child, they learn better. That's not how we teach in class. No, fact -reforming. That's right. We teach to some sort of middle -level. Imagine if we built agents that taught children... for their way of learning, right? And here's the way we've been doing it the same way for a thousand years and during that entire time, we knew how to do it better and we just not to. And here's the way we can do it. Put that on the pro side. And so as long as we're sort of thoughtfully and fairly writing the good and the bad, I think it'll come out of here. I think it'll come out of here.",
+      "word_count": 162,
+      "utterance_ids": [
+        "d3ab7f9dde6b511a",
+        "d39d348207c2364a",
+        "8a51ebcc05cd7505",
+        "3e81d934eeebc9dd",
+        "b6882c6da84c2dd1",
+        "dca08b6db07577e0",
+        "4b6eda60f7647813",
+        "5d77ba33e10a8d37",
+        "3226a5013700d647",
+        "d301a20c87c79118",
+        "b94078409f8cf871",
+        "5683f6f6f586d31c",
+        "daf967cbe35cb697",
+        "5c39162c98769ab5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0108",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2400000,
+      "end_ms": 2414960,
+      "text": "Indicating your version of the world because some people see around the corner and they get a little nervous and okay fair enough, but I think the ledger as you describe it is heavily weighted towards abundance.",
+      "word_count": 37,
+      "utterance_ids": [
+        "e6681a670b2a3225"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0109",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2415220,
+      "end_ms": 2424600,
+      "text": "I think I can't create abundance. Massive abundance. And pleasure. See you next month for our check -up. That'll be great. I'm doing all of you.",
+      "word_count": 26,
+      "utterance_ids": [
+        "0513c774c40350ed",
+        "e8e11bf8670dce97",
+        "39874c0736af4cb7",
+        "7ea64e14ac7c1b43",
+        "f339f89b5ce696cc",
+        "565ff18a23ddaa56"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0110",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2425000,
+      "end_ms": 2432560,
+      "text": "Industries, capital, and intelligence are converging into a single interconnected system. And the infrastructure behind it needs to evolve just as quickly.",
+      "word_count": 22,
+      "utterance_ids": [
+        "26e46144cd334c0f",
+        "7e5c1669c7160fc1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0111",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2432820,
+      "end_ms": 2450420,
+      "text": "Nasdaq was built for this moment, powering more than 135 marketplaces and regulators globally, and connecting capital to company shaping. the future. As the innovation economy accelerates, connectivity becomes the critical asset. Nasdaq is the leading technology platform that makes it possible and scalable. Learn more at Nasdaq .com.",
+      "word_count": 49,
+      "utterance_ids": [
+        "4d6233df9c2e1c98",
+        "f6966a7ef179f516",
+        "a75afd6053d968a1",
+        "45ad1dc89486cd70"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0112",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2452640,
+      "end_ms": 2457620,
+      "text": "Robin Rombock is the co -founder and CEO Blackfars Labs.",
+      "word_count": 10,
+      "utterance_ids": [
+        "c28aabc80831ebc9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0113",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2458500,
+      "end_ms": 2566240,
+      "text": "You are a basic German. in black forest, which is a city in Germany, a mountain range actually, a mountain range. Yes. Where you grew up? Well, I grew up, yes. And you are working on open source image and video models. You worked at stable diffusion for a little bit. That's correct. Cut your teeth on that. And you're known for the open... source model flux and maybe also for some close source models tell us about the business of black forest labs what is the business and what is the goal 100 percent one quick addition we are based in the black forest it's a town called frybook and in San Francisco we have a sandwich to go first yeah Um, we just playing your time or I'm splitting my time to a certain degree. Um, we, um, yeah, started a company two years ago, um, me and my co -founders, as you said, like we've worked on stable diffusion in the past, uh, we fought out, we invented, like an algorithm called late in diffusion, it's just basically like the f***. On the mental algorithm behind all of like generative models that are being deployed for image generation, video generation, even like physical AI, I know. Yeah, it basically makes use of this principle that you can compress natural data, such as images, such as video, such as audio, into much more like efficient representation. And then train a transform on model on that. And I mean, this is the stuff where I like, you know, like, JPEG, MP3 and all of that works. And we basically translated that into like a neural algorithm a few years ago when we were still like PhD students in Munich actually. And then build on top of that, we build stable diffusion and then on top of that,.",
+      "word_count": 308,
+      "utterance_ids": [
+        "5e99a41828d194b0",
+        "90f0bdae957aec37",
+        "79babea07f4d7d2b",
+        "b37e7a360c901bf1",
+        "1100382f38c25914",
+        "b625b396efdcd71d",
+        "3adb9ff582cf135e",
+        "cb7cc573d6154ced",
+        "68cded00bc49ded1",
+        "99d3bdaf3bb7d22e",
+        "60fe19ad5332b3f7",
+        "7c5ddc5c06a2c0b6",
+        "eae5688dd12e3a14",
+        "c5201cfd4cfab842",
+        "510324bf3695da17"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0114",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2569220,
+      "end_ms": 2607020,
+      "text": "The generative models that we are developing today and of course like the technology has advanced, but we are now tackling, I would say models that are really made for are understanding like a whole world around us. Fronty model visual models, pre -trained on images, videos, audio data at the same time. And we are now like entering a new paradigm, which is combining that with something that's called action prediction, such that you can actually use the same model to make images. to make videos, to make audio, and to predict actions, which means you can ultimately deploy it on a robot and the real world.",
+      "word_count": 108,
+      "utterance_ids": [
+        "f311758198e9b6ea",
+        "d74e0f0476491def",
+        "80ea64ae63828d17"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0115",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2607640,
+      "end_ms": 2629580,
+      "text": "Wow, so from the image to the video, the audio, and then eventually the real world with robotics and a real world model, because if you can make the image... You and you can train the model that means by default you understand the world in order to make a video of the world You have to understand the world.",
+      "word_count": 60,
+      "utterance_ids": [
+        "d10172837bfce3f4",
+        "ea7a82d078d577f7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0116",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2630200,
+      "end_ms": 2685720,
+      "text": "Yeah, and the object. I think that's yeah. I think that's like a really good like way to think about it Yeah, it's like it's like an intuitive way to. Interact with the world, right? Like I would say there's like these complementary forms of intelligence ultimately there's like intuitive intelligence and then there's like a deep reasoning layer. Now ultimately you need for like a kind of like complete form you need both and you need them to interact and I think like we've been approaching it more from like the intuitive side. Images is like a very natural way to approach this whole field because it's not as computationally intensive let's say video, right? But now yeah, I think like we're combining it it's converging into like a multi -modal model and yeah, we see like exactly like pre -training on videos because like implicit understanding of the physics of interactions with the real world, and then you can get stuff like action prediction like robotics out of the same model.",
+      "word_count": 173,
+      "utterance_ids": [
+        "25dba4f560d20341",
+        "91ef2f2324034851",
+        "1b313ca88c2de8d7",
+        "d74f76508150d36f",
+        "e7ddfc678ae07e91",
+        "53b93b05eda7a180",
+        "9d95c9698e8b8cfe",
+        "6e053284d4796fe3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0117",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2686860,
+      "end_ms": 2703040,
+      "text": "And with these models and the training, they're kind of been a limitation in creating videos and creating images where the criticism of... Of a is a bit of a slot machine.",
+      "word_count": 32,
+      "utterance_ids": [
+        "98d15b2868401136",
+        "8a8c8d3dac0c0456"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0118",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2703140,
+      "end_ms": 2709500,
+      "text": "I give a prompt. It gives me something back. But how did it come up with that? The training data.",
+      "word_count": 20,
+      "utterance_ids": [
+        "219215f251740010",
+        "e2d877e7e8c76e0b",
+        "bbfe9a704b21e77e",
+        "95300f5f0adbcdfa"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0119",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2710780,
+      "end_ms": 2712920,
+      "text": "But, you know, maybe I want a different style.",
+      "word_count": 9,
+      "utterance_ids": [
+        "f044d6d4f978d5f6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0120",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2713580,
+      "end_ms": 2719980,
+      "text": "Maybe I want a different color. Maybe I want a different, you know, a step.",
+      "word_count": 15,
+      "utterance_ids": [
+        "5ec3667faa49fbdd",
+        "cac9f499b8869f92"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0121",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2720000,
+      "end_ms": 2731860,
+      "text": "It has that, how does that problem get solved and do you actually understand what's happening when the image is being made under the hood?",
+      "word_count": 25,
+      "utterance_ids": [
+        "79b629b3af0d1b3e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0122",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2732680,
+      "end_ms": 2789480,
+      "text": "Yeah, I think like ultimately it's about exposing as many like manipulation layers. is possible to like I don't know like a user or developer that builds on top of this model, right? And I think like we've seen that in the past with like in the past image models say basically started from simple text to image systems, then they've expanded into text plus image to image systems for images. Could suddenly take an image, like a real image or a generated image, and iterate on that. Based on a text from like, edited, modify it, right? And then this expanded into taking multiple images, and a text from combining them in a semantic way and producing new content, and the same. principle now applies to video and I think now it becomes actually even more interesting when like all of these like modalities I actually combined inputs and outputs of the same model.",
+      "word_count": 155,
+      "utterance_ids": [
+        "0878a4e2c5ec9734",
+        "310b582bed1b47d6",
+        "64792574c3b5df77",
+        "e1c3e3b258ae6d45",
+        "e084eb741cbebef8"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0123",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2789820,
+      "end_ms": 2819980,
+      "text": "So let's talk about video There's an announcement that you're working with the greatest director of all time or living director Martin Scorsese We'll talk about that in a second. Yeah, so just But in a movie, this promise of being able to make a movie in which the camera angle the sound could be something that a Martin Scorsese would be proud to release to him.",
+      "word_count": 67,
+      "utterance_ids": [
+        "21cc99a2b373155a",
+        "edff90d3a3315f0d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0124",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2820000,
+      "end_ms": 2824340,
+      "text": "Fans. How close are we? And maybe tell us a little bit about this partnership.",
+      "word_count": 15,
+      "utterance_ids": [
+        "b9cb37e8d4085670",
+        "235e0b426d4e8590"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0125",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2825280,
+      "end_ms": 2858400,
+      "text": "The technology being able to make an actual movie like Goodfellas or a scene from Goodfellas versus where it is today, where you can make interesting 5 or 10 second clips and then maybe. How people struggle making ten of them and then they use some post -editing software to put them together but you immediately understand this is not that it's not a movie it's AI Slop it's Kluji it's doesn't pass the uncanny valley.",
+      "word_count": 76,
+      "utterance_ids": [
+        "6ea2d680e684cca4",
+        "65093d1c5c822ecd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0126",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2858940,
+      "end_ms": 2899460,
+      "text": "Well I think It's a bunch, and that's at least like a view that we have, is that these AI models, they are a medium, right? We don't want to set like any way of how they are supposed to be used. We don't want to tell anyone, especially not someone like Martin's, because he's the only, how is he supposed to use his model? Like he is one of the greatest filmmakers ever, it wasn't saying... sitting in the same room with the multiple times and actually seeing like exploring our models like as like one of the like call researchers behind it was like just and then saying feeling right and at the same time I'm also like a big fan. So you sat in a room in Marty's courtesy and showed him your tools. Exactly. Yeah. And what was his reaction?",
+      "word_count": 144,
+      "utterance_ids": [
+        "238f5107519e7eaf",
+        "ff4637ca118de229",
+        "e0b2eb794a1f4ccc",
+        "39fbfd488e91c043",
+        "b44fcc469b918d6e",
+        "bdd78c9e99fd595a",
+        "8a60fbbeb6ed95aa"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0127",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2899820,
+      "end_ms": 2905840,
+      "text": "What was - What did he key off of? What was the thing that he found most inspiring or interesting?",
+      "word_count": 20,
+      "utterance_ids": [
+        "77e49b37c0253e40",
+        "ee0f933eb835e275"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0128",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2906940,
+      "end_ms": 2959680,
+      "text": "I think it was really this idea of like, yes, clearly a vision in his head of like a scene or a scenery where like maybe a new movie. Will be shot and he's trying to explore that and kind of like we basically looked at the scenery or like a village and Eastern Europe somewhere and he was describing it we saw some outputs we iterated on the outputs and ultimately I think and that's what he said and yeah and just like getting like the mental picture of something out of your head and communicating it in a visual way by making like these images or the series of images is something that just makes it easier to communicate and convey like an idea of like what is actually in your head and I think that's like one of the like very interesting and powerful ways to use this technology.",
+      "word_count": 152,
+      "utterance_ids": [
+        "1d4e9e7540cc64d6",
+        "f1e4d4285c01dc02"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0129",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2960000,
+      "end_ms": 2967360,
+      "text": "And I think ultimately is to get the inspiration to get the vision out of his head onto an image.",
+      "word_count": 20,
+      "utterance_ids": [
+        "c09f967e8297eb81"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0130",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2967760,
+      "end_ms": 3035200,
+      "text": "Yeah, I mean like language ultimately is like a little bit of like a lossy communication medium, right? It's also interpreted in different ways, but then visual information is so rich, so rich. Like an image or video there's so much signal in it and it's just like another way of communicating and I think that's like one of the beautiful things that the technology ultimately enables and I think like do your question of making like full movies with I don't know like a video generation model for example I'm not sure that is like the ultimate goal. Maybe it's like interesting to block this into like some kind of a genetic work, so I make like a very long video and I think that's really cool to explore, but I think ultimately like the real interesting use cases, they come when you have like a human in the loop who iterates and uses it as a medium and I think this is this is at least like a perspective that did I take. Um, that makes it interesting and that this is most often when the most interesting outputs Um, arrive for I actually being made the brain storming production level is so obviously a huge win That's a good idea. I realize your brain storming basically good.",
+      "word_count": 220,
+      "utterance_ids": [
+        "56a6834d9e62fb87",
+        "21bc56bf1fa32ff5",
+        "c712120b5041b559",
+        "fac1f7382081b87c",
+        "fd37c1b5cad20542",
+        "789b104661077b8d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0131",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3035360,
+      "end_ms": 3059580,
+      "text": "Yeah, and yeah, I like that paralyze your brain storming and they have an analogy for the they do storyboards and some of the great directors Ridley Scott of Aliens and Gladiator was known for making his own. I also believe Spielberg was also like to sketch Raiders on the Lost Ark and some of these George Lucas was known for collaborating with many amazing artists even making miniatures.",
+      "word_count": 69,
+      "utterance_ids": [
+        "b7dc9af98e57234f",
+        "5905a89eee10b5a8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0132",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3060000,
+      "end_ms": 3067920,
+      "text": "Making storyboards for the Star Wars franchise. He had those people on full -time helping him with that. So that's the obvious place to start.",
+      "word_count": 25,
+      "utterance_ids": [
+        "d0717bb8ccd912d5",
+        "51ec0b1339373352",
+        "bb9ec43cede3eddf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0133",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3068400,
+      "end_ms": 3075100,
+      "text": "But if we look at startups, startups always want to try to figure out how to do something cheaply.",
+      "word_count": 19,
+      "utterance_ids": [
+        "d38a32dccf0032b8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0134",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3075620,
+      "end_ms": 3140500,
+      "text": "And people used to make a launch video for their startup for, you know, $100 ,000 to $150 ,000 so they take their $10 ,000 venture raise and spend $250 ,000 on a watch video. I've seen with a lot of the startups I'm investing in now. They'll just spend a week or two working with a director to make a watch video. You've probably seen this trend. Yeah, and I'm sure people use fl - and some of your models for this? Have you seen this? Yeah, of course so. Yeah, and what's your take on that? Because that feels like the early stage of storytelling. You're trying to communicate a product or service in a fun, engaging, crunchy, 30 second, 90 second way, yeah. I mean, like, again, like. I think we support this exploration based on these tools, right? And I think ultimately it's great to see like all different kind of like, I don't know, like launch videos, products being built on top of like the same kind of like base model or the same technology and I think that's what's making it so interesting and also so powerful.",
+      "word_count": 193,
+      "utterance_ids": [
+        "8634c626f237f888",
+        "3fdbe2a6c436eb6a",
+        "e30f9bf0feccc90e",
+        "e256a1a04bea8a2a",
+        "acc4aefb9ccf441b",
+        "677c3026500f122b",
+        "39d56ed2a62bcf81",
+        "7423803f2d1a4725",
+        "7a553bf4dd1fa869",
+        "6da6f551ca4b67e4",
+        "da40281d76885132",
+        "a6a89d1f1a51d724",
+        "f153bf8fdc60ed0b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0135",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3141400,
+      "end_ms": 3150400,
+      "text": "Yeah, and what else are people using the technology for I understand there's a Bitcoin movie coming out instead of using a green screen in this Bitcoin movie.",
+      "word_count": 28,
+      "utterance_ids": [
+        "74faf7ba4fa3c275"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0136",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3151060,
+      "end_ms": 3157840,
+      "text": "I was talking to Gal Gadot, you know, the woman who play the actress who played Wonder Woman. Yeah, of course.",
+      "word_count": 21,
+      "utterance_ids": [
+        "c0915019e77ecdec",
+        "e299e31e24cdb1cd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0137",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3158160,
+      "end_ms": 3198640,
+      "text": "She I was talking during an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking to her in an event and she was talking she was telling me, it was the breakthrough prize, Yuri Milner's event, and she was telling me she just did a Bitcoin moving, and they did it on a sound stage without green screens. But all the actors just worked in like a sound stage, and then all of the scenery behind them was being gotten by generative AI. A real movie that's a $30 million budget movie. She said it would have cost 150 million if they had to build sets and the film would have never been granite. Are you starting to see people use that in production, not just in the back end and the ideation phase, but actually in production yet with your tools?",
+      "word_count": 345,
+      "utterance_ids": [
+        "918a9bebcf27dd37",
+        "215b0f533959f8e4",
+        "1a5dd8ad581cf1d5",
+        "c57537ed8bf7416d",
+        "16287067324942a6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0138",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3199300,
+      "end_ms": 3309960,
+      "text": "Yeah, we see. some use cases like that in production. I think like high -end film production is kind of like the one of the like most demanding use cases and I think I'm glad that it's being explored but I also really want to like it's I think it's important to see that this technology is like on a trajectory and it's improving it's improving rapidly. I don't know if I look back at like Where we started like a few years ago when I was doing my PhD in this feels like the only thing that you could do was like Images of 64 by 64 pixels How you can do like multi Minutes videos right like a high resolution, but it's like it's not gonna stop there. It's gonna. It's continued to improve and I think like then it's Going to unlock like even more of these like high end use cases. But I think that's the main thing. How to predict? I think ultimately a couple of years. Ultimately, I think you still want to have the tool that enables like this human in the loop kind of course. A production works all right. But I think When I look at multimodal channel of models as a whole, I think what really excites me is you can use the same kind of AI model to make a movie and deploy that as a brain on a robot. And I think this is like, this is so interesting. And I don't know, like there's like some thoughts around trying that in the digital world, right? This which would be, for example, computer use, it remains to be seen if that is actually something that works or not. But I think like the technology is so powerful and so versatile and it's just moving. into that, you know, all the talk on like world models, world action models, all of that, it's basically all the same. And I think that's what's making it so interesting and what I find like most upsetting.",
+      "word_count": 344,
+      "utterance_ids": [
+        "6401c178985bcef3",
+        "56cad988523c59d6",
+        "ca28d2e2045b2c63",
+        "175f2730ecdc260a",
+        "9d65bae1fded9be1",
+        "c1ec347fc7865f32",
+        "aab0189b64126de5",
+        "b2ed1962f2c4641a",
+        "0d06b83d78eb4607",
+        "b83334a1d2943806",
+        "306551562c944eee",
+        "90c40e09d2b58354",
+        "458f1baed7328fd9",
+        "693449600f18499a",
+        "853425a4adff9937",
+        "89188535aaa20430"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0139",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3310860,
+      "end_ms": 3338720,
+      "text": "So do you believe that the technology will be used to analyze or primarily to analyze real world? Like, here's a video of some... you know, making a sandwich now we have the robot study it and make the sandwich or do you think there'll be a lot of synthetic data made that then the robots will just study the synthetic or they're going to just in some way innately know based on all this massive amounts of training data.",
+      "word_count": 80,
+      "utterance_ids": [
+        "78c0ad12a17de5de",
+        "ec22f271da1dc29b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0140",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3340000,
+      "end_ms": 3386280,
+      "text": "Think it's a combination of prediction, right? And prediction is a way of, you can think about it as simulation, as generation. It's predicting actions, which is you have to understand the input, the visual inputs in order to actually predict a reasonable next action. And it's, about perception that you can only do that if you understand, if you perceive the content, you can only, I don't know, like transform it in the new piece of content or predict an action or describe what you actually see in that, and the combination of all of that is, I think,. I think, yeah, is I think what's right. I think it is not a single one of them. It's a combination of these thoughts. And what's the best way to get that training data?",
+      "word_count": 134,
+      "utterance_ids": [
+        "630dd9fd996399e5",
+        "f762820a35e8a0e3",
+        "f1d241fa2141618d",
+        "d5e16556117f31d8",
+        "5a3032afddb7c523",
+        "c47b74840fe74f92",
+        "0a55202e462bdff6",
+        "1915180524a2312b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0141",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3386680,
+      "end_ms": 3419980,
+      "text": "Do you need to have people put on glasses, get a first person perspective, have them put on gloves, so you have that fidelity of understanding, hey, this glass is moving, I'm pouring this glass, I'm putting ice cream. Into it, you know, and here's how that works and the splashing and the condensation water, so I can pick it up and not drop it because it's wet on the outside, or is it going to be just hey, take the corpus of YouTube videos and the robots know exactly what to do because they'll find a thousand videos of people pouring drinks.",
+      "word_count": 103,
+      "utterance_ids": [
+        "b2ee4f407a4ae0c9",
+        "23e26f260cb33c08"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0142",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3421459,
+      "end_ms": 3489180,
+      "text": "I mean ultimately I think you would want to go to a place where you could like prompt a roll -words in context right as you can do with like a language model basically just tell that they go and I don't know pick up this glass with the I don't know or in shoot or whatever else yeah exactly we're not there yet but I think this is like one of the goals. And I think like how these models are deployed currently is there's like a lot of like different hardware, different robots that are running in factories that all have like some different kind of action representation that you need to kind of tune the models towards right so in practice what you do is you have all this visual understanding in the models and then you need only a very little bit of like a few hours of fine tuning data to adjust the model on that specific task. And I think the goal would be to kind of move away from that towards like as much in context as possible. This is a little bit of a research problem. I think that open source has kind of having a moment right now. We've been discussing it on the podcast a whole bunch recently.",
+      "word_count": 218,
+      "utterance_ids": [
+        "f1a35cb739b1946d",
+        "d832fd5851a380f5",
+        "97a5609d41c444bf",
+        "01427db8dd1a2b87",
+        "75a5b3216bf606b6",
+        "07403a9cf38c8099"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0143",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3491020,
+      "end_ms": 3496219,
+      "text": "And people are also talking about sovereignty. You have companies that own incredible IP libraries.",
+      "word_count": 15,
+      "utterance_ids": [
+        "c9283f1f9f167199",
+        "5edcb2d162b0753e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0144",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3496460,
+      "end_ms": 3498140,
+      "text": "I mentioned Star Wars before.",
+      "word_count": 5,
+      "utterance_ids": [
+        "83ae57193d524836"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0145",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3498260,
+      "end_ms": 3531140,
+      "text": "She's the owns an incredible library. what should your advice what would your advice be to a company like Disney should they take your open source software train their own models or work with you to train their own models to control it and then hey this is RIP they've already made a point of working with chat chbt and saying hey you can and cannot use certain characters In fact, open air had a relationship with them that's for Sora that's no longer happening, but they officially licensed on the output some characters. So how do you think about those major IP holders?",
+      "word_count": 104,
+      "utterance_ids": [
+        "8d4adda1a1f68d31",
+        "7de8fb035303fab9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0146",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3531320,
+      "end_ms": 3534120,
+      "text": "What's your advice to them? Are you in discussions with them?",
+      "word_count": 11,
+      "utterance_ids": [
+        "9250662069913101",
+        "f587fd7555a6f471"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0147",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3534180,
+      "end_ms": 3539520,
+      "text": "We know about the markets were sazy or tour deal, but how do you think about content libraries?",
+      "word_count": 18,
+      "utterance_ids": [
+        "18e482e6378a2030"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0148",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3539520,
+      "end_ms": 3589440,
+      "text": "I think... I think it is, um, look, I think like the most interesting use cases of this, like if you think about like content creation, um, is in generating something, making something that hasn't been there before, right? Think that that's a fundamental, like, interesting aspect of the technology. And then I think like, yeah, when it comes to IP, what we implement, for example, on like our public facing tools is you cannot generate certain IP with these models, right? And I think that's something that is a sensible approach. And then yes, we do work with certain IP all these to develop models together with them. Some of them based on our open source model, some of them based on our mobile. or provide every models, but I think that is like a very like attractiveness. What do you think that will look like for consumers in another couple of years?",
+      "word_count": 154,
+      "utterance_ids": [
+        "4d135d1d722d4324",
+        "c21fc11f8bab7f0f",
+        "53ae8346d9a0f51a",
+        "d07f1ba48218cae0",
+        "88b5850f73ba3aee",
+        "ac155e0367c6d4d3",
+        "bb66132bb6a8a664",
+        "e6d85b57ce91c047"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0149",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3589700,
+      "end_ms": 3593720,
+      "text": "What would potentially happen when you open up Disney Plus?",
+      "word_count": 10,
+      "utterance_ids": [
+        "26fd83d5ad643ab2"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0150",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3594060,
+      "end_ms": 3623140,
+      "text": "I mean, that's a good question. I'm not in Disney, right? So it's up to them to decide that, but I think we want to enable them to build all kinds. of stuff that they that they that they envision. And I think we can support them, we can support like other companies in that space too. I don't know integrate the technology in a best possible way. I think like one of the very interesting angles of it is that it is like it's becoming much faster, it's becoming more interactive. I can envision like a whole bunch of like very interesting interactive content creation tools. that you could host on Disney to a plazo elsewhere.",
+      "word_count": 117,
+      "utterance_ids": [
+        "1f4eb5c0039e71ae",
+        "08de547a74b3d1e2",
+        "68a1f2a5e0c1e75b",
+        "8154af18709ad093",
+        "dcf48bfa844c5dd5",
+        "69a992bb7449c547",
+        "072482715abe7025"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0151",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3623800,
+      "end_ms": 3633080,
+      "text": "I think the most interesting thing I've seen in this regard is fan films, right? So there's a category before a generative AI fan fiction.",
+      "word_count": 25,
+      "utterance_ids": [
+        "25d429f6fdd91a49",
+        "83ba22094ba11eea"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0152",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3633280,
+      "end_ms": 3635520,
+      "text": "It would write their own Star Wars story.",
+      "word_count": 8,
+      "utterance_ids": [
+        "c46dece31059e7b5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0153",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3636700,
+      "end_ms": 3672700,
+      "text": "Then there came fan films where people... would dress up as Jedi Knights and record their own films. And George Lucas said, as long as you're not doing it, commercially you're not styling it, I give you permission to go make Jedi movies. And they even released how to, how to choose on how to make a lightsaber or sound files of like how to make the lightsaber sound. Now, people are taking the stories that haven't been told from the Star Wars universe and They're recreating them using AI and for the fans.",
+      "word_count": 94,
+      "utterance_ids": [
+        "a731d54b3f576549",
+        "0e2bfe38a0876ead",
+        "c9129ac024cb5e0c",
+        "6c5766f09e72f075"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0154",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3672840,
+      "end_ms": 3678740,
+      "text": "They're becoming quite popular on YouTube Star Wars stories untold as I think the biggest one.",
+      "word_count": 16,
+      "utterance_ids": [
+        "1f02819a7bf45075"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0155",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3678800,
+      "end_ms": 3699000,
+      "text": "It's getting millions of views video already and I think that's really the future is letting the customer base pay a licensing fee or pay a fee maybe rent software or maybe based on the output and let them be creative with the characters. Let them make their own stories and you could be in a unique position to empower that.",
+      "word_count": 61,
+      "utterance_ids": [
+        "39be396eecff7e3f",
+        "570e144f9ca21617"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0156",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3699000,
+      "end_ms": 3741520,
+      "text": "Oh, 100 % I think like it. If you find like a model that works for like the IP owners, but then also kind of enable like the super creative customization skills, I think that's great, yeah, I mean like for myself like when I read a book or whatever, like watch the movie, I'd like so many like I'd use. How it could be done differently or this could have happened right now? Yeah, this is like this is so nice. you can actually enable people to visualize these ideas. Yeah, it's going to be incredible. Continue to success with it. You have an office in San Francisco, you're hiring people, yeah? We do, yeah, we do. You raised a bunch of money. We raised a bunch of money. We just cross on with people, we are hiring in Germany and in San Francisco. Fantastic. Who are you looking for? What's the right type of - person, the right type of skill.",
+      "word_count": 163,
+      "utterance_ids": [
+        "c5a09d38968e0b26",
+        "77d40f1f7dca3ea4",
+        "39a9c310e15e10e7",
+        "8470208e30aa937f",
+        "64d533913777aa81",
+        "5e803fb90bfbf10f",
+        "7e2191fe7b8d00b3",
+        "47db41e466428a1c",
+        "4f8eac82bc5e68f9",
+        "13c77575f2ddea58",
+        "17a81579ee435f9a",
+        "d832c5366e574568",
+        "a43a2dd334a5d409"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0157",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3743740,
+      "end_ms": 3797740,
+      "text": "On the one hand, we are always looking for researchers who have experienced in large scale model training, experience in diffusion model training, slow matching training. We're looking for engineers who want to be working with the customers to you know, develop these like, customer. the most physically eye solutions or for example with like IPO and I like develop these models jointly with them. We are looking for engineers who have experience in just like large scale compute in -frah managing devs and making sure that the training runs smoothly. We maximize our and if you and all that and we're looking for people who have interest in. You know like getting the technology out there. Yeah, the hands of people the for deployment of this There's just so many great ideas and so many great partners for you.",
+      "word_count": 140,
+      "utterance_ids": [
+        "beb7dc118bbbe3f3",
+        "9d3ea63e25df4b37",
+        "81f5bbe96b91a30c",
+        "ee15cf2254dd2adf",
+        "f1c7865a22dc3921",
+        "bf47fa065e276389"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0158",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3797740,
+      "end_ms": 3810500,
+      "text": "I think you're going to with the open source specific Like we, you know, it seems like the corporates really want to have some additional level of control, but they also need the frontier models or your proprietary ones for some of those refined features.",
+      "word_count": 45,
+      "utterance_ids": [
+        "44fab78510998535"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0159",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3810720,
+      "end_ms": 3815820,
+      "text": "So I think you have a very bright background. I understand exactly. All right. Continue to success. Thank you so much for doing this show. Thank you so much.",
+      "word_count": 29,
+      "utterance_ids": [
+        "dcb35bef65bf67bd",
+        "42b830ceaef1ff5c",
+        "5922d5a00cd20739",
+        "9eae4386d1a28107",
+        "b8971d6becd4b42d",
+        "5d83ec6670675eba"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "6244e2a46bed1e89_t0160",
+      "source_id": "6244e2a46bed1e89",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3831580,
+      "end_ms": 3834300,
+      "text": "I'm doing all of it!",
+      "word_count": 5,
+      "utterance_ids": [
+        "42d19b847eaff35b"
+      ],
+      "is_question_anchored": false,
+      "stripped": "outro"
+    }
+  ]
+}

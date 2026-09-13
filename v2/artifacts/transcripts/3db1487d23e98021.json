@@ -1,0 +1,2176 @@
+{
+  "source_id": "3db1487d23e98021",
+  "title": "Michael Kratsios: Trump's Science Agenda, Anti-Science Claims, Fauci's Damage, DEI & China",
+  "metrics": {
+    "source_id": "3db1487d23e98021",
+    "title": "Michael Kratsios: Trump's Science Agenda, Anti-Science Claims, Fauci's Damage, DEI & China",
+    "utterance_count": 522,
+    "turn_count": 117,
+    "retained_turn_count": 109,
+    "stripped_turn_count": 8,
+    "question_anchored_count": 27,
+    "question_anchored_pct": 23.08
+  },
+  "turns": [
+    {
+      "turn_id": "3db1487d23e98021_t0000",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 0,
+      "end_ms": 10980,
+      "text": "Is this administration anti -science? We want to essentially double the scientific output of the United States. Did we lose it? Or did it lead to moments where you have like Fauci? That's great question.",
+      "word_count": 35,
+      "utterance_ids": [
+        "703f315c40db8c0c",
+        "fa8b0e793e469701",
+        "20b1aa0462bb3d79",
+        "8eeeed2b918fb419",
+        "c57c8e33ee711e10"
+      ],
+      "is_question_anchored": false,
+      "stripped": "cold_open"
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0001",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 11360,
+      "end_ms": 17600,
+      "text": "Are we in this moment this populist moment right now on the West where science and technology is viewed as a tool of the elite?",
+      "word_count": 25,
+      "utterance_ids": [
+        "be96a3667651311f"
+      ],
+      "is_question_anchored": false,
+      "stripped": "cold_open"
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0002",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 18140,
+      "end_ms": 23080,
+      "text": "And therefore it must be broken and destroyed. That's what's most tragic. That is a crazy, fact.",
+      "word_count": 17,
+      "utterance_ids": [
+        "04d291dc0fcae174",
+        "32bd362164ab5405",
+        "439bd0ddc3c5b6f7"
+      ],
+      "is_question_anchored": true,
+      "stripped": "cold_open"
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0003",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 23380,
+      "end_ms": 25960,
+      "text": "As science stagnated in America, what the heck is going on?",
+      "word_count": 11,
+      "utterance_ids": [
+        "b25081b7c0151939"
+      ],
+      "is_question_anchored": false,
+      "stripped": "cold_open"
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0004",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 26020,
+      "end_ms": 28039,
+      "text": "I'm doing all of you.",
+      "word_count": 5,
+      "utterance_ids": [
+        "17177f4e16c851d2"
+      ],
+      "is_question_anchored": true,
+      "stripped": "cold_open"
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0005",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 42039,
+      "end_ms": 44220,
+      "text": "I'm doing all of it.",
+      "word_count": 5,
+      "utterance_ids": [
+        "89ff537e378896cf"
+      ],
+      "is_question_anchored": false,
+      "stripped": "cold_open"
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0006",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 44400,
+      "end_ms": 47800,
+      "text": "Michael Crattfields, welcome to the All -In Interview. Thank you for having me, said beer.",
+      "word_count": 15,
+      "utterance_ids": [
+        "5b94e752b7907d14",
+        "d4e31334bbb76466"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0007",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 48260,
+      "end_ms": 54880,
+      "text": "So you are the director of the Office of Science and Technology Policy here at the White House. Can you just tell me a little bit about what that role is?",
+      "word_count": 31,
+      "utterance_ids": [
+        "a42c177e29e631d1",
+        "984626aefcfb1691"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0008",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 55100,
+      "end_ms": 115080,
+      "text": "What do you do here? Yes, so the Office of Science and Technology Policy was created in... the 60s to coordinate science and tech policy across administration. So very unique to the US is that we don't have an agency that does science and technology. We have lots of agencies that do pieces of a science and technology enterprise. We have a national science foundation that does basic research. We have an Department of Energy that runs our national lab. Department of War has extensive R &D programs like DARPA, for example. So the one office in the White House or in the administration broadly, but it's able to coordinate all those efforts is the office that I run, called OSTP. And we try to do is work with the President to set the National S &T Agenda and then ultimately implement. to implement that across all of our agencies. And you had this role before, is that right? So last administration, I was the Chief Technology Officer of the United States. So if you think about OSTP, it does science and it does tech and then Trump won, I ran the tech portfolio for the president.",
+      "word_count": 197,
+      "utterance_ids": [
+        "d82c0c00c21a9608",
+        "9ac954ab42df10ae",
+        "2d3eeea130a3c294",
+        "74448ceaacaa62e7",
+        "7353e066463d1615",
+        "75c3f84ceefff30d",
+        "884a04eb610b6493",
+        "d98dcf2d852daa8d",
+        "5d6caf62331eddfe",
+        "7e9c2d8f25ed3bf6",
+        "6191683ae8329802",
+        "95e0824bfc914675"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0009",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 115680,
+      "end_ms": 119700,
+      "text": "So let me kick off by asking you, is this administration anti -science?",
+      "word_count": 13,
+      "utterance_ids": [
+        "36f4ad49cb0c6bbd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0010",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 120000,
+      "end_ms": 153620,
+      "text": "It is not anti -science. I think one of the things that I'm most proud of is the release of a new report a couple weeks ago called Science and New Golden Age. I think anyone who reads that report, I think what we'll most likely see is a administration that deeply cares about the American Science and Technology Enterprise. We really want the US to be the home for the next great scientific discoveries. We want to... when power, young scientist, we want to create an ecosystem that allows our greatest scientists to work on the hardest problems everywhere in the US. And to us, we're doing everything we can to align all of our agencies. Like I just mentioned, to be able to help that make reality.",
+      "word_count": 129,
+      "utterance_ids": [
+        "a969858011768d60",
+        "05ef8d116234d41e",
+        "2646103a98efeea3",
+        "12f47097c8e8679f",
+        "42996f95d5b33015",
+        "e63f59c7de10e743",
+        "d64daaf4c6a0e69f"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0011",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 153940,
+      "end_ms": 170880,
+      "text": "But going back, there's a poll I'm going to give you from nature, which is one of the scientific journals. They poll 2 ,000. of their readers, which are all scientists. 86 % supported Kamala Harris in the election, according to the poll, and Donald Trump polled at 6%.",
+      "word_count": 49,
+      "utterance_ids": [
+        "b815e68b45ff3268",
+        "7b8949072784d5fc",
+        "2da0ddc98b27bd27"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0012",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 170880,
+      "end_ms": 172600,
+      "text": "Why is that?",
+      "word_count": 3,
+      "utterance_ids": [
+        "c992981c816ff4c8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0013",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 172600,
+      "end_ms": 179400,
+      "text": "What is going on with the perception of the president and this administration as being anti -science?",
+      "word_count": 17,
+      "utterance_ids": [
+        "0ad05e7f09f9557d"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0014",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 179800,
+      "end_ms": 248780,
+      "text": "To me. I think that scientific community has lost its way over the last few decades. I think America has been the place of some of the most amazing scientific transformations in history, and the government has played an important role in a lot of them. If we look back and think about them in Hatten Project or Apollo, these are sort of seismic events. that only the U .S. government could bring together the ecosystem to achieve. And to be honest, I think over the last, you know, 15 or 20 years, I think science has been deeply and deeply politicized. And we no longer asking sort of a very hard and important questions of, you know, what does a scientific method? How should we approach it? Should we be questioned? You know, some of these conclusions, and rather, you know, I think it's been dominated by kind of this dogman. I think it really crescendoed and peaked in COVID, where suddenly, you know, there was a certain individual that if you didn't agree with what he said, then suddenly you were in Thai science. And to me, I think that is the most anti -science conclusion you could ever make. And I really think we have to return back to the basics and that's what we're trying to do in this administration.",
+      "word_count": 224,
+      "utterance_ids": [
+        "9485a6e314b05824",
+        "c088cf06c33d7169",
+        "6848ce101fa7f7a4",
+        "3636a59355ffbc6a",
+        "2221368edaa2a45e",
+        "af7ef6c1eb13f0c3",
+        "bb9e43c866d14392",
+        "6419bf93242d2bcb",
+        "a3e8ab2800fa83ea",
+        "0946371e791b3502",
+        "c5cdbee317d052f3",
+        "4eab4f2a85390a75"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0015",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 249240,
+      "end_ms": 279980,
+      "text": "Yeah, I mean, at the basis of what you call the scientific method for many people here who might be watching that aren't familiar, it's like you ask questions. The process of science is a process. of asking questions and inquiry and that inquiry leads to experiments which collect data and that data is what informs your view and then you continue to ask questions. The idea that science is authority is almost antithetical to the basis of the scientific method which is constant inquiry.",
+      "word_count": 85,
+      "utterance_ids": [
+        "0a31d3f28dc7ceb8",
+        "3c5a9efec6f4f5aa",
+        "df58ad606f7900c1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0016",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 280000,
+      "end_ms": 345660,
+      "text": "I could not agree more, and I think what we as a government for many, decades have hadn't taken the effort of the time to do is to apply those same principles of the scientific method to the way that we as a government approach science policy and the way that we approach. Research and development. Right now, if you talk to your media and lobbyists for the science community, the only thing that they are fixated on is singularly is the research and development budget. If the number doesn't go up, then they haven't done their job and they haven't called supported science. And to me, that's a question. But the more important question that every scientist should be asking is, the way the US government spends a $200 billion in S &T funding every year? Is it actually driving the best breakthroughs in biggest breakthroughs in American people? Are there other ways that you could be deploying that capital in different to different organizations? The different scientists through different time horizons? there's so many questions we should be asking which we're not, and that is what science knew Golden Age tries to bring to the front.",
+      "word_count": 198,
+      "utterance_ids": [
+        "0d078f5be12c4217",
+        "dd42bcba9c2e15ca",
+        "27bda50caab84333",
+        "0c359bce488cecd7",
+        "e6ee180b2cd3e634",
+        "1783b65abaff2b6b",
+        "31b4b81ea37e0a52",
+        "f8c2eff701dc9f54",
+        "20721d3806fca6ff"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0017",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 346120,
+      "end_ms": 370440,
+      "text": "So I've heard this a lot from my friends who are scientists, who are researchers, who work in both the academic community, private industry, and elsewhere, that there's a perception that this government, this administration, is cutting science funding. And it sounds like, well, what you're saying is that there's an allocation of resources, perhaps away from some things into other things as kind of the way that you're viewing this?",
+      "word_count": 71,
+      "utterance_ids": [
+        "0a2553b769c07062",
+        "ad4645eb78d7ee21"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0018",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 370440,
+      "end_ms": 403940,
+      "text": "Yeah, I think the most important thing that people should initially sort of table set is that there's a distinction between a proposed budget and the dollar. that are appropriated by Congress. So Congress controls a purse string. So other ones, you say how much science funding there will be and they've consistently continued to fund science over the last decade plus. But I think, you know, the more sort of policy question to think about is, and the way I view it is, spending more money on the wrong... types of things is not the right policy action. What's an example of that?",
+      "word_count": 104,
+      "utterance_ids": [
+        "9ef961adb98d1faf",
+        "0e8b42ab409e1793",
+        "7f8b3846019ede12",
+        "3f206d2152635748",
+        "a7616aafabe39a82"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0019",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 404240,
+      "end_ms": 426260,
+      "text": "So to me, I, sorry, because I'll just say, like, in 2025, this administration disrupted froze or terminated $3 billion in unspent funds on active grants. And so you terminated grants that scientists or labs had received or gotten approval for. And so maybe you could just give us an example. What were those three billion and what were some of these other things that administration would say are not really the right place?",
+      "word_count": 74,
+      "utterance_ids": [
+        "f851c87c45d538f8",
+        "1e9012f7986478a8",
+        "b11646f7f8d59872",
+        "82eb9334eb76f423"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0020",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 426260,
+      "end_ms": 495420,
+      "text": "That's a good point. To me, I think the best example is the National Science Foundation. And for some of the lists, the NSF is essentially that the premier funder of extramural basic research in the United States to have about $8 -9 billion a year where most of them... to that money is given to academics at universities who do research on all sorts of basic science domains. Senator Ted Cruz and the committee on in the Senate did an analysis of the grants that were given during the Biden administration and they found that roughly one quarter are 25 % of grants at NSF during the Biden administration that time period went towards DEI -related quote -unquote science. And if you think about that, that's an astronomical amount. That is roughly $2 billion a year times four years. That's eight billion dollars of science funding that went to these DEI -related initiatives. And that isn't science. And that shouldn't be. And that's a pure manifestation. station of the politicization of science, where you had the button administration stand up and say, oh, you know, if you want to win a grant, you have to make sure that you talk about some DEI related factored in application. And that's the only we're going to give you money. And that obviously is not the way we should be doing it. And that's not gold standard science.",
+      "word_count": 236,
+      "utterance_ids": [
+        "aac3cdf95a222be6",
+        "8d896b6c4b0a7491",
+        "c5c2dd6776f15863",
+        "9ab5947e6ceb7634",
+        "c4385c6e2de75f5f",
+        "a38d0edd68358ee4",
+        "1d6c9e4056a1c9d3",
+        "1c05adc5c7e09041",
+        "7bbff9c844c73853",
+        "c80d007f3b67f5dd",
+        "44888c80a9ef4bba",
+        "77244d14a65df888",
+        "5b7c7a39cf40e51e"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0021",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 495780,
+      "end_ms": 529580,
+      "text": "There was also cuts to climate science research. And this is one that's been deeply criticized. in media and by broad kind of scientific community representation, journals, associations, and whatnot. Can you just frame up the administration's view on how settled is anthropogenic climate change, meaning the climate is changing because of human action and releasing carbon into the atmosphere? And the criticality of that is that a climate emergency and what do we know? What do we not know and why are dollars being redirected away from those research efforts?",
+      "word_count": 91,
+      "utterance_ids": [
+        "d99bfad49ca49796",
+        "523a52e44dfe3757",
+        "8dd9a940c69709ca",
+        "f37cec2a8d9542cf",
+        "d9b0a6838b7db0d0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0022",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 529720,
+      "end_ms": 587700,
+      "text": "Secretary Wright has been very vocal on this and kind of serves as the belly button for a lot of these issues of administration and what he has advocated for very publicly and has said many times. Is that, yes, the climate is changing. And like, yes, humans have a burn fossil fuels over the last 100 years, and that is contributed to CO2 in the environment. The thing that is not true and what the data does not support is that it is a climate emergency. And I think one of the best examples of that is what's happened with these... the RCPA .5 they call it. So these are scenarios that, climate scientists, I'm trying to estimate kind of the impact of this quote unquote climate change we'll have on, the world. And this was the most extreme scenario that had been in, numerous or national climate assessments and run by the IPCC as well. And ultimately they determined a few want to go that they could not with any scientific integrity substantiate continuing to have this scenario play out. So we had to pull it down.",
+      "word_count": 189,
+      "utterance_ids": [
+        "35d87e54db56a95a",
+        "bc2ea715e79d0724",
+        "e378af699dfcd80d",
+        "446a85b27b23280a",
+        "d29a276a193e4cab",
+        "2d4cf9bc6ea5b203",
+        "280f9fe5399b9901",
+        "06808090085e4ee6",
+        "0f802d2c7f7e68cc"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0023",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 587960,
+      "end_ms": 599980,
+      "text": "So to me, I think this is what a lot of media and a lot of coverage and a lot of re -reporting was based on, a lot of funding was based on this simulation of the future that did not come to bear, that did not come to bear.",
+      "word_count": 50,
+      "utterance_ids": [
+        "a88ca7ff2b07f21e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0024",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 600000,
+      "end_ms": 629060,
+      "text": "Happen precisely and I think it's this crazy narrative that kind of spun around where you know they threw in this extreme scenario which most people believe would never happen and now this year proven that it will never happen because they even removed it from all the predictions yet every media report of every climate assessment over the last 20 years has always focused on the example. That's the one that the media fixates on and that's what sort of like captivates the attention of all these folks. And I think that's kind of a real -disservice to science.",
+      "word_count": 100,
+      "utterance_ids": [
+        "4cff8b8c4ce66893",
+        "75d45051a0148ca5",
+        "037b6d95d29274d4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0025",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 629340,
+      "end_ms": 643940,
+      "text": "So over the last decade to two decades, one 15 years or so, is that why a lot of funding has rolled into climate research, climate science, and culminating. Reducing budgets, it's kind of a roll -back.",
+      "word_count": 37,
+      "utterance_ids": [
+        "dbc751623c68558f",
+        "d7de212f48aade71"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0026",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 644059,
+      "end_ms": 677640,
+      "text": "Is that the way to think about it? I think the way we like to view it is that, you know, we want to be investing in the technologies in the science, which are ultimately going to create a abundant energy for Americans. 70, you advocate a lot for me. You talk about we have to win and we have to win this fusion race. We set it. target for 2035, for example, for that. We have been one of the most forwardly administrations in the history of this country on nuclear energy. And we're trying to get that up to speed, and running, and supplying energy for Americans as soon as humanly possible. So to us, I think technology is what's going to have the biggest impact for every day Americans.",
+      "word_count": 132,
+      "utterance_ids": [
+        "5de5a2901636c4be",
+        "b33f87592cdd4bc4",
+        "287848493b484749",
+        "8e1f91fc7a6ffd5a",
+        "e968cf962d59a33e",
+        "4ade10efa01c27bf",
+        "283e50fe3172180e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0027",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 678040,
+      "end_ms": 704120,
+      "text": "Yeah, I mean, I would make two arguments. One is China's output of carbon into the atmosphere, it clipses the rest of the world. And so plus or minus 50 % in the US doesn't really move the needle. So then there's arguably a question like is it worth the economic cost, particularly because it mostly impacts the poorer communities. Then the wealthy community is going to forward. alternatives but poorer communities that lose access to certain sources of energy.",
+      "word_count": 80,
+      "utterance_ids": [
+        "5d55fac387804af3",
+        "6ba2f8f46fa7d7bb",
+        "3e030f55c0b27cc1",
+        "5830f52cf58088c7",
+        "d156b361c9eb70cf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0028",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 704940,
+      "end_ms": 730360,
+      "text": "Absolutely the most. Absolutely. I think the numbers that I've seen, you know, roughly, you know, 2 billion people around the world use sort of this very dirty fuel for cooking in their homes. Things like wood or dung or charcoal. And this leads and then the UN has poured, leads to roughly 3 million. and deaths every year because of this. And you know, these are the people where sort of clean fossil fuel could make a huge difference in their quality of life and overall.",
+      "word_count": 87,
+      "utterance_ids": [
+        "372b6b35c428e550",
+        "9bc9c4e42c86d1d4",
+        "9f7d820e033ea30d",
+        "2e81f9d8f519bcd6",
+        "cea353effb27a86b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0029",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 730640,
+      "end_ms": 778260,
+      "text": "And so if we can accelerate through to alternative energy sources, which arguably you don't necessarily need the government to make happen. In some cases, you need to have technical... breakthroughs like fusion, but solar battery backup. I mean, there's such a strong economic incentive. It's cheaper, it's easier, it's deployable, that the market is kind of getting all of that problem on itself. That's what matters in solving. You can believe that carbon going into the atmosphere can cause climate change. Believe that the world is getting warmer. But you can also argue that the best way to solve that problem isn't necessarily to go backwards by 30 years or 40 years, but to go forward with new technology that replaces carbon rather than forcing and making things more expensive, which makes it very hard for people to adapt.",
+      "word_count": 140,
+      "utterance_ids": [
+        "5b5d98cc747c6476",
+        "ea892e1d8c08e003",
+        "9dfe02c815ef548e",
+        "e6a20baee113bc62",
+        "5c256158c7ef56ab",
+        "182999ac80755370",
+        "ed9056d7ad9f18fc",
+        "b338cab5d878e81f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0030",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 778960,
+      "end_ms": 795860,
+      "text": "Absolutely, and I actually want back to point about China. I mean that any of these sort of extreme policy reactions to this sort of perceived problem would inevitably hurt Americans the most and not actually solve the problem whether you believe it's happening or not. So let's talk about NIH.",
+      "word_count": 51,
+      "utterance_ids": [
+        "75553512bc2dcfeb",
+        "cb92928c19187445",
+        "db939e1e828fc2af"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0031",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 796400,
+      "end_ms": 806340,
+      "text": "I want to talk a little bit about the stagnation of science. Progress in the United States. It's easy to look around and say we've got AI.",
+      "word_count": 27,
+      "utterance_ids": [
+        "dbe86cb8861bc9af",
+        "bdf7ee7b096b8520",
+        "43378fc3094b44e8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0032",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 807260,
+      "end_ms": 808380,
+      "text": "We've got gene editing.",
+      "word_count": 4,
+      "utterance_ids": [
+        "9b7075fdb9b2351b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0033",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 808540,
+      "end_ms": 815260,
+      "text": "We've got an understanding of the genome. We've got flying cars. I mean all of the stuff came from the United States.",
+      "word_count": 22,
+      "utterance_ids": [
+        "de1113b2cec4128a",
+        "341215bc6fdb0fa6",
+        "708b1473d968ab32"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0034",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 816020,
+      "end_ms": 817880,
+      "text": "So I think it would be easy to argue.",
+      "word_count": 9,
+      "utterance_ids": [
+        "3099cb359234df69"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0035",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 818560,
+      "end_ms": 873180,
+      "text": "We are making great - progress as a nation. We have made great progress as a nation. But if you look at NIH funding 1998, 14 billion, 2003, 27 billion, 2024, 47 billion. So the budget has more than triple since 1998, but there has not been a - proportional rise in breakthrough treatments, coming out of that funding, arguably, the people call it heirlooms laws, like Moore's Law, in reverse. It's fallen roughly 84, since 1950, in terms of outcomes per dollar spent. And it halves every nine years. So every nine years, we get, half as efficient as we were at getting a return on the investment we're making. And I think this comes from your report or it's published. So has science stagnated in the American? What the heck is going on?",
+      "word_count": 135,
+      "utterance_ids": [
+        "d9d5cd74c0d79309",
+        "471f406324fb523c",
+        "f35e0d583712aa70",
+        "d8df9b23e883be3b",
+        "89d7ed7bef1ea23d",
+        "fc19f5c900e3dd50",
+        "ec19f2413a9049b1",
+        "66c966b63acc6497",
+        "a45d5938c042655c",
+        "bd065e0330746b4a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0036",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 873680,
+      "end_ms": 956100,
+      "text": "I think generally our argument is it has. And I think that's one example. I think the one that a lot of Americans... see and feel a note is quite obviously that I always like to talk about is the speed of flight. You know, in the 1990s you could you could find a concord and now you can't. We're flying slower than we were before, you know, 10, 20 years ago. And I think, and I think we can do much better. And I think the question we always ask is like, why? Why is this? why is this happening, and a context of government funding, I think, you know, you could say one thing will look, okay, all the easy problems have already kind of been solved, sort of loading through has been picked, so it's harder to solve the next thing, sure, but I think but I think broadly the issue is we have not been innovative in any way on the way that we actually conduct the science. The, you know, whether it's at NIH or at NSF or at any of their other science agencies, the answer has always been, let's just keep doing the same thing, but add more money and hope that we get more outcomes proportionally. Rather than asking the harder questions about, are there other ways we could be conducting the science? Are there other types of science? is that could be getting the money, could be getting the money, other institutions that could be getting the funding. And I think those are some of the questions that we start to bring up in a new golden age about how we should really be looking to mirror and ask ourselves, are we spending money in the smartest and best ways? Why won't we do that along the way?",
+      "word_count": 307,
+      "utterance_ids": [
+        "64b57c443e096150",
+        "f6b579bb582322e4",
+        "b184f0e974c5a0c9",
+        "c810f2d54c3156a9",
+        "731ca8a12fb69390",
+        "df050b4a077306d1",
+        "4f4905a99c66d139",
+        "bbfca206c99983fe",
+        "b3c690ad13998848",
+        "9ac13fff473d6470",
+        "cd43738a8fca61ba",
+        "52c0d730b33be8b3",
+        "5c469bdf3c321a49"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0037",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 956840,
+      "end_ms": 961780,
+      "text": "And as you pour more money in, where does it go that makes the over... all outcome less efficient.",
+      "word_count": 19,
+      "utterance_ids": [
+        "dd2c33fea248ed5a"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0038",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 962180,
+      "end_ms": 1012680,
+      "text": "Whereas there's no incentive to do that, I think the incentive on the hill oftentimes is to just keep increasing budgets that ultimately flow down to particular districts or particular states. On the government side, there's no incentive to sort of check your homework and reveal that what you're doing is not actually working very well. It's always easy to take a headline. that you're increasing funding in XYZ domain. And the work is actually like quite hard. It's not easy to go through $47 billion worth of funding and figure out what's working and what isn't. And I think that's what we try to introduce. It's a concept of metascience that's introduced in the report where we're setting up metascience units both. that NSF and at NIH, where we're actually going to start running experiments. Maybe there are different ways that we should be doing funding, and then we can analyze those and then course correct and direct money towards places where innovation is actually occurring.",
+      "word_count": 167,
+      "utterance_ids": [
+        "93abafd3520ca266",
+        "9ad165391f47204f",
+        "db66d88ab4f14479",
+        "4385999d487612c2",
+        "f495fc9f5ea0e834",
+        "02f40c7ef30a229f",
+        "3cab8bed419e7782",
+        "3ab4873c343deb60"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0039",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1012740,
+      "end_ms": 1018740,
+      "text": "So you're going to start doing your own experiments on how you're allocating money to see what has the highest return.",
+      "word_count": 21,
+      "utterance_ids": [
+        "8ea053aa271e8ac8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0040",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1018960,
+      "end_ms": 1109400,
+      "text": "Exactly. Well, I think you start by figuring out what experience you want to run. So I think you take for example in the National Science Foundation, almost all the grants are done in a very standard typical format. There's a set of peer reviewers that do this merit -based review. It's maybe three or four people from a particular field. They take all the applications, they review them, and they select the ones as a... they believe are most meritorious. You know, one could argue that, you know, it is mayor -based, of course, but it also, in many times, incentivizes scientists to not necessarily propose crazy, bold, innovative, out -of -box ideas. They tend to want to propose ones that are in the strike zone that the board, for example, will also. So one thing that we're going to be testing at National Science Foundation is a concept called Golden Tickets, where each of the evaluators are going to be given one or two or three golden tickets. And this was initially actually tested in Denmark and some other places. And the theory is that, you know, the reviewer will then be able to... unilaterally, without the rest of the committee agreeing, can make a selection of a particular grant. So you incentivize folks to have more interesting grants. What I think what's also kind of cool about this concept is that you actually incentivizing better people to participate in the boards, because they have a golden... take it now and they're more likely to want to participate. So we want to run that experiment and see what kind of applications actually get approved and what kind of science gets done.",
+      "word_count": 283,
+      "utterance_ids": [
+        "d66b073c9e474180",
+        "7d3ef58467c37039",
+        "de79b31836e2f2b3",
+        "fdf861098a98d72a",
+        "812a0136411a092b",
+        "d32da54ab00e4ef4",
+        "e5c2effdc93420f3",
+        "9e43c6443c975fc6",
+        "4d3e4c6f83bca7c9",
+        "558b6423d52bcbbf",
+        "e788f9e6273361ba",
+        "6589a55c71c240fd",
+        "78199d6997706a16"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0041",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1110260,
+      "end_ms": 1161400,
+      "text": "So it creates an incentive for scientists to propose wild and crazy ideas because the way scientists typically get a research grant, which is what they need to do. because that's their living is literally a grant for your salary, pay for the salary that people in your lab, is you go and submit an application for a grant that looks like the kind of thing that you think will get approved. And typically that's low risk, because if something is likely to happen,. The review board would say, okay. great, we're giving that grant because we feel confident that money is well spent, but the reality is, in venture capital, which you and I know well, you're going to have one out of 10 things work and it's a power law, that things work the hundred X, and you want to have nine out of 10 failures, because that means you're taking a lot of risk, that's really how you push the envelope and discover new things and make big breakthroughs. Got to take risk, which means failure.",
+      "word_count": 179,
+      "utterance_ids": [
+        "b1d5f4d1ce62d7ae",
+        "7ae191d270397fff",
+        "4ce047ecd2d22168",
+        "0fda371f4a36b93e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0042",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1161940,
+      "end_ms": 1216079,
+      "text": "Yeah, exactly. That's exactly right. And I think another example of this is, typically, most NSF grants are roughly 18 months. And that's just become kind of a natural equilibrium that NSF has come to, just given where the academic calendars are. But all research ideas don't require 18 months. Some of them require 30 minutes. three months or six months. Some of them require five years and I think another thing we're going to be testing we proposed in a new Golden Age was this idea of different durations of grants and allowing there to be opportunities for people to try fast track grants where they have an idea that can be done in six months and if it works then they can apply for a longer or you may have longer data ideas. That you would need three, four, even five years to work on that we would be evaluating. So at its core, at almost every term Golden Age tries to do is meet scientists where they are. There's some ideas that require 18 months. There are other ones that require six months, and we want to make sure that they're opportunities for them to at least propose their ideas for evaluation.",
+      "word_count": 205,
+      "utterance_ids": [
+        "03f38a009c8a6cc6",
+        "1e55186a81589f99",
+        "75c24612aa333b2e",
+        "57e3dda71598ee49",
+        "831f74418c5298d5",
+        "a2142eecb6ce00f1",
+        "4351c505f2456245",
+        "86ec52772e183ad6",
+        "f2005981b67edd64",
+        "bd299c848cf6d52b",
+        "80a8a6e8f191f334"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0043",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1216340,
+      "end_ms": 1284000,
+      "text": "Well, besides funding ideas, an alternative model. to fund individuals who this has been strongly advocated for as you and I both know like in the venture capital world you find great entrepreneurs and they may have a crappy idea but because they are who they are they eventually make something amazing work I was just reading again about steward photography who started Slack, and he was working on a totally different business. He had 3 million left, he told the investor, it should I give the money back. But by the way, we built a communication tool that we use on our engineering team, and they're like, no, go ahead, pivot, make that the business, and then it turned into Slack, and they sold it for $30 billion. And so the idea in science may be the same, which is, you... great people. Yes. You give them significant funding. You let them decide how to spend the money rather than have some overlord board that scrutinizes every dollar they're spending and every action they're taking gets out of their way and says, I trust that you're going to get somewhere. There's a whole bunch of money. A lot more than you're asking for. Here's a whole... a lot of time see you in 10 years, you'll figure something amazing out.",
+      "word_count": 221,
+      "utterance_ids": [
+        "84e9864f233a5599",
+        "61b0b919c762f675",
+        "1405817ac5f8997d",
+        "c5a120e9d78a4fdc",
+        "4ce62a3ed0242de3",
+        "4408fb4647802267",
+        "f7be9735922a6d49",
+        "54e34012cb1b430d",
+        "b68ac9f975de6c0e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0044",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1284240,
+      "end_ms": 1323160,
+      "text": "So I think the one sort of manifestation of that is the way that we think about some of these early career fellowships. So GRFPs are kind of the flagship fellowship you have at the National Science Foundation, which we give roughly 2600 of the... to the smartest and best sort of aspiring PhDs in the country. In the idea there is, you know, we will give you this money to go pursue your PhD, but it's totally portable. So you can take it anywhere you want. You can have universities compete for you, and ultimately you're on up in a place where you're comfortable and you can do your best research. And that's where again, like we're warning the scientists. individual and give them an opportunity to pursue their studies.",
+      "word_count": 131,
+      "utterance_ids": [
+        "d17bcd36f5bab39b",
+        "6008e8dce7a90838",
+        "db6b59f0e7cf1bd9",
+        "4ed3368f81281ac9",
+        "c3f6a3ec5f1a2c6c",
+        "1e319bef9f879e81"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0045",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1323560,
+      "end_ms": 1370820,
+      "text": "And then the alternative is to go after big projects, the Human Genome Project, Manhattan Project, Apollo Moon missions. China seems to be exceptionally good at this. In the central planning context, they have these big objectives they want to achieve, and then they originate. It's an organized resources and allocates significant capital to achieve that objective. Is that an alternative funding model, and if so, how do we organize an execute in a world where you got small labs, everyone's kind of working on their own? Maybe people are even competing with each other for grants. You've got private industry doing their thing. Do we have the capacity as a nation? to tackle big, meaty projects that can really make incredible breakthroughs for humanity, but require significant capital and time in a long -term commitment.",
+      "word_count": 136,
+      "utterance_ids": [
+        "81dda468e2cb95e3",
+        "7042dd3e7855e2df",
+        "a4c20aafc4894195",
+        "cf59b5cf92d31de4",
+        "624196ab6aed6da4",
+        "7fb65bad17cc6cf0",
+        "e6b23d4d13f6dc39",
+        "965ac211bb278fe2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0046",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1371120,
+      "end_ms": 1467460,
+      "text": "I need to show our answers, yes, and I think what we advocate for and argue in science, new golden age is that we have lost our way on doing that. I think back to even when I mentioned I think most Americans sort of look back favorably on things like the Apollo mission. It kind of brought the country together. There was a discrete goal of something you're trying to accomplish. And only the federal government could sort of marshal the resources to do that. And we advocate foreign golden age as we have to return to that. Not, that's the only thing we should do. But that should be one of the things we do along with everything else. I just mentioned. And a couple examples what we're doing in that domain now I think the first is around space. The president very boldly sort of said in the first Trump administration that we're going to go back to the moon and we're almost there. We're going to have American boots back on the moon in 28. We said we're going to have a nuclear reactor in space by 28. We're going to have the first elements of a moon base by 2030. These are like b - bold bets that take a decade to accomplish and we're going to do it. I think the second is around a quantum computing. So President -Syne executive order just last month launched a new National Quantum Initiative. And one of the key goals there that we're trying to do is create a scientifically relevant quantum computer by 2028. And so directive to the Department of Energy. and we're gonna be working very hard to make sure we can hit that pretty crazy timeline. I mean, you're a camp, we really wanna get the fusion by 2035 and we're trying very hard to get the resources allocated at DOE and combine with all the private sector investment to get there. And I think the last one, which is kind of our big flagship project for the whole administration, is called the Genesis Mission. And that is what... where we want to essentially double the scientific output of the United States by applying AI to a hardest scientific challenges and endeavors.",
+      "word_count": 379,
+      "utterance_ids": [
+        "4f3c92f30f62b545",
+        "2e142eb1ed7aa8d3",
+        "776dae90b95ab1c2",
+        "fcfc3a6b3753367a",
+        "2ecaf96e61f5a8ec",
+        "50f701e049e9f07e",
+        "8257b49b8a291ccc",
+        "9b501c5328fcb35f",
+        "b7caeff78bf1e0eb",
+        "d01ebdd9228c0f67",
+        "0a9c746c1f10c8a9",
+        "575b8e1d08280021",
+        "a1d46243a9935760",
+        "7724f30b7de84b5d",
+        "538e8806356f7cb7",
+        "72ba07f175eba6e0",
+        "fb4d58ecf4f2ac83",
+        "a3c1ee7035d45b57",
+        "25c4d1aa78c6563b",
+        "7d804c3267d89001",
+        "3cfcd6d3808f6347",
+        "d74e065c4423c0a0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0047",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1468080,
+      "end_ms": 1493260,
+      "text": "We fundamentally believe that AI is going to be the biggest unlock to scientific discovery in the history of the world, whether you're in material science, whether you're in chemistry, whether you're in math, whether you're in physics, you know, applying AI to your discipline is going to fundamentally. Change the way that you can do your science and accelerate the way that it's done, and we launched an initiative in late last year to do that. And now we have the pretty much all of government sort of working towards that effort.",
+      "word_count": 93,
+      "utterance_ids": [
+        "4677305b9e4b52c6",
+        "fcfe067b1e31084b",
+        "4c38a42814fb3802"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0048",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1493800,
+      "end_ms": 1544300,
+      "text": "So let me just break this down and try and understand the selection process then. Because something... things you can argue can be funded by private industry and they will be because there's hundreds of billions of dollars of capital flowing into AI, there's a natural market incentive for individuals to use AI because it makes them more productive. Do you really need the government to fund things like quantum computing and AI and science when those things are getting hundreds of billions of dollars of private? capital versus funding things that are like not going to be found in the private capital markets like, you know, deep space research, understanding the origins of the universe, their physics, looking at these kind of more fundamental scientific breakthroughs that everyone kind of waves off, but we always find that in those fundamental... Our standards of our universe emerge some application yours down the road that we weren't even thinking about.",
+      "word_count": 159,
+      "utterance_ids": [
+        "e56affc82929dee3",
+        "2a2b240ef54e695c",
+        "003626907afdef35",
+        "878c9b509a626e15"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0049",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1544580,
+      "end_ms": 1617420,
+      "text": "How do we make those selections? Yeah, no, that's a great point. Something that we've advocated for quite aggressively is we have to return the primary focus of government funded research on basic early stage pre -competitive R &D. This is Discovery Science. That is an area where You know, the private sector is not incentivized to participate in and only the government can do that. At the same time, having these kind of big bold ideas on the government can do is also very important for enterprise. If you think about sort of the urgency to create a scientifically relevant quantum computer by 2028, you know, there's lots of activity in quantum going on. throughout the private sector. But to them, it's for commercial applications. We want to create an instrument that can be used for scientific discovery that will pay huge dividends across all the ecosystem. And I think the AI for science, I think the nuance there is, we're not spending money on the science that the private sector is doing around AI. You know, there is more. computed more money going into AI than anything you could ever imagine today and the government's not trying to compete in that space. What it's trying to do is saying like look, if you are doing basic research on all the things that you mentioned are so important, you should be considering how AI is going to impact or accelerate the work that you're doing and we want to help you along in that journey.",
+      "word_count": 256,
+      "utterance_ids": [
+        "14b3d5176561f12c",
+        "de078b50801372c4",
+        "b3cd869be7543fb5",
+        "013b4e4d49e8691b",
+        "ccc909733398a7f4",
+        "2c61865578f917f6",
+        "3a9199ef8a9db425",
+        "ad61c9136b917984",
+        "1e3faa7e60dd2681",
+        "c6a747b6e4790f42",
+        "fe6ffc1e062bbaa4",
+        "c4e62252cb1c75e4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0050",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1618160,
+      "end_ms": 1645540,
+      "text": "I always felt like So much of the challenge with government is the complication, it's like entropy over time. You have all these different agencies, all these different groups, all competing for budget and everything ballooned. But like, is there a rationale for consolidating so many of our agencies into a single science and technology? and being better organized and prioritized and allocating capital to the most important things.",
+      "word_count": 69,
+      "utterance_ids": [
+        "73a6fb1e1d6a3b41",
+        "112459342d782c4e",
+        "de5b341d370373ac"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0051",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1645820,
+      "end_ms": 1697380,
+      "text": "It's a perennial debate. And I think, as I reflect on for many years working on it, I honestly think it's a feature and it's not a bug. And I think the alternative to an extreme is kind of what, what, PRC or what China is doing. And there you have sort of a top -down, directed sort of single agency entity that sets priorities and tries to execute. They have been trying to essentially figure out how do you view the Lafoggi free, since we put the X4 controls in 2019, no breakthrough has happened. And there you have it. There's nothing more important in their economy than solving that scientific problem and how many able to do that. So, to me, I feel like one of the most special features about our system is we do have people competing. This sort of free market approach innovation is a huge feature of our ecosystem and one that I think is an important reason why we have all these breakthroughs.",
+      "word_count": 170,
+      "utterance_ids": [
+        "81c5c12beb44fa87",
+        "a0d3c1b8948a7cfe",
+        "aeace71f62ea3baa",
+        "08946598d336413a",
+        "53e10e62aa603c5c",
+        "f8dbf15e41c4812e",
+        "4ccb20b9a109bd3d",
+        "9d1c256369ea9772",
+        "6ea1bed64061e622"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0052",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1697540,
+      "end_ms": 1699660,
+      "text": "So that's critical for our success, fundamentally.",
+      "word_count": 7,
+      "utterance_ids": [
+        "b709e14a8fba10be"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0053",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1699660,
+      "end_ms": 1713220,
+      "text": "So, I think that's what we're going to do. I think so, I think, you know, the fact that the DARPA people and the people working on Nash security related R &D are sitting at DOW and not sitting at some science agency, I think makes their work much better and more relevant to their mission.",
+      "word_count": 56,
+      "utterance_ids": [
+        "bc57815138bebc0c",
+        "50c47d2c3f05391a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0054",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1713840,
+      "end_ms": 1796600,
+      "text": "So, before we get to China and talk about the great race that's underway, across every domain, I don't... talk to anyone in industry, government or elsewhere, that isn't acutely experiencing this kind of competitiveness with China at the moment. But I just want to talk about how we allocate capital, because NIH, NSF, so much of the money flows either to a government agency. Or to a university, and it seems to me that there are probably four channels and you might have your own kind of rubric for this, but a government agency can take the money and go do research. A university can take the money and the lab is at the University and the University of Minister's the lab, and it's all done on campus at the University, and we can talk - talk about the challenges with that, which I think is really important to highlight. And then there's industry companies that have an economic incentive that can do research and have breakthroughs and get money from the government to help them. And then there's these kind of like independent organizations, like how would huge medical institutes, Mayo Clinic, in Europe, there's like Max Plong, I mean... these sorts of institutes that are not a government, not private industry, they're sort of like a non -profit, if you will. How do we think about allocating capital amongst those four channels, why they're good, why they're not good, and how the balance needs to shift over time for us to get better ROI on our science dollars?",
+      "word_count": 261,
+      "utterance_ids": [
+        "db5edde107447bac",
+        "de732bac3b41d428",
+        "beeb6fd805173980",
+        "412d1953ee39416c",
+        "9b52cf0a620617e5",
+        "b2eb46e610879c10",
+        "e5f14a8b41de9985"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0055",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1798180,
+      "end_ms": 1904600,
+      "text": "So, what you're bringing up here is kind of one of the things, big reasons why we even wrote the Golden Age report. So if you kind of rewind history back in 1945, World War II was ending, Vancouver Bush, who was sort of the science advisor, had my role for FDR, received a letter from the president that asked him, what do we do with the science and was frontier, which is kind of the seminal work in the way that the U .S. Government should interface the science community. And it sort of served as sort of the north star for how we think about science funding for the last, you know, 70 years. And what Bush proposed was essentially the system that we have today, where the government funds basic research primarily at university. And it set up the center prize where all these researchers sprung all this research kind of sprung up and kind of the post You know, war era those able to do this great basic research and in parallel to that all the national labs It helps sort of build a nuclear weapons of World War II and so on sort of sprung up to do the intramural work that you're talking about So there you had sort of two pieces you had government and you had Academia. And why that was so important that era was at that time the vast majority of science funding was done by the federal government. Roughly 70 % of R &D was paid for by the U .S. government about 30 was in the private sector. What has happened to our last 70 years was, there's been this dramatic shift. Now roughly 70 % of R &D is done by the private sector. 30s funded by the federal government. And as you mentioned correctly, new institutions have sprung up things like philanthropies at fun, focused research organizations, things like Howard Hughes, Max Plockens' Institute, and so on. And the question now is, is that model that Bush pushed forward and promulgated and actually led to the great discoveries in the last 50 years? Is that still as relevant today as it was then? And our answer is it's not, and we need a refresh, and that is why we wrote New Golden Age.",
+      "word_count": 387,
+      "utterance_ids": [
+        "3b163f5ef6060ba5",
+        "1c9a96d61373dd48",
+        "9d4a8260f73ba2f9",
+        "69f3a416a2505cad",
+        "01f8d003a4c3c060",
+        "c6aa1c96f1080f17",
+        "f5616bedbc286855",
+        "cb71bf293a718c40",
+        "a38d96abdbf7abf4",
+        "7bf704f038c81852",
+        "3234fd3e359b6bd7",
+        "6a335860789bafec",
+        "d090260fb348c9bc",
+        "cb93de6f7c54ff8b"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0056",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1905200,
+      "end_ms": 1968280,
+      "text": "And for us, the first basic question we always ask ourselves is, is the government spending on something that the private sector, or others in the community, like philanthropy, are not incentivized to do? And that should be your first cut at all points, and then you should ask yourself, kind of... what are the most important priorities for the United States. And I think that is something that sometimes it almost is like a tension with the science community. Many sort of people believe that you know, all discovery science is good and you have no opinion about what's important. And I think we would say like no, we disagree. Like the government is a set of elected individuals, congressmen. has a very strong opinion about where we should spend money, and they direct science funding all the time through the appropriations, and the executive branch should have some sort of thesis about what's important for the country. I know we'll talk about China's second, but we have to win on things like on AI, on quantum, on nuclear, on bio. And I think there we can, there can be an overlay of kind of what are the biggest priorities. to the U .S. government and make sure that the gaps of places where the private sector and where philanthropy and others aren't able to fill the need, the government can step in.",
+      "word_count": 234,
+      "utterance_ids": [
+        "c219d53f93040f80",
+        "aa9d79288ac30684",
+        "04d448386f3e3b6f",
+        "05768a190b93d22b",
+        "a3621d8d7a6954ee",
+        "3e07e467cbe15e66",
+        "554512915b4b02ef",
+        "51f147bbf067da60"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0057",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1968560,
+      "end_ms": 1971400,
+      "text": "Yeah. So what is going on with university funding?",
+      "word_count": 9,
+      "utterance_ids": [
+        "59a98c9a6e3e81da"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0058",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1971820,
+      "end_ms": 1977040,
+      "text": "There's this administrative charge that universities have. You change that. Maybe you can tell us a little bit about that.",
+      "word_count": 20,
+      "utterance_ids": [
+        "c79a17a8c9a3987c",
+        "5143a29004e23358",
+        "6b71eab366613788"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0059",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1977420,
+      "end_ms": 2005640,
+      "text": "And what is this administration's view? on universities taking capital that's been allocated for scientific research, getting an administrative fee, and where does that money get used in ways that may be counter or that this administration views? Yeah, because some people have made the case that this administration is being political with the changes that they're making and how they're allocated. getting capital because they don't like the politics or the social views of university administrators.",
+      "word_count": 77,
+      "utterance_ids": [
+        "0a39602453be1281",
+        "6a2895c453958c2b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0060",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2006020,
+      "end_ms": 2043780,
+      "text": "My view as the as a science advisor is that we should meet the best scientists wherever they are. If they're at a university, we should fund them. If they're at a focus research organization, we should fund them. If they're on the ground in the garage. to incredible work and can pass a merit -based review panel, we should fund them in their garage. And to me, I think the idea that we are open to funding scientists outside of universities, I think has been sort of like twisted by the academic community to believe that we're like somehow anti -academic scientists. We are pro -scientist and we don't care where they are. and I think that's a core 10 of golden age that we're going to be pushing for the next few years.",
+      "word_count": 135,
+      "utterance_ids": [
+        "40fc11dba02a63dd",
+        "7a8c28df4bdb2a77",
+        "ee1f40f2431b3f7a",
+        "939ff93d2ea03c5d",
+        "927607d7a9c70544",
+        "77dcd042f6fc9a8d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0061",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2044160,
+      "end_ms": 2090040,
+      "text": "Okay. So let's talk about the great race with China in the year 2000. China was spending 33 billion dollars a year, 2021, 670 billion. So China increased spending by 19X over the same time period the U .S. increased spending by rough. 3x. There's a statistic all quote, but it's going to be hard to verify, but it's estimated it that about a decade ago, US published roughly twice as many papers and scientific journals as Chinese labs and academics and scientists did. And today China's publishing roughly 50 % more in Europe. every domain with the exception of some life sciences. China's kind of race to head. Frame for us the importance of the scientific race with China.",
+      "word_count": 120,
+      "utterance_ids": [
+        "b64d00af1590758c",
+        "b079c0b56c3b1e5b",
+        "1de825cfa7b6f3ab",
+        "b875736c752ed05a",
+        "4bca5d67242507d3",
+        "3df66d69c8e519b5",
+        "66faec569491ac2f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0062",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2090800,
+      "end_ms": 2092740,
+      "text": "Why does it matter? Why should people care?",
+      "word_count": 8,
+      "utterance_ids": [
+        "961016360c6c5c96",
+        "787eabb8633777ff"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0063",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2092860,
+      "end_ms": 2107000,
+      "text": "Isn't science for the benefit of humanity? Doesn't everyone benefit when breakthroughs are made, when discoveries are made? Why should America? care, and why should the world care about where we are with respect to this kind of competitiveness and discovery?",
+      "word_count": 41,
+      "utterance_ids": [
+        "388677ddde150038",
+        "6b1208379e0a1019",
+        "82852608be94702c"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0064",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2107500,
+      "end_ms": 2190200,
+      "text": "What China? I think the Chinese realized a few years ago that technological and scientific leadership is the most important foundational block to economic and national security. Everything that we do as a country is sort of, in some way, in my opinion, rooted in scientific and technological discovery. We see it with what's going on in semiconductors today. The breakthroughs that we had in transformers and technology led to the large language models of today. It's literally everything that's repairing our economy. At its core was some sort of... scientific discovery. I think to me to talk a little about kind of mention earlier, I think what what I keep trying to push this idea that trying to centralize science has historically not led to the type of breakthroughs that you may want. And I think to me that the free market approach, is that this extraordinary. primarily vibrant ventricosis that we have paired with the science funding that the government does, paired with what industries and centivized to do, ultimately leads to these great discoveries. And I think to me, I'm also very assured, because we continue to be the place where everyone wants to come, work, live and study. Everyone wants to... and build a business here. Everyone wants to learn how our universities, and that is something that makes our ecosystem so special and so unique, and that's why we have to nurture it and make sure to keep succeeding.",
+      "word_count": 244,
+      "utterance_ids": [
+        "3ab8ab7cc25d459c",
+        "c4b73afdfcc10401",
+        "e3f7080cb6cf9e13",
+        "2828a31e05f2e3d5",
+        "08debeed7b80db96",
+        "435944a4649db79a",
+        "7c021f6bf5c70097",
+        "90ddd36c32defeb6",
+        "5a554aee3faabe80",
+        "c1a1e6b5e8d3bea2",
+        "978d1afbdeac45f1",
+        "fbc9a2d9087059f2"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0065",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2190500,
+      "end_ms": 2209080,
+      "text": "You could argue that some of our biggest breakthroughs were centrally planned, managed, and funded human genome project Manhattan Project Apollo and so on. But... Yeah, generally the competitiveness in the market, the market -based system yields greater risk taking greater pushing of the envelope and ultimately greater outcome.",
+      "word_count": 49,
+      "utterance_ids": [
+        "817fc161fa0c6300",
+        "7a6a1dcfd9b09f2c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0066",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2209120,
+      "end_ms": 2224460,
+      "text": "And that's why I think the portfolio approach we talked about so important. I mean, that's why we've set these bold bets in quantum and space and fusion. But at the same time, we've like opened the aperture for this sort of discovery science and market approach to commercialization. So where do you think China's getting things really right?",
+      "word_count": 59,
+      "utterance_ids": [
+        "3f34c1cf0f39eb6f",
+        "eeec4c442dec5e75",
+        "69d2c0af6f4b1e18",
+        "837ac5d296180648"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0067",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2225060,
+      "end_ms": 2236040,
+      "text": "When you advise the White House, the President, and you're talking about policy, when we look at China, what do we see as being incredibly well done with respect to their policy?",
+      "word_count": 32,
+      "utterance_ids": [
+        "3e2cc11567bda13b"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0068",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2236200,
+      "end_ms": 2275580,
+      "text": "The playbook that they have used for a long time is essentially... copying RIP, creating cheaper alternatives of that particular technology, dumping them in the United States, getting our businesses to go out of business, and then squeezing us. And I think you've seen that with a wide variety of technologies over the years, and I think it's something that we need to be very, cognizant of. I think the second area, which they've taken action on or threatened action. are around some of our critical minerals which we realize are a very important piece of our larger sort of like tech and science ecosystem, if you will, supply chain. So those things that we have to constantly be thinking about and preparing ourselves to be able to be independent.",
+      "word_count": 130,
+      "utterance_ids": [
+        "4ba9fb76eb08ff9b",
+        "1ed86a97926ef400",
+        "c603a568ed8751a6",
+        "1fc962fc1ba88221"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0069",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2275780,
+      "end_ms": 2283960,
+      "text": "But given the number of papers they're publishing, arguably they're credible, they're pure of you'd let you say they are making breakthroughs and they are getting ahead of us in many cases.",
+      "word_count": 32,
+      "utterance_ids": [
+        "0607369e7deeee84"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0070",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2284420,
+      "end_ms": 2285200,
+      "text": "What's helping them there?",
+      "word_count": 4,
+      "utterance_ids": [
+        "e4b8bee61fe9d44b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0071",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2285720,
+      "end_ms": 2330720,
+      "text": "So the IP theft dumping on the market, that's industrial trade policy type stuff, but on this core basis of like discovery, are they not getting ahead and what are they doing while they're, are they just funding more? Because I would argue, by some estimates, so again, they're spending roughly on, with us. But by some estimates, they get QX for every dollar they put in by some estimates for X by some estimates, 10X because their labor costs are lower, they have much more automation, their supply chain costs are lower, obviously the standards are different there and how things operate. So on a dollar for dollar basis, they're... way over spending relative to us in terms of generating output and it's showing up in the papers that are publishing. If it's just a function of spending more or there are other things that we could be doing differently.",
+      "word_count": 151,
+      "utterance_ids": [
+        "4fbf9ef06739cef8",
+        "94fb7323e9b328c4",
+        "d384761eac0ff70f",
+        "fb51c3f8def2998c",
+        "d09d024f4e97e850"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0072",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2330960,
+      "end_ms": 2415040,
+      "text": "Look, I think to me what we could be doing a lot more of is encouraging more Americans to enter the STEM fields. This is something that has been on my mind for many, years. in the statistics that I've tracked for a long time is the percentage of U .S. Born Ph .D. recipients and computer science, for example. If you rewind the clock, you know, 30 years, I think it was, you know, 70 % were American and 30 % were foreign and now it's now it's inverted. And I think to us as a country, you know, I believe... that having a STEM literate workforce is one of the most important superpowers we could have as a country and we're doing everything we can to find ways to encourage our younger students to continue to pursue these degrees. And to me, I mean, back to this thing, I think another thing that we have to take a lot more seriously is, and what I've observed in our science ecosystem, you know. Our young scientists, the ones that have just finishing up their PhD in our starting their academic careers, you know, these are one of the toughest jobs you can imagine. You're paid almost nothing, you know, you're in a university, you're toiling away trying to do, trying to do research. Here's the most underpaid people you could imagine for what they're doing for our country. And to us, I think we have to return... our scientific enterprise to reward them, to give them opportunities to work on their best ideas and to allow them to excel. And I think that's what that's what we're focused on. So we train a lot of foreign students. We bring them in. They get PhDs here. Why don't we let them stay more?",
+      "word_count": 303,
+      "utterance_ids": [
+        "961b326b66f5ed5f",
+        "75c381c167af8047",
+        "ef30610b593fffd4",
+        "9c19e27271b325ff",
+        "32e47513c7a6e6fd",
+        "f656107f80e35451",
+        "7a02f73f8498e299",
+        "b2822abb5bce5f3e",
+        "e628b262beacc988",
+        "49be292f416dc881",
+        "ca9c6e43322c95a8",
+        "3ccb0d596fcf8bb2",
+        "00db6703354b69d1",
+        "42d61794aae60869",
+        "61885191b54a4c01"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0073",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2415460,
+      "end_ms": 2443980,
+      "text": "And so what is the immigration policy that also bolsters the point to you, earlier about getting the right people in the field, getting the right people into scientific research. We've got a lot of Chinese students that come here, get a degree, get a PhD, and then we don't have a program for actively retaining that talent. They go back and they work in the And China's now starting to attract scientists from India from Europe.",
+      "word_count": 77,
+      "utterance_ids": [
+        "36be435d4edfc828",
+        "eaec87c3a63431d0",
+        "9c4f6a675da76c46"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0074",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2444400,
+      "end_ms": 2445300,
+      "text": "Why aren't we doing that?",
+      "word_count": 5,
+      "utterance_ids": [
+        "5f2210d1dde0fd78"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0075",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2445340,
+      "end_ms": 2450820,
+      "text": "Because we don't have the homegrown talent pool in science. Shouldn't we be more active in recruiting Americans?",
+      "word_count": 18,
+      "utterance_ids": [
+        "9229d711e62ba8ee",
+        "4d0e7f5e4d00c4b9"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0076",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2451280,
+      "end_ms": 2464019,
+      "text": "I think for us, I think you got to do two things. I think one, you got to make sure that we're encouraging young Americans to go into these STEM fields. And for... those who do want to stay allow them to sort of pursue legal pathways to stay here.",
+      "word_count": 50,
+      "utterance_ids": [
+        "448cf28da946aa07",
+        "d7edd32c04e6e6eb",
+        "b685b150bbfbfa62"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0077",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2464320,
+      "end_ms": 2475940,
+      "text": "So is that policy being heard by the administration? Is it accepted or is it in conflict with a more America first policy? Which is looking at looking out for Americans first, making sure jobs are for Americans before?",
+      "word_count": 39,
+      "utterance_ids": [
+        "988ea2c23b8399ae",
+        "cbcc7fa44a25383d",
+        "dd55b2aac4841597"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0078",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2476360,
+      "end_ms": 2556600,
+      "text": "Why don't you think, again, I says in conflict with the policy? I mean, I think we... As basics, before we start thinking about anyone else, we have to get our house in order about how we can get more Americans to pursue this stuff. Again, these numbers around computer science should be very alarming for people. The idea that seven out of ten STEM -related PhD candidates in the United States are not American. Like, anyone can look at that and say like that just doesn't look right given the way that we've been educating Americans for so many decades. And I think we have a huge opportunity through a lot of these science programs to sort of bring folks back in. I think one thing that I discovered kind of in writing this book and this report was you know we used to have programs of national science foundation that actually support and encourage gifts and talent that students in American high schools and middle schools. Those were stopped. For some reason encouraging high performing young students to pursue STEM in America was something that and actual decisions may have the government tend to no longer fund that. And I think those are sort of discouraging actions that we want to we want to turn around. Why is that? Seems silly. It feels like it's sort of part of this larger sort of DI effort. I mean, they were, you know, you can imagine and you probably know well being California. I mean, there were all these initiatives out in San Francisco where they stopped one to teach, you know, advanced algebra to students in high school.",
+      "word_count": 279,
+      "utterance_ids": [
+        "ae9532ebf1c58355",
+        "7deceb643b74a480",
+        "e968198b791c2d4c",
+        "da5be894a14d8a9c",
+        "56c6b88c367e60bc",
+        "3bb7605ada33bc05",
+        "bcf219c97ce9b427",
+        "8070155ee0cadd60",
+        "2e44a2408038aa7c",
+        "9528953d79660bb3",
+        "a4a144762bb3eb16",
+        "25ea0be33129a30e",
+        "e55daadff3938950",
+        "7432d8634e661f3b",
+        "5d405c43de4ae1ff",
+        "98b85331ef41f542"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0079",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2556800,
+      "end_ms": 2582840,
+      "text": "And there's a battle right there at the University of California on SAT scores. professors are all saying, we got kids coming in and we have to do a remedial math to teach them how to do math. You see Berkeley, it's crazy where I went and it was like, like you're to get like a 1 ,500 on your SATs just to get in there back in it, wow, this was when it was on 1 ,600. Yeah, I don't know if it still is, but they stop taking SATs. And now you're seeing it in the performance when the kids show and the professor initially did. want to remove this, it's your now saying, no, we need a back.",
+      "word_count": 121,
+      "utterance_ids": [
+        "2597375aa927cd85",
+        "d8e44df97d11045a",
+        "a9275e0d5cb78d28",
+        "99a77da426fd70ed"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0080",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2582960,
+      "end_ms": 2583680,
+      "text": "We need it back.",
+      "word_count": 4,
+      "utterance_ids": [
+        "0516141793d80777"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0081",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2583940,
+      "end_ms": 2595700,
+      "text": "These policies are like fundamentally harming the progression of talented STEM kids in America to create that pipeline for the next scientists in America.",
+      "word_count": 24,
+      "utterance_ids": [
+        "69e4f7d85aef8add"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0082",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2596059,
+      "end_ms": 2613980,
+      "text": "Yes, we should be rewarding the greatest and most talented Americans and giving them off. opportunities to pursue all their great science and techs where dreams and endeavors. And I think to me, like that's what's most tragic, where you have kids that have potential to pursue this, yet we actively run programs which discourage them from doing that. And that has to stop.",
+      "word_count": 64,
+      "utterance_ids": [
+        "37c688b7962b3a62",
+        "76718180d508ec4b",
+        "6b773a2f6f2656d0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0083",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2614100,
+      "end_ms": 2619740,
+      "text": "The rest of the world's doing it and then they're getting paid a lot and giving nice homes and moving a China now.",
+      "word_count": 23,
+      "utterance_ids": [
+        "ed8e4ae73d6270db"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0084",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2620000,
+      "end_ms": 2645920,
+      "text": "Yeah. That is a crazy, fact. And I think, too, again, to keep harping on it, I mean, honestly, that the core tenant of new golden age is about thinking about how we can elevate the scientists again, how the way that we fund our programs, the types of programs we do fund, the way that we structure our grants and fellowships are all centered around the science. Itself. It's not about what institution you work at or where you came from or where you grew up, it's about you yourself.",
+      "word_count": 91,
+      "utterance_ids": [
+        "175ac068d0a1177b",
+        "8cb6bdf1616a3884",
+        "403b326a272788d6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0085",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2646060,
+      "end_ms": 2669220,
+      "text": "Can you pursue sort of gold standard scientific work and we'll mean in the 20th century scientists in the post World War II particularly were celebrities, were rock stars, they were kind of featured in magazines. And newspapers and television shows and, you know, they were rewarded economically with fame and notoriety.",
+      "word_count": 52,
+      "utterance_ids": [
+        "715f705252526f98",
+        "d364797a84741bae"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0086",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2670100,
+      "end_ms": 2671140,
+      "text": "Did we lose it?",
+      "word_count": 4,
+      "utterance_ids": [
+        "389ed5da2c94cb42"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0087",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2671280,
+      "end_ms": 2674100,
+      "text": "Or did it lead to moments where you have like Fauci?",
+      "word_count": 11,
+      "utterance_ids": [
+        "0710e1764f24f150"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0088",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2674460,
+      "end_ms": 2693980,
+      "text": "That's a great question. I do feel like there are a few sort of names and... today in today's time that kind of meet that moment if you think of someone like Demis, for example, at Google, that has one of Nobel Prize, that is sort of - 90 % of people hate AI. That is true. That is true. Maybe you can turn the title now when I'm not sure.",
+      "word_count": 71,
+      "utterance_ids": [
+        "8d2885c18669b0d6",
+        "55e86c0a8520ac90",
+        "bf3690a87d64d323",
+        "6af63c32499bd7d5",
+        "4306defae1b76063"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0089",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2694000,
+      "end_ms": 2697620,
+      "text": "You probably the best qualified, but I think it's an uphill battle at this point.",
+      "word_count": 15,
+      "utterance_ids": [
+        "be630bdcd4cff2e1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0090",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2697860,
+      "end_ms": 2698060,
+      "text": "It's true.",
+      "word_count": 2,
+      "utterance_ids": [
+        "6372da0946015499"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0091",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2698080,
+      "end_ms": 2718780,
+      "text": "I mean, there's this deep anti -science. And - anti -technology sentiment, not just in the US, but in the West. Do you think it's bread locally because people feel left behind? Scientists and technologists, if you look historically through great cycles, they're often scapegoats, they're often viewed as the elitists because they know stuff, they have stuff that others don't.",
+      "word_count": 61,
+      "utterance_ids": [
+        "10a1f3c497a04cd1",
+        "1d69e5d33b46da48",
+        "c242f188063c3234",
+        "a0bb2094fcd74920"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0092",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2718780,
+      "end_ms": 2719580,
+      "text": "Yeah. The knowledge.",
+      "word_count": 3,
+      "utterance_ids": [
+        "d736408e7605c3b2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0093",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2720000,
+      "end_ms": 2737540,
+      "text": "There's access, there's control, there's power, because when you have a new technology, you have power that others don't have. When you have understanding, you have something that others don't have. Are we in this moment, this populous moment right now on the West where science and technology is viewed as a tool of the elite, and therefore it must be broken and destroyed?",
+      "word_count": 64,
+      "utterance_ids": [
+        "f6f8ff2356ee2e3b",
+        "a370a1c76fd2f2e2",
+        "167c8188f66d73dd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0094",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2738160,
+      "end_ms": 2819980,
+      "text": "I don't know about that, what I think about... is, I really do oftentimes think about kind of what happened during COVID and kind of what felt you represented. And I think, you know, he did more disservice to science than anyone in modern history. You know, when he is advocating for positions like, you know, students need to be masked. in schools when societies, you know, the pediatric societies are putting out letters saying, you know, it's okay for people to go out and collectively protest, but they're not allowed to, you know, go see their dying grandmother in a hospital, you know, no regular media in America and can listen to that and then take science seriously. So I think there's a lot of healing that needs to be done and that's why I think our approach to going back to the roots of Goldstein and Science is so important, we have to allow people to understand and trust what science is about and see that it's inspiring and a good thing. And can change our way of life. And it's not some sort of like dogma or rule or some edict that comes from on high, but it's a process that all of us are part of, that we're all experimenting and learning about the world and the universe that we live in. And I try to be more optimistic, but I think we really, hit a low point during COVID and I think we're gonna have to take, it's gonna take quite a while.",
+      "word_count": 258,
+      "utterance_ids": [
+        "b7d18ffb1c8cb11e",
+        "475ad4e00a1ce532",
+        "310664535bfe79e5",
+        "af3b5a7bd11f15e6",
+        "cb0b5a3156bc4e28",
+        "41fb787cfe9acf0d",
+        "62b10980897125c2"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0095",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2820000,
+      "end_ms": 2899980,
+      "text": "Yeah, my observation during that era is like I always assume that if everyone thinks something it's probably wrong Yes, but if some percent of people argue viciously against it and some people argue for something There's some objective truth to be found in that But if everyone aligns behind something in a very kind of uniform way. There's something really off about that. But what was scary to me was how so many people without empiricism, the whole fundamental basis of sciences, you gather empirical data. You ask questions, you inquire, and then you go gather data, and you use that data to inform your conclusion. And there wasn't a lot of empirical data that was being used to make conclusions. and everyone lined up behind these conclusions, and these assumptions, and it was told trust the science, and as a result, not only did it kind of destroy trust in science, but I think it brings to light questions, what happened to the scientists? Why did they all kind of line up like this? And why did everyone feel it was okay to put down people that ask questions. When the basis of science is to ask questions. And it's okay if people ask dumb questions, if they ask wrong questions, but there was this breakdown on the scientific basis of scientists being capable of asking questions without being...",
+      "word_count": 231,
+      "utterance_ids": [
+        "c27fc0b899ac04cc",
+        "9141baf0d78f8014",
+        "03c3bd585fbb13df",
+        "b5ea3b9396845ae9",
+        "51d18de0662116a1",
+        "6478e1bbbe7a68b8",
+        "0dc86b22a257cc4b",
+        "3c2275df980fae25",
+        "74391eb38b645002"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0096",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2900619,
+      "end_ms": 2910980,
+      "text": "Sean. I could not agree more and anyone who asked questions were criticized by the scientific community as being anti -science. It's crazy. Anti -science.",
+      "word_count": 25,
+      "utterance_ids": [
+        "a87af0a1d5133e65",
+        "7610636f0fa55505",
+        "14f41f09a1d9c403"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0097",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2911320,
+      "end_ms": 2912180,
+      "text": "Anti -science.",
+      "word_count": 2,
+      "utterance_ids": [
+        "d28c305bf53454a5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0098",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2912300,
+      "end_ms": 2913240,
+      "text": "You ask one question.",
+      "word_count": 4,
+      "utterance_ids": [
+        "df06b4b34379ddcf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0099",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2913480,
+      "end_ms": 2923380,
+      "text": "Your anti -science, if you question some of the conclusions in the IPCC reports on climate change, you can agree with some - things, disagree with other things, but if you don't agree with it all, you're anti -science.",
+      "word_count": 39,
+      "utterance_ids": [
+        "5814481e60b3c703"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0100",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2923600,
+      "end_ms": 2951580,
+      "text": "Well, no, but the idea that you would push back on the RSP8 .5, if I would have pushed back on that publicly three, four years ago, I would have been criticized, dramatically, but everyone is doing your anti -science, your Trump or anti -science maga go. But now, yeah, PCC says we can't talk about that anymore. So I think if you stay the course and continue to stick to course sort of gold standard science ideals of being inquisitive asking questions falling scientific math I think ultimately proven right.",
+      "word_count": 91,
+      "utterance_ids": [
+        "526b5b16781beb60",
+        "389769458645b9cd",
+        "e0ab4aa3a5ab7889"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0101",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2951980,
+      "end_ms": 2972300,
+      "text": "I mean, I think one of your points about the aging of the scientists that you make in the reports worth highlighting maybe you could just talk a little bit about the importance of where we are because the scientific community that we're working with today and the loss of STEM graduates, the loss of the pipeline may be hurting us in our progress with China.",
+      "word_count": 66,
+      "utterance_ids": [
+        "fa5bdf41df8f21ea"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0102",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2972740,
+      "end_ms": 3014160,
+      "text": "No, I mean we have to continue to back and support young scientists and I think one of the statistics which is most alarming for me which was Jay that about a chariot, the director of NIH shared with me was that the median age of an intramural researcher at NIH is 71 years old. 71. 71. That's a median age. The median age of an, and so these are these are research that work at an NIH Institute. Wow. Is there a reason for the retirement? like, don't you get a pension before that? You know, I got to dig in more of that statistic, but that is crazy. But I think there's this huge opportunity to bring young scientists back into the fold. So I would say, stay tuned there because there's a lot of them. She's not going to happen in a age.",
+      "word_count": 146,
+      "utterance_ids": [
+        "d9e8b3d243850389",
+        "5c8e87a49e55b138",
+        "0e158c60f573e56f",
+        "3be370b47935a040",
+        "99c0f086b6ecdb34",
+        "25e47b669fb149e8",
+        "f123b301e0e2c50d",
+        "30b72012546f4c01",
+        "dddca2e6bc3e3c7c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0103",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 3014720,
+      "end_ms": 3057600,
+      "text": "So how do you get science and pure science research? Physics. Mathematics. Astronomy. How do you get these funded and get the attention that they need in an era where it seems like Everyone is so consumed with AI, which is an applied technology. Yeah, and there's important work still to do AI can be leveraged in some of this other stuff But like how do you how do you think about competing on AI? Every meeting, I go into, I'm sure you go into its AI, this AI, that chips progress with China open models, that's kind of dominating the conversation in DC, dominating the conversation in the world, and I feel like we're leaving behind some of these really important advances that we need to be making in fundamental research.",
+      "word_count": 132,
+      "utterance_ids": [
+        "709d24d5311b0e50",
+        "6c885a1b0ccae42a",
+        "f74ebf8d8276a2a6",
+        "90e997725e278b1e",
+        "abc14a4bd1c710d7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0104",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3057600,
+      "end_ms": 3107460,
+      "text": "So, after, um, New Golden Age was... released. On the same day actually, Russ vote, who's the OMB director, the budget director, and myself, we wrote our annual R &D Priorities memo. And then at memo, we essentially list out kind of what are the priorities of administration and how individual agencies should write their budgets to map to those research priorities. And kind of first and foremost in the very first page we talk about the importance of basic fundamental research I think those are things that you mentioned and I think that memo kind of serves the policy United States on how agencies like NSF should be prioritizing those things So I'm excited to see as go in that direction and kind of as you say keep your mind in the world There is an insane amount of capital going into R &D real into AI out in the private sector, we should be thinking about the stuff that the only the US government can fund and that is that sort of basic research.",
+      "word_count": 176,
+      "utterance_ids": [
+        "804a913681c1dcd3",
+        "705eec00d6ccbf2c",
+        "dee9d57a7f52ea40",
+        "480eab774b47fed4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0105",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 3107720,
+      "end_ms": 3122740,
+      "text": "So after the publication of New Golden Age, are there EOS executive orders coming out from the president to follow? Is there going to be asks of Congress? I mean, what are the actions that you need in the admin and with com - to try and carry forward some of the ideals that you lay out.",
+      "word_count": 57,
+      "utterance_ids": [
+        "b1a47a07dee81ef1",
+        "ac49bafaf3b066b3",
+        "75cd2b8e379f3b99"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0106",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3123080,
+      "end_ms": 3193920,
+      "text": "Totally. So the first implementation document is this R &D Priorities Memos. This is a memo that goes out to the White House, that goes out to the agencies, that essentially tells them these are the budget priority areas and practices that you need to implement going forward. In the top five research agencies, with over $3 billion in R &D have a report due back to us 90 days after the publication on how they're going to be doing implementation. So you've already started seeing announcements from the agencies on how they're implementing the report. You had an X -Labs announcement coming out of National Science Foundation to sort of fund these focus research organizations and SF also put out announcement around four year PhDs that are done in partnership with industry, so people can graduate out of the PhD program and go into industry much, more quickly. And I think these are the programs you're going to be seeing across our agencies. I think the second piece is going to be actually working with Congress on the appropriations to make sure that sort of... aligned with the directions of new golden age. But I would just stay tuned. I think we have we have a lot down in the pipe. And I think the first big step of the White House saying, Dao shout in your budgets prioritize these things. We're going to start seeing that manifested over the next year.",
+      "word_count": 243,
+      "utterance_ids": [
+        "08b00cd75583b4a0",
+        "40b3f5c2066bf4fa",
+        "ab6a895e25f8c9f7",
+        "16255754e52c9d01",
+        "c22dc03819c0a62a",
+        "cec86f97403fae34",
+        "9c41ecab1bf9e06b",
+        "6d88f2db13cdbda6",
+        "1999c87819980a48",
+        "5f2ec279c2d0d6ce",
+        "f273a9889895e3bf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0107",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 3194440,
+      "end_ms": 3217480,
+      "text": "The one thing that pulled, I pulled my hair out when I come to Washington DC. And fortunately, I don't have to deal with it after this. you do is you go to Congress down the road here and you go meet with these guys in the house in the Senate and all they want is funding for their people. They want money to flow to their district or to their state. How do you balance that demand from Congress against what really matters that we just talked about?",
+      "word_count": 89,
+      "utterance_ids": [
+        "b3f3cb31f2957e8c",
+        "47ea9f8476d34503",
+        "1207e973993e2369",
+        "b3c91d55a659ed8d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0108",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3217560,
+      "end_ms": 3218220,
+      "text": "This is the science.",
+      "word_count": 4,
+      "utterance_ids": [
+        "f6fbde437d908502"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0109",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 3218300,
+      "end_ms": 3232460,
+      "text": "This is how it's got to get done. This is where you go to Congress down here and you go to Congress down here and you go to Congress down here and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go back and you go are, this where the institutions are, and it's not about taking money and just spreading it to states, it's about achieving the mission that is clearly defined, and the mission is what matters, not about a money grab for everyone.",
+      "word_count": 274,
+      "utterance_ids": [
+        "12cb9941c2470cf2",
+        "08718e671942219d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0110",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3233180,
+      "end_ms": 3281660,
+      "text": "You know, I think there's a couple ways, I think the first thing which I'm very optimistic about is most of the recommendations are in Golden Age are... very, nonpartisan or bipartisan. I think the idea of like rethinking about the methods by which we deploy science capital and try to fund different institutions and promote individual scientists are all things that I think will be uniformly sort of accepted or people excited about on the hill. I think the other thing that's actually could work in our favor with this. the hill is that a lot of these tenants are ones that will touch lots of difference in lots of different states like if you go on say like look you know there's really great work being done at a few select institutions in northeast that being said there's lots of research done all over the country and we want to make sure the best scientists no matter where they are funded I think that's something that can also gain a lot of support so I'm optimistic but as you know the hill always be slogged.",
+      "word_count": 187,
+      "utterance_ids": [
+        "8bc9ac02bad7325c",
+        "1607d76737cf351e",
+        "e2a3cc0d1979e73e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0111",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 3281880,
+      "end_ms": 3304780,
+      "text": "And if 2028 happens and there's let's just say a DSA person as president you think everything will kind of quickly flip back to being the way it was and you know what's kind of the institutional memory that gets created with your administration here and this idea of this turn to this gold standard. And science versus things being social, political things driven.",
+      "word_count": 64,
+      "utterance_ids": [
+        "9a6a4a8b4bc5f6d6",
+        "acff52a66dfcd910"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0112",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3305100,
+      "end_ms": 3330260,
+      "text": "I'm optimistic one that will win in 2008, but I think two of these ideas I said before are pretty non -partisan. I mean, if you're just someone looking at the science ecosystem and wanting to succeed, I think these are generalizable ideas that you can get behind. And our hope is that... We can run really hard through the taper of the next two years and prove that they're actually working and sort of changing and are turning around is going to be costly from a political capital standpoint because it'll be working.",
+      "word_count": 94,
+      "utterance_ids": [
+        "aa41969d6306ac86",
+        "f8296fe16c8701e4",
+        "d64cf4913a3eee2c",
+        "c1a97343dcd843c3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0113",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 3330880,
+      "end_ms": 3335620,
+      "text": "Michael Cratsio's director of the Office of Science and Technology Policy here at the White House.",
+      "word_count": 16,
+      "utterance_ids": [
+        "d2c2e244f101a752"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0114",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3335640,
+      "end_ms": 3337900,
+      "text": "Thank you for being with me today. Thank you, so fun.",
+      "word_count": 11,
+      "utterance_ids": [
+        "0ff278403996195d",
+        "76b820c1b9874dbd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0115",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3337960,
+      "end_ms": 3339820,
+      "text": "I'm doing all of you.",
+      "word_count": 5,
+      "utterance_ids": [
+        "fadb0cc246f18398"
+      ],
+      "is_question_anchored": false,
+      "stripped": "outro"
+    },
+    {
+      "turn_id": "3db1487d23e98021_t0116",
+      "source_id": "3db1487d23e98021",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3353400,
+      "end_ms": 3355920,
+      "text": "I'm doing all of it!",
+      "word_count": 5,
+      "utterance_ids": [
+        "b93196f0cf3dea1c"
+      ],
+      "is_question_anchored": false,
+      "stripped": "outro"
+    }
+  ]
+}

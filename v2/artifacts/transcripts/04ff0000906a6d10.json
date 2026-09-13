@@ -1,0 +1,2675 @@
+{
+  "source_id": "04ff0000906a6d10",
+  "title": "Mark Cuban on the AI Bubble: Who Actually Gets Wiped Out?",
+  "metrics": {
+    "source_id": "04ff0000906a6d10",
+    "title": "Mark Cuban on the AI Bubble: Who Actually Gets Wiped Out?",
+    "utterance_count": 615,
+    "turn_count": 146,
+    "retained_turn_count": 135,
+    "stripped_turn_count": 11,
+    "question_anchored_count": 14,
+    "question_anchored_pct": 9.59
+  },
+  "turns": [
+    {
+      "turn_id": "04ff0000906a6d10_t0000",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 0,
+      "end_ms": 3520,
+      "text": "You and I live through a couple of bubbles. We've seen up this movie before.",
+      "word_count": 15,
+      "utterance_ids": [
+        "1562d382710142e5",
+        "ee67f211ba773c98"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0001",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 5200,
+      "end_ms": 8660,
+      "text": "And this wave seems very different than the dot com wave.",
+      "word_count": 11,
+      "utterance_ids": [
+        "0497a325ef34d20b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0002",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 8800,
+      "end_ms": 11140,
+      "text": "So let's talk about that. Are you concerned about a bubble?",
+      "word_count": 11,
+      "utterance_ids": [
+        "14a79bcc5be0e5fd",
+        "ba273239a850b406"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0003",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 11380,
+      "end_ms": 13600,
+      "text": "We're seeing bubbly like behavior people.",
+      "word_count": 6,
+      "utterance_ids": [
+        "734bc50c3582f27b"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0004",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 13820,
+      "end_ms": 46900,
+      "text": "It's not the traditional dot com bubble. Right. Because back then, there were companies going public getting crazy valuations of people. And the stock would go up, you know, 50 % 100 % with companies that had no revenue, no traffic, no nothing, and you'd go get a cab back then, and people would be talking about them. Yeah. And you don't see that at all today. So it's not a bubble that's going to impact most people in the room, right, or most people across the US. But it could be - just destroy a lot of VCs and a lot of funds and a lot of PE right because they're going all in.",
+      "word_count": 115,
+      "utterance_ids": [
+        "acff7e98387c1430",
+        "3908eaf91f408d7e",
+        "0adcc93089fc9634",
+        "1e618db0fef7080b",
+        "323c954eb8ca1063",
+        "30755c5b1d43bc4b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0005",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 50200,
+      "end_ms": 66460,
+      "text": "Apple 11 started with an $8 domain and no VC funding and became one of the largest ad platforms in the world. Now that same engine powers Apple 11 ads for e -commerce. Your ads run inside mobile games reaching over a billion people with full -screen distraction for the attention.",
+      "word_count": 51,
+      "utterance_ids": [
+        "e8c2711f285f22d9",
+        "35664990797c8042",
+        "49db034bafb1c865"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0006",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 66760,
+      "end_ms": 71380,
+      "text": "The platform finds buyers and optimizes for profit. You set the target? It does the rest.",
+      "word_count": 16,
+      "utterance_ids": [
+        "4a31a4fbad44b0ee",
+        "d733e4e5aa785dcf",
+        "34764f6836c94602"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0007",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 71560,
+      "end_ms": 83040,
+      "text": "One cookware brand went from $4 million to $16 million turned profitable and is on pace for $80 million this year. Visit apploving .com slash. all in to launch your first campaign today.",
+      "word_count": 33,
+      "utterance_ids": [
+        "03d0f65003d5a33d",
+        "0e10132da193b971"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0008",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 84980,
+      "end_ms": 106540,
+      "text": "You used to be the product managers for brokerages, had to outperform their numbers right for the SPX or whatever, but now you've got to outperform to keep the money coming in. You've got to outperform the fund next door. And they're all in it. drop it, and getting their outcomes to SpaceX and celebrating. But if she hits the fan, yeah.",
+      "word_count": 62,
+      "utterance_ids": [
+        "192625a0229599a6",
+        "68d11fbc7bed7ba9",
+        "9540f849c3aac907",
+        "0c8a38bd7569b6de"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0009",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 107640,
+      "end_ms": 133980,
+      "text": "And it really is, like, I've only done Ventura for just over 10 years. And it is wild to watch so many people who deployed at the wrong time, just at a business. They just invested at the peak and entry price. matters and you and I have been in a bunch of deals together and we used to get to investing companies that 5 million, 10 million as angel investors and then all of a sudden they request was 40, 50, 60 and the product's not launched and you're no, and that is just work.",
+      "word_count": 96,
+      "utterance_ids": [
+        "452b06189a940601",
+        "9f18b260a77fc8c8",
+        "6f487ea0f049aa4a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0010",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 134400,
+      "end_ms": 179020,
+      "text": "Yeah, and you know, and what's happening now is the market leaders, Google, etc. Meta, they're barf. and we hundreds of millions of dollars. Yeah, that's interesting. And there's already a private credit problem right now, right? So you just layer on, private credit, like out capital, getting all the refunds, and then you have these huge companies that have cash flow, but there's spending all their cash loan. And then they're borrowing on top of that. That's the year bonds. That's planning for perfection. And that's going to be hard. And we're building these data centers. And if there's a price performance curve on AI, that minimizes the power requirements, there's going to be a lot of data centers that are going to be turned into pickleball courts.",
+      "word_count": 129,
+      "utterance_ids": [
+        "39dc691a76de3b1b",
+        "f22cc5f95aee4985",
+        "2c2b62d97111f10b",
+        "1afcb86a2e396d37",
+        "a072236ee06fd165",
+        "07cd8176461c25ca",
+        "c3df6785dc2c79da",
+        "633e759959f74128",
+        "0aac7adb29672289",
+        "187a4e82d7adf04d",
+        "0e8c7a5c92493391"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0011",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 179500,
+      "end_ms": 181980,
+      "text": "Interesting. because they just can't get the power turned on.",
+      "word_count": 10,
+      "utterance_ids": [
+        "202ff6aba46c5dc4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0012",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 182080,
+      "end_ms": 234400,
+      "text": "No, and then just a power, just everybody thinks that, okay, there's gonna be so much more utilization. And there will be, right? It'll just scale like everybody expects. But there's gonna be breakthroughs in technological breakthroughs as well. Just like we saw fiber back in the day. It was all about putting it in fiber. Then it went from one gigabyte fiber to ten to a hundred gigabyte... And then there wasn't a fiber problem anymore. There wasn't a bandwidth problem. And it was quite the opposite. We had dark fiber that people bought. Yeah. And there's Phoenix on the dollar. And just sitting there, right? And how is it not going to be the case that we don't get the same price performance improvements on the AI side and on the data center side? And then with all the hate going against the... to centers, I think that could be, you know, protecting them. I mean, spending, committing tens of billions of dollars for 10, 20 years going out? Yeah. I mean, nobody can predict that well.",
+      "word_count": 179,
+      "utterance_ids": [
+        "ff3deb774fbe6853",
+        "b8f5d84dff3af2e4",
+        "4f56bf87660654b8",
+        "0f596df270241dcf",
+        "b49a21dae96700be",
+        "a2eec565650fdfa9",
+        "717e69a9ee517905",
+        "a4f0c92eacada921",
+        "fd9a9ae66db20a04",
+        "2a14ea53a76f1ff3",
+        "97029c565151908d",
+        "e3e24a166fb0c016",
+        "f65a0c9ff58d015e",
+        "7844db49cc1c8a6d",
+        "aaa6e972b7606685",
+        "5043cbb09e6b8cf4",
+        "d8333d3d73e11f9b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0013",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 235200,
+      "end_ms": 239760,
+      "text": "I mean, you're, you used the word pricing to perfection, I think, earlier in the conversation.",
+      "word_count": 16,
+      "utterance_ids": [
+        "cc6ce9dbe5e82423"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0014",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 240000,
+      "end_ms": 241300,
+      "text": "And that's really what's happening.",
+      "word_count": 5,
+      "utterance_ids": [
+        "634fa0955d5bd08c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0015",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 241480,
+      "end_ms": 254300,
+      "text": "I mean, you have to have a thesis that we're going to put 100, you know, opening a 100 billion dollars to work. And that's going to come back, not just in revenue, but it has to come back and earnings.",
+      "word_count": 41,
+      "utterance_ids": [
+        "13a95ab8cb80c62a",
+        "a2d5e72ead5c7622"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0016",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 254320,
+      "end_ms": 341940,
+      "text": "A margin of dollars. Yeah, it has to be profitable. Yes, and you just don't know. No, and I'll tell you the other in terms. the corollary for bubbles, right? In this particular bubble, because it's so driven by private capital, there should be a lot more companies going public, not at the SpaceX level for not open AI, not inthropic, but the $100 million IPO. Because if AI does, there should be a lot more companies going public, but AI knows we all know what it'll do in terms of disruption. Then you wanna have some sort of currency that allows you to buy all those companies. Like you guys were talking about buying different legal companies. Yeah, right. Well, if you don't have that currency, the stock is currency. You're going to have to go out and raise money to do it and if anything happens and that money is not cheap, not money is really expensive versus if you go out and you do a hundred million dollar IPO or a fifty million dollar IPO and you can do a secondary whatever as many times as you need if you're performing But the minute that company that you're competing with that is a legacy business can't keep up or there's some other company that has domain expertise that you need or data that you need. Like you guys were talking about. You want to be in a position to buy them. That is nobody. Yeah. No one is for we're thinking like that at all. And I'm like trying to tell my portfolio companies go public. Go public. Yes, they just don't think that's the right thing to do.",
+      "word_count": 282,
+      "utterance_ids": [
+        "7c366bebe92056f6",
+        "08bc7a8378f67845",
+        "fd9b02c1f5e291be",
+        "1760b4defdd04a3a",
+        "e98305271df60b19",
+        "cea1eab4670b1b60",
+        "eb03b886b1c255b4",
+        "a8833f5aa020d6a3",
+        "c638d79ec50be465",
+        "1aedeb0722634a5b",
+        "33a5321ebafb80ce",
+        "e96ddb8f6207fd05",
+        "dd41c8ac42da527a",
+        "9b8e08b963c8bb10",
+        "275274259f57ee89",
+        "62f19489aa31addb",
+        "f52ba3a9f11863e3",
+        "de9c0d6eff1cb66a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0017",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 342200,
+      "end_ms": 358520,
+      "text": "Well, an M &A is not to make this political, but, you know, when you're an entrepreneur, you have to play the game on the field, M &A was off the table. Lina Khan had a certain perspective, which was, we have to be like three cogs in my article.",
+      "word_count": 50,
+      "utterance_ids": [
+        "4638459de04bac85",
+        "e689b6ca57f9cd8e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0018",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 358940,
+      "end_ms": 359980,
+      "text": "We have to predict who's going to be...",
+      "word_count": 8,
+      "utterance_ids": [
+        "717d6788fc290ea4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0019",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 360000,
+      "end_ms": 361760,
+      "text": "I'm an optimally in the future and stop them now.",
+      "word_count": 10,
+      "utterance_ids": [
+        "8c6bd974105fa805"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0020",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 362080,
+      "end_ms": 368900,
+      "text": "It's like, okay, I'm in the situation with to compete with China and everything else is going on globally for four years of no acquisitions.",
+      "word_count": 25,
+      "utterance_ids": [
+        "1ceec06076a3e110"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0021",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 369060,
+      "end_ms": 376880,
+      "text": "I mean, the people I talked to were in corporate development were like, we've been told to stand down because it's not, but we are where we are going to see.",
+      "word_count": 31,
+      "utterance_ids": [
+        "f705ac649c28aec3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0022",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 377260,
+      "end_ms": 404700,
+      "text": "But even so, right, it's, you know, with mergers. acquisitions that that's still fine. But if AI does what we know it will do, the companies that are disruptive don't have to be enormous companies. No, these are, you don't want to have to always raise cash to go out. Yes, such a good insight like it is. Right, because like back in the day, back with broadcast .com, we bought like five companies just stock. And then there bigger fish. Yeah, which we're happy to, you know, be honest with you. Yeah. Yeah.",
+      "word_count": 94,
+      "utterance_ids": [
+        "4f613d9f44014cc1",
+        "a89673fdf2f4dedd",
+        "232993fa35a960bb",
+        "5f62bbbddeb19ebe",
+        "ebb9593090e8202f",
+        "f3e5fc6ac1b3e103",
+        "22b07b5dd94b05ed",
+        "e60dce0b265047c2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0023",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 404800,
+      "end_ms": 414220,
+      "text": "The famous collar, uh, if you were a Claude employee, if you're out at Thropping, you're at opening I, is it, uh, time to start thinking about the collar.",
+      "word_count": 29,
+      "utterance_ids": [
+        "3639e1c27c6636e7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0024",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 414340,
+      "end_ms": 434760,
+      "text": "It's trying to think about, yeah, pairing the pistol I collar my stop because how rich do I need to be? Right. You know. And if you're able to change your life, if I work for any SpaceX, any of them right, whatever, I'd be like, you know, somebody put together a collar for me, you know, because I just need to be protected, save part from my upside, but just cover my downside.",
+      "word_count": 74,
+      "utterance_ids": [
+        "6d6c26a3370edd1b",
+        "235ddbfb667bb749",
+        "de44077e94b3f60d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0025",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 435560,
+      "end_ms": 440900,
+      "text": "Yeah. And when you did it, you had to, like, actually, you orchestrate that.",
+      "word_count": 14,
+      "utterance_ids": [
+        "dee318cd90d7ce19"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0026",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 441180,
+      "end_ms": 466280,
+      "text": "It didn't exist as a product. No, it didn't. So I had to actually create an index of internet stocks. I had Goldman Sachs created an index of internet stocks and I thought sucked. And then I sorted that index because we had to follow all the lines. And I just had to have that short and place until I was able to do a real collar in the market on my yacht. who stocked and I lost tens of millions of dollars on that short. Yeah, but I made up for it.",
+      "word_count": 93,
+      "utterance_ids": [
+        "3faa32482e6032ca",
+        "ed2741e72eace2fd",
+        "973625de003020e5",
+        "7fcf8147bf4a1571",
+        "1226931fb4a685ab",
+        "24f1fe9467ce8c19",
+        "eb69f717abb0176b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0027",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 466420,
+      "end_ms": 469980,
+      "text": "Yeah, I mean, one of the great trades of all time.",
+      "word_count": 11,
+      "utterance_ids": [
+        "f78f1f0ac56d6c81"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0028",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 470460,
+      "end_ms": 470900,
+      "text": "What do you think?",
+      "word_count": 4,
+      "utterance_ids": [
+        "6177c285f2e8c70d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0029",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 472920,
+      "end_ms": 479120,
+      "text": "The this wave of capabilities in AI, I'm sure you play with it because you've always been able to take care.",
+      "word_count": 21,
+      "utterance_ids": [
+        "76e96d09291f6ed8"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0030",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 479360,
+      "end_ms": 481400,
+      "text": "Yeah. So maybe. What are you tinkering with?",
+      "word_count": 8,
+      "utterance_ids": [
+        "7f5accdfb76d134a",
+        "6e4de309e140af75"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0031",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 481640,
+      "end_ms": 494780,
+      "text": "And what do you think is going to be the most world -changing, you know, in the next five, 10 years for entrepreneurs for society? Where do you look at it and go, hey, let's really need a world.",
+      "word_count": 39,
+      "utterance_ids": [
+        "6bf3a06850b6c9a9",
+        "cc7d2d25e42da5b0"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0032",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 495300,
+      "end_ms": 600540,
+      "text": "Yeah, okay. So AI is a lot harder to implement than anybody expected. For sure. right, you know, you can do an agent pretty straightforward, right? Yeah. You can prop the way we, you know, we cheated on tests, we, you know, cheated at work, you know, did projects and proved their productivity a hundred acts, right? All easy peasy and we just assumed, you know, at the enterprise it'd be just as easy. It's hard. Yeah. And it's terrifying. And not terrifying. for employees because dairy on everybody's saying 50 % of white color people are going to lose their jobs. Here we are two years later they said within two years and you know employment still growing people are hiring we need more AI literate people right so CEOs have no clue what is going on none whatsoever and that's not going to change. Right. And so, you know, trying to explain to them that you need to add a hardest to do, you know, all that comes out. Yeah. No chance. Right. And if you think about it from an AI perspective, if AI, we're talking about, you know, AI, and we're talking about taking over the world. If you can't, if you can't. you need to have forward deployed engineers. That tells you all you need to know about AI because by definition, you should just be able to ask AI to do what I need you to do and ask and tell me how to implement it, right? Yet, here you have Microsoft hiring 6000 people, right? You have in -thropic, open AI also. and they're going to deploy to these companies, which tells you AI is hard. And then you have Alex Carp from Palantir, freaking out saying, how can you give your alpha to these companies when, in my opinion, he's just saying they're doing what we're doing, right? We're all about four different engineers that Palantir and they're doing the same. thing.",
+      "word_count": 330,
+      "utterance_ids": [
+        "007231d71ad39cbe",
+        "7be9048ab35e5319",
+        "61366e6a5e2f1ccf",
+        "6ba8cce195fc1abc",
+        "4a85d1a587054003",
+        "0bc8863d0aca385b",
+        "ab8194a99df8662b",
+        "9835299b2b520e6f",
+        "5a4df10018e0ae90",
+        "35b1de4427191825",
+        "e3d30cc46bda7c68",
+        "d1a4932e7fdb07fb",
+        "113180cded7330ec",
+        "b51d3be0f3ef37d9",
+        "574472fb954a97e7",
+        "2fd5dbfd32f74a3c",
+        "31cefb3828fff63c",
+        "ec3e316c14d49a2b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0033",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 601700,
+      "end_ms": 610080,
+      "text": "Again, it's a great insight because you can, if you're using it as a search engine or you're making your little agent to, you know, go do your cron job.",
+      "word_count": 30,
+      "utterance_ids": [
+        "ad0dc8bec7a2868a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0034",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 610380,
+      "end_ms": 612040,
+      "text": "Okay, fair enough. It's, going to work.",
+      "word_count": 7,
+      "utterance_ids": [
+        "b12b3bc55fd99657",
+        "0eecbbeb2eb18f84"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0035",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 612060,
+      "end_ms": 619920,
+      "text": "You need to be, I have a little bit of systems thinking, but what you start putting into the enterprise and, you know, this is making clear up to work about the little bit of systems thinking.",
+      "word_count": 37,
+      "utterance_ids": [
+        "7fec86c997ed1107"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0036",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 620000,
+      "end_ms": 736620,
+      "text": "Yeah, because that's the second part. And I'm not trying to shout on AI. I love it. I'm best in it. It's going to be amazing. It's the most impactful technology that we've ever seen and may ever see, right? But try going into clutter or chat to you, PT, and saying, okay, I just want you to do this search for Jason Calacanis investments. And I want you to do report. And I want you to email it to me every week. Yeah. You can't do it. Can't do it. And then it says, okay, would you like for me to do an agent that gives you alerts? And then you say sure. And then you have to know how to program because it either gives you Jason file or gives you, know, code and it comes out sloppy. Yeah, then you have to not brag. You should write you have to reiterate it, you know, if you want to say, you know, Let me load a picture in and you tell me if I'm hot or not. Or is this girl hot? Which did I say to her, you know, or business versions? Great. Right. But AI is not going to, you know, take away 50 % of the jobs. There's just so much, it can't do that regular people need it to do. Right. Now does that create opportunity? Enormous opportunity, right? So like I'm an investor and lovable and we were here this morning talking and and I was saying that people are using lovable to create 770 ,000 applications a week, a week, right? And that. only 30 % of their business is into U .S. And only 20 % is engineers. And what's happening is entrepreneurs to answer your question about where you're going, right? If you're an entrepreneur, like he was saying before, there's no better time to be an entrepreneur. He nailed it, right? because that's where AI is the most impactful. No matter where you are in the world, they have big utilization and Brazil, India. If you're in France, US, wherever. You know, I gave it a prompt. Like I said, because I wanted to see what it would take.",
+      "word_count": 370,
+      "utterance_ids": [
+        "fc72d0c3f7f0058d",
+        "f0ef9d3996224e0d",
+        "15d88048b71719d4",
+        "cc1105be14d99802",
+        "f06c8d82c0026e65",
+        "72536f2d4cf6cfb9",
+        "cb67ba828d9c9ac8",
+        "646c1543e0315ded",
+        "09bfea39fd580cd0",
+        "0dee190f0516d794",
+        "7b4aec94f8ea73eb",
+        "f7434a77cfc1ea36",
+        "d6d51266dc61fedc",
+        "65013f8d1661f435",
+        "3c42f0499546ad0c",
+        "1fd47208e7ddabb1",
+        "bf3f84d915185714",
+        "7f6cd8fd266a50e9",
+        "ceda97335e2b23c1",
+        "356999043a86690a",
+        "21d95e6c695eaefa",
+        "855d6d517462776f",
+        "215d1a3492426912",
+        "3ff009fd7a131c46",
+        "51c2d69e1c7b43c7",
+        "e15433b54f256d42",
+        "be034a5b50ad97c5",
+        "5ba579c9ef74fa15",
+        "2410bd342209eea5",
+        "1751e8e0c9bc60f7",
+        "b5bfad41f50b5acb",
+        "9cb1cac534bbb2cf",
+        "8aa45f1bbccf12a0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0037",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 736980,
+      "end_ms": 791700,
+      "text": "I was like, okay, we're gonna create an imaginary company that has... a button that can record 24 -hour video and then I wanted to be able to send it to me every 24 hours and I want you to create a patent and a business plan and tell me what licensing or whatever I need. 12 minutes. Yeah. We've started tons of businesses. Six months to get a prototype. 12 months to launch it. Yes, and then you have to as then I asked for a bill of materials and the source companies like the basic stuff to be that The blocking and tackling stuff that every company has to do have you know when you're setting it up and early in its lifecycle Done even if it's wrong. So what? Because the one thing you and I both know and everybody in the room should know, every single mother fucking business plan ever written in the history of business plans. It's wrong. Of course.",
+      "word_count": 166,
+      "utterance_ids": [
+        "bb0b6e10c5af3b19",
+        "5019f72d45a9ac42",
+        "bd7ca95d6e7c0e18",
+        "1ee3f8a3a1c32311",
+        "a1d3585b7a997898",
+        "a0f7f841efd30634",
+        "c2d762b5779aa376",
+        "cc556aa3814262be",
+        "21a9ac30779e2b8c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0038",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 792340,
+      "end_ms": 797000,
+      "text": "Yeah, it's a thought exercise that at least gives you some sort of direction you're going.",
+      "word_count": 16,
+      "utterance_ids": [
+        "d8a1f7d61c9792bd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0039",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 797040,
+      "end_ms": 859900,
+      "text": "Yeah, it's a little bit of a guideline. And it's for you, right? wrong. Yeah, so what if the AI is wrong if the model was wrong? You know, because you're going to learn and you're going to iterate, but it's still, again, all just talk about taking white -collar jobs is ridiculous when it can't even do the basic shit, right? And you have to have, like you said, a programming mindset. Yeah. And in order to be able to iterate and figure it out. And like even you would think if AI is advanced as we want to believe AI is right now, all the errors that we get when we ask it to do a project, it would learn from all those errors. And even have, hey, I'm Yeah. You guys see you have a problem with... this, right? And if failed on these three attempts, let me just tell you what 97 .6 % of the other people ran into this did, right? And then it would fix it for you and tell you. It doesn't even do that. It just says failed, right? We're says whatever. You know, again, AI is amazing and particularly for programmers, it's game job.",
+      "word_count": 204,
+      "utterance_ids": [
+        "5bb9cfd50f8aa5e3",
+        "152fe1977f5f7c3a",
+        "f6adc52fd8b5533e",
+        "6e4dd7024f4270a5",
+        "3be67ed0c3beaac3",
+        "75f72cb7aa92bce0",
+        "3b8fd575701f605b",
+        "d5862d1a89eec4ec",
+        "924e0f8628075e4e",
+        "cb10981faccb3a31",
+        "10b31f92acffb13f",
+        "61d4ad60e7c37da5",
+        "eb7c3b660b2dd0c9",
+        "073bc4b0ce6645bd",
+        "51abb3ef88c99d56"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0040",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 860000,
+      "end_ms": 866420,
+      "text": "When you have a narrow data set like code or legal, it's just tax, it's magic, and it's just math, right?",
+      "word_count": 21,
+      "utterance_ids": [
+        "236c9c00ba17ccbd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0041",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 866560,
+      "end_ms": 959980,
+      "text": "And now it's basic data, right? But when you want it to do, when normal people, anywhere in the world, want to use it for normal stuff. Great, you start a business, great. But if you want to start getting advanced, it's like figuring out powerpoint used to be or excel, right? You always have to have your excel expert, you know, your power in your company. Yeah, or whoever that you knew, right, or there would be companies built, I even destined like a company that's slideshare, that all they did was have powerpoint templates that you could. dollars and redo. And I'm not even that advanced for, you know, once you get to the second level. And so, it creates so much opportunity for anybody to walk into a small medium -sized, even large business, and say, hey, I understand AI, I have a basic computer background or better. And so all these fails that you're running into across your company bigger, small, I can help you fix them. Because what AI can do once those issues are fixed is phenomenal. But even better if you're thinking as an entrepreneur to start a business, those things will eventually break. They just get bored, right, and they drift. Because as the underlying, large language model starts to change, the way it was originally program doesn't match what the large language model turned into. You want to say it? And so you even wrote something about this, right? We're taking more people to manage all this stuff.",
+      "word_count": 257,
+      "utterance_ids": [
+        "4625df3d2b4ddca8",
+        "87167455dfa69189",
+        "18817899be239f50",
+        "6a6ada7a8b288175",
+        "a0331e3ce1db00c7",
+        "8dd291f1370e14dc",
+        "c6823d6e63cada06",
+        "c9095546a8c53062",
+        "c0c65f1d685f9737",
+        "893a6712b77f1b80",
+        "40ab4dbf20de0ed9",
+        "fe988930133911dd",
+        "2b7878e894edcdcf",
+        "394d446e079fb2a9",
+        "91509c04aa91cbb3",
+        "86081778318c369a"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0042",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 960000,
+      "end_ms": 963160,
+      "text": "I'm doing all of you.",
+      "word_count": 5,
+      "utterance_ids": [
+        "3ee6c07eff8091ec"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0043",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 965060,
+      "end_ms": 970180,
+      "text": "Starting a business usually means juggling a bunch of different services just to look legit.",
+      "word_count": 15,
+      "utterance_ids": [
+        "228e8bbd438690fa"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0044",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 970720,
+      "end_ms": 971180,
+      "text": "Not anymore.",
+      "word_count": 2,
+      "utterance_ids": [
+        "f1a576ad3974695d"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0045",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 971560,
+      "end_ms": 982480,
+      "text": "With Northwest Registered Agent, you get a complete business identity all in one place, a business address, domain, website, phone number, and more. With privacy protection, built -in from day one.",
+      "word_count": 31,
+      "utterance_ids": [
+        "303c8cd34d996d14",
+        "078c1724c35ee4ff"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0046",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 982700,
+      "end_ms": 985160,
+      "text": "Don't spend hundreds or thousands on services.",
+      "word_count": 7,
+      "utterance_ids": [
+        "5d8209d6595abdd8"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0047",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 985720,
+      "end_ms": 995820,
+      "text": "You can get from Northwest Repriek. Visit NorthwestRegisteredAgent .com slash all -in -freak and start using free resources to build your business today.",
+      "word_count": 23,
+      "utterance_ids": [
+        "73fc4d1a71bfdb93",
+        "cc35035e25d4168e"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0048",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 996260,
+      "end_ms": 997860,
+      "text": "I'm doing all in.",
+      "word_count": 4,
+      "utterance_ids": [
+        "5021157bea7eae57"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0049",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 998140,
+      "end_ms": 999880,
+      "text": "I'm trying to get the whole firm.",
+      "word_count": 7,
+      "utterance_ids": [
+        "8e2da3e622878c8b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0050",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1000000,
+      "end_ms": 1027100,
+      "text": "To be AI first and even with young people. It's like one group in braces it and You know, they solve you know, I don't know. Let's call it five or six really pressing issues The other group is you know, not embracing it and the difference between those AI first employees and the non AI first employees, the gap is like, whoa, it's almost like when we got into the industry and somebody knew how to use the office suite in a piece right?",
+      "word_count": 85,
+      "utterance_ids": [
+        "94a428bc1d07e6cc",
+        "b108913f910a0e86",
+        "c279f02ebaee8777"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0051",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1027560,
+      "end_ms": 1036100,
+      "text": "And then somebody else was like on legal paths. It's like that much of a difference. It's so stark. People who are AI literate. Yeah. When do they run into a ceiling?",
+      "word_count": 32,
+      "utterance_ids": [
+        "885d89d5b17eaddc",
+        "c163f424cb9ddc76",
+        "3db5257d39380cee",
+        "b49c71dcdda78462",
+        "09006c4777a62a00"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0052",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1037000,
+      "end_ms": 1045880,
+      "text": "Well, you know, it's what I'm seeing is a lot of tool hop. which is a good question because they started with open cloth, they started building it, got brittle.",
+      "word_count": 30,
+      "utterance_ids": [
+        "0aba23cd2aeb09dd"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0053",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1045920,
+      "end_ms": 1068640,
+      "text": "Is anybody still in open cloth? Who's open cloth? Anybody using Ermez? Agent, okay, there you go. Who's on cloth co -work? And then, oh, whoa. And complexity computer, anyone? Okay, interesting. Those are the four of that people... been bouncing around on. And what I decided to do is I was just like a token max that you can eat about a couple thousand dollars a month. I don't care about that. I just care about the gains.",
+      "word_count": 79,
+      "utterance_ids": [
+        "8c0f6acdae79889f",
+        "733d0a51b45ca0fc",
+        "c0d1847b39d5a0a9",
+        "223e433d8c1059db",
+        "ed51657cdddc266c",
+        "bb623abf557e8f19",
+        "d7895caa8df1e0f9",
+        "74974ee4ea430570",
+        "4dadae67c6cd69b1",
+        "202aeea3ab86ea8b",
+        "06dc8805dfc1c730",
+        "8980e6203b450ec8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0054",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1069640,
+      "end_ms": 1098140,
+      "text": "And they all wound up going from open claw all the agents started breaking. It's hallucinating us like two frustrating. They started using clawed coarser. work, okay, great, but kind of limited, and then they started using loveable. And they built intranets for the venture business, that no venture business was spent a half million dollars and 12 months building an intranet. Like you just be like, I'm going to put it in notion and Google sheets, whatever.",
+      "word_count": 78,
+      "utterance_ids": [
+        "c5e93c26c3050624",
+        "d8be4a2152387308",
+        "0a57268b28b1a002",
+        "c370bae44689b7d0",
+        "67461e453dbac412"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0055",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1099120,
+      "end_ms": 1101260,
+      "text": "And then they just started building more and more softwares.",
+      "word_count": 10,
+      "utterance_ids": [
+        "2dad19b049446868"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0056",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1101360,
+      "end_ms": 1110180,
+      "text": "I have two or three people who are building software that I would say five years ago we would have spent maybe two or three million dollars a year building this thing that outsource somebody.",
+      "word_count": 35,
+      "utterance_ids": [
+        "dd631be04a197c02"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0057",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1110320,
+      "end_ms": 1114240,
+      "text": "You just would not have done it. Which means we wouldn't have done it. Right, you would just bought the SaaS application that did it.",
+      "word_count": 25,
+      "utterance_ids": [
+        "68862e3cc0ffe629",
+        "2172e2259d51e817",
+        "ad41e08f0d0054e4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0058",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1114400,
+      "end_ms": 1118620,
+      "text": "And then we would have tried to like shoehorn it into a SaaS app and customize it.",
+      "word_count": 17,
+      "utterance_ids": [
+        "38857c156017dfb4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0059",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1118620,
+      "end_ms": 1122220,
+      "text": "It wouldn't have worked and we would have given up. But how are you going to manage it now once they get there?",
+      "word_count": 23,
+      "utterance_ids": [
+        "578db99f4ba57b3c",
+        "8e63c5f173cc2fbd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0060",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1122780,
+      "end_ms": 1132880,
+      "text": "Well, you know, again, to your company lovable, which, man, congrats on that investment because that company was going to go out of business four times and I told Anton, every time they say you're going out of business, you had 100 million in revenue.",
+      "word_count": 45,
+      "utterance_ids": [
+        "77ed585dd13a0173"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0061",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1133240,
+      "end_ms": 1209880,
+      "text": "600 million in revenue. And four times, 200 million in 300 million. Oh, yeah, it's going to be absorbed into the front of your model. So the work. Yeah, I mean, I've got lovable, I've got Synthesia .io. Oh, yeah, it was the first investor in 10 years ago, maybe that are just killing it, right? I've got AMI, which is y 'all in the Coons world model. Yeah, we haven't even talked about world models versus LLM and Transformers. Yeah, because everything we do is built. on text and pictures. Not there's going to be text and pictures in 10 years, right? And what's going to drive it? And like people say what AI is so smart, it's going to change everything. I'm like, okay, if you tell AI, if you show AI a video of a two -year -old on a high -chair with a sippy cup, the... The two -year -old knows, if you push the sippy cup over the edge, mom's going to come running, and the kid's going to start laughing. And I've got no clue what's going to happen. None, right? Would you rather, if you're at a corner blindfolded, and you have to cross the street, would you rather have a video, would you rather have your phone with AI? But would you rather have a C and I dog? Yeah, dog. I'm thinking the dog every time. Of course, yeah, it's not ready. Right? Yeah. It's not ready. So just think about how far we have to go.",
+      "word_count": 256,
+      "utterance_ids": [
+        "0d435ea379257ab4",
+        "fa68b5a0837b65c7",
+        "82e7a29e86b1eb84",
+        "a10cea66b0c5cddd",
+        "95facebf33024104",
+        "b34e0491683757cd",
+        "ca3ecedf76ac5ecd",
+        "e0d82b831c392ac8",
+        "7d4d7bd3c79a7d5c",
+        "69008f62589ba1d7",
+        "077d4adc31486a66",
+        "e1141056524fa4d1",
+        "b5f99f549f281110",
+        "9a87fcf5332ecfba",
+        "30a70014b6cf00ef",
+        "f45879a1f123da9c",
+        "39e06ed03c24b509",
+        "274ec5d5b81550c4",
+        "f7fb01625cfc3f2d",
+        "7e63010b94e08bd2",
+        "544bd04eaf803c4c",
+        "c7cfb2d3591edbcd",
+        "a5711cfed2b6762b",
+        "590ef827c2a2de14"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0062",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1210260,
+      "end_ms": 1219980,
+      "text": "You know, and all the huge opportunity though, I mean, the world models are crazy because you have videos available on YouTube and just we have the world there.",
+      "word_count": 29,
+      "utterance_ids": [
+        "20f5a43670328221"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0063",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1220000,
+      "end_ms": 1223200,
+      "text": "So that's not enough. It's not enough. They have to wear gloves.",
+      "word_count": 12,
+      "utterance_ids": [
+        "3e85198cd7cb1198",
+        "8bbbffbd73008e5e",
+        "e99f291887056082"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0064",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1223480,
+      "end_ms": 1227720,
+      "text": "And now they've got people in Manila, like doing recipes.",
+      "word_count": 10,
+      "utterance_ids": [
+        "eff5759987f92d73"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0065",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1227780,
+      "end_ms": 1259980,
+      "text": "So I have this company matter dot com. And they're watching satellites just to take and they do spectrography where they take use of satellites to take videos of everything underneath them. He was expecting him to even understand all the shit. In order to be able to convert it into a world model that will provide algorithms that other world models can use, right? And there's just no way that the future of AI doesn't include video. Oh, I mean, it's a huge part of it. And as the...",
+      "word_count": 90,
+      "utterance_ids": [
+        "8f3d19092c2a0703",
+        "aaf4cc2ac3ef6620",
+        "266ee31b5a953111",
+        "45c09480df88df76",
+        "83e0cd9bcc7ca8e4",
+        "c70a63f51f60a3c2",
+        "3735d7b9885f0e27"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0066",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1261019,
+      "end_ms": 1273600,
+      "text": "Inference, and the back to the build out of these data centers, as we wonder what's going to happen, people wanting to use more tokens, and then these world building and video, and that takes a magnitude.",
+      "word_count": 37,
+      "utterance_ids": [
+        "cf27f4df39b59ba3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0067",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1274080,
+      "end_ms": 1307520,
+      "text": "Yeah, so I'm going to be wrong on the data centers. It's going to be because of the video. Yeah, right. And world models and robotics. all related. Yeah, I mean, and robotics, you know, it's related, but we still got a long way to go. Yeah. Uh, health. You look great, by the way. I don't know what's going on. You got the right out. What do you got? Ready to true tie? What's on the menu? No, yeah, what's off the menu? Follow me on Instagram and Cuban. I just, I mean, eating better. I mean, you look better now than 20 years ago. I appreciate that. I mean, you had helps too, right? The tab. But I mean, you look thin and fit. Yeah. And we're getting up there now. We're not kids anymore.",
+      "word_count": 137,
+      "utterance_ids": [
+        "dea5ae2b9fbf93f9",
+        "2dd58891e9aa50a2",
+        "7619698bda107457",
+        "4a2e9d6ed91a3f52",
+        "44d0f4a587a9549d",
+        "74e8fff074d94d45",
+        "30181488afc8a871",
+        "08b12ed57474c385",
+        "b299bb82174da360",
+        "e608829a805faeb2",
+        "83e64b8ed3ddfffd",
+        "da299630c8b15686",
+        "efd52cf4ac3032c0",
+        "90db334190efd2f4",
+        "1341d031d42b0daf",
+        "f4f8d64909d60163",
+        "956d60253b7e2111",
+        "6d8f0a0002e7f56a",
+        "4ed25c7686e99041",
+        "90ad690d5b86e3ad",
+        "d9fd1a03401ba4cb",
+        "f681feb32ab63857"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0068",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1308459,
+      "end_ms": 1313020,
+      "text": "This is definitely going to help AI all the work being done.",
+      "word_count": 12,
+      "utterance_ids": [
+        "6588226ce78709c6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0069",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1313020,
+      "end_ms": 1354860,
+      "text": "Oh, I mean, I use it too. Like I invested in a company called Open Evidence. Yes. Yeah. I know it. We're medical, right? I used it and like I have two I have one supplement I have to take because my iron levels allow and I have to take this one medication I was taken them at the same time and couldn't understand why I was having problems I've run it through open evidence and I said here's everything I'm taking everything I'm eating and they're like no, you got to do this You know when you get up to pee at three in the morning take this medication When you get it. Yeah, no, it's sucks. Yeah, right. I always write there with you last night. What's going on? Let's go on, right? And so, you know, but it's for health, it's going to make a huge difference, but it's not going to replace doctors.",
+      "word_count": 157,
+      "utterance_ids": [
+        "d1f74bb0165a1670",
+        "2ee250ca7afbcee4",
+        "d28d736dcdf88370",
+        "81b7d639d174365a",
+        "4cd4614a8c7b2346",
+        "807725b2b69dd56e",
+        "ba1fa786f6ee5215",
+        "da3a5e62a654ff0b",
+        "ef9e7d79ac4ddcff",
+        "e06daffd3798ce0d",
+        "483d5094048d4f19",
+        "16acc662ac025ec3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0070",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1356140,
+      "end_ms": 1358160,
+      "text": "But I mean, it is pretty amazing.",
+      "word_count": 7,
+      "utterance_ids": [
+        "2c3bbe8fec397816"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0071",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1358340,
+      "end_ms": 1360680,
+      "text": "I don't know. Are you on woo for your apple? I watch you.",
+      "word_count": 13,
+      "utterance_ids": [
+        "23d46c9e70db066c",
+        "7bc351ee5465df9c",
+        "bc1a4a619707804a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0072",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1360880,
+      "end_ms": 1373220,
+      "text": "Yeah, I mean, the, the, woof plus getting your blood test, just self directed health care with AI, man, you're gonna get some early wins and then when you do go talk to your doctor, you have it right there, right?",
+      "word_count": 41,
+      "utterance_ids": [
+        "c746775d8e340afc"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0073",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1373220,
+      "end_ms": 1397860,
+      "text": "I have it right there, you know, now six months, just over three to six months. Yeah, right. And I've been doing it for 10 years. So I know all my training. Wow, and so you were doing it before function and super far and yeah, like you could go look up mark human blood tests on Twitter Right X and I would get into it with doctors like eight ten years ago and just then you're gonna need this for your benchmarks And but it's only gonna get better. Yeah, that was gonna be really interesting.",
+      "word_count": 97,
+      "utterance_ids": [
+        "a913b27b7fdbddfd",
+        "aa8e94f9e4c89982",
+        "8a60e2a9229624ec",
+        "1b50020ea31b149d",
+        "f30375a1b2e9e38e",
+        "ed668ea94cfa9852"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0074",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1398080,
+      "end_ms": 1408460,
+      "text": "We had this big data moment And it was like, okay, we're storing all this data, but we didn't have any intelligence against it now. That's incredible when Apple is now putting that data.",
+      "word_count": 34,
+      "utterance_ids": [
+        "b73a286682c43489",
+        "dff964e7eb2397f1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0075",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1408760,
+      "end_ms": 1409420,
+      "text": "They're doing studies.",
+      "word_count": 3,
+      "utterance_ids": [
+        "71972a930709c3ec"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0076",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1409540,
+      "end_ms": 1412140,
+      "text": "I don't know if you've been invited to studies on your Apple watch.",
+      "word_count": 13,
+      "utterance_ids": [
+        "0d4789aae3da0bc2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0077",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1412420,
+      "end_ms": 1414080,
+      "text": "I'm like, well, this is going to get very interesting.",
+      "word_count": 10,
+      "utterance_ids": [
+        "4c3a191b97171ba3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0078",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1414420,
+      "end_ms": 1426900,
+      "text": "Just added blood panels. Yeah. So now your sleep data, your steps, your heart rate. your respiratory EKG blusher blood work that's prevent if you can get your diet into it as well.",
+      "word_count": 33,
+      "utterance_ids": [
+        "afb264823c9c6220",
+        "db835295c3282b1f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0079",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1427120,
+      "end_ms": 1464520,
+      "text": "Yeah, that's what I watch has in my health, right? Yeah. So yeah, you're just going to get smarter, you know, and that'll make your doctor's able to be smarter because 95 % of medicine is guessing. You know, because you can't, there's no way a doctor can memorize all the new f*** that happens every single day. You just can't. But a doctor using these tools, having the empathy and the ability to communicate and the ability to see. Right? Because again, you can't see. You could have, you know, why am I bleeding? You got a... It looks like you got a young child wound, right? Yeah. He's not going to tell you that, do I?",
+      "word_count": 118,
+      "utterance_ids": [
+        "4726f2ec0b5041e1",
+        "4aa07de3b78777cc",
+        "dcd353d1f5771f83",
+        "2e9b3b430cdf724b",
+        "8595399d8e4b2a96",
+        "2e4aaab7ae1a4d36",
+        "52fafc59427f9ebf",
+        "7f15c3a92fefc5ed",
+        "54eec36da160952a",
+        "3b03fa6bed255a66"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0080",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1466660,
+      "end_ms": 1483520,
+      "text": "When we look at the opportunity here, it's going to be a lot of change. A lot of talk about wealth disparity in the U .S. Invest in America, our friend Brad Gersner, and our friend Michael. down and other great Texan and thanks for welcome me.",
+      "word_count": 47,
+      "utterance_ids": [
+        "942bed9ab17011e3",
+        "88d1d81a3beeef53",
+        "9351c65482e22260"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0081",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1483660,
+      "end_ms": 1509380,
+      "text": "I enjoy my time with Texas. I mean it's fucking great. I love Texas man. This is fun. It's kind of like the heat's kind of like this though. Yeah, the heat's air conditioning. We do have air conditioning. There's a record number of air conditioners coming from China to Europe this summer. You know, I look at what company. He's installed them and everything. Oh, you're always got a trade. You always got a trade. You're curious, but there's no real sold out. They're all being shipped here from China at the moment.",
+      "word_count": 94,
+      "utterance_ids": [
+        "5365d086452a4e80",
+        "75fbd7d328f138c3",
+        "63559168d1e38730",
+        "b9ba7de730de6a78",
+        "9b5ad4d09a0d0e97",
+        "a9a215defca82777",
+        "61dd6d36e19c9a91",
+        "70f2197c1b96b552",
+        "0aafbefeebfc4489",
+        "2c7292b95509cff9",
+        "01d8ee90c62ba8ac",
+        "5351dcae2148aecb",
+        "7f23846944f13709",
+        "c06ca5297307b85e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0082",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1510880,
+      "end_ms": 1524760,
+      "text": "But really interestingly, feels like entrepreneurship, which has been our shared passion for many decades. Hey, investing another shared one, giving people access to public markets in West America.",
+      "word_count": 29,
+      "utterance_ids": [
+        "47dd63a24544efbe",
+        "b675550e48005e9f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0083",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1525580,
+      "end_ms": 1526840,
+      "text": "We have this dueling narrative.",
+      "word_count": 5,
+      "utterance_ids": [
+        "f182bd24e6f567bf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0084",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1527480,
+      "end_ms": 1538640,
+      "text": "Socialism, in America, capitalism, and it feels like this is them in our lifetimes, you and I are close in age. This is the most favorite we've ever seen it.",
+      "word_count": 30,
+      "utterance_ids": [
+        "2063c63b3466e111",
+        "fffb7133ee8658f8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0085",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1538680,
+      "end_ms": 1545060,
+      "text": "I mean, we have states. Maybe not since the 60s or 70s. I missed that. I was born in 1970.",
+      "word_count": 20,
+      "utterance_ids": [
+        "e80cc665c8821ed4",
+        "ccdffa670dedfeac",
+        "37e9283bef07c4ce",
+        "c84009924c7fb6f5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0086",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1545280,
+      "end_ms": 1547240,
+      "text": "You were born, I guess 1943.",
+      "word_count": 6,
+      "utterance_ids": [
+        "a84d4a68db2e479f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0087",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1548520,
+      "end_ms": 1551620,
+      "text": "23. 23. I always joke. I like to cry there too. I look good.",
+      "word_count": 14,
+      "utterance_ids": [
+        "ff4201e534cc6e88",
+        "0418ba539d17fb85",
+        "aeab1040c9456d18",
+        "bb101c24dc2dd6d6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0088",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1552720,
+      "end_ms": 1559300,
+      "text": "But, you know, it's pretty polarized and what you're taking on the social, there's two things here.",
+      "word_count": 17,
+      "utterance_ids": [
+        "580f6e5fe222d818"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0089",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1559300,
+      "end_ms": 1682900,
+      "text": "Yeah, one. all the DSA stuff is local, right? It's really easy to be mandami and in New York when you have a budget, you get to control it and it's local, right? You got elected, you just do and you have to balance the budget and you'll see them Michigan and wherever else. I don't think it's going to be game changing but the more important thing is the people who are doing And so the people who are best at social media, right, you know, because the algorithms drive how people vote in the United States, I can't speak to the rest of the world, more than anything else. Whoever controls the algorithm controls, you know, the election in many cases, Trump knows how to use it and what, do mandami, you know, what, is unique about mandami? me relative to Trump. He's what thirty one thirty two years old. Yep. His whole adult life is been Trump and social media. He studied it and the two together. Yeah. And the guy I'm Michigan the same thing. So if you're good at AI, I mean, at algorithm, you know, driving algorithms, whether it's flooding the zone. or, you know, like Trump's saying, they're eating cats and dogs. Yeah. It's just attention. Yeah. And it's just, you know, defining the algorithms because whatever you search for, you get more of. And if they can get you to search for what they're saying and you show your interest, then you're going to just get Mandami 24 -7. And you'll get the positive size of the dummy, or if you happen to be on the other side of the aisle, and you are looking at stuff that's counter to that, you'll get more of that. We don't feel like, but one other piece, I think is starting to change that, and that's the large language models. The thing that I think will save us as a group. a world more than anything else in terms of information availability and reducing the information asymmetry as it applies to politics or large language models. Because large language models have to be as literate or in literal and honest as they possibly can. Good speaking. Yeah. better way to put it in. Yeah. So they have to seek truth.",
+      "word_count": 385,
+      "utterance_ids": [
+        "330ac476e5ef6733",
+        "a575ea71810d963c",
+        "c9e3f011c8387625",
+        "e05c3c2f4e0f2f48",
+        "7e96a45bb3cc7155",
+        "cd84fcf031bc410c",
+        "d3886f24bfba9719",
+        "3d5e07e2b3d2b8bf",
+        "ad13688d0ffd0cbb",
+        "910203e7c3aae1a8",
+        "1708a4848fdc6c29",
+        "539f0f16b7e9badb",
+        "db0c60f1021d2bbf",
+        "373ff6888c1ad88b",
+        "cec1fcfc3d558eda",
+        "7dc80d1e57ee03d7",
+        "5eead1b1300dd207",
+        "0f68bf4455399c7f",
+        "ddf29e6c5d5198c6",
+        "a4c7a8613d31ac99"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0090",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1683220,
+      "end_ms": 1691940,
+      "text": "Otherwise, you'll lose trust in them and the last thing you know, clawed open their eyes needs is, you know, they're lying there stuff about this group.",
+      "word_count": 27,
+      "utterance_ids": [
+        "e3277695daa1e877"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0091",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1692020,
+      "end_ms": 1699360,
+      "text": "Yeah, their currency is getting you the correct answer and the correct knowledge. Social media's currency is keeping you engaged. Right. It's two different missions.",
+      "word_count": 25,
+      "utterance_ids": [
+        "80b64f4f874ee30d",
+        "bd67c53d48009ae6",
+        "abb8054fb79c8a40"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0092",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1700000,
+      "end_ms": 1719980,
+      "text": "Missions, right? And so you're not going to get rid of social media, but I think people as they become more uncertain with their politics are going to go more, more, more to large language models. It's a who should I vote for? And the large language models are going to come back and say, well, what do you think about this, what you're insisting to listen to that and so give you honest hands?",
+      "word_count": 75,
+      "utterance_ids": [
+        "2455a5f644b17709",
+        "044e84db56e2dd80",
+        "d4816f9ba185773d",
+        "62f2a796bce26f93"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0093",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1720000,
+      "end_ms": 1730920,
+      "text": "Yeah, and if you ask it, hey, what's a reasonable immigration policy, it'll give you a reasonable immigration policy, which is like, yeah, maybe That's an order and you a point -based system.",
+      "word_count": 33,
+      "utterance_ids": [
+        "cdfd6ab458264ad0"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0094",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1731060,
+      "end_ms": 1736480,
+      "text": "Yes, like Canada, New Zealand, whatever it may be right. Yeah, I've done the same thing and it's impressive. Very impressive.",
+      "word_count": 21,
+      "utterance_ids": [
+        "f455f8a2c1966ede",
+        "355c4f3c16313458",
+        "e5b5532e093457ba"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0095",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1736700,
+      "end_ms": 1752200,
+      "text": "You know my favorite troll now is like JD or you know So AOC will come out with whatever their craziness is on either side of the aisle. And then I'm like, eh, Grok, please vet these claims. He has objective and factual as possible, check your work and show your stories.",
+      "word_count": 52,
+      "utterance_ids": [
+        "b4d3ff54a36b88c7",
+        "bfaebd95402668ac",
+        "8ed5202a2a4c4eb6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0096",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1752240,
+      "end_ms": 1767980,
+      "text": "And then it just replies to them. So I've been just totally trolling Stephen Miller. Oh my God. Who, you know, he's like anti immigration. I'm very passionate. about like legal immigration or food and great people because we need them and every Christian running a basketball team.",
+      "word_count": 48,
+      "utterance_ids": [
+        "2e8d3bccadaab1e1",
+        "d334d5de46d3a848",
+        "9a72c8bcb5902579",
+        "77960b8afab01774",
+        "5ad3a19c89dab3ae"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0097",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1768100,
+      "end_ms": 1771960,
+      "text": "Every time you get dirt, nobody else doesn't have them on the team.",
+      "word_count": 13,
+      "utterance_ids": [
+        "45dc5e3698d0d921"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0098",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1772280,
+      "end_ms": 1811480,
+      "text": "You get Joe and Bronson, it's not on the Mavericks anymore, now he's on the next. You know, like, well, that's why we come to these things in Europe, right? Yes, because great time. right smart people, obviously you guys are geniuses for being here, but at the same time there's a different vibe in every European country and India and the whole rest of the world, right? And I think you're starting to see some entrepreneurs leave us, yep, to come here. And that's scary. And hopefully, you know, large language models seeking the truth will help educate people away from what the algorithms tell them. Yeah, I think it's like important.",
+      "word_count": 113,
+      "utterance_ids": [
+        "c099d7eb5c860bc5",
+        "6038da2851088c53",
+        "1bbeabf93631f0c5",
+        "6f67db690f645fa9",
+        "2e8acba0c29911ee",
+        "75573e064ab222f9",
+        "d11e3a5b68364920"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0099",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1812160,
+      "end_ms": 1818520,
+      "text": "You optimistic now, it's been pretty chaotic, but we're seeing such great progress.",
+      "word_count": 13,
+      "utterance_ids": [
+        "c56dafadb76bc914"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0100",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1819080,
+      "end_ms": 1842380,
+      "text": "You're optimistic? Yeah, I think it's going to be a good idea. Yeah, it's going to be a good idea. Yeah, it's going to be a good idea. Yeah, it's going to be a good idea. Yeah, it's going to be a good idea. about. Let's start with America and then we'll go to Humanity. Yeah, I mean, you know, like every country, we have our issues, ours is that would be kind of insane. It is pretty wild. Yeah, but the good news is, you know, we have termless. it's for our president. Yeah. Yeah.",
+      "word_count": 96,
+      "utterance_ids": [
+        "86296b656ffce04f",
+        "265b977c8ab0bdec",
+        "1b9a8e213d5c1775",
+        "9c2878e229edd6dd",
+        "d4f9fd4a3f57c98c",
+        "35e4848d80768d3a",
+        "2cdc88712374849a",
+        "312ff8b1ccb49b49",
+        "346627b957b7e970",
+        "f297b789bd92ad1b",
+        "24e502cf221b1a8b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0101",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1842860,
+      "end_ms": 1845820,
+      "text": "And it seems like 12 or three terms is going to be the one for fresh.",
+      "word_count": 16,
+      "utterance_ids": [
+        "ff3caf243fccb61c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0102",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1846980,
+      "end_ms": 1861300,
+      "text": "I mean, you're going to run. I mean, I hope you do. Man, I would love to be your fresh secretary. I don't have to be a vet. We'd have so much fun. We'd have fun. We'd have fun. Who would have fun? Well, I mean, he died the run for a third time. Then I'll run, but he's yeah. Okay. That's good. That's breaking news.",
+      "word_count": 66,
+      "utterance_ids": [
+        "033b1727aaf40d2c",
+        "50fd8ed8731ff5c6",
+        "d72ab05226f94900",
+        "26c3db119f8add8a",
+        "bc22540a6a4e4a2d",
+        "92b79988b60c2c04",
+        "eb1665c18acfd8b5",
+        "dcb0b038b8c16a9f",
+        "33d12f4737772018",
+        "0c984a394d945d86",
+        "c63d199f28ab80d7",
+        "205989ca2b89d70a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0103",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1861420,
+      "end_ms": 1875740,
+      "text": "I mean, I honestly like, if you think about what we need, I think in leadership, executives who can, I think, you know, who are like post money, post needing to make a living.",
+      "word_count": 34,
+      "utterance_ids": [
+        "e9e75e559f031ef3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0104",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1876360,
+      "end_ms": 1877580,
+      "text": "No, I'm not going to go there.",
+      "word_count": 7,
+      "utterance_ids": [
+        "1f0094990ef99d34"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0105",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1878520,
+      "end_ms": 1888760,
+      "text": "Wow. And then maybe who are doing it for love of country or maybe some amount of civic pride or like you what you're saying right it's just like you know in the U .S.",
+      "word_count": 35,
+      "utterance_ids": [
+        "60ab57600c9c755b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0106",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1888860,
+      "end_ms": 1920640,
+      "text": "With the Democrats don't know how to actually do anything right you know they know how to take whatever happens and extrapolate that to the end of the world and the end of democracy right But, and the republicans on the other hand, you know, do crazy shit, right? Like, they don't care about the people in the country, they don't, you know, there's no connection to people, there's no empathy, and so, you know, we're f***ing, but in the short term, but I think as we get past this next, the mid -terms, and the next presidential election, I think we'll be back. To normalcy.",
+      "word_count": 106,
+      "utterance_ids": [
+        "dabfe9ab5cdf9783",
+        "17dbe169b2bec12a",
+        "3321fe9ed19eaef8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0107",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1921240,
+      "end_ms": 1939980,
+      "text": "I think people want it and you know, the thing that has been really eye -opening for me having lived in New York, California, and now Texas, you know, in Texas, we're spent half as much money per, sometimes less. I think it's two and two point two times as much spent on each citizen in New York, and...",
+      "word_count": 59,
+      "utterance_ids": [
+        "f56223d8d7a0bb62",
+        "2fef892919eb5a6f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0108",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1940540,
+      "end_ms": 2007240,
+      "text": "We spend half as much, right? $67 ,000 per person. They spend like 14 or something, 12 to 14. And the quality life is better. But on the flip side, New York contributes more to the federal treasury. Then Texas does. And you would think it should be the opposite, right? Just because of the business and how things are run. So there's... trade off. Yeah, but it's changing. I wouldn't think about all of us moving to Austin and like Texas, you guys barred obviously for obvious reason particularly, you know, like the wealth actually was just dumb crazy. They tried it here ever before. Yeah, and they did it for about two years in France. Did they? Yeah, I don't know. But you know, when Elizabeth Warren first proposed. the wealth tax. So I found, and she said, well, we have these models and everything. So I found the economist at UC Berkeley, and I said, would you share your model with me or at least tell me about it? He goes, I'm like, was it more than one year? And he goes, no, it was just one year. I'm like, did you do any behavioral analysis to see how people respond to the changes? Yeah, no. And so... You know, whether it's mandami, Elizabeth Warren, whether it's California, it's showmanship more than reality.",
+      "word_count": 226,
+      "utterance_ids": [
+        "fe3f313f317af7a8",
+        "d494f34440be5814",
+        "9b26cdbd35055509",
+        "bcac81db43f74845",
+        "bf8c2270657f66f7",
+        "97c3bd742bbfb652",
+        "5a0d5276f1dfcd06",
+        "e88aa6cd91afc6fb",
+        "f9fea7cb54d8b13f",
+        "8d9361b27f733ccb",
+        "ebddace5316bd78f",
+        "efaac103f63438af",
+        "2f29a83989f59be9",
+        "5553bdb6a7961305",
+        "3b504d2667dd2a45",
+        "e69be83d5ca02c3d",
+        "5b2f3728ecd2fd9f",
+        "5e7bb5c01d7bf45d",
+        "d97ec982f3aeb8c9",
+        "6509f7cd309b017a",
+        "eac6be36e4ac01cf",
+        "67b481f849c5c8b3",
+        "6ffc673ee688695c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0109",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2007860,
+      "end_ms": 2022140,
+      "text": "Yeah. And I think people are forgetting that people are mobile, you know, like in the US, it's pretty extraordinary. You got Travis, Sacks, myself, Elon, just a bunch of... folks have all of a sudden just showing up.",
+      "word_count": 39,
+      "utterance_ids": [
+        "08dd07c12ec866c4",
+        "34191123d6ddcf66"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0110",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2022320,
+      "end_ms": 2023380,
+      "text": "I was there first. You were.",
+      "word_count": 6,
+      "utterance_ids": [
+        "2723c3465cc49081",
+        "fe1f62bf8e5d13e0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0111",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2023560,
+      "end_ms": 2028960,
+      "text": "I remember talking to you about it. And the thing that's amazing to me is, you know, in California, you didn't let you build anything.",
+      "word_count": 25,
+      "utterance_ids": [
+        "0f72e90ad8b31754",
+        "add4684635775034"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0112",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2029140,
+      "end_ms": 2047620,
+      "text": "And then we go to, um, I come to Texas, I buy a ranch. And I asked a guy like, hey, can I, like, put a solar farm in here, he's like, on your ranch? I'm like, yeah. here. He's like, oh, son, it's your ranch. You can do that. And it's like, can I like build like trust me in the cities themselves? Yeah, I do with that in the city of Austin.",
+      "word_count": 74,
+      "utterance_ids": [
+        "ae289863aa769659",
+        "0c4371f454f7481a",
+        "8959b288e9cc1db2",
+        "cf9899daece1260b",
+        "49fb980c8b56d1f3",
+        "20fa931ef7112b9d",
+        "12758b67d6e357fb"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0113",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2047620,
+      "end_ms": 2050680,
+      "text": "I mean, but just outside of it, you can build whatever.",
+      "word_count": 11,
+      "utterance_ids": [
+        "c1d28a03f988ce70"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0114",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2051040,
+      "end_ms": 2055580,
+      "text": "In the housing price have gone three years in a row, housing prices and rents have gone down.",
+      "word_count": 18,
+      "utterance_ids": [
+        "543e3971a9c278ed"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0115",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2055800,
+      "end_ms": 2079980,
+      "text": "When you build a company in Austin now, I'm sure it's like that in Dallas and Houston. in San Antonio, when I have founders move there, the entire pressure is released, people can own a home, and I was like, wow, is that why do people still go to Silicon Valley? That's like, drives me to, I think if you're a first time founder, nothing better in terms of soaking in it, but when you're a second time founder, you need it, but what they don't tell you, they hit the shit.",
+      "word_count": 92,
+      "utterance_ids": [
+        "268d0db89e72104a",
+        "a142b3f77762334e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0116",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2080000,
+      "end_ms": 2081680,
+      "text": "Yeah, it's stuff.",
+      "word_count": 3,
+      "utterance_ids": [
+        "c2b921afb77052b3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0117",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2081940,
+      "end_ms": 2092460,
+      "text": "I think second time founders have not realized if I build it in Texas or Nevada or Florida I'm gonna just all the talents that have been Silicon Valley just sets people's heads so wrong.",
+      "word_count": 35,
+      "utterance_ids": [
+        "20dde0a8ec830329"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0118",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2092660,
+      "end_ms": 2142320,
+      "text": "Yeah, right? So whether's Travis Mike by the way, I know Michael Delos since we were 22. Yeah, it's a nice to do business with them way back when But just the in Texas is just like build your company and go. Yes, and the valley is like So are you serious a you serious a you serious a lot of distractions. Yeah 25 years. I've been waiting for my next And win a championship and you played a significant role No, the first, they should have kicked your s**t and why didn't they why didn't I think it was coaching Like experience. Yeah, because you're up put aside the 29 right you're up in the fourth quarter of every game When be throws it into the back of some guy. I missed his two free throws during Fox goes the wrong way and a lot of mistakes Yeah, and you've been talking about fire in Mike Brown.",
+      "word_count": 158,
+      "utterance_ids": [
+        "64827e8033e32e1e",
+        "ecdfb094853e02db",
+        "0d6813bf4b2f7ce8",
+        "fe3a89ac1693dff6",
+        "8125935d25efb706",
+        "3fabfa8603e05b84",
+        "bee7752f4ed2b60e",
+        "05458e60885988f4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0119",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2143060,
+      "end_ms": 2148360,
+      "text": "I mean, it was if we worked certain when he got hired and getting rid of TEMPS, you know?",
+      "word_count": 19,
+      "utterance_ids": [
+        "ed593e4a87fc017b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0120",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2148440,
+      "end_ms": 2154340,
+      "text": "Oh my God. But JP was the real deal, right? Yes. He was my Indiana boy, OG, right? You know, he stayed, you guys.",
+      "word_count": 24,
+      "utterance_ids": [
+        "4763d4929b122392",
+        "0998d6ac48ae1df8",
+        "a28e64bf00c1df86",
+        "b0a6756226571490"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0121",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2154520,
+      "end_ms": 2157320,
+      "text": "Yeah. And you had Jalen Bronson.",
+      "word_count": 6,
+      "utterance_ids": [
+        "1e24e9f7b7bad3ea"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0122",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2159660,
+      "end_ms": 2170360,
+      "text": "He... last. And that was kind of destiny. His family wanted to come. That's what he wanted. I mean, I can show you with text words. Asian, you know, text me says he wants his own team. He wants his own team. Right. Yeah. He was ready to go.",
+      "word_count": 49,
+      "utterance_ids": [
+        "19549e930448b279",
+        "c6ab9e1eccaf9edf",
+        "0d4d81d169b2ae2f",
+        "dfcb72f33f6cac9f",
+        "c17173cb1faab43f",
+        "0efcd0a3995c4641",
+        "98ad3ec43271aed1",
+        "b90b56cfeea3f3b1",
+        "1d0d8cf7a0224dd8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0123",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2170440,
+      "end_ms": 2176580,
+      "text": "And I texted her email as you and I said, what's the story of the, this is what we're going to base the franchise on.",
+      "word_count": 25,
+      "utterance_ids": [
+        "f8332dfdf54f4ccc"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0124",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2176660,
+      "end_ms": 2197280,
+      "text": "You said he's really good. He's the real deal. Oh, and I love he's a great guy. the best part about JB. He's just really a good human. I was there for the fifth game, six rows behind the bench. That's cool. And man, I just cried. I just cried. It's been so many years and you got your chip too with Dirk.",
+      "word_count": 63,
+      "utterance_ids": [
+        "7859f40a60937df1",
+        "ed72654480419da4",
+        "df13fbf823f91dbb",
+        "a352a07e6ce6f90f",
+        "369edc9f90cd9118",
+        "2e321229d2d3438e",
+        "6d027307bb18f60a",
+        "c95ed4ecd37fb0a2",
+        "dd9c49f16d98df95"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0125",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2198340,
+      "end_ms": 2204360,
+      "text": "It's so amazing. how sports plays such a role in so many people's lives, yeah?",
+      "word_count": 15,
+      "utterance_ids": [
+        "f456068ad2c22c77"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0126",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2204400,
+      "end_ms": 2243160,
+      "text": "First of all, look at the world cup. I mean, it's just like sports has just changed everything. And you know, like I've been to four world cup games in Dallas and I hate soccer, football, right? Yeah. I hate it, but just the whole scene, the vibe, the energy, you can't beat us, like going to an... next game going to a math game same thing. Yeah. And the NBA, is it peaked? It sounds like it's hard to say. I mean, you know, for fans, no, because I mean, it just grows on social media. You know, I went, I was walking in Paris and there was a basketball store, you know, and had me jerseys and go back. and everything and so, I mean, it's just growing globally.",
+      "word_count": 131,
+      "utterance_ids": [
+        "4c6930fd8218dc6d",
+        "296ab588634bb7fc",
+        "77c1529ad08be092",
+        "c802fc18cf35e920",
+        "af0cfd278c168aa4",
+        "e649c570b8f496e8",
+        "e89d07db61b04bd3",
+        "d1d88eab1c86dd4f"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0127",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2244100,
+      "end_ms": 2246100,
+      "text": "Yeah, it's when be the real deal.",
+      "word_count": 7,
+      "utterance_ids": [
+        "36e5f1c2a9405bf6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0128",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2246540,
+      "end_ms": 2254880,
+      "text": "Yeah, he's got, he got humble though. Yeah, which is good for him. It's like Durk and 2006 got humbled and came back better. When be will come back bigger stronger better.",
+      "word_count": 32,
+      "utterance_ids": [
+        "f95aaaaec9193d89",
+        "f9c014fb07ad05d9",
+        "c22674a789789f91",
+        "66a0611a75a0449e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0129",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2254900,
+      "end_ms": 2263140,
+      "text": "Yeah, it's amazing how he went from this like incredibly, I don't know, the... There was a magic about him to, you know, he's a villain.",
+      "word_count": 26,
+      "utterance_ids": [
+        "959bacebd7ea11b3",
+        "d4a6c8ae99bee995"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0130",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2263880,
+      "end_ms": 2291060,
+      "text": "And he turned into a villain, which was New York. Yes, some years right and just the circumstances. And, you know, San Antonio thought they had in the bag. Everybody, it's like I went to Indiana University, right? And if anybody here to follow his college football in the States, like we were the ultimate underdog. We had not, had, you know, we had not won 10 games, we had, we beat more top 10 teams last year than we did in 100 plus years of the program. And so that, just changes people's attitude.",
+      "word_count": 95,
+      "utterance_ids": [
+        "53b9ff8b5ed6ffde",
+        "f17680560605b71b",
+        "9d91a37f04903349",
+        "00251e19f62489ef",
+        "e89848dbe9fbf872",
+        "51eaa37737d31879",
+        "56b126180927a043"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0131",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2291620,
+      "end_ms": 2316059,
+      "text": "You, we're very much involved in rule changes and well, we're going to get on AI next, but it's just great to talk to you about this since we're both such super fans of the NBA. It seems like the rule changes, the apron,. And, you know, how punitive it is, has created a lot more parity in the league and it only knows who's going to win like, well, because you have to break up your team, right?",
+      "word_count": 79,
+      "utterance_ids": [
+        "d586df938c38add5",
+        "e4dc7cf3ef3da504",
+        "eabb1264cc667505"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0132",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2316500,
+      "end_ms": 2354960,
+      "text": "Because at some point, okay, see what I have to break up their team. That's why they collect all - the draft assets because you can't have three max players, and if one of them turns out to be hurt or not what you expected, then you're in deep shit, right? And so the second apron is just a complete game changer, and you have to be so much better at putting together a team than you were before, and you have to get lucky, like... disperse that when be on a rookie contract, you know, the okay C has got, you know, had jet on a rookie contract. He's not on a rookie contract any longer. Right. So they have to be even more careful. And so it really changes the strategy behind building a roster.",
+      "word_count": 137,
+      "utterance_ids": [
+        "c018d4bf7dbee902",
+        "e99f3502b7751aa2",
+        "80a9c04e2eb77883",
+        "594fd8c119c8fb8c",
+        "072f67653618bba1",
+        "64fb25899fbf695c"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0133",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2355120,
+      "end_ms": 2358080,
+      "text": "So we're going to see back to backs or any more chance.",
+      "word_count": 12,
+      "utterance_ids": [
+        "b5b7fa2a3613d87e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0134",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2358320,
+      "end_ms": 2359500,
+      "text": "No chance. No idea.",
+      "word_count": 4,
+      "utterance_ids": [
+        "8cfdb0960128646e",
+        "520d00fb44a1cc5b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0135",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2360000,
+      "end_ms": 2363580,
+      "text": "It may be back to Max, but not a, what do they call when you have three, the three feet?",
+      "word_count": 20,
+      "utterance_ids": [
+        "5e2633eb5c47894e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0136",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2364180,
+      "end_ms": 2374540,
+      "text": "Yeah, three feet. Yeah, three feet. There can be back to Max, like, you know, if J .L. and J. Williams, J. Dobb hadn't gotten hurt for O .K .C. I think they would have beat San Antonio and I think they would have beat the net.",
+      "word_count": 47,
+      "utterance_ids": [
+        "e8fb989fbf6716c7",
+        "f824f1b516d21447",
+        "985fb5bd8ba00bba",
+        "b50296f10b493ba0",
+        "bfa619277dc77c4c",
+        "54cb0a605d5bc5e3"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0137",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2374640,
+      "end_ms": 2376820,
+      "text": "I was worried about them versus the next.",
+      "word_count": 8,
+      "utterance_ids": [
+        "455d5ee5621fb86f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0138",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2377000,
+      "end_ms": 2379700,
+      "text": "I knew we could beat the spurs. But I was concerned about that.",
+      "word_count": 13,
+      "utterance_ids": [
+        "eb5e3f449ea8aa3c",
+        "d48ba091aae22c93"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0139",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2379700,
+      "end_ms": 2398360,
+      "text": "No, you. to buy newer would be home on we beat them two out of three of the games in the year were spanked him I knew it would be like I said Nixon six it was Nixon you guys barely beat the hawks and then oh come on now we were tweaking the offense and we just had to get cat to buy in as far as let's talk a yeah you let's talk to yeah.",
+      "word_count": 77,
+      "utterance_ids": [
+        "e2e650537e323df2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0140",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2400419,
+      "end_ms": 2417360,
+      "text": "But it is a great to be a champion. God, it was, where's your ring? Then it give you, they didn't yet. No, I'm going to get it at the ring sir. You got one. I, you know, I always was like, man, I got to follow cubes and get, you know, a piece of it. You don't, you want to buy it. I always wanted to get like a, you know, a piece of the next.",
+      "word_count": 77,
+      "utterance_ids": [
+        "f2e42b8d64abb51c",
+        "7fb4c2cffe45469c",
+        "d3582ddaf355aeca",
+        "e20ddc1d9fd14300",
+        "9557cad942a511d2",
+        "89ae3bc741ae7795",
+        "8cf75e9f53e0407f",
+        "9938b82a45871874"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0141",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2417500,
+      "end_ms": 2422340,
+      "text": "And now it's like, my net worth doing crazy. great, the value of the team.",
+      "word_count": 15,
+      "utterance_ids": [
+        "eade5d0e1b1c3006"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0142",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2422760,
+      "end_ms": 2458280,
+      "text": "So disconnected from reality. I mean, my only chance is to call like, he'll ought to be a part about the valuations. It's not driven by attendance. It's not driven by wins or losses. It's driven by subscriptions to streaming services. And it's going to be interesting to see because he... used to be we looked at ratings TV ratings and people says the NBA was underperforming versus everybody else. Now the next play obviously there's some pen up demand there. But what really matters is the number of subscribers peacock gets ESPN gets it's the rating house for ourselves, but it's more subscribers.",
+      "word_count": 104,
+      "utterance_ids": [
+        "9af3c161cdd76d9b",
+        "609b697c7d6a070c",
+        "6d7edbabd3c2fe44",
+        "21659934dd0e6be8",
+        "8e6771abc579de65",
+        "0f8d91a48b199cd7",
+        "b99331c11e6c4179",
+        "ee1db03116000f23"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0143",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2458480,
+      "end_ms": 2461600,
+      "text": "I mean I literally had to subscribe. to like I think one or two more services.",
+      "word_count": 16,
+      "utterance_ids": [
+        "d4d090e41d793777"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0144",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2461780,
+      "end_ms": 2479980,
+      "text": "That's the whole point, right? And did you keep them as the question? Yeah, I'll keep them sure. I mean, we'll there will be churn. If there's churn, who knows what happens with valuations? If there's not, valuations keep on going. Wow, that's so crazy. Sorry, listen, there's your 45 minutes with Mark Cuban, the one that only says. I'm doing all this.",
+      "word_count": 63,
+      "utterance_ids": [
+        "3f57506a1f5b60c9",
+        "b17d2da7b7bc728a",
+        "b864901969910453",
+        "2d44aabae2275188",
+        "c7ea00fe1610e59b",
+        "8de7ef8b72ee8bc9",
+        "449f412124e7e056",
+        "17479709692cd23b",
+        "b2305871112ae832"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "04ff0000906a6d10_t0145",
+      "source_id": "04ff0000906a6d10",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2493659,
+      "end_ms": 2496280,
+      "text": "I'm doing all of it!",
+      "word_count": 5,
+      "utterance_ids": [
+        "aa274013e9a47339"
+      ],
+      "is_question_anchored": false,
+      "stripped": "outro"
+    }
+  ]
+}

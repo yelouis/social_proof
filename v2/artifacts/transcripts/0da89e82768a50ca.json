@@ -1,0 +1,1832 @@
+{
+  "source_id": "0da89e82768a50ca",
+  "title": "Saronic Founders: Autonomous Warships, China's 230X Advantage & Swarms of Robot Ships",
+  "metrics": {
+    "source_id": "0da89e82768a50ca",
+    "title": "Saronic Founders: Autonomous Warships, China's 230X Advantage & Swarms of Robot Ships",
+    "utterance_count": 542,
+    "turn_count": 91,
+    "retained_turn_count": 82,
+    "stripped_turn_count": 9,
+    "question_anchored_count": 15,
+    "question_anchored_pct": 16.48
+  },
+  "turns": [
+    {
+      "turn_id": "0da89e82768a50ca_t0000",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 0,
+      "end_ms": 3080,
+      "text": "All right, everybody, welcome back to the all in interview series.",
+      "word_count": 11,
+      "utterance_ids": [
+        "79c526031a129658"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0001",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3680,
+      "end_ms": 4340,
+      "text": "I am thrilled.",
+      "word_count": 3,
+      "utterance_ids": [
+        "abcce236838500cf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0002",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 4540,
+      "end_ms": 16480,
+      "text": "Really thrilled because Ceranic is a defense company that has been doing amazing work. And we are so lucky to have the co -founders here on the program. Welcome to the program, Dino Mavruchis, how are you, sir?",
+      "word_count": 38,
+      "utterance_ids": [
+        "57e4179910c852b6",
+        "1c70f0b59c16911d",
+        "ae793f67cb1114ca"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0003",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 16940,
+      "end_ms": 18440,
+      "text": "Doing well. Thanks for having us.",
+      "word_count": 6,
+      "utterance_ids": [
+        "0e34975726b9ee9b",
+        "de646362c12e3845"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0004",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 19200,
+      "end_ms": 26780,
+      "text": "And your co - founder here, Vib Altaqar. Let's talk a little bit about ceramic and we'll get it get into everything.",
+      "word_count": 22,
+      "utterance_ids": [
+        "5688f80d02a9bf1e",
+        "bdac7c0339ec5fbe"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0005",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 27400,
+      "end_ms": 28780,
+      "text": "But you were in the news.",
+      "word_count": 6,
+      "utterance_ids": [
+        "b5ee0b3bb7b0861c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0006",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 28780,
+      "end_ms": 37480,
+      "text": "You were in the news because you're making autonomous ships. And one of these was used recently in the straight of horror moves.",
+      "word_count": 23,
+      "utterance_ids": [
+        "474e788d92fd738a",
+        "d75c132ceb02107e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0007",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 37480,
+      "end_ms": 38300,
+      "text": "I understand.",
+      "word_count": 2,
+      "utterance_ids": [
+        "904955d647efd842"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0008",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 41299,
+      "end_ms": 51480,
+      "text": "As your wealth grows, have you noticed how much more complex things get between investments, tax strategy and estate planning, managing in all is a full -time job that you didn't ask for.",
+      "word_count": 33,
+      "utterance_ids": [
+        "21ed7eceb08da28c"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0009",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 51640,
+      "end_ms": 52820,
+      "text": "Creative planning can help.",
+      "word_count": 4,
+      "utterance_ids": [
+        "9a17be01100a6d7b"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0010",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 52960,
+      "end_ms": 68100,
+      "text": "Their coordinated team of investment managers, CPAs, and affiliated estate attorneys can do much of the heavy lifting so you don't have to create a planning where wealth works together. Go to CreativePlanning .com slash all in.",
+      "word_count": 37,
+      "utterance_ids": [
+        "a64c79ba2af86d97",
+        "14e666d44a82995e"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0011",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 70160,
+      "end_ms": 71600,
+      "text": "I got to start there, Dino.",
+      "word_count": 6,
+      "utterance_ids": [
+        "4c3e8ef1c740a535"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0012",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 72300,
+      "end_ms": 84840,
+      "text": "Tell us about the mission, tell us what happened. This is the first time an autonomous ship has ever rescued. Folks in the field and then we'll get back into your history and everything, but I think we've got to start off with this story because it's incredible.",
+      "word_count": 48,
+      "utterance_ids": [
+        "6877671ec5d99001",
+        "e11095cef5070ebf",
+        "8239e93e8eaf6c51"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0013",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 85740,
+      "end_ms": 201740,
+      "text": "It's a huge story and I can't get into too many specifics of the operation and the mission for obvious reasons, but before we get into what it means for the country, what it means for our company, I mean, without saying the most important and thing, is that those two pilots came home safely, regardless of how they got there. Now, what we were able to demonstrate through this partnership with the Navy, for us is the Navy actually trusted us. In this moment, lives are on the line. We're gonna send this autonomous platform to go and rescue these folks. This is not a... patrol. This is not maritime domain awareness. This is the highest stakes of the highest things. There's down to American pilots in the streets before moves. And I like, of course, there, which you actually see right over my right shoulder, which is our 24 foot fully autonomous speedboat for those that don't know. So we're going to use that to rescue the And that's actually like a milestone moment for the country and I can tell you I'll tell you a personal story firsthand I kind of what this means, but you know this leaving people behind in the US military just it's not a thing No, US military does not do it right like I was in the Navy sealed teams for 11 years from 2004 to 2015. My last five years were on sealed team six. I personally experienced 2005, there were four seals trapped on a mountainside in Afghanistan, and the helicopter got shot down while going to rescue them. So what we were able to prove in this moment. was that you can go and rescue people without putting additional soldiers in harm's way. That's the impact of what this had. That's what it means for the country. And for our company it was just an extremely proud moment where the Navy trusted us in this high -stakes environment. Absolutely incredible! And obviously, thank you for your service.",
+      "word_count": 339,
+      "utterance_ids": [
+        "ffa4939beb5cc3e3",
+        "0c5b4be34c41c78a",
+        "581ee46d118a2d78",
+        "f1c0627b32c0cec7",
+        "489cc4dfe5dda980",
+        "d837a294735736c2",
+        "24891cb10855acb6",
+        "774ec2d47db0cecf",
+        "e362c3766e16915a",
+        "7dd1e0564c0a68d4",
+        "08321a65780b48b7",
+        "9b891eaea1525d30",
+        "e6231954a7b75b59",
+        "5c95d79bd68dfed9",
+        "07b0df02b7ab63c4",
+        "cfd36eb1e2a7f329",
+        "a528f44f54e98aa5",
+        "dec001a330ce198f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0014",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 202780,
+      "end_ms": 219760,
+      "text": "And I know you can't get into too many details, but I've been reading all about it. And I got to wonder with these two pilots, did they know that this was an autonomous ship and the ship comes rolling up and they're like, somebody said to them, message, hey, you can get picked up by the autonomous ship, grab the side of it, climb on board, like, what's the protocol?",
+      "word_count": 71,
+      "utterance_ids": [
+        "28637ab13ff07606",
+        "8f7a168f7f5d304c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0015",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 220000,
+      "end_ms": 258280,
+      "text": "For the autonomous ship picking up two folks that they swimming out to it. Well, I just got to get a little color on this before it becomes a movie. I mean, it's the first time that it happened, right? And when a ship went up, both pulls up to you and there's nobody on it, you know, you can very quickly deduce that it's fully that it's an autonomous boat. And you know, these piles. were in the water for I don't even know how long they're in a completely contested environment. We're in a conflict with our ran there in the streets before moves and we can go through the dynamic there. But they looked at this platform and said that's my way home. That's how I get out of here. I love it.",
+      "word_count": 136,
+      "utterance_ids": [
+        "4562408681b079c4",
+        "368f821e24ff3a69",
+        "062dca0d5756de28",
+        "d179c191b69fe431",
+        "64dec3b1aae2bd81",
+        "e267993a09076d82",
+        "730045afa2f57f41",
+        "4b152d0b10f348b6",
+        "4944885816769069"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0016",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 258420,
+      "end_ms": 312900,
+      "text": "All right, let's step back a bit here. you're in AVCL, web, you've worked in this space for a while. And you previously worked at Android, I understand. The mission, as I understand it for the company, is to greatly increase our ability in America to produce ships. And for people who don't know, the amount... of, uh, tonnage, the number of ships that we're able to make in America and most Western countries is very low. But there's an adversary, uh, in the Pacific, who is able to produce a lot of ships. It's known as the Chinese Communist Party. So maybe from first principles, you could just explain what you're building. and why it's important and just how insane the incompetence of the West in terms of building ships has become. I mean, we are really bad at making ships right now.",
+      "word_count": 144,
+      "utterance_ids": [
+        "f48b6253df2ae2d5",
+        "8a25287a3b83c2ab",
+        "4bccd5d8c80065d9",
+        "b9b5ffc121a04233",
+        "411016f5c82de8aa",
+        "4502b7234403f5a7",
+        "6755de5390b5893e",
+        "dec569e839511aa9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0017",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 312940,
+      "end_ms": 398360,
+      "text": "Am I correct? We're beyond that. Let me I'll take a step back and just kind of highlight where we're at. And then I'll let Vib go through what we're doing about it. How we're changing that dynamic, but Jason, what you were saying, right? Just to put it in context, the United States can build 100 ,000 gross tons of ships over your gross ton is this why you metric measure of ships. So if you build a 200 foot ship, that's different than it. 800 foot ship, but let's compare apples to apples, 100 ,000 gross tons. The Chinese, which you were referencing, in both 23 million gross tons, so they can outbuild the U .S. 230 to 1. And it wasn't always the case, right? 30 years ago, the Chinese didn't have this capability. They have 5 % of the world's shipbuilding capacity. Today they have 57 % of the world's shipbuilding capacity and actually that problem is getting worse because they consider the Communist Party is just constantly subsidizing the entire industry so they're cutting the commercial market on price. They're not just such a thing. subsidizing the direct cost to build. They're subsidizing raw material and labor costs. So as the ship built in the United States, it's actually five to six times the cost of that same ship built in China. And so they keep getting more and more orders. So that number is a 57 % is just going up. How do they get that capability?",
+      "word_count": 253,
+      "utterance_ids": [
+        "8f420511cc8889d2",
+        "812e1e78e0b2b0a2",
+        "2b76622853cd2a8a",
+        "843b21537006a63a",
+        "45accff436708b18",
+        "184497ae83ef521b",
+        "6fbeb94069340e55",
+        "3c89b6bba9e584ea",
+        "cafaa9b12876d314",
+        "f3fd82b75cbd3efd",
+        "059106c726bea99c",
+        "df1244d8e5e11273",
+        "df6e60d425efd6f0",
+        "97d97313c9e4bcd2",
+        "d858b1d6cff4d786",
+        "e37daf709f9bb3f3",
+        "f8b7d85541e47a37",
+        "3c531b043c518ce6",
+        "37f1b06326fb76ea"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0018",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 398640,
+      "end_ms": 411060,
+      "text": "Is that because, as a manufacturer to the world, they needed to ship out products, so they did this in a commercial way for first, or was this always very intentionally, we need to own the sound for such a thing.",
+      "word_count": 41,
+      "utterance_ids": [
+        "1815c2e2585b4b6c"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0019",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 411060,
+      "end_ms": 518380,
+      "text": "The first ones are on the commercial market, and then I'll talk about, I want to talk about the status of our Navy, like where the naval fleet is today, what that means. and then where the Chinese navy is and where that's going. Because again, 30 years ago, the Chinese navy was a literal backwater navy. Today the nuclear submarines, aircraft carriers, and hypersonic missiles. So there's a massive change over the last 30 years. And what's happened in the U .S. Building Industries, completely declined. So the US Naval fleet has 296 ships today. There's a congressional mandate, statutory minimum of 355 ships that was set by Congress in 2018. That was eight years ago. Last year we built nine ships, but we retired 19 naval vessels. We're going in the wrong, like the completely wrong direction. The Chinese delivered somewhere in the ballpark of 30 ships, their fleet sizes around 370, they'll be at 450 before you know it. But the commercial market is where that discrepancy lies, even larger, right? They delivered over a thousand commercial ships last year. United States built five, five, one two three four five, one two three four five, one hand. Wow. So if a conflict actually kicks off and we saw this in the US and World War II where we had the production capacity where we building the thousands of vessels every year, if a conflict kicks off, that commercial capacity isn't going to go. Building cargo containers and more. It's all going to flip to defense capacity and it's going to be building for what the Chinese Communist Party needs to win a conflict and that's what we have to be building towards. That's what we're doing at surrounding. That's why we're thinking, okay, how do we build mass? How do we build scale in whatever it is that we do?",
+      "word_count": 313,
+      "utterance_ids": [
+        "34058dff975573f3",
+        "49e090d49f6cb40d",
+        "f100e209198947cc",
+        "227b70103f32ccf8",
+        "b3c72243d917d621",
+        "0ae2551db7e8c60c",
+        "3b4af01efc7f76cc",
+        "d92bab9aba9bd2ca",
+        "7ef7c8060a12138e",
+        "b4f17df63d202b98",
+        "e349afbe4eecd28a",
+        "23d984d32b6215fe",
+        "c7275c1ffbfc3589",
+        "f592f8ad6189a041",
+        "e6656b7f49ecb099",
+        "5ead9a2c0e46d64c",
+        "7a79aa940c60e643",
+        "1978d9ed87a1a727",
+        "e9c832503d38efbb",
+        "c4f97526b17931d2",
+        "a032426e34a145f2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0020",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 518720,
+      "end_ms": 545540,
+      "text": "And so how do you do it? I would think and listen, I'm a Neo fight here, but if these are autonomous ships, well, you can remove things like you don't need beds, you don't need a commissary and you don't need latrines and I don't know what percentage of a coercer or a battleship are there to support. Humans on the ship, but I got to think it's half the mass of it as to is to keep humans on it.",
+      "word_count": 82,
+      "utterance_ids": [
+        "8619a1dc7cff8d78",
+        "8994ec7284eab367",
+        "2a19d8da36522367"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0021",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 545600,
+      "end_ms": 605620,
+      "text": "Am I directionally correct? I think half is a little excessive, but there is a significant percentage of the components, the cost, the labor that actually goes into catering to human beings on board. I would say at a high level, you know, you're really reducing the complexity of the entire product, right? You don't need to worry about a separate electrical system for humans. You don't need to worry about, as we mentioned, doors, bathroom, stairs, et cetera. And then at the end of the day, you can actually start to intend to optimize a lot of different things. So even if you look at Corsair, for example, you know, if you were to buy a commercial 24 foot it's unlikely. a thousand of them out. It's also unlikely to drive and have the control authority of the boat that we've built here. Because you don't have, again, you don't have to worry about, you know, a person feeling, you know, take two floors in the middle of the distance. Yeah. And so you can actually optimize across a bunch of different areas, naval architecture, the speed, range. and payload of the craft itself, and then again, reduce a lot of the complexity where you're removing subsystems that are meant for humans.",
+      "word_count": 213,
+      "utterance_ids": [
+        "3380f68a7e77e8d7",
+        "1feb07905a7d3485",
+        "5e2cd3c8c164f15e",
+        "b5b646880eef97ce",
+        "fdf59c546c0aa800",
+        "ab9e4accd49789c7",
+        "6e6bc0345b647fe2",
+        "3dee94b94868b3b4",
+        "7a40c834a4c079eb",
+        "51481b1025bcda5f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0022",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 606700,
+      "end_ms": 626060,
+      "text": "And the course error, which is my favorite ship, just based on the name, I believe, for my research, this meat was originally meant like a pirate ship or a private hearing ship, but it's, is it now standard, lingo, that that's a 24 foot book? And has a certain profile, do you know, is that how these designations come about the names of these ships?",
+      "word_count": 66,
+      "utterance_ids": [
+        "7810436b9567fe06",
+        "36f4bff4c21e52c1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0023",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 626460,
+      "end_ms": 677020,
+      "text": "I mean, I wouldn't say that course there is now universal 24 foot autonomous surface. Let's the name of our product lines and we chose it very purposefully. And we chose all our names purposefully. Even the name of the company, I mean, we were talking about. You know, our Greek heritage before the show and where they came from. You know, the Seranic Gulf is a Gulf off the coast of Athens where the Battle of Salam has happened. It's one of the most famous naval battles in history, came after the Battle of Thermopoleor, the famous stand of the Spar 300 Spartans, and it was the naval battle between. The Greeks and the Persians where the Greeks were wildly amassed. The Persians had much, larger ships. They had a much larger fleet and the Greeks were able to lure them into this narrow street and use smaller, more maneuverable products to ultimately defeat the Persians.",
+      "word_count": 157,
+      "utterance_ids": [
+        "e06968d73a11742c",
+        "0d87cae5b42eed38",
+        "47b744507ebb0778",
+        "642c4746883b6755",
+        "29997e94bd162f99",
+        "b90f1a743e6ee3b8",
+        "d98fc04498894652",
+        "d45cf7d45d8ab00f",
+        "2910f8f31ab24fa0",
+        "d71d80ab8b345ded"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0024",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 677020,
+      "end_ms": 691060,
+      "text": "Now, cost is part of this. in terms of these ships in the field and the number of ships. My understanding of our contemporary China is that they don't build a lot of big ships.",
+      "word_count": 35,
+      "utterance_ids": [
+        "2ce0956200c47e33",
+        "86bece01ea5d4c2f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0025",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 691080,
+      "end_ms": 692480,
+      "text": "They build a lot of ships.",
+      "word_count": 6,
+      "utterance_ids": [
+        "b43077a63dee916e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0026",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 692740,
+      "end_ms": 716940,
+      "text": "So they've got a lot of smaller and very, very number of ships. If I'm correct there, then the cost becomes the issue. Because building a lot of ships in the field. a bunch of aircraft carriers, I keep hearing that supersonic is going to take out all these aircraft carriers in the first 15 minutes. Vib is, that true what we hear that, hey, we need smaller ships, faster ships, and what is the cost of something like, you know, the core saire that you used on this incredible mission?",
+      "word_count": 91,
+      "utterance_ids": [
+        "8feefa03155c1365",
+        "6b017732d4ccdac2",
+        "75db5c2dd3c4ac0d",
+        "a3e7cba3b31f1028"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0027",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 717440,
+      "end_ms": 784059,
+      "text": "Yeah, I would say, you know, at a high level, the goal is mass. Like large -scale attributable mass. And yeah, if an aircraft carrier takes 10 years to build, and $13 billion is like you're not really achieving that, I think there's always going to be kind of a role in responsibility for a craft like that, but ultimately you're right. But if you're big and very obvious to find, and you can find you from space, et cetera. You know, it's a real risk when you reduce, you know, the overall cost of like just doing things in the ocean, right? But that's ultimately where the autonomous piece comes in. You can deploy at scale. You can monitor a larger body of water with less people. And ultimately what you're really getting to. is removing people from harm's land, right? So what we think about designing and kind of thinking through the price points of these things, the comparison demand crafts isn't really necessarily even comparable as you get into larger ships, right? For us, it's really a question of like, what is the cost that you would typically have to use? humans for and how much is that actually being reduced by having a large autonomous fleet.",
+      "word_count": 210,
+      "utterance_ids": [
+        "38ede4422e89c6c3",
+        "40ade6ed1b238a9b",
+        "e68a83a4bd249a39",
+        "7622d363b4ceecfa",
+        "d9bfa00e5953fedf",
+        "565fec0723658679",
+        "5ac36751845e3c70",
+        "836d523ea9d5ca93",
+        "1231d90b5a0b11c8",
+        "4fc0073236d8bcb5",
+        "952655625229ed59"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0028",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 784440,
+      "end_ms": 788320,
+      "text": "Corsair's a million bucks or something, do you know the Corsair costs about a million?",
+      "word_count": 15,
+      "utterance_ids": [
+        "783d4191ab6320ff"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0029",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 789060,
+      "end_ms": 906860,
+      "text": "Yeah, I want to go back to, we'll get that, I want to go back to one thing you said earlier and it's like, China's building both very large ships and a lot of ships. They're right, they're doing it all, right? And when we think about, okay, how do you actually change the paradigm for the U .S. Navy? It's let's actually boil it down to unit economics. Let's think about this like a commercial company. How do you live mentioned like payloads? What are you actually moving on the ocean? One of the most important metrics is VLS tube. So vertical launch. It's basically how many big Tomahawk missiles can you carry on a ship? It's how much fire power are you fielding? So let's use an example of that, right? A destroyer, enable destroyer costs about $3 billion. $3 billion, $3 billion. And I'm not even getting into the sustainment and maintenance costs over the life cycle of the destroyer. about what it costs to buy. If we do that, it's $10 billion over 30, 40 years. $3 billion. $68 to make. You can feel about 96 VLS tubes. So I'm going to round up on to make that a hundred for easy math. So on average, you're fielding somewhere between 10 to... 15 VLS tubes per year at a cost of 30 million per tube. Marauder, I won't give you the exact price or cost, but can reduce that cost by a significant amount. But we're building 20 marauders for 20 marauders for year at our shipyard in Louisiana. Right? So now you can feel we can carry the equivalent of 16 VLS tubes on the back of that 180 foot fully autonomous ship. So now you can feel 320 VLS tubes per year as opposed to 15 and you can do it at a fraction of the cost. This is how you act. they save the taxpayers, hundreds of billions of dollars, and you get more capability into the field faster.",
+      "word_count": 336,
+      "utterance_ids": [
+        "e38dc131a11fd89a",
+        "f216e3d34fa8433d",
+        "22e7ac2a406a32ca",
+        "5daf091f87209af9",
+        "fa83bea3fcd7c2ed",
+        "82476ee65136203f",
+        "6ff58647526eb76f",
+        "e58ae8ccc75d5cfa",
+        "f52cc053e9af7b1f",
+        "2990b266a9fe07db",
+        "10b6e31bcbd1a58d",
+        "62521fbe47536126",
+        "70ab11425ba2f20a",
+        "929a9e742b2b208d",
+        "44a12dab85654129",
+        "c36e7f10c129f1ca",
+        "76a851122ef74856",
+        "7bf6816e1d36953a",
+        "66f4a6ca4d8fef13",
+        "afe5006aa58bcb2c",
+        "849172ea32439a28",
+        "183401ccd88489be",
+        "03891f14d04567b8",
+        "97416a812506927f",
+        "8782f87acb8e7fe5",
+        "afdea66e768b9cb7"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0030",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 907140,
+      "end_ms": 939980,
+      "text": "I mean, that's just extraordinary thinking about it. What do you lose by not having humans on it? You know, are we going to be faced with a moment in time where these are kind of like drones, you know, where There's no pilots, they're just pilots in a shipping container, dropped somewhere, either, you know, in the middle of America and doing it remote like we've done is that the future of warfare with the ships or and what do you lose when you don't have a team there on the boat? What is the criticism valid or invalid that people have of unmanned?",
+      "word_count": 105,
+      "utterance_ids": [
+        "c125d1d081135910",
+        "dc880f74c03e9fa1",
+        "496902ea043c0e22",
+        "1cb3c8cd0fddd07b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0031",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 940540,
+      "end_ms": 1033100,
+      "text": "Well, I'm going to live and talk about the way that we're using software, because I think though the criticism to your question is, well, what happens if we're in the middle of the ocean and the ship breaks down, who's going to fix it? It's not that we don't meet this technology. It's folks that aren't used to technology, saying Oh, how's the technology actually going to work? And that's what we're proving out every single day. To your point of like, what do you lose by not having people on them? Look, it all boils down to the mission, right? And this is why we partner so closely with the Navy. This is why we work with actual operators. It's like, what are you using? What are you delivering? If the mission is long -range, fine. requires we're packing a bunch of VLS tubes on the back of our honor. You actually don't lose anything, right? You're just delivering those capabilities into the field while keeping people out of harm's way. And that's a very, important part of the equation. But if our ships, let's be clear, like, if our boat's and ships aren't accomplishing the mission. Then they're not relevant. They're not going to be used in the first place. And there is going to be some mix. I don't know what that mix is. I don't think anybody really knows what that mix is. Of man and unmanned ships. So what you're going to see in the Navy is like a hybrid Navy. So the things that you're missing from having people on the ship. forward deployed decision makers in the environment. You can actually have out there on man's ships, but you're using unmanships to put into combat areas and conflicters to keep those people very safe.",
+      "word_count": 302,
+      "utterance_ids": [
+        "06a6a531d8632b7a",
+        "d7b4bac897c93749",
+        "facc3984e3f9bcc6",
+        "9cd9bf992d0654cc",
+        "5ce914b4e1774ac0",
+        "a79a5d234361324a",
+        "c69c4972062eeeb3",
+        "2c209212a390b8bb",
+        "d6eb0a55201f361b",
+        "642959d7fd45666e",
+        "f6146055ad68827c",
+        "4e4135b0611b4827",
+        "a402c197cd825417",
+        "2a0c909743385d38",
+        "5466e32068756ab6",
+        "2ac7cedfb072e273",
+        "7a5a9c87349a157d",
+        "2c6d9b204709494e",
+        "62e193d800c05878",
+        "b63f15d4703bfa76",
+        "9061876a97d98bf5",
+        "79bf2effe2bfc136",
+        "50c744d9013bcb58",
+        "b8a8f941a7be8321"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0032",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1033480,
+      "end_ms": 1078420,
+      "text": "Bobbi, take us through the production of these. How do you achieve speed at it? You know, friend of the party on must with the... Tesla's over time, he eventually built the full stack. In the beginning, if you had a Tesla, you would look at the shifter and you'd be like, hey, that looks like my Mercedes, and that's because they had their steering column from Mercedes, one of the early investors. The HVAC was from somebody else. But eventually, he had materials coming in. And one side of the factory car is coming out the other, and he made every single thing in that car. He was now no longer dependent on any third party manufacturers or a supply chain, and famously the HVAC, I think, in the Model 3 and Y, when it came out, reduced massively the drain on the battery, right?",
+      "word_count": 146,
+      "utterance_ids": [
+        "f2330b685d4745bd",
+        "d99d13535ab31b22",
+        "b942a39da2f991c9",
+        "0fec789c8cc2db0a",
+        "60f0f3a30b018716",
+        "0a1f538fa3ac92bb",
+        "0e082b6a6b925eab",
+        "e26677a068c37387",
+        "499f6eefab1aa275"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0033",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1078420,
+      "end_ms": 1079980,
+      "text": "So it's purpose -built for that mission.",
+      "word_count": 7,
+      "utterance_ids": [
+        "e092f795b8dc826d"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0034",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1080000,
+      "end_ms": 1088080,
+      "text": "So, I'm assuming you're doing that from first principles, but what's the secret to this rapid production and lower cost production?",
+      "word_count": 21,
+      "utterance_ids": [
+        "b0d505e868b9f041"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0035",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1088600,
+      "end_ms": 1189580,
+      "text": "Yeah, listen, I think there's, you know, within the shipping industry or the largest, there's a bunch of different challenges of why the production isn't as high as it should be. And one of those core reasons in the Navy's talk about the successively is investing in the supply chain. When you build five commercial ships a year, your gen set manufacturers, the marine engine manufacturers, also don't have to produce at a very high rate, so one of the things that we get the luxury of doing by being very cleaner is that we get to work with these manufacturers directly do non -referring engineering work, invest in really digitizing. A lot of the components that historically have been very analog, right? Um, you know, you asked earlier like, what do people, what do the people do on the ship? So what are they going to do if the ships are autonomous? Well, when you think about, you know, do you know, mentioned the life cycle of these ships for 30 years? You think about a ship that was built 30 years ago? You know, you have people that are doing extremely manual things in the engine room. That today should be extremely... trivial to automate through software. And so a lot of that work actually gets completely absorbed by the software stack and you don't have to worry about it. And as we choose components, we invest in the supply chain, we invest in the U .S. database. We actually help bring all of these analog components that for a long time were meant to be operated by humans, we give them software. API is to make sure that they can be controlled by, you know, MCP or software sex somewhere else and to be, you know, remotely access and whatnot. So there's like something that's going to go down massively when your building one of these, yeah. Absolutely. Yeah. And, you know, frankly, I don't think the person is sitting in the engine room is super thrilled about it anyway. No, not right. Actually, you're actually changing the, You're too much in the decision making, right? Like now there's going to be, you have more mass out in the ocean, more sailors are going to be making decisions about what those, what that mass is going to be doing and where assets are going to be.",
+      "word_count": 399,
+      "utterance_ids": [
+        "8d9fcb1d8c098c6b",
+        "b53789791cd6c9b6",
+        "1cbf6230882a43bd",
+        "0bd499444ef65b0f",
+        "8de303e9b25c542c",
+        "d93369a755b48177",
+        "b3667e0b861f6114",
+        "322f8df5366ed870",
+        "b36812e6398ccba8",
+        "a44daf1d1223aaf6",
+        "949ec69ee89d21d1",
+        "6dc82c1a00b92a65",
+        "51e3c118eed8c4e6",
+        "4269a41b3dcf9e98",
+        "70fd0f6114184314",
+        "3994cb61a50502c8",
+        "acf82e8464ac5b84",
+        "41c3ee6e96000220",
+        "3cc4fa520385c3db",
+        "5834bde11f7271be"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0036",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1189600,
+      "end_ms": 1250500,
+      "text": "Instead of worrying about, you know, cool pressure and an engine, right? And so, you know, when we think about the actual design, there's, a lot of different variables. There's some components that are commercial off the shelf, right? Elon in the early days, from a compute perspective, they had to invest in A6, right? The compute stack wasn't there to run large models and run inference at the speeds and power budgets that they wanted to. In 2026, it's a totally different game, right? And so there's a lot of different parts of the supply chain that, you know, some... sometimes we're looking at, you know, investing in industrial base and making sure that, you know, our end -to -end manufacturers and gents at manufacturers are keeping up. On the other side, there's particular components that we're like, hey, the marine industry actually hasn't had this level of investment in a long time, so we're going to have to build this in -house. You know, a couple of examples around that are related to a lot of electronics. related to the sensors and compute, but, you know, a bunch of different things there that help us at build and assemble quickly. I'm doing all of you.",
+      "word_count": 207,
+      "utterance_ids": [
+        "45896d295c9c3351",
+        "0d580c622a41d5a3",
+        "1e85734903b83e9b",
+        "08f9b2c770e5b736",
+        "a9ca31e102f11d5b",
+        "2ff8f114a2e0f742",
+        "e30b61078a708eae",
+        "c9ee6f2ff66a6a13",
+        "245f3c10b9fe58b3",
+        "1b4a4f4728591272"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0037",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1252500,
+      "end_ms": 1257260,
+      "text": "Starting a business usually means juggling a bunch of different services just to look legit.",
+      "word_count": 15,
+      "utterance_ids": [
+        "b2fdaf86bd17a524"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0038",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1257760,
+      "end_ms": 1258280,
+      "text": "Not anymore.",
+      "word_count": 2,
+      "utterance_ids": [
+        "6d928fc7b2153c91"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0039",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1258580,
+      "end_ms": 1269540,
+      "text": "With North West Register E. you get a complete business identity, all in one place. A business address, domain, website, phone number, and more. With privacy protection, built -in from day one.",
+      "word_count": 32,
+      "utterance_ids": [
+        "00f28e6e94038fd6",
+        "6f42482ad4d08f6f",
+        "19211697108a71b0"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0040",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1269800,
+      "end_ms": 1272240,
+      "text": "Don't spend hundreds or thousands on services.",
+      "word_count": 7,
+      "utterance_ids": [
+        "735ea745c54f72de"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0041",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1272780,
+      "end_ms": 1283060,
+      "text": "You can get from Northwest Repree. Visit NorthwestRegisteredAgent .com slash all in freak. and start using free resources to build your business to that.",
+      "word_count": 24,
+      "utterance_ids": [
+        "30a998010c3f3dcb",
+        "7532f376105479f2"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0042",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1285040,
+      "end_ms": 1333240,
+      "text": "Let's talk a little bit about Dino on the business side. How will you work with the Department of War, formerly known as the Department of Defense, Emil Michaels and a bunch of the folks over there are really focused on getting started up, essentially, like you are. More contracts, but you also are moving out, I assume, of this cost plus world and you're just figuring out, hey, what's the right price for this? And take us inside that paradigm shift. You have these primes and then you have these upstarts and it seems like based on In history, the incumbents sometimes don't take this lying down. So take this inside the paradigm shift from cost plus to what these, I guess they call the new primes like yourself and Android are doing.",
+      "word_count": 134,
+      "utterance_ids": [
+        "2d718be566b12149",
+        "37af247a879ed868",
+        "39bb496977ac6024",
+        "cdbed472ed28ba3f",
+        "2074cb5f9876f595",
+        "706ff4b07ae7c09e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0043",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1334520,
+      "end_ms": 1452340,
+      "text": "And I'll just define cost plus service listening basically means, hey, we're going to go build you something. Mr. government and however long that takes, however much it costs, you're just going to pay us 10 to 15 % on top of that So I'm actually incentivized and I'm not saying there's malicious intent, but I'm incentivized to make it take longer and cost more because of it costs $100 million Well then I only make 15 million dollars. But if it costs a billion dollars, then as a company, I make $150 million. So there's this perverse incentive to drive well -cost. Now that's not the only reason the industry is where it is today. But we're very encouraged by the push from the administration to adopt things. speed and scale and to do that quickly and to do that differently and to move away from cost plus. You hit it. We invest our own capital. To date, we're just about four years old. We've raised two and a half billion dollars in private capital. We're pouring that into R &D. I remember when we decided to build Marauder again, 180 foot. ship, Viv and I were talking is like, who's crazy enough to go and build a ship on I rat? And it's like, well, well, we are, because that's what the country needs. That's what it demands. That's what we're going to go do. And our investors are giving us the capital to go do it. They're actually entrusting us with that capital. That's the reverse of what's happening in the large primes where their investors are kind of demanding share buybacks or saying, give us our capital back. So the country very much needs us to build for needs companies like us to build for the future. And when you look at what the administration is doing, even just in shipbuilding, just making nice. that shipbuilding is a critical strategic industry, right? The president, one of the first things he did was put out the maritime executive order that was followed with the maritime action plan, right? There's ships exiting in Congress.",
+      "word_count": 356,
+      "utterance_ids": [
+        "317e6fcb49d06ccd",
+        "7a605be5b7a5f8b0",
+        "f868c43c29865f9f",
+        "39fa39b62ce6dccf",
+        "e374ff03e7eada7f",
+        "fb5c4013c4539285",
+        "ea2168bf8ee1c674",
+        "d214b53bf9b0185a",
+        "7b5614109d66f70b",
+        "6ed725a7f131d940",
+        "411888430e6a40c0",
+        "394bb24bef9460d8",
+        "06e31016ddff113a",
+        "cabd6af0dc7e3d16",
+        "f45078e550c4f41b",
+        "58daaa3b645a222f",
+        "06ab81b467c7e9fe",
+        "e3c6412b4fe7fef4",
+        "8d24338ffb39ddfb",
+        "0955daeee5a68701",
+        "0a29db406aa5822b",
+        "732232084a68294f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0044",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1452800,
+      "end_ms": 1553380,
+      "text": "You have the Secretary of War give a whole speech on defense acquisition reform, talking about how we're going to push the department. to be better, to move faster, to work with companies like us that are building on firm fixed price contracts that are focused on delivering at speed and scale and driving down cost for the taxpayer. So all of that is extremely encouraging, but I also want to be clear. on the flip side, we're in the early days, Jason. Like, yeah, very early days. When you look at the overall defense department of wars budget,. 1 %, 1 % goes to autonomous systems. That's not nearly enough. Make that 5 % make that, I don't know the right me. But it needs to go up and it needs to go up quickly. I'll just add one more thing that, you know, historically shipbuilding, you know, the design is bifurcated from the builder, right? So the someone gets paid to do the design and the ground up general assembly and all that. I think it's handed off to a totally different person to go and build ship. And I think there's a suggestion. out there, that's like 70 % of sequence critical components on some Navy ships, or sole source supplies, like single source of the pliers. And so, to the nose point, it's not just that you're incentivized to take longer. It's that you're not incentivized to change that necessarily, because you know that you're still going to get paid. Whereas, like, from our perspective, when you own the design, you own the... shipyard, you know, software engineers, shipbuilders, naval architects, and welders, and all fall sit down and eat lunch together in the yard. There's end -to -end optimizations that you get that, you know, the system from a historical perspective is what it set up the game.",
+      "word_count": 313,
+      "utterance_ids": [
+        "4d4e747445731201",
+        "2ab55c8082d2fe19",
+        "b3b5743fe8d1004a",
+        "2b6638a44d5ac954",
+        "1bdc691f627d6a12",
+        "80689639ca605999",
+        "a1c24778a149ad04",
+        "ad5bc1079cd2f466",
+        "0490155e85ff6e05",
+        "57e86c072ab18ce7",
+        "3cba7fda2451e187",
+        "cc204518e888bd94",
+        "840881bce9155f5d",
+        "df3f65e7fa1cd691",
+        "4e0801283fac8cf5",
+        "5830d59e628b7ad7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0045",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1553820,
+      "end_ms": 1587360,
+      "text": "Yeah, let's do a little look at what happened in the straight -of -poor moves. We weren't able to control it completely doesn't seem like anybody in history has been able to control it. If we were to fast forward and you had your entire fleet, you had, you let's assume, not unlimited, but massive capacity. How would you be able to secure something like the straightaway? With these autonomous vehicles and what might that look like? Take us into a scenario five years from now, what would it take?",
+      "word_count": 90,
+      "utterance_ids": [
+        "38e7124e30eaa642",
+        "287f57727ed1d284",
+        "fe93ef983e30bcc9",
+        "f5b5493327be48d4",
+        "ef21a5117a5d8742",
+        "48290816f9852479"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0046",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1587580,
+      "end_ms": 1692540,
+      "text": "That's the type of scenario that we're building for. I think before talking about the scenario, let's talk about the straight of hormones itself, the environment, the part of the world, like what neighborhood is it in, right? It connects, so you have the Persian Gulf, which is 200 miles wide, which narrows down to a 20 mile wide strip, which is the straight of Hormuz, and then it connects to the Indian Ocean and connects these large oil -producing countries to global markets. On the one side of the Persian Gulf, you have Iraq, Kuwait, Saudi Arabia. Arabia, UAE, Qatar, and Oman. And on the other side of the Persian Gulf, the north side is all controlled by Iran. So now, I ran and saying, well, how are we going to disrupt traffic in the straight of Formus? Well, it's only a 20 mile wide stretch. I can use missiles, I can use fast attack vessels, I can use naval mines. you keep drones because I don't have a large distance to cover. I can launch these things anywhere from shore. So because it's completely chaotic environment that's sending in naval destroyers into or trying to get commercial ships past becomes extremely dangerous. So using large numbers of autonomous vessels, you can combat these threats in combat. completely different ways. You can offer scale persistence and risk reduction in ways that, you know, man vessels just can't. And again, won't get into too many of the specifics on the types of operations that we're building towards, but autonomy is a way to counter these effects. These, these, these, effects that are overwell or like really aren't meant to be countered by traditional manships alone. We can counter that with scale and technology and keep people out of harm's life. Well you have some small ships.",
+      "word_count": 306,
+      "utterance_ids": [
+        "dd647823be83d52c",
+        "e44ad0ed0ac7abba",
+        "cef6d6e274cdaa90",
+        "83deff474571403f",
+        "cc372ec7e62d101f",
+        "9b44de758fe3f3f1",
+        "f7e4c34308dbae5c",
+        "9aaeab53dd94bdcf",
+        "6a0fa1b3562553f1",
+        "9e9260b4acee6a63",
+        "efea21d5bc68947c",
+        "4105c9a1c045b1d1",
+        "400b6997ba76a772",
+        "f9479d967599580d",
+        "b1e1ee79516dc5f5",
+        "7be5cfe0de80283b",
+        "d6e72f37b45f4b3c"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0047",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1692780,
+      "end_ms": 1697540,
+      "text": "Yeah you got the cut list and you got the spy glass in this uh you know build out.",
+      "word_count": 19,
+      "utterance_ids": [
+        "60feab2b9b437d74"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0048",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1697640,
+      "end_ms": 1744860,
+      "text": "Those are six foot 15 foot or whatever, we actually started with those and I'll give you an interesting story. We actually don't build those aren't, we haven't productized those. Those were great sub -scaled demonstrators, but our real flagship product is Corsair. And when you talk about again the scenario and the straight -of -horror moves and what type of volume can we bring there, I think it's not only... five years in the future. We can build 2 ,000 course error per year right now at our manufacturing facility in Austin. So I know you live in Austin, we'd love to show you around when you see it. When you see it, actually comes to life. You're like, oh wait, it can actually build thousands of these vessels every single year. How many would you need a thousand? 5 ,000 in the straight or above 7 ,000, I don't think it's a 20 mile wide straight.",
+      "word_count": 158,
+      "utterance_ids": [
+        "851967cf73fb7aa9",
+        "db91f5a7ddbc79d2",
+        "ec24c741b91ea2fe",
+        "8125b5e60c194bbb",
+        "5f9697dda28ccd13",
+        "338945832e7f270e",
+        "a28d1aa09ed05fe1",
+        "fbefa5498775413c",
+        "6dbfc866e8250189",
+        "559690d5d799d8c3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0049",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1745340,
+      "end_ms": 1763240,
+      "text": "So you're just going to, and they, this is their offensive strategy. They have these speedboats that they use, I don't know what they're called, but they call them fast attack vessels. Fast attack, those guys essentially are Kamikaze, right? They just zip in, you know, no regard for... safety in their life, etc. And they will attack.",
+      "word_count": 58,
+      "utterance_ids": [
+        "7a0a58d5a7814e1e",
+        "638aaa919f832227",
+        "9277ce80f0136b15",
+        "6ea07d7230c3c2a0",
+        "b83704c86c5846f0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0050",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1763840,
+      "end_ms": 1783760,
+      "text": "They're using facetack vessels. They're using cheap drones. So you have to be able to have counter UAS capabilities. They're using mines. They're just floating mines into the straight without regard for what those mines may set off. So it's a really complicated environment that you need to bring a lot of capabilities towards.",
+      "word_count": 54,
+      "utterance_ids": [
+        "c20f214d2d3ae2c9",
+        "62474225c96fc542",
+        "26ba677e737d0c8c",
+        "3dbe167dba0dfa6d",
+        "42ca7e5504ea586a",
+        "27652641fb14aa36"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0051",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1784440,
+      "end_ms": 1790320,
+      "text": "Yeah, but it sounds like with artificial intelligence, which is the next card that I think is going to turn over.",
+      "word_count": 21,
+      "utterance_ids": [
+        "2b228e0d63c90891"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0052",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1790520,
+      "end_ms": 1792130,
+      "text": "You put these course errors out there.",
+      "word_count": 7,
+      "utterance_ids": [
+        "417f52e41e323d6e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0053",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1792840,
+      "end_ms": 1824700,
+      "text": "Could they with AI be able to, you know, be using satellite data from planet or whoever's providing it to just or military satellites and just zip out there and no say somebody's putting out some minds. Hey somebody's putting out some of these fast attack vehicles just intercept them and now they have an actual cost human life and a limited amount of resources and hey we're America and we have you guys building ships at scale they don't have this ability. Ability to build AI -based ships, so talk about what AI on these ships could do eventually.",
+      "word_count": 100,
+      "utterance_ids": [
+        "154061a880086e67",
+        "ef4584a4880fd8f4",
+        "c84459c5af0eb118"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0054",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1826040,
+      "end_ms": 1883620,
+      "text": "Yeah, so I would say today, there's a bunch of different machine learning applications that run on our boat today. There's heavy amounts of compute on all over crafts that allows people to have tons of capability whether it's the navigation. of the autopilot or self -driving or the crafted self or compute for payloads, whether that's counter UAS, as Dino mentioned, or a bunch of other things, really. There's a variety of different mission sets. The end state here is that you have a distributed fleet across the ocean that, you know, in variable, there's a notion as a tumultuous place, like by default. without words though, and the coach should still bad. You know, solider is your intent as you lose comms. So there's a bunch of different communication on this. There's a bunch of different sensors. All of those things kind of hard to network together with ML with a bunch of different software components of the software staff to make sure that you can basically translate intent. For a commander or a sailor and then results in a mission outcome.",
+      "word_count": 184,
+      "utterance_ids": [
+        "09ed12c22dd0dfa5",
+        "9856dc115096ea47",
+        "e27369709d5bdd46",
+        "d7c26c696fa15e9b",
+        "768a295cfb20f992",
+        "b343604c45f9b249",
+        "e2e5ea2c0ab9a7bd",
+        "281566da8cf1dc2c",
+        "0bcf779feb15a88f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0055",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1883940,
+      "end_ms": 1904340,
+      "text": "Let's talk a little bit about the adversary China and they have started to put weapons on robots. I'm assuming that they're doing the same if they're willing to put it on a, you know, one of those dog robots, like the spot robots, they're putting weapons on them. They're dem - And what are they're demonstrating? They've already got in production.",
+      "word_count": 62,
+      "utterance_ids": [
+        "4c4ad71e41095b7c",
+        "4623a3c221f850f6",
+        "cef44082c27b4b75",
+        "cb30678551f985a7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0056",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1904580,
+      "end_ms": 1905620,
+      "text": "Let's just call it what it is.",
+      "word_count": 7,
+      "utterance_ids": [
+        "320b9647450b5076"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0057",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1906580,
+      "end_ms": 1927080,
+      "text": "And they're not signing some UN treaty to not put autonomous in AI weapons. This is a different type of adversary. And I'm sure North Korea and another bad guys are doing similar things. We have, um, believe treaties where we're not allowed to put weapons and use AI -based weapons. Am I correct about that in the West here?",
+      "word_count": 60,
+      "utterance_ids": [
+        "7f0dc1323216b870",
+        "c0344f00c0dfb124",
+        "fb1f3f7073c3c0bc",
+        "7c8dfead1a9ce48a",
+        "6ecef5fe680777fe"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0058",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1927480,
+      "end_ms": 1936760,
+      "text": "There is a autonomous weapons system standard called 3 .09 that basically outlines exactly how AI can be used on an autonomous system. Yeah. Tell us all about that.",
+      "word_count": 29,
+      "utterance_ids": [
+        "cec5a7f1061f4a75",
+        "cd294023db7d87bc"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0059",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1937100,
+      "end_ms": 1964440,
+      "text": "Like, or because this is the mobile cop scenario, this is the robotic soldier or the robotic boat that's able to engage the enemy without a human, you know, if it loses comms or to do a comma -cosy mission, which seems like something we might have to do, these are things we might have to do, you know, versus the Chinese cos they're not signing these treaties, they are not thinking ethically they are not not respecting the declaration of human rights, they've got their own playbook, yep.",
+      "word_count": 89,
+      "utterance_ids": [
+        "b731a8a078dc0020"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0060",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1964820,
+      "end_ms": 2016820,
+      "text": "And I think the important thing to articulate here, especially when you use the kind of robot cop example, and just to kind of... 12 people's fears a little bit is, even in that example where we're sending boats off the... Off of Taiwan and we're in the Taiwan Strait and they're engaging. We're still using artificial intelligence to bifurcate between an enemy vessel and a friendly vessel between a non -combatant and a combatant, and people are still making the decisions and setting the mission intent. It's just government policy that's setting, okay, when are you authorized to end? first is not. Artificial intelligence actually just gives the military the opportunity to one operate at a greater scale and then operate more efficiently. These aren't robots actually just making decisions on when to go to war or not. Got it. So it says, hey, this is a bad guy.",
+      "word_count": 150,
+      "utterance_ids": [
+        "e034068b7c89bfe1",
+        "780b3c0a71e35a68",
+        "9cef238102e3c6f1",
+        "ed48a800a3f5f309",
+        "924bf0d5e24c484e",
+        "05f406f2bd17260a",
+        "a211e47e7bcb0726",
+        "e015032aff09d1ac"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0061",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2017500,
+      "end_ms": 2045680,
+      "text": "Hey, our recommendation is to... You know, neutralize it and then a human has to say, okay, neutralize it. But if you're up against an adversary who says, hey, no, we built this thing. Anybody comes in to the blockade in Taiwan, which, you know, we think is, you know, a pretty significant non -zero probability in our lifetime. If you're up against somebody who says, I'm just going to have these ships kill anything that's not our ship period full stop.",
+      "word_count": 82,
+      "utterance_ids": [
+        "78abfa3333b33f83",
+        "f9f985cccb9a2ffe",
+        "c2ad8364205b9dc6",
+        "e735ac0ab3dea11b",
+        "b7150f6d379944f8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0062",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2046080,
+      "end_ms": 2099980,
+      "text": "Then we lose don't we? No, because the technology that all you're doing is putting policy thresholds and approval thresholds into the technology. There's a real world scenario where doomsday scenario. go to World War III, the Taiwan Strait as a complete conflict, exactly what you said, our commanders are going to make that same judgment. And they're like, hey, have any of it? There's no fishing boats out here right now. There's no cruise ships coming. No coal. No damage. If you're not a friendly vessel, you're an enemy vessel. And that's that. And our technology's actually. enables that we're talking about earlier is like the autonomy, the artificial intelligence and everything else is there and you're building the policies into the software based on government procedures and when those authorizations need to be in place, those authorizations will change based on the threat environment that we're in.",
+      "word_count": 149,
+      "utterance_ids": [
+        "beb4d78fec6ca478",
+        "549ae5df685ee64f",
+        "875c25f2470f0179",
+        "0d925d310b311202",
+        "c3395494d0845586",
+        "a7f0d57d4176e27d",
+        "8bb0cf7f0d83592a",
+        "8c47e57507673dfd",
+        "bb4c3f73841a1bd1",
+        "356c239b7c192cf9",
+        "799c7494d5a674c1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0063",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2100000,
+      "end_ms": 2137820,
+      "text": "Is the plan for you to sell to our allies and what are the rules there because it sounds like We need as many ships for our Navy as we can get, but if you can get up to capacity then hey the French The Germans and the English have essentially we can just stop making ships, right? And they have very different It's my understanding, is the only people who are really doing a great job at this are the folks in South Korea, which I believe are building, but one ship for us, so maybe you could talk about the other top countries in the world democracies and our allies and what their capability is and then your ability to help arm them and sell to them.",
+      "word_count": 129,
+      "utterance_ids": [
+        "a032b5c2e971802c",
+        "30fc7926f762f637"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0064",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2138000,
+      "end_ms": 2193260,
+      "text": "I mean, very, focused on our allies. partners. If you talk to the Department of War, if you talk to the United States Navy, they actually want our allies and partners to have these capabilities as well. This is this is going to be a combined effort, right? We mentioned earlier the China's 57 % of the world's shipbuilding capacity. That's not limited to just that one industry. If we can go industry by industry and talk about their manufacturing might and their manufacturing dominance. So you really do need a combined effort. You need our allies and partners to have this technology. We're talking to our allies in Asia. Obviously in Europe and in the Middle East right now about getting not only our... products there, but also how do we stand up, you know, domestic production in those countries? How do we give them the sovereign capability? How do we have production lines overseas, so that they're already forward deployed if we get into a conflict in the first place?",
+      "word_count": 172,
+      "utterance_ids": [
+        "e5f3f4224efa74a2",
+        "83afec3eaabf8ae7",
+        "3e9d0a92dc10f655",
+        "10ac1ce9e5cd6888",
+        "4f6dbde7c31881c6",
+        "d6a37a009be3211a",
+        "fab4edcf46c075f5",
+        "edec46ee5803c3f2",
+        "68318b1e4583799a",
+        "6d11bedf7d7e7328",
+        "6c97ac77c16c6880",
+        "27000c6ff40b5e81"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0065",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2193380,
+      "end_ms": 2199140,
+      "text": "Pretty amazing stuff, and you have an announcement today, I understand. Now that we're going to share with you all in audience for the first time.",
+      "word_count": 26,
+      "utterance_ids": [
+        "d718b0208cdae95e",
+        "c844acfac8a65515"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0066",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2199340,
+      "end_ms": 2302540,
+      "text": "That's right, so. So we've been working on Port Alpha for a long time now. So Port Alpha, just for the listeners, is our shipyard of the future. This is going to bring American shipbuilding back to a place that we haven't seen since World War II. To be clear, we're already operating a shipyard. We have a shipyard in Franklin, Louisiana. That's where we're building marauders. We're ramping that up to 20 marauders. We can bring that up to 50 marauders per year every single year. And that is a 100 acre shipyard. What we're doing at Port Alpha is 10Xing that. We're looking at a shipyard that is well over a thousand acres. We've been doing this search for... over a year now on what is the ideal location for this shipyard where we're going to find the right partner, the right land, the right workforce, the right community to be a part of. And we're proud to announce that we found that in Brownsville, Texas. So we're headed for it in Austin. We're going to be basing Port Alpha in Brownsville. We're going to start on a eight. 100 acre plot of land, which in and of itself, 800 acres is now the largest shipyard in the United States. Amazing. Just to give you a sense of scale, we have the opportunity over time to scale that to 4 ,000 acres. We're going to invest billions of dollars into this project. We're going to create 10 - and jobs over the next 10 years and we're going to bring ship building in this country back again to a place that we haven't seen since World War II and we're just grateful for the partnership from the state, from Governor Abbott, from Cameron County, and then the city and the port of Brownsville for making this happen. I mean, this is one of the great things we're about being... based in Texas. They let us build things in Texas.",
+      "word_count": 331,
+      "utterance_ids": [
+        "eb83e9a9e4f5a187",
+        "3b409ae2b2a7202f",
+        "5bb9acc46b50596b",
+        "65306a24e8b24331",
+        "7ad7b8262e12a8f1",
+        "47eea57897dc3a96",
+        "798d8b86a921f2cd",
+        "fb6cd749fc4ac914",
+        "8b28e5fde28ae865",
+        "5c83f61963bf624f",
+        "9182122b359a7bab",
+        "fcf1501fb9580ac0",
+        "bc6ec90843c193ad",
+        "a75c86c85886a08a",
+        "8ee58ad4de1a0e6f",
+        "4336b3e9e3a6d599",
+        "502192130e7567db",
+        "fc028a7abf37d5d0",
+        "fc0904a4f45fdbf0",
+        "f51f9ce2d5959a43",
+        "dc09378fc3eb1619",
+        "45fd1cbea0a43c39"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0067",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2302820,
+      "end_ms": 2326520,
+      "text": "Yeah, as a recent resident here, it's pretty amazing to live in a state where the state's like, what do you want to build? How can we help as opposed to, hey, you know, F off, like they told Elon in California and he got the message received reply to that lunatic. So maybe you can talk a little bit. little bit about operating Vib in Texas and the crazy support you got from Abbott and everybody.",
+      "word_count": 77,
+      "utterance_ids": [
+        "150d2a447b10e9d3",
+        "1eccf4f3cce3096b",
+        "990df9c32f73ed2b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0068",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2326880,
+      "end_ms": 2391420,
+      "text": "One of the questions that we used to get back in the day was, you guys are a merit -time company, a business of water -nost, because doing that. And I would say, you know, Austin has this like radical kind of nexus of both. digital and physical labor forces, like you can find software talent, you can find AI talent, you can find designers, but you can also tap into, you know, the industrial base from San Antonio, from the oil and gas industry in Houston, and when you marry those two together, like you can actually start to photosign these things across the entire stack, right? I mentioned earlier, like typically ship design. and shipbill is totally independent,. But with Port Alpha, we get the luxury of greenfield designing what the manufacturing plant for ships should look like. And so you can optimize the design as ship for the yard and the design of the yard for the ship. And it's very similar to kind of how companies today like to hardware. software code design on chips, right? You just had a compiler and they stick together to optimize both for the other. We have the luxury of being able to do that for ships here, and I can't think of a better place to do it than Texas.",
+      "word_count": 221,
+      "utterance_ids": [
+        "2b52aa2f89356524",
+        "fb84a6383de99eca",
+        "4083e1d1987735dc",
+        "64e95d8c37c4f837",
+        "84e4716788e39db8",
+        "6cb0bcd4c7b2ecd6",
+        "50103d89b6616864",
+        "66e1242aee7eac26"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0069",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2391899,
+      "end_ms": 2402160,
+      "text": "Well, and the store base is right down the block, SpaceX, obviously, and you want to that work, and I think it's like a four, what it may be, four, five. six -hour drive down to the coast, yeah.",
+      "word_count": 39,
+      "utterance_ids": [
+        "1764df7f18ed6399"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0070",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2402560,
+      "end_ms": 2519380,
+      "text": "So you guys can either zip there on a PJ or you can just drive. So it's pretty straightforward. Pretty straightforward. It's easy for logistics. What SpaceX has done in Brownsville is incredible. I think what Brownsville has done for SpaceX and helping them build the community down there. We were very impressed, very excited to be basing Port Alpha there, and look at the end of the day, it's the people that are going to make this work. It's the labor force, the workforce, if I mentioned earlier, and we can talk about, you know, why the American shipbuilding industry has declined so much, but it's the sub. Applied chain in the workforce that has suffered the most. And so like one of the things we focus on is really, how do we rebuild that workforce? How do we upskill existing talent to advance manufacturing? How do we take somebody that's building a car at Ford and get them building ships very, efficiently, very quickly, right? And that'll actually also, starts with the design. If you design a ship from the ground up from a first principles approach to be more simplistic, to be designed and manufactured at scale, then you can put in the training the work construction of the processes and everything else where, hey, let's go make this much faster. Let's train, let's build the workforce. And then let's be honest, like you have to make it cool for young people to go work in a shipyard again. You have to pay them good wages. Every one of our employees, every welder, every pipe fitter. They have good wages. The same benefits are Silicon Valley software engineers. They have equity in our company. They're fired up. I mentioned our shipyard in Louisiana, like people are fired up down there. And it's not just the workforce, it's the community. Like some of the stories I hear when I'm down there are like so encouraging. People are like, I'm wearing my hat and the grocery store. And people are coming up to me saying, you guys are kicking butt, keep building ships.",
+      "word_count": 354,
+      "utterance_ids": [
+        "8c03a9cfef49df21",
+        "2ebfca95ed96b7c2",
+        "033421fb39b1780d",
+        "23fd463a2b58fd0e",
+        "6d023e8ac82d04b9",
+        "cbabddfb6dc22596",
+        "ba78ac09fffe1a2b",
+        "5b6c35134718b412",
+        "6bad256f11808d00",
+        "5de0132ae05f3979",
+        "27bfabed1e413356",
+        "75ec0925522769e7",
+        "9d198271d44c3ea4",
+        "fdd3e0218e85cf03",
+        "a7a884ee0dc288aa",
+        "223faed6a89bf23f",
+        "7499682d8fbacc5c",
+        "fdf0278cc544a651",
+        "273788ca154ccf68",
+        "77ca6c91db8d09bf",
+        "6e5af85706b55fec",
+        "d0f6724f60d48066",
+        "b0dfbeb76fb4e678",
+        "c4a73672cbbc82da",
+        "1f17e739ffe59a2c",
+        "755e1a6d27a0131c",
+        "74006da39781533e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0071",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2520000,
+      "end_ms": 2540860,
+      "text": "Nobody else in the country is doing what we're doing and these are great salaries people are getting paid Significant amounts of money obviously to work in manufacturing at your company at a down at Starbucks and now you have these two incredible companies I don't know if there's any other ones in Brownsville, but this is a small community's only like 200 ,000 people down there.",
+      "word_count": 67,
+      "utterance_ids": [
+        "950d5042afac8ed6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0072",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2540960,
+      "end_ms": 2595580,
+      "text": "This is going to be an incredible boom town. Oh, it's going to be with space and you know, and you're absolutely incredible. And I mentioned earlier like the cost of building ships in the United States and the United States doesn't competitive in the commercial market. And again, we can go through the specifics and what happened over time. Five to six times. the cost of building a ship in China. We think just by investing in product and processes and new shipyards, we can cut the cost of a ship in the United States in half. So if you have a ship that costs $300 million, we can get that under $150 million. And that's not by simply just... paying people less. We're paying people more, but we're investing in our product. We're investing in the process. We're designing the product to be built that way in the first place. So we're making the investments that are needed for long -term sustainability and to rebuild the workforce.",
+      "word_count": 169,
+      "utterance_ids": [
+        "9611eb5529c432ae",
+        "a7c70299203569b3",
+        "43ad9d47ca8cbe89",
+        "7741d30c6aae866d",
+        "1ae0bff90d9bfccf",
+        "4f5114ec64d5788f",
+        "7549f2b6ce4d9a02",
+        "c4ac6f80e597b138",
+        "0a3a93877d19cd1b",
+        "dd4fa2912f548105",
+        "a033b4f785c9382e",
+        "5fea8e021cf17d38"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0073",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2595580,
+      "end_ms": 2607580,
+      "text": "All right, if people want to come work with you, Vib, how can they apply? they're a career page and what are you looking for? What talent do you need to come do this incredibly patriotic duty and go work it's eronic?",
+      "word_count": 42,
+      "utterance_ids": [
+        "cc1fceb1b5627356",
+        "0c123397d72b3ba0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0074",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2608020,
+      "end_ms": 2671040,
+      "text": "Yeah I mean strike .com we have a career page you can reach out on foot or LinkedIn whatever you want. We're hiring pretty aggressively right now. I would say that the biggest thing you know we look. for generally speaking is, you know, especially in 2026 when, you know, tattoo BT and Claude are getting so much better every year. It's pretty important right now to be fairly, you know, neuroplastic, you know, be ready to adapt for what the future looks like, computing is changing. You know, there's, going to be agents that can to help you on the manufacturing floor to assemble faster if you have an issue. There's all these digital systems that are kind of changing the paradigm here. I mean, when we first got to Gulfcraft in Dunham, Louisiana, a lot of the processes were pretty much pen and paper, right? And that's pretty common across most shipyards. So I kind of bringing that into the 21st century, quickly. I mean, it's just going to require people to be thoughtful, adapt to the future, and really be passionate and excited and about kind of building the future.",
+      "word_count": 193,
+      "utterance_ids": [
+        "e2b09346c6471e02",
+        "0a3f2b9e39ea01f6",
+        "174ad48b7249d5d6",
+        "7400a057c3e44e6b",
+        "d10c82f83c989d6a",
+        "b193dbb806347603",
+        "9e303a3eba837c58",
+        "a4598c5db9b5e3cf",
+        "c1f88c64a05e6bd3",
+        "323fe7eb4576f9a3"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0075",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2671600,
+      "end_ms": 2675460,
+      "text": "Yeah. Go to the website, S -A -R -O -N -I -C .com.",
+      "word_count": 13,
+      "utterance_ids": [
+        "69d266341bbf07ae"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0076",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2675840,
+      "end_ms": 2676600,
+      "text": "Join the mission.",
+      "word_count": 3,
+      "utterance_ids": [
+        "f44b8b84113bcd87"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0077",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2677280,
+      "end_ms": 2678780,
+      "text": "300 jobs listed on the website.",
+      "word_count": 6,
+      "utterance_ids": [
+        "ed4c3f7dd9330d5c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0078",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2678980,
+      "end_ms": 2679980,
+      "text": "There's something there for everybody.",
+      "word_count": 5,
+      "utterance_ids": [
+        "8853a2bf15986ac5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0079",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2680000,
+      "end_ms": 2691580,
+      "text": "And listen, just as a fellow Greek, you know, you know, we were obviously the cradle of innovation and or science math technology art and everything.",
+      "word_count": 26,
+      "utterance_ids": [
+        "ca7994db8189c22e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0080",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2692040,
+      "end_ms": 2737120,
+      "text": "I happen, but we were also the great warriors and we patrolled the sea. Obviously Greece has a lot of coastlines. So you're doing our Greek. My brothers and sisters and ancestors, because a lot of Greek has a lot of coastline and they're actually big in the sipping industry. So now I hear more of them than not now. Oh, it's good to see a Greek building ships. You know what? I can sleep now at night. I was very worried about the straight -of -war moves. I was worried about the Pacific Theater. and South China Sea. Do you know now that I know that my Greek brother is on top of this? My head's going to hit me. I'm like a baby tonight. I know you got us covered. Thanks so much, guys. And sincerely, on behalf of all Americans, like, thank you for doing this work.",
+      "word_count": 150,
+      "utterance_ids": [
+        "30c53a9cd24fb5e4",
+        "c26e2167517ffe4e",
+        "87082070d3edcc69",
+        "867c05fcbf116743",
+        "7f20c1797960e179",
+        "946e88736ab8ec38",
+        "8d7f7a29f41bfce1",
+        "fc1ca5ac07d52b08",
+        "d813a23861d2418d",
+        "b25c934e9de5a72b",
+        "d179474dfcde4989",
+        "71bc5d485ef81335",
+        "69c8574a5c6fdbb2",
+        "fcde3d37c7402124",
+        "07a2e018b4c218b7",
+        "35a93d12909fac31"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0081",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2737560,
+      "end_ms": 2750880,
+      "text": "You know, this is something where we really need to... technologists and entrepreneurs to really help us innovate because we're falling behind and we're the good guys in this. We're the ones who are spreading democracy and freedom and protecting that.",
+      "word_count": 41,
+      "utterance_ids": [
+        "73777a0913ea7753",
+        "711eea49b80fae1c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0082",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2751160,
+      "end_ms": 2753620,
+      "text": "The only thing in the world that is intrending in the right direction.",
+      "word_count": 13,
+      "utterance_ids": [
+        "b898aeb31a9bba06"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0083",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2753760,
+      "end_ms": 2789280,
+      "text": "And if you look at life spans, if you look at, you know, infant mortality, if you look at people standing. of living, everything is trending in the world in the right direction, except the spread of democracy, which has been on the decline in our lifetime. Let that sink in folks. More people living under authoritarian than democracies. It's a modest amount, but you've seen the statistics I'm sure have been in Dino, and we need to have a great military. We need to have this advanced technology if we're going to maintain the number of people living under a democracy and freedom and hopefully increase it.",
+      "word_count": 108,
+      "utterance_ids": [
+        "b61923c062cc913e",
+        "221b79cd6810c9ab",
+        "00ceeac2636503e7",
+        "72baa808cf86471a",
+        "9bbdc39fc6970576"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0084",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2789340,
+      "end_ms": 2843960,
+      "text": "A lot of bad guys out there and you know, just thank you so much for doing this work. That's right. Well, thank you for having us and I will end on a positive note where we're seeing that starting to turn around. in a really big way. It's not just seronic. You mentioned Androle. There's SpaceX and Palantir before that. And now there's just a big wave of a big push into defense tech because people realize the importance and the magnitude of the moment that we are living in. Right now I tell our team I'm like, this is our generation's version of the space race, make no mistake about it. And we cannot lose. So that's how hard we're working at ceramic. That's how we're working with a sense of urgency. And there's a lot of other companies into the coming into the space that are working with that same sense of urgency. So I'm very optimistic. I know this country can do it. When we put our minds in. and we get a collective effort behind something, nobody can beat us.",
+      "word_count": 185,
+      "utterance_ids": [
+        "582883b2bdc70a2e",
+        "250ae195afd1bc05",
+        "1ce3ae0f51d08c00",
+        "edab04e2505a5cc1",
+        "0c1d5499c24d0208",
+        "8c249d3dc6d110b5",
+        "ddeae004df60ea16",
+        "cb9e5fef65da2aa6",
+        "911f04f2969be4a6",
+        "3b4276775a6965fd",
+        "604280b156fa262d",
+        "49e7a431c691fe27",
+        "1fde08b473d66256",
+        "15a7e23ec09781da",
+        "f432a3da93415ed4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0085",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2844340,
+      "end_ms": 2859980,
+      "text": "So nobody can, nobody can beat us and listen, if you were thinking of going, listen, it's no, dig to anybody, but if you're thinking about going and optimizing and ad network at some big tech company, like it's incredibly boring, and it's incredibly meaningful. You'll get 20, 30 years into your career and you're like, what did I do?",
+      "word_count": 60,
+      "utterance_ids": [
+        "fe4f71fffbf2407f",
+        "09d7081bdc15b31c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0086",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2860420,
+      "end_ms": 2861440,
+      "text": "Go work, it's ironic.",
+      "word_count": 4,
+      "utterance_ids": [
+        "2012fe0b89c4b9c0"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0087",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2862040,
+      "end_ms": 2865700,
+      "text": "You'll get a couple of years into your career and you're saying, I'm doing important work.",
+      "word_count": 16,
+      "utterance_ids": [
+        "72cf444f967ad2bb"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0088",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2865760,
+      "end_ms": 2874440,
+      "text": "That's right. That's right. Every person that walks through the door every single day is quite literally changing the world and we remind them of that and they know it. Yeah, all right, Vib.",
+      "word_count": 34,
+      "utterance_ids": [
+        "1555bf93c1594945",
+        "afd02c31361a63eb",
+        "76967fe25b343e6d",
+        "421cf7eacd297747"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0089",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2874580,
+      "end_ms": 2877920,
+      "text": "Dino. Thank you so much for coming on and we'll see you next time on the All In Interview.",
+      "word_count": 19,
+      "utterance_ids": [
+        "681d7972d9736ea1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "0da89e82768a50ca_t0090",
+      "source_id": "0da89e82768a50ca",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2893440,
+      "end_ms": 2896040,
+      "text": "I'm doing all of it!",
+      "word_count": 5,
+      "utterance_ids": [
+        "542987ff1e6ba6fa"
+      ],
+      "is_question_anchored": false,
+      "stripped": "outro"
+    }
+  ]
+}

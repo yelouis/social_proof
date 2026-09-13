@@ -1,0 +1,2074 @@
+{
+  "source_id": "79f3aaf4ae50dde5",
+  "title": "Former Intel CEO on What Went Wrong, What's Next + Lovable CEO on the Real Promise of Vibe Coding",
+  "metrics": {
+    "source_id": "79f3aaf4ae50dde5",
+    "title": "Former Intel CEO on What Went Wrong, What's Next + Lovable CEO on the Real Promise of Vibe Coding",
+    "utterance_count": 504,
+    "turn_count": 111,
+    "retained_turn_count": 105,
+    "stripped_turn_count": 6,
+    "question_anchored_count": 15,
+    "question_anchored_pct": 13.51
+  },
+  "turns": [
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0000",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 0,
+      "end_ms": 5320,
+      "text": "Spent a long time in Intel, and only 34 years, 34 years,.",
+      "word_count": 12,
+      "utterance_ids": [
+        "bf6e1d8957275deb"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0001",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 7020,
+      "end_ms": 35420,
+      "text": "Probably one of the greatest American companies ever, and then absolutely went off the rails, and got absolutely demolished by Nvidia, TSM. See. And I guess Apple to a certain extent. So you had this incredible intelligence side moment. We bought our computers based on, you know, hey, the Pentium and that sound and tell inside, baby, tell inside.",
+      "word_count": 59,
+      "utterance_ids": [
+        "b463f5953279eaaa",
+        "d84435646277e293",
+        "cc5238476667ed2d",
+        "11924b06b9515d20"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0002",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 35720,
+      "end_ms": 39980,
+      "text": "Do them, do them. Do them. And so let's talk about how things went wrong.",
+      "word_count": 15,
+      "utterance_ids": [
+        "12474fb3e5098d3f",
+        "9834269c7dd0d294",
+        "ce99fc3ec72084d3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0003",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 40000,
+      "end_ms": 70920,
+      "text": "What went right and then how did it and you were there for a long time you took a break and then you came back But there seemed to be have been some critical mistakes that we can learn from So let's just embrace it and go right into it tremendous success as an American company coming back now. I think reasonable But when you look back on it and we do our post -mortem, what were the mistakes and what would we change in terms of the direction of that company?",
+      "word_count": 92,
+      "utterance_ids": [
+        "ca8aa346f1e05a7d",
+        "b1d36ce0d08a6fd8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0004",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 72780,
+      "end_ms": 78720,
+      "text": "If you were building a global financial system from first principles today, you wouldn't build it on 50 -year -old legacy rails.",
+      "word_count": 22,
+      "utterance_ids": [
+        "f14c3b6e2e73bc6b"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0005",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 78880,
+      "end_ms": 79900,
+      "text": "You'd build airwollocks.",
+      "word_count": 3,
+      "utterance_ids": [
+        "f83cb3ae95d95c92"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0006",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 80000,
+      "end_ms": 98000,
+      "text": "One AI native platform for global accounts, cards, and payments is designed to make the entire world feel like a local market. Others are bolting AI onto broken infrastructure, but AirWallix was built for the intelligent era from day one. Stop paying the legacy tax and start building the future at airwallix .com -allin.",
+      "word_count": 54,
+      "utterance_ids": [
+        "24b0faa0daa3929e",
+        "24b21e19954268b7",
+        "4f92e79693ac73ae"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0007",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 98220,
+      "end_ms": 99420,
+      "text": "Airwallix, built for the future.",
+      "word_count": 5,
+      "utterance_ids": [
+        "0636a6df4abd09c6"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0008",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 101019,
+      "end_ms": 238340,
+      "text": "I haven't spent so much on my life there, you know, I view it. I joined when I was 18, I went through puberty at Intel, right? I joke right. You know, I was just like, you know, I am so early, grove, noise, bear, it, right? And, you know, they were the people I grew up at. right you know so on they were my mentors they were the people I adored for it and they were deeply technical. Andy Grove and he grew up Gordon Moore Bob noise you know co -inventor you know these were deeply technical leaders I remember when I joined the executive staff for the first time there was you know probably 15 of the 20 people that were in the room were PhDs, right? It was just that technical and, you know, I view one of the things that went off the rail was when it started to be run by business people. Yeah, opposed to technical. The being counters to finance people. Yeah. And, you know, when I became CEO in 2001. And that was the first technical leader in essentially 15 years, right, you know, associated with it. Oh, and if you have a business leader, who does he promote business leaders and you know, so I think one of the fundamental things is, and you know, as you look at the great technology companies today, you know, they're deeply technical. And even if they're not, Bill Sacha's not a founder, right? You know, $2 ,000 not a founder as well, but they're deeply technical individuals. And when you're making these hardcore technical decisions that affect billions of dollars, you don't do that through a spreadsheet. Right, that's a lousy investment. Right, unless the technology trends make it the right to investment. And I think that's one of the fundamental things. And obviously, you know, in the five years, five six years before I came back, you'll entail gave a hundred billion dollars to share holders. Oh, the dividends and my stocked by Bax. Yeah. 100. What I wouldn't have done for another hundred billion dollars on the Well, I mean what would you have done you probably would have made well I chips for iPhone which Intel passed on yeah you know, but you know, it had a built -in new factory in a decade when I got there.",
+      "word_count": 399,
+      "utterance_ids": [
+        "e0a2c5731bbbd7a7",
+        "412beed0c6153ada",
+        "8c1226902f27b4f0",
+        "e55d0e8fa5130438",
+        "da513905d60f367f",
+        "67a80c2de671443b",
+        "607d5079b35967a5",
+        "649c3cc5ae0ae7bd",
+        "58ff4db4758ce07b",
+        "a6b6c27cdd777b5f",
+        "3cafa0678d50899d",
+        "a4cf50d302bde0c6",
+        "09e4130df6f0f19e",
+        "d61ef8f7f5249796",
+        "a86300de2069d0de",
+        "75d82261f3a1e990",
+        "e7c30487bf14cea1",
+        "53bf1715e6ec19a5",
+        "1b734645235c2992",
+        "748922c973f8eea2",
+        "7efb59d4e4e790b1",
+        "b64fe65185d9865b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0009",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 238440,
+      "end_ms": 291540,
+      "text": "It's like you know How can you not be? building. How could you not buy UV machines? You know, there's just all of these things you know, that you would only do as a technologist because the economics behind them by themselves were not good. So, you know, it was getting back to the core of technology to me that was, you know, the fundamental thing. You know, you make good decisions, you make bad decisions. as leaders every business does that as they go along but you know fundamentally this is a technology business and you need technologists running technology that then hires technologists that are sitting at the staff that then hire the best technologists you know you know a big swings at You know, categories that could matter in the future like skating to where the puck's going if you look at Apple They did the same thing for the past 15 years buying back the stock tremendous amount of dividends to the largest.",
+      "word_count": 167,
+      "utterance_ids": [
+        "2f2eb94c4fa493ad",
+        "9ea84dcae9d83b98",
+        "5bf3f51bed0bc1db",
+        "50e720969edd6dc7",
+        "43dd1c322f6df443"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0010",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 292119,
+      "end_ms": 329649,
+      "text": "Holder of capital of any company. I believe to this date and What if what companies do they buy they buy little tiny acquisition? on the margins, I think the largest ones was beats because they wanted to get inroads into certain demographic segments, like in the intro, it's based that they couldn't get into, but I got what a colossal waste of time, like you said, they could have done so many amazing things, tell me about Steve Jobs in 2008, 2009. Deciding I think we're going to make our own silicon and that impact because was that a covert product project? Did you guys know he was doing that he informed you?",
+      "word_count": 114,
+      "utterance_ids": [
+        "d9ab34972e857999",
+        "c87d0b0f96bdae22",
+        "85e034a0024ee488",
+        "434efcb8b3c8b2ec"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0011",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 330800,
+      "end_ms": 465700,
+      "text": "Well, that seemed to be another one of those forks in the road. Yeah. Yeah Steve was an incredible leader. Yeah he was also a ruthless leader, right? Very difficult, you know, reef. to Walber Riders, the Isaacson's book on him, as well. I had many, conversations with Steve over the years, you know, for it. But, you know, when they moved to Intel in this Centrino chip, it was a big deal, right? And they were putting extraordinary demands on Intel. You know, make the chip smaller. drive lower power. They're demanding a customer. And when he was no longer convinced that we could continue to do that, he started the project, right? You know, and if you remember, was it, you know, you know, P, Semi, you know, they acquired some small company, started to build some competency. But yeah. they did a few little chips internally. It wasn't a big deal and then the little chips got a little bit bigger. You know, and Steve was a master of this. You know, just starting, you know, these small efforts to build core competence inside the company. Uh, I remember when we had the first conversation with Steve about, uh, forwarding the, uh, operating. system to the Intel chip from the power chip that they were running on before they moved to Intel. And we were quite proud of the silicon software competencies that we had in compilers and operating systems. You know, so Steve will help you port the operating system to the X86. And I remember that Steve said, I've been working on that the last four releases. He had been preparing the core technologies inside of Apple for something that might happen in the future. And he was already, to me, I just remember, I was just shocked. I've forred it the last four releases to the... 86. I think we got this. Yeah, right? You know, is that kind of thing? And that's how they got into the semiconductor. You know, doing their own semiconductor. I'm not sure I can rely on Intel to be that much ahead of the industry. And I can start optimizing the system design with the silicon design as opposed to relying on one that's been somewhat mind for windows environment versus an iOS environment, you know, in their operating system.",
+      "word_count": 392,
+      "utterance_ids": [
+        "af47bc24f25134c5",
+        "15531b8167420404",
+        "17170683871f2865",
+        "cfbb3a123f0ea8eb",
+        "0c98313233291d43",
+        "3e610eb7512ed442",
+        "0c6792d94704a4e5",
+        "1b26313c321e19c6",
+        "9627ceba66456bbe",
+        "1a374bc57df41751",
+        "b3044a1a6abc23f2",
+        "98ba75f1486da8a4",
+        "bd38636f58314bb8",
+        "a8c4b67e17733554",
+        "238eb899096e5b45",
+        "14bcddddf415b428",
+        "3a6aa4fb356d3a07",
+        "6017d3f79b16b48f",
+        "3a2318d888c5e570",
+        "97ddde1eb6d3ed37",
+        "56daa379d987476f",
+        "78acab19e540ceab",
+        "b3756c78549ae81f",
+        "51f48579d8c5e362",
+        "cc64ae9f5b5a3bd5",
+        "46f540e781c6da3c",
+        "d96b76e4cecbb258",
+        "418d0e3a0b5997c5",
+        "2178ca19ceb016f6"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0012",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 466000,
+      "end_ms": 479980,
+      "text": "And, you know, it was just, you know, it was never that kind of thing that you said, you know, you failed a supplier. No, I can supply myself better. Yeah, and Jensen decides, hey.",
+      "word_count": 35,
+      "utterance_ids": [
+        "4fff79751dd66570",
+        "e518c25672349ac2",
+        "523cd180180b77b0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0013",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 480000,
+      "end_ms": 500360,
+      "text": "He's going to go all into making these video cards and talk about just incredible serendipity that these happen to be also very applicable for cryptocurrency and running these AI jobs. Yeah, Was that lock or skill or combination of both? there.",
+      "word_count": 42,
+      "utterance_ids": [
+        "9bd8cb1e39f7a75e",
+        "39fca84444a6bdbd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0014",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 500880,
+      "end_ms": 624059,
+      "text": "Well, when you think about that progression, you know, Jensen, he was just building high performance computer, you know, throughput machines, you know, when we were at the height of our strength on CPUs, uh, at Intel, we sort of scoffed at his machines. Yeah, right? You know, oh, it's a graphic machine, you know, who could. There's some gamers who want to use that kind of stuff, right? It was always the big CPU and those little GPUs. But when they started to build a real software stack, yes, with it, right, you know, sort of okay, this kuda thing and SIMT is a technology, you know, multi -threading and so on, and it just sort of kept getting a little bit better. And a little bit better. And it was a little bit jobs like in that way. We're just making it better every release and it's becoming more robust. And all of a sudden, the crazy Japanese HPC guys said, hey, we could take those graphics cards, and maybe start using them in HPC, right? You know, that was sort of... finding moment where it wasn't just about doing graphics anymore. This was a more computationally dense platform to start attacking some of the world's most interesting workloads. And I think Jensen would agree that was a defining moment. And then sort of saying, oh, these aren't just graphics cards anymore. You know, these are general - purpose computing devices that can start applying to these other workloads. And you know, AI was, you know, had gone through what it's fifth nuclear winter by that point. It was like, man, you know, this is never going to matter, right? We're never going to, you know, get the breakthroughs, but the community around it was continuing to develop. You know for it and the kudos offer kept getting better generation by generation and you know I had a project at Intel Larby right where we were trying to take the x86 and essentially do the same thing right you know for 10 you know in my first departure from Intel the project was killed a week after I left, and the world would have been so much different, right?",
+      "word_count": 371,
+      "utterance_ids": [
+        "2d9e713e5c6665cb",
+        "2471fe7b66d79cdb",
+        "c7c165a81f656b6f",
+        "574dc4b28db448c2",
+        "7c552077f1145e08",
+        "8912980da27218ef",
+        "9f0ecc3ac8fbc9e3",
+        "e0f12a47b63862b2",
+        "2e72812cc1c2b7c7",
+        "2ec9feccc38bd33b",
+        "034ea252dbba2579",
+        "bddcd0dcbf6027f6",
+        "aa98af6cbf9f2e85",
+        "c46b7300bc19adc2",
+        "e483d6f2c5c04f70",
+        "b11c6d42d6c6189f",
+        "94c77e8c4af2f8fe",
+        "41258d3f14020499",
+        "f1075bc57b21d70e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0015",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 624420,
+      "end_ms": 639980,
+      "text": "I mean, it really, I think it's illustrative of what continuous innovation, taking some risks, and doing that fundamental research, and the compounding power of technology, because I think it was William Gibson who said this street.",
+      "word_count": 37,
+      "utterance_ids": [
+        "e74f3266dd85597d"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0016",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 640000,
+      "end_ms": 641480,
+      "text": "Finds its own use for technology.",
+      "word_count": 6,
+      "utterance_ids": [
+        "49b91510480c58d4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0017",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 643540,
+      "end_ms": 654420,
+      "text": "Like, Nvidia did not predict that this Bitcoin project would take over and that this would be the best way to do those computations, nor did they anticipate, I think, you know, that AI would take off.",
+      "word_count": 37,
+      "utterance_ids": [
+        "a58d5f88338a21f1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0018",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 654960,
+      "end_ms": 659980,
+      "text": "But because it was the best solution, the hacker community could kind of over that out. Well, as we wrap on the...",
+      "word_count": 22,
+      "utterance_ids": [
+        "86c0c3d57f21bbf9",
+        "aff2b589fb4e8fbd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0019",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 660000,
+      "end_ms": 691860,
+      "text": "Intel portion of your career, okay, Apple Silicon, that's one, and then you have Nvidia, and then you have this Taiwanese company that starts making, you know, really great fabricating these chips, and Intel missed that. And maybe you talk a little bit about TSMC and they're surging, and we can even get into a little bit of the politics of it now, and then we'll get into some of these AI chips and venture investing.",
+      "word_count": 76,
+      "utterance_ids": [
+        "518017f6a0d4edf4",
+        "cbebea95781988a8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0020",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 692320,
+      "end_ms": 838720,
+      "text": "The thing with TSMC was they started with a vision of foundry, right? They were going to become the factory. for the industry. And again, these factories are so expensive, 20 billion, 30 billion. And the engineering and the continuous investment required to do it. And it was a stunning vision at that point in time. Intel was an IDM as we called it, the integrated design. Manufacturing. You know, we never worked to make our process and our factories available for third parties, right? It was always this thing. Hey, it's, you know, we do enough CPUs ourselves. You know, we reuse it for chip sets and some of the other things that we're doing, but it was never standardized in a way that it could be a main. available for a broad ecosystem using PDKs and all the design tools. We did a lot of our own EDA tools herself. One of the projects that I started earlier in my career was the foundations of EDA as well, the first place and route, you know, the first standard cells, the first high -level - description language. It was so proprietary and TSMC basically cut that in half and says, I don't care who's chip it is. I don't care what you're designing. I'll be your manufacturing partner. You're in at the time. That was so trivial. He's to the business and tell them they care, right over the so on. And then over. steady progress over a long period of time, and Apple as a customer driving them to be good, become really meaningful, you know, obviously the world changed. And when I came back to Intel in 2001, TSMC was producing five X the way first of Intel. Wow, right? 10 % more 5x. And all of a sudden that model of foundry became the model of the semi -conductor industry with two exceptions, Intel and memory. You have memory -di's design and manufacturer, right, for that is uniquely different. And obviously, you know, we're seeing the You know, three trillion dollar memory companies, just extraordinary. You know, and you know, trillion dollar foundry company in TSMC. You know, the industry has said, I want a lot of waiters. I want a lot of innovation of different designs. I have a layer of standardization and EDA tools and the world change.",
+      "word_count": 394,
+      "utterance_ids": [
+        "4b1a35450c4ca0d4",
+        "834575681868b0d5",
+        "3b95a0e20429f714",
+        "77465f3a1736d30a",
+        "b033a7476cd84b03",
+        "14458d6aeb785bfc",
+        "6e7516e64775195a",
+        "ca4680741ed35888",
+        "add20c1e10306e9f",
+        "01b031e9c0333a40",
+        "a3c979c91976a6ad",
+        "9720eb8b89fedbcb",
+        "2376177093e12fd2",
+        "275fa884333e4285",
+        "c68e1bcc948ef784",
+        "98b9429bc6a1b250",
+        "5ddf11dc4ed4559e",
+        "fcfca2d7b131ee48",
+        "ae3897c6c510e0eb",
+        "8bfee88372466216",
+        "bc037fc8ff96124f",
+        "4afefe96b47eba27",
+        "8a493c17b5d58003",
+        "070ed2b892f2fccb",
+        "058659f36e506d21",
+        "ea2d004243c8fd3b",
+        "aca1f82ec94d6e7e",
+        "bccfbc25eb7fd99c",
+        "147959b98bb8bd45"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0021",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 838980,
+      "end_ms": 853180,
+      "text": "And obviously, as I came back. didn't tell that was one of the core thesis of the new strategy. Yeah. We must become a foundry as well. Five to one. And now it's more like seven to one in terms of waitfers. You know, two TSMC2. And are we going to be able to unsure that?",
+      "word_count": 56,
+      "utterance_ids": [
+        "96f94c7cb4dcaa6c",
+        "b2c35e7ba0bac6bf",
+        "78eb0431b27c1bbb",
+        "b0ab75d2ca0ffdec",
+        "9782ebbe5a237acd",
+        "52433dc5586be13d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0022",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 853180,
+      "end_ms": 899980,
+      "text": "Obviously we had the chips act and just give us broad strokes what you think's going to happen here in terms of obviously. Taiwan is in play some people in the administration believe it's going to happen the year after Trump's out unless he takes his third term. Other people believe like it was going to happen as early as 27 or maybe going into 28. So are we going to be able? to replicate that here in America in a reasonable amount of time, where it's just like truly could be a cataclysmic. Eventive, you know, God forbid trying to decide, hey, we're going to block a Taiwan and then the Taiwanese decide, yeah, we're going to burn the fabs and we're going to fly out all of the engineers and ship them to America.",
+      "word_count": 136,
+      "utterance_ids": [
+        "ffcbe7ae117205a0",
+        "0b3e9fe43b37472e",
+        "3e32c26719b26fa4",
+        "c3cc1b98be717dde",
+        "6f1f823780592e3f"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0023",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 900799,
+      "end_ms": 904960,
+      "text": "Well, there's a lot in that question, you know, do we have an hour to talk about this question?",
+      "word_count": 19,
+      "utterance_ids": [
+        "5c9765a26d0e7d1f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0024",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 904960,
+      "end_ms": 909260,
+      "text": "Well, I mean, we have six minutes, but oh, um, yeah, do the best you can.",
+      "word_count": 16,
+      "utterance_ids": [
+        "462ff4881050a4c5"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0025",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 911400,
+      "end_ms": 1039720,
+      "text": "That's not a dog also about the AI bubble. So super, you know, three things out the super quick. You know, one is the chips act is having benefit. Yeah. Right. You know, when we started. chips acting, you know, when 2001 when I came back, the U .S. was building about 12 percent of leaving edge today. That number is more like 18 percent. Okay. Yeah, we're making progress. It's not 50 percent. We have a long way to go, right? You know, Intel is starting to be a real poundary. Okay. That's real progress. And TSMC. These factories are up in operating at scale, right? We have Samsung and as well, but I'd say the Intel and the TSMC progress, okay, that's meaningful. Now let's make it ugly for a second. The island of Taiwan has less than three weeks, a big article in the Wall Street Journal two weeks ago on this. less than three weeks of energy reserves. Wow. Okay. That should just put a chill in everybody's spine, right? Because the blockade after three weeks, the island browns out. When you turn off a fab, it doesn't come back all in for 90 days. Right, the economic impact of a brownout of Taiwan is greater than the great depression, right, in the world. Never do you need to do anything a shot to be fired. You just need to say great. No energy for three weeks. No oil. Yes. Right. No LNG. Right. That's how the island run. That is scary. Here to me. We need more resilient supply chains associated with it and I don't think this is an alternative for the world because if it really does become a risk, you know, I don't sit in the situation room and get all the data and so on, but let's remind each other that I think China has located the Taiwan Streets. Seven times over the last four years? Yep. This isn't a theory. No, they're running exercises. They're being pernicious and great. Pretty provocative in terms of 2027 is at 2030. Is that 2035? Their intentions have been clear over a sustained period of time. We need more resilient supply chains.",
+      "word_count": 368,
+      "utterance_ids": [
+        "0a545a0ff9864025",
+        "14cd6a3ac853bc85",
+        "d2a9b77780779275",
+        "f31dc179c3b14616",
+        "4593606a139af16c",
+        "d505f5aba023469a",
+        "da4088b6f7408ad1",
+        "73b847a9a4c50ac1",
+        "09687ee253156edd",
+        "4e33bcad541077ad",
+        "bcbaf4499fff7f63",
+        "e64826930af2db98",
+        "be4663e7a6f1abdf",
+        "80849b9be0723197",
+        "e5e68f1834d15a17",
+        "60688ab1e3a2274d",
+        "211a8bc66b9b70c1",
+        "a619cedf5ca435a3",
+        "3738beae743d51ef",
+        "455c2a3243400de5",
+        "a04ad4e4da3fd560",
+        "60434ba0de8640fe",
+        "e9118c018dbebd92",
+        "5364db581355f277",
+        "6482d95764cc72fd",
+        "04f4b91a545cac4d",
+        "6cd2728369864cce",
+        "df654980132e94d9",
+        "ddaaeea05740a2e8",
+        "a5413747f6b24f11",
+        "772839f9ba854f10",
+        "9264e1b9e61a9210",
+        "fe6f3adbab5c8c3d",
+        "f7161fe939cd34aa",
+        "761a7e95c72052b4",
+        "1d47cc431b9b40e1",
+        "ebfd7f50c4a7f737",
+        "d2c61410ea09d3fd",
+        "5c42aacb6c7d166c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0026",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1040000,
+      "end_ms": 1050800,
+      "text": "You know, for it's still something, you know, I put a lot of my time and energy into and we're making progress, but we need to go faster, need to go more meaningful. Yeah, and let's talk a little bit about the AI build out.",
+      "word_count": 45,
+      "utterance_ids": [
+        "3db6089abe53fcb1",
+        "fc55656572441fce"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0027",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1051800,
+      "end_ms": 1079980,
+      "text": "I mean, you watched the PC Revolution servers, the internet, these were all extraordinary buildouts and then this is. build out to end or build out. So the amount of data centers, the amount of chips, the amount of inference needed. Do you think it's a bubble I think I've heard just to say like it's obviously a bubble but what's the risk factor here that we build too much or that the technology doesn't solve enough problems and...",
+      "word_count": 79,
+      "utterance_ids": [
+        "19ec5332ea64a59f",
+        "32407c4bbdb53805",
+        "856f99f7321ec72f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0028",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1080000,
+      "end_ms": 1082220,
+      "text": "And we are swimming in tokens.",
+      "word_count": 6,
+      "utterance_ids": [
+        "a69758faeaef57c0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0029",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1082540,
+      "end_ms": 1107280,
+      "text": "What worries you about what you're seeing now. The valuations of these companies has gotten quite extraordinary. And if they build too much and they spend too much money and they don't make enough money, well, based on your experience with running a company, a public fund. A lot of tension on it when you don't make as much money as you're spending and people tend to fall out of love with these stocks.",
+      "word_count": 74,
+      "utterance_ids": [
+        "8100439fd1a1a057",
+        "61ff7279bee4d082",
+        "e928abe8415bfb3d",
+        "e5bca27b41629d5a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0030",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1107760,
+      "end_ms": 1221600,
+      "text": "Yeah. Well, I do think there is a silver lining here that guarantees we don't get too far ahead of ourselves in terms of bubble. And that is capacity. Right. Right. You know, energy capacity in the world is expanding four or five percent. You know, in the US, we had a decade up, one percent. Right. You know, I mean, there's just hideous what we did to our energy grid over about a decade and a half. But now that's getting built out. But essentially, nobody's going to build it and buy GPUs. build data centers if they don't have energy. So essentially you have an upper bound on how aggressive and how hyped and bubbled that we get. So I take a lot of solos in that. Yeah, right? You know, for it because what then is the incremental value of a token? And if it's a measure of intelligence, it's somewhat infinite. Right, you know, in the sense if I have more intelligence, I will do, you know, better supply chain. I will do better finance. I will do more, you know, efficient logistics. I will, you know, all of those things. So to me, the potential value that we unleash in a token economic world is somewhat infinite. Right. with labor shortages, the so -one that we see right in developed countries. I am an optimist, you know, that we're in a couple of decade build out. Wow, right. Not a couple of years, a couple of decades. One of the big objectives I've said is that I have to make AI 10 ,000 X better. Right? You know, it's way too expensive today. You know, we want to drop, you know, by five orders of magnitude, the cost per token, you know, the energy, you know, per token, so that we really do have Jevon's law, that we just explode the access to AI, right, and much more economic ways, which it does seem like Jevon's paradox. Has been a play over the last year.",
+      "word_count": 340,
+      "utterance_ids": [
+        "ed72b70361e363ef",
+        "7a7df5245cd038a2",
+        "3ca993dbaf321ec9",
+        "4f74a58a190b73e3",
+        "199bcf2cf1e98c04",
+        "b218e6e79ad5de2b",
+        "deeedfbd6ca6d282",
+        "254b22cdabc9777b",
+        "35bf62e55b023230",
+        "03dd6948981f1990",
+        "69bdac07fa723168",
+        "14f498d343cd01bd",
+        "cc9e9a8bd9c5b240",
+        "422c7feab4e7cce3",
+        "09f3943d9dfd8d55",
+        "1fc253644ed7319b",
+        "d682e7aec456382f",
+        "3c31ef84b9b2f762",
+        "182c141ae1e20603",
+        "5c45fcf3015751f1",
+        "f1caa839ed534f59",
+        "f0b27d91abdab3a2",
+        "dc68604b96280536",
+        "3d450031d03693bc",
+        "c32adf7b09586c5d",
+        "cd711bc701525d28"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0031",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1222120,
+      "end_ms": 1237520,
+      "text": "Like, oh, my Lord, these tokens are so cheap and the tools are getting so good. Yeah, I'm just going to start using these tools all day long until the bill comes in and you're like, okay, yeah, maybe I need to get some ROI out of this, but you do have these incredible companies, cerebrouss, grock, et cetera, making inference.",
+      "word_count": 61,
+      "utterance_ids": [
+        "30e3c22a686e83c7",
+        "63b22a291549caca"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0032",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1237580,
+      "end_ms": 1287560,
+      "text": "D -made tricks. Yeah, I just still look in and so. you know, and you know, if we accomplish, right, you know, these orders of magnitude improving and token economics, availability, reduction and energy costs associated with it, you know, we just have a fantastic couple of decades in front of us. There has not been a time in human history where it's been better to be a technologist than the one right now. We will solve chemistry. We will solve language. We will, you know, invent new materials. We, you know, new forms of, you know, interaction, you know, killing cancer, right, lifting people out of poverty. There is not a better time to be alive than the one that we're in right now. And this technologist, we get to sit in the... driver seat of it. Pretty amazing and you're investing and that's your passion now. What do you think of these valuations?",
+      "word_count": 155,
+      "utterance_ids": [
+        "901fdd1be3aedb7f",
+        "66476fc712674e74",
+        "2437f70f9af6dd59",
+        "5931d57faad001dc",
+        "373cdac7a19b3233",
+        "32c4536a3fda5988",
+        "3bbd25c7b76b91ab",
+        "564b39241d8ffd36",
+        "c2ac8b8503549b29",
+        "8007a82a5ff49fbc",
+        "ff28b90124a76100"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0033",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1288240,
+      "end_ms": 1294160,
+      "text": "It's quite seems, you know, if you live through the dot com bubble, we did see a disconnect there.",
+      "word_count": 19,
+      "utterance_ids": [
+        "f0481bbe1bf3ecd5"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0034",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1294520,
+      "end_ms": 1302220,
+      "text": "These companies slightly different. We just have 11 labs up 600 million revenue. Love it. I think they're at five or six hundred billion.",
+      "word_count": 24,
+      "utterance_ids": [
+        "6beb0a1930527460",
+        "3636057eb4602278",
+        "dd91ca90d0f50057",
+        "4ec71996dd2254cb"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0035",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1302440,
+      "end_ms": 1304940,
+      "text": "So that's quite different than the dot com speculation.",
+      "word_count": 9,
+      "utterance_ids": [
+        "cde91d37035f53a7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0036",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1305380,
+      "end_ms": 1373000,
+      "text": "Yeah. Yeah. Well, fundamentally, we have real revenues, you know, real margins coming out of these businesses as well. You know, that said any time the multiples get too high. Okay, some corrections. You know, and to me, periodic corrections that keep the multiple, you know, earnings multiple. and you're so on in reasonable things is good because this will not be a smooth curve. You know, I'm predicting two decades of goodness and there's going to be lots of disruptions along the way. It's not going to be a smooth curve and every time we have one of those corrections, say thank you, right? We're not letting the bubble get ahead of itself, right? You know, hey, we have the SESH apocalypse. There's going to be... other apocylipses on that journey when industries get impacted by the capabilities that will be unleashed. And that's even before it gets exciting and what I call the Trinity of Computing, Classical Computing, AI Computing, and Quantum Computing. And when those three come together, okay, that's what things get. really exciting. It cotton's been about five years away for 25 years. When is it actually going to do anything this decade? This decade. So by 2030. Yep. You don't have to be meaningful.",
+      "word_count": 210,
+      "utterance_ids": [
+        "6813e9d1df72bf97",
+        "8e8f3c7a1912775b",
+        "a07002a257b7880e",
+        "74e3b321161916d5",
+        "3f8ec6010894e4c7",
+        "7d3f71ea55282a5a",
+        "7c537f06842989d7",
+        "fe32faee8a4cb20c",
+        "b6db5269f3a1b361",
+        "3a183f2b645b58ee",
+        "de64df7ebf0bacf8",
+        "276435e25f1ddf9b",
+        "5d08885a5b6a33cb",
+        "981d856883956874",
+        "fe14e698d72daacc",
+        "0c39528761995313",
+        "84f4b66b70ee9744"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0037",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1373540,
+      "end_ms": 1376760,
+      "text": "What should we expect in terms of its impact in 2030?",
+      "word_count": 11,
+      "utterance_ids": [
+        "d304fe33a05e38d6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0038",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1377080,
+      "end_ms": 1470860,
+      "text": "You're going to be able to start doing things that might not be compute. today. Chemistry, biology, there will be things that can't be computed today. Some of the easy things will be some of the logistics where I will compute the best answer to get this thing to you. Driving salesmen problem? All of a sudden, all of those problems. Obviously, it's probably going to be, you know, 20. 28, 20, 32, 20, 33 when we solve things like encryption, right, you know, where, you know, you'll have the fundamental Q day, you know, kind of implications, but this decade, we will see quantum supremacy results across multiple industries. You know, we know how to build Cubits. We know how to error correct Cubits. we now have algorithms right against quantum and you know now it's just about the engineering scale. Who's gonna win? Well obviously I'm a side quantum guy right since that's one of our portfolio companies. But the thing that you're seeing is that you now have like four, five, six modalities of quantum that are... demonstrating pretty good results, right? You know, across trapped ions, across, you know, photonic approaches, spin approaches. So you're now saying modality is not an issue. Air corrections have been proven across them. And you know, I think the race will be on and my prediction is meaningful results before 2030. Wow, you realize that's about 40 months from now. Yeah, okay. Meaning for us, so it's thanks so much Pat for sharing All this incredible Information and knowledge great to see him. Very good.",
+      "word_count": 265,
+      "utterance_ids": [
+        "a177d574e1078dae",
+        "95e47fa61ef0946f",
+        "1df2bb2ca80d60d7",
+        "a938e7915199cf9e",
+        "5bda63f51c05f1de",
+        "b313f4ab393fdcd0",
+        "f59fd244f763e14c",
+        "a8997c1776bea627",
+        "4bc5bfce078297f9",
+        "b3db34383dd23104",
+        "2e00b28fa18c38bd",
+        "c572d153069f2ff7",
+        "608ba444b0072d2a",
+        "21946e3700b256ec",
+        "011b1f94c5382ace",
+        "35bdffdf86147e06",
+        "0687f376a21ea462",
+        "48f4de488cc5836d",
+        "a03641c0350fe4df"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0039",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1470860,
+      "end_ms": 1490020,
+      "text": "I'm doing all of you Your most valuable conversations rarely happen at a desk the hallway sink the dinner the quick founder Paul, flawed, no -pin -s, clips on and captures all of it, hands -free. Afterward, flawed intelligence turns the recording into clean notes and clear next steps.",
+      "word_count": 49,
+      "utterance_ids": [
+        "d5860bc319ce884a",
+        "207de406e5737acc"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0040",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1490280,
+      "end_ms": 1492600,
+      "text": "You stay in the room, flawed handles the rest.",
+      "word_count": 9,
+      "utterance_ids": [
+        "1cf813201ca20d46"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0041",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1492920,
+      "end_ms": 1498020,
+      "text": "For people who live in meetings, that's real leverage, where you're flawed at plot .ai.",
+      "word_count": 15,
+      "utterance_ids": [
+        "4bbc06d5bed072f4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0042",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1500720,
+      "end_ms": 1503280,
+      "text": "Oh, Sica, is one of my favorite founders.",
+      "word_count": 8,
+      "utterance_ids": [
+        "1e58c34976d245c3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0043",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1503480,
+      "end_ms": 1506320,
+      "text": "He's the founder of Loveable. Why do I love this founder?",
+      "word_count": 11,
+      "utterance_ids": [
+        "d75c01cb64878da1",
+        "70beef84c634151a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0044",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1507140,
+      "end_ms": 1510700,
+      "text": "Well, he's built a product that people are addicted to.",
+      "word_count": 10,
+      "utterance_ids": [
+        "33c34010b3dd5ef1"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0045",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1510860,
+      "end_ms": 1513340,
+      "text": "Primarily, and the people who work for me.",
+      "word_count": 8,
+      "utterance_ids": [
+        "8516cbac209c15bf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0046",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1514560,
+      "end_ms": 1525360,
+      "text": "And I love talking to you because as the founder, you have a North Star, you're in credit. laser focused on enabling anyone to build great software.",
+      "word_count": 27,
+      "utterance_ids": [
+        "730bea8ff69306fb"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0047",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1525740,
+      "end_ms": 1584059,
+      "text": "Yeah, it's the mission of the company. I'm paraphrasing here by jump. Essentially that's the mission of lovable. Mission I talk about empowering humans. Empowering humans. And the first gap is to build the product. The second gap is to be the business around the product. Everyone at Loveable, we're working on both of these two gaps. Right, the first one we got to very, far, we're seeing a million new projects built every single week on the platform. And on the second one, we're investing a lot in making it easier to run your business and to get people to care, people to discover what you build and the entire business. So whatever you're doing as a small business, as if you're a large business, we're also getting a lot of traction. And we're actually seeing as a proof of that more than 700 million visits to the applications every month. So every month there is extreme growth in the surface area of the entire... and more than 50 million apps built on the platform today.",
+      "word_count": 177,
+      "utterance_ids": [
+        "db7c2000b22f7740",
+        "ad060788f0b54c42",
+        "38918dd04a9ecb4d",
+        "97e9d22d4b9c9065",
+        "e64e127c8642d808",
+        "58c8077cf2b7dd7d",
+        "55ca80c9710d0bc3",
+        "e7bfadf58bed2b10",
+        "d0ba13e42c73d166",
+        "8790b3f1a937e6d6",
+        "e628d41e5ce99a8a",
+        "ddcdae7acaee671f",
+        "a5a5c1cd69f45308"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0048",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1584400,
+      "end_ms": 1589640,
+      "text": "How many years has loveable been in market or how many months now? 20 months. 20 months.",
+      "word_count": 17,
+      "utterance_ids": [
+        "705867a497dce738"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0049",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1590320,
+      "end_ms": 1617460,
+      "text": "And again, we're seeing people who are first -time founders. We're seeing enterprise leaders move much faster together with the teams on this platform that... has a lot of opinionated pieces in how you should create software and how to operate that software and how the different applications in your company connect to each other over time. So that's why we're seeing so much growth also on the enterprise side, which where we're actually growing fastest right now.",
+      "word_count": 78,
+      "utterance_ids": [
+        "15e8445c50cb926c",
+        "dcdb4945b0efe611",
+        "a171503c25b1a8fb"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0050",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1617600,
+      "end_ms": 1623760,
+      "text": "This is really interesting because 10 years ago, people were doing wizzywigs software.",
+      "word_count": 13,
+      "utterance_ids": [
+        "87dd43ff6e616840"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0051",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1625100,
+      "end_ms": 1629200,
+      "text": "What was the name for it? Before 5 code. No code, low code.",
+      "word_count": 13,
+      "utterance_ids": [
+        "00119f8591453da3",
+        "f5a4457361780182",
+        "37764ea1ea330964"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0052",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1629640,
+      "end_ms": 1676219,
+      "text": "Yes. And when I saw that 10 years ago in my incubator, you know, every 20th company somebody would come in who was an MBA or not a developer and they had I'd code it. Something and not vibe coded they had no coded and they were using these different software platforms and the software didn't look good it didn't work perfectly well it was slow but the promise was there and I guess it took LLMs and this new intelligence. To make actually good software. So maybe you could talk a little bit about who is the customer because developers do developers use lovable or is it the other 95 % of society that are your customers?",
+      "word_count": 118,
+      "utterance_ids": [
+        "ae45fcd5002a5075",
+        "d6aa7eb75f80c914",
+        "27f3ce0b8b4d034a",
+        "4e2f17e4368226e2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0053",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1676260,
+      "end_ms": 1756940,
+      "text": "How do you think about who your ideal customer profile is? We're seeing people use lava both with a technical background, that's about 20 % of our technical or some type of engineer. And they love that we're quite opinionated, we put all the best practices into how the software is architected. And we make it seamless to we want from get payments that up in a very secure way. And there were things like run security scans after every change, even now in the background monitoring the projects. So it's actually quite appreciated by the engineers in the technical community, also because it's a great bridge from the non -technical people, which is four out of five, are non -technical, and there we go. Building often first to figure out what is the right thing to build, which is where allowable has always been an extra new good, and now what we're seeing is that people are running the business is making more than $1 million of revenue on the on this platform. So it's this is a building for everyone, it's this entire spectrum. And what's exciting to see is often that if someone who discovers lovable from their colleagues at the large company They go out and then run a side -hustle and Some of those side -hustles really work. They make hundreds of thousands of dollars and then they become a founder after that So this is cross -pollination from both.",
+      "word_count": 245,
+      "utterance_ids": [
+        "d163343605f6d250",
+        "342041165dc735ee",
+        "4be88b656dbeb3e3",
+        "bce801b54b8496c9",
+        "bb43fb673b5c95b9",
+        "cf86d21dbf2fa1a7",
+        "cf269ac2d3a30367",
+        "029e7df4c3b105a4",
+        "d4f56dc9526cd163",
+        "5ccba5d20814a88c"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0054",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1757280,
+      "end_ms": 1772000,
+      "text": "Yeah, it's just like they're really interesting in about vibe coding if we were sitting here last year, people would look at it and say, it's a great way to make a mock -up, like you said. A great way to think about product and maybe create wire frames or a workable prototype.",
+      "word_count": 53,
+      "utterance_ids": [
+        "de100a949a406779",
+        "93b1d7b4f5987c56"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0055",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1772320,
+      "end_ms": 1774020,
+      "text": "All of that's out the window now.",
+      "word_count": 7,
+      "utterance_ids": [
+        "ffbb4ff0fc75bbb5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0056",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1775220,
+      "end_ms": 1784600,
+      "text": "The whole concept of building wire frames and building a mock -up, woo. You could just go right to building the product in a day or two days.",
+      "word_count": 28,
+      "utterance_ids": [
+        "3c7173f2dc0d38aa",
+        "028bd45fb4077031"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0057",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1786040,
+      "end_ms": 1788260,
+      "text": "And what people I think don't appreciate about what you're doing.",
+      "word_count": 11,
+      "utterance_ids": [
+        "45529385f7c40ef9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0058",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1788360,
+      "end_ms": 1795140,
+      "text": "I loveable is after you've made a product that you're proud of and that has some product market fit.",
+      "word_count": 19,
+      "utterance_ids": [
+        "7d1a6b7d69766e10"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0059",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1795620,
+      "end_ms": 1799520,
+      "text": "There are many more steps that are required. You mentioned payments.",
+      "word_count": 11,
+      "utterance_ids": [
+        "cf592205f938e109",
+        "2e2fe3b26ae0eb46"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0060",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1800000,
+      "end_ms": 1805220,
+      "text": "Security, making sure that the data isn't lost or that it's not leaked.",
+      "word_count": 13,
+      "utterance_ids": [
+        "31340e83d8ae6e9d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0061",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1806400,
+      "end_ms": 1872200,
+      "text": "That's changed dramatically over the last 12 months. Yeah, very much so. So I would say many engineers, they don't look at the code, they don't write code anymore. And that means that you don't need to be an engineer to create software. But the thing that loveable does for anyone, also the non -technical people, is that it takes a great structure for the architecture of the software that you build. And it makes sure that you don't go off a cliff and that things like setting up payments, emails. Things like getting discovered by other AI chat engines and my Google search. Those things are kind of taking care of. You don't have to know how all these things work in the details. You can trust the platform to take care of data security, connecting to other tools that you might be using in a secure way. And that's really where I'll be opinionated from day one, and being focused on making this for the 99%. It's a vast market, right, from day one. He's what made us very successful.",
+      "word_count": 182,
+      "utterance_ids": [
+        "aa293623298699d0",
+        "9d476138e16eabd8",
+        "4b66ce903a919c33",
+        "16d9d24accc454b1",
+        "691e49fb7985f9f4",
+        "78c8bdd104c6e37d",
+        "2e4ab27228a53895",
+        "7b7d654ffc809ae6",
+        "8103cd1bbd8f4912",
+        "11fecdfd61b6d32e",
+        "ca6a18714aa5adc9",
+        "3b6c7e1243d0801a",
+        "c99b2c1c07c22b01"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0062",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1872480,
+      "end_ms": 1890180,
+      "text": "Yeah, and I can tell you internally, I gave my team all the different tools they could possibly want to use. And somebody else, started with loveable, I think I told you the story when you were on this week and started up to a year ago. Like, and they made some interesting websites and they were trying to make an internet.",
+      "word_count": 62,
+      "utterance_ids": [
+        "2e55c353c904aad6",
+        "118ae1bb4c060bb6",
+        "e8c2a5fd7bd40305"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0063",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1890520,
+      "end_ms": 1891880,
+      "text": "They couldn't quite get it done.",
+      "word_count": 6,
+      "utterance_ids": [
+        "3436f53844ac4e9f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0064",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1892540,
+      "end_ms": 1919460,
+      "text": "Then I had some people who started using cursor or clawed code. They started Vive code and stuff, but they couldn't finish them. product. And then people tried to solve some problems with coworker. I really like perplexity computer. And then my team came to me and for one of our projects, so I was talking to you about founder and university, our pre -excelerator, they wanted to make it okay.",
+      "word_count": 71,
+      "utterance_ids": [
+        "a4ddd9cfef87d28b",
+        "c4f849e05e6780d7",
+        "c403b8a81ba0ddca",
+        "5f8566a00bab5b5b",
+        "f001c8d7db86f547"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0065",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1920000,
+      "end_ms": 1930380,
+      "text": "Because it would have cost $500 ,000, 10 years ago to make it and we don't have that kind of budget. We would rather put that towards the founders in the program and getting more people into the program.",
+      "word_count": 39,
+      "utterance_ids": [
+        "38c88e6378fc16ab",
+        "56e5b80fc085a675"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0066",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1931160,
+      "end_ms": 1949220,
+      "text": "And in four to eight hours, they made the whole internet and they made a bunch of things I had an and it was the person running the... The founder of the university who made it and she did it on her own without permission in loveable.",
+      "word_count": 47,
+      "utterance_ids": [
+        "22830f46b6d9a703",
+        "872d3dc1f42d404b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0067",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1949540,
+      "end_ms": 1958760,
+      "text": "I said, whoa, how did you build this? She said, loveable. I was like, oh, we still have loveable and they're like, she's like, I just put it on my corporate card to your point. She made it.",
+      "word_count": 38,
+      "utterance_ids": [
+        "fb9d8d94c8e58dd4",
+        "5609381ac6820593",
+        "779359f107c83314",
+        "df4e12941f05573e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0068",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1958780,
+      "end_ms": 1981860,
+      "text": "Now that. software is driving the program and the reason people do the program in their country we have an insati and in Japan is because it has economic impact So I said hey, I have an idea. Can you make for me an economic impact of the 50 companies that? are in the program.",
+      "word_count": 55,
+      "utterance_ids": [
+        "6059fcb2f8b98432",
+        "addff18461116fb4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0069",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1982580,
+      "end_ms": 1984220,
+      "text": "She asked loveable to do it.",
+      "word_count": 6,
+      "utterance_ids": [
+        "3ea84f9cffe8d23c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0070",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1984480,
+      "end_ms": 2013180,
+      "text": "I gave her some, you know, prompting, human prompting, bosset. Now it has the economic impact in there. And it considered, you know, with our prompting, well, how many people work in each company, what are they paying taxes, how much do they rent their home for, what is their... average salary, and it built something that I would have never been able to afford to build, and lovable is $50 a month, I think. I don't know how much you charge, but it's far too little, like $50 a month, I think.",
+      "word_count": 93,
+      "utterance_ids": [
+        "cf7c236b64d03579",
+        "1cd8ca6c921412e8",
+        "5a2c0b76c265e1a1",
+        "ae4ae4a6614fae0c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0071",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2013360,
+      "end_ms": 2016780,
+      "text": "Yeah, that's if you're on a business plan. Yeah, it starts on the 5th.",
+      "word_count": 14,
+      "utterance_ids": [
+        "5248bc52a8465b6e",
+        "bdf7bfcb7d9c7f32"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0072",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2017380,
+      "end_ms": 2028280,
+      "text": "Yeah, so, the ackin' up. to make impact of what you're building is I would equate for what you built to us would have cost me $500 ,000 to years ago.",
+      "word_count": 31,
+      "utterance_ids": [
+        "aaa30f01f7d13e95"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0073",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2028540,
+      "end_ms": 2039980,
+      "text": "It was built in four hours by an employee which if you just put employees at 50, 60, whatever $70 plus the cost of your software got made for less than $2 ,000 in a year.",
+      "word_count": 36,
+      "utterance_ids": [
+        "c3f7e01978fe4642"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0074",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2042200,
+      "end_ms": 2049760,
+      "text": "I'd love to hear more about the progress of the Internet. Anything that you ask for that you want to forward directly to me?",
+      "word_count": 24,
+      "utterance_ids": [
+        "15e699b7792b5566",
+        "b36d5d5a60f4d40d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0075",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2051320,
+      "end_ms": 2061100,
+      "text": "Well right now, you know, my concern was security and making sure that data didn't leak and they talk to your team and they went through it. it's secure.",
+      "word_count": 29,
+      "utterance_ids": [
+        "b6b3726fde55024d"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0076",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2061620,
+      "end_ms": 2095540,
+      "text": "So we feel good about it. Look, um, I'm no asking people who do penetration testing to say I want you to compare all the tools Yeah, and make sure that there's some all the work that we're doing that's not visible on security and trust. Yeah, there's a lot of a lot of other things. Um, where we invest and spend money on that every also free users get a little security scanning running in the background, that actually translates to something that security experts can see. And here we go, we wrap mockups.",
+      "word_count": 95,
+      "utterance_ids": [
+        "8daf3171f4d85e3f",
+        "786eb1bd9c465e7f",
+        "5806dbc7d98b0c12",
+        "199bfd281ab18cf1",
+        "a720e81335f7750a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0077",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2095660,
+      "end_ms": 2103020,
+      "text": "Now we're at functionality and pure and super viable for - deployment, well you'll be in a year.",
+      "word_count": 18,
+      "utterance_ids": [
+        "09144a68b52e8540"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0078",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2103740,
+      "end_ms": 2189120,
+      "text": "Yeah, so what we're seeing is that there's a gap in build being able to build the product rights and you build an entire internet on the platform. That's great. What we've done since then is to have a new product line basically, the hosting part, which is both the AI and all the norms. hosting, and that's frontline has been going faster than the building thing. I'm MSWS competitor. It's let's say it's let you run all your software and then we're working with companies like AWS, but what you also want to have is to use available, we're seeing, bye -bye. Customers as an AI co -founder and larger that you talk to about everything in your business. And if you're running your apps, your tools are on the platform, then just talking to love will have access to all the data that you might want to know about your company, how you're doing. Working with some of our customers in pre -release to give them access to a co -founder that works for you even when you're sleeping and comes back to you in the morning and says like here are some strategic directions you could go here's some optimizations you can go in terms of growing your business faster serve your customers better faster And that's that evolution towards operation and intelligence for towards driving towards outcome Right your business.",
+      "word_count": 234,
+      "utterance_ids": [
+        "6f9f2ae3035e7d0f",
+        "6c835210631f0512",
+        "f93855c616896b6d",
+        "32a9594ed1822f49",
+        "9dfd09e33848474e",
+        "37ecfd6e181b4862",
+        "2dcfcf5cb95ca118",
+        "c977895c4a3e7da1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0079",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2189500,
+      "end_ms": 2193580,
+      "text": "Just come to build the software, but you stay to build the business.",
+      "word_count": 13,
+      "utterance_ids": [
+        "61247bfe6d26b7f4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0080",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2193700,
+      "end_ms": 2216540,
+      "text": "Yes to operate your business And what we're already doing I've been doing for a very long time is to compare from everything we're learning, every time lovable makes a mistake, it goes with our engineers in improving it, that compounding intelligence is of course applicable to our customers, our users running their business on our platform as well.",
+      "word_count": 59,
+      "utterance_ids": [
+        "923f5c44eee605cd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0081",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2216780,
+      "end_ms": 2225280,
+      "text": "Is software going to become a hunt? percent bespoke, even like the internal tools, I was looking at Slack.",
+      "word_count": 19,
+      "utterance_ids": [
+        "28126fe431ecb2d8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0082",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2225920,
+      "end_ms": 2233480,
+      "text": "And our bill for Slack, even on the highest version is maybe $10 ,000 a year. It's not a lot of money. It's well worth it.",
+      "word_count": 26,
+      "utterance_ids": [
+        "97fe7f9e911ff984",
+        "b0fb8a908d80fd4d",
+        "e93ca91160ac31de"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0083",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2233760,
+      "end_ms": 2256980,
+      "text": "But I was starting to think, well, maybe I should vibe code my own Slack, so it's integrated into everything we do at it. deeper level. So, how do you think the future will look like in terms of some of these, you know, foundational pieces of software that every startup, every enterprise uses sales course, HubSpot, Slack,.",
+      "word_count": 58,
+      "utterance_ids": [
+        "e7d29c684c1e49a0",
+        "863e50ef89e7107d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0084",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2258720,
+      "end_ms": 2260640,
+      "text": "The Google Suite, Microsoft. office.",
+      "word_count": 5,
+      "utterance_ids": [
+        "07cf1da54ca8a159"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0085",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2261580,
+      "end_ms": 2266040,
+      "text": "Will bespoke software start to replace those?",
+      "word_count": 7,
+      "utterance_ids": [
+        "a6b0af7aa1e54e24"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0086",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2266320,
+      "end_ms": 2371980,
+      "text": "Do you believe? I like this question. Let me answer it, but I'll just give you a story about someone I recently heard who's going on this journey. They're quite advanced, so they're not. He works at a very large company in the U .S. nurse and he came to our platform because he wanted to build out the new product lines nurse a study for educating more nurses and he built out all the admin tools for the program the scheduling for the nurses getting their licenses and their certification management and he was able to build that into a product And to take it to market because they have they have had all that access to nurses wanting their certification What he also did was he took it into their back office internally and they've not replaced more than ten tools that they had Wow,. This book applications, and In terms of your question, you can do that for multiple reasons. In their case, they're saving more than a million dollars per year. Right. So that's huge, right. But it's also the case that in some cases, you have specific requirements where the tools that you've been using today, they aren't suited for those requirements exactly. And in those cases, I think yes, you will. have more and more bespoke solutions. Yeah, but we're all I will I also expect as to see that lovable continues to interpret with all of those tools and I'm not sure if you try this if you ask for connecting to anything in the Google so it's sweet. Yeah, we're now so and do anything in the Microsoft Suite or sl... It's a level guide you through all the steps to do that, in a way where you can get a very good overview of exactly how the data flows, which is of course very important, that you don't give access to the wrong person to the wrong data.",
+      "word_count": 327,
+      "utterance_ids": [
+        "45d518d6601a87b1",
+        "83b4d318d163c8d1",
+        "b3c65ec98cecd84a",
+        "a7fbb36d40f0d999",
+        "273d563cdafd1b92",
+        "1551a9b1397ca018",
+        "9d5dfd8215666dcc",
+        "ff0bcbc0e0cf058f",
+        "5ee11e6a10696daa",
+        "1a43c2e025ae3651",
+        "e2494b528e5ecda0",
+        "6cbb891212015487",
+        "e6fa00e65a7c0168"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0087",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2372240,
+      "end_ms": 2399980,
+      "text": "And you can continue to use Salesforce, HubSpot, all the tools that you kind of like to use under the hood, but with a bespoke interface on top. with how have these new frontier models there in some ways competitive but in some ways you can use them to power a lovable. So how do you think about the competition with them open source and the future of lovable because people have announced that lovable's dead.",
+      "word_count": 76,
+      "utterance_ids": [
+        "1fdab31aad501b83",
+        "f9bcbcb3bafcf2ab"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0088",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2400000,
+      "end_ms": 2512880,
+      "text": "Every six months since you started and then every six months you go from 100 to 200 to 300 I think you're at 400 million in revenue something crazy. We reached 500 in May. Okay, it's growth is a phenomenal So you're dying again by another 100 million in annual revenue so but underneath the you're using some of these, yeah, let me explain, yeah, so we've always had this strategy that we do whatever is best for our customers and in terms of intelligence that means that we're using multiple models, and so if you ask level now it's actually routed to the model that's both to whatever you want to do. And that's both the commercial frontier models, from multiple vendors, and increasingly, it's open -weight models. Whenever it gets routed to our own model, that model becomes more intelligent for our agent harness, especially on the mistake. that it might be making, in some cases, on which tool to call, which integration to create, and how to guide you through success for your business. Right, sure, all in on open source. You believe that's the future of love of all I am reading into it. So we have multiple partnerships and we're investing heavily to be... with those partners. It's the big labs and it's also to make sure that we get the fastest performance at the lowest cost for our customers when we know that we can do that with our own models. We have a really, really strong research team up in Stockholm who is working on what's called training. So, and we're applying all the best practices to do that, scaling up that team quite significantly. Since we also believe it's a part of the European ecosystem, to have that capability in Europe specifically.",
+      "word_count": 300,
+      "utterance_ids": [
+        "35edecad84369da0",
+        "71e0d422d1531c95",
+        "4d8f7a4cbc33a5bc",
+        "4c89f940ae8ca6df",
+        "550843ac981c6e12",
+        "9f68e938fd57279c",
+        "6aaec39ef0296346",
+        "4db18f55a75be92b",
+        "35ecfe3b411c3704",
+        "635b54ec67fbce92",
+        "603ae917b4851745",
+        "51d5a265cb0cab4a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0089",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2513320,
+      "end_ms": 2524860,
+      "text": "Are you doing or are you using any of the data labeling data training companies to help? you understand the most common businesses and build that proprietary data.",
+      "word_count": 28,
+      "utterance_ids": [
+        "97332534e06eb544"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0090",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2525540,
+      "end_ms": 2580860,
+      "text": "So what we're doing is that we're looking at the mistakes that any of the models they're right now. And then we prioritize them by what drives most impact for our customers. And then we make the models, we create data sets where we do something called reinforcement learning specifically for the problems where the frontier models are making mistakes for us right now and we have this enormous token distribution right from a million new projects being built every single week you're learning a lot of tokens we are yes and that's a lot of signals for making the system both the agent harness and what we've been refining over the last two years which is the skills that we have to have this internal type of skills that the agent knows went to remember the facts from our software engineers that know how to build really good software we're modifying both of those every single.",
+      "word_count": 157,
+      "utterance_ids": [
+        "9928a58149552279",
+        "6ebde99665466a4c",
+        "804e8384b9b183c6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0091",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2580860,
+      "end_ms": 2585500,
+      "text": "Week. It makes total sense and somebody told me some companies are doing token dumping.",
+      "word_count": 15,
+      "utterance_ids": [
+        "18d74afe1150b0e3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0092",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2586160,
+      "end_ms": 2590280,
+      "text": "They're, you know, selling $100 worth of tokens for $50,.",
+      "word_count": 10,
+      "utterance_ids": [
+        "1928f3508d5f975f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0093",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2592280,
+      "end_ms": 2597100,
+      "text": "You know, basically become token resellers in some ways and there are money -loosing businesses.",
+      "word_count": 15,
+      "utterance_ids": [
+        "31c10b776b14a182"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0094",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2597840,
+      "end_ms": 2621580,
+      "text": "You have to, you're profitable life. believe now or close to it we always monitor our margins but again we're doing what best for our customers and that means that often is more intelligence so we're not we're not looking at all let's use it we do we have never had the decision to say we're let's use a tea per model here if it's uh... Measureably worse for our customers And we can measure that. What's best for it?",
+      "word_count": 80,
+      "utterance_ids": [
+        "c21a2c242a4808ba",
+        "209c9a3c97abc7c0",
+        "34144f3296a18847"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0095",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2621980,
+      "end_ms": 2624700,
+      "text": "Is it unlimited for the 50, or you have caps?",
+      "word_count": 10,
+      "utterance_ids": [
+        "05f24815c37215a1"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0096",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2624880,
+      "end_ms": 2639740,
+      "text": "We have caps. Yeah, we have caps. We have caps. We're purchasing caps. Are people starting to hit them? Yeah. Our customers definitely hit caps and then you can't top up. Yeah. We have multiple subscriptions here. Now I'm just curious. What percentage of people need to top up?",
+      "word_count": 49,
+      "utterance_ids": [
+        "a958a964b043925d",
+        "02bc85f51566cdce",
+        "f0de44ad293f55f7",
+        "3a1391cee4bf0bcf",
+        "6d5c329a28a25c52",
+        "4cb469e937a99a4b",
+        "cdac04bc7cbb733c",
+        "00e77ff4c735823f",
+        "71a06044d9b0de89"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0097",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2639860,
+      "end_ms": 2661720,
+      "text": "They're so... addicted to it that they're blowing past the so some of the from the lowest subscription here yeah I think it's a much I something like 60 % of our customers out yeah I'm hearing that more and more often that people are willing to pay the overages because you're getting so much value that I think that's the future of the businesses.",
+      "word_count": 65,
+      "utterance_ids": [
+        "f9ffc1411df85a0e"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0098",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2662580,
+      "end_ms": 2695180,
+      "text": "People are looking at it going like I am. Well, if I'm paying $600, and if you token max to $6 ,000 a year, but this is a $500 ,000 piece of software, I don't care. I'm still paying somewhere between 0 .1 % and 1 % of what I would have been. paid three years ago. Who cares? Go for it. So yeah, what we're seeing is everything is about moving, fast and they are more AI, usually let's you move much faster. So this man is usually worth it.",
+      "word_count": 91,
+      "utterance_ids": [
+        "a0e48d609b37fcd3",
+        "f4be3996d72eb173",
+        "416e04a62c78a096",
+        "7820546bc407cb22",
+        "f88f551ebda30f4d",
+        "a2252a1a93f1b782",
+        "e1364684e64fdd01"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0099",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2695540,
+      "end_ms": 2697780,
+      "text": "Do your customers of final question for you?",
+      "word_count": 8,
+      "utterance_ids": [
+        "b19f6cab4f40e62c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0100",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2697900,
+      "end_ms": 2699260,
+      "text": "Because I'm starting to see this now.",
+      "word_count": 7,
+      "utterance_ids": [
+        "90ed551289002d30"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0101",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2700000,
+      "end_ms": 2707400,
+      "text": "Where multiple people in the organization try to solve the same software problem and they're competing with each other.",
+      "word_count": 19,
+      "utterance_ids": [
+        "97a140d75ca23bb6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0102",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2707860,
+      "end_ms": 2725360,
+      "text": "So like this internet I'm talking about, we built one for Japan. But somebody built the US one. So now I have two pieces of software. So I sent it to the two different people. Do we have, did you guys? It's for each other's code or you're like, no, we just built two different lovable projects.",
+      "word_count": 57,
+      "utterance_ids": [
+        "2d85a2f2e8268bfd",
+        "6ae5714fc146332f",
+        "9eebd577454fb27f",
+        "f0bf23095ddc13a6",
+        "0b3387d06c1381c5",
+        "82479515ff411fd8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0103",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2726080,
+      "end_ms": 2754200,
+      "text": "And I'm like, is that the right thing to do because you went faster and I had two swings, I bet two different intelligent brilliant people making their version of the software, but you would never have done that in the previous way. You would have one track of software and you would be building Franken software where you'd be trying to get all the needs into it from the two different groups Yeah, I'm actually a huge fan of very rapid experimentation.",
+      "word_count": 83,
+      "utterance_ids": [
+        "5c69e6c32d88d798",
+        "6a46a4795494f5ad"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0104",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2754720,
+      "end_ms": 2844640,
+      "text": "Yeah, and I have a story where for a while I worked at a place called where they do chartical physics, it's pretty short here in sub -inero, right? And that's where I was introduced to this concept of co -opetition, where they have two actually quite isolated teams working on the same particular accelerator, but different places on it. And then they don't share their results until they publish. They can kind of over time learn what's working west in the different organizations But you don't get stuck in a local minimum and it's you know free markets work extremely well because of competition And they do that in academia as well And now since the engineering is less of the bottleneck is more the question of what is the right thing to build? I think it's a great thing to have if you have the sufficiently many humans right to try to attempt to solving the same problem in different ways. And then if you do that on lovable, what I like to do is I bring up a new project or one of the products and I say, hey, can you go and check out this other one and take this three things that I really like and bring them over here. And maybe even run an explique test, run an experiment to see if it's improving the metrics for our customers We're trying to serve to juicy somebody used Fable to build fortnight and I think this is really some of the 3D games Yeah, what is your take on you know this latest version from anthropic fable know they're a part or I assume they're a partner. I don't know that. Yeah, that's stable as well. It's one of the models.",
+      "word_count": 296,
+      "utterance_ids": [
+        "7e95127308c2875a",
+        "964321269a463543",
+        "0e6fb141e4adcb87",
+        "a8d852dfba1b1dc8",
+        "2cadab374902c767",
+        "32637b161f14fe79",
+        "b98fa8dcc7415f26",
+        "71d78469903d4a34",
+        "a867de9c43bedc3c",
+        "bf156bcf41ac3b03"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0105",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2844960,
+      "end_ms": 2852100,
+      "text": "Yeah, what do you think of it in terms of compared to the last generation faster, better, both?",
+      "word_count": 18,
+      "utterance_ids": [
+        "fc8c63308b96789a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0106",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2852620,
+      "end_ms": 2926860,
+      "text": "Yeah. Is it a massive step function? Yeah. What I've seen is that it can in the first attempt. very sophisticated things that look really good. Then when us revolving, right, it's still the same thing where you as a human, you have to think you're often too planning together with your agent about what is the right thing to do. And that's more of that again, more of the bottleneck, whereas boring intelligence is on some path. it's great. Yeah, it's really beautiful saying 3D games for example, but on figuring what to build, figuring out what are the right strategic directions or experiments you should run to improve the outcomes for your business,. That's not changing as fast, is the humans knowing how to use the tool to get the end. to plug in all the right data to be able to take the right decisions for taking your product forward and to take your business forward. Listen, I love the product, but even more than I love the product and you as a founder, I love the outcome. The outcome for business is extraordinary. So anybody who's listening, lovable is absolutely worth your. time. Don't wait. Just put it on your corporate card and start building. That's my message. Just start building with lovable.",
+      "word_count": 217,
+      "utterance_ids": [
+        "cbb03087e91c6d66",
+        "84d55e1c53415912",
+        "9e16ee5647897963",
+        "4ff33f248282d5ef",
+        "b60bcda4e6c6d62b",
+        "7f3bd460e0975b05",
+        "56d3d6c1f3a43e04",
+        "551a0911fc20def4",
+        "cea983956e1eb71b",
+        "ae870530ee774706",
+        "adf238c9e2b2c31e",
+        "6fc7e285132f89d3",
+        "62fd8abbdb8a9b5f"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0107",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2927080,
+      "end_ms": 2947720,
+      "text": "It's an incredible product and congratulations on being reborn six times. Because every six months you had a hundred million in revenue, it seems, and then everybody says lovable is dead because the new foundation model is so good, but you keep studying your customer and you keep somehow surviving and thriving.",
+      "word_count": 52,
+      "utterance_ids": [
+        "f9ed92fe5422f9ee",
+        "fbd7d8713fa01516"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0108",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2948140,
+      "end_ms": 2961900,
+      "text": "So congratulations, that's an entrepreneur. Thank you so much, Disman. I enjoyed the stuff. I hope you enjoyed the rest of you. Stay here in the price. It's pretty great and the palace of Versailles is so impressive, huh? Someday we'll be building with loveable and optimist robots.",
+      "word_count": 48,
+      "utterance_ids": [
+        "cf6e984878016fcd",
+        "998f9bd356a86d2d",
+        "4cb7e0e7cf141ea1",
+        "dd15c5b5a9afc238",
+        "0c9828415deb2a18",
+        "cdf88b6b1de717a5",
+        "6fffc4fbde10b736"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0109",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2963400,
+      "end_ms": 2966740,
+      "text": "I'm doing all of you.",
+      "word_count": 5,
+      "utterance_ids": [
+        "f8f42d9f294d9765"
+      ],
+      "is_question_anchored": false,
+      "stripped": "outro"
+    },
+    {
+      "turn_id": "79f3aaf4ae50dde5_t0110",
+      "source_id": "79f3aaf4ae50dde5",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2980000,
+      "end_ms": 2981240,
+      "text": "And all in.",
+      "word_count": 3,
+      "utterance_ids": [
+        "aee99a51f34518b7"
+      ],
+      "is_question_anchored": false,
+      "stripped": "outro"
+    }
+  ]
+}

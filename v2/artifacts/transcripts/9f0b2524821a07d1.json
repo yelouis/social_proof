@@ -1,0 +1,2741 @@
+{
+  "source_id": "9f0b2524821a07d1",
+  "title": "Flock CEO Garrett Langley on Controversy, \"Surveillance State\" Claims, and Privacy vs Safety",
+  "metrics": {
+    "source_id": "9f0b2524821a07d1",
+    "title": "Flock CEO Garrett Langley on Controversy, \"Surveillance State\" Claims, and Privacy vs Safety",
+    "utterance_count": 681,
+    "turn_count": 146,
+    "retained_turn_count": 135,
+    "stripped_turn_count": 11,
+    "question_anchored_count": 14,
+    "question_anchored_pct": 9.59
+  },
+  "turns": [
+    {
+      "turn_id": "9f0b2524821a07d1_t0000",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 0,
+      "end_ms": 620,
+      "text": "All right, everybody.",
+      "word_count": 3,
+      "utterance_ids": [
+        "72fab1ca4dd3794d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0001",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 840,
+      "end_ms": 18240,
+      "text": "Welcome back to the all in interview. This is where we find the people building the future. Sometimes a politician, sometimes a CEO, sometimes an investor, all the time, an important discussion. And one of the most important discussions of the moment is balancing safety and privacy.",
+      "word_count": 47,
+      "utterance_ids": [
+        "21091299f65b2b02",
+        "4ba1e3d64125f43a",
+        "fcd01c5fe79d084a",
+        "e688eb8b748949d0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0002",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 18460,
+      "end_ms": 19640,
+      "text": "And there is one company.",
+      "word_count": 5,
+      "utterance_ids": [
+        "3ad72a22b423a50a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0003",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 20000,
+      "end_ms": 33180,
+      "text": "That has, you know, is that the center of this and we're so lucky to have Garrett from flock here, Garrett Langley. Garrett, you and I spoke on this week in startups, my other podcast that I've been doing for 16 years. I don't know how many years ago that was six or seven years.",
+      "word_count": 55,
+      "utterance_ids": [
+        "62d5ead271ac2b2f",
+        "9177a1215d81ddbe",
+        "4b2c51f3ff2397a9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0004",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 33220,
+      "end_ms": 34300,
+      "text": "Six or seven years, yeah.",
+      "word_count": 5,
+      "utterance_ids": [
+        "caf4b1b1c3dc58f9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0005",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 34800,
+      "end_ms": 37180,
+      "text": "And I've been following your company full disclosure.",
+      "word_count": 8,
+      "utterance_ids": [
+        "574a7fdea0e90f65"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0006",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 37440,
+      "end_ms": 39980,
+      "text": "I was like trying to invest that one point. I'm not a shareholder.",
+      "word_count": 13,
+      "utterance_ids": [
+        "5eb85b1f235906d0",
+        "07ba54ea18a8b96a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0007",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 40000,
+      "end_ms": 62860,
+      "text": "But I've always been intrigued by what you're doing on the margin sometimes concerned and it seems like you've been so Successful with flock which does safety cameras license plate reader specifically when you get into all the details today But in the last year because of the tremendous success of flock it has been adopted in many communities.",
+      "word_count": 59,
+      "utterance_ids": [
+        "05eecd709217e90e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0008",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 63080,
+      "end_ms": 64100,
+      "text": "We're going to get into that.",
+      "word_count": 6,
+      "utterance_ids": [
+        "ee40363b9d86588f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0009",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 64360,
+      "end_ms": 68700,
+      "text": "And it's had a really great impact at reducing crime.",
+      "word_count": 10,
+      "utterance_ids": [
+        "92e4dc4b442259c3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0010",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 68920,
+      "end_ms": 69820,
+      "text": "We'll get into that.",
+      "word_count": 4,
+      "utterance_ids": [
+        "680790f870fc5964"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0011",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 70340,
+      "end_ms": 76720,
+      "text": "But there is now a group of people who maybe are have privacy concerns. And you and I have talked over the years.",
+      "word_count": 23,
+      "utterance_ids": [
+        "f1b472e9719af090",
+        "b7aabcfe9b7163f4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0012",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 77000,
+      "end_ms": 77840,
+      "text": "And we're going to get into it.",
+      "word_count": 7,
+      "utterance_ids": [
+        "5c3a265e179bf938"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0013",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 77900,
+      "end_ms": 99880,
+      "text": "We're going to go right at the controversies. and everything, and this grand debate we're gonna have. How much privacy am I gonna give up to get safety? And it's really interesting to me that there's been so much energy on this recently, because when I see that kind of energy as an investor or as a podcast host here in the world's greatest moderate of TM, I know there's something at stake.",
+      "word_count": 73,
+      "utterance_ids": [
+        "e5ecf6c59312b4b3",
+        "fef0a9c08bd9f1f6",
+        "3e6f1a11c2ff8dd3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0014",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 99880,
+      "end_ms": 102880,
+      "text": "Ah! I'm doing all of you.",
+      "word_count": 6,
+      "utterance_ids": [
+        "796e03e470313866"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0015",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 103380,
+      "end_ms": 119360,
+      "text": "Apple 11 started with an $8 domain and no VC funding and became one of the largest ad platforms in the world. Now that same engine, power's Apple 11 ads for e -commerce. Your ads run inside mobile games, reaching over a billion people with full -screen distraction free attention.",
+      "word_count": 50,
+      "utterance_ids": [
+        "da297e8c45e5e1cd",
+        "f070e872c590bd69",
+        "10cf653d1b35c505"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0016",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 119580,
+      "end_ms": 122120,
+      "text": "The platform. find spires and optimizes for profit.",
+      "word_count": 8,
+      "utterance_ids": [
+        "f0a6372fa477f385"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0017",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 122520,
+      "end_ms": 136020,
+      "text": "You set the target, it does the rest. One cook where brand went from $4 million to $16 million turned profitable and is on pace for $80 million this year. Visit apploving .com slash all in to launch your first campaign today.",
+      "word_count": 42,
+      "utterance_ids": [
+        "c2316499bc93a306",
+        "2948fa7fb9f674fb",
+        "5d4d976f809e0dd4"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0018",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 136059,
+      "end_ms": 139980,
+      "text": "Tell us a little bit about floppy.",
+      "word_count": 7,
+      "utterance_ids": [
+        "1d608385b2f2716f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0019",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 140980,
+      "end_ms": 153360,
+      "text": "And how many communities you're in now. And then also the drone component. Because people know the license plate readers, maybe they don't know the drones. So let's just get that footprint and build a mental model for the audience here.",
+      "word_count": 41,
+      "utterance_ids": [
+        "272cb2ec0992ac47",
+        "58f945f07cd46536",
+        "43481a45a0489775",
+        "a5fc2b8d0a275095"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0020",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 153680,
+      "end_ms": 262000,
+      "text": "That's great. Yeah, Jason, thanks for having me. So I started the company nine years ago with a pretty simple mission, which is to live in. safer neighborhood. And that was our initial pitch, you know, if you look at our first two or three years in business, it was just neighborhoods. We sold the neighborhood to be sold a license plate reading camera, which is pretty basic technology, a car drive spy, we take a still image of vehicle, we read the license plate, and then the system's gotten more sophisticated at the time. You can detect things like a roof rack or a bumper sticker or a dent or a damage. But that's how it's core on what the technology does. And if you look at this last year to your point, we've had a tremendous impact on the country. North of a million crimes solved using flock. North of 10 ,000 people found to be missing and that's everything from Mark Graham. parents with dementia to our children. Like just last week in Atlanta, there was a stolen car that happened to have a two -year -old in the backseat. And thankfully, because of very hard work by a land of police department and our cameras, that little kid was safely returned within the hour. I don't know what that would have happened without flock. That's one story, but that's my own city last week. And you look at July as a data point last month, it was about 1 ,125 missing people and over 20 ,000 stolen cars. And those are the cars we used to drive our kids to school, to drive to work. And so we're in roughly six, just over six years. There are so cities across the country and in the consequence of being that consequential is people have a lot of questions and people have a lot of debates and I think it's a worthwhile thing to talk about what kind of society do we want to live in? I want to live in where we're safer and I want to keep my privacy while I do it but that is hard. You know to find that balance is not easy.",
+      "word_count": 370,
+      "utterance_ids": [
+        "f12a8ecea6bdb8dd",
+        "c07a06c41b7e218c",
+        "7d45dc6bd8a1552b",
+        "df8053346a3260d9",
+        "f20bf915eb80b15d",
+        "357a5f460db2c154",
+        "84fb68cff60117fa",
+        "7bba8a21c8c1e7d7",
+        "b19a31fdbb1a17ba",
+        "7683fca536996f27",
+        "69a6271f60343ab5",
+        "c447ab842b2dbb3d",
+        "3f320e5ce2fa0484",
+        "d9cc4db5c575710f",
+        "f75a283689fc9006",
+        "7ba09904a5861fd7",
+        "2cecb5a8a7bedf41",
+        "b3b9a53d3927f474",
+        "618df64923a026e5",
+        "8abe453f2f458436"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0021",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 262360,
+      "end_ms": 299520,
+      "text": "I remember when we had our first discussion gosh so many years ago on this we can start up We were talking about it and I had brought up this, you know, hey, well, what happens about abuse in the system? Because once in a while you get a dirty cop if you watch any kind of procedural TV you watch a law and order You watch the sopranos the sopranos, you know, Tony sopranos guy a dirty cop who's, you know, you know, in the hole for, you know, with some gambling debt and they run license plate for them, right? This is like a trope on the news and it's a trope because it's common, not like on a percentage basis, but we all know that any system that chords, data, could be abuse.",
+      "word_count": 136,
+      "utterance_ids": [
+        "6fb0e535671e6192",
+        "e16ea2dc0398ed1e",
+        "68d9999dcf2addcf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0022",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 299760,
+      "end_ms": 299980,
+      "text": "We saw that.",
+      "word_count": 3,
+      "utterance_ids": [
+        "6c5aac6f444fe6fa"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0023",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 300000,
+      "end_ms": 348100,
+      "text": "Facebook, you had engineers there famously stalking their X and like reading their unencrypted messages and the industry had to make a lot of change. So I remember at the time you were telling me, hey, the settings and this is where we're going to get really granular today, the settings are set by the local - community. And these cameras are installed by a local community. The communities I've lived and have had them. So let's answer these two questions. Number one, how does a community wind up having flock cameras installed? What's that decision making process like typically? And then we'll get into a very granular. what you're recording for how long, who has access the audit logs and then what's not recording.",
+      "word_count": 125,
+      "utterance_ids": [
+        "ce26fc3c54d81051",
+        "058d7b023c7d4c0a",
+        "3f03500165b0c992",
+        "8400a5924e1655ea",
+        "c506b36725e2957a",
+        "fd67fff4153b7e71",
+        "c232057baa4d71d6",
+        "5e2373703b5855c7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0024",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 348600,
+      "end_ms": 419940,
+      "text": "Yeah, that's a great question. So, you know, one of the reasons Jason, we struggled so much to raise money as a business is because it is traditionally and was a long time ago. very hard to get contracts done with local government, you know, the last company to go public that service to local government was over 20 years ago. This is a really hard space because city councils have the final decision. And so every two weeks a city council meets and their, you know, the city managers. direct reports to be at a police chief or fire chief, public works, presents ideas, presents concepts they would like to get approval for, and flock is on that list. And so I think last year, we went to something close to 10 ,000 city council meetings as a business. I have a huge team whose entire job is just going to city council meetings as well. explaining what Flock does and what Flock doesn't do, and it's just a cost of doing business with local government. So it's really straightforward. And then I was actually talking to the chief, our first ever police chief down in Jersey Village, Texas, talking to him a couple weeks ago. And like that video, that council the six years ago is still public.",
+      "word_count": 220,
+      "utterance_ids": [
+        "924ae74eba3281f9",
+        "ccb3db9465dca134",
+        "459da2d74eb60c95",
+        "5454065833a2ee0e",
+        "edca6d992b1c794c",
+        "02f614a1c3be1e1f",
+        "a5acb5f64c5e16c7",
+        "8aec604dedf4e17b",
+        "f55fcfdbd05f3d40"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0025",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 420620,
+      "end_ms": 423060,
+      "text": "Yeah, city council meeting is famous.",
+      "word_count": 6,
+      "utterance_ids": [
+        "53d41c39373da91a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0026",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 423200,
+      "end_ms": 491780,
+      "text": "Remember it's tough. It's a wacky environment. It is. It can be particularly wacky. And we go, right? Because we want to know what they're buying. So they buy the product. And, you know, what has been true for the last nine years. As we've always said. This is, this data is a liability to unasset. You should have a set retention period. And that retention period, for how long this data will be stored, is going to determine the efficacy of the product. And so if you don't beat this data in a day or two, it's going to be less effective. It's still going to be better than nothing. And if you hold this for 30 days, it's going to be pretty effective. you've held it for a year, it'd be more effective. And we always believe city council should have that final say for how long they want to store it and who they want to share it with. And so for the longest time, 30 days was our default. We've recently shifted that down to seven days. We think that's a reasonable trade -off, but we still think city should decide or stay. for that matter, but someone who is a democratically elected should have the final decision of how this technology works in their community, but what I think you probably agree with the technology provider, we have to set strong defaults.",
+      "word_count": 237,
+      "utterance_ids": [
+        "2952ddb879a03c72",
+        "adbc07007ae8bd22",
+        "4b84fc74142a5cc7",
+        "fb4294b49716cb41",
+        "2c5bab1cbabbf05a",
+        "0568033b733baf42",
+        "13ef3ed5d5a60e19",
+        "c536f2d66681f8df",
+        "8df880c5d6875dee",
+        "301c4847386e0c6a",
+        "8e11df42f5fd2c95",
+        "8ecada594306c415",
+        "6b78147a79d20fde",
+        "b2d95aff2777cfd9",
+        "31446dd5378a46a5",
+        "5d46503c9d500b1b",
+        "a8de97f7bbe93010",
+        "d4ba85b50e5cf5ef",
+        "eb30dd20a006f891"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0027",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 491940,
+      "end_ms": 515640,
+      "text": "We deal with the matter is what we say in the industry, and you know, if you think about the number of crimes of a hundred crimes. How many would, and I'm sure you have some idea of this, if we have 100 crimes that occurred, whatever the nature are, how many are solved with seven days of data, 30 days of data, or require more than 30 days of data.",
+      "word_count": 71,
+      "utterance_ids": [
+        "6d849e6b24649003",
+        "7df3b56e24e710fb"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0028",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 516340,
+      "end_ms": 574460,
+      "text": "We have a good sense, right? I mean, I'm going to give you an aggregate data. when across the whole country, we think 90 % of crimes will get solved within seven days of data retention. It is Jason, but I would tell you. I've probably talked to two or three hundred police chiefs this week. And they remind me, and I'd tell them, you should tell your city council this too. The 10 % we're talking about, but the 10 % you read about are the news, though. Oh, right, it's the, it's the homicide that there was never a 911 call because someone was killed, and it takes five days to discover the body because of a welfare check, and then it's a complicated case. Or it's a look and I'm sorry to, you know, go to this topic. It's a rape victim who felt guilt, who felt shame, and... she didn't call 911 until a week later because she wasn't ready. And that's real life, right? Like I deal with this every day, so I'm probably less sensitive to it. But these victims deserve privacy. Data is our accountability for the people who have access.",
+      "word_count": 198,
+      "utterance_ids": [
+        "7bf90030dc522ca4",
+        "11cd2cfbc21d99a9",
+        "034e7ae2cef9f93b",
+        "04daf01af1b242a3",
+        "830e0610691e724f",
+        "9a99efc38afa86cb",
+        "ce7c146b3ce2f3cd",
+        "c8445fe5bf4e080a",
+        "2051672fccac48a4",
+        "abbdc37cb8e6c31a",
+        "130fca58b9488668",
+        "9bbf524887bc4dac",
+        "29baa2a420f53c5c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0029",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 574980,
+      "end_ms": 591080,
+      "text": "To even identify the crime. So what you're saying is now, we're just... 30 days of the 10 % remaining that, you know, which is ballpark here, but that less 10 % how many of those out of 10 would be resolved with 30 days of data.",
+      "word_count": 47,
+      "utterance_ids": [
+        "7c7209228c8f18e7",
+        "6e6408880e406e0a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0030",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 591100,
+      "end_ms": 646460,
+      "text": "We think the majority and look we're not going to lose. We're not going to, we're not going to tell cities how to run themselves and to be clear, you know, there's states. like New Jersey, where state law is five years. And so every customer holds it for five years. In the state of California, there's a max retention in the state of Washington. You know, most states have now adopted regulation. And they set a maximum limit. But I think for me, Jason, what's important more than my just default is making sure, see. counselors and mayors are educated that they have control. They can make this choice and they should actually go spend time with their police chief and figure out, what does he or she think is the best for that community? And I think look, there's some communities who are going to push for two days or three days. And I think that's so much better than nothing because that amperler and that's silver. alert, which are the things we all lose sleep over, they're still going to get solved too. So it's just like I've literally lose sleep over.",
+      "word_count": 195,
+      "utterance_ids": [
+        "decf53d9b6886d55",
+        "5cd11b54888b58a4",
+        "4a1dc6bfe46ffda8",
+        "fed7db07a30927b5",
+        "ce458609afa424e5",
+        "6d34b5b4c5301f27",
+        "dfe6e051af32c10e",
+        "9d23c14833724d67",
+        "fae35682313ce65c",
+        "e4b1d3ae8b0c4cd1",
+        "02a3f758b40d1bc8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0031",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 646460,
+      "end_ms": 694420,
+      "text": "I got one of two in the morning the other day and I wake up, I've read it. I'm like, I'm not, I don't know what I'm going to do with this data to am and I'm in bed, but okay. So this seems completely fair in terms of how you're expressing it. And to be clear, when I had you on twist back in the day, I was like, well, don't you need to know who's in the driver's seat and wouldn't you want to get a picture of the windshield? And I was kind of finding myself advocating in my community, hey, I would be okay, just as Jake had the dad and somebody who sometimes on the margins has some... Privacy security issues, they're not acute like for, you know, I don't know, Sam Altman tragically and what's happened at his house twice. You know, but I have my own security cameras. I use unity, it's incredible.",
+      "word_count": 160,
+      "utterance_ids": [
+        "0c6efb3f7da4a990",
+        "08d35df54e52f894",
+        "86117b21f9d3d908",
+        "bf26e93a5bd987da",
+        "a27552e22ad41ce3",
+        "37c529f5c882e598",
+        "c045d7e759204781",
+        "df321a6812fddf17"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0032",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 694520,
+      "end_ms": 695220,
+      "text": "Yeah, great products.",
+      "word_count": 3,
+      "utterance_ids": [
+        "19030953874b5495"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0033",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 695420,
+      "end_ms": 697540,
+      "text": "And I have a license plate reader online.",
+      "word_count": 8,
+      "utterance_ids": [
+        "ec17c5adf35fcd43"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0034",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 697940,
+      "end_ms": 699820,
+      "text": "I have facial recognition on my.",
+      "word_count": 6,
+      "utterance_ids": [
+        "4102beb2015b1c09"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0035",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 700000,
+      "end_ms": 713160,
+      "text": "That's some of my private property, of course. Some of it does look out on public roads, because I have access roads, so I am technically able to record the license plate of everybody who drives by the front of my house. I think that's legal to do this legal.",
+      "word_count": 50,
+      "utterance_ids": [
+        "3f133325474ce8f1",
+        "83b8d2f97227fcc0",
+        "45b4911888b34ab5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0036",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 713580,
+      "end_ms": 714540,
+      "text": "It is legal. It is legal.",
+      "word_count": 6,
+      "utterance_ids": [
+        "a9d84b646e2f289e",
+        "59b20db0683bf3bd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0037",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 714680,
+      "end_ms": 729220,
+      "text": "So are there communities that are using other systems? that are not flock and recording every single person in and out because when I go in and out of private communities once in a while, I see this four or five cameras.",
+      "word_count": 42,
+      "utterance_ids": [
+        "40ad63fb81e6ecaa"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0038",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 729320,
+      "end_ms": 730420,
+      "text": "I know I'm on camera.",
+      "word_count": 5,
+      "utterance_ids": [
+        "dd98fe662ee25f52"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0039",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 731000,
+      "end_ms": 735920,
+      "text": "So aren't people already doing full video in their communities?",
+      "word_count": 10,
+      "utterance_ids": [
+        "a68488aa6d2cad61"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0040",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 736260,
+      "end_ms": 779860,
+      "text": "Not using fog? Yeah, no. Jason, you're spot on to me. We don't do facial recognition. We don't capture video. We don't look inside the car. We don't even allow in our system to search for people for our life Syrian cameras. And that's in direct conflicts with some of our biggest competitors who do all the things I just mentioned. And unfortunately, we're for... Fortunately, we've been very successful and as kind of the industry leader, the spotlight's on us, and that's okay because my hope is the changes we're making, the changes we'll continue to make will force the rest of the industry to follow suit. And I hope the counselor has asked questions of the systems they have if it's not flocked. And maybe they'll switch to flock, when if they want a privacy first solution.",
+      "word_count": 139,
+      "utterance_ids": [
+        "66593eba50eb8771",
+        "c09ff3946a510a05",
+        "6bc00ebd74af2750",
+        "ee72426d3a1bd959",
+        "216eff309b8376c9",
+        "40f48bcb0138632d",
+        "3e8902cca95ab5b5",
+        "c79033b3deb6d389",
+        "6829d0423661ee00",
+        "1a6de590b810ac77",
+        "edec11b16caeb486",
+        "41e37b10184d1fd1"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0041",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 780959,
+      "end_ms": 812440,
+      "text": "And you guys have had a bit of a communication challenge, people were ripping down the cameras. There's people care about privacy. Not just here in the United States, by the way. And the UK, people are ripping down cameras. There are a group of people who are entitled to this opinion. And I share it on the margins when I had... Children, it changed dramatically because number one for me is security. I'm willing to give up my license plate data. If somebody knows my exact whereabouts for 30 days of my license plates, I'm okay with that.",
+      "word_count": 99,
+      "utterance_ids": [
+        "16ce556c1c8e984e",
+        "7dc22d89d4c9e9de",
+        "21c406328f2da05b",
+        "395492226d9cb8bd",
+        "03ffbd22e5e8f40e",
+        "3507e55bf4fbe964",
+        "8a5b5c47003ca17c",
+        "4de81e2e9706592a",
+        "110b23dde2310d12"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0042",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 812740,
+      "end_ms": 817180,
+      "text": "Because I have children and I'm okay with giving up that amount to price.",
+      "word_count": 14,
+      "utterance_ids": [
+        "03e579a965d92854"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0043",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 817460,
+      "end_ms": 838760,
+      "text": "I wouldn't be a little concerned, I think, with the... with facial recognition if I'm being doing honest. But you know, it's kind of a moving target. And I guess the reaction you guys had was, and I think I had talked about this as you call them terrorists, like the people taking the cameras down, you know, this kind of thing. Where does this audience who's ripping down cameras?",
+      "word_count": 70,
+      "utterance_ids": [
+        "86b7f2ded5963915",
+        "dce2cdcc374ee566",
+        "c4f1ba8b686ea38c",
+        "6a45b36210c7e608"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0044",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 838960,
+      "end_ms": 843440,
+      "text": "I mean, they're obviously in a terror. I think they're like activists.",
+      "word_count": 12,
+      "utterance_ids": [
+        "9169590f2163f3cd",
+        "5f6ae3791b2e849d"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0045",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 843800,
+      "end_ms": 881700,
+      "text": "I would say would be a better descriptor, but you guys haven't communicated this perfectly in my opinion. So where are people coming to you with valid concerns? And then how have you evolved your ability to communicate what you're doing? I wanted to have you on this because I looked at them and I was like, I don't think you're doing a particularly good job of communicating this and I also think the people who are ripping down the cameras they think they're in a surveillance state with permanent records and facial recognition So I think they don't actually understand the nuances and contours in the product. So talk about where you got it right where you got it wrong with a involved in communication.",
+      "word_count": 126,
+      "utterance_ids": [
+        "2539b0c06b566e97",
+        "58f72db6fa873185",
+        "28dee3df7fddd7e7",
+        "31fa91073e555725",
+        "8233d50e3198df8b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0046",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 882420,
+      "end_ms": 961220,
+      "text": "Yeah, no, and look, I'm far from perfect. And I've made my fair share of mistakes over the last year and good God over the last decade. I couldn't even, I tried to write it down one time and the list got pretty long and I was like, this isn't helping me move forward. I'm just gonna, I'm gonna keep focus on what I need to do in the future. I mean, to your point on vandalism, It's pretty sad because these individuals are getting kind of amped up from on TikTok and on Instagram to go take action and I don't know if they realize they're committing a felony. You know and I saw this individual who just got arrested and I think it was on a Ohio or Illinois. And Jason, he's facing like 15 to 20 years in jail, and I'm thinking, I feel horrible. I don't think he, I hope, maybe he realized it. But what if he did it? And the person who's on TikTok or Instagram that's pushing this, they're not the ones cutting these things down. They're just, they're doing this for likes and views. use. And you know, that I don't like, right? Because when that camera is cut down, and there's that umbrella alert, something to work. Yeah. And that, you know, I still don't have a lot of space in my heart for people who choose to commit the felony versus go to city council and stream and fight for what. they believe in, that is.",
+      "word_count": 256,
+      "utterance_ids": [
+        "8c252ad6bcb9c203",
+        "5fc8f7efb566ea24",
+        "9bc95f793a69e85e",
+        "4ac96e838036bc75",
+        "02758052f60316e7",
+        "96555a857e1b84ab",
+        "7204f37c4021d610",
+        "12e62b157566fb9b",
+        "e35c496f27d2a042",
+        "7fb3af60e6124be5",
+        "2f24a526d1308e14",
+        "0298e883339941a7",
+        "34800d8a3f761cc9",
+        "7ad12bb09945a40e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0047",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 961220,
+      "end_ms": 975680,
+      "text": "And they can join City Council and there have been a number of cities that have decided to take flock down in my correct, and the backlash is cause that and you're okay with that if that's the community's choice.",
+      "word_count": 40,
+      "utterance_ids": [
+        "2622386ada24967b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0048",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 975880,
+      "end_ms": 1039540,
+      "text": "I would say. Yeah. And it's obviously just hardening when a city chooses to be less. You know, that's tough to hear when there's so many other options to reduce the efficacy of the product versus just take them out. You know, to me, the individuals who only look at privacy or only look at safety are both on their own side of the equation. Like we've got to find a common ground. That's the point of the democratic process. This is common ground on complicated problems. And I think safety is up there on Marlos hierarchy if things we have to do for our community. And this one of the most fundamental things that I believe our government owes us is an equal level of safety. And today, depending on the color of your skin, the in your wealth level, and your race. That's how you're in your sex. Determine tell safe you feel. Women feel less safe than men. That's a fact. Short minorities feel less safe than you and me. That's a fact. If you live in a less affluent city, in a less affluent part of a city, you feel less safe. And I think our government has an obligation to make us all safe.",
+      "word_count": 209,
+      "utterance_ids": [
+        "db71b57de2a6ecee",
+        "6ef39ccb5af7a361",
+        "de5f65d236b4c896",
+        "78efcc801cc7ff93",
+        "214f97137fafa184",
+        "060dd4d7506d130b",
+        "f66f71188aae73ff",
+        "8cb3cd5400914a38",
+        "a516080f3039e415",
+        "395d15ef6fc0129f",
+        "e38f58f9ebf8159b",
+        "78adf3143052edaf",
+        "87156afc8c38dacf",
+        "3e07052297a311ac",
+        "604c5a21c2c1cedd",
+        "d0dcced911247042",
+        "963b88924b8d5e9c",
+        "e6a84e5ec718caaf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0049",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1040000,
+      "end_ms": 1069880,
+      "text": "And that's what we're trying to do and you'll notice that privacy folks, where do you find common ground with them and where do you feel obviously vandalisms and easy one okay, that's an easy one, but there's a nuance here like hey I didn't opt into this I don't want my license plate in there is there an ability for them to opt out and what is the max now for the amount that's saved and then really this is a very nuanced point.",
+      "word_count": 85,
+      "utterance_ids": [
+        "f5f6097b484f2353"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0050",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1070260,
+      "end_ms": 1071520,
+      "text": "What's the audit trail here?",
+      "word_count": 5,
+      "utterance_ids": [
+        "97d9ccddaebbd65a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0051",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1071560,
+      "end_ms": 1083800,
+      "text": "If there's a dirty cop as described who's into Tony a crown over a hundred dimes for his betting on NFL games and he wants to give the money. Or somebody like a bunch of license plate data from flock.",
+      "word_count": 40,
+      "utterance_ids": [
+        "071474ebc303df44",
+        "8664ca1fecc3288b"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0052",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1084120,
+      "end_ms": 1086580,
+      "text": "What's to stop the dirty. What's to stop?",
+      "word_count": 8,
+      "utterance_ids": [
+        "086cdc649b6f6b92",
+        "207ef034a4ab7237"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0053",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1088020,
+      "end_ms": 1095200,
+      "text": "This and do false matter, but also like yeah, what's the largest window people can use today on floor.",
+      "word_count": 19,
+      "utterance_ids": [
+        "a9295a545a51003a"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0054",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1095360,
+      "end_ms": 1137060,
+      "text": "Let's only abuse thing because I think that's something that I was called naive I would say maybe optimistic, you know, I grew up in Atlanta. I trusted the police. I've always trusted the Atlanta Police Department, and, you know, over the last year I've spent a lot of time talking to people who don't like flock. And I finally got to the bottom of it. So I was like, why do you hate this company so much? We sell a camera. And I realized this woman was like, Garrett, I don't trust the police at all. And I was like, ah, that's the root issue. And I was like, but why? And she was like, they lie, they cheat, they steal, I don't trust any of them. And I'm like, okay, man, what if you're, what if you're right now wrong?",
+      "word_count": 142,
+      "utterance_ids": [
+        "30f94ef3b8447105",
+        "6155afec243a2714",
+        "b5fe8f477d7bce54",
+        "39ed47117897d357",
+        "20a801f5fd15d4e0",
+        "56b6548b4db485a1",
+        "0b0005de832c4875",
+        "82f3819b16a32b0e",
+        "11888cba83b8129f",
+        "ca54ac9b804eb0f9",
+        "5df871a910db21f0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0055",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1137620,
+      "end_ms": 1159880,
+      "text": "And so, and that might be the case. Yeah, I mean, she's right there have been many cases of police departments that have subverted you know even the wearable cameras they turn them off I mean we have ice agents wearing masks and no numbers so the public is rightfully concerned is rightfully concerned and they're bundling you as their partner now I get this.",
+      "word_count": 65,
+      "utterance_ids": [
+        "ad054b4adc7c49c9",
+        "12347f57e2bdcfe1"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0056",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1160000,
+      "end_ms": 1265080,
+      "text": "Now, that's where they have a valid concern. Yes. And so we said, it's interesting. And I think if you make it a more macro topic, any one in a position of power, there's a higher likelihood of a boost. Look at CEOs, look at elected officials, look at police. When you're in power, abuse tends to follow not to far behind. And so when we met, You know, six or seven years ago, we had the audit loan. And my assumption was like, this is good enough. This is what most police systems do is they have this audit loan. But what it didn't realize is that he was meeting with a large agency in Southern California, and they've got something like 1 ,000 officers a day that could just clock. And imagine they're doing five or six searches a day. And imagine on one sub month. Someone, one person, is supposed to review that model on. So they're going to spot check 10 or 20 searches, which is the best I can do. And then they move on. And so we built four months ago, we built this new tool called Autodesist Assistance. Because we saw up a million crimes last year. So we have a pretty good, pretty good sense for what normal usage looks like. And then we had about. I'll just under a dozen of uses or for the last eight years that we had detected, and said we also kind of know what abuse looks like. Tell us about this abuse look like. So here's a good example. This is the easiest one. Let's say you're an officer, and you'll say you're trying to stalk me, you would look for me. You'd say I'm looking for a... against cards, ABC -1 -2 -4, and you'd search for it, and you kind of figure out where it is, and then the next day you'd search for me again, and then the next day you'd search for me again. That's very abnormal. If you were truly trying to find me, because I'd come into the crime, you would have put my tag on the hot list, so that anyone else in the police department would have been also notified, because you might be asleep. You might be off -shift because I'm a criminal. So everyone has a right everyone's trying to find me.",
+      "word_count": 397,
+      "utterance_ids": [
+        "ac4123f616053214",
+        "ba90805efe7e9dcc",
+        "304954f789323d74",
+        "fc7b7672794c7f8f",
+        "ef97196fc369edd8",
+        "50cbc5a5231c3a2e",
+        "9376ef4ce8a365e1",
+        "a4c3aab7c797ecae",
+        "29f4bdc00ba3945e",
+        "23934211930a72e0",
+        "dde2fc308f57db2f",
+        "494b63c3b12b695a",
+        "d8d4aa9a5738d7a9",
+        "579fa00699636850",
+        "7899ef3453ff239d",
+        "64278134926e68c7",
+        "3fea3d7295d55ec3",
+        "82304a2d397dfc59",
+        "79d7f11490277041",
+        "a0041447a5f6f84f",
+        "f2ca16ffb84cf8f0",
+        "8d4178da81ae8266",
+        "82dbdfc86c3379dc",
+        "83993c02b7f9e7f2",
+        "35c134c906528bc0",
+        "9c688a4bc8df0f80",
+        "360efefb2c35da18",
+        "28eaed19ef931996"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0057",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1265280,
+      "end_ms": 1330400,
+      "text": "If you're stalking me you don't want anyone else to know it's happening. And so that's it maybe that's the easiest one we can flag but so we built this tool four months ago we kind of put it out there not knowing is it going to work well how how how good is it how you're going to always So you've seen the headlines of the last few weeks, we've caught a lot of bad cops. And yeah, it's a ton. Yeah, it's a ton. It's more than I ever would hoped. And you look at my home state here in Georgia, where some of our customers have been with us for years. And I have to give this chiefs an applaud because they're not hiding. behind it, they're publicly saying, I fired nine officers today, which is the most severe offense in Georgia for abusing the system. They're at a microwave experiment. I don't want them. Wow, and I think that's good. And like we shouldn't be criticizing those guys. We should be saying thank you and who's next? Who else wants to have a clean police department? And so we now... or requiring it as a mandatory. It's not even a default. It's a mandatory feature. You have to have $4. We have to find these bad cops and get rid of them. They shouldn't have a badge.",
+      "word_count": 231,
+      "utterance_ids": [
+        "b3f00b00dea648a5",
+        "2cbecb55cbda3754",
+        "ad7b3690a2d729f1",
+        "73550ee987347572",
+        "5323a45d19bab686",
+        "0bb0a76f6f0a1b3d",
+        "dc01febced7ed919",
+        "b682dd5e664c700e",
+        "20d66c0d34af0e5b",
+        "749ec75176f8fa4e",
+        "9b64c82001c15af3",
+        "0f0c7db38b23d553",
+        "68d88a0da80fdd32",
+        "f8d213e92d766409",
+        "f710fb5f8efa9ce7",
+        "f3e1cf3f911aa82d",
+        "4c3a8b8d0332d4bf",
+        "be2233e5782b706e",
+        "4a339e7c27538933"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0058",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1331160,
+      "end_ms": 1342720,
+      "text": "Amazing. And so this is very interesting, I think, because if we assume that, let's pick a number, 1 % of cops do bad. things. Some people might think it's all cops.",
+      "word_count": 32,
+      "utterance_ids": [
+        "e364c945cfbbce45",
+        "06563d3c49fb6b72"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0059",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1342940,
+      "end_ms": 1346700,
+      "text": "Some people might think it's 10%. I'm just going to say 1%.",
+      "word_count": 12,
+      "utterance_ids": [
+        "6ab9713b5912d221",
+        "9018cf90ac099022"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0060",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1346700,
+      "end_ms": 1359980,
+      "text": "It's a very small percentage, but as a, in a, in a city with 30 or 40 ,000 police officers like New York City has, I believe, and I think less than just 10 ,000, cops, 1 % of all of this.",
+      "word_count": 42,
+      "utterance_ids": [
+        "04118253618f4daf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0061",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1360000,
+      "end_ms": 1364019,
+      "text": "Doesn't become 100 or 300. That's a lot of bad cops.",
+      "word_count": 11,
+      "utterance_ids": [
+        "5ea9253c772fee82",
+        "f49641564fc0c33b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0062",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1364600,
+      "end_ms": 1418140,
+      "text": "And you have set in a way a honeypot for those bad cops. And they probably don't know that this is being tracked. My question to you is when I make a request, I'm a rank -and -file top in a... go do this. Why should rank a file cops be able to do this? Shouldn't there be like a higher level person who they put their request in or maybe there could be like a supervisor and that supervisor says I'm looking into this case, I explain why I'm looking into it and then a senior person like a sergeant on duty they have to say, OK, you can run that search. And then the third person has to look at the sergeants OKs, and they put a note on it. You could also build that into the system, which is, I think, like a double key system, where two people have to say, OK to this, which now you're a dirty cop, you've got to find a dirty job.",
+      "word_count": 171,
+      "utterance_ids": [
+        "12803b176ea947ff",
+        "8911f1fadc259e40",
+        "13340bc50dcf2859",
+        "47c5906a20d0e4d1",
+        "d0f2b954f1429132",
+        "fe8f7ca071103509",
+        "cd6aa22c30b55a07"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0063",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1418520,
+      "end_ms": 1455220,
+      "text": "Yeah. No, I think we should. you're describing,. I can show you the screenshots or what it would look like and how it would work and it's definitely something that's on the whiteboard for how it continued to curb abuse. I think the challenge we face and you've done with this in your software companies, we have some customers who have thousands of employees. and we have some who, I was just on the phone with the police chief in Texas with 20 employees. The burden of what we, you and I just described, would be pretty, big for him with just 20 officers. He's also not using the product every day. He doesn't need to. There's only time of 2000.",
+      "word_count": 121,
+      "utterance_ids": [
+        "56ce18fb0cc7a551",
+        "95811f575f0ce274",
+        "60f84fe17558f6df",
+        "754ca3543d0c5f98",
+        "7f71cba09583e5f8",
+        "93d38c85772645fc",
+        "ce8107a2e5bd0c8b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0064",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1455420,
+      "end_ms": 1456880,
+      "text": "So they want a log is very slim.",
+      "word_count": 8,
+      "utterance_ids": [
+        "52a8714d5aeddebf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0065",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1456920,
+      "end_ms": 1495260,
+      "text": "A lot of log is slim, so he doesn't need any of the things we're talking about. And so... So I do think this is where defaults do matter and this might get to a level of nuance where, okay, for big cities, these are rules, for medium cities, these are the rules and for small towns, you have different rules. Another thing that there are academies is to become a police officer in New York City is harder, it's a longer academy than to be a police officer in a small town. because there's just different expectations. So, yeah, your spot on, we're not done. Like, I think abuse is a problem that's industry -wide. It's not just a flock thing. And you look at California, there was 7 ,000 reported abuses of their state database last year.",
+      "word_count": 139,
+      "utterance_ids": [
+        "e1ceec19f3e339ee",
+        "62ab64c8753f875f",
+        "dfe8d685834a8d61",
+        "698551425fa6bc03",
+        "3b9852cf704bfe7e",
+        "6ccd2359484b44c2",
+        "564a20ee4588ee35",
+        "9c8f61df73d79b0d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0066",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1495460,
+      "end_ms": 1528020,
+      "text": "Seven thousand of the state database, yeah. Which means you should have some percentage of that. And I saw the Washington Post did a story on this and so the company is evolving and reacting to that and so you are responsible now as a technology provider with the worst behaviors of your customers and so the lesson there is even if you want to say hey, we just sell a tool the reality of in this company. Since it is, you know, people have to give up some level of privacy to get that security, you actually have to own it.",
+      "word_count": 102,
+      "utterance_ids": [
+        "c6df66c6d85655c2",
+        "bf628d1879888d3b",
+        "004a446169f516a3",
+        "5ac7e15b37952dc4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0067",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1528240,
+      "end_ms": 1528860,
+      "text": "This is no choice.",
+      "word_count": 4,
+      "utterance_ids": [
+        "8fd8a0f4091ff309"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0068",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1529200,
+      "end_ms": 1559980,
+      "text": "And, previously your approach was, hey, it's a tool, do with it what you will. You made that choice, which is not exactly an unreasonable thing to say. People sell laptops and cameras. and guns to a local police department, they send tasers to a local police department. We don't say to the taser company, hey, you're responsible when somebody gets tazed and it was an inappropriate taser. It was an unjustified taser, but here we are, this is different. This is qualitatively different because America and Americans really value fraud.",
+      "word_count": 91,
+      "utterance_ids": [
+        "a672c469b0d388e9",
+        "1a940ec3b4fa4061",
+        "11b6ac3f2b16ae84",
+        "61602ceecb791eb5",
+        "e00d4aa772624129",
+        "314155664a5291f7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0069",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1560000,
+      "end_ms": 1564019,
+      "text": "I'm doing all of you.",
+      "word_count": 5,
+      "utterance_ids": [
+        "ffbcef71f3f0bab1"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0070",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1565380,
+      "end_ms": 1572200,
+      "text": "Sales tax rules are changing. Starting January 1st, California will tax certain software for the first time.",
+      "word_count": 17,
+      "utterance_ids": [
+        "cea32dcec54e2869",
+        "3dab06348f32594e"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0071",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1572320,
+      "end_ms": 1573280,
+      "text": "Newmoral can help.",
+      "word_count": 3,
+      "utterance_ids": [
+        "4a9fcf0aae560a40"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0072",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1573460,
+      "end_ms": 1592880,
+      "text": "Newmoral is the sales tax solution for fast growing businesses and government registrations filing tax rates. and compliance across the U .S. and over 70 countries. So, you can stay ahead of risk. With numerals guaranteed, sell with confidence. You grow the business, numerals, and also sells tax.",
+      "word_count": 48,
+      "utterance_ids": [
+        "f4b7ecc443974644",
+        "08cf35448c7967a8",
+        "f85d8b241ef421aa",
+        "72e0b72cd9060133"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0073",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1593260,
+      "end_ms": 1598440,
+      "text": "Learn more at numerals .com. I'm doing all in!",
+      "word_count": 9,
+      "utterance_ids": [
+        "6bd38e39fed25819",
+        "e8163d28a10c524f"
+      ],
+      "is_question_anchored": false,
+      "stripped": "ad_read"
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0074",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1598440,
+      "end_ms": 1639920,
+      "text": "To your point, R R I think our view, my view of our responsibility has evolved. Now, I would prefer if every elected official understood how all the technology worked perfectly and made decisions that represented their community values. I don't think that's a reasonable expectation because that means they also need to know everything about data centers, they need to know everything about water works. They're relying on their police chief to tell them what is best, and that chief's relying on me to educate him on what I think is best. And so I do think the responsibility falls on us to give those strong defaults, and then allow them to pivot against it. And still, respect the democratic process, but focus on the default.",
+      "word_count": 127,
+      "utterance_ids": [
+        "e37b12fb2f085b29",
+        "dfe3904f03349c24",
+        "e07106630f7c31c1",
+        "709e2a1b0ef6364c",
+        "b35d7825c5b7027a",
+        "4e953b924f8408dd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0075",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1640619,
+      "end_ms": 1647420,
+      "text": "Yeah, and as the lead candidate, you're going to take the arrows, but there's other people my friend Jamie Simanov, who's an incredible entrepreneur.",
+      "word_count": 24,
+      "utterance_ids": [
+        "0848efea285c9134"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0076",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1647420,
+      "end_ms": 1648420,
+      "text": "Yeah, great entrepreneur.",
+      "word_count": 3,
+      "utterance_ids": [
+        "7c53c9d8b4ad1158"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0077",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1648620,
+      "end_ms": 1684900,
+      "text": "And a dear friend of mine from any decades, he has rain famously and during the Super Bowl, he did this thing like, hey, with rain cameras, and I guess I don't know if they're considered your number one competitor because they sell to individuals and then. Allow the data to be used by police if people opt into that, which is the individuals, right? They were like, hey, we could find a lost dog and then people lost their mind over that because they were like, hey, you can find a lost dog then you can, you know, have somebody stalking, whatever people's valid concerns are and they had to turn that feature off as my understanding after releasing it.",
+      "word_count": 121,
+      "utterance_ids": [
+        "0e328abad5eb0ac4",
+        "182331ab3492d71c",
+        "af56a2179e9b4375"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0078",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1684960,
+      "end_ms": 1718720,
+      "text": "Yeah, no, I've no Jamie for a long time as well. I don't think they're a competitor at say they're friendly. We have the same mission, which is to build safer communities in America. And I think I've learned a lot over the last year of maybe underestimating people's concerns with how. Technology could impact them and needing to maybe go slower in some cases like we you know we haven't gotten into the AI topic but it's an era where I think we're doing it smarter now because there's a version of lock where we would have just ripped and launched the AI feature after AI feature and said this is awesome and we're going intentionally really slow.",
+      "word_count": 119,
+      "utterance_ids": [
+        "2149d05489bd6ed9",
+        "ce9f25bad879e0bb",
+        "113edb6587dcd570",
+        "4f71a1a878f21b44",
+        "a21c4695fdbfdf23"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0079",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1719020,
+      "end_ms": 1750460,
+      "text": "What do you want to say when it's the opportunity and the concern with AI. What gives us the practical, you know, you know, if we were in a police state, but was China and they're using this like the CCP has a literal police state. That's very triggering for Americans because they see that, then they see flock on this end. bring on this end and they say, hey, what's the distance between these two and AI's the obvious one? Because they're tracking people with facial recognition and they're watching their behavior.",
+      "word_count": 93,
+      "utterance_ids": [
+        "d2daaaab96662223",
+        "42ba774a1e0947dd",
+        "1a5db18ef40ab5d3",
+        "3768cbee66c0c36f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0080",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1750960,
+      "end_ms": 1756460,
+      "text": "They're like, this person littered, this person raised their voice and it's pretty not really. Yeah, that's very different.",
+      "word_count": 19,
+      "utterance_ids": [
+        "8d9afc3e2353be61",
+        "92cf52c2308587c8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0081",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1756620,
+      "end_ms": 1770920,
+      "text": "So tell us about the AI features and then what is - detective wants most because the detective wants to close cases reasonably. And then what you're saying like, oh gosh, that would close the case, but maybe it's too much of a privacy concern.",
+      "word_count": 45,
+      "utterance_ids": [
+        "6780510a24ff9c5b",
+        "5017cc1304147c01"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0082",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1771120,
+      "end_ms": 1854560,
+      "text": "Yeah, I mean, let's talk about a simple one that's kind of in debate right now, which is one -systems. Today, you know, when you call Delta, maybe you get an AI. agent, maybe you get a human, but you're booking a flight. So the risk of kind of hallucination is pretty low. Maybe they're booking on the 7pm instead of the 4pm, and you're like, what just happened? But it's fine. Imagine someone broken to your home, and you call a 911, and we've now switched over our 911 system to an AI bot, and it starts talking. to you about what you have for lunch. Yeah, no good. No good. And the risk is so high. And we have no idea how these things work. And there's no good way to control them. That's like, I think that's pretty well in sap. And so you see cities, due to budgetary reasons, and due to staffing issues, kind of leaning in pretty aggressively. There's been some bad cases where the AI's gotten it really, really, wrong. And so I think there's a smarter way to do it. Like, the smarter way to do it, would be, okay, look, we're going to, we're going to have AI. But AI's only going to pick up when the phone lines are fully busy. Yes. Okay. So it's like, okay, that's smarter. That's not what's happening. Like, there's a reckless way to do it, which is just... flick a switch. Or maybe you start with just, do you handle 911 system? We don't, we don't, we don't, we don't, we don't, we don't, we don't, we don't, we don't do 911 calls. But I'm watching this unfolding. I'm going, man, this is a, this is a huge risk. I, look for that.",
+      "word_count": 299,
+      "utterance_ids": [
+        "67ff2b490f8a00a7",
+        "7b9fc175335b016a",
+        "b6ec69b18bb15829",
+        "52448dd02863f5b6",
+        "9f83d6628dc34cfd",
+        "02d98acb8ce72807",
+        "86211f42b37d6eb9",
+        "5b95c6ad3fd98f42",
+        "7d0f569becd9dd17",
+        "281e0d1a6c1ec4a8",
+        "ae708422913cf386",
+        "39d75553647ff4a1",
+        "0ab75e2c82d793a8",
+        "f4ecea0cec7813d5",
+        "f22aa1f417068984",
+        "8bfd96b17043d336",
+        "d618217c9361ce76",
+        "8d5dca831d93b29b",
+        "eaa265c3f02cc35a",
+        "5855cd7b8375863e",
+        "fc6bd014d8b4e248",
+        "288dc564fd4d9dfd",
+        "8d1bc33dbbafdeab",
+        "5166d5302c52e63b",
+        "2426907c855dcaa8",
+        "07b029bade950353"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0083",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1854600,
+      "end_ms": 1877640,
+      "text": "I suppose you could use AI to look at patterns and say, these are abnormal. more patterns for this car. This car is slowly driving up to this house, then driving away, slowly drove up to the next house, drove away, and it did that six times. Is this somebody delivering a lot of burritos or is this somebody casing the joint? Like, that would be what the detective would be like.",
+      "word_count": 72,
+      "utterance_ids": [
+        "f8cd59887069d3d3",
+        "eb8d4288d1df538c",
+        "4d969028ca88664b",
+        "5f6de1e7d6ed6cb6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0084",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1877840,
+      "end_ms": 1879240,
+      "text": "Hey, yeah, let's go to the creek.",
+      "word_count": 7,
+      "utterance_ids": [
+        "5516824b93a5e4fb"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0085",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1879240,
+      "end_ms": 1885860,
+      "text": "I'll see you at the creek. this is from minority report to predict a crime, because something I don't want to do.",
+      "word_count": 22,
+      "utterance_ids": [
+        "dc0ad4a74e637657"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0086",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1886480,
+      "end_ms": 1962380,
+      "text": "Yeah, that I don't want to do. I think we've been really consistent with that. We've never want to be a company that defines suspicion. That's really interesting. It's an interesting kind of like happy hour topic, like what is that world look like? But for us, I think it's really valuable that there's a human in the loop when it comes to public safety. What are my people's lives? You're talking about people's, like, it's really important stuff. So we always want to have a human in loop, but I think there is some products that we could build. But the difference is, like, you know, looking at knowing the cost of getting it wrong, you have to deploy this with third party proper attestation that it's that's working as expected. It shouldn't be up to me. It shouldn't be up to my customers. Someone who actually doesn't want this to work should come in and say, guess what, it does actually, like this is actually really good, and it's making the officers more effective. It's off making officers more objective, less subjective, like that should be our in goal is that AI is used in a way that increases the number of primes they can solve, and decreases the likelihood of they get the wrong person. That's an easy ideal state, and I still think we should rush this. I think we should be really deliberate about how we get there.",
+      "word_count": 243,
+      "utterance_ids": [
+        "50ad8fdf8ed9a62a",
+        "8f26ba3edab57fbb",
+        "9203acafbf713604",
+        "1715bef39e91e730",
+        "4de32461e5c01792",
+        "fc1d7aac027252f1",
+        "b653c486a384f590",
+        "4bf598ee1e3d2583",
+        "67b4cd69a168892c",
+        "c346c3793b9ac0f7",
+        "b79a486a36686551",
+        "47b2fa7ce913386d",
+        "bb9449ab6dd4cabd",
+        "817d5411f170b385",
+        "2fd21a9f6221e687",
+        "49e7dff9ab0115e8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0087",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1962640,
+      "end_ms": 1984680,
+      "text": "You've lost, I think, dozens of cities of the 6 ,000, so some cities are now saying, hey, this isn't worth the trouble or too many people protested, take me through what's happened in the last year with those, I think in 60 or 70 cities maybe, six. Thousand, if I got a number's correct, one percent have said, okay, this is in for us.",
+      "word_count": 65,
+      "utterance_ids": [
+        "9991a8e97e997ab6",
+        "956141c201333ca7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0088",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1984960,
+      "end_ms": 2095200,
+      "text": "Yeah, it's tough, right? Because I want everyone to be safe. That's why I started the company. And I know what they've had, and I know the results we've had. And unfortunately, the majority of the time, they're making a decision off of this information. I remember vividly the first customers that chose to walk away did so because of facial recognition. They went online in Google ALTR face recognition. They saw whenever competitors website and said, we're getting rid of this flock then. They didn't realize they were looking at the wrong person's website. Yeah. And that's tough because that's on me, right? That's on me to better communicate to these decision makers that like, here's what we do, here's what we don't do. That's been the bulk of it. I think the other thing that has been tough to see Jason is, I saw this woman sitting in Washington, just, just, it's so sad. They turn the woman's off. The next weekend, a little boy gets shot, car drives off, it's gonna be a cold case and luckily, the city next door still have flock cameras, found the car, made the arrest, and looked at the, the, the, the, the, the, the, the, But at least their family knows justice was served and so I think we're making really consequential decisions on inaccurate information and that's top. And I thought we have to do a better job as a company like communicating to our customers and their customers which would be the community. But what the technology does and what it doesn't do and for me at least when I speak. let's call it 99 people out of 100 and explain the facts they go. Why is this a debate? This feels like we have controls a city, we can set limits, we can set guardrails, I want to be safer than I feel today. I've never had something like I want to be less sick.",
+      "word_count": 328,
+      "utterance_ids": [
+        "14f7cb7441d3d244",
+        "d2d6b7989d9f3730",
+        "f73fb0840bcf4c7d",
+        "e38d30534125cf83",
+        "8893fe4719a9ccb7",
+        "e0695b7c253ad409",
+        "e7bc5c990699220f",
+        "5383781c09720664",
+        "dba78fff431e48dc",
+        "4e04d94a497ae4da",
+        "7ef7827d1da87850",
+        "b4a3dfe6184be0d3",
+        "37c07a85b754c760",
+        "8b86a6bf74aca1a4",
+        "9471b627a4783c9e",
+        "91c9d360e6697199",
+        "35697248be932373",
+        "c5f010e6be0a2cbe",
+        "aa11edc79e987579",
+        "e11160a766d69012"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0089",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2095440,
+      "end_ms": 2125520,
+      "text": "I predict as you explain this and you change the defaults and the audits get in place and the dirty cops get, you know, taken out of this that you'll see some number of those cities, you know, and the city council's re -addressed this when things cooled down a little bit. And, you know, this happened here in, you know, where I live now in Austin, Texas, Austin, canceled, flopped or didn't renew whatever. In 2025 according to my notes, then we, you know, people have guns here.",
+      "word_count": 89,
+      "utterance_ids": [
+        "d721ed6b0dbe4c4f",
+        "398f55d0cac61e4c",
+        "b0ebcdd89942e759"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0090",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2125780,
+      "end_ms": 2128540,
+      "text": "I have a gun. I carry a gun. Everyone's got guns.",
+      "word_count": 11,
+      "utterance_ids": [
+        "4f733865edd63d82",
+        "e5fe139361edbc66",
+        "84de441bac2909de"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0091",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2128940,
+      "end_ms": 2169000,
+      "text": "And so we had this crazy shooting with a bunch of kids. And it was a similar situation to what you're describing. They were committing these crimes in Austin proper. They drove out of Austin, and manner police department did have flock. They picked it up, and 20 hours later, the three teens were arrested, and they were like juvenile, 15, 16, and 17 here, according to what I'm seeing, and that was the wake -up fall here, and that brought it back to - the front and now everybody's debating it again in Austin. Okay, the ACLU wants 48 hours. I think is their proposal.",
+      "word_count": 106,
+      "utterance_ids": [
+        "0b868c73d2a85fa5",
+        "01e4a25a115ff98c",
+        "098151fea1280a33",
+        "88a7b6e031ef7a76",
+        "433843d35c94ec10",
+        "c26cb277aa37974a",
+        "64f97494c956ee89"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0092",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2169400,
+      "end_ms": 2173200,
+      "text": "Okay, that's the ACLU. That's reasonable. Yeah, that's their, that's a good sense.",
+      "word_count": 13,
+      "utterance_ids": [
+        "1ff6aab42ba64edc",
+        "429d639da93028b4",
+        "f758c28bd97bcdab"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0093",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2173720,
+      "end_ms": 2175780,
+      "text": "This is the privacy organization's privacy organization.",
+      "word_count": 7,
+      "utterance_ids": [
+        "f2d2d1fe86678e79"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0094",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2175940,
+      "end_ms": 2178000,
+      "text": "Several liberties we get it.",
+      "word_count": 5,
+      "utterance_ids": [
+        "b58bdffd2b827c94"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0095",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2178000,
+      "end_ms": 2182980,
+      "text": "You know, most cops probably want 30. Communities are going to set it at seven or 14 days.",
+      "word_count": 18,
+      "utterance_ids": [
+        "cdea45eb8fab31d6",
+        "c5285f1c6d28ad8c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0096",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2183400,
+      "end_ms": 2185120,
+      "text": "That's it. You have competitors.",
+      "word_count": 5,
+      "utterance_ids": [
+        "6534099ffc348990",
+        "7edb3df08143969b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0097",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2185760,
+      "end_ms": 2199740,
+      "text": "Tell me about like the competitors approach here and how you deal with that as an entrepreneur. They just saying, hey, we're just going to sell you the technology and we're not going to just going to keep our heads down and we'll be the, did they go in and sell themselves as a worth walk without limits?",
+      "word_count": 58,
+      "utterance_ids": [
+        "b2c5b0547f31104b",
+        "8b310c9dd7a81c27"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0098",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2199740,
+      "end_ms": 2274440,
+      "text": "See you. to your earlier point. Yeah, we've had close to 20 cities already turned their cameras back on. Oh, interesting. Because they realize they are now less safe and they have an obligation to their constituents to be safer. And it is, it is top as an entrepreneur because you want to build as big of a business as possible, right? But you also want to do it in a way. that when it's all said and done, your kids go, I'm so proud to be that guy's son, or daughter. So you have to make decisions that you're going to be comfortable with 10 years later. And I'd rather lose, you know, I had a lot of concerns about requiring accountability for all of our customers, knowing very well that I'm... and upset a lot of customers, potentially. And I said to myself, look, if a customer doesn't want to be hold accountable, I don't think I want them as a customer. And they can go to one of my competitors who doesn't have these tools, doesn't have these requirements. And that's OK with me, because this is just business, right? It's just a business. Now, it's business, I think, serving number. important mission, but I want to sleep at night and I do today and our competitors to your point, yes, they run more reckless, they run without these tools without the scrutiny. And I think it's in a catch -up, though, they will catch up to them eventually.",
+      "word_count": 252,
+      "utterance_ids": [
+        "648f530567bec1cf",
+        "f5965c071f6f64b0",
+        "501fd1c2d7d8dcbf",
+        "5c6b90de94338429",
+        "430dcd6e34162a0c",
+        "87b3392f95ec6f18",
+        "544aa5a4aba1d4b5",
+        "bdaee5ee257acf0d",
+        "c2ca0f807922d9be",
+        "365b6c3cca1a5f49",
+        "d825740464494554",
+        "e2bde2ac7cbd575a",
+        "42ae3e7b7c72cdda",
+        "a06c90a4d5219ecb"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0099",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2278820,
+      "end_ms": 2306500,
+      "text": "Yeah. you know, tethered system without, you know, proper constraints. Yeah, you'll lose some of them, but I don't think you want them as customers anyway because it's going to blow back on you. Sanford Cisco famously with these ALPR's automated license plate, something. Automated license plate reader. Yeah. So the ALPR, as you said earlier, you're also keeping if there were dense in the car or the color of the car or like the make and model of the car is that right?",
+      "word_count": 84,
+      "utterance_ids": [
+        "7c2c58a570d971d5",
+        "82edb0fbd4972196",
+        "de25b23c93dc8532",
+        "586038da9371afc7",
+        "a86b2f7fbd96010d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0100",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2306900,
+      "end_ms": 2386100,
+      "text": "Yeah, so it's pretty, it's pretty cool technology and pretty effective. You think about what happens on a 911 call. Most people don't instinctively look at the license way and remember it. They see the thing that was unique about the car. Oh, it hadn't. had damage on the right side. I remember so vividly, we had this homicide case near me and Atlanta, and all the person could remember was that the back right tire was missing a hubcap. Hmm, and so the detectives had to go in and say, okay, show me all the cars in this 15 minute window that did not have a back right hubcap. And that's the beginning of an investigation. I'll be in the middle of it. investigation that's just the way to get started. And that's all they had. And because of that great detective, he's like, he's, I've got to know him pretty well, and he's like, it's very good at his job. He worked his butt off and found the person. But that was the start. And so, yeah, so you think it was like San Francisco. And I love that I saw them tweet out. the other day, which is, you know, the flock effect. And it's like crime is down, stolen vehicles is down. And look, we, are one small part of a very big transformation that's happened in that city, including stronger elected officials, stronger enforcement of the law, a strong police tree, a strong DA, community that demand. To be safe, but that's what should happen. If you live in Cisco, you deserve to be safe. That's one of the best cities in the country.",
+      "word_count": 279,
+      "utterance_ids": [
+        "f5a85cc402ceecff",
+        "dc12447c0f475434",
+        "feecb1472980b9bd",
+        "600aed8eca538b56",
+        "ad29ab0670744d1e",
+        "266dc6ed7fc75eee",
+        "639b62ca28c0c594",
+        "d7aff607ce9f6fbd",
+        "41c4710c1f609aeb",
+        "c9c1cdc879e02876",
+        "888cc1d16fe9f682",
+        "0cc748323706ce80",
+        "60b52b2cfa8fcf7e",
+        "0a38402949c6bd2e",
+        "19996cf969563d8d",
+        "76ed193d962c74b8",
+        "33b729d7bcc97c2e",
+        "d93a7e327fede343",
+        "4a1717babe7ffffb",
+        "675785d023175474"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0101",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2386560,
+      "end_ms": 2450960,
+      "text": "And San Francisco has a lot of problems and people are very libertarian, privacy -based, live -and -let -live -based. It is kind of the problem that people are so open. and hearted from the summer, and it literally comes from the summer of love and the fact that it was a mining town, like they just have this live and let live attitude, obviously a lot of the culture that's emerged there is, hey, let your freak fly, do what you want to do, even to the point of, hey, if people are stealing, what? Are they stealing like what happened in their childhood and that it up and people there have had enough the fact that San Francisco and I think this is the correlation do you have the ability and you have the entitlement to say I don't need to worry about this because I have security at my house I have a security guard, I have a personal driver, I have personal security, which by the way, a lot of rich people have now some combination of these things at a minimum, like I just described I have cameras,.",
+      "word_count": 193,
+      "utterance_ids": [
+        "42d7a4b33c85049a",
+        "83d95346d4d16f2d",
+        "ca4e55690ec583cf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0102",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2451160,
+      "end_ms": 2452940,
+      "text": "I have people, you know, all this stuff.",
+      "word_count": 8,
+      "utterance_ids": [
+        "95fc54d2f65de4a9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0103",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2453380,
+      "end_ms": 2463600,
+      "text": "And so, you know, you start painting that picture, it is, you have to be extremely aware of your... own privilege that you don't have to deal with crime.",
+      "word_count": 29,
+      "utterance_ids": [
+        "cfbceb37fb097059"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0104",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2463820,
+      "end_ms": 2468080,
+      "text": "And then my brother was a cop during the stop, asked and frisk out in New York.",
+      "word_count": 17,
+      "utterance_ids": [
+        "66c2e477bdfbab79"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0105",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2468600,
+      "end_ms": 2501680,
+      "text": "The statistics during stop frisk and ask, which was a violation of the poor amendment, like you're stopping people based on like they're hanging out. So it definitely was a little step. too far, but New York in the 70s and 80s was dangerous as hell. Like there are a lot of guns on the street, my brother took a couple of guns off the street, cops were in a really tough situation. The people in the poorest communities were the most in favor of stop, ask, and fristly. They always leave out the ask, because they're like, oh, we're just going to stop you and frist who knows. It would stop and say, hey, what do you up to?",
+      "word_count": 120,
+      "utterance_ids": [
+        "5c456f3b13e33006",
+        "d2e251514b909087",
+        "e3bfb8bd441c75d0",
+        "2b3856e3b1f0fa3b",
+        "7fa8c8f6bcc8704f",
+        "ece61cd501083451"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0106",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2502240,
+      "end_ms": 2504320,
+      "text": "And hey, you're hanging out on the corner. What's going on?",
+      "word_count": 11,
+      "utterance_ids": [
+        "8a2df31ac1355d1a",
+        "5663cd527d3611f9"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0107",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2505020,
+      "end_ms": 2512040,
+      "text": "Yeah, they've just tried to get a read on people, which by the way, if you ever go to Israel or go to some countries, they asked you 20 questions.",
+      "word_count": 30,
+      "utterance_ids": [
+        "28981699cc3f76d3"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0108",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2512220,
+      "end_ms": 2512900,
+      "text": "Why are you here?",
+      "word_count": 4,
+      "utterance_ids": [
+        "81dbc7ee219f4b0e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0109",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2513080,
+      "end_ms": 2529180,
+      "text": "Hey, you know, we're staying like, they want to get a read on you, whether you're going into Israel or Tokyo. They might ask you a couple of personal questions. which would be offensive to Americans, but the correlation was really people who experience crime are in favor of it.",
+      "word_count": 50,
+      "utterance_ids": [
+        "c1a18c7a04bf0c27",
+        "9f25770659bb5410"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0110",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2529420,
+      "end_ms": 2532540,
+      "text": "People who live in pack hights, I don't need to worry about this man.",
+      "word_count": 14,
+      "utterance_ids": [
+        "b891d6ab394d6ebf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0111",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2532600,
+      "end_ms": 2538260,
+      "text": "Something goes down in pack hights, there's 20 cops and 50 private security guards rallying around.",
+      "word_count": 16,
+      "utterance_ids": [
+        "5a65687e5e17a348"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0112",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2538660,
+      "end_ms": 2539980,
+      "text": "One homeless person. One homeless person.",
+      "word_count": 6,
+      "utterance_ids": [
+        "7a88f327de252f7d",
+        "a5df9431f7f455ec"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0113",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2540740,
+      "end_ms": 2547520,
+      "text": "One vagrant, you know, one person who's in a car that doesn't look like a shablon there, it's like, they're gonna get swarmed in pack hines.",
+      "word_count": 26,
+      "utterance_ids": [
+        "c5763340286125d6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0114",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2547960,
+      "end_ms": 2581540,
+      "text": "Yep. No, I mean, you have to nail the head and it's not spoken about as much, but it's worth looking at who is so against what we do and who is so for it. And it's typically people who don't have any other way to protect themselves. Who need this, right, who want this and for those who have a gate and have a guard and have cameras and have a security system and they have Jamie's incredible doorbell camera right and they have all of these products and the service is they're like why does anyone need to feel any safer because most people don't have any of this stuff and they don't feel safe when they go to bed and Yeah, it's quite telling.",
+      "word_count": 127,
+      "utterance_ids": [
+        "0cc70c555a45874a",
+        "ee30fef5c9c20dc8",
+        "d35cd4e2c163c0a7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0115",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2581920,
+      "end_ms": 2617980,
+      "text": "I'm rooting for you to get everything right and To continue making a new safer. I'm also rooting for our communities to make their own decision 100 % think that is the key part of this that people need to embrace as well if you have it if you've chosen to live in a dated community, you have made that choice for security in all likelihood. And if poor people or people who don't get to live in a gated community and you were to ask people with a family, hey, would you like to live in a gated community or would you like to live with not in a gated community?",
+      "word_count": 112,
+      "utterance_ids": [
+        "bf551f79f1d4dd28",
+        "30c7c9645f169ae9",
+        "0713627284f7a79d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0116",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2618200,
+      "end_ms": 2619740,
+      "text": "Like a hundred out of a hundred people.",
+      "word_count": 8,
+      "utterance_ids": [
+        "ea9406b60f3896a3"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0117",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2620000,
+      "end_ms": 2660460,
+      "text": "I mean, maybe it's 95. I think if you offer like the average Joe or Jane, hey, would you like to live in a, would you like your community to be gated with three gates on this security guard? They'd be like, heck yes, but I can't afford that. How much is that gonna cost? So this is where, you know, I think people, with children, people with homes, they think just have a different view of this than maybe when you're younger and you can afford to say it wasn't, I don't get kids and I care about my safety, I care about my privacy and my safety. Yeah and I understand it like I don't want the government to have like a national flock database, I don't want the government to do facial ignition.",
+      "word_count": 136,
+      "utterance_ids": [
+        "8e1cba9a069275b3",
+        "f3c1973b976fabf5",
+        "3ff0aee23a2df19c",
+        "37ececb418f2671e",
+        "2294b08b6df09ebc",
+        "fd2d503c3a88dd8f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0118",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2660680,
+      "end_ms": 2662380,
+      "text": "I find that like a bridge too far.",
+      "word_count": 8,
+      "utterance_ids": [
+        "0f38846c073b9d40"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0119",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2662660,
+      "end_ms": 2677420,
+      "text": "There's been a license plates for two weeks or 30 days. I kind of feel okay with it. I'm sorry if people are disappointed in me for that, but as a parent and somebody in a community, I'm okay with my community having license plate readers for up to 30 days.",
+      "word_count": 51,
+      "utterance_ids": [
+        "8ac4003cec21ce79",
+        "edd5391cfa431e08",
+        "46cd53965c6481d7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0120",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2677840,
+      "end_ms": 2735560,
+      "text": "That's the decision I came to. And I think to your point, I had this interesting conversation with an elected official in Illinois who was one of our largest antagonists, very anti -slok, and really sad, really scary, she was the victim of political violence, someone shot at her house, and the police used a flock camera to find that person. And loan the whole to her credit she changed, but she did change and she's now one of our largest advocates. Because she realized you don't get to pick when you're the victim of violence. You don't get to pick. Sometimes it's random, sometimes it's intentional, but everyone wants. Justice when something bad happens and everyone wants to know that they're going to be safe and so I think you're right that my hope is that these kind of conversations actually lead to fruitful debates about how we have both and we don't let necessarily allowed minority dictate us moving towards a less safe society that'd be pretty sad.",
+      "word_count": 170,
+      "utterance_ids": [
+        "56b0b9fd5e26be45",
+        "ec46006be189695d",
+        "ac4ae0e287f25136",
+        "ff4ee716378e0da0",
+        "b111ea12b82f64f1",
+        "dd6f2c9fd0316dbf",
+        "1be3db8d866931dc"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0121",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2736100,
+      "end_ms": 2769040,
+      "text": "Yeah, and listen, you have been in what I would describe as a PR disaster. last year over this. How far through the PR disaster are you? You've changed a lot of the communications and is this something block can recover from or is this like, you know, company killing like, oh my God, we're screwed. Like, just be honest with us about the PR disaster. of the last year, how that's affected you and how that's informed, how you, you know, run the company and how damaging has it been?",
+      "word_count": 91,
+      "utterance_ids": [
+        "6a58fa7ef9ebb322",
+        "35df2cad354e087e",
+        "7472371dc4e54519",
+        "9b0828ed6be00001"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0122",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2769360,
+      "end_ms": 2853240,
+      "text": "You know, I think the biggest damage is the internal morale, right? Because you go on to X or you're going to read it and you go, why are people so mad at us? when we've been doing the same thing for nine years. And why does it matter us for things we don't do? And we just, we feel people to be safe. And that's tough, right? It's really hard for your work to be challenged. So, viscerally, I think the interesting part is it's brought us closer to our customers, you know, with PizzBus work. they have a job to do, which to keep their community safe, and they see this as one of the most, if not the most, critical part of how they do their job. There was a chief who was like, this is the best thing since DNA, in terms of fighting crime, and I agree with them, so that's something good side, and I think, you know, the businesses in good shape, you know, we raised more money. beginning to be your company still growing. We could be growing faster if we used to have zero turn now we have to your point one percent. Okay, well I would like to be back at zero. Then I'm going to fight as hard as I can to get the right message out there to your point, communicate better, listen more. And I think if we do that we're going to be just fine. because it did it the day, everyone wants to be safe, but hasn't changed, and that'll probably never change. Just like everyone wants to have food, everyone wants to have a roof. Those are just these coordinates. It's the mass lowest hierarchy of needs. Safety is up there. And it's haunted.",
+      "word_count": 300,
+      "utterance_ids": [
+        "b572c8d3f5ca60f0",
+        "c327ea8b9747be75",
+        "466ca2b358c9f8d4",
+        "1292b0d75c9b1f0a",
+        "80d3f41709d50358",
+        "b0bebc8a2ccad378",
+        "4e6afc1e78e3bfd9",
+        "77491b271d37aa87",
+        "e889f9ca06061946",
+        "eb90bb20f744f041",
+        "5adc150047ad4b6c",
+        "137c74ea321b1b6e",
+        "e312fc06ece1d34b",
+        "fd4c934663851582",
+        "375ba93f176836a0",
+        "4193c9f2b06e1f2e",
+        "0e0b6fd1161c8355"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0123",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2853540,
+      "end_ms": 2942160,
+      "text": "I think for your company, you're going to just have to lead, and you're going to have to be ahead of these things. Look at Zuckerberg and Facebook, they've always been playing defense and ketchup on the impact that, let's say, Instagram had on young teens and eating disorders and addiction to social media, ex and Twitter had like political, you know, nonsense and like, people trying to subvert democracy, like all of the social networks had a serious downside that's now been quantified, et cetera. It would have been so much better if he was ahead of it and said, listen, I have kids, I understand where you're coming from. I think there should be an age gay. And he just wrote that manifesto last week and I'll give him credit because I think he was looking at it saying, there are obviously self. business needs. He wants to be part of the AI revolution. But I think it was also identifying and trying to get ahead of and show some empathy for, hey, yeah, you could lose your job because of AI. Here's how I think if you use the tools you wouldn't lose your job and if you have open source and it's available to everybody, not just the rich and we. give you agents and free AI that other people are paying thousands of dollars a month or hey, maybe that levels of playing field. And I think that's what CEOs have to do right now in this media saturated, you know, a story can just go viral so fast. And you got to just get a head of it anticipate these things at own them and just be frank about it, talk about it. call us and demolish you last week.",
+      "word_count": 296,
+      "utterance_ids": [
+        "46efe3317a191a8d",
+        "f8e07227e71474c3",
+        "eaf66e6c62bb3308",
+        "8b465da6038a1f67",
+        "f13ca60c105785a3",
+        "258a4e1b6d723142",
+        "09039f1f6458d3cc",
+        "d2e67d16af44faca",
+        "6ecf4dc68bd83db3",
+        "4d06ba17f9f26361"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0124",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2942460,
+      "end_ms": 3033280,
+      "text": "Have you reached out to talk or to go on his pond? No, I don't know if that's something that's in my deck of cards. But no, I appreciate it. I liked that, you know, I do like T -shirts. I guess is what I'd say. I weren't T -shirts. I put a polo on for you. I thought that's all I would be appropriate. I'm going to follow you too in the hotosses. Yeah, you look great. Yeah, you look great. But no, I think, look, we want to, we were on the Today's show this morning from Good Morning America. We want to go to places where the community lessons and we want to have meaningful conversations. And yeah, we're not done. We've got a long road ahead of us. And I think, you know, we didn't get to drones. Oh, yeah. How do they draw? Yeah, that's what I'm talking about. How do they draw? It's just to draw. This is probably our fastest growing business unit right now. Because our LPR business is just under 50 % of our forward -looking revenue. So it's a big part of our business, but we've got drones, we've got live video cameras, we've got some really cool software. I think the story I share with you about drones, which is... one of my favorite stories is, so these drones live in it kind of an HVAC control box, a dock, or say, on top of a roof, typically like a police precinct or a fire department. And when a 911 call happens, instead of sending an officer first, you can send a drone. And so there's this really interesting case, not too far from you up in the Dallas Fort area where a w - in, you know, at late at night at a gas station called number one and said, there's a man walking back and forth for the gun. I don't feel safe. Um, which obviously is illegal to, to garnish a weapon in the say it's axis, but she was scared, right?",
+      "word_count": 346,
+      "utterance_ids": [
+        "77c0fc71926fcd71",
+        "138879a925ab5298",
+        "1e92629b497a2f00",
+        "eb02a018a25508bc",
+        "10934e0312e6c187",
+        "4877b4afc48df3df",
+        "42cfae09690337a7",
+        "40292caef29c206a",
+        "0ffa300fe1b376d2",
+        "1f417312e868602b",
+        "e546099dc6a5a6d6",
+        "a58453e32fed5dd1",
+        "38c1b75501d3afe3",
+        "33b9968eca899b0e",
+        "214fb205e5bef72a",
+        "1f008ed694420790",
+        "e532eb0639736d60",
+        "112a412df108045e",
+        "2ebd442094d5958e",
+        "8e0afe98cbbb7c75",
+        "5c5a79cf74b2ae05",
+        "78a69111040d6739",
+        "c870fddcd6b72cfb",
+        "e896692a973f1ce8",
+        "8c92474d71538d0a",
+        "f24a0dc9135d801f",
+        "77f3e74b138fcb36",
+        "03dd0e3c287abbd0",
+        "6f24e5738751a88c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0125",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3033700,
+      "end_ms": 3036329,
+      "text": "And well, you can wear one, but you can't be waving it around.",
+      "word_count": 13,
+      "utterance_ids": [
+        "b07d8e6ea681a0f9"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0126",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3036670,
+      "end_ms": 3102580,
+      "text": "Yeah. And he was fair enough, fair enough. And, so she called him. and normally what would happen, right? It's like one cop would have heard that, flip on the blue lights, race down and they're heart racing, he's got his gun ready, and someone's about to die. Instead, they launch the drum, the drums at 400 feet, flying 60 miles an hour, so it gets there in under a minute. As the crow flies, yep, and it's got a 40X optical zoom, so it's zoom. all the way in. It's not a gut. It's a lighter. It's one of those toy, like, lighter things. They call them back and say, hey, man, it's just a lighter. You're okay. And I share that story because so much of my business is related around solving crime, but it's more than crime. It's about safety. It's like how do we help the community feel safe? And this is an example. where we demitigate and we mitigated what we're going to really bad situation for everyone. And we have thousands and thousands of stories like that where communities are safe and out with our drones, they're safe for with our cameras. And to your early point, we just got to do a better job communicating how it all works. And we got to teach our customers how to do that, too. Because we're only one company. We got thousands and thousands. of customers, we need their help to and tell the story.",
+      "word_count": 249,
+      "utterance_ids": [
+        "86a71bed47c9dc10",
+        "d23c7c24fbbdd07e",
+        "7e678e43bdc828da",
+        "b5b2d910adb8546e",
+        "b13df2551cac72e8",
+        "8559889a1eeeea9e",
+        "3bfa55febddbab55",
+        "fb3b2f32f9d4b67d",
+        "169f18bc30a55c5d",
+        "87426b1567d6def2",
+        "6d1b90e11b627b11",
+        "759ae0e4f7535d55",
+        "f8442c9fe729a68f",
+        "1177c0546c7bc57d",
+        "6a8a25b26e6e9efe",
+        "7c175bcc753eb379",
+        "2066c505048dfcb0",
+        "5fd451e80221fc12",
+        "ddabfb7831967ca0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0127",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3103200,
+      "end_ms": 3139980,
+      "text": "Yeah, I think the new tool you're talking about with the audit trail, I think that has great potential. I think a third party auditor, so if you sell the system, it can come with third party auditing, you know, people use Ernsting Young or whatever the audit books. What's the equivalent here of an auditor that would say, hey, The drone got launched. This isn't a dirty cop sending a drone to stock their X spouse or break somebody's privacy. And we're just going to review in real time slash whatever every drone flight. Because that's now you start sending drones. Talkers going to look at that or ACF.",
+      "word_count": 110,
+      "utterance_ids": [
+        "072aae337f7ac1df",
+        "96e71e2105de5243",
+        "99f4d657bec92498",
+        "ca963a180bcff69e",
+        "b0a45f5fbae3aec3",
+        "8dea2eb40ad3d5b6",
+        "931bb3729c033e69"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0128",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3140000,
+      "end_ms": 3140560,
+      "text": "I'll use him.",
+      "word_count": 3,
+      "utterance_ids": [
+        "cdd617f528ddf259"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0129",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3140680,
+      "end_ms": 3149800,
+      "text": "Look at that and say, OK, so now you're like peeking in my window. So there's got to be massive safeguards on the drone getting deployed. Is it only deployed if there's a 911 call?",
+      "word_count": 35,
+      "utterance_ids": [
+        "be95ecb3d1fea390",
+        "e2fbb9cbeaa203a6",
+        "27e253683a4957c6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0130",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3149940,
+      "end_ms": 3179880,
+      "text": "Is that the this is the next big guy chapter for law enforcement is doing a better job implementing drones than they've done with historical boxes. You look at something. like body cameras and I'm not sure how much he fell this. There was massive outreach on body cameras. And now it's like, wait, second, it's actually really good. It's a better tool. And same with non -lethal weapons. And so now we have the summer work to do there. And to your point of the third party, the object is one, you've got a city manager. That is effectively his or her job is to hold the police chief accountable.",
+      "word_count": 111,
+      "utterance_ids": [
+        "648180d0a075051d",
+        "addbf91226872456",
+        "cd0a4bd2c2787ab1",
+        "d89c8334df27b75c",
+        "33987f516d736786",
+        "2e8091f9dbe09e80",
+        "fe71e11cabecceb1",
+        "8034886461075653",
+        "8f5628a534d0865c"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0131",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3180000,
+      "end_ms": 3181480,
+      "text": "And they can see the auto logs.",
+      "word_count": 7,
+      "utterance_ids": [
+        "4cef6be77d98ddeb"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0132",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3182260,
+      "end_ms": 3214920,
+      "text": "They can see the auto logs. They can see the auto logs. They can see the auto logs. They can also see the flight patterns. So most of our customers have a transparency portal. It has the auto log. It has how many cameras they have. It has their drones. It has their drone flights. Now, there's a lag, right? We want to delay. We want to break it. Raising from chasing to the crime scene. investigation. So there's a lag, but I look at that in, and what's going to be hard for our customers is getting comfortable with this ever -growing expectation of both transparency and accountability. Yeah. And we're going to push, we're going to push our, but the communities also are going to push our.",
+      "word_count": 129,
+      "utterance_ids": [
+        "7a6c4f9861215357",
+        "0e15b955d1d81382",
+        "d0d2195da5298aaf",
+        "dd5aec82d6f21dd2",
+        "dcd6518d1d6bb027",
+        "7ba65f9dc3671f69",
+        "437d206e2c8b2fdb",
+        "5760228a90f911d4",
+        "e0600f838488a659",
+        "5c6551a935da6f6f",
+        "4500db32709faa0e",
+        "e47524ac89542efc",
+        "f62676d55b2f3421",
+        "f0211e34d4fd1f57",
+        "c849be2de038185a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0133",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3214980,
+      "end_ms": 3221280,
+      "text": "And some of these things are like nine, one, calls in many jurisdictions, are public. record.",
+      "word_count": 16,
+      "utterance_ids": [
+        "67b9d02a88a663ed"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0134",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3221460,
+      "end_ms": 3222220,
+      "text": "They're public record.",
+      "word_count": 3,
+      "utterance_ids": [
+        "14a6f826898ba4e9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0135",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3222620,
+      "end_ms": 3239980,
+      "text": "And same thing with radios, although some places don't have those as public record, they don't have the radios and crepting. So drone flights is one where like, you know, should drone flights just be on the website like here's all the drone flights that occurred and here's the 911 calls that are with them or people doing that or yours.",
+      "word_count": 61,
+      "utterance_ids": [
+        "5d1bf48b2fd9dfd0",
+        "71d41a672bb02ee7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0136",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3240000,
+      "end_ms": 3269260,
+      "text": "Is your software doing that for them? It would be possible. We've never had a customer ask to do it. We have this concept of like a spectator mode, which would be available for city officials and command staff. But I think that your questions are right, one. And I think as an industry, we're going to have to make these decisions sooner than later of what... that default is because we have a default now, but there's very little state regulation. There's zero federal regulation, outside of air safety, which is important, but nothing yet.",
+      "word_count": 96,
+      "utterance_ids": [
+        "8bee4e4ffbe63e57",
+        "3918ade0aff6c9ab",
+        "174046c54321a528",
+        "e8897e4dcf16b95f",
+        "64efe80723c74802",
+        "398ec11dcfb57735",
+        "618a40a4f0fb19cb"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0137",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3269400,
+      "end_ms": 3274240,
+      "text": "What's the short -term state regulation or city regulation for the, yeah.",
+      "word_count": 12,
+      "utterance_ids": [
+        "03a267bec45b360d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0138",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3275060,
+      "end_ms": 3299940,
+      "text": "So the short -term, so you've got, new hamster at three minutes. And then three minutes for life. This is my reading. Okay. That's New Hampshire. That's New Hampshire though. So for the free ride. Okay. And then the next New York state is 21 days. That's the state of Washington. Okay. Well, here you are folks. Like, if you want to really live off the grid in privacy, you have to live the free or die.",
+      "word_count": 77,
+      "utterance_ids": [
+        "a80d05460554cf63",
+        "f4715bfa22badca2",
+        "127e87c55409758a",
+        "31862579edad3f63",
+        "8a3f472698978ff8",
+        "d53c18261e188d26",
+        "e0736253d6779945",
+        "8906b6fbce8ba527",
+        "9592a2f7dfa3f135",
+        "4de30b9212d81648"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0139",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3300000,
+      "end_ms": 3323700,
+      "text": "I appreciate your candidness and Good luck being in such a controversial space and getting ahead of these things. I wish you great luck with it and we can agree I think publicly for everybody to agree and disagree on the margins about these things But it's up to the community to make these decisions. I think and I think that's the high order bit here and I think that's what that you're starting to really get right is, hey, this is your community stress.",
+      "word_count": 85,
+      "utterance_ids": [
+        "9b6ce8971b311387",
+        "799e511d9c88ecd7",
+        "b61d0094aac48ea3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0140",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3323760,
+      "end_ms": 3327800,
+      "text": "You don't want it turned off. You want it for 48 hours? Put it at 48 hours.",
+      "word_count": 17,
+      "utterance_ids": [
+        "718a1cebe373865a",
+        "26f422e5f7eab981",
+        "12945e19ebc462f7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0141",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3328240,
+      "end_ms": 3329980,
+      "text": "We're gonna have some reasonable caps on this.",
+      "word_count": 8,
+      "utterance_ids": [
+        "963751ac922962e9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0142",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3330000,
+      "end_ms": 3331560,
+      "text": "I wish you great luck with it.",
+      "word_count": 7,
+      "utterance_ids": [
+        "dc7963599d80e407"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0143",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3332700,
+      "end_ms": 3336620,
+      "text": "And thank you to everybody for tuning in to the all in interview program, bye -bye.",
+      "word_count": 16,
+      "utterance_ids": [
+        "d8853478975580a3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0144",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3336840,
+      "end_ms": 3338740,
+      "text": "I'm doing all of you.",
+      "word_count": 5,
+      "utterance_ids": [
+        "4dc5fdd9f6afae45"
+      ],
+      "is_question_anchored": false,
+      "stripped": "outro"
+    },
+    {
+      "turn_id": "9f0b2524821a07d1_t0145",
+      "source_id": "9f0b2524821a07d1",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3352339,
+      "end_ms": 3354560,
+      "text": "I'm doing it all in!",
+      "word_count": 5,
+      "utterance_ids": [
+        "b9930eb8d30edfae"
+      ],
+      "is_question_anchored": false,
+      "stripped": "outro"
+    }
+  ]
+}

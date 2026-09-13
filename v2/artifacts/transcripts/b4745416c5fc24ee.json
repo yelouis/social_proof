@@ -1,0 +1,3961 @@
+{
+  "source_id": "b4745416c5fc24ee",
+  "title": "Google's AI Brain Drain, SpaceX's Huge Quarter, Airtable's 90% Collapse, US Data Fuels China AI",
+  "metrics": {
+    "source_id": "b4745416c5fc24ee",
+    "title": "Google's AI Brain Drain, SpaceX's Huge Quarter, Airtable's 90% Collapse, US Data Fuels China AI",
+    "utterance_count": 907,
+    "turn_count": 217,
+    "retained_turn_count": 215,
+    "stripped_turn_count": 2,
+    "question_anchored_count": 31,
+    "question_anchored_pct": 14.29
+  },
+  "turns": [
+    {
+      "turn_id": "b4745416c5fc24ee_t0000",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 0,
+      "end_ms": 3060,
+      "text": "All right, everybody, welcome back to your favorite podcast.",
+      "word_count": 9,
+      "utterance_ids": [
+        "81a74e8e18d759f0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0001",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3320,
+      "end_ms": 4220,
+      "text": "It's the all in podcast.",
+      "word_count": 5,
+      "utterance_ids": [
+        "13f774cabb9037f1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0002",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 4460,
+      "end_ms": 14320,
+      "text": "It's the summer. It's August 6th, having a hard time getting a core I'm here on the podcast. But David Friedberg is here. David Friedberg is back our Sultan's science.",
+      "word_count": 30,
+      "utterance_ids": [
+        "da0a2e502628322e",
+        "583444b74f1a1f74",
+        "df81270b89ad90f9",
+        "5aeee609c449641b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0003",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 14420,
+      "end_ms": 19980,
+      "text": "How you doing, brother? Great to be with you. It's great to be with you. And everybody.",
+      "word_count": 17,
+      "utterance_ids": [
+        "a0cf2aada83f5120",
+        "d9700bb9f96b8ac2",
+        "a647e482c819e29f",
+        "6d12b4a5c3a92d0d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0004",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 20000,
+      "end_ms": 23460,
+      "text": "Nobody loves when Brad Gersner is here.",
+      "word_count": 7,
+      "utterance_ids": [
+        "2198b2359b9d33c7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0005",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 23760,
+      "end_ms": 24700,
+      "text": "He's your Bruce Wayne.",
+      "word_count": 4,
+      "utterance_ids": [
+        "d4032c7ab56443cb"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0006",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 24740,
+      "end_ms": 35180,
+      "text": "If markets are your gate, he brings that namaste to your payday. Yes. His glasses at discount and fetching one of those fancy Trump accounts. All right, welcome back to the program.",
+      "word_count": 32,
+      "utterance_ids": [
+        "cbcfe9d63c4e4871",
+        "5563fe6d5611c195",
+        "e47f18e7e8b4d7b5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0007",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 35680,
+      "end_ms": 39780,
+      "text": "Brad, I love it. I love it. You bring the rhymes back. I bring a little intro back.",
+      "word_count": 18,
+      "utterance_ids": [
+        "f8bd6082dc7f6c11",
+        "a8096bbb6a8ca12d",
+        "58834cbbdff049ce",
+        "ffc1597e906e9150"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0008",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 40779,
+      "end_ms": 59020,
+      "text": "Shemop is on the road right now. Shemop is on the road, but we will get a field report from Shemop and I call Daniel somehow sex is going to be here, but you know how he is. He's always late because you know, get a phone call from very important people, but he will break in at some point. Oh, wait, I see in the text here.",
+      "word_count": 68,
+      "utterance_ids": [
+        "9c3e622e046bc0a4",
+        "c43087537b6bb695",
+        "4dce74580150aee6",
+        "5ce1c76d6d4782af"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0009",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 59240,
+      "end_ms": 79980,
+      "text": "Oh, there he is. You made it. How do you like my beautiful summer of July? It's incredible. It fits perfectly. I don't know how your mouth does this. I don't know how your mouth does this. I don't know how your mouth does this.",
+      "word_count": 45,
+      "utterance_ids": [
+        "6664a3be54983c88",
+        "349c72c41d554df1",
+        "6eb4f689c91860e5",
+        "1a9865affa429b82",
+        "60ac3b372c74d9df",
+        "1620c02196c6582a",
+        "b166b0ed3e62739a",
+        "d23b113848bce82e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0010",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 89159,
+      "end_ms": 93040,
+      "text": "Well, here's the report, everybody, as everybody knows, Trimoff is on the road.",
+      "word_count": 13,
+      "utterance_ids": [
+        "9c333c972ca213ae"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0011",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 93520,
+      "end_ms": 102940,
+      "text": "He, oh, here he is, he, this is a photo, snacks he went, he went to check his data center progress. I think that's in Colorado and the water where he's building a data center.",
+      "word_count": 35,
+      "utterance_ids": [
+        "60f4902fd2afe4bb",
+        "c9aafb02f1fb88e2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0012",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 102940,
+      "end_ms": 104260,
+      "text": "I think that's on Dune.",
+      "word_count": 5,
+      "utterance_ids": [
+        "0c9779df93bf9f79"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0013",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 104400,
+      "end_ms": 111020,
+      "text": "Oh, it's on Dune. Yes. Just four. Oh, yes. There he is. And Mary himself. Oh, look. Here's that.",
+      "word_count": 19,
+      "utterance_ids": [
+        "bc5c72ebd49cbf0c",
+        "84b1a9f3e9491fa9",
+        "26b9e808eb449537",
+        "79377867bf0cadaf",
+        "9da591d1472ba380",
+        "7a3a88020be7ba00",
+        "04d9d7f6612bc879"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0014",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 112040,
+      "end_ms": 117560,
+      "text": "You know when a meme has reached its peak when your wife starts dunking on you.",
+      "word_count": 16,
+      "utterance_ids": [
+        "527b34d09114e12b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0015",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 117580,
+      "end_ms": 119060,
+      "text": "There it is. And here we are.",
+      "word_count": 7,
+      "utterance_ids": [
+        "e42f047ae0ed2f6f",
+        "6e390b9627e26803"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0016",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 119140,
+      "end_ms": 120980,
+      "text": "This was at the Christmas. party I think.",
+      "word_count": 8,
+      "utterance_ids": [
+        "46a68a635ff9c8dc"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0017",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 123360,
+      "end_ms": 130440,
+      "text": "I wasn't sure if it was my Twitter feed that was just selecting into it, but not everyone, right?",
+      "word_count": 19,
+      "utterance_ids": [
+        "51ac2d883bcaef73"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0018",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 131180,
+      "end_ms": 133480,
+      "text": "This is it. This is it, everything. All right, let's go.",
+      "word_count": 11,
+      "utterance_ids": [
+        "2e84726a5e12567c",
+        "e5cf331f5a99242e",
+        "42c0f96ead98fd23"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0019",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 133660,
+      "end_ms": 150260,
+      "text": "I've to get to enough with the shenanigans and small talk. Google had two major shakeups to its AI staff on Wednesday, Demis Hassavas has moved to chair of D -Mind and chief scientist at Google. Reports describe this as Demis stepping down or being kicked upstairs.",
+      "word_count": 47,
+      "utterance_ids": [
+        "c48243bd5dd81e5c",
+        "bc3a5c0ca64ecb15",
+        "5cccb9e467cc1bfa"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0020",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 151100,
+      "end_ms": 151980,
+      "text": "We'll get into that.",
+      "word_count": 4,
+      "utterance_ids": [
+        "d60a986f0d2c4245"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0021",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 152200,
+      "end_ms": 222140,
+      "text": "But Google framed it as a promotion and says he was stepping up. Here's exiocese, quote, explaining the shake -up. Quote, Google's Gemini 3 .5 Pro is, months behind, with some company sources telling XEOs that it's in part due to low morale, interesting, several top researchers including Gemini's co -lead have left the firm for competing in labs. Chef Dean, plus three other AI superstars are leaving Google to start a company called Discovery Loop. Dean is a legend for your burger, and I think you worked with him at Google, one of the world's great AI engineers. He was employing number 30, joined in 1999, and has worked there for what I understand continuously. For 27 years, the scary loop is going to be focused on deep scientific breakthroughs in AI. Google shares down 4 % on the news of Dean leaving. So 200 billion in lost market cap, if you. want to correlate those two things. Freeberg, this is your alma mater. What are your thoughts here? Is this creative destruction, maybe these people weren't delivering and they wanted fresh blood? Or is this just the siren call of doing a startup in an age of unlimited capital for AI and unlimited opportunity just being too much for the OG? at Google to not take advantage of.",
+      "word_count": 220,
+      "utterance_ids": [
+        "05f60a27b0eb2933",
+        "286d57265be21317",
+        "ba192f43832b81ca",
+        "8b4ef7be5f9f0361",
+        "614606208625b1ac",
+        "1ddb8c5249c1a272",
+        "5feb418241022b3b",
+        "81232636d5086252",
+        "4e8b04e46b140900",
+        "20966acca9195e49",
+        "18ee74db189cc29d",
+        "17248972816c4406",
+        "4d4a6a86ffc2ff34"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0022",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 222280,
+      "end_ms": 238460,
+      "text": "Maybe it's the third bucket, which is if you're the board and the management, you're having a debate about how to best deploy capital. Google has made a commitment to deploy $200 billion in capex this year in AI infrastructure, data center, build out.",
+      "word_count": 44,
+      "utterance_ids": [
+        "eff22341b9ede2d2",
+        "31ea2196d74ced8e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0023",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 240700,
+      "end_ms": 326500,
+      "text": "Depreciation, making an investment in AI compute in the US right now is hugely tax -advantaged. And because of the extreme demand for compute, it's a pretty obvious kind of ROIC model, return on an invested capital. So if you make this sort of an investment, you have a significant demand for that compute infrastructure. You're very good at running the compute infrastructure. That capital can deliver massive profit returns for you with very high confidence in some forecasted period. Building the most advanced frontier lab driven model also takes tens of billions of dollars. of capital, and the question really is, can you deliver the profits from the model? And in a world where open source is becoming so good and open weights models are catching up so quickly, and all the front -care labs are catching up to each other so quickly. Does it really make as much sense to deploy tens of billions of dollars against building a model. And I think that the scientists that we're seeing transition out are the scientists that have been at the core of model development of making these frontier models. And they were certainly first out the gate. You can look at some of the early interviews with Jeff Dean for a couple of years ago, where they actually had a chat GPT equivalent internally a year before chat GPT came out. from Open AI, Google chose not to release it for fear of cannibalizing search. And so on, that's when Sergey stepped in.",
+      "word_count": 254,
+      "utterance_ids": [
+        "a5c2199d4e0b3840",
+        "ad6bcad804b82273",
+        "937c6edd629a8c32",
+        "d798ba44afe0fdca",
+        "d5c69fdd5bf61973",
+        "2575b4a5f94c1730",
+        "a967550894010219",
+        "f0098ec2304e67bb",
+        "1c004872deb72853",
+        "9e3768236c1b5360",
+        "d7b4fe18dbb97984",
+        "1fd32bc04e24f741"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0024",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 326940,
+      "end_ms": 328460,
+      "text": "And there's this whole kind of revitalization.",
+      "word_count": 7,
+      "utterance_ids": [
+        "fcadd0f44c43e337"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0025",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 328920,
+      "end_ms": 405200,
+      "text": "But it's time has gone on. And as everyone has competed on models, as we've talked about many times on the show, I think it's pretty obvious that it is very hard to get the same sort of return on... capital invested in model development, as it is in capital invested in compute infrastructure and being model agnostic. What Google has is probably one of the greatest, install enterprise bases in the world for compute, save the most enterprise customers, they have the most consumers, and in both cases they don't necessarily need to have the better model to make an incredible business. They can be model agnostic, they can work with anthropic, they can work with open AI, they can work with SpaceX, they have a significant ownership stake in SpaceX and an anthropic, and they can work with all the open weights models, they can host them all. So now, if you're one of the great computer scientists, you're Demis, you're Jeff Dean, you're this whole - crew, and you're inside a Google, and they're allocating capital, not to your models, not to the things that you're most interested in, but they're allocating capital to infrastructure and data centers, and supporting the broad ecosystem of models. You start to say, well, given the fact that I can go down the road and visit Brad Gorsner and a couple other people money with a PowerPoint deck because I'm the greatest in the world of doing this, that might be a better path for me.",
+      "word_count": 255,
+      "utterance_ids": [
+        "83420dafdf76eeb7",
+        "94bc60fcc2f35aa0",
+        "a3118a1508187df0",
+        "818df4d501ecf22e",
+        "c37cf40edf656d45",
+        "b8e3b759b7515aa3"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0026",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 405520,
+      "end_ms": 406600,
+      "text": "And I think that that's the moment.",
+      "word_count": 7,
+      "utterance_ids": [
+        "c4f79d530a228139"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0027",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 406860,
+      "end_ms": 429760,
+      "text": "So the way I would frame it is capex is high alpha, low beta in data center infrastructure, that capital. And model development theoretically could be high alpha, but it's very high beta. it's a very risky way to deploy capital. So if I'm the board, I'm the management, I'm deploying more capital and computing infrastructure, less capital into the model development. That's what I think is going on.",
+      "word_count": 69,
+      "utterance_ids": [
+        "00ea2dc011851033",
+        "86482724bfbb2f29",
+        "3da69e7e0cb2817f",
+        "411c148987c94e63"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0028",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 429780,
+      "end_ms": 431560,
+      "text": "What you're taking on this?",
+      "word_count": 5,
+      "utterance_ids": [
+        "4128c27ddcff3930"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0029",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 431560,
+      "end_ms": 536500,
+      "text": "I think David nails it. I mean, listen, the same thing is going on at Microsoft, right? Sacha is out this week saying, you know, adding Morgan Stanley's report and saying the seen over a 30 % return on invested capital in tokens as a service, right? So in the infrastructure business. So I think David's exactly right. Those are such good businesses, right? You deploy capital, everybody's running it from you. But the scientists who want to be involved in super intelligence, who want to kill. cancer, want to be on the frontier of these models, right? They're sitting there dealing with this channel conflict at Google because, you know, Google Cloud wants all of the compute in order to rent it out to Anthropics. And those, for those building the frontier of models, internally, want that compute in order to compete with Anthropics. So you have this inherent chance. conflict between those wanting to build the models. I think David said it really well and I think that's a big challenge for them. It looks like it's being resolved in favor of being more of an infrastructure company. So where does telescope out for a second? SpaceX also reported this week. They also have. channel conflict. They're running out their compute to anthropic at the same time they're trying to build their own model with rock and cursor. You have that channel conflict at Google. You have that channel conflict at Microsoft, although I don't even really see them pushing the frontier anymore in terms of models. Met us talking about getting into the infrastructure as a service game. And then at anthropic can open AI, you don't - have any of that channel conflict, they say we're not in the infrastructure business, we're only in the model business. So I think it's a clarifying view as we look forward that we may in fact not have those companies on the frontier of model development if all these people leave.",
+      "word_count": 332,
+      "utterance_ids": [
+        "d254e330f6b8d1a8",
+        "730391a39cf9afda",
+        "4871839bc0ca254e",
+        "fbc50aaed06b0c24",
+        "40d56c68b980fb7d",
+        "d427d6398d9aa6d9",
+        "183d2da3e649e4c1",
+        "da674022d79589c6",
+        "a2a33b2d496034ca",
+        "a8202ef6bd142397",
+        "afb7d1dddf479965",
+        "4016095687ca5715",
+        "6fccad122981d27c",
+        "e03be91f28f387c5",
+        "1e71485108650e29",
+        "565079212c3880ac",
+        "fb0262508eecba26",
+        "61a2034a6d530a08",
+        "61cc5776f9a62fa7",
+        "46809a866779ecdb",
+        "bf4466cf8bb4b0eb",
+        "79ed7804f64e38c0"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0030",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 536500,
+      "end_ms": 549860,
+      "text": "By the way, thanks to the law passed on capex depreciation. If you assume a 26 % corporate tax rate, every dollar you deploy in CapEx, because you get to write it off in this year, you're basically getting 26 % off.",
+      "word_count": 42,
+      "utterance_ids": [
+        "85b943679562b874",
+        "0264ee2a4a83220f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0031",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 550240,
+      "end_ms": 553400,
+      "text": "You know, that's money. You get right back. Yeah. Yeah. Hey, sacks.",
+      "word_count": 12,
+      "utterance_ids": [
+        "6b25deb0d95fddde",
+        "aef598f679e69074",
+        "c6a3152ade7ed869",
+        "712b39e87852286e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0032",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 553540,
+      "end_ms": 594480,
+      "text": "Let me have you comment on this as well, polymarket, which companies will have the number one AI model by the end of this year. on December 31st. Now, of course, in the last time they did this and profit ones, so they're not on the list. They're the winner, but who will have it going forward? Opening I -32 % Google 20 % only Bob of 14. And then you got moonshot XA and I met a by -dance all that about 10 % Sussex. Your thoughts here. on what's the better business? Is the better business being in the language model, frontier model, or is that getting quickly commoditized and really you want to be in the token cell? Business, or is that also going to be a commodity? And you just need to be on the application layer.",
+      "word_count": 141,
+      "utterance_ids": [
+        "3774c18f301cb6f3",
+        "450180fd81d65157",
+        "b5877100ba76f8e1",
+        "94ffc7feedee6b39",
+        "6f440d12715365cd",
+        "852618dfb18d5d62",
+        "cdfdad26b6386e6c",
+        "59ad5fb642a18a7f",
+        "5ece36950fd5dc38"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0033",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 594640,
+      "end_ms": 720920,
+      "text": "Here's what I think is going on in terms of the market structure is when I saw this Google news. My reaction was, and then there were two, because like Brad was saying, we used to have five major companies in the hunt to be the leading frontier lab, the leading frontier model, just a year ago. Now we're really down to just anthropic and open AI. So, the market for frontier intelligence has become a... doopily. Now, Elon is still in the hunt. I'm sure Google would say there's still on the hunt, but like Brad is saying they may have contradictory incentives there, because they can actually do quite well just with their compute. So I think that the market for frontier intelligence has become a doopily. I think it's a very powerful doopily. I don't think it's - That's being commoditized. I think that we're evolving to as a two -tier market structure where there's a market for frontier intelligence and there's a market for, let's call it kind of commodity or lagging intelligence, whatever you want to call it, that's six to twelve months behind. There is a market for those tokens, those models, but the reality is you can't charge anything. for the weights. You can charge for the compute. You can charge for the inference that you're providing. You can charge for essentially consulting services to help put the whole thing together. But if you're not at the frontier, you can't charge for the model layer itself. If you are at the frontier, you can charge a premium. And that's what... and Thropic and OpenAI are. And I think the proof for this is just you look at the growth rates of these companies. The latest we heard is in Thropic is now over 80 billion of ARR. Start of the year at 10, it had forecast a hundred billion as exit ARR for the year. And most people said that would be impossible to it. Now, it looks like they're going to do it with a couple of months to spare, so their estimates are going up. I mean, 1, 10, 1, 20, or higher for end of your A or R, open A I, seeing acceleration. So I think what you're seeing now is a very clear bifurcation of the market. You've got a frontier model, doopily, that can charge. at Premium.",
+      "word_count": 400,
+      "utterance_ids": [
+        "437d954f207ca53b",
+        "a4b00960c14693bb",
+        "d3612176b0f216c4",
+        "77437dbe87c2800b",
+        "815eb00e9ded68da",
+        "5822855a74e0f426",
+        "f626e6563bc42fc7",
+        "8dee3f907835ff2a",
+        "55be3e5a394e481c",
+        "8458ea3ea1aa66c5",
+        "6d3d7351bd1dde4d",
+        "4bb5c0b22a69e44f",
+        "768a4693667c51f8",
+        "1b0eb9cf482ec775",
+        "130b07d7560204ad",
+        "39e12cc549ed7c3b",
+        "527e854c3b22eb01",
+        "261edd9163a64af6",
+        "e206c12c9a12e278",
+        "41fa80e016f1443d",
+        "9c065e18fcaeabad",
+        "5e7056e410ee6d54",
+        "3ff43c28358c485b",
+        "e08388d41ce37341",
+        "dd8d028290a62347"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0034",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 721300,
+      "end_ms": 752120,
+      "text": "I think of it like Apple. You know, Apple is competing against Android. It's open source. Android actually has more users in the world, but all the monetization goes to Apple because people are willing to pay for the premium experience. I think in a similar way, people are willing to pay a premium for true frontier intelligence, if it's real. really at the leading edge. But if you're not the leading edge, there's a huge market for that too. But it's highly commoditized. People are just wanting to pay you for the compute. So I mean, that's what I see happening right now.",
+      "word_count": 104,
+      "utterance_ids": [
+        "ef1aa1996ded4a62",
+        "ce6740f9b0018676",
+        "4babd9a349e24df2",
+        "47ca021f3ef71b03",
+        "de3fc9cb1b2765f7",
+        "a60424eb7b2c14e6",
+        "c18f52127e0f5230",
+        "9650a50c9291e423",
+        "2318ffc7a3c67036"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0035",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 752360,
+      "end_ms": 754460,
+      "text": "Yeah, what do you think? Jason, what do you think?",
+      "word_count": 10,
+      "utterance_ids": [
+        "6a63ebb297b1fd8f",
+        "e33c35886092060d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0036",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 754960,
+      "end_ms": 798620,
+      "text": "Well, if you look at Google Cloud, they posted 82 % year over year revenue growth, which is at We've never seen in the history of these cloud providers Elon Musk and XAI just had the space like Syringes were going to get into that, but they also had massive uptick in their Elon web services as I've dubbed it. And if you look at Google, I still think Google will be the number one AI company because They have so many people using AI inside of their products already. They have five products now with over 3 billion monthly users each. Android search, Gmail, Chrome, YouTube, all have over 3 billion. If you've used any of these products recently, they are becoming AI first products.",
+      "word_count": 126,
+      "utterance_ids": [
+        "f2d6a4a51a73c02c",
+        "b4228cb6b49f274a",
+        "414107baecc9d3f2",
+        "8655cc25735a28eb",
+        "b58d6f8a23250193"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0037",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 798700,
+      "end_ms": 799560,
+      "text": "YouTube especially.",
+      "word_count": 2,
+      "utterance_ids": [
+        "b1bfe9c620ffeab8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0038",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 800000,
+      "end_ms": 886360,
+      "text": "But obviously Chrome and Gmail, you're seeing tools pop up there for AI, and then, freeberg, you kind of alluded to this. They have 13 products total with over a billion, and that now includes Gemini. In Q2, Gemini had over 950 monthly active users tripling year they will... the number one AI company in terms of consumer usage, by far, I think, Fisherier. That doesn't mean that the frontier models are not great businesses. They obviously are, but I have been using exclusively non frontier models. And for 95 % of the jobs I'm doing, sacks. It's good enough, and I just posted about this, you know, and Elon and I got into it a little bit here, and I think you reference this in our group chat. I tweeted just the other day, the difference between the open source models I'm using in front here is negligible or ready. I believe that to be a true statement for the work I'm doing, and he said, you know, I'm responding back to me. It's actually a world of difference, you know. So if you're doing something other than making a copy of a video game or you have incredible speed needs, the frontier models are not necessary anymore. They're just not necessary. The people using the frontier models are doing it because their company set it up and it's too hard to implement open source right now. But it's going to get easier in using to implement it. So I'm still going with open source in Gemini being the leader of this game.",
+      "word_count": 264,
+      "utterance_ids": [
+        "524874c49acf8cce",
+        "ca8e5ab3ef6742b6",
+        "3e36d0e84c14b404",
+        "ab995e4875f1bb9e",
+        "ea1e469cb7cd38d3",
+        "4a709408a34f6344",
+        "945f5be856924c4c",
+        "f3931089e012a739",
+        "6a746105de7efffd",
+        "7573b80acd3920c8",
+        "8c259bc4b9bfe459",
+        "9b1c638916ea9b65",
+        "1114c8392bc93ce7",
+        "ef41468d3fb59017",
+        "b64fe7d86a1fcffc"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0039",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 886820,
+      "end_ms": 956480,
+      "text": "It's true for your use cases that let's say the cheaper commodity intelligence that middle of the market is good enough. Look, an Android phone would be good enough for me. I could get by on a cheap Android phone. You know what? I still pay a premium for this because I use it so much. So if you're a business that let's say you are a hedge fund and you're an highly competitive industry, you don't want to take the chance that you're not getting the best intelligence to power your models, you know, and there's a lot of industries like that where the competitive dynamics will drive you to. Pay for the best intelligence. There's also situations that goes back to the blog post that Decagon posted, which is, if you're looking for use cases, you also want to use the true frontier. Because again, when you're dealing with immature use cases, you don't know where the value is going to be, and you're searching for opportunity to use AI. You just want to use the best, because... again, the return on finding those use cases is going to be so much greater than the small premium you're paying at the token level. So I think there's a lot of examples like that when, you know, the use cases immature, where you're in a competitive industry, where you're just deploying AI, you want the convenience of the full stock.",
+      "word_count": 241,
+      "utterance_ids": [
+        "5cbeafc06f11588c",
+        "8792a3a18d3a056e",
+        "75e86df005fbaf97",
+        "c6a982435f91a5db",
+        "e0ce073c59536077",
+        "382296ad89d20c69",
+        "2f70db221abd8f90",
+        "e0dea894c5cad2a7",
+        "c08babe1b47a0339",
+        "5e9c817fbd647b4a",
+        "d197c718e84d757e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0040",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 956480,
+      "end_ms": 957860,
+      "text": "So I'm not going to go front here, mom.",
+      "word_count": 9,
+      "utterance_ids": [
+        "7948662d3c1a02fc"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0041",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 958120,
+      "end_ms": 971620,
+      "text": "Yeah, look again to me, you know, unless you're, employees are doing something stupid like you create a leader board and they're token maxing. I don't think the cost is that great. And again the benefit that you're getting is huge. So a lot of people just like give me the best. I'm willing to pay a premium for the best.",
+      "word_count": 61,
+      "utterance_ids": [
+        "80d0ccbcd70fe335",
+        "63a02fa1df829b1a",
+        "d507b301317cb5f5",
+        "04f936ecf1f8db15",
+        "4b89d58f90c1b254"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0042",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 971760,
+      "end_ms": 999980,
+      "text": "I'll take a slightly different take. I think that it's not necessarily do you take the best model or the open source model. I think that there's a blend that's happening. at least that's what I see. For example, we'll use open swords, open weights for a vast majority of simple workflow applications. But when it comes to specialized applications where we really need to have high quality model proficiency, for example, in life sciences and genomics modeling, I am going to go for the...",
+      "word_count": 85,
+      "utterance_ids": [
+        "25242f6f47cd1a73",
+        "00d2382c5e0b9c74",
+        "7a46ae3e5e74d3d8",
+        "bb8008e001ecab6e",
+        "1a5b5fb37e696338"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0043",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1000000,
+      "end_ms": 1000660,
+      "text": "Premium model.",
+      "word_count": 2,
+      "utterance_ids": [
+        "88c45344124933b5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0044",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1000780,
+      "end_ms": 1059460,
+      "text": "If I'm working at a media company and I'm trying to do AI rendering of video, I'm going to use Gemini's model that does video. It is the best model or Sora or whatever the best model is for that particular application. So I think the idea that there's kind of a model that you pick for everything, I think is the false assumption on the consumer. side is likely the case of the consumers are not going to be using some open -weight model because they can pay 20, 40 bucks a month and get chat, GPT, or Gemini, or Claude, and be very happy paying 40 bucks a month and they'll basically be able to minimize their cost to run that for consumers. For enterprise, I think the enterprise is going to be very active in selecting a blend of models that are going to make the most sense, very cheap, open -weight model for simple workflow applications, individual employees, spinning up an app, whatever, and then more complex models for those really key workflow tasks and then specialized models. And I will say it is way too early to count Gemini out on building incredible specialized models.",
+      "word_count": 200,
+      "utterance_ids": [
+        "d4c6b6c21fb2b9db",
+        "dd130ef29ab37092",
+        "710db0a377ae6f99",
+        "b36b373b31b01714",
+        "d9afdd09ce76ebee"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0045",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1060000,
+      "end_ms": 1060940,
+      "text": "Best video data.",
+      "word_count": 3,
+      "utterance_ids": [
+        "828a089f2e3e41af"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0046",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1061320,
+      "end_ms": 1093100,
+      "text": "They have the best life sciences data. They've been working on this for far longer than anthropic or open AI in the life sciences side. They're very well ahead on that front. I mean, Demis is still going to be running isomorphic labs. So when it comes to be specialized models, verticalized specialized models like video life sciences, protein folding, I think these are the things where you're really going to see Gemini shot. And then every enterprise is going to have a mixture, but hey, if you can be the cloud service provider with that mixture of models, which is what Google GCP can now be. I'm going to sign up for working with GCP versus working just with anthropic.",
+      "word_count": 121,
+      "utterance_ids": [
+        "d89dedc1be99e408",
+        "53cd69c9e1c5ca98",
+        "6d1c53d994d4b4c6",
+        "3ffdea150ce17e20",
+        "fd005263fa87bafd",
+        "3452948ee464f4f9",
+        "487cb34b39597921"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0047",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1093760,
+      "end_ms": 1117380,
+      "text": "One of the things this has created is downward pressure on the pricing. We start opening eye and clawed. Massive price cuts for token. So they are reacting, they're not taking a sitting down and the augustration between these models is being built into a lot of harnesses side of enterprises. So what's your take on the downward pressure on token pricing? Or is it just great for consumers and enterprises good?",
+      "word_count": 72,
+      "utterance_ids": [
+        "59b0d145bcf0f32c",
+        "bce19bb347e970e4",
+        "abf21a1eb62b1e09",
+        "fa4b853097b10998",
+        "a91ff7c931b0b041",
+        "7833b960214e8a59"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0048",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1117840,
+      "end_ms": 1229460,
+      "text": "Listen, we've got massive competition. That's the thing. America's winning is exactly what you want. We have massively competitive market. We have Chinese open source domestic open source frontier national labs that are doing what they're doing. We have downward pressure on pricey, you know, David referenced the doopily, you know, I think it's hard to call it a doopily when you're, you know, only a few years into this and you have giants like. Amazon, Microsoft, and Google, I do think he's right. I do think they've emerged as the pure plays, their revenues would suggest that they're gaining share of wallet. But there are two points I want to make here, because I think they're non -consensus views that we're spoken this week. One was Elon's response to you, Jason. Over the last two weeks. everybody's been saying that the Chinese have caught up, that open source tokens have caught up in intelligence, that they're much cheaper, et cetera. And Elon comes out and says not so fast. We're entering the singularity and the frontier models are way further ahead than people think. I believe that to be true. I think for your use case, they're very similar, but I don't... I don't think that's the most sophisticated use case that people are trying to train on and try and to experience. And then Jensen came out this week and said close models are actually cheaper. You know, if you don't have to build it for yourself, if you don't have to, you know, the training costs and a lot of expertise to fine tune and maintain and guard rail and keep it safe. So he's basic. making the argument that not only are the frontier models for their head, but that the cost differential between the two is not what everybody's making it out to see to be, which I think explains why they continue to run away with it on the revenue side of the equation. But I think we have healthy competition, you're right, Jay Cow. You know, for the vast majority of use cases, I think token consumption is going up for the open source guys While share of economics is going up for the frontier labs.",
+      "word_count": 373,
+      "utterance_ids": [
+        "9985251ae0eef73e",
+        "6a5bf9f447c164cb",
+        "82f3efbd3a91668c",
+        "ad0a101a38ee4ba3",
+        "2421fc0c37606374",
+        "4f3edd594d5e6f24",
+        "3e33e3256f16acf6",
+        "c71ac362d5117b6f",
+        "0a583d6c08aebbf2",
+        "a42bf8bc84a9acb8",
+        "7ec60ac2a7fc05b1",
+        "ed70384309d8a531",
+        "94c9945ca149046f",
+        "4b9880dc353bd074",
+        "aac0fc0a914071db",
+        "62f8cae650df2828",
+        "332f3ff030c442d6",
+        "a936354014c628a1",
+        "4059866f7eb7303a",
+        "7a011c843effd328",
+        "166018237c505090"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0049",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1229460,
+      "end_ms": 1269580,
+      "text": "I think that's what we want to see Yeah, and it's just Android versus iPhone all over again one platform makes the profit one gets the majority of users at least globally and usage let's talk space X here. They had their first earnings report as a public company. Sheriff dropped their team percent, I think, because people were a little concerned about the surging AI capex. It's down 30 % since going public in June, but it's now trading and it seems to have settled in at a $1 .4 trillion valuation when public office. about 2 trillion. Q2 results were spectacular. It's the only way to put it. 7 .8 billion in revenue up 92 % year over year.",
+      "word_count": 121,
+      "utterance_ids": [
+        "a49babf1a4167152",
+        "cc83131ee92fe628",
+        "498eff6ed3310305",
+        "aa48855b0e0761bd",
+        "84c41129966592c9",
+        "82f3c7488c1f8074"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0050",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1269660,
+      "end_ms": 1271220,
+      "text": "Let that sink in.",
+      "word_count": 4,
+      "utterance_ids": [
+        "a01388d81c0f133c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0051",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1271340,
+      "end_ms": 1298400,
+      "text": "And 67 % quarter over quarter AI revenue, Elon Web Services, more than tripled quarter over quarter to 2 .6 billion. That's not cursor, that hasn't closed yet, but that's going to be one of the great purchases in history. This is from Elon Web Services, renting out compute specifically to anthropic and Google from the Colossus collection of servers. But CapEx was up 18 .4 billion in the quarter.",
+      "word_count": 70,
+      "utterance_ids": [
+        "47c4d395c2ca1576",
+        "bcb774567acf8666",
+        "8f7419830354ee4e",
+        "83bbf6ea10950b4f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0052",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1298640,
+      "end_ms": 1299980,
+      "text": "That's six acts a year over year.",
+      "word_count": 7,
+      "utterance_ids": [
+        "1ad9594ee1e0d17c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0053",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1300000,
+      "end_ms": 1309400,
+      "text": "Obviously, you can do the math there for a run rate of about 75 billion dollars. I'll stop there and get your reaction bread to the SpaceX IPO.",
+      "word_count": 28,
+      "utterance_ids": [
+        "95af263836ed8bea",
+        "5061257000dd5a69"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0054",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1309560,
+      "end_ms": 1428140,
+      "text": "I know you've been tracking this and commented on it because I mean, listen, I think that want first, let's start off $1 .4 trillion of value creation for this copy is extraordinary. So, the... fact it from peak to trough, it's down 40 or 50 % from the IPO. We had that chart out a few weeks ago. Remember that within six months of the IPO, almost all these tech stocks are down 50 % peak to trough. We see it again here with SpaceX. I thought it was a really solid quarter. I thought as guides were pretty extraordinary. 100 billion in ARR by the end of the year. pulled forward the one trillion dollar target in ARR by a year from 2031 to 2030. Now, to just put that in perspective, Morgan Stanley's 2030 revenue estimates 325 billion, which is also extraordinary. Remember, this company did 18 billion in revenue last year. So, whether you're taking Morgan Stanley's... numbers are Elon's numbers. Clearly, the market is not pricey that in. At 2 trillion, we were pricing ahead a couple of years. I think now it's, you know, the value reflects kind of where we are. The market has questions about a few things. Here's what they are. Number one, on the rental business, the rental of compute business, the rented out of huge block of compute. to anthropic. It's the question that we've been talking about here. Are you going to use the compute to build your own frontier model, or are you going to rent it out? And if you rent it out, are you going to be able to find those people who have the capital to offtake that compute? He's talking enormous numbers, 10 to 20 gigs, and people are wondering how they're going to be able to have financed that. And remember those businesses, the GPU rental businesses, tend to trade at very low multiples, look at corewee, et cetera. On the frontier model business, I think this is the sleeper. I think he said on the call that rock tripled tokens in the month of July, that doesn't include cursor. Cursor was already on a path to, go from 3 billion to 10 billion by the end of the year, cursor plus grock could be at 10 to 20 billion by the end of the year.",
+      "word_count": 394,
+      "utterance_ids": [
+        "cb9cc2c3caec4f86",
+        "cb5570e8fbce3a96",
+        "d774abf9734b1ff4",
+        "4b3e4939be668571",
+        "11c2c03be063c9ae",
+        "ebda85059191fb35",
+        "b56e206a80634638",
+        "fc5aa088c1177166",
+        "195f4d6507d631fa",
+        "f9dc79f1907e686c",
+        "5332a75ee4e9c967",
+        "35957dd7b162c9cc",
+        "ef35774eaf873cbc",
+        "34b720b492843083",
+        "1a6b561a091d61bb",
+        "12a7d1e2c86cbcda",
+        "f3f583bfe4914be4",
+        "79dad27f82778803",
+        "d58dbf9b549ab3a5",
+        "f819b5c9c9e3ecb0",
+        "073ad89708276316",
+        "b8c95de82bb5faf4",
+        "2cd95f57b7cb4b97",
+        "a0cb6c942f3c8dbb",
+        "bfee250ac45afe93"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0055",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1428340,
+      "end_ms": 1467520,
+      "text": "That would be an extraordinarily valuable asset going to trade it a much higher multiple than the data center business. And then of course, we haven't even talked about Starlink and what are you going to do? You know, I think going to run the table on mobile. So. This is the normal consolidation. We have funds like across Silicon Valley that are distributing their shares, the stock is traded down a bit, nothing surprising to me here. Now it's all about execution. I think the most important thing to watch the two most important things to watch are number one, how do the rock and cursor revenues end the year? And number two. to, you know, the traction they get on, you know, continuing to replace traditional mobile carriers with starving.",
+      "word_count": 132,
+      "utterance_ids": [
+        "79c4eb3df23f90d4",
+        "6ec4285bef948cc2",
+        "07261fc24d63854c",
+        "81a95ba0219079fd",
+        "9456796059e06542",
+        "ead6549e3b876953",
+        "baa42ee64cc874ad",
+        "3b70d6a6634839e1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0056",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1467960,
+      "end_ms": 1497060,
+      "text": "The distribution started, I think today, or yesterday, I got my first distribution from a fund I'm in. I'm in a couple of funds that are in SpaceX, since I got everybody's in that, and that will obviously create down pressure if you are. amongst the people who want to cash out and have been in it for a long time, but I'm holding these for my grandkids. Sacks your take on these spectacular, I guess, is the only way to describe them results. Coming from a vertical that was in part of SpaceX's business, but nine months ago.",
+      "word_count": 99,
+      "utterance_ids": [
+        "352b23a5ead7d974",
+        "c946547324beaffa",
+        "a7793dc6d0749419",
+        "0de4bc880bc3c25a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0057",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 1497420,
+      "end_ms": 1588020,
+      "text": "Yeah, look, I thought it was a very bullish earnings call. a little bit surprised that the stock went down after the earnings call because not only was it a beaten raise, but also I think Elon spoke to a lot of their plans. The only thing I would add to what Brad said was around Starship, Elon basically said, we all saw it, right, that the Starship test flight was successful, the Starships. floating in the ocean, the heat shield worked. That's going to enable more flights of starship now and more accelerated rate. That pays away for the V3 satellite, which enables much more bandwidth for the Starlink network, which then powers the whole direct to cell play. So you have that piece of it. I mean, just the whole telecom aspect seemed very on track. they're very bullish about that, and then you've got the whole AI data center play. Now on the data centers, I think what they said is that they expected to go from 1 .4 gigawatts a compute to about 2 by the end of the year, and Elon said that the spot price for compute's in the $30 to $50 per watt range, so, you know, you do the math that gigawatt is a billion watts. So 30 to 50 dollars per watt means 30 to 50 billion per gigawatt. And I think they're at the high end of that range right now. So when Elon says, look, we're going to end the year at 100 billion of ARR. All you have to believe is that they're at two gigawatts of compute running. for $50 a watt to hit that. That doesn't include Starlink or the launch business or the Grok cursor piece or any of these things.",
+      "word_count": 296,
+      "utterance_ids": [
+        "4771895db5be33a9",
+        "ddf4b4afd00c7fea",
+        "6892c73b0548e1d0",
+        "bcd533e55231b133",
+        "271e1b1268b5abe7",
+        "cdc3c1c267092ee9",
+        "f47cb43f12306870",
+        "e214c27d86ad595f",
+        "a399cb03daeab746",
+        "a1cd78da3e331d12",
+        "a0777ad48b27419c",
+        "840daa76dd22b021"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0058",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1588700,
+      "end_ms": 1592240,
+      "text": "So I think that's why they're supposed to pull ways to win is what you're saying.",
+      "word_count": 16,
+      "utterance_ids": [
+        "26f20ab8d8cd1343"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0059",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1592320,
+      "end_ms": 1594480,
+      "text": "So there's multiple ways to win with the stock.",
+      "word_count": 9,
+      "utterance_ids": [
+        "7529fac0c430963e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0060",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1594620,
+      "end_ms": 1712400,
+      "text": "I think Starlink's just an unbelievable juggernaut cash machine. If you look at the financials, there's segment. sports space connectivity in AI. And on the connectivity side, the Starlink side, they generated $2 .6 billion in adjusted EBITDA. You can kind of approximate that to be kind of operating cash flow. Space was kind of, you know, negative 200 million to call it break even. And AI was plus 1 billion. But AI, to Brad's point, it's unclear whether the pricing they're getting on compute rental today is temporary and out of premium because of the lack of compute available in the market today and people that need computer paying you on a premium for that coupon queue. So I think there's a question mark where that goes, but the connectivity piece. on Star Lake, 4 .3 billion in the quarter, and 2 .6 billion in adjusted EBITDA. He's got 12 million subscribers, that's doubled year over year, $66 R .Poo per month, what people are paying per month, and he grew 20 % quarter of a quarter. So if you extrapolate this out, he's pretty close. to being at a 24 million subscriber run rate on this multiple and assuming this enterprise stuff, which is like airlines and other things scale, which they seem to be scaling with the consumer business, Starlink alone could be generating on the order of 40 million dollars of revenue top line with a huge amount of that flowing to free cash. That could be a $30 billion free cash flow within the year. That alone provides the cash flow to fund much of what Elon's doing. And if you just put a 30x multiple on that, which I think you can, because the subscription businesses are very high renewal rate, very low -calc, I think you could probably get a 30x. just on the Starlink business, the Starlink business alone could be a trillion dollar market cap within two years, within 18 months, let's say. That I think funds all of the rest of this is kind of science projects and upside.",
+      "word_count": 349,
+      "utterance_ids": [
+        "e12d1e736d84e8b9",
+        "f41ef421593984c0",
+        "2a52a680b22e8a58",
+        "917c974f9a06ab62",
+        "03df7ee58481e050",
+        "9ba850b65cd89271",
+        "eaa5db0f54e67ae7",
+        "56bbc32f338d289b",
+        "04f6bbb04dbb2a84",
+        "6df032f91903fc65",
+        "3d702e47dbf2ae9a",
+        "17b9b69008f83a72",
+        "50457b687ba95894",
+        "4fef538456379430"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0061",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1712860,
+      "end_ms": 1714700,
+      "text": "So I'm kind of making a bullcase.",
+      "word_count": 7,
+      "utterance_ids": [
+        "ef1b327e55e9b831"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0062",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1715000,
+      "end_ms": 1732000,
+      "text": "It's crazy to me how well the Starlink business performs and you can see it in AT &T. and Verizon, HughesNet, VSAT. I mean, these companies have been decimated. I used to have a HughesNet satellite dish on my Sonoma County ranch. In order to get internet, that's what we had to use. It was like, you know, 200 bucks a month after terrible.",
+      "word_count": 64,
+      "utterance_ids": [
+        "53427a252139b6b4",
+        "21ee29c6f179f8ca",
+        "b79c6e0599c2f262",
+        "55175c19610a03bb",
+        "a5d4000463d26648"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0063",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1732020,
+      "end_ms": 1733840,
+      "text": "Because those are about service. Or a bit, right?",
+      "word_count": 9,
+      "utterance_ids": [
+        "18d8209ca4bccd8d",
+        "a62e906368098196"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0064",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1733860,
+      "end_ms": 1735600,
+      "text": "And they take forever to terrible service.",
+      "word_count": 7,
+      "utterance_ids": [
+        "c455d73c38b98a7d"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0065",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1736419,
+      "end_ms": 1752840,
+      "text": "And that market got decimated by Starlink. And if you launch this, hand -set thing, that subscriber growth is going to go right now he's adding two million subscribers on the consumer side a quarter. You could see that going to four to five million a quarter. You could actually see an acceleration in the consumer subscription.",
+      "word_count": 57,
+      "utterance_ids": [
+        "1f123666a6405900",
+        "cda84e48edaab6df",
+        "e444bc161ceba5ad",
+        "02fa0f5516e0226f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0066",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1753300,
+      "end_ms": 1757760,
+      "text": "More than 400 million mobile subs just in the United States.",
+      "word_count": 11,
+      "utterance_ids": [
+        "350f6442c6550e32"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0067",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1757920,
+      "end_ms": 1766440,
+      "text": "Justin, you can make, you can make the bull case. some Starlink alone. And then the rest of it is like, hey, is Elon gonna do well with investing the excess capital that's spitting off of Starlink?",
+      "word_count": 37,
+      "utterance_ids": [
+        "3b05a4cb414dacc0",
+        "7c6b2d0909bd1494"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0068",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1766740,
+      "end_ms": 1770100,
+      "text": "How's Elon gonna do with that money? Well, I don't know who else I'd give it to.",
+      "word_count": 17,
+      "utterance_ids": [
+        "c76e02a4b2b6ec8a",
+        "582bd63db3a4d195"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0069",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1770700,
+      "end_ms": 1775420,
+      "text": "Like, you know, do what he's doing with Starship and with AI Compute and the Terra Fab.",
+      "word_count": 17,
+      "utterance_ids": [
+        "c95c1f5dda382b67"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0070",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1775460,
+      "end_ms": 1777820,
+      "text": "Oh my God, this is the science fiction.",
+      "word_count": 8,
+      "utterance_ids": [
+        "055d7c1821ac9f65"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0071",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1778280,
+      "end_ms": 1779980,
+      "text": "I mean, if you wanna talk about...",
+      "word_count": 7,
+      "utterance_ids": [
+        "d49575b83ce967b7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0072",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 1780000,
+      "end_ms": 1794660,
+      "text": "How the U .S. gets off of this dependency with Taiwan and China from semiconductors, if Elon takes this on his shoulders and he delivers what he's showing as a vision here today, this is going to be the greatest semiconductor fabrication site on planet Earth.",
+      "word_count": 46,
+      "utterance_ids": [
+        "f0a611d62fc94e1c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0073",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1795000,
+      "end_ms": 1856020,
+      "text": "Well, you know, I would say something, you know, David to your point. You know, how many CEOs or founders would just take that starling business, which is such an exceptional business. Trillion dollar business going to two trillion, and they would not take any of these other risks. They would not do tariffab. They would not try to build out the days and they would not try to build their own model that's highly risky, but highly important investments that are... being made. I mean, it is heroic and important that we have this level of, I just think I'm bridled enthusiasm for innovation on the frontier, the dealings doing. And I wish we saw more CEOs, more public companies willing to take this level of risk. We just got done talking about our sub -CEO's, maybe that we're... taking less risk because the safe bet was easier to make. Elon refuses just to take the safe bet. He's taking all the dollars from this thing where he has an extraordinary business and plowing them back into these things that are critically important to the United States.",
+      "word_count": 188,
+      "utterance_ids": [
+        "91260873944cda56",
+        "a1f65095c5a5755a",
+        "87290141b2da2808",
+        "c55c2c47ff870de6",
+        "208f9ee3610a6c17",
+        "c1b29d8458d35f17",
+        "2ac74cfe37e4173b",
+        "6e1a132f6c028144",
+        "d9187129e326879b",
+        "bbc8ccc1bda1925e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0074",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1856219,
+      "end_ms": 1897580,
+      "text": "And by the way, Brian, such a good point because if you look at other CEOs and other management teams, they're getting in on this, they're starting to realize that buying back your shares, giving dividends is not as important as betting on the future door dash got taken to the wood shed because they're investing too much in capex, obviously Google got smacked with their capex spend. So that keeps happening over and over again and just on the headwinds that SpaceX. Is going to face the arguments that I think will turn out to be wrong, but they're valid to talk about here. Our hey, is this demand for tokens and compute going to keep up or does on -prem and desktops and open source models getting smaller, better? Does that actually mute at some point demand?",
+      "word_count": 139,
+      "utterance_ids": [
+        "5b82cb342b57a802",
+        "08dc2cec1452842c",
+        "f7c1707627e2268e",
+        "9ffd81f924092e23",
+        "8376fc197ddd3a0a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0075",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1897740,
+      "end_ms": 1899800,
+      "text": "I don't think it does. I don't know. There's an upper.",
+      "word_count": 11,
+      "utterance_ids": [
+        "9fdc52b869b2dbad",
+        "1cdef604c40c8136",
+        "d96f3758b756c99e"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0076",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1900779,
+      "end_ms": 1954100,
+      "text": "I don't know if this is an upper bound for on -demand intelligence. The second one, obviously, is Starlink is for people who are in a rural neighborhood. If you've got Verizon fiber to your building or spectrum, you're not putting nor can you put a Starlink on your building. So the piece there that's going to be... Explained probably in the next year or two is every single Tesla sold is going to have Starlink in it when they get that merger done. What that means is you're going to have Wi -Fi networks connecting any phone to any Tesla, say all those robot hexes out there, you'll be able to connect also directly with the next generation of Starlink. So your phone. will be able to direct if it's got clear line of sight. It's going to be able to connect to any Tesla on the road which there are many that all future ones will have a starling built into them. So those are super promising and then finally you know there's been a lot of speculation about the valuation.",
+      "word_count": 183,
+      "utterance_ids": [
+        "2facdccc19d93123",
+        "5672172da6f3e271",
+        "65b72c0db77f4556",
+        "ecb99797ed169f39",
+        "b0521e75995d541c",
+        "8d795f96509f3225",
+        "e4ae69122856c365",
+        "9c29f83ae6dddaef",
+        "312ad8ef3aa2aba5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0077",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 1954460,
+      "end_ms": 1955860,
+      "text": "Brad, you brought it up.",
+      "word_count": 5,
+      "utterance_ids": [
+        "c3640648c874fa9c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0078",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 1956000,
+      "end_ms": 2003980,
+      "text": "I think at liquidity when people were asking you and I heard you talk about it. Hey! private companies venture capital we are a voting mechanism and then when it goes public it becomes a weighing mechanism and sometimes you'll have this moment in time where there's hand ringing about those valuations and the hand ringing peaked in the last quarter you had 160 times price to sales ratio for Tesla when it first came out. 160 times, right? You take this two or three trillion dollar market cap, and you put it against a smaller revenue number. Well, if you look at the revenue number increasing, now we're down to a 45 times price to sales ratio. So some kind of balance is occurring here. Between these private and public markets, as well as the increase in revenue.",
+      "word_count": 139,
+      "utterance_ids": [
+        "c5103dffb6afa755",
+        "179020e872d140ad",
+        "74b58482471e4218",
+        "379547c0d930aa0b",
+        "03edd22cfc0f113c",
+        "c659f4d42c7a9a80",
+        "2d18deac9f72426d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0079",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2005100,
+      "end_ms": 2048600,
+      "text": "Yeah, I mean, honestly, I think this is all super healthy. I think the SpaceX IPO is extraordinary. I think the consolidation here is perfectly predictable. And now you have a company at 1 .4 trillion that I think if you take a three or four year view, you can see yourself trippling. your money in this business at a very reasonable valuation on the Morgan Stanley numbers or on the Elon numbers or whatever. But that's always been the bet. Do you believe that Elon is the greatest innovator and great allocator of capital? But the price of entry matters, right? When you get carried away on day one of an IPO and you buy this thing over to Truths. You got to know that this is going to happen. I was on CMBC, the day of the IPO, and I said, I would want to own this company, but I'm not sure today's the day I would buy the company, right?",
+      "word_count": 163,
+      "utterance_ids": [
+        "fbee335ad18e13ab",
+        "272c7c8b1fd59a25",
+        "62dcb99d86233275",
+        "80364820c969a003",
+        "6858ae51f668e669",
+        "12e6b20b14f588d5",
+        "b2a2282d3946991f",
+        "bc8bad99f95d38a6",
+        "6150fbb345f39a95",
+        "fba35e92e809d7de"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0080",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2050120,
+      "end_ms": 2051960,
+      "text": "And so, you know, entry price matters.",
+      "word_count": 7,
+      "utterance_ids": [
+        "a40280fc85d8c2bc"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0081",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2052080,
+      "end_ms": 2099980,
+      "text": "And entry price is not fundamental. But let me give you another one, you know, like we've talked about the anthropic IPO, or a lot of people have talked about it later this year. I hear a lot of people. saying 1 .5 or 2 trillion dollars. David just talked earlier that it's going to be run rating over a hundred billion maybe by the end of the year. That's like 10 to 15 times revenue. That is not that much for a company that just grew 10x and is rumored to be profitable in Q2. And so I look at the market, the consolidation we saw in the month of June. July, you know, we put in the Leopold bottom, hopefully in July that, you know, a lot of semi -stocks were down. That's part, you know, 30, 40 get him. Hey, hey, listen, the guy's doing great. He's apparently still up 80 % for the year, just made another big private investment. I think he's done an extraordinarily good job building a firm to short peer to time.",
+      "word_count": 180,
+      "utterance_ids": [
+        "9b23b755e0e42a03",
+        "5a59c367b3e9cf2c",
+        "ca6179a630da67d8",
+        "2f4daedb2b9de46d",
+        "3f3317488628cc8a",
+        "c655d5463960eb3a",
+        "3a693ecec779e029",
+        "c1aa26449a8b2926",
+        "27ac11e879340d41",
+        "1b99b9893f67a113",
+        "60dd15a167414755",
+        "cc22bbef03b6a7d9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0082",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2100000,
+      "end_ms": 2158460,
+      "text": "But the market did panic around that as he had to cover I think all of that is really good So as I look ahead marching to these IPOs later in the year on the back of the SpaceX IPO I think we're in really good shape You know, particularly if these revenues continue a pace you know what Elon's really good at it's just building stuff like factory specific physical site that is such a core advantage in this world where everyone's competing for data centers and phabs the software layer needs hardware in the physical world in order to deliver their software services and there is no one better than Elon at actually doing that. Look at how giga factories have been stood up around the world. This is his core competency. So Brad, like when you put Elon up against Adario and a Sam, and even an alphabet which has 27 years of doing this, I mean, man, Elon's got a core advantage of this is what this world comes down to.",
+      "word_count": 175,
+      "utterance_ids": [
+        "a5511a8327e4d5d2",
+        "0b33c1bc82c2499e",
+        "6baf620644c99cbd",
+        "cff630389d85c4ec"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0083",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 2158520,
+      "end_ms": 2250260,
+      "text": "He says something like that on the call. where he said, look, putting up data centers is nothing compared to the difficulty of putting up a rocket, right? It's like, you know, creating data centers is not rocket science. So they take some of those hardware expertise that they have from SpaceX and they put them into data centers, and that's why they've been able to stand up, you know, more data centers or bigger data centers faster. than all the competitors. A couple points there. Is it clear why Starship is so important to startling? Okay, let me just explain this quickly. So basically SpaceX has developed a new V3 satellite that has 10X the bandwidth of its V2 satellite. So currently the power link network is... powered by V2 satellites, they deploy them on the Falcon 9 rocket and they launch about 27 satellites per launch and that adds about 2 .6 terribits per second of total network capacity. Starship deploys 60 of these V3 satellites per launch, that would add 60 therapists per second of tool network capacity, per launch. So over 20 times more capacity per launch, that's the power of it. So if they get Starship working, by the way, the last test, not only did it prove that the heat shield worked, my understanding. is they actually launched, or rather they deployed 20 V3 satellites as a test. And they were able to make connection with those satellites and prove that it worked.",
+      "word_count": 249,
+      "utterance_ids": [
+        "345a590e64e33e91",
+        "1f339de125d53a34",
+        "cabf9d6c372d2221",
+        "38fd10ff9c28a24d",
+        "dd30df623dd71077",
+        "6cf285b96803dbcf",
+        "1c8f5fe12d236d1e",
+        "1bc8cc7f42a18249",
+        "35968fc87f5bed54",
+        "05f3dac684f10bbc",
+        "0cb5df1a82d07895",
+        "d793b7bf8ad6ae51"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0084",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2250480,
+      "end_ms": 2251780,
+      "text": "They didn't have a camera zone.",
+      "word_count": 6,
+      "utterance_ids": [
+        "60023c48b9c58217"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0085",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2252200,
+      "end_ms": 2258980,
+      "text": "The reason we were able to see the starship was because they're like, yellow, let's put some cameras, actually cameras on them.",
+      "word_count": 22,
+      "utterance_ids": [
+        "060f18c8b38a2059"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0086",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 2259280,
+      "end_ms": 2296940,
+      "text": "Right. Now I think those satellites basically it was just a test and they burned up so I think the next big milestone here will be when they launch Starship with let's say 60 of these V3 satellites put them in the correct orbit make connection with them add the bandwidth to the network that's going to be a big milestone but you play this out to his logical conclusion and the bandwidth available to the Starlink network goes up 10x or eventually 100x times and that's when they can do all the interesting things like direct cellular. There were some interesting hints that Gwynshaw will talk about with ground stations about what they could potentially do there.",
+      "word_count": 118,
+      "utterance_ids": [
+        "bff5225372f78c98",
+        "b3bf4a98e73c32e7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0087",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2297180,
+      "end_ms": 2302280,
+      "text": "And I think that they might buy T mobile or something like that, Sachs. easily within their range of purchases.",
+      "word_count": 20,
+      "utterance_ids": [
+        "5d35ddedc96509d0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0088",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 2303000,
+      "end_ms": 2351960,
+      "text": "And I think Elon mentioned something about potentially the Starling Network could eventually handle roughly half of internet traffic. So, I mean, this thing could get so much bigger than just 12 million subscribers to your point freeberg. But look, I want to actually talk about the data center. for a second product. I do have a couple of questions about this. So Elon mentioned that, okay, we're going to be at two gigawatts by the end of the year. He said that we will be at five to ten next year, closer to ten than five. So let's just say eight. Okay, so I'm just making that up, but it's on their range. So let's just say that's an ad of six gigawatts. So they go. from 2 to 8. Okay, to me, there's two questions there. One is, how do you know that the spot price is going to stay where it is? You know, can it stay at $50 per watt?",
+      "word_count": 164,
+      "utterance_ids": [
+        "e22413e17c05e5ae",
+        "6a2613501d6d486d",
+        "acbe97fbc178548b",
+        "695624692a166ab3",
+        "6283bff706c38203",
+        "d8c91c87da193d63",
+        "6b32f8f8cf0a30f1",
+        "561f63d65545236c",
+        "f9ebc15866b68ae2",
+        "26b1d4837c93892b",
+        "5b74986dd0923bac",
+        "51b713a6a54289cf",
+        "4124ac7bdd183462"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0089",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2352060,
+      "end_ms": 2352840,
+      "text": "How do we know?",
+      "word_count": 4,
+      "utterance_ids": [
+        "10e882984f5c646e"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0090",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 2352860,
+      "end_ms": 2404580,
+      "text": "How do we track that? How much risk is there around that? I got the sense on the call that Elon thinks that number is going up. Because the market is memory constrained right now. I think he mentioned that we might see a 20 % increase in memory production next year But the demand is going up 200 % plus so the market is constrained by whatever the ball neck is at that time right now The ball neck is memory. So where do you see the spot price going? How do we know? how much risk is around that? And then the other question I would have is if you go from 2 to 8 gigawatts that you have net of 6, we know that a gigawatt power data center is, you know, 50 billion of kappax. So six incremental gigawatts of compute would be 3 billion. of CapEx next year. It's something they built that, right? I mean, they have optionality around that.",
+      "word_count": 166,
+      "utterance_ids": [
+        "162be1c5551a6621",
+        "609abc90cf8052d8",
+        "5c3f1b4d6d527032",
+        "51f9e5669123a0f1",
+        "5f136de57c75c06d",
+        "f8f6f5a0a2143279",
+        "b01e270dcc60c563",
+        "5a0247f18d8c9ccc",
+        "94814efba7d47e87",
+        "0a925379358e1a35",
+        "4c9df091d9fabbcf"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0091",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2404660,
+      "end_ms": 2405160,
+      "text": "I'm sure.",
+      "word_count": 2,
+      "utterance_ids": [
+        "13b1e22174aeff49"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0092",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 2405560,
+      "end_ms": 2421980,
+      "text": "So how do you finance that? What's the most non -delutive way? They said their payback is a year or less after that's tied to the spot price. So you only have to finance it for a year. And the question, do you think in video gives them that financing or... How will this play out, I guess, is my question?",
+      "word_count": 61,
+      "utterance_ids": [
+        "bc180171467026a5",
+        "42df973edf72011c",
+        "8d5581d0dda34246",
+        "d3186dbdeaf9ecfa",
+        "fd4396c4e6ba87bf",
+        "dec5018d9ce264e1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0093",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2422340,
+      "end_ms": 2514260,
+      "text": "It's a great framing David. First, it's $50 billion per giga lot to build minimum, okay? So you're $300 billion dollars. So in order to finance that, it seems to me, you either have to go into the market and borrow the money, or you have to do a dilute of equity raise, neither of which they wanna do. or you get in video to backstop it, which they've indicated that they're going to do more up. But the problem there is in video shareholders. Don't want them backstopping on them because the fear in the world is that spot price at some point, right, may go against you. And when it does, the payback period changes. Now nobody thinks. that the payback period is going to be one year. Even though the spot price is suggesting that it is that today, right? Just a few years ago, people thought you would get paid or not few years ago, a few months ago. People thought you'd get payback over four years, so you basically spend 50. You then earn 10 to 15 per year. You get payback over... four to five years. And then hopefully you get the six year, which really takes you up well above 20 % in terms of your returns. Right now, the shortage is so acute. And the willingness to pay from the front Frontier Labs is so high because they all recognize there on the verge of some massive breakthrough. that they're willing to pay three, four, five X market pricing in order to get at scale compute. And that's what happened with the anthropic deal with SpaceX. I think anthropic would buy a lot more of that today if they could, same with OpenAI.",
+      "word_count": 291,
+      "utterance_ids": [
+        "3e29fc8f69070888",
+        "c7dc63bbc8fccb8d",
+        "5739a009cfcc4776",
+        "78bb266620b32b5a",
+        "c29663cdcdf70359",
+        "d1f4138ea3524771",
+        "a4a3cdc5a38e35da",
+        "19d334ef1c9dbb84",
+        "3906a80bb8df5022",
+        "19bf88eb0a94b367",
+        "6151fab12588e007",
+        "84499589057f773e",
+        "4c4fd8e84b64e53d",
+        "51f84b043e88340a",
+        "42cbac054fd0b835",
+        "1e0ef2dbd421b58e",
+        "b8ec9bb891f5211b",
+        "ad3c48965826c229"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0094",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2514520,
+      "end_ms": 2519500,
+      "text": "You're saying that they would be willing to overpay by a factor of up to five X.",
+      "word_count": 17,
+      "utterance_ids": [
+        "ed45d60a2db9a433"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0095",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2520000,
+      "end_ms": 2611840,
+      "text": "You know, that's the $50 per watt, the David was referencing, they would be willing to pay this 30 to 50 if they could get at scale compute that would give them a competitive advantage over the other people in the market and remember there aren't a lot of people who have the off -take revenue that can afford to buy compute at the scale right it wasn't the Chinese open source companies that were buying, you know, SpaceX's excess computer building the 10 gigawatts, you know, plant in Ohio. That's open AI and Anthropics. So, the vast majority of the off -take commitments are coming from Anthropics, open AI, and in video. Right? When you hear about the hyper -scalers building all of this, you know, this computer. They're building it out to sell to the people that we just mentioned. So David, net if he build six gigawatts next year and by the way, probably only Elon can actually stand up that much in that time frame. Like Jensen said to me on the pod, he's like, nobody comes close, Microsoft doesn't come close. Google doesn't come close in terms of standing it up in that time frame. I think that he's going to have a challenge getting all of the componentry, right? I know he can stand it up, but can he get the memory, can he get the chips, can he get that land powered shell all in time? I think the offtake is there, right? But to put it person - In fact, if this year anthropic and open AI combined, they're starting total compute, it was like five gigawatts. So he's talking about incrementally adding more than they had as combined companies.",
+      "word_count": 288,
+      "utterance_ids": [
+        "7af395e4cfc31388",
+        "50e09e8b61472239",
+        "d4d9a048c7b8c23f",
+        "b0383b1269180982",
+        "691d206cefeebf1a",
+        "92cd3252dd69c190",
+        "ab84677d16ce9fb2",
+        "f0be48a4bed9b727",
+        "19420ebea45be18c",
+        "e117eb620452f1bf",
+        "4227b137098523a5",
+        "99a591e784dca465",
+        "5d5f8f7e14aaefaf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0096",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 2612340,
+      "end_ms": 2619980,
+      "text": "That's not that much of an increase when anthropic is growing 10x year over year and open AI is maybe at what, 4x or maybe after.",
+      "word_count": 26,
+      "utterance_ids": [
+        "e8063ab7a436aeef"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0097",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2620639,
+      "end_ms": 2654440,
+      "text": "So you may exist in the world, the demand exists in the world today. I think it will exist in the world. Well, you know, the next 12 to 24 months, but there is a wall of worry in the market. The reason we saw the pullback in July is Kimmy scared people into thinking, oh my gosh, they're going to undercut the frontiers revenues and if they undercut. cut the frontier labs revenues, who the hell is going to pay for all this compute? That's why you saw a 40 % trade down in the core weaves of the world and you know all of the semi -conductor stocks and semi -conductal related areas.",
+      "word_count": 115,
+      "utterance_ids": [
+        "7edd6b77b0d51997",
+        "4433b44d057b2807",
+        "8cc63761c36ba0e4",
+        "3b06d3a2e705d2da",
+        "14b2ba80e68b3eb4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0098",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2654560,
+      "end_ms": 2689980,
+      "text": "In some ways the fact that there's a discussion going on that this next 10 gigawatts is going to cost. You know, sacks five hundred billion dollars in U .S. The question, where does that come from? A secondary offering does in video put it on their books. Do they create SPVs off their books like some people are doing? You know, the fact that we're having this conversation, everybody's aware of it. The market has been educated on it. Means I think people will be able to change in real time. if it doesn't come to pass or if it slows down, which I suspect this cannot keep up at this pace, you know, more than another two years or so.",
+      "word_count": 122,
+      "utterance_ids": [
+        "b93e7c2c5b150f5a",
+        "0d92abaed5c788fd",
+        "69f00bf24ec2f82e",
+        "efa48b44e09d7385",
+        "8b453c487172e770",
+        "791866c5d8dd6a4b",
+        "dce22d36c9801be1",
+        "db8b2bc5e96c037a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0099",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2690380,
+      "end_ms": 2747080,
+      "text": "As our good friend Bill Gurley likes to remind us, he's like, I can't believe that we're all just taking and stride this level of seller financing. He would call it circular revenues, right, but the market has gotten comfortable with this and remember like we saw in July If there is a scare about demand the whole sector trades down. Yeah, everything will trade down, you know, together Because that's just the leverage that you're pumping into the system. You're effectively backstop people's ability to build ahead of their revenue. So it becomes much more violent if you ever see demand slippage, you know, famous last words, I don't see it today over the course in the next 12, 18 months, but you know, you have these unknown moments that certainly causes people to be fearful. Spreads are blowing, you know. have continued to stay wide on these deals. So there is fear in the market about them. All right, everybody, the fifth annual.",
+      "word_count": 165,
+      "utterance_ids": [
+        "05974be74bcb5bde",
+        "2dd8c393c52a5b89",
+        "aaeea22d01da34ae",
+        "85c85ed19b7c990e",
+        "a7ae93e8cfc77fd5",
+        "7507b473b5544a32",
+        "9e7217838bbcdd23",
+        "9cc2e91b9c7f8150"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0100",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2747480,
+      "end_ms": 2752200,
+      "text": "If it's September, you know it's time for the oil and summit, the fifth annual is happening.",
+      "word_count": 17,
+      "utterance_ids": [
+        "b93aeae6e0d13684"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0101",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2752520,
+      "end_ms": 2753500,
+      "text": "Yes, that's right.",
+      "word_count": 3,
+      "utterance_ids": [
+        "c46d61e90ad872d2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0102",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2753940,
+      "end_ms": 2779220,
+      "text": "David Freeberg's been at work. And we have an all star, all star list of people. joining us. Chetson Wong, founder and CEO of NVIDIA. If you care about where AI is headed, you won't want to miss this conversation. The best, the Oracle, Satya Nadella, CEO of Microsoft fan of the pod will be coming on for the second time Jared Isaacman from NASA, the one the only Brad Gerser and Bill Garli BG2 coming back space exes Gwen Shotwell.",
+      "word_count": 81,
+      "utterance_ids": [
+        "5e0895868bdf4c20",
+        "34437c0ef0e48c66",
+        "10d3c05ebdad7f69",
+        "6f932492b98d894f",
+        "9b64e5f49b5d42e4"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0103",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2779380,
+      "end_ms": 2779980,
+      "text": "My guide, Gene!",
+      "word_count": 3,
+      "utterance_ids": [
+        "d5693180360c88f2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0104",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2780000,
+      "end_ms": 2805740,
+      "text": "Paul, Nick Shirley, a lot of incredible people coming, Martin Schreley, maybe he's even coming. He's going to be fun, go to be all insummit .com to apply today, all in .com or the all insummit .com. Any of those will get you there and we're taking over universal studios again. We'll have our... own private playground, Dave Friedberg, great job on the summit, casino night, too.",
+      "word_count": 67,
+      "utterance_ids": [
+        "a4430a12a93f861f",
+        "fdb178fe6d1b994d",
+        "06b0f939ba18c466",
+        "7686908fa25842ad"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0105",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2805920,
+      "end_ms": 2845360,
+      "text": "Aren't just going to be a bit casino night, biggest yet and the concert to be announced who will be performing at the concert, but it is going to be incredible. So I'll just say one of the things about the summit, we've had people come to the summits from over 60 countries. It's really incredible to me. all these people entrepreneurs, investors, people that are just really interested in the topics that we talk about. We try and have the world's most important conversations, but it's really this amazing community experience. That's what brings folks back. So we try and invest more and more every year in making it an amazing experience, not just cool content on a stage, which I think is a lot of these other shows really deliver, but it's like, how do you actually come and have an experience for a couple of days?",
+      "word_count": 149,
+      "utterance_ids": [
+        "1ed93632b0cd49f7",
+        "c60a50ff1856c339",
+        "4901e0e3fb2a6f4c",
+        "3e8a824cc49be7e1",
+        "846c5c83363eacdd",
+        "8edab0c787f41c22"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0106",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2845520,
+      "end_ms": 2846100,
+      "text": "It's gonna be awesome.",
+      "word_count": 4,
+      "utterance_ids": [
+        "5e53422d640984e9"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0107",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2846580,
+      "end_ms": 2859980,
+      "text": "So, for example, it is those three things that we focus on. One, you don't learn something, right? You got these great people on stage, you don't learn something from them. You're gonna meet new people, you're gonna network. And then you're gonna have these great experiences. It's the trifecta folks you're excited Brad. You're excited to be back.",
+      "word_count": 59,
+      "utterance_ids": [
+        "96c43fe2cb52aac7",
+        "c70030e60cc54abb",
+        "27f15561382f87e3",
+        "03662c28faf8b472",
+        "6a4453735b40552c",
+        "48282cd07b77b9b2",
+        "0b7bd51124c98a09"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0108",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2860000,
+      "end_ms": 2864200,
+      "text": "What are the dates? What are the dates? It's like, look at your calendar here.",
+      "word_count": 15,
+      "utterance_ids": [
+        "43c6d3bfbc6ba258",
+        "7128c1f8cb311188",
+        "d3a28f05f41af690"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0109",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 2864600,
+      "end_ms": 2870680,
+      "text": "See hey September 13th through 15th in LA This couldn't be better dates for the summit.",
+      "word_count": 16,
+      "utterance_ids": [
+        "db48cb6989809480"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0110",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2870680,
+      "end_ms": 2881000,
+      "text": "I mean, we're gonna be within 60 days of an election In term election. We're gonna be within 30 days of an IPO, you know, potentially of inthrop. I mean like it It's going to be heated.",
+      "word_count": 37,
+      "utterance_ids": [
+        "e89466398aad9abf",
+        "d4cf39228dba48b0",
+        "6355347c621f99c5"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0111",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2881420,
+      "end_ms": 2893700,
+      "text": "The SaaS apocalypse, not the SaaS apocalypse. This is the SaaS apocalypse is, I guess, winding its way out. The indigestion might be clearing. AirTable just got acquired for less than it raised.",
+      "word_count": 33,
+      "utterance_ids": [
+        "534aea406bb82874",
+        "c26ff2a37b1136fe",
+        "d9609a166f8127e1",
+        "b2fc0112b415f789"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0112",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2894060,
+      "end_ms": 2895220,
+      "text": "It's a profitable SaaS company.",
+      "word_count": 5,
+      "utterance_ids": [
+        "ec7d0b8892f11f60"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0113",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 2895340,
+      "end_ms": 2963360,
+      "text": "A great product, $480 million, half a billion dollars. annual revenue growing 20 % a year. Respectable if it was a public company with almost a billion dollars in cash has been sold. It's been sold for 1 .28 billion. About 10 % of its peak valuation which was 11 .7 billion in 2021. Now they did have a bunch of cash. I mean, the cash position sell was 2 .25. billion. They were acquired by a firm called Bending Spoons. This is a Italian company, Milan -based company. They buy, challenged, but you know, interesting businesses, AOLs, legacy business, ever -note, event -bright Vimeo, meetup .com. And they just went public last month, shares that is Bending Spoons when public last month. Share a show of 15 % on the air table news sacs when we look at this. This was a company that had done a lot of things right had a massive amount of cash in their war chest But rumors where maybe the founders were a little exhausted maybe some of the investors were exhausted who bought it in the high level What can we take away from this transaction and bending spoons?",
+      "word_count": 197,
+      "utterance_ids": [
+        "233e966ce501bffc",
+        "7b4ea20c7d861023",
+        "c47776a9fc863d1d",
+        "1fa81eb5b0876efc",
+        "73fd15c7025e9e22",
+        "37e27fe9808a9138",
+        "03d484189687a0f3",
+        "535610af674ae50b",
+        "609886d0b8cd7d5f",
+        "d344db35e290d82d",
+        "e6f99779f01b3607",
+        "646948ccdbfc1b66"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0114",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 2963580,
+      "end_ms": 2966100,
+      "text": "Are they the buyer of last resort now?",
+      "word_count": 8,
+      "utterance_ids": [
+        "bcffaafe3230e549"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0115",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 2966560,
+      "end_ms": 3038020,
+      "text": "Well, I think they're creating a great business for themselves because I think this will end up being a fairly profitable acquisition for them. Let me just add a piece to this, which is airtables spun out its AI agent business, which is known as hyper agent. Into a separate independent company prior to this acquisition. So I think what's going on here is that the founders and town of the company, they said, look, we don't want to have to make this legacy product work. That's basically a private equity play. I'll explain what that means in a second. We want to focus on the new thing, the AI company, that's where the big value creation's going to be. future or the potential for it. So essentially, the talent is going to focus on the venture play, and then they're selling the private equity play to bending spoons. Now, why do I think this could be a good acquisition for bending spoons? I think there was a really interesting data point that I saw in the commentary on this, which is only 30 % of error. table sales team was making quota that a 30 % sales attainment number. And that told me a lot about this business. Okay, what it told me is, and I'm reading between the lines here. But this was a company that had a successful PLG motion.",
+      "word_count": 233,
+      "utterance_ids": [
+        "c8c6ad929dd20184",
+        "bc7a2f317c78a835",
+        "22ab8384f7964cd2",
+        "857d8f566cd6c823",
+        "5fb4e8b617e2838f",
+        "f618c7ea4737c267",
+        "a6ea4b9c13ac1fd5",
+        "4d310d1cb8b4ff52",
+        "5d5ee6fa758920f8",
+        "4e2160285be5f4f7",
+        "061e026e3ac87eb4",
+        "1144dfa34ef8cccd",
+        "cfc9db8219a09dd0"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0116",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3038460,
+      "end_ms": 3055560,
+      "text": "In other words, organic growth, I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was, but I'm not sure what it was leg growth and they're growing about 20 % a year. But that was not good enough for its board. You know, these are investors, some of whom invested in a $11 billion peak valuation. So they're looking for a venture type outcome.",
+      "word_count": 221,
+      "utterance_ids": [
+        "e5fabcea2e398019",
+        "b5977211cbfb62cf",
+        "55ba8a5b8304b183",
+        "dbcb22c583a3ff18"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0117",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3055920,
+      "end_ms": 3056480,
+      "text": "So what happens?",
+      "word_count": 3,
+      "utterance_ids": [
+        "e3d19366aac0aae2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0118",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3056880,
+      "end_ms": 3069220,
+      "text": "The board pressures the founders to do something that frank. is a natural for them, which is they say, look, you should bolt on a traditional sales lead motion here to get the growth up faster.",
+      "word_count": 36,
+      "utterance_ids": [
+        "0ba755a983d62699"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0119",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3069920,
+      "end_ms": 3070620,
+      "text": "Does that work?",
+      "word_count": 3,
+      "utterance_ids": [
+        "d838a702934cd0c8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0120",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3070820,
+      "end_ms": 3102840,
+      "text": "No, they probably get a little bit of growth out of it, but they only get 30 % of payment. So they've got hundreds and hundreds of sales reps here trying to push on a string, and it's not making a... So now what's the opportunity for the acquire here? Bening swims can go in here and do what Elon did at Twitter, eliminate 85, 90 % of the cost structure. Don't do this sales lead motion. Just go back to your product lead growth roots. You'll probably keep most of that 20 % growth. And it'll be a very profitable company.",
+      "word_count": 102,
+      "utterance_ids": [
+        "6f6e2ed795ea93fe",
+        "7266d148549e11d5",
+        "61d2564741815d7a",
+        "e054d53584af62c4",
+        "d5f1a891140437f4",
+        "b21ffde91e5e8df2",
+        "b0a7fb2aa9f4cbcd",
+        "fbc8fab3ce21b8a6"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0121",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3103060,
+      "end_ms": 3105220,
+      "text": "You'll be able to be a percent profitable probably, right?",
+      "word_count": 10,
+      "utterance_ids": [
+        "5a07fe81111158e9"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0122",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3105640,
+      "end_ms": 3107600,
+      "text": "Probably, I mean, You're going to be into the bottom line.",
+      "word_count": 11,
+      "utterance_ids": [
+        "2c074e4d549ddfe2"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0123",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3107620,
+      "end_ms": 3109400,
+      "text": "Pace for the power station in the whole years.",
+      "word_count": 9,
+      "utterance_ids": [
+        "5c47f704a7581ae0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0124",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3109480,
+      "end_ms": 3138100,
+      "text": "You're saying they're only going to generate 30 percent EBITDA margin. I think like you're saying it could be 80, 90 percent. I don't think you need to keep most of this business or most of the cost structure. To see with this business. AirTable is a company that has its fans. I think they will probably stick with it. And you'll be generating, I don't know, you could probably generate 300 million of EBITDA a year or four million while growing 10 to 20%. So that's a play for bending spoons.",
+      "word_count": 92,
+      "utterance_ids": [
+        "5fda94798285f0a9",
+        "1e106651f8572f4b",
+        "6b21779c716dfe77",
+        "cba3b8e3a22a6879",
+        "758eb41ff0c88f3c",
+        "6ad6847542453fa1",
+        "0453ec0fc810a91e",
+        "d0a4de6b10dfc776"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0125",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3138180,
+      "end_ms": 3154040,
+      "text": "Bend the venture investors here, Sachs. they're happy to get their money back and move on to the next thing. It's a bit of a push for them, you know, in terms of at the Black Jack table, rather than they've got to go 10x just to catch up. And then they would have to go 10x again to make their LPs happy.",
+      "word_count": 63,
+      "utterance_ids": [
+        "361c86b1eb6bd6aa",
+        "ae5d36066ebd5b32",
+        "641e49e96edd03ad"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0126",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3154200,
+      "end_ms": 3155040,
+      "text": "It's not going to happen.",
+      "word_count": 5,
+      "utterance_ids": [
+        "09ef68abaf9d4486"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0127",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3155260,
+      "end_ms": 3203540,
+      "text": "I think the question is, if bending spoons can basically take this business, that's not... making money and probably generate 400 million a year of EBITDA on pay for the acquisition in just three years. Amazing. Why isn't that something that the company could do on its own? And I think that's the structural problem is I think it's very hard for both VCs who are on the board and the founders to shift in. to private equity mode. Why? Because they're going to have to demolition what they've built. They've got all this loyalty to the team. They don't want to think about how do I eliminate 80, 90 % of the cost structure. It's just not what they do. I mean what the founders want to do and the outcome that the board members are going for is a venture backed outcome. And I think they could have done this. They could do a bending spruce does.",
+      "word_count": 159,
+      "utterance_ids": [
+        "382f450cfda9daff",
+        "c51d53bc17cbe3d0",
+        "7b632869f06aef4c",
+        "c1e1292b1492d097",
+        "d8b940964b643959",
+        "42776c4ff0f79e4c",
+        "94a463f46cc86188",
+        "5f1527e47ac30f4e",
+        "d08b27de3fcacf82",
+        "2e44103c6f6dcfa1"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0128",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3203580,
+      "end_ms": 3204660,
+      "text": "They're not built for it.",
+      "word_count": 5,
+      "utterance_ids": [
+        "6ea707450d15ebec"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0129",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3204780,
+      "end_ms": 3207460,
+      "text": "They're not built for it. They're not built for it. They're not built for it. They're not built for it. They're not built for it. They're not built for it. They're not built for it.",
+      "word_count": 35,
+      "utterance_ids": [
+        "fdecefdb071bdd6c",
+        "1832b27d85ec158d",
+        "5f81f9a7ddf6596f",
+        "697802844f288ceb",
+        "f312505e63da5bf9",
+        "0c67a1b743aabef4",
+        "7908e61ee139b44c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0130",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3207460,
+      "end_ms": 3208400,
+      "text": "They're not built for it.",
+      "word_count": 5,
+      "utterance_ids": [
+        "a775b05ffd00e0ca"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0131",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3208580,
+      "end_ms": 3209200,
+      "text": "They're not built for it.",
+      "word_count": 5,
+      "utterance_ids": [
+        "790d520134c0134d"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0132",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3209200,
+      "end_ms": 3219040,
+      "text": "They're not built for it. They're not built for it. They're not built for it.",
+      "word_count": 15,
+      "utterance_ids": [
+        "063147987ca72b2f",
+        "5b414b4a5d3c94be",
+        "cd89e3edab975492"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0133",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3219040,
+      "end_ms": 3239080,
+      "text": "They're not built for it. incentives are broken, Brad and you, you yourself, that you're a firm altimeter, you are pretty frisky in this period. You made a lot of bets. So I don't know if air table was one of them, but you made some satsets there. Some of them were on high valuations. How are you looking back at that time period? Any lessons that you take going forward?",
+      "word_count": 71,
+      "utterance_ids": [
+        "2d73acbe7611fe13",
+        "46dc03ef3b722e10",
+        "f8447dc00331930f",
+        "dfcb93029dc0d1cd",
+        "526ac70e11fb3bd4",
+        "bd075c06797dd275"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0134",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3240000,
+      "end_ms": 3278800,
+      "text": "A new can compress very quickly, right? It works great when the company's growing greater than 50 % but remember, it's just a heuristic. It's just a very rough estimate used almost exclusively in Silicon Valley. You know, so people are saying, oh my god, this thing to sold for two times revenue. But when you actually look at it on a look through bases, probably sold for maybe. 30 times free cash flow. I don't think it's easy to get it to 400 million in E. But I think if it was, the board would have done that. I'm, you know, we're involved in some of these companies. Once they slow down, the company morale goes to hell. Turn over among your customers, you know, begins to spike. It starts to feed on itself.",
+      "word_count": 135,
+      "utterance_ids": [
+        "d6b3482d96e66c8b",
+        "6738706c0f85ac9d",
+        "6ed07d3853d5caa0",
+        "7d8b01458942ccb6",
+        "88cc957643fed4b3",
+        "1b95f0056e19196b",
+        "3a81499b510311a2",
+        "0d0d90beeb6d77e5",
+        "38e171814090c539",
+        "eed7a2d64e99a1b5",
+        "8e26ea3181b62cd6"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0135",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3279160,
+      "end_ms": 3280760,
+      "text": "So I think it's a little... work every day.",
+      "word_count": 9,
+      "utterance_ids": [
+        "2c0c6c3cb99dbcd6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0136",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3283639,
+      "end_ms": 3312120,
+      "text": "I don't know the core product and what's happening in terms of turnover in the core product, David. But my hunch is that the core product has started to really fizzle as the advances in the core product is slowed down. You're seeing a bunch of churn out of it. the product side and now people are saying, listen, it's almost impossible for a software company today to keep any decent sales people to keep any different decent product development people because they all want to go work on AI.",
+      "word_count": 90,
+      "utterance_ids": [
+        "46829efd5f87ec6b",
+        "2a091db01f345e25",
+        "424c9444e55fae8b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0137",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3312280,
+      "end_ms": 3347720,
+      "text": "Agreed, so you don't need them for this product. I mean, the market's being efficient. I mean, look, this is where I think bending spoons has an advantage that. companies board and founders wouldn't have, which is they already have an infrastructure, right? They have a core team of bending spoons that's managing now, I don't know, dozens of these properties. And so they can plug this in. I think AI in a way makes their job easier because in the past, the reason why of course you can eliminate like all of the top. the infrastructure is because you need the institutional memory. You need a people who knew the code base. Now AI can learn the code base instantly.",
+      "word_count": 121,
+      "utterance_ids": [
+        "4b0b4214d6c20582",
+        "dd2037fb409f1458",
+        "0ae66fc6840adcff",
+        "79dd1838920a758c",
+        "4235bd357299b25c",
+        "b2505ca0bf0dde15",
+        "a04e54b8c4a879c9",
+        "9279bba915923d2f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0138",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3347880,
+      "end_ms": 3348840,
+      "text": "Because that's interesting inside.",
+      "word_count": 4,
+      "utterance_ids": [
+        "9ea4985285a1b37a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0139",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3349020,
+      "end_ms": 3351440,
+      "text": "And so yeah, it's a change is easier with AI.",
+      "word_count": 10,
+      "utterance_ids": [
+        "58d457931827ed3c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0140",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3351720,
+      "end_ms": 3361720,
+      "text": "I think maintenance mode becomes a way easier with AI because you don't need the historical knowledge anymore. The AI can go in and sort of reconstitute that. historical knowledge.",
+      "word_count": 30,
+      "utterance_ids": [
+        "5babd87abbb3e4ea",
+        "2eb2d6c9892961ad"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0141",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3361960,
+      "end_ms": 3398760,
+      "text": "Let me get you in here free bird. If I may, when we look at the lessons from peak zirp and sass, and then we look at, you know, this moment in time, this surging AI market, any parallels that we might find here, or lessons between the two, between zirp and AI, there are the ZERP SaaS era. We had a lot of very high valuations, a lot of enthusiasm, a lot of suspending disbelief. We're here in the AI era, we've just talked about the price of compute and all these companies being at a hundred ex - ourselves, or any parallels here, or not.",
+      "word_count": 107,
+      "utterance_ids": [
+        "3874b61566a60742",
+        "2d167c89929755cd",
+        "3758da139a70cd80",
+        "80247b892ce6da59"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0142",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3399040,
+      "end_ms": 3400540,
+      "text": "It's a kind of a soft one question. for you.",
+      "word_count": 10,
+      "utterance_ids": [
+        "25db5962c21fa196"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0143",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 3400860,
+      "end_ms": 3419440,
+      "text": "No, this is a very different paradigm. The AI capex build out and model training, which is where the predominance of the capital is flowing, is not about some high multiple on revenue, which is where capital was flowing into SaaS. It's like, oh, you get a 20x multiple, turn a dollar into 20.",
+      "word_count": 54,
+      "utterance_ids": [
+        "7f78dd81a9e0eb5c",
+        "3a1e5ce470e47558",
+        "83ed62713cc160bf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0144",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3419660,
+      "end_ms": 3421040,
+      "text": "That's great. do it all day long.",
+      "word_count": 7,
+      "utterance_ids": [
+        "5c5f30cd46ce0498"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0145",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_friedberg",
+      "speaker_label": "David Friedberg",
+      "start_ms": 3421480,
+      "end_ms": 3430700,
+      "text": "This is a very different structure and strategy and capital allocation process. So I don't think that I would look at them as being linked.",
+      "word_count": 25,
+      "utterance_ids": [
+        "f7bd63f12475bb3f",
+        "bb6edd5a963e4d8e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0146",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3430720,
+      "end_ms": 3434420,
+      "text": "It was a small question to me on as I was letting you hit it out of the park.",
+      "word_count": 19,
+      "utterance_ids": [
+        "898b3290cbbc4aad"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0147",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3434640,
+      "end_ms": 3502840,
+      "text": "Look, I mean, obviously SaaS companies were over you during the SERP era for two reasons. One is... that we had artificially low interest rates, so we had a kind of a speculative asset super bubble. But the other is that people were treating these things like guaranteed annuities, and actually growing annuities. They'd look at it and see, oh, 120 % dollar attention. So this single does grow 20 % year over year forever as a base case, right? and they were then price that way, but what we've seen with AI is obviously there's disruption and you can't, to Brad said I'm sure they're seeing elevated churn right now and it's not an annuity, things can change. So obviously now these things are trading at a much greater discount. All of that being said, let me just say I don't think you can extrapol. to the entire SaaS space based on this one company AirTable. I think there's some things about AirTable that make it very different, then I don't know. Let's say a sales force or a work day is, you know, AirTable is always a little bit of a quirky product. I remember at the peak hype for this company, people were saying like, oh, this is like a new excel or a new Google cheats.",
+      "word_count": 220,
+      "utterance_ids": [
+        "77b53cf1de134952",
+        "f075dcd87e455720",
+        "be7ef09efe54fcdd",
+        "be8ae9d53ee74de4",
+        "6838392f1dccade3",
+        "375ac99c462fc580",
+        "35c3e75c77e4493e",
+        "49a36b347743ccdf",
+        "f53313eb414032db",
+        "29b4d8be35d9d3dd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0148",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3502860,
+      "end_ms": 3504300,
+      "text": "It's a soft offense, yeah.",
+      "word_count": 5,
+      "utterance_ids": [
+        "aa7a61849428eec2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0149",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3504380,
+      "end_ms": 3532220,
+      "text": "Yeah, it was basically a spreadsheet for words. That's how people were viewing it. Is this like this new kind of spreadsheet for words as opposed to numbers? And it never achieved that kind of promise. It never achieved that kind of ubiquity. People understand how to use, spread. but everyone uses them, air table never got to that point. Most you'll still don't know what air table is. Again, it had its dedicated fans, but it was a hard product to explain to people, when do you use it?",
+      "word_count": 90,
+      "utterance_ids": [
+        "2cab6fc0a5f666f9",
+        "3f8d12748338cd63",
+        "fca3b78e798236f6",
+        "08daab21bd89ec0f",
+        "be0fe862e0fee22c",
+        "12fb0c6c5732efc2",
+        "054084794839ef72",
+        "f31c1af705416bbe"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0150",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3532220,
+      "end_ms": 3533500,
+      "text": "It had a cult in it.",
+      "word_count": 6,
+      "utterance_ids": [
+        "1660184d86607fdf"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0151",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3533600,
+      "end_ms": 3546000,
+      "text": "It had a cult in it, but it never achieved that sort of level of acceptance. It was never self -explanatory in terms of... why you should use it, what the use cases are, they never were able to kind of get the market right because of that.",
+      "word_count": 48,
+      "utterance_ids": [
+        "3c54fd0024ca085e",
+        "3ab1e9d2f7321593"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0152",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3546220,
+      "end_ms": 3553120,
+      "text": "And to be honest, if you look at Cloud Co -Work, complexity computer agents, those things are now doing what AirTable did.",
+      "word_count": 22,
+      "utterance_ids": [
+        "9cde183072ff3b67"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0153",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3553800,
+      "end_ms": 3577060,
+      "text": "So, never carved out, I think in niche where it was super clear, when you were always supposed to use AirTable. And really it was part of this hodgepodge of this grab bag, you could say, of no code tools. This is the category was put in. And no code has to be the most impacted, the most disrupted area of SAS right now, because I mean, what is Claude code really good at? I mean, that's the ultimate.",
+      "word_count": 79,
+      "utterance_ids": [
+        "ecc7345ffe1865c3",
+        "3849fa2e3e06db53",
+        "2d8da03e1e4e2313",
+        "46ab2cfee075c5b0",
+        "2f10042fc79179f2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0154",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3577260,
+      "end_ms": 3579900,
+      "text": "It's no code. Laughable Claude code.",
+      "word_count": 6,
+      "utterance_ids": [
+        "859572217091ed9e",
+        "0dfed9a3f65eb578"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0155",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3580000,
+      "end_ms": 3632020,
+      "text": "I mean, the thing with, yeah, the thing with air table or retool things like this is it's true. You didn't need to be a coder to use them, but you have to learn how to use air table. You have to learn how to use retool all these, it was kind of these alternative programming languages in a way and you just don't need to learn any of that anymore. I mean, you use Claude and you, just tell it what you want it to create. And so, you know, if you do want to create some sort of new dashboard, some sort of, I don't know, like a verbal spreadsheet or whatever, you just tell Claude what you want, you don't have this learning curve. Look, all of this has been impacted right now, but this has got to be the most impacted area. So, I don't know that you can totally extrapolate based on what's happening to air table. I don't necessarily think that you want to replace your CRM, your ERP, your HR system with something that's been vibed coded. You want the certainty, you know, for anything that involves compliance.",
+      "word_count": 195,
+      "utterance_ids": [
+        "9a881bd804805de9",
+        "8aee1af088cd9f00",
+        "d13da8e4493340d9",
+        "2f50f8689194cfcb",
+        "9776e19b30d4f72c",
+        "50c28c7042f481ca",
+        "22066ea9bf3edf35",
+        "e35050aa91c5c344",
+        "55d92875c6430784"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0156",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3632080,
+      "end_ms": 3633060,
+      "text": "I got to be honest.",
+      "word_count": 5,
+      "utterance_ids": [
+        "ef4b42b002f6e945"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0157",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3633180,
+      "end_ms": 3644740,
+      "text": "My team, Sachs, made, I don't use like a portfolio off the shelf, SaaS tool for men. managing crafts, like portfolios and everything?",
+      "word_count": 23,
+      "utterance_ids": [
+        "2e0e730f62c04b80"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0158",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3645160,
+      "end_ms": 3646760,
+      "text": "Well, we vibe good at something, actually.",
+      "word_count": 7,
+      "utterance_ids": [
+        "8286b312dacbea28"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0159",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3647340,
+      "end_ms": 3648960,
+      "text": "So yeah, we just did the same too.",
+      "word_count": 8,
+      "utterance_ids": [
+        "9cd4d2e1fbf7cd9a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0160",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3649120,
+      "end_ms": 3666360,
+      "text": "So my team just belt something that is so mind blowing, that to buy it with off the shelf software would have been a quarter million dollars in software and like a million dollars integration over two or three years. We built it in a month and now we have complete insight into the whole portfolio, the competitive set, the founders, everything going on.",
+      "word_count": 64,
+      "utterance_ids": [
+        "e1bac480800e5ed6",
+        "c305fcec04ede574"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0161",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3666420,
+      "end_ms": 3678480,
+      "text": "Keep in mind that one of the reasons why Leah pulled got blown out. Okay. I mean, it is because he bet on the SAS POCK ellipse. Remember, it wasn't just that he was super long these chips stocks that had a correction.",
+      "word_count": 43,
+      "utterance_ids": [
+        "da4070fdad8ea05d",
+        "b312601d297bf9c9",
+        "6f7a14458cf29a1b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0162",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3678480,
+      "end_ms": 3679980,
+      "text": "Oh, is that right? He was showing that out.",
+      "word_count": 9,
+      "utterance_ids": [
+        "ad4af8205cce102a",
+        "d684b3d146be2fd7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0163",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3680000,
+      "end_ms": 3748180,
+      "text": "He was short, Adobe, and a whole bunch of other SaaS companies. And those trades also move the wrong way on him. So again, I just think that it's painting with two broad of brush to say that all of SaaS is going to get obliterated here. And there was a really good post about this. Let me just quote from this where they said, nobody buys Microsoft. because Microsoft writes the best code. They buy Microsoft because Microsoft is the rail that everything else runs on. Active directories where your employee identities live, Excel is where your board decks and numbers come from, teams is where the compliance recorded conversation happens. Azure holds a Fed ramp, high authorization, and Department of Defense, impact level five clear ends. Which means a defense contractor cannot casually swap it out for something cheaper and so on down the line So there's a lot of really good compliance reasons why if you're a large enterprise You're not gonna want to spend tens of millions of dollars ripping out something that costs you a million dollars a year It just that just doesn't make sense and I noticed that many off just tweeted five minutes ago that 15 out of 15 cabinet agencies run on sales force. Look, the government is not going to rip and replace it.",
+      "word_count": 224,
+      "utterance_ids": [
+        "adf313da4cb57558",
+        "31ae11e019cf55c8",
+        "98f7d3d9d377b736",
+        "58c5d0bb18aadaf0",
+        "cda8c2ff4860e8ab",
+        "b69850009f2064bb",
+        "37675b37e460ad88",
+        "03821a2c2f50bc9a",
+        "b836a90363669491",
+        "2538086bcb785aaa"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0164",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3748240,
+      "end_ms": 3748800,
+      "text": "That's right. That's right.",
+      "word_count": 4,
+      "utterance_ids": [
+        "7a641ee3bb0bf7f6",
+        "c3667de155c58137"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0165",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3749820,
+      "end_ms": 3752400,
+      "text": "So look, it not all sass is equal in this demand.",
+      "word_count": 11,
+      "utterance_ids": [
+        "ef5c003908f2df7b"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0166",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3752420,
+      "end_ms": 3754060,
+      "text": "I just want some figment.",
+      "word_count": 5,
+      "utterance_ids": [
+        "88df13c0b0be0fa2"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0167",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3754080,
+      "end_ms": 3764320,
+      "text": "I just think some of these sass companies with great founders who are in it for the long term and they have like passionate user bases. I think they... will make the jump to AI first products, and I put Figma in that bucket.",
+      "word_count": 44,
+      "utterance_ids": [
+        "8f14f0c82dce7081",
+        "f20904b7af418101"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0168",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3764440,
+      "end_ms": 3779860,
+      "text": "Just to wrap this, actually is, I GVs up 20 % in the last six months, it's up 20 % in the last five years. Explain GVP. So the high growth software stock index, right? Snowflake's 88 % in the last six months.",
+      "word_count": 43,
+      "utterance_ids": [
+        "11bc7a4734f61e73",
+        "598f7771ec738d97",
+        "dfa64feb53971efa",
+        "779eb4c540e91e45"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0169",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3780000,
+      "end_ms": 3786680,
+      "text": "That's an IGVZ and ETF of IGVZ and ETF of gross off our companies, right?",
+      "word_count": 15,
+      "utterance_ids": [
+        "25f84abfeda8d068"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0170",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3787140,
+      "end_ms": 3839900,
+      "text": "So to David's point, there was a panic about software companies, there was a big tradeout. You know, honestly, they'd perform pretty well and as he mentioned in the month of July, they were up when a lot of the semi -conductor AI stocks were... down. And some of these companies, data breaks, snowflake, clickhouse, et cetera, are doing extraordinarily well. As I just mentioned, snowflakes up 90 % in the last six months, which puts it in the same category as the semiconductor AI stock. So today, if it's point, you can't throw them on the same bucket. But I do think that for these no code, a lot of these applications software companies, they're real. Like the game is up, sell the company, get what you can get, you know, importantly here in the air table story, all the late stage investors, right? We passed on this in the last three funding rounds, right? Which I think we're at two billion five billion and eleven billion, but all those late stage investors, which were the most venerable of growth.",
+      "word_count": 181,
+      "utterance_ids": [
+        "5b7a54a2311d8fc0",
+        "76a9f38d429fb89e",
+        "19e4bbdd8b14705c",
+        "49ddb13590cc6ffa",
+        "82f004da2260e08d",
+        "7b31f281ac93e7b3",
+        "da4494fb59ecc5eb",
+        "97a4ee14b8adb0a3",
+        "42dc62e0b98524bb"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0171",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3840000,
+      "end_ms": 3861500,
+      "text": "They all got their money back and the early stage of besters ended up making a lot so if this is a failure This is a pretty good failure for so if this is one of the points that was made at that time, which is hey With this is a strong enough company and team and revenue base that if we just get our money back with the optionality Hey, maybe this would be a good investment. You can say this the same thing about some AI bet.",
+      "word_count": 89,
+      "utterance_ids": [
+        "8bd57bc23720cab4",
+        "0f2a67276227aca7"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0172",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3861680,
+      "end_ms": 3868900,
+      "text": "Well, this is one of those cases where the liquidation preference actually mattered, you know? Absolutely. It doesn't matter, but I think that's great money here.",
+      "word_count": 26,
+      "utterance_ids": [
+        "9a54fd100612dc1f",
+        "43f4bfed6e28e047"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0173",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3869360,
+      "end_ms": 3881560,
+      "text": "My understanding is this wasn't like they had like a 7 % interest rate or they didn't have like a participating preferred where you get two times your money back and then they do the trade, does anybody know? Because I looked deeply into this.",
+      "word_count": 45,
+      "utterance_ids": [
+        "60dc2f5a216fd995",
+        "4fe5e58bdecfc8a0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0174",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 3881940,
+      "end_ms": 3888460,
+      "text": "And I think that net of cash, they may have come in a little bit less than the total cash raised, but it seemed like everybody got made home.",
+      "word_count": 29,
+      "utterance_ids": [
+        "79ce30ed1acd6d43"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0175",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3888980,
+      "end_ms": 3895860,
+      "text": "But if they had the, I guess, acts, we live through moments in time where companies had to guarantee a 1x, right?",
+      "word_count": 22,
+      "utterance_ids": [
+        "2ea543cd8bd27727"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0176",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3896260,
+      "end_ms": 3903980,
+      "text": "You know, another 1x liquidation preference is standard. It just means you get your money. I'm trying to spot for other people start to profit, which is appropriate.",
+      "word_count": 28,
+      "utterance_ids": [
+        "1ecacbce7aa43247",
+        "20ae60d06d5340d8",
+        "78a432ffdf813ff8"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0177",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3904680,
+      "end_ms": 3909660,
+      "text": "But before the trial, the treatments were taken out, right? Of these deals, I think, during things.",
+      "word_count": 17,
+      "utterance_ids": [
+        "e21fee8aa6780fd0",
+        "42c970de66c1446f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0178",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3910240,
+      "end_ms": 3923660,
+      "text": "The standard terms, you know, what's known as clean terms is just a simple one, liquidation preference. The preferred just gets their money back before the common starts to participate. in a successful sale of the company. That just makes sense, right?",
+      "word_count": 42,
+      "utterance_ids": [
+        "d0023613ac17e5b0",
+        "1d476cd34709c4b8",
+        "ac814a4e8562b88a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0179",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3924100,
+      "end_ms": 3926980,
+      "text": "Yeah, but we're not anticipating preferred is the double debt, right?",
+      "word_count": 11,
+      "utterance_ids": [
+        "119be4f07d9b833d"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0180",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 3927560,
+      "end_ms": 3955640,
+      "text": "Yeah, and look, we've never done that. You know, we believe in clean terms. No one's trying to be punitive towards founders. It doesn't make sense for some people in the cap table to be making money while other people are losing. Yeah, it just doesn't make sense, right? That's just a transfer of value from some people in the table to other people in the cap table. So the standard thing you do is you make sure that the investors get paid back and then everybody is participating in the upside.",
+      "word_count": 92,
+      "utterance_ids": [
+        "2047d4f3f0372e83",
+        "722e17ebc006ce5e",
+        "8731cc2113ca7f3c",
+        "b259fa9a66eadc92",
+        "6d6c8b86318ac2ca",
+        "38add5b9708ab024",
+        "739fd509f0dd8d3a"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0181",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 3956320,
+      "end_ms": 4025680,
+      "text": "Okay, fourth story here, China is training on U .S. from U .S. providers, Forbes, published an investigation called these American startups are making China's AI smarter, and I think this relates to a lot of your work in the early part of the administration, SACS. They claim U .S. data labeling startups are selling valuable training data to Chinese labs, which in turn is... helping them catch up with the U .S. Frontier ones to start up surge AI in Merkower, are both valued in over $20 billion. They sell training data sets to people like OpenAI and Thropic federal agencies. They all sell the same data sets to top Chinese AI companies according to this report like Tencent by Tencent. probably above the moonshot, et cetera. Top six AI labs in China according to this report are spending $500 million a year buying what Forbes calls secret sauce, PhD written content, reinforcement learning, knowledge pipelines, all that kind of great stuff. I have investments in a couple of these companies. including micro one, the founder of micro one, didn't participate in selling to China.",
+      "word_count": 186,
+      "utterance_ids": [
+        "9f7b9809946cb89c",
+        "cf205e178876cf05",
+        "7d98fb755043d268",
+        "828b8b395909110a",
+        "d9d6821be476f3a4",
+        "bbb5b23637e77082",
+        "659b455a87dd5bcf"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0182",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4025780,
+      "end_ms": 4027240,
+      "text": "He made that decision sex.",
+      "word_count": 5,
+      "utterance_ids": [
+        "bf9e61a33c66bf8e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0183",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 4027680,
+      "end_ms": 4055900,
+      "text": "What do you think here about this new wrinkle in terms of, really, the secret sauce behind a lot of these models is the data. We've run out of open data on the web, obviously. We talked last week about the books being, you know, having the spines taken off of them and scanned in. I mean, people are looking for data, Miracle or micro one or all these companies are providing it. Should they be providing the same data and selling it to Chinese open source companies or not?",
+      "word_count": 90,
+      "utterance_ids": [
+        "b55254864d02cf44",
+        "bb9f45e632feba08",
+        "768fc0c73bcbfee1",
+        "b74d6453d840fec4",
+        "1147d4434ff0560a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0184",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 4056079,
+      "end_ms": 4124360,
+      "text": "Well, look, I think we got to decide what our objective is here. Are we trying to just get in? like a full -blown economic war with China, we just try to prevent all of our companies from doing business over there. If that's our objective, then you can take that position. Historically, the rules have been that you want to be careful about technology transfer of technology that has a dual use, right? That it has a military application. And my sense of data is that it's largely commodity. I mean, data labeling certainly is. If you basically tell them that they can't use data labeling, I guarantee you there's no shortage of labor in China that they can use to do the data labeling. In fact, they probably are. What I'm saying is there's a lot of ways to get this data. So, look, if we basically ban these companies from selling to China, we should expect reciprocal actions taken by China to ban companies over there selling to us, maybe rare earths. These two countries are not completely independent of each other. By the way, I want us to be... As independent and sovereign as possible. I don't want to have any dependence.",
+      "word_count": 206,
+      "utterance_ids": [
+        "66c81f0db4663ca2",
+        "c541a63f9b13dca3",
+        "007632542921eafa",
+        "071aec358fb81483",
+        "3a867c56596524f2",
+        "961ba5d18f5d9f28",
+        "8db5dcd037f4154a",
+        "120c69eb1a890e7e",
+        "fecc821bd6a670e0",
+        "4dd7c3b2d256a945",
+        "e367bb0f08adfe31",
+        "a84ab54dc8120152",
+        "3275654650bdce12",
+        "2a1d38e4b672fa1a",
+        "ef11f8b58f0c9c04"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0185",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4124360,
+      "end_ms": 4125160,
+      "text": "No dependencies.",
+      "word_count": 2,
+      "utterance_ids": [
+        "2f190691fa3bc40e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0186",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 4125680,
+      "end_ms": 4132460,
+      "text": "But we still, at this moment in time, do you have some dependencies? So I think you have to ask the question, is this data really proprietary?",
+      "word_count": 27,
+      "utterance_ids": [
+        "4f638db5c8ceba52",
+        "e637a7d688997965"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0187",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4132640,
+      "end_ms": 4133600,
+      "text": "Does it have a disease?",
+      "word_count": 5,
+      "utterance_ids": [
+        "5a28569f27f24c46"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0188",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 4133880,
+      "end_ms": 4135340,
+      "text": "Does it have a military application?",
+      "word_count": 6,
+      "utterance_ids": [
+        "f81c6beb772ab6ee"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0189",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4135920,
+      "end_ms": 4138680,
+      "text": "Yeah, I don't think it has military. It's definitely not data labeling.",
+      "word_count": 12,
+      "utterance_ids": [
+        "0b650c5ec0ab2659",
+        "b0fc46635a4d00ef"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0190",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 4138840,
+      "end_ms": 4144620,
+      "text": "This is like hiring. PhDs hiring super professionals to create unique data set.",
+      "word_count": 13,
+      "utterance_ids": [
+        "bd6d5466a527b905",
+        "005e8545b971fdc6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0191",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 4145020,
+      "end_ms": 4186540,
+      "text": "So it's trying to do that, too, and I guarantee you they are. I don't think this is going to give us a decisive advantage in the AI race. It's going to annoy, it's going to create annoyance, it's going to create friction, and how bad you want our relationship with them to be, you want to restart another trade war. Look, I'm not against restrictions when I think they're going to hack a punch. For example, I'm really glad that the first term administration limited the export of EV, the photography machines to China. You know, that was all way back. I think in 2019. So that was a really important decision. And so look, I think Target... strategic controls make sense. I would just make sure that this one actually meets that bar.",
+      "word_count": 135,
+      "utterance_ids": [
+        "69b937dfc2b22213",
+        "b0e3c3ee3754ba9d",
+        "4c428ea886cc0c19",
+        "842739ea434fefbe",
+        "996c0e3289428975",
+        "66eebec8bfda8423",
+        "e00fe07d7b84750c",
+        "6276294a4d099a4d",
+        "9aa6c1454db0bb7f",
+        "d24621710189303e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0192",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 4186860,
+      "end_ms": 4194060,
+      "text": "Brad, any thoughts here on this open source catch up the data being sold to China in our adversaries?",
+      "word_count": 19,
+      "utterance_ids": [
+        "5c12edbb4b587acd"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0193",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4194220,
+      "end_ms": 4279980,
+      "text": "Are you concerned about these open source models and then us providing data to them? First, you know, I'm an absolute agreement with you. David that we want maximum competition. As we sit here today, the U .S. is winning. We talked about it at the start of frontier labs or winning or open sources winning. And we have fairly limited regulations, right? She's coming here in September in a bilateral meeting to meet with the president. We're advancing relations on a variety of... So I think everything looks good and you want to continue down that path. With that said, I will tell you that this will irritate people in Washington, who feel that this along with distillation and other things could be the exported chips all of which at a certain level makes sense, cause people to wonder whether or not we're making it too easy on the Chinese labs to catch up with American labs, you know, in the race to frontier intelligence. So, you know, it's the type of story, Jason, that I think will continue to money the waters that will continue to be monitored. The reason I don't think it will cause us to change our stance with respect to China is because we're winning. But if the president asks his advisors, you know, one of these days, six months down the line, or we went in against China, and all of the sudden he gets a response, no, we're no longer winning. They caught up. They passed us, et cetera. Then these things will get a lot more scrutiny than they're getting today. I think the only reason they passed a monster today is because we're still leading the risk.",
+      "word_count": 287,
+      "utterance_ids": [
+        "6fc745550565cd20",
+        "1e46b6c5e16f310e",
+        "0833b061106782c7",
+        "a8303e2be80ed99f",
+        "b83cd65f5bec60ab",
+        "2c70f09394caadf8",
+        "d7467c9b49a9a98a",
+        "de3c0ce3abdd9b1c",
+        "767b12e52a6447b6",
+        "be02a937f8dd02fb",
+        "6476dc404715ac79",
+        "2a31168a53f0ef87",
+        "271aa66df1aa28e9",
+        "18517d9554403017",
+        "82afaf6258fcf65f",
+        "a25291d7eedc031e",
+        "f4f949c15251693f"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0194",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 4280000,
+      "end_ms": 4291160,
+      "text": "I got to say using Kimmy and Quinn and, you know, GLM -52 for the last 60 days, my Lord, these things are good and I don't think it's very patriotic to be giving them an advantage.",
+      "word_count": 37,
+      "utterance_ids": [
+        "a5ee77c23c1201fa"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0195",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4291400,
+      "end_ms": 4293840,
+      "text": "I wouldn't do it. I'm glad the company. Sorry, what's the advantage?",
+      "word_count": 12,
+      "utterance_ids": [
+        "71f82d7bc5b9247e",
+        "1911697cd393f6b1",
+        "38f50a6d31415128"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0196",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 4294060,
+      "end_ms": 4297160,
+      "text": "What's the data set that you you're worried about that's so proprietary?",
+      "word_count": 12,
+      "utterance_ids": [
+        "e78e9738a88304f0"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0197",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 4297660,
+      "end_ms": 4309560,
+      "text": "Any of these data sets are... created by experts here in America who are given like the queries that have errors in them. So when you give them, you know, a thumbs down to a query that's highly technical.",
+      "word_count": 39,
+      "utterance_ids": [
+        "0453e0039fff45a0",
+        "f90cf9eb9a308522"
+      ],
+      "is_question_anchored": true,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0198",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4309740,
+      "end_ms": 4310960,
+      "text": "It could be code.",
+      "word_count": 4,
+      "utterance_ids": [
+        "4f132e35912390e6"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0199",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 4311160,
+      "end_ms": 4335500,
+      "text": "It could be biology and science. These are, you know, PhDs going in there and putting in the latest and greatest content. And then verifying it, double ver. and that's why we're getting better and better results out of the LLMs. So essentially, you're just helping them catch up. And this could be a big advantage for America if we were in sending it there. I think a big reason these models are getting better is because data is being leaked to them.",
+      "word_count": 83,
+      "utterance_ids": [
+        "53155b5d689dd834",
+        "9b2ac552381bcf68",
+        "02f9ba4d3c9583e5",
+        "fd151b11c90f2c42",
+        "50c2f44a6ec26e83",
+        "265e3db41d636d1e"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0200",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 4335540,
+      "end_ms": 4339500,
+      "text": "But what makes you think that China can't do this? They have tons of PhDs over there.",
+      "word_count": 17,
+      "utterance_ids": [
+        "19d0d86cbefd377f",
+        "e0c0ed0b4097b22f"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0201",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4339500,
+      "end_ms": 4339980,
+      "text": "They want to take it.",
+      "word_count": 5,
+      "utterance_ids": [
+        "0ab240a20adcbed0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0202",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 4340000,
+      "end_ms": 4371480,
+      "text": "If they were to do it at this scale, they would need to hire the best and brightest scientists and experts in the West. So basically, all the knowledge of the West is being put into packages for our LLMs to get better. They're sending no same packages. and reselling them to Chinese companies, which means they catch up just as quick. I think it's a big part of why they're catching up. In line with distillation, you know, it's really a very similar process.",
+      "word_count": 85,
+      "utterance_ids": [
+        "1b05e5cae0e36d58",
+        "5a2788a737b28286",
+        "c7e5d3818e72a6a6",
+        "6d19532ec3a34aa1",
+        "764946f8b1664700"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0203",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 4371840,
+      "end_ms": 4394300,
+      "text": "Look, if there's something truly proprietary here, I don't want us to sell our secret sauce to China. So, you know, I'd have to look into that and see, like, is there something... real secret sauce here, but this idea that it would seriously disadvantage China. You know, they're graduating more math and science graduates every year than the rest of the world combined. I mean, they don't have a shortage of smart people.",
+      "word_count": 74,
+      "utterance_ids": [
+        "2753305d234c7fe1",
+        "7824189f319b15a1",
+        "3d42d2e057b70c97",
+        "106083dcdc0ee4e8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0204",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4394780,
+      "end_ms": 4399180,
+      "text": "Yeah. And we're graduating science. I'm checking them out on the country. That's the other problem. We got to get that fixed.",
+      "word_count": 22,
+      "utterance_ids": [
+        "c92990ad86aa52fe",
+        "6b106108877dd212",
+        "f6801af950fd0174",
+        "90517bf9f1ae3788"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0205",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_david_sacks",
+      "speaker_label": "David Sacks",
+      "start_ms": 4400000,
+      "end_ms": 4415660,
+      "text": "There's a lot of different issues here. I don't know, I mean, you want to conflate, but this idea that they can't recreate those data sets. I mean, look, if there's something truly right here, if it has a dual use, if it's military -related, but I don't know that that's what this is.",
+      "word_count": 54,
+      "utterance_ids": [
+        "513214a6e74166e0",
+        "1e2b444b67a4d138",
+        "33ff25b74d62308c"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0206",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 4415800,
+      "end_ms": 4428940,
+      "text": "Well, they're all proprietary, if I design, but I don't know about the dual use. I don't have the data sets here. All right, folks, that's another amazing episode of your all in podcast. Thank you so much, Brad, for joining us.",
+      "word_count": 42,
+      "utterance_ids": [
+        "1964e489aa38008c",
+        "a181fb3a03809c48",
+        "16eba6eb0b87d1cd",
+        "7605770b94b9dbba"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0207",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4429000,
+      "end_ms": 4431120,
+      "text": "Chema, good luck on your world tour.",
+      "word_count": 7,
+      "utterance_ids": [
+        "2970c6da3126c703"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0208",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 4431160,
+      "end_ms": 4437960,
+      "text": "Hope you're enjoying a little rest and good luck trying to buy a white turtle neck this season.",
+      "word_count": 18,
+      "utterance_ids": [
+        "615d670f9912d797"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0209",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4438080,
+      "end_ms": 4439620,
+      "text": "They're sold out every way.",
+      "word_count": 5,
+      "utterance_ids": [
+        "129e218a26c7c69a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0210",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "subj_jason_calacanis",
+      "speaker_label": "Jason Calacanis",
+      "start_ms": 4439620,
+      "end_ms": 4448960,
+      "text": "Bye. So go to the all -in .com store, all -in .com slash store. We have 1 ,000 signature Chimoth autographed. White sweaters coming.",
+      "word_count": 24,
+      "utterance_ids": [
+        "4ffe22b6d8c08df8",
+        "0ec6b85eb6af09e2",
+        "7146f043498a1351"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0211",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4449100,
+      "end_ms": 4457580,
+      "text": "You can sign up and advance for them. All proceeds go to charity in my charity. I mean, Chimoth's yacht. Fun. All right. We'll see you next week. Everybody, bye -bye.",
+      "word_count": 31,
+      "utterance_ids": [
+        "c79f13265348bd62",
+        "9e6b29bf09b5ce42",
+        "2b901f17b5118886",
+        "1aac25e6750a9766",
+        "740a841dfd2c2502",
+        "eebdf90d7826c8c8"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0212",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4466599,
+      "end_ms": 4475860,
+      "text": "We open source set to the fans, and they've just gone crazy with it. Love you, S .I .S. We know you can't walk, going on with you. That's fine. That's fine.",
+      "word_count": 32,
+      "utterance_ids": [
+        "6915587507d96739",
+        "781dc97d855c9baf",
+        "9b9f35cfa24c28a3",
+        "5d78c15fcb77aa18",
+        "ea83521190a47ab0"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0213",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4479400,
+      "end_ms": 4489840,
+      "text": "Besties. I don't think that's the way I'm done to give it a wish, you're right, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec,.",
+      "word_count": 166,
+      "utterance_ids": [
+        "ac1f848a612d7f54"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0214",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4492920,
+      "end_ms": 4504840,
+      "text": "Wait a wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait a sec, wait You are a beer or a feast. We need to get more cheese on the ground.",
+      "word_count": 49,
+      "utterance_ids": [
+        "911757e90a4ea1e1",
+        "bb5e0f7365244a6a"
+      ],
+      "is_question_anchored": false,
+      "stripped": null
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0215",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4504860,
+      "end_ms": 4506860,
+      "text": "I'm going all the way up.",
+      "word_count": 6,
+      "utterance_ids": [
+        "14628e4eb711708a"
+      ],
+      "is_question_anchored": false,
+      "stripped": "outro"
+    },
+    {
+      "turn_id": "b4745416c5fc24ee_t0216",
+      "source_id": "b4745416c5fc24ee",
+      "subject_id": "unknown",
+      "speaker_label": "unknown",
+      "start_ms": 4512520,
+      "end_ms": 4514540,
+      "text": "I'm going all the way up.",
+      "word_count": 6,
+      "utterance_ids": [
+        "ef7fbb54bf6fec73"
+      ],
+      "is_question_anchored": false,
+      "stripped": "outro"
+    }
+  ]
+}

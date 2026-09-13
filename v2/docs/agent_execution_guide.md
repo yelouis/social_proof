@@ -64,9 +64,9 @@ Louis read V1's output and made three calls. **They are not provisional and they
 
 ---
 
-## 5. B1 — Turns, and how much of this show is question-anchored
+## 5. B1 — Turns, and how much of this show is question-anchored · **DELIVERED**
 
-**Blocked on R0.**
+**Blocked on R0.** DELIVERED. Unblocks B2.
 
 **User impact:** the transcript becomes readable by a person, which is the precondition for labelling it.
 
