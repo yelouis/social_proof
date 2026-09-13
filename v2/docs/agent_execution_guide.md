@@ -31,89 +31,190 @@ Read this once. It is the reason V2 exists and it is short.
 
 ---
 
-## 2. R0 — Split the repository into `v1/` and `v2/`
+## 2. R0 — Split the repository · **DELIVERED** (`b4e7319`, `3c58e91`)
 
-**User impact:** none. This is the item that makes it possible to start over without deleting the record.
+`v1/` is reference. `v2/` is the build. The 62 traps (17–76) carried forward with numbering intact, along with the validation standard, the invariants, the deliberate non-goals, and evidence-integrity contracts. **Do not extend V1, do not repair it, and do not import its extraction code without a stated reason.**
 
-### What goes where, and the one judgement that matters
+---
 
-**`v1/` is reference. `v2/` is the build.** The split is not a straight move, because **the most valuable thing V1 produced is not its code.**
+## 3. The approach — decided September 13, 2026
 
-**Move into `v1/` — reference only, do not extend:**
+Louis read V1's output and made three calls. **They are not provisional and they are not to be re-litigated by an implementing agent.**
 
-```
-v1/worker/        v1/scripts/       v1/tests/        v1/fixtures/
-v1/golden/        v1/extension/     v1/artifacts/    v1/social_proof.duckdb
-v1/docs/          (all 13 design docs + the V1 execution guide + ongoing_errors.md)
-v1/conftest.py    v1/pyproject.toml (a copy — see step 4)
-```
+1. **Turn-level extraction**, not one line of ASR. V1's unit was a median of **12 words / 3.3 seconds**; 49% were under 12 words. *"A couple of tickets left."* was an utterance.
+2. **Question-anchored where the show allows it** — the host's question gives the matter at issue in clean English and the answering turn gives the position. **How much of All-In is actually question-anchored is unknown and B1 measures it.** If it is a minority, question-anchoring is a high-precision slice rather than the main path.
+3. **A written rubric** is passed to the local model with the transcript, and **the same text is the human labelling instruction.** It is `v2/docs/design_claim_rubric.md`. Read it before B1; it is the definition of the thing this whole pipeline exists to produce.
 
-**Carry forward into `v2/` — these are not version-specific and must not be archived:**
+**Validation is one All-In episode, labelled by hand, end to end.** Not a sample — **recall is the half V1 could never see**, and a sample measures only precision.
 
-- **The traps (V1 guide §6 — numbered 17–76, 62 present; 1–16 live in commit `217b383`)** and **the validation standard (§8)**. These are the accumulated record of how this project has fooled itself, and every one was paid for. **Copy them into `v2/docs/agent_execution_guide.md` verbatim**, keeping their numbering so V1's commit messages still resolve.
-- **The invariants (V1 guide §16)** — I1–I10. They are claims about the product, not about the pipeline.
-- **`docs/master_implementation_plan.md` §8**, the deliberate non-goals. Re-proposing one costs a cycle.
-- **`design_evidence_integrity.md`** in full. Quarantine semantics, the anchor chain, and *"evidence about the store must be resolvable against the store"* survive any rewrite of extraction.
+**What is deliberately NOT decided:** whether a claim-detection library earns a place. TARGER, MARGOT and Canary are research artefacts trained on written argumentative prose, not disfluent multi-speaker ASR; ClaimBuster has a live API but scores *check-worthiness for fact-checking*, which is a different question from *did this speaker commit to a position*. **Borrow the claim/premise taxonomy if it helps; do not add a dependency without measuring it against B2's gold set first.**
 
-**Leave at the repository root:** `README.md`, `.gitignore`, `.github/`, `.venv/`.
+---
 
-> **Verify:** after the move, `grep -rn "worker\." v2/ --include="*.md"` returns nothing that points at V1 code paths. **A V2 doc that references `worker/extract/` has imported V1's assumptions along with its path.**
+## 4. Queue
 
-### Steps
+| Order | ID | Item | Blocked | Why here |
+|---|---|---|---|---|
+| 1 | **B1** | Turns, and how much of this show is question-anchored | none | V1's unit was 12 words. Also measures the question-anchored share, which B3's design depends on. |
+| 2 | **B2** | Label one episode by hand | B1 | **The item V1 never had.** Every threshold after this becomes measurable instead of self-reported. |
+| 3 | **B3** | Extract against the rubric | B2 | The first V2 claims. **No validators** — run the rubric alone and measure it. |
+| 4 | **B4** | Measure, and decide whether to go on | B3 | Precision **and** recall on one episode, then a decision, not a task. |
 
-**Step 1 — Move with `git mv`, one commit, no edits.** Content changes in the same commit as a move make the diff unreadable and hide what was altered.
+**Do not reorder these and do not start two at once.** V1's worst outcomes came from items that were individually correct and sequenced wrong — a publishing item run before the thing it published was real, a threshold tuned over claims that were fabricated.
 
-> **Verify:** `git show --stat` shows renames only — no insertions or deletions beyond the rename lines. If content changed, split the commit.
+---
 
-**Step 2 — Create the V2 skeleton.**
+## 5. B1 — Turns, and how much of this show is question-anchored
 
-```
-v2/docs/agent_execution_guide.md     ← this file, moved here
-v2/docs/                             ← V2 design docs, written later, not now
-v2/                                  ← no code yet
-```
+**Blocked on R0.**
 
-> **Verify:** `v2/` contains documentation and nothing else. **Do not scaffold a package, a worker, or a schema.** The extraction approach is undecided and any scaffold will encode an assumption about it.
+**User impact:** the transcript becomes readable by a person, which is the precondition for labelling it.
 
-**Step 3 — Copy the carry-forward material into `v2/docs/agent_execution_guide.md`.** Traps verbatim with numbering intact, the validation standard verbatim, the invariants, and a pointer to `v1/docs/` for everything else.
+**Contract:** `v2/docs/design_claim_rubric.md` gate 4 · V1's `utterances` table (read-only).
 
-> **Verify:** **62 traps, numbered 17–76 with no gaps introduced**, matching `v1/docs/agent_execution_guide.md` number by number. Traps 1–16 are not in that file — they live at `217b383:docs/agent_execution_guide.md` §1 and the V1 guide points there; carry the pointer, not the text. **Assert the numbers, not just the count** — a renumbered trap breaks every commit message that cites it.
+**Gap.** V1's extraction unit is one line of ASR — **median 12 words, 3.3 seconds, 49% under 12 words.** *"A couple of tickets left."* is an utterance. A position is made across a speaking turn, and asking a model to find one in twelve words is what produced five rewrites of the extraction format.
 
-**Step 4 — Make V1 runnable but inert.** The review site is the only part of V1 worth still being able to start. Keep `v1/pyproject.toml` and `v1/scripts/serve_site.py` working with paths adjusted; confirm the site still serves.
+**Turns are also a measurement, and that is half of why this item exists.** Nobody knows how much of All-In is question-anchored. It is four co-hosts talking over each other as often as it is an interview, and **if interrogative-preceded turns are 20% of the show, question-anchoring is a high-precision slice rather than the main path** — which changes B3's design. Measure before designing around it.
 
-> **Verify:** `cd v1 && .venv/bin/python scripts/serve_site.py` serves the site and `/` returns 200 with 23 episodes listed. **If you cannot make this work in fifteen minutes, stop and say so** — V1 being startable is a convenience, not a requirement, and it is not worth restructuring the package to get.
+### Implementation
 
-**Step 5 — Update the README.** One short section: V1 is the reference implementation and what it established; V2 is the rebuild and what it is rebuilding. **Link the three root causes in §1 above** rather than restating them.
+**Step 1 — Build turns from V1's utterances, read-only.** Group consecutive utterances by the same `subject_id` into one turn. Break a turn on: a speaker change, a gap over ~2s, or a hard cap (~400 words) so one mis-segmented block cannot become the whole episode.
 
-> **Verify:** a reader who has never seen this repo can tell from the README which directory is live. That is the whole job of this step.
+> **Verify:** print the turn-length distribution against the utterance distribution. **Median turn should be several times median utterance (12 words).** If it is not, the grouping is not grouping — most likely `subject_id` is alternating on noise.
+
+**Step 2 — Strip what is not the show.** Ad reads, cold opens, and the outro. Sponsor segments are the highest-value exclusion: V1 turned an Airwallex ad into *"the speaker is FOR airwallets built for the future"* attributed to a host. Detect by CTA phrasing (`dot com slash`, `promo code`, `our sponsor`) plus the fact that ad reads are contiguous blocks.
+
+> **Verify:** list every stripped span with its timestamps and **read them.** Report what fraction of the episode was stripped. **A sponsor block that survives is a claim generator; a real segment that gets stripped is silent data loss** — both directions matter and only reading catches either.
+
+**Step 3 — Classify each turn as question-anchored or not.** A turn is question-anchored when the immediately preceding turn from a *different* speaker ends in an interrogative.
+
+> **Verify (this is the number the design depends on):** report the percentage, per episode and overall. **State it plainly in the commit body.** If it is under ~30%, say so and flag that B3 cannot rely on question-anchoring as its main path.
+
+**Step 4 — Emit a readable transcript artefact.** One file per episode: turn id, speaker, timestamp, text, `is_question_anchored`, `stripped` reason if any. **This file is what a human reads in B2.**
+
+> **Verify:** open it and read five minutes of it. **If it does not read like a conversation, B2 cannot be done from it** and no amount of downstream cleverness recovers that.
 
 ### Validation
 
-- **(c)** — **`git log --follow` resolves for a file moved into `v1/`** (try `v1/worker/extract/validators.py`), and the trap numbering in `v2/docs/agent_execution_guide.md` matches `v1/`'s exactly, asserted number by number. *History-preservation is the entire point of moving rather than copying, and trap numbering is the entire point of carrying them forward rather than rewriting them. A move that breaks either has thrown away what it was protecting.*
-- `v2/` contains no code.
-- The V1 site starts and serves, or the commit body says why it does not.
-- Nothing under `v1/` was edited in the move commit.
+- **(c)** — **on one episode, a person reads the emitted transcript end to end and confirms it reads as a conversation**: speakers attributed correctly through at least three exchanges, no ad copy in the retained text, no turn ending mid-sentence. *No metric substitutes for this. The artefact's entire purpose is to be read, and V1 never produced one that was.*
+- Turn-length distribution reported against utterance distribution.
+- Question-anchored percentage reported.
+- Stripped spans listed with timestamps and total duration.
+- **Nothing is written to V1's database.** Assert its file hash is unchanged.
 
-**Falsify.** Check out the commit before R0 and confirm the tree is unchanged from it apart from paths — `git diff --stat <before> <after> -M` should report renames and the two new/edited docs, nothing else.
+**Falsify.** Disable the speaker-change break; turns must collapse into a handful of giant blocks. Disable ad stripping; the Airwallex block must reappear in the retained text. Record both.
 
-**Blast radius.** Every path in the repository. `README.md`. No code logic.
-
----
-
-## 3. What happens after R0
-
-**Nothing, until Louis selects an extraction approach.** The candidates are being discussed now; the shortlist and their trade-offs will be filed in `v2/docs/ongoing_errors.md` §1 as an open issue with a `Your selection: _____` line.
-
-**Two things are already known to be prerequisites regardless of which is chosen**, and the second matters more than it sounds:
-
-1. **The extraction unit must be larger than one ASR line.** Turn-level at minimum. This is V1's root cause ① and no format choice survives ignoring it.
-2. **A human-labelled gold set must exist before any threshold is tuned.** V1 set six parameters and ran five format rewrites without one, and every gate it reported was scored against its own output. **Build the labelled set first, from V1's existing transcripts** — they are real, they are verbatim-verified, and they cost nothing to reuse. **This is the one piece of V1 worth taking wholesale.**
-
-**Do not begin either without the selection.** Both shape what a claim *is*, and that is the decision being made.
+**Blast radius.** `v2/` only. V1 is read-only.
 
 ---
 
-## 4. Standing constraints, carried from V1
+## 6. B2 — Label one episode by hand
+
+**Blocked on B1.** This is the item V1 never had, and its absence is why five rewrites were each scored against the model's own output.
+
+**User impact:** every threshold, prompt and gate after this becomes measurable instead of self-reported.
+
+**Contract:** `v2/docs/design_claim_rubric.md` in full.
+
+**Gap.** V1 set six parameters and ran five format rewrites without a single human-labelled example. Five gates were self-reported as met and disagreed with on independent reading; one pasted forty claim ids as evidence and **none of them existed.** **There was never anything to be wrong against.**
+
+### Implementation
+
+**Step 1 — Pick one episode and say why.** A regular four-host episode, not a guest interview — guests are excluded by gate 1 and a guest-heavy episode measures the wrong thing.
+
+**Step 2 — Read the whole episode's turns and mark every claim.** Not a sample. **Every turn**, start to finish, applying the rubric's four gates in order.
+
+> **Verify:** the count of turns examined equals the count of turns in the episode. **Recall is the whole point** — a sample tells you whether what you found is good and nothing about what you missed, and missing is V1's failure mode.
+
+**Step 3 — For each claim record the rubric's fields**; for each **exclusion** record only the gate that caught it. Exclusions are data, not waste — their distribution is the health signal in rubric §6.
+
+> **Verify:** report the four gate-failure rates. **If any is zero, re-read.** A gate that never fires is either unnecessary or not being applied, and rubric §6 says which is more likely.
+
+**Step 4 — Have the rubric's worked examples checked against your own judgements.** If you disagree with rubric §5's calibration table, **stop and raise it with Louis** rather than proceeding — the rubric is wrong, or your reading is, and both are worth more than a labelled set built on a disagreement.
+
+> **Verify:** state explicitly in the commit body that you applied §5 and agreed with it, or which row you disagreed with.
+
+**Step 5 — Commit as `v2/fixtures/gold/<episode>.json`,** with the rubric's version or commit hash recorded in it.
+
+> **Verify:** the file records which rubric produced it. **A gold set whose definition has drifted is worse than none** because it looks authoritative.
+
+### Validation
+
+- **(c)** — **every turn in the episode has a verdict** (claim with fields, or exclusion with a gate), the count matches B1's turn count exactly, and **the four gate-failure rates are all non-zero.** *An incomplete labelling measures precision only, which is the half V1 already had.*
+- A second reader — Louis, or a fresh agent given only the rubric — labels **20 turns drawn at random** and agreement is reported. **Do not target a number; report it.** Low agreement means the rubric is ambiguous and that is a finding about the rubric.
+- The claim count is stated plainly. **If one episode yields very few claims, say so** — that is a real result about the show and it changes what the product can be.
+
+**Falsify.** Label 20 turns, set them aside, re-label them a day later without looking, and report self-agreement. **If you disagree with yourself, the rubric is underspecified** and no model will do better.
+
+**Blast radius.** `v2/fixtures/gold/`, possibly `v2/docs/design_claim_rubric.md` if step 4 finds a defect.
+
+---
+
+## 7. B3 — Extract against the rubric
+
+**Blocked on B2.** Running extraction before the gold set exists is how V1 tuned six parameters against its own output.
+
+**User impact:** the first V2 claims.
+
+**Contract:** `v2/docs/design_claim_rubric.md` · B1's turn artefact · B2's gold set.
+
+### Implementation
+
+**Step 1 — Build the prompt from the rubric file, not from a paraphrase of it.** Load `design_claim_rubric.md` and interpolate it. **The prompt must not restate the rubric in its own words** — the whole point is that the model, the labeller and the verifier share one text.
+
+> **Verify:** assert in a test that the rubric file's §2 and §3 appear verbatim in the prompt. **If they are paraphrased, they will drift**, and V1's five rewrites were five paraphrases of a rule nobody changed.
+
+**Step 2 — Feed one turn at a time, with the preceding turn as context.** The preceding turn is needed for gate 1 (is this answering a question, or rejecting a position just voiced?) and gate 4 (what does *it* refer to?). **Context is read, never quoted from.**
+
+> **Verify:** assert no emitted quote resolves to the context turn rather than the target turn. This is a cheap check and it catches a whole class of misattribution.
+
+**Step 3 — Require the model to emit exclusions, not silence.** For every turn: either claims, or an exclusion with the gate. **A turn that returns nothing is a bug**, because it is indistinguishable from a turn that was never processed. V1's decline branch fired 3 times in 401 claims and nobody could tell whether it was working.
+
+> **Verify:** turns processed equals turns in the episode, and every turn has a verdict.
+
+**Step 4 — Do not add validators yet.** V1 had seven, and they were repairs for a prompt that was asking the wrong question. **Run the rubric alone first and measure it.** Add a guard only when B4 shows a specific failure the prompt cannot fix, and say which.
+
+> **Verify:** the commit body states how many validators were added: the expected answer is zero.
+
+### Validation
+
+- **(c)** — **on B2's episode, precision and recall against the gold set are both reported**, with the confusion counts and every disagreement listed by turn id. *Both numbers, or neither means anything: V1 could always find claims and never knew what it missed.*
+- Gate-failure distribution reported and compared to B2's human distribution. **A large divergence is the finding** — it says the model is applying a different rubric than the text it was given.
+- Every quote resolves verbatim to its turn.
+
+**Falsify.** Strip the rubric from the prompt, leaving only *"extract claims"*, and re-run the same episode. Report both precision and recall. **If the rubric adds nothing, that is the finding** and it should be reported rather than buried.
+
+**Blast radius.** `v2/` only.
+
+---
+
+## 8. B4 — Measure, and decide whether to go on
+
+**Blocked on B3.**
+
+**User impact:** an honest answer about whether V2's approach works, before any of it is scaled.
+
+**Gap.** V1 never had this step. It scaled to 23 episodes and 20,666 utterances before discovering that its claims were not claims.
+
+### Implementation
+
+1. Report **precision and recall** against B2's gold set, with every disagreement listed by turn id.
+2. **Read every claim B3 emitted that the gold set does not contain**, and every gold claim B3 missed. Say which failures share a cause.
+3. State a conclusion **in a sentence**: the approach works and should be scaled, it works on a slice — say which — or it does not work and here is the evidence.
+
+> **Verify:** the conclusion names the next decision, not the next task. **If recall is 40%, "improve the prompt" is not a conclusion** — whether 40% is enough for the product is a question for Louis, and it belongs in `v2/docs/ongoing_errors.md` §1 with options.
+
+### Validation
+
+- **(c)** — **precision and recall both reported over B2's full episode, with every disagreement listed by turn id and read.** *A single aggregate is what let V1 run for weeks on a corpus of invented claims.*
+- **Do not scale to a second episode inside this item.** Whether to scale is B4's output, not its method.
+
+**Falsify.** Score 20 of B3's outputs blind — source hidden, order shuffled — and compare to your attributed verdicts. Report the agreement rate; a poor one means the measurement is your reading rather than the model.
+
+**Blast radius.** `v2/docs/ongoing_errors.md`, `v2/docs/agent_execution_guide.md`.
+
+---
+## 9. Standing constraints, carried from V1
 
 - **One item = one commit**, the *why* in the body.
 - **Never fill in a `Your selection: _____` line.**
@@ -125,7 +226,7 @@ v2/                                  ← no code yet
 
 ---
 
-## 5. Traps (carried from V1 §6)
+## 10. Traps (carried from V1 §6)
 
 Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writing in their layer. The ones that have already bitten:
 
@@ -193,7 +294,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 6. Validation standard (carried from V1 §8)
+## 11. Validation standard (carried from V1 §8)
 
 **This section is the difference between an item that lands and one that comes back.** Every rule below was paid for.
 
@@ -219,7 +320,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 **Prove the threshold is doing the work.** Set it to a value that must fail, watch the assertion go red, restore it. Record both outputs in the commit body. A repair with no falsification is a guess.
 
-**Re-run every gate yourself before trusting §4.** This file has recorded a gate result that did not match reality more than once.
+**Re-run every gate yourself before trusting §9.** This file has recorded a gate result that did not match reality more than once.
 
 **Report zero with its denominator.** "No tensions found" over an empty candidate set and "no tensions found" over 400 examined pairs look identical in a status table and mean opposite things.
 
@@ -230,7 +331,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 7. Invariants — do NOT change (carried from V1 §16)
+## 12. Invariants — do NOT change (carried from V1 §14)
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -251,9 +352,9 @@ Full invariant definitions (carried from `v1/docs/master_implementation_plan.md`
 
 ---
 
-## 8. Deliberately not built — do not re-propose (carried from V1)
+## 13. Deliberately not built — do not re-propose (carried from V1)
 
-Each of these was considered and rejected for a stated reason in `v1/docs/master_implementation_plan.md` §8. Re-proposing one costs a cycle.
+Each of these was considered and rejected for a stated reason in `v1/docs/master_implementation_plan.md` §13. Re-proposing one costs a cycle.
 
 Each of these was considered and rejected for a stated reason. Re-proposing one costs a cycle.
 
@@ -270,7 +371,7 @@ Each of these was considered and rejected for a stated reason. Re-proposing one 
 
 ---
 
-## 9. Evidence integrity and V1 reference contracts
+## 14. Evidence integrity and V1 reference contracts
 
 The integrity contract survives any rewrite of extraction:
 - **E1–E5 Operational Rules:** Every rendered claim carries a verbatim quote, a date, and a resolvable source locator (E1). Every quoted string `grep -F` matches stored source text (E2). Every quote supports the proposition attached to it (E2b). Nothing derived from page context ever persists (E3). Below sufficiency gates, scores are null, never computed-and-hidden (E4). Precondition failures quarantine tensions, never rendered (E5).
