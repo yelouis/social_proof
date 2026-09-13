@@ -31,6 +31,14 @@
 - **Option A (Recommended) — Scale local model size to Gemma-2-27B (or Gemma-3-12B/27B 4-bit) on MLX.**
   - *Pros*: Preserves the core architectural invariant of local-only inference on Apple Silicon; zero cloud API cost or data egress; tests whether multi-gate instruction-following capacity is the sole bottleneck.
   - *Cons*: Slower inference (~5–8s/turn vs 1.8s/turn); requires ~16GB unified memory for 4-bit weights.
+> **Added by the verification pass, September 13, 2026 — read before selecting.**
+>
+> **Option B is ruled out by a standing constraint.** Louis has confirmed the model must be local and open-weights; no transcript leaves this machine. That is a property of the product, not a cost decision, and it is now recorded in `agent_execution_guide.md` §3 and §10. **The live choice is A or C.**
+>
+> **And Option A should start with a model that is already here.** `gemma4:latest` is **pulled in Ollama on this machine right now** — 8.0B, `Q4_K_M`, **131,072 context** — and has never been tried. B3 ran `gemma-2-2b-it-4bit`, the *smallest* model present, because it happened to be in the MLX cache. **Trying the 8B costs one command and no download; proposing a 12B or 27B download before doing so is skipping the free experiment.**
+>
+> The context window may also be part of the diagnosis rather than a separate issue. The rubric is ~1,400 words ≈ 2,000 tokens against the 2B's 8k window — **a large fraction of its attention budget spent on the instruction before it reads a single turn.** Gemma4's 131k removes that pressure entirely, so an 8B run separates "not enough parameters" from "not enough room to think", which the current evidence cannot.
+
 - **Option B — Benchmark a frontier model (Claude 3.5 Sonnet or Gemini 1.5 Pro) on reference episode E287.**
   - *Pros*: Immediately establishes the empirical performance ceiling of the written rubric on conversational speech; reveals whether prompt phrasing or model capability is the limiting factor.
   - *Cons*: Introduces external cloud API dependency and cost; requires key provisioning.

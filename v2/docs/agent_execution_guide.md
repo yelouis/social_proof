@@ -45,6 +45,23 @@ Louis read V1's output and made three calls. **They are not provisional and they
 2. **Question-anchored where the show allows it** — the host's question gives the matter at issue in clean English and the answering turn gives the position. **How much of All-In is actually question-anchored is unknown and B1 measures it.** If it is a minority, question-anchoring is a high-precision slice rather than the main path.
 3. **A written rubric** is passed to the local model with the transcript, and **the same text is the human labelling instruction.** It is `v2/docs/design_claim_rubric.md`. Read it before B1; it is the definition of the thing this whole pipeline exists to produce.
 
+4. **The model is local and open-weights. Not negotiable, and not a default to revisit when something is hard.** No hosted API, no frontier model, no transcript leaving this machine. Social Proof reads what named people said; that it never leaves the laptop is a property of the product, not a cost saving.
+
+**What is already on this machine, so nobody guesses or downloads unnecessarily:**
+
+| runtime | status | model | size / context |
+|---|---|---|---|
+| **Ollama** `/opt/homebrew/bin/ollama` | installed | **`gemma4:latest` — already pulled** | 8.0B, `Q4_K_M`, **131,072 ctx** |
+| **MLX** `mlx_lm` 0.31.3 | installed | `gemma-2-2b-it-4bit` in HF cache | 2B, 4-bit, 8k ctx |
+
+**B3 used the 2B.** That is the smallest model on the machine, chosen because it happened to be cached, and it produced 0% precision and 0% recall. **An 8B with a 131k context was sitting unused the whole time.** Before concluding anything about local capacity, **try `gemma4:latest` — it costs one command and no download.**
+
+Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a turn plus its preceding turn fits many times over. **Do not build chunking machinery for a context problem you do not have** — the 2B's 8k window, most of it consumed by the rubric, is a plausible contributor to the collapse B4 measured.
+
+**GLM and Qwen are equally acceptable if they measure better.** The constraint is local and open-weights, not a family.
+
+**Record the model identity in every artefact** — model id, quantisation, runtime, and the rubric's commit hash. V1 ran five prompt versions and could not say which produced which corpus without reading commit history.
+
 **Validation is one All-In episode, labelled by hand, end to end.** Not a sample — **recall is the half V1 could never see**, and a sample measures only precision.
 
 **What is deliberately NOT decided:** whether a claim-detection library earns a place. TARGER, MARGOT and Canary are research artefacts trained on written argumentative prose, not disfluent multi-speaker ASR; ClaimBuster has a live API but scores *check-worthiness for fact-checking*, which is a different question from *did this speaker commit to a position*. **Borrow the claim/premise taxonomy if it helps; do not add a dependency without measuring it against B2's gold set first.**
@@ -59,6 +76,10 @@ Louis read V1's output and made three calls. **They are not provisional and they
 | 2 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
 | 3 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
 | 4 | **B4** | Measure, and decide whether to go on | B3 | DELIVERED. Precision and recall reported; conclusion recorded in one sentence; Issue 036 filed in v2/docs/ongoing_errors.md. |
+
+| 5 | **B5** | A local page showing what was extracted, and what was not | B1 | **The tool B2 and B4 should have been done with.** Renders every turn with its claims *or* its exclusion gate — showing only claims is how V1 could see precision and never recall. |
+
+**IDs are labels, not sequence numbers — follow the Order column.**
 
 **Do not reorder these and do not start two at once.** V1's worst outcomes came from items that were individually correct and sequenced wrong — a publishing item run before the thing it published was real, a threshold tuned over claims that were fabricated.
 
@@ -214,7 +235,66 @@ Louis read V1's output and made three calls. **They are not provisional and they
 **Blast radius.** `v2/docs/ongoing_errors.md`, `v2/docs/agent_execution_guide.md`.
 
 ---
-## 9. Standing constraints, carried from V1
+## 9. B5 — A local page showing what was extracted, and what was not
+
+**Blocked on B1 only.** It renders whatever artefacts exist and grows as the others land: turns after B1, gold labels after B2, model claims after B3. **Build it early — it is the tool B2's labelling and B4's reading are done with**, not a presentation layer bolted on at the end.
+
+**User impact:** Louis can see what the pipeline did to the most recent episode, turn by turn, without running a query.
+
+**Contract:** `v2/docs/design_claim_rubric.md` · B1's turn artefact · V1's `v1/scripts/serve_site.py` as a shape to copy, not code to import.
+
+### The one design decision that matters
+
+**Show the turns that produced nothing, and why.** V1's site listed claims and nothing else, so you could see precision by eye and never recall — which is exactly the half that was broken for the whole of V1. **A page that only shows claims cannot tell you what the pipeline threw away.**
+
+Every turn appears. A turn either carries its claims or carries the gate that excluded it. **The gate distribution should be visible at a glance** — that is the health signal rubric §6 describes, and it is worth more than the claims themselves while the rubric is still being tuned.
+
+### Implementation
+
+**Step 1 — Read artefacts from disk. No database.** V2 has no store and must not get one before the approach is proven; a schema now encodes assumptions B4 might overturn. Read B1's turn file, B2's gold file if present, B3's claim file if present.
+
+> **Verify:** the page renders with **only** B1's output present — turns, speakers, timestamps, ad-stripped spans marked — and says plainly that no claims have been extracted yet. **If it errors or renders blank without B3, it cannot be used during B2**, which is most of its value.
+
+**Step 2 — One page per episode, turns in document order.** For each turn: speaker, timestamp, verbatim text, and then either its claims (quote, claim, type) or its exclusion gate. **Do not paginate or collapse** — reading the episode end to end is the point.
+
+> **Verify:** the turn count on the page equals B1's turn count for that episode. **A viewer that silently drops turns is the same defect as a pipeline that does**, and it would hide it.
+
+**Step 3 — Put the gate distribution at the top.** Four counts and four percentages, from the page's own data. Link each to the turns it caught.
+
+> **Verify:** the percentages match what B3 reported in its commit body. **If they disagree, one of the two is computing from a different set** and that is a finding, not a rounding difference.
+
+**Step 4 — On B2's labelled episode, show model and human side by side.** Three states per turn: both agree it is a claim, both agree it is not, **they disagree** — and make disagreement visually obvious.
+
+> **Verify:** the disagreement count matches B4's. **This view is how B4's "read every disagreement" step is actually performed**; if it does not agree with B4's numbers, B4 was reading something else.
+
+**Step 5 — Show the model identity on every page.** Model id, quantisation, runtime, prompt version, and the rubric commit hash that produced these claims.
+
+> **Verify:** change the model, re-run, and confirm the page says so. **An output you cannot attribute to a model and a rubric version is not evidence** — V1 spent five rewrites unable to say which prompt produced which corpus without reading commit history.
+
+**Step 6 — Serve on loopback, read-only, one command.**
+
+```
+.venv/bin/python v2/scripts/serve_review.py
+```
+
+Print the URL on startup. Same posture as V1: `127.0.0.1` only, no writes, no network calls from the page.
+
+> **Verify:** start it, open it, **read one full episode in it.** Say in the commit body that you did and what you noticed — that reading is the item's actual deliverable.
+
+### Validation
+
+- **(c)** — **every turn in the most recent episode appears on the page**, count matching B1's, each carrying either its claims or its exclusion gate; and the four gate percentages shown match B3's reported figures. *A viewer that shows only claims satisfies nothing here — it is the exclusions that make recall visible, and recall is what V1 could never see.*
+- The page renders correctly with B1's output alone, with B1+B2, and with all three.
+- Model id, quantisation, runtime, prompt version and rubric hash appear on every page.
+- **No network requests from the served page.** Assert it; a local tool that phones out is not a local tool.
+- Serves from `127.0.0.1` and writes nothing.
+
+**Falsify.** Point it at a turn file with three turns removed; the count check must fail and name the discrepancy. Restore; record both.
+
+**Blast radius.** `v2/scripts/serve_review.py`, `v2/templates/` or equivalent. **Reads artefacts, writes nothing.**
+
+---
+## 10. Standing constraints, carried from V1
 
 - **One item = one commit**, the *why* in the body.
 - **Never fill in a `Your selection: _____` line.**
@@ -222,11 +302,13 @@ Louis read V1's output and made three calls. **They are not provisional and they
 - **When an assertion cites rows, cite primary keys that resolve in the store.** V1 ended with forty pasted claim ids, none of which existed.
 - **Every `> **Verify:**` step is answered in the commit body, including the ones you skipped, marked as skipped with a reason.**
 - **A guard that has never failed has not been tested.**
+- **Local, open-weights models only. No hosted API; no transcript leaves this machine.** If an item appears to need one, that is a question for Louis, not a decision to take mid-item.
+- **Exhaust what is installed before proposing a download or a dependency.** B3 concluded "local extraction fails" from a 2B model while an 8B sat pulled and unused.
 - **Read the output a person would read, not the aggregate.** V1 published five fabrications past complete, honest, passing metrics.
 
 ---
 
-## 10. Traps (carried from V1 §6)
+## 11. Traps (carried from V1 §6)
 
 Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writing in their layer. The ones that have already bitten:
 
@@ -294,7 +376,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 11. Validation standard (carried from V1 §8)
+## 12. Validation standard (carried from V1 §8)
 
 **This section is the difference between an item that lands and one that comes back.** Every rule below was paid for.
 
@@ -331,7 +413,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 12. Invariants — do NOT change (carried from V1 §14)
+## 13. Invariants — do NOT change (carried from V1 §14)
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -352,7 +434,7 @@ Full invariant definitions (carried from `v1/docs/master_implementation_plan.md`
 
 ---
 
-## 13. Deliberately not built — do not re-propose (carried from V1)
+## 14. Deliberately not built — do not re-propose (carried from V1)
 
 Each of these was considered and rejected for a stated reason in `v1/docs/master_implementation_plan.md` §13. Re-proposing one costs a cycle.
 
@@ -371,7 +453,7 @@ Each of these was considered and rejected for a stated reason. Re-proposing one 
 
 ---
 
-## 14. Evidence integrity and V1 reference contracts
+## 15. Evidence integrity and V1 reference contracts
 
 The integrity contract survives any rewrite of extraction:
 - **E1–E5 Operational Rules:** Every rendered claim carries a verbatim quote, a date, and a resolvable source locator (E1). Every quoted string `grep -F` matches stored source text (E2). Every quote supports the proposition attached to it (E2b). Nothing derived from page context ever persists (E3). Below sufficiency gates, scores are null, never computed-and-hidden (E4). Precondition failures quarantine tensions, never rendered (E5).
