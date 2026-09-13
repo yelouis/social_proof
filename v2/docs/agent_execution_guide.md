@@ -58,7 +58,7 @@ Louis read V1's output and made three calls. **They are not provisional and they
 | 1 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 2 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
 | 3 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
-| 4 | **B4** | Measure, and decide whether to go on | none | Precision and recall on one episode, then a decision, not a task. |
+| 4 | **B4** | Measure, and decide whether to go on | B3 | DELIVERED. Precision and recall reported; conclusion recorded in one sentence; Issue 036 filed in v2/docs/ongoing_errors.md. |
 
 **Do not reorder these and do not start two at once.** V1's worst outcomes came from items that were individually correct and sequenced wrong — a publishing item run before the thing it published was real, a threshold tuned over claims that were fabricated.
 
@@ -188,7 +188,7 @@ Louis read V1's output and made three calls. **They are not provisional and they
 
 ---
 
-## 8. B4 — Measure, and decide whether to go on
+## 8. B4 — Measure, and decide whether to go on · **DELIVERED**
 
 **Blocked on B3.**
 
