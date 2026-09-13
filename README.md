@@ -55,6 +55,18 @@ Python owns ingestion and analysis (Whisper, pyannote, local Gemma, embeddings).
 
 ---
 
+## Running the review site
+
+```bash
+.venv/bin/python scripts/serve_site.py
+```
+
+It prints a URL with a bearer token: `http://127.0.0.1:8787/?token=…`. The first request sets an `sp_token` cookie, so links afterwards work without it. Four routes — episodes, one episode's claims grouped by speaker, the Social Proof panel for a claim, and one person across all episodes.
+
+**Loopback only, and the database is opened read-only.** If a writing worker already holds `social_proof.duckdb`, startup fails with a message saying so rather than quietly taking a writable connection — stop the worker and retry.
+
+**What it shows today.** 23 episodes, 20,666 utterances, 401 claims, every quote verbatim-verified against its transcript with a deep link to the source at its offset. **Specificity is the only axis producing a number.** Consistency, Update Integrity and Even-handedness all render as explicit absence, because no contradiction has yet survived verification — five of five tensions ever generated were quarantined as fabrications. That is the honest state of the pipeline, not a rendering bug; `docs/agent_execution_guide.md` §2 has the diagram showing where it breaks.
+
 ## Evidence discipline
 
 The system makes claims about real, named people, so the integrity rules are load-bearing rather than decorative — a finding you have to double-check is worth nothing.
