@@ -81,7 +81,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 3 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
 | 4 | **B4** | Measure, and decide whether to go on | B3 | DELIVERED. Precision and recall reported; conclusion recorded in one sentence; Issue 036 filed in v2/docs/ongoing_errors.md. |
 
-| 5 | **B5** | A local page showing what was extracted, and what was not | B1 | **The tool B2 and B4 should have been done with.** Renders every turn with its claims *or* its exclusion gate — showing only claims is how V1 could see precision and never recall. |
+| 5 | **B5** | A local page showing what was extracted, and what was not | B1 | DELIVERED. Rendered all 405 turns of E287 with side-by-side gold/model verdicts, gate distributions, and 33 disagreements. |
 
 | 6 | **B6** | Three local models on the same episode, and what agreement is worth | B5 | Gemma, GLM and a third lab's model over the same 405 turns. **Agreement is evidence only if checked against the gold set** — three models wrong together is the row worth finding. Also settles whether a LoRA is worth attempting. |
 
@@ -241,9 +241,9 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 **Blast radius.** `v2/docs/ongoing_errors.md`, `v2/docs/agent_execution_guide.md`.
 
 ---
-## 9. B5 — A local page showing what was extracted, and what was not
+## 9. B5 — A local page showing what was extracted, and what was not · **DELIVERED**
 
-**Blocked on B1 only.** It renders whatever artefacts exist and grows as the others land: turns after B1, gold labels after B2, model claims after B3. **Build it early — it is the tool B2's labelling and B4's reading are done with**, not a presentation layer bolted on at the end.
+**Blocked on B1 only.** DELIVERED. Unblocks B6.
 
 **User impact:** Louis can see what the pipeline did to the most recent episode, turn by turn, without running a query.
 
