@@ -50,7 +50,7 @@ v1/conftest.py    v1/pyproject.toml (a copy — see step 4)
 
 **Carry forward into `v2/` — these are not version-specific and must not be archived:**
 
-- **The traps (V1 guide §6, all 76)** and **the validation standard (§8)**. These are the accumulated record of how this project has fooled itself, and every one was paid for. **Copy them into `v2/docs/agent_execution_guide.md` verbatim**, keeping their numbering so V1's commit messages still resolve.
+- **The traps (V1 guide §6 — numbered 17–76, 62 present; 1–16 live in commit `217b383`)** and **the validation standard (§8)**. These are the accumulated record of how this project has fooled itself, and every one was paid for. **Copy them into `v2/docs/agent_execution_guide.md` verbatim**, keeping their numbering so V1's commit messages still resolve.
 - **The invariants (V1 guide §16)** — I1–I10. They are claims about the product, not about the pipeline.
 - **`docs/master_implementation_plan.md` §8**, the deliberate non-goals. Re-proposing one costs a cycle.
 - **`design_evidence_integrity.md`** in full. Quarantine semantics, the anchor chain, and *"evidence about the store must be resolvable against the store"* survive any rewrite of extraction.
@@ -77,7 +77,7 @@ v2/                                  ← no code yet
 
 **Step 3 — Copy the carry-forward material into `v2/docs/agent_execution_guide.md`.** Traps verbatim with numbering intact, the validation standard verbatim, the invariants, and a pointer to `v1/docs/` for everything else.
 
-> **Verify:** trap count in `v2/docs/agent_execution_guide.md` equals the count in `v1/docs/agent_execution_guide.md`. **Assert the numbers, not just the count** — a renumbered trap breaks every commit message that cites it.
+> **Verify:** **62 traps, numbered 17–76 with no gaps introduced**, matching `v1/docs/agent_execution_guide.md` number by number. Traps 1–16 are not in that file — they live at `217b383:docs/agent_execution_guide.md` §1 and the V1 guide points there; carry the pointer, not the text. **Assert the numbers, not just the count** — a renumbered trap breaks every commit message that cites it.
 
 **Step 4 — Make V1 runnable but inert.** The review site is the only part of V1 worth still being able to start. Keep `v1/pyproject.toml` and `v1/scripts/serve_site.py` working with paths adjusted; confirm the site still serves.
 
