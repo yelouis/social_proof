@@ -318,11 +318,20 @@ Print the URL on startup. Same posture as V1: `127.0.0.1` only, no writes, no ne
 |---|---|---|---|
 | **Gemma** | `gemma-4-31B` (dense, 30.7B active) | ~18 GB | Gemma 4, Apache 2.0, April 2026. `26B-A4B` (MoE, 3.8B active) is ~14 GB and runs at roughly 4B speed — **worth taking as well if throughput hurts** |
 | **GLM** | `mlx-community/GLM-4-32B-0414-4bit` | ~18 GB | **GLM-4.5-Air does not fit** — 106B/12B needs **66.7 GB at Q4_K_M**, over both the RAM and the disk. GLM-4.6 needs ~205 GB |
-| **third slot** | a 32B-class model from a **third lab** — Qwen3 32B is the usual pick for this machine | ~18 GB | see below on why this slot is not Inkling |
+| **Nemotron** | **`Nemotron 3 Nano`** — 31.6B total, **3B active** (hybrid Mamba-Transformer MoE) | ~18 GB | **This is the third slot.** Nemotron 3 Super is 120B/12B ≈ 65 GB — does not fit, same wall as GLM-4.5-Air. Ultra is 550B — no. |
 
-**Three at ~18 GB is ~54 GB against 58 GB free. Do not download all three at once.** **Stage them: pull one, run the episode, write the output, delete the weights, pull the next.** Outputs are small JSON; weights are not. This removes the disk problem entirely and costs only re-download time.
+**Three at ~18 GB is ~54 GB against ~57 GB free on the internal disk.** Two ways out, and the second is better if the hardware is there: **stage them** — pull one, run the episode, write the output, delete the weights, pull the next; outputs are small JSON and weights are not. **Or put the cache on an external SSD** and skip staging entirely, which is the preferred option since all three stay resident and can be re-run without re-downloading.
 
-> **Verify before pulling anything:** `df -h /System/Volumes/Data`. **If free space is under ~25 GB, stop and tell Louis** rather than filling the disk — a Mac that runs out of space mid-download fails in ways that are tedious to unpick.
+**External SSDs are a supported answer and remove the staging constraint entirely.** Point the caches at the volume and both runtimes follow:
+
+```bash
+export HF_HOME=/Volumes/<SSD>/hf          # MLX / transformers
+export OLLAMA_MODELS=/Volumes/<SSD>/ollama # Ollama
+```
+
+**Weights load from the SSD into unified memory once; inference speed afterwards is unaffected by where they came from.** Thunderbolt (3–6 GB/s) loads an 18 GB model in seconds; USB 3.2 (~1 GB/s) takes ~20 s. **Neither changes tokens/sec.** Format the volume APFS or exFAT — not FAT32, which caps files at 4 GB and will corrupt a sharded download in a way that looks like a model bug.
+
+> **Verify before pulling anything:** `df -h` on whichever volume the cache points at. **If free space is under ~25 GB, stop and say so** rather than filling the disk — a Mac that runs out mid-download fails in ways that are tedious to unpick. **Note that `df` can lag after a delete:** APFS Time Machine local snapshots hold freed space until macOS reclaims it under pressure, so a recent deletion may not show up. `tmutil listlocalsnapshots /` tells you whether that is what you are looking at.
 
 ### Inkling does not fit, and this is not a close call
 
@@ -332,7 +341,9 @@ Print the URL on startup. Same posture as V1: `127.0.0.1` only, no writes, no ne
 
 **And finetuning it is not local either.** Inkling is designed to be customised through **Tinker**, Thinking Machines' hosted fine-tuning platform. That sends training data off this machine, which guide §3 decision 4 rules out. **Both halves of the Inkling idea — running it and tuning it — fail on this hardware and on the constraint.**
 
-**Finetuning is still a live option, just not that model.** A 30B-class model can be LoRA-tuned locally on 64 GB with MLX, and **B2's 405 hand-labelled turns are exactly the shape a LoRA wants** for a narrow classification task — small, consistent, single-domain. **Do not start it inside this item.** Measure the three base models first; if one is close and its errors are systematic, a LoRA on that model is the natural follow-up and should be filed as its own issue with the base-model numbers attached.
+**Nemotron 3 Nano replaces Inkling in both roles, and is the better answer for the second one.** It fits at ~18 GB, its 3B active parameters make it fast enough to run 405 turns repeatedly, and **NVIDIA published the training data, the RL environments and the post-training recipes alongside the weights** under OpenMDW-1.1. **For a model you intend to finetune, published recipes are worth more than raw benchmark position** — it is the difference between adapting a known procedure and reverse-engineering one.
+
+**Finetuning is live, locally, on the right model.** A 30B-class LoRA runs on 64 GB under MLX, and **B2's 405 hand-labelled turns are exactly the shape a narrow-task LoRA wants** — small, consistent, single-domain. **Do not start it inside this item.** Measure the three base models first; if one is close and its errors are systematic, file the LoRA as its own issue with the base-model numbers attached. **On current evidence Nemotron Nano is the candidate**, on recipe availability rather than on any measurement yet taken.
 
 ### Why three labs rather than three sizes
 
