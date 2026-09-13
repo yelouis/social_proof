@@ -47,7 +47,9 @@ Louis read V1's output and made three calls. **They are not provisional and they
 
 4. **The model is local and open-weights. Not negotiable, and not a default to revisit when something is hard.** No hosted API, no frontier model, no transcript leaving this machine. Social Proof reads what named people said; that it never leaves the laptop is a property of the product, not a cost saving.
 
-**What is already on this machine, so nobody guesses or downloads unnecessarily:**
+**Measured on this machine, September 13 2026 — Mac Studio, M4 Max, 64 GB, `iogpu.wired_limit_mb = 0` (default ≈ 48 GB to the GPU), 58 GB free disk of 460 GB. The binding constraint is disk, not memory.**
+
+**What is already installed:**
 
 | runtime | status | model | size / context |
 |---|---|---|---|
@@ -59,6 +61,8 @@ Louis read V1's output and made three calls. **They are not provisional and they
 Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a turn plus its preceding turn fits many times over. **Do not build chunking machinery for a context problem you do not have** — the 2B's 8k window, most of it consumed by the rubric, is a plausible contributor to the collapse B4 measured.
 
 **GLM and Qwen are equally acceptable if they measure better.** The constraint is local and open-weights, not a family.
+
+**The biggest of each family that fits is worked out in §10 (B6).** Short version: **Gemma 4 31B** and **GLM-4-32B-0414** at 4-bit, ~18 GB each. **GLM-4.5-Air does not fit** (66.7 GB at Q4_K_M) and **Inkling does not fit at any size** — 975B/41B, Inkling-Small 276B ≈ 138 GB in 4-bit — and its fine-tuning path is Thinking Machines' hosted Tinker platform, which decision 4 rules out.
 
 **Record the model identity in every artefact** — model id, quantisation, runtime, and the rubric's commit hash. V1 ran five prompt versions and could not say which produced which corpus without reading commit history.
 
@@ -78,6 +82,8 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 4 | **B4** | Measure, and decide whether to go on | B3 | DELIVERED. Precision and recall reported; conclusion recorded in one sentence; Issue 036 filed in v2/docs/ongoing_errors.md. |
 
 | 5 | **B5** | A local page showing what was extracted, and what was not | B1 | **The tool B2 and B4 should have been done with.** Renders every turn with its claims *or* its exclusion gate — showing only claims is how V1 could see precision and never recall. |
+
+| 6 | **B6** | Three local models on the same episode, and what agreement is worth | B5 | Gemma, GLM and a third lab's model over the same 405 turns. **Agreement is evidence only if checked against the gold set** — three models wrong together is the row worth finding. Also settles whether a LoRA is worth attempting. |
 
 **IDs are labels, not sequence numbers — follow the Order column.**
 
@@ -294,7 +300,80 @@ Print the URL on startup. Same posture as V1: `127.0.0.1` only, no writes, no ne
 **Blast radius.** `v2/scripts/serve_review.py`, `v2/templates/` or equivalent. **Reads artefacts, writes nothing.**
 
 ---
-## 10. Standing constraints, carried from V1
+## 10. B6 — Three local models on the same episode, and what agreement is worth
+
+**Blocked on B5** — you need the viewer before three models' output is worth looking at, and B5 is the thing that makes disagreement legible.
+
+**User impact:** a claim that three independently-trained models all call a claim is more trustworthy than one model's verdict. **How much more is the thing this item measures.**
+
+**Contract:** `v2/docs/design_claim_rubric.md` · B2's gold set (405 labelled turns of E287) · guide §3 decision 4 — **local, open-weights, nothing leaves this machine**.
+
+### What actually fits — measured on this machine, September 13 2026
+
+**Mac Studio, M4 Max, 64 GB unified memory. `iogpu.wired_limit_mb` is 0 (default ≈ 48 GB available to the GPU) — a 30B-class 4-bit model needs ~18 GB, so it does not need raising.**
+
+**The binding constraint is disk, not memory: 58 GB free of 460 GB.**
+
+| family | biggest that fits | 4-bit size | note |
+|---|---|---|---|
+| **Gemma** | `gemma-4-31B` (dense, 30.7B active) | ~18 GB | Gemma 4, Apache 2.0, April 2026. `26B-A4B` (MoE, 3.8B active) is ~14 GB and runs at roughly 4B speed — **worth taking as well if throughput hurts** |
+| **GLM** | `mlx-community/GLM-4-32B-0414-4bit` | ~18 GB | **GLM-4.5-Air does not fit** — 106B/12B needs **66.7 GB at Q4_K_M**, over both the RAM and the disk. GLM-4.6 needs ~205 GB |
+| **third slot** | a 32B-class model from a **third lab** — Qwen3 32B is the usual pick for this machine | ~18 GB | see below on why this slot is not Inkling |
+
+**Three at ~18 GB is ~54 GB against 58 GB free. Do not download all three at once.** **Stage them: pull one, run the episode, write the output, delete the weights, pull the next.** Outputs are small JSON; weights are not. This removes the disk problem entirely and costs only re-download time.
+
+> **Verify before pulling anything:** `df -h /System/Volumes/Data`. **If free space is under ~25 GB, stop and tell Louis** rather than filling the disk — a Mac that runs out of space mid-download fails in ways that are tedious to unpick.
+
+### Inkling does not fit, and this is not a close call
+
+**[Inkling](https://thinkingmachines.ai/news/introducing-inkling/)** (Thinking Machines Lab, July 2026) is **975B total / 41B active** MoE. **Inkling-Small** is **276B / 12B active**.
+
+**MoE needs all weights resident, not just the active ones.** Inkling-Small at 4-bit is roughly **138 GB** — over twice this machine's total RAM, and more than twice its free disk. There is no quantisation that closes a gap that size without destroying the model.
+
+**And finetuning it is not local either.** Inkling is designed to be customised through **Tinker**, Thinking Machines' hosted fine-tuning platform. That sends training data off this machine, which guide §3 decision 4 rules out. **Both halves of the Inkling idea — running it and tuning it — fail on this hardware and on the constraint.**
+
+**Finetuning is still a live option, just not that model.** A 30B-class model can be LoRA-tuned locally on 64 GB with MLX, and **B2's 405 hand-labelled turns are exactly the shape a LoRA wants** for a narrow classification task — small, consistent, single-domain. **Do not start it inside this item.** Measure the three base models first; if one is close and its errors are systematic, a LoRA on that model is the natural follow-up and should be filed as its own issue with the base-model numbers attached.
+
+### Why three labs rather than three sizes
+
+Agreement is only evidence when the things agreeing are independent. **Gemma (Google), GLM (Zhipu) and a third lab's model give three different pretraining corpora and three different instruction-tuning regimes.** Three Gemma sizes would agree with each other for reasons that have nothing to do with the claim being real.
+
+**And the failure mode to keep in view: models sharing an architecture or data lineage agree on the same mistakes.** Consensus measures reliability only if it is itself checked against the gold set. **It is not a substitute for B2** — a claim all three models call a claim, that the gold set says is not one, is exactly the case worth finding.
+
+### Implementation
+
+**Step 1 — Run each model over all 405 turns of E287, same rubric prompt, byte-identical.** No per-model prompt tuning. A prompt adjusted per model makes the comparison meaningless, which is the same reason V1's model experiment required an empty prompt diff.
+
+> **Verify:** paste the prompt hash for each run and confirm all three match. **Record model id, quantisation, runtime and rubric commit hash** per guide §3, in the output file.
+
+**Step 2 — Record per-model output in the same shape as B3's**, so B5 renders it without special-casing.
+
+> **Verify:** B5 displays all three side by side on one turn. If it needs a new template per model, the output shapes have diverged and later comparison will be arithmetic on incompatible things.
+
+**Step 3 — Compute the agreement table against the gold set.** For each of the four cells — all three agree claim, all three agree not, two-one split, and every other combination — report **how often the gold set says they were right.**
+
+> **Verify:** this is the item's whole product. **Report precision for unanimous-claim, for 2-1 majority, and for any-model-says-claim**, all against B2's 33 gold claims. If unanimous precision is not clearly higher than single-model precision, **consensus is not buying anything and the item should say so plainly.**
+
+**Step 4 — Read the disagreements.** Specifically the turns where models split 2-1, and every turn all three called a claim that the gold set does not contain.
+
+> **Verify:** list them by turn id in the commit body and say what they have in common. **A shared false positive across three labs is the most interesting row in this experiment** — it says the rubric is ambiguous, not that the models are weak.
+
+**Step 5 — Report throughput honestly.** Wall-clock per model for 405 turns. A model that is twice as good and ten times slower is a different decision from one that is twice as good and equally fast.
+
+### Validation
+
+- **(c)** — **precision and recall reported for each model individually and for the unanimous, majority and any-model consensus rules, all against B2's gold set**, with every disagreement listed by turn id. *Three models' raw output is not a result; the comparison against a human-labelled set is. Without the gold column this item produces three opinions and no way to rank them.*
+- All three runs used a byte-identical prompt — hashes pasted.
+- Model id, quantisation, runtime and rubric hash recorded per run.
+- Disk free reported before and after; **no weights left resident for models no longer being compared.**
+- **Nothing left this machine.** Assert no network calls beyond the model download.
+
+**Falsify.** Run one model twice with different seeds or at a different temperature and report the agreement between the two runs. **If a model agrees with itself less than the three models agree with each other, the consensus signal is noise** and the whole approach needs rethinking before it is built on.
+
+**Blast radius.** `v2/src/`, `v2/artifacts/extraction/`, model weights on disk (staged, then removed). **No changes to the rubric, the gold set, or V1.**
+
+---
+## 11. Standing constraints, carried from V1
 
 - **One item = one commit**, the *why* in the body.
 - **Never fill in a `Your selection: _____` line.**
@@ -308,7 +387,7 @@ Print the URL on startup. Same posture as V1: `127.0.0.1` only, no writes, no ne
 
 ---
 
-## 11. Traps (carried from V1 §6)
+## 12. Traps (carried from V1 §6)
 
 Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writing in their layer. The ones that have already bitten:
 
@@ -376,7 +455,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 12. Validation standard (carried from V1 §8)
+## 13. Validation standard (carried from V1 §8)
 
 **This section is the difference between an item that lands and one that comes back.** Every rule below was paid for.
 
@@ -413,7 +492,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 13. Invariants — do NOT change (carried from V1 §14)
+## 14. Invariants — do NOT change (carried from V1 §14)
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -434,7 +513,7 @@ Full invariant definitions (carried from `v1/docs/master_implementation_plan.md`
 
 ---
 
-## 14. Deliberately not built — do not re-propose (carried from V1)
+## 15. Deliberately not built — do not re-propose (carried from V1)
 
 Each of these was considered and rejected for a stated reason in `v1/docs/master_implementation_plan.md` §13. Re-proposing one costs a cycle.
 
@@ -453,7 +532,7 @@ Each of these was considered and rejected for a stated reason. Re-proposing one 
 
 ---
 
-## 15. Evidence integrity and V1 reference contracts
+## 16. Evidence integrity and V1 reference contracts
 
 The integrity contract survives any rewrite of extraction:
 - **E1–E5 Operational Rules:** Every rendered claim carries a verbatim quote, a date, and a resolvable source locator (E1). Every quoted string `grep -F` matches stored source text (E2). Every quote supports the proposition attached to it (E2b). Nothing derived from page context ever persists (E3). Below sufficiency gates, scores are null, never computed-and-hidden (E4). Precondition failures quarantine tensions, never rendered (E5).

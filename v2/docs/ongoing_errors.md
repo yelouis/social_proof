@@ -46,7 +46,7 @@
   - *Pros*: Leverages the fact that the unconstrained prompt achieves 100% recall (33/33) on E287; isolates gate decisions into discrete single-gate evaluation calls that smaller models can execute without negative-checklist interference.
   - *Cons*: Adds pipeline complexity and doubles per-turn inference passes.
 
-Your selection: _____
+Your selection: 
 
 ---
 
