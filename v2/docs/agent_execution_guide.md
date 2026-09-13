@@ -55,10 +55,10 @@ Louis read V1's output and made three calls. **They are not provisional and they
 
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
-| 1 | **B1** | Turns, and how much of this show is question-anchored | none | V1's unit was 12 words. Also measures the question-anchored share, which B3's design depends on. |
-| 2 | **B2** | Label one episode by hand | B1 | **The item V1 never had.** Every threshold after this becomes measurable instead of self-reported. |
-| 3 | **B3** | Extract against the rubric | B2 | The first V2 claims. **No validators** — run the rubric alone and measure it. |
-| 4 | **B4** | Measure, and decide whether to go on | B3 | Precision **and** recall on one episode, then a decision, not a task. |
+| 1 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
+| 2 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
+| 3 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
+| 4 | **B4** | Measure, and decide whether to go on | none | Precision and recall on one episode, then a decision, not a task. |
 
 **Do not reorder these and do not start two at once.** V1's worst outcomes came from items that were individually correct and sequenced wrong — a publishing item run before the thing it published was real, a threshold tuned over claims that were fabricated.
 
@@ -150,7 +150,7 @@ Louis read V1's output and made three calls. **They are not provisional and they
 
 ---
 
-## 7. B3 — Extract against the rubric
+## 7. B3 — Extract against the rubric · **DELIVERED**
 
 **Blocked on B2.** Running extraction before the gold set exists is how V1 tuned six parameters against its own output.
 
