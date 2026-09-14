@@ -10,7 +10,11 @@
 
 **B5 is delivered and verified independently.** All 405 turns of E287 render with their claims or their exclusion gate, the four gate rates are shown, and the model id and rubric commit appear on the page. Serve it with `.venv/bin/python v2/scripts/serve_review.py`.
 
-**One issue is open and needs Louis: 036**, on extraction model capacity. Its Option A is now item B6; Option B is ruled out by the local-only constraint; Option C, a two-stage filter, remains genuinely open. **Do not start B6 while that line is blank** — read the annotation in `v2/docs/ongoing_errors.md` §1.
+**One issue is open and needs Louis: 036**, rewritten September 13 after B5 made the gold distribution readable. Four options, not exclusive: **A** run three bigger local models (item B6) · **B** two-stage filter · **C** rewrite the rubric as a positive elicitation · **D** finetune on the gold set. **Recommendation is C then A.**
+
+**Two facts from that issue belong here because they change how you read everything else.** The task is **8.1% positive** — a model answering "not a claim" every time scores 91.9%. And **the rubric is written as an exclusion manual** — four gates that are four ways to say no, and 8 of its 11 worked examples are negative — which is the mechanism B4 measured as "binary collapse under negative checklists". **Unconstrained, the same 2B model found all 33 gold claims: 100% recall at 8.4% precision. It is not blind to claims; it cannot exclude.**
+
+**Do not start B6 while that selection line is blank.**
 
 ---
 
