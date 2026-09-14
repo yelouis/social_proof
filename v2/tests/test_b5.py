@@ -261,6 +261,7 @@ def test_server_loopback_and_read_only():
     import threading
     import urllib.error
     import urllib.request
+
     from v2.scripts.serve_review import create_server
 
     # Invalid host binding must be rejected

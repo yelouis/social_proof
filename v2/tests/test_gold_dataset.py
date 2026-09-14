@@ -10,6 +10,7 @@ Contract:
 import hashlib
 import json
 from pathlib import Path
+
 import pytest
 
 from v2.src.evaluate_agreement import evaluate_20_turns

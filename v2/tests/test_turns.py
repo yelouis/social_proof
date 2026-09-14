@@ -7,8 +7,9 @@ Contract:
 """
 
 import hashlib
-from pathlib import Path
 import statistics
+from pathlib import Path
+
 import duckdb
 import pytest
 

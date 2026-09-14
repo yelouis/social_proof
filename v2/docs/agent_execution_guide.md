@@ -4,9 +4,9 @@
 
 **V1 is finished and is not being continued.** It ingested 23 episodes, produced 401 claims, and never found a single contradiction that survived being read. Five consecutive rewrites of the extraction format each fixed one failure and produced another. **V1's pipeline is reference material; do not extend it, do not repair it, and do not import its extraction code into V2 without a stated reason.**
 
-**Where things stand, September 13 2026.** R0 split the repository; B1–B5 are delivered; the approach is decided (§3) and the rubric exists (`v2/docs/design_claim_rubric.md`).
+**Where things stand, September 13 2026.** R0 split the repository; B1–B5 are delivered; the approach is decided (§4) and the rubric exists (`v2/docs/design_claim_rubric.md`).
 
-**`ruff check v2/` reports 95 errors and `mypy v2/src` has never resolved a module.** R0 carried the traps forward and not the gates, so five items landed with a green test suite and no static checking at all. **Start at §5 (G0).** This is V1's G1 repeating — there the unchecked directory was `scripts/`; here it is the entire new codebase.
+**`ruff check v2/` reports 95 errors and `mypy v2/src` has never resolved a module.** R0 carried the traps forward and not the gates, so five items landed with a green test suite and no static checking at all. **Start at §3 (state detection) then §6 (G0).** This is V1's G1 repeating — there the unchecked directory was `scripts/`; here it is the entire new codebase.
 
 **B5 is delivered and verified independently.** All 405 turns of E287 render with their claims or their exclusion gate, the four gate rates are shown, and the model id and rubric commit appear on the page. Serve it with `.venv/bin/python v2/scripts/serve_review.py`.
 
@@ -45,7 +45,39 @@ Read this once. It is the reason V2 exists and it is short.
 
 ---
 
-## 3. The approach — decided September 13, 2026
+## 3. State detection
+
+```bash
+#!/usr/bin/env bash          # run under bash: compgen is a bash builtin
+cd "$(git rev-parse --show-toplevel)"
+echo "=== HEAD ==="   && git log --oneline -1
+echo "=== DIRTY? ===" && git status --porcelain | head
+echo "=== GATES ==="
+.venv/bin/python -m ruff  check v2/
+.venv/bin/python -m mypy        v2/src v2/scripts v2/tests
+.venv/bin/python -m pytest v2/tests -q
+echo "=== EPISODE ARTEFACTS: transcripts, gold, extractions ==="
+echo "  Transcripts: $(ls -1 v2/artifacts/transcripts/*.json 2>/dev/null | wc -l | tr -d ' ') episodes"
+echo "  Gold:        $(ls -1 v2/fixtures/gold/*.json 2>/dev/null | wc -l | tr -d ' ') episodes"
+echo "  Extractions: $(ls -1 v2/artifacts/extraction/*.json 2>/dev/null | wc -l | tr -d ' ') runs"
+echo "=== OPEN SELECTIONS ==="
+grep -c "^Your selection: _____" v2/docs/ongoing_errors.md 2>/dev/null || true
+```
+
+**Interpreting it:**
+
+| Signal | Means |
+|---|---|
+| dirty tree | Someone stopped mid-item → check git status |
+| `ruff` red | Code quality / import / style violation → fix before proceeding |
+| `mypy` red | Type error or module resolution failure → fix before proceeding |
+| `pytest` red | Regression in test suite → investigate and repair |
+| 0 gold episodes | B2 gold set missing |
+| open selections > 0 | Unresolved architectural decisions in `v2/docs/ongoing_errors.md` |
+
+---
+
+## 4. The approach — decided September 13, 2026
 
 Louis read V1's output and made three calls. **They are not provisional and they are not to be re-litigated by an implementing agent.**
 
@@ -70,7 +102,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 
 **GLM and Qwen are equally acceptable if they measure better.** The constraint is local and open-weights, not a family.
 
-**The biggest of each family that fits is worked out in §12 (B6).** Short version: **Gemma 4 31B** and **GLM-4-32B-0414** at 4-bit, ~18 GB each. **GLM-4.5-Air does not fit** (66.7 GB at Q4_K_M) and **Inkling does not fit at any size** — 975B/41B, Inkling-Small 276B ≈ 138 GB in 4-bit — and its fine-tuning path is Thinking Machines' hosted Tinker platform, which decision 4 rules out.
+**The biggest of each family that fits is worked out in §13 (B6).** Short version: **Gemma 4 31B** and **GLM-4-32B-0414** at 4-bit, ~18 GB each. **GLM-4.5-Air does not fit** (66.7 GB at Q4_K_M) and **Inkling does not fit at any size** — 975B/41B, Inkling-Small 276B ≈ 138 GB in 4-bit — and its fine-tuning path is Thinking Machines' hosted Tinker platform, which decision 4 rules out.
 
 **Record the model identity in every artefact** — model id, quantisation, runtime, and the rubric's commit hash. V1 ran five prompt versions and could not say which produced which corpus without reading commit history.
 
@@ -80,11 +112,11 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 
 ---
 
-## 4. Queue
+## 5. Queue
 
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
-| 1 | **G0** | V2 has no gates, and five items landed without them | none | `ruff check v2/` → **95 errors**; `mypy v2/src` **cannot resolve modules and has never run**. R0 carried the traps and not the gates. **A red gate outranks the queue** — and there is currently no gate to be red. |
+| 1 | **G0** | V2 has no gates, and five items landed without them | none | **DELIVERED**. Wired §3 state detection into guide, clean ruff & mypy (17 files), pytest 35 passed. |
 | 2 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0 | Hours, not days. The rubric is an exclusion manual used as the prompt verbatim, on a task where "no" is right 92% of the time. **Do this before B6** — running three big models against a prompt known to induce collapse buys an expensive wrong conclusion. |
 | 3 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**) | C1 | Gemma, GLM and a third lab's model over the same 405 turns. **Agreement is evidence only if checked against the gold set** — three models wrong together is the row worth finding. Also settles whether a LoRA is worth attempting. |
 | 4 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
@@ -93,20 +125,15 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 7 | **B4** | Measure, and decide whether to go on | B3 | DELIVERED. Precision and recall reported; conclusion recorded in one sentence; Issue 036 filed in v2/docs/ongoing_errors.md. |
 | 8 | **B5** | A local page showing what was extracted, and what was not | B1 | DELIVERED. Rendered all 405 turns of E287 with side-by-side gold/model verdicts, gate distributions, and 33 disagreements. |
 
-
-| 8 | **B5** | A local page showing what was extracted, and what was not | B1 | DELIVERED. Rendered all 405 turns of E287 with side-by-side gold/model verdicts, gate distributions, and 33 disagreements. |
-
-| 3 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**) | C1 | Gemma, GLM and a third lab's model over the same 405 turns. **Agreement is evidence only if checked against the gold set** — three models wrong together is the row worth finding. Also settles whether a LoRA is worth attempting. |
-
 **IDs are labels, not sequence numbers — follow the Order column.**
 
 **Do not reorder these and do not start two at once.** V1's worst outcomes came from items that were individually correct and sequenced wrong — a publishing item run before the thing it published was real, a threshold tuned over claims that were fabricated.
 
 ---
 
-## 5. G0 — V2 has no gates, and five items landed without them
+## 6. G0 — V2 has no gates, and five items landed without them · **DELIVERED**
 
-**Do this before B6.** A red gate outranks the queue (§14), and right now there is no gate at all to be red.
+**Do this before B6.** A red gate outranks the queue (§15), and right now there is no gate at all to be red.
 
 **User impact:** none directly. This is the item that makes every later "delivered" mean something.
 
@@ -163,10 +190,10 @@ v2/src/turns.py: Source file found twice under different module names:
 
 **Falsify.** Re-introduce one unused import and one `typing.List`; the block must go red naming both. Revert; record both.
 
-**Blast radius.** `v2/docs/agent_execution_guide.md` §3 and §14, `v2/src/*`, `v2/scripts/*`, `v2/tests/*`. **No behaviour changes** — if a fix alters behaviour, it is not a lint fix and belongs in its own commit.
+**Blast radius.** `v2/docs/agent_execution_guide.md` §3 and §15, `v2/src/*`, `v2/scripts/*`, `v2/tests/*`. **No behaviour changes** — if a fix alters behaviour, it is not a lint fix and belongs in its own commit.
 
 ---
-## 6. C1 — Turn the rubric positive, and move every prompt into editable Markdown · *Issue 036 = C*
+## 7. C1 — Turn the rubric positive, and move every prompt into editable Markdown · *Issue 036 = C*
 
 **Blocked on G0** — a red gate outranks the queue, and G0 is the item that gives V2 gates at all.
 
@@ -241,7 +268,7 @@ Today the rubric hands the model four tests to fail and eight worked examples of
 **Blast radius.** `v2/prompts/` (new), `v2/src/extract.py`, `v2/docs/design_claim_rubric.md`, `v2/tests/`, `v2/artifacts/extraction/`. **No change to B2's gold set** — if it needs changing, that is a separate item.
 
 ---
-## 7. B1 — Turns, and how much of this show is question-anchored · **DELIVERED**
+## 8. B1 — Turns, and how much of this show is question-anchored · **DELIVERED**
 
 **Blocked on R0.** DELIVERED. Unblocks B2.
 
@@ -285,7 +312,7 @@ Today the rubric hands the model four tests to fail and eight worked examples of
 
 ---
 
-## 8. B2 — Label one episode by hand · **DELIVERED**
+## 9. B2 — Label one episode by hand · **DELIVERED**
 
 **Blocked on B1.** DELIVERED. Unblocks B3.
 
@@ -327,7 +354,7 @@ Today the rubric hands the model four tests to fail and eight worked examples of
 
 ---
 
-## 9. B3 — Extract against the rubric · **DELIVERED**
+## 10. B3 — Extract against the rubric · **DELIVERED**
 
 **Blocked on B2.** Running extraction before the gold set exists is how V1 tuned six parameters against its own output.
 
@@ -365,7 +392,7 @@ Today the rubric hands the model four tests to fail and eight worked examples of
 
 ---
 
-## 10. B4 — Measure, and decide whether to go on · **DELIVERED**
+## 11. B4 — Measure, and decide whether to go on · **DELIVERED**
 
 **Blocked on B3.**
 
@@ -391,7 +418,7 @@ Today the rubric hands the model four tests to fail and eight worked examples of
 **Blast radius.** `v2/docs/ongoing_errors.md`, `v2/docs/agent_execution_guide.md`.
 
 ---
-## 11. B5 — A local page showing what was extracted, and what was not · **DELIVERED**
+## 12. B5 — A local page showing what was extracted, and what was not · **DELIVERED**
 
 **Blocked on B1 only.** DELIVERED. Unblocks B6.
 
@@ -450,13 +477,13 @@ Print the URL on startup. Same posture as V1: `127.0.0.1` only, no writes, no ne
 **Blast radius.** `v2/scripts/serve_review.py`, `v2/templates/` or equivalent. **Reads artefacts, writes nothing.**
 
 ---
-## 12. B6 — Three local models on the same episode, and what agreement is worth
+## 13. B6 — Three local models on the same episode, and what agreement is worth
 
 **Blocked on B5** — you need the viewer before three models' output is worth looking at, and B5 is the thing that makes disagreement legible.
 
 **User impact:** a claim that three independently-trained models all call a claim is more trustworthy than one model's verdict. **How much more is the thing this item measures.**
 
-**Contract:** `v2/docs/design_claim_rubric.md` · B2's gold set (405 labelled turns of E287) · guide §3 decision 4 — **local, open-weights, nothing leaves this machine**.
+**Contract:** `v2/docs/design_claim_rubric.md` · B2's gold set (405 labelled turns of E287) · guide §4 decision 4 — **local, open-weights, nothing leaves this machine**.
 
 ### What actually fits — measured on this machine, September 13 2026
 
@@ -470,7 +497,7 @@ Print the URL on startup. Same posture as V1: `127.0.0.1` only, no writes, no ne
 | **GLM** | `mlx-community/GLM-4-32B-0414-4bit` | ~18 GB | **GLM-4.5-Air does not fit** — 106B/12B needs **66.7 GB at Q4_K_M**, over both the RAM and the disk. GLM-4.6 needs ~205 GB |
 | **Nemotron** | **`Nemotron 3 Nano`** — 31.6B total, **3B active** (hybrid Mamba-Transformer MoE) | ~18 GB | **This is the third slot.** Nemotron 3 Super is 120B/12B ≈ 65 GB — does not fit, same wall as GLM-4.5-Air. Ultra is 550B — no. |
 
-**Three at ~18 GB is ~54 GB against ~57 GB free on the internal disk.** Two ways out, and the second is better if the hardware is there: **stage them** — pull one, run the episode, write the output, delete the weights, pull the next; outputs are small JSON and weights are not. **Or put the cache on an external SSD** and skip staging entirely, which is the preferred option since all three stay resident and can be re-run without re-downloading.
+Three at ~18 GB is ~54 GB against ~57 GB free on the internal disk. Two ways out, and the second is better if the hardware is there: **stage them** — pull one, run the episode, write the output, delete the weights, pull the next; outputs are small JSON and weights are not. **Or put the cache on an external SSD** and skip staging entirely, which is the preferred option since all three stay resident and can be re-run without re-downloading.
 
 **External SSDs are a supported answer and remove the staging constraint entirely.** Point the caches at the volume and both runtimes follow:
 
@@ -489,7 +516,7 @@ export OLLAMA_MODELS=/Volumes/<SSD>/ollama # Ollama
 
 **MoE needs all weights resident, not just the active ones.** Inkling-Small at 4-bit is roughly **138 GB** — over twice this machine's total RAM, and more than twice its free disk. There is no quantisation that closes a gap that size without destroying the model.
 
-**And finetuning it is not local either.** Inkling is designed to be customised through **Tinker**, Thinking Machines' hosted fine-tuning platform. That sends training data off this machine, which guide §3 decision 4 rules out. **Both halves of the Inkling idea — running it and tuning it — fail on this hardware and on the constraint.**
+**And finetuning it is not local either.** Inkling is designed to be customised through **Tinker**, Thinking Machines' hosted fine-tuning platform. That sends training data off this machine, which guide §4 decision 4 rules out. **Both halves of the Inkling idea — running it and tuning it — fail on this hardware and on the constraint.**
 
 **Nemotron 3 Nano replaces Inkling in both roles, and is the better answer for the second one.** It fits at ~18 GB, its 3B active parameters make it fast enough to run 405 turns repeatedly, and **NVIDIA published the training data, the RL environments and the post-training recipes alongside the weights** under OpenMDW-1.1. **For a model you intend to finetune, published recipes are worth more than raw benchmark position** — it is the difference between adapting a known procedure and reverse-engineering one.
 
@@ -505,7 +532,7 @@ Agreement is only evidence when the things agreeing are independent. **Gemma (Go
 
 **Step 1 — Run each model over all 405 turns of E287, same rubric prompt, byte-identical.** No per-model prompt tuning. A prompt adjusted per model makes the comparison meaningless, which is the same reason V1's model experiment required an empty prompt diff.
 
-> **Verify:** paste the prompt hash for each run and confirm all three match. **Record model id, quantisation, runtime and rubric commit hash** per guide §3, in the output file.
+> **Verify:** paste the prompt hash for each run and confirm all three match. **Record model id, quantisation, runtime and rubric commit hash** per guide §4, in the output file.
 
 **Step 2 — Record per-model output in the same shape as B3's**, so B5 renders it without special-casing.
 
@@ -534,7 +561,7 @@ Agreement is only evidence when the things agreeing are independent. **Gemma (Go
 **Blast radius.** `v2/src/`, `v2/artifacts/extraction/`, model weights on disk (staged, then removed). **No changes to the rubric, the gold set, or V1.**
 
 ---
-## 13. Standing constraints, carried from V1
+## 14. Standing constraints, carried from V1
 
 - **One item = one commit**, the *why* in the body.
 - **Never fill in a `Your selection: _____` line.**
@@ -545,10 +572,11 @@ Agreement is only evidence when the things agreeing are independent. **Gemma (Go
 - **Local, open-weights models only. No hosted API; no transcript leaves this machine.** If an item appears to need one, that is a question for Louis, not a decision to take mid-item.
 - **Exhaust what is installed before proposing a download or a dependency.** B3 concluded "local extraction fails" from a 2B model while an 8B sat pulled and unused.
 - **Read the output a person would read, not the aggregate.** V1 published five fabrications past complete, honest, passing metrics.
+- **Any new directory containing Python code must be added to the gate commands (`ruff check`, `mypy`, `pytest`) in the same commit that creates it.** Prevents unmonitored code rot — V1's `scripts/` sat outside gates and accumulated 17 errors; V2's entire tree landed without gates for five items.
 
 ---
 
-## 14. Traps (carried from V1 §6)
+## 15. Traps (carried from V1 §6)
 
 Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writing in their layer. The ones that have already bitten:
 
@@ -617,7 +645,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 15. Validation standard (carried from V1 §8)
+## 16. Validation standard (carried from V1 §8)
 
 **This section is the difference between an item that lands and one that comes back.** Every rule below was paid for.
 
@@ -654,7 +682,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 16. Invariants — do NOT change (carried from V1 §14)
+## 17. Invariants — do NOT change (carried from V1 §14)
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -675,7 +703,7 @@ Full invariant definitions (carried from `v1/docs/master_implementation_plan.md`
 
 ---
 
-## 17. Deliberately not built — do not re-propose (carried from V1)
+## 18. Deliberately not built — do not re-propose (carried from V1)
 
 Each of these was considered and rejected for a stated reason in `v1/docs/master_implementation_plan.md` §15. Re-proposing one costs a cycle.
 
@@ -694,7 +722,7 @@ Each of these was considered and rejected for a stated reason. Re-proposing one 
 
 ---
 
-## 18. Evidence integrity and V1 reference contracts
+## 19. Evidence integrity and V1 reference contracts
 
 The integrity contract survives any rewrite of extraction:
 - **E1–E5 Operational Rules:** Every rendered claim carries a verbatim quote, a date, and a resolvable source locator (E1). Every quoted string `grep -F` matches stored source text (E2). Every quote supports the proposition attached to it (E2b). Nothing derived from page context ever persists (E3). Below sufficiency gates, scores are null, never computed-and-hidden (E4). Precondition failures quarantine tensions, never rendered (E5).

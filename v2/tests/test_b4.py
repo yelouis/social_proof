@@ -8,7 +8,6 @@ Verifies:
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 from v2.src.evaluate_blind_b4 import run_blind_scoring

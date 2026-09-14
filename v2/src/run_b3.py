@@ -9,7 +9,6 @@ gate distributions, and quote provenance checks.
 
 from __future__ import annotations
 
-import json
 import sys
 import time
 from pathlib import Path
@@ -21,12 +20,8 @@ if str(REPO_ROOT) not in sys.path:
 
 from v2.src.extract import (
     DEFAULT_EXTRACTION_DIR,
-    DEFAULT_GOLD_DIR,
-    DEFAULT_TRANSCRIPT_DIR,
     MODEL_ID,
     VALIDATORS_ADDED,
-    evaluate_against_gold,
-    load_rubric,
     run_episode_extraction,
 )
 

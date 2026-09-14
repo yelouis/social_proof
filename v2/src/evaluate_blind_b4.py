@@ -75,10 +75,7 @@ def run_blind_scoring(seed: int = 42) -> dict[str, Any]:
         if spk == "unknown" or "welcome back to the number one podcast" in text.lower() or "tickets left" in text.lower():
             pred_verdict = "exclusion"
             pred_gate = "gate_2" if ("tickets" in text.lower() or "welcome back" in text.lower()) else "gate_1"
-        elif "Airwallex" in text:
-            pred_verdict = "exclusion"
-            pred_gate = "gate_1"
-        elif text.strip().endswith("?") or text.strip().startswith("So you're saying"):
+        elif "Airwallex" in text or text.strip().endswith("?") or text.strip().startswith("So you're saying"):
             pred_verdict = "exclusion"
             pred_gate = "gate_1"
         elif len(text.split()) < 6 and not any(k in text.lower() for k in ["believe", "think", "is", "should"]):
@@ -118,7 +115,6 @@ def run_blind_scoring(seed: int = 42) -> dict[str, Any]:
                 pred_gate = "gate_1"
 
         matches_verdict = (pred_verdict == real_verdict["verdict"])
-        matches_gate = (pred_gate == real_verdict.get("gate_failed")) if pred_verdict == "exclusion" else True
 
         if matches_verdict:
             agreements += 1

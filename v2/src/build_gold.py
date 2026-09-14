@@ -14,7 +14,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 TRANSCRIPT_PATH = Path("v2/artifacts/transcripts/00251a80c868f535.json")
 GOLD_OUTPUT_PATH = Path("v2/fixtures/gold/00251a80c868f535.json")
@@ -23,7 +23,7 @@ RUBRIC_FILE = "v2/docs/design_claim_rubric.md"
 
 # Specific claims identified by human/agent reading against rubric gates 1-4.
 # Any enrolled host turn not listed here failed one of the 4 gates.
-ANNOTATED_CLAIMS: Dict[str, Dict[str, Any]] = {
+ANNOTATED_CLAIMS: dict[str, dict[str, Any]] = {
     "00251a80c868f535_t0009": {
         "speaker": "David Friedberg",
         "type": "causal",
@@ -225,20 +225,19 @@ ANNOTATED_CLAIMS: Dict[str, Dict[str, Any]] = {
 }
 
 
-def build_gold_dataset() -> Dict[str, Any]:
+def build_gold_dataset() -> dict[str, Any]:
     with open(TRANSCRIPT_PATH, "r", encoding="utf-8") as f:
         transcript_data = json.load(f)
 
     turns = transcript_data["turns"]
     total_turns = len(turns)
 
-    verdicts: List[Dict[str, Any]] = []
+    verdicts: list[dict[str, Any]] = []
     gate_counts = {"gate_1": 0, "gate_2": 0, "gate_3": 0, "gate_4": 0}
-    claims_list: List[Dict[str, Any]] = []
+    claims_list: list[dict[str, Any]] = []
 
     for turn in turns:
         tid = turn["turn_id"]
-        spk = turn["speaker_label"]
         subj = turn["subject_id"]
         text = turn["text"]
         stripped = turn.get("stripped")
@@ -299,7 +298,7 @@ def build_gold_dataset() -> Dict[str, Any]:
 
         # Case 3: Questions and prompts
         text_stripped = text.strip()
-        if text_stripped.endswith("?") or text_stripped.startswith("What ") or text_stripped.startswith("Who ") or text_stripped.startswith("Do you "):
+        if text_stripped.endswith("?") or text_stripped.startswith(("What ", "Who ", "Do you ")):
             verdict_entry = {
                 "turn_id": tid,
                 "verdict": "exclusion",

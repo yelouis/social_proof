@@ -11,13 +11,13 @@ Contract:
 import json
 import random
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any
 
 GOLD_PATH = Path("v2/fixtures/gold/00251a80c868f535.json")
 TRANSCRIPT_PATH = Path("v2/artifacts/transcripts/00251a80c868f535.json")
 
 
-def evaluate_20_turns(seed: int = 42) -> Dict[str, Any]:
+def evaluate_20_turns(seed: int = 42) -> dict[str, Any]:
     with open(GOLD_PATH, "r", encoding="utf-8") as f:
         gold = json.load(f)
 
@@ -43,15 +43,12 @@ def evaluate_20_turns(seed: int = 42) -> Dict[str, Any]:
         t = turns_by_id[tid]
         subj = t["subject_id"]
         text = t["text"].strip()
-        spk = t["speaker_label"]
 
         if t.get("stripped") == "ad_read":
             second_reader_verdicts[tid] = {"verdict": "exclusion", "gate_failed": "gate_1"}
         elif t.get("stripped") == "outro":
             second_reader_verdicts[tid] = {"verdict": "exclusion", "gate_failed": "gate_2"}
-        elif subj == "unknown":
-            second_reader_verdicts[tid] = {"verdict": "exclusion", "gate_failed": "gate_1"}
-        elif text.endswith("?") or text.startswith("Do you ") or text.startswith("What ") or text.startswith("Who "):
+        elif subj == "unknown" or text.endswith("?") or text.startswith(("Do you ", "What ", "Who ")):
             second_reader_verdicts[tid] = {"verdict": "exclusion", "gate_failed": "gate_1"}
         elif any(w in text.lower() for w in ["all-in", "podcast", "summit", "episode", "freeberg"]):
             second_reader_verdicts[tid] = {"verdict": "exclusion", "gate_failed": "gate_2"}

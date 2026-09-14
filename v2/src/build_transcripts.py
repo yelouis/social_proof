@@ -7,15 +7,12 @@ transcripts into v2/artifacts/transcripts/.
 """
 
 import hashlib
-import json
-from pathlib import Path
 import statistics
+from pathlib import Path
+
 import duckdb
 
 from v2.src.turns import (
-    AD_SPANS,
-    COLD_OPEN_SPANS,
-    OUTRO_PATTERNS,
     build_turns_from_utterances,
     export_transcripts,
     load_all_sources,

@@ -13,18 +13,18 @@ Contract:
 from __future__ import annotations
 
 import json
-import os
 import re
+from collections.abc import Sequence
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Tuple
+from typing import Any
 
 import duckdb
 
 # Known sponsor ad intervals (start_ms, end_ms) per source_id.
 # These represent contiguous sponsor copy reads (Airwallex, AppLovin, Creative Planning,
 # Nasdaq, Numerals, Oracle Cloud, Northwest Registered Agent, 8090 Promo, Summit Sponsors).
-AD_SPANS: Dict[str, List[Tuple[int, int]]] = {
+AD_SPANS: dict[str, list[tuple[int, int]]] = {
     "00251a80c868f535": [(4890000, 4971000)],  # All-In Summit sponsor block (Ironhouse, merch.com, Oracle, EY)
     "04ff0000906a6d10": [(50000, 83500), (960000, 998000)],  # AppLovin, Northwest Registered Agent
     "0da89e82768a50ca": [(41000, 68500), (1252000, 1283500)],  # Creative Planning, Northwest Registered Agent
@@ -39,26 +39,26 @@ AD_SPANS: Dict[str, List[Tuple[int, int]]] = {
 }
 
 # Cold open teaser soundbites preceding the show introduction.
-COLD_OPEN_SPANS: Dict[str, Tuple[int, int]] = {
+COLD_OPEN_SPANS: dict[str, tuple[int, int]] = {
     "3db1487d23e98021": (0, 44200),
     "601ab4063555d485": (0, 24500),
     "8550481c62a4fddf": (0, 15000),
 }
 
 # Patterns characteristic of the terminal outro music/remix collage.
-OUTRO_PATTERNS: List[re.Pattern] = [
-    re.compile(r"what you're (the|that)?\s?bee?f", re.I),
-    re.compile(r"what you're that beat", re.I),
-    re.compile(r"what you're here", re.I),
-    re.compile(r"sexual tension that we just need to release", re.I),
-    re.compile(r"doing all of (you|it)", re.I),
-    re.compile(r"doing all in", re.I),
-    re.compile(r"going all the way up", re.I),
-    re.compile(r"going out for a lead", re.I),
-    re.compile(r"besties are gone", re.I),
-    re.compile(r"beef, beef, beef", re.I),
-    re.compile(r"i'm going to the toilet", re.I),
-    re.compile(r"i squeak up in the water", re.I),
+OUTRO_PATTERNS: list[re.Pattern] = [
+    re.compile(r"what you're (the|that)?\s?bee?f", re.IGNORECASE),
+    re.compile(r"what you're that beat", re.IGNORECASE),
+    re.compile(r"what you're here", re.IGNORECASE),
+    re.compile(r"sexual tension that we just need to release", re.IGNORECASE),
+    re.compile(r"doing all of (you|it)", re.IGNORECASE),
+    re.compile(r"doing all in", re.IGNORECASE),
+    re.compile(r"going all the way up", re.IGNORECASE),
+    re.compile(r"going out for a lead", re.IGNORECASE),
+    re.compile(r"besties are gone", re.IGNORECASE),
+    re.compile(r"beef, beef, beef", re.IGNORECASE),
+    re.compile(r"i'm going to the toilet", re.IGNORECASE),
+    re.compile(r"i squeak up in the water", re.IGNORECASE),
 ]
 
 SPEAKER_NAME_MAP = {
@@ -80,11 +80,11 @@ class Turn:
     end_ms: int
     text: str
     word_count: int
-    utterance_ids: List[str]
+    utterance_ids: list[str]
     is_question_anchored: bool = False
-    stripped: Optional[str] = None  # "ad_read", "cold_open", "outro", or None
+    stripped: str | None = None  # "ad_read", "cold_open", "outro", or None
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return asdict(self)
 
 
@@ -105,11 +105,11 @@ def get_utterance_stripped_tag(
     end_ms: int,
     text: str,
     max_episode_ms: int,
-) -> Optional[str]:
+) -> str | None:
     """Determine if a raw utterance falls inside cold open, ad read, or outro."""
     # 1. Cold open check
     if sid in COLD_OPEN_SPANS:
-        c_start, c_end = COLD_OPEN_SPANS[sid]
+        _c_start, c_end = COLD_OPEN_SPANS[sid]
         if start_ms < c_end:
             return "cold_open"
 
@@ -120,20 +120,19 @@ def get_utterance_stripped_tag(
                 return "ad_read"
 
     # 3. Outro check: last 80s matching outro remix patterns
-    if start_ms >= (max_episode_ms - 80000):
-        if any(p.search(text) for p in OUTRO_PATTERNS):
-            return "outro"
+    if start_ms >= (max_episode_ms - 80000) and any(p.search(text) for p in OUTRO_PATTERNS):
+        return "outro"
 
     return None
 
 
 def build_turns_from_utterances(
-    utterances: Sequence[Tuple[Any, ...]],
+    utterances: Sequence[tuple[Any, ...]],
     max_gap_s: float = 2.0,
     max_words: int = 400,
     enable_speaker_break: bool = True,
     enable_stripping: bool = True,
-) -> List[Turn]:
+) -> list[Turn]:
     """Group consecutive utterances into turns.
 
     Breaks on:
@@ -149,11 +148,11 @@ def build_turns_from_utterances(
     max_ms = max(u[5] for u in utterances)
 
     # Classify each utterance's stripped status
-    classified: List[Tuple[Any, ...]] = []
+    classified: list[tuple[Any, ...]] = []
     outro_active = False
     for u in utterances:
         uid, src, subj, text, start_ms, end_ms, spk = u[:7]
-        st: Optional[str] = None
+        st: str | None = None
         if enable_stripping:
             st = get_utterance_stripped_tag(source_id, start_ms, end_ms, text, max_ms)
             if st == "outro":
@@ -162,8 +161,8 @@ def build_turns_from_utterances(
                 st = "outro"
         classified.append((uid, src, subj, text, start_ms, end_ms, spk, st))
 
-    turns_raw: List[Dict[str, Any]] = []
-    curr: Optional[Dict[str, Any]] = None
+    turns_raw: list[dict[str, Any]] = []
+    curr: dict[str, Any] | None = None
 
     for u in classified:
         uid, src, subj, text, start_ms, end_ms, spk, st = u
@@ -212,7 +211,7 @@ def build_turns_from_utterances(
         turns_raw.append(curr)
 
     # Convert to Turn objects
-    turns: List[Turn] = []
+    turns: list[Turn] = []
     for idx, t in enumerate(turns_raw):
         turn_id = f"{t['source_id']}_t{idx:04d}"
         joined_text = " ".join(t["texts"]).strip()
@@ -237,7 +236,7 @@ def build_turns_from_utterances(
     return turns
 
 
-def classify_question_anchoring(turns: List[Turn]) -> None:
+def classify_question_anchoring(turns: list[Turn]) -> None:
     """Classify each turn as question-anchored or not.
 
     A turn is question-anchored when the immediately preceding turn from a
@@ -251,19 +250,14 @@ def classify_question_anchoring(turns: List[Turn]) -> None:
         prev_turn = turns[idx - 1]
         prev_text = prev_turn.text.rstrip()
         is_diff_speaker = prev_turn.subject_id != turn.subject_id
-        ends_with_q = (
-            prev_text.endswith("?")
-            or prev_text.endswith("?\"")
-            or prev_text.endswith("?'")
-            or prev_text.endswith("?...")
-        )
+        ends_with_q = prev_text.endswith(("?", '?"', "?'", "?..."))
 
         turn.is_question_anchored = bool(is_diff_speaker and ends_with_q)
 
 
 def load_utterances_for_episode(
     con: duckdb.DuckDBPyConnection, source_id: str
-) -> List[Tuple[Any, ...]]:
+) -> list[tuple[Any, ...]]:
     """Load utterances for a single episode from v1/social_proof.duckdb."""
     return con.execute(
         """
@@ -276,7 +270,7 @@ def load_utterances_for_episode(
     ).fetchall()
 
 
-def load_all_sources(con: duckdb.DuckDBPyConnection) -> List[Tuple[str, str, int]]:
+def load_all_sources(con: duckdb.DuckDBPyConnection) -> list[tuple[str, str, int]]:
     """Load all sources (source_id, title, duration_ms) from v1/social_proof.duckdb."""
     return con.execute(
         """
@@ -287,14 +281,14 @@ def load_all_sources(con: duckdb.DuckDBPyConnection) -> List[Tuple[str, str, int
     ).fetchall()
 
 
-def format_transcript_markdown(title: str, source_id: str, turns: List[Turn]) -> str:
+def format_transcript_markdown(title: str, source_id: str, turns: list[Turn]) -> str:
     """Format turns into a human-readable markdown transcript."""
     total_turns = len(turns)
     retained_turns = [t for t in turns if t.stripped is None]
     stripped_turns = [t for t in turns if t.stripped is not None]
     q_anchored_turns = [t for t in turns if t.is_question_anchored]
 
-    lines: List[str] = [
+    lines: list[str] = [
         f"# {title}",
         "",
         f"- **Source ID:** `{source_id}`",
@@ -332,12 +326,12 @@ def format_transcript_markdown(title: str, source_id: str, turns: List[Turn]) ->
 def export_transcripts(
     con: duckdb.DuckDBPyConnection,
     output_dir: Path,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """Export structured JSON and readable Markdown transcripts for all 23 episodes."""
     output_dir.mkdir(parents=True, exist_ok=True)
     sources = load_all_sources(con)
 
-    summary: Dict[str, Any] = {
+    summary: dict[str, Any] = {
         "total_episodes": len(sources),
         "total_utterances": 0,
         "total_turns": 0,

@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import html
 import json
-import re
 from pathlib import Path
 from typing import Any
 
@@ -23,7 +22,6 @@ REFERENCE_EPISODE = "00251a80c868f535"
 
 class TurnCountMismatchError(ValueError):
     """Raised when turn count on disk does not match B1's turn count metrics."""
-    pass
 
 
 def format_ms(ms: int) -> str:
@@ -37,11 +35,13 @@ def format_ms(ms: int) -> str:
 
 
 def validate_episode_turns(transcript_data: dict[str, Any]) -> None:
-    """Validates that turns in transcript match metrics.turn_count exactly."""
+    """Validates that turns in transcript_data match metrics.turn_count."""
     metrics = transcript_data.get("metrics", {})
     expected_count = metrics.get("turn_count")
+    if expected_count is None:
+        return
     actual_count = len(transcript_data.get("turns", []))
-    if expected_count is not None and expected_count != actual_count:
+    if actual_count != expected_count:
         raise TurnCountMismatchError(
             f"Turn count mismatch: transcript data contains {actual_count} turns, "
             f"but metrics specifies {expected_count} turns. Discrepancy of {abs(actual_count - expected_count)} turns."
@@ -50,7 +50,7 @@ def validate_episode_turns(transcript_data: dict[str, Any]) -> None:
 
 def list_available_episodes(transcript_dir: Path = DEFAULT_TRANSCRIPT_DIR) -> list[dict[str, Any]]:
     """Lists all available episodes from the transcript directory."""
-    episodes = []
+    episodes: list[dict[str, Any]] = []
     if not transcript_dir.exists():
         return episodes
 
@@ -66,7 +66,7 @@ def list_available_episodes(transcript_dir: Path = DEFAULT_TRANSCRIPT_DIR) -> li
                 "title": title,
                 "turn_count": turn_count,
             })
-        except Exception:
+        except (json.JSONDecodeError, OSError, KeyError):
             continue
     return episodes
 
@@ -237,7 +237,6 @@ def load_episode_data(
 
     # Gate distribution calculations
     total_turns = len(merged_turns)
-    total_model_exclusions = sum(model_gate_counts.values()) or 1
     total_gold_exclusions = sum(gold_gate_counts.values()) or 1
 
     model_gate_pcts = {

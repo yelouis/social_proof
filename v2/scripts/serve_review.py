@@ -90,7 +90,7 @@ class ReviewRequestHandler(BaseHTTPRequestHandler):
                 self.wfile.write(body)
             except FileNotFoundError as e:
                 self.send_error(HTTPStatus.NOT_FOUND, str(e))
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 self.send_error(HTTPStatus.INTERNAL_SERVER_ERROR, f"Error rendering review page: {e}")
             return
 

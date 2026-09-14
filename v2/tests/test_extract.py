@@ -11,9 +11,7 @@ Verifies:
 from __future__ import annotations
 
 import json
-from pathlib import Path
-
-import pytest
+from typing import Any
 
 from v2.src.extract import (
     DEFAULT_RUBRIC_PATH,
@@ -176,7 +174,7 @@ def test_evaluate_against_gold_confusion_matrix() -> None:
     ]
 
     # Extracted: t1 is TP, t2 is FN (model said exclusion), t3 is TN, t4 is FP (model said claim)
-    extracted = [
+    extracted: list[dict[str, Any]] = [
         {"turn_id": "t1", "verdict": "claim", "quote": "quote 1", "claim": "claim 1", "quote_resolves_verbatim": True},
         {"turn_id": "t2", "verdict": "exclusion", "gate_failed": "gate_1", "reason": "missed"},
         {"turn_id": "t3", "verdict": "exclusion", "gate_failed": "gate_1", "reason": "banter"},

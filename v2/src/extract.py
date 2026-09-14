@@ -9,9 +9,9 @@ from __future__ import annotations
 import json
 import re
 import time
-from dataclasses import asdict, dataclass
+from collections.abc import Callable
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 # Standing requirement Step 4: validators added = 0
 VALIDATORS_ADDED: int = 0
@@ -199,7 +199,7 @@ def parse_model_verdict(
     parsed_obj: dict[str, Any] = {}
     try:
         parsed_obj = json.loads(clean_json)
-    except Exception:
+    except (json.JSONDecodeError, ValueError, TypeError):
         # Fallback: attempt to salvage verdict and gate_failed if JSON was slightly malformed
         verdict = "claim" if '"verdict": "claim"' in raw_output else "exclusion"
         gate = "gate_1"
@@ -396,7 +396,9 @@ class ModelExtractor:
     def __init__(self, model_id: str = MODEL_ID) -> None:
         from mlx_lm import generate, load
         self.model_id = model_id
-        self.model, self.tokenizer = load(model_id)
+        loaded = load(model_id)
+        self.model = loaded[0]
+        self.tokenizer = loaded[1]
         self.generate_fn = generate
 
     def extract_turn(
