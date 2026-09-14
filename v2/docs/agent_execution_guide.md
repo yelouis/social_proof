@@ -10,11 +10,9 @@
 
 **B5 is delivered and verified independently.** All 405 turns of E287 render with their claims or their exclusion gate, the four gate rates are shown, and the model id and rubric commit appear on the page. Serve it with `.venv/bin/python v2/scripts/serve_review.py`.
 
-**One issue is open and needs Louis: 036**, rewritten September 13 after B5 made the gold distribution readable. Four options, not exclusive: **A** run three bigger local models (item B6) · **B** two-stage filter · **C** rewrite the rubric as a positive elicitation · **D** finetune on the gold set. **Recommendation is C then A.**
+**Issue 036 is decided: C then A**, plus a directory requirement. **C1 (§7)** rewrites the rubric as a positive elicitation and moves every prompt into `v2/prompts/*.md` that Louis can read and edit without touching Python. **B6 (§13)** then runs three bigger local models. Option B stays ruled out by the local-only constraint; Option D — finetuning — waits for B6's numbers and needs a second labelled episode before it can be measured honestly.
 
-**Two facts from that issue belong here because they change how you read everything else.** The task is **8.1% positive** — a model answering "not a claim" every time scores 91.9%. And **the rubric is written as an exclusion manual** — four gates that are four ways to say no, and 8 of its 11 worked examples are negative — which is the mechanism B4 measured as "binary collapse under negative checklists". **Unconstrained, the same 2B model found all 33 gold claims: 100% recall at 8.4% precision. It is not blind to claims; it cannot exclude.**
-
-**Do not start B6 while that selection line is blank.**
+**Three numbers to carry into C1, because they are what "better" is measured against.** The task is **8.1% positive** — answering "not a claim" every time scores 91.9%. The old rubric produced **0 claims, 0% recall.** The same 2B model with the rubric **stripped** produced **393 claims, 100% recall, 8.4% precision** — so it is not blind to claims, it cannot exclude. **The stripped control is the recall ceiling and the precision floor; beating one is easy and beating neither is the likely failure.**
 
 ---
 
@@ -53,7 +51,7 @@ Louis read V1's output and made three calls. **They are not provisional and they
 
 1. **Turn-level extraction**, not one line of ASR. V1's unit was a median of **12 words / 3.3 seconds**; 49% were under 12 words. *"A couple of tickets left."* was an utterance.
 2. **Question-anchored where the show allows it** — the host's question gives the matter at issue in clean English and the answering turn gives the position. **How much of All-In is actually question-anchored is unknown and B1 measures it.** If it is a minority, question-anchoring is a high-precision slice rather than the main path.
-3. **A written rubric** is passed to the local model with the transcript, and **the same text is the human labelling instruction.** It is `v2/docs/design_claim_rubric.md`. Read it before B1; it is the definition of the thing this whole pipeline exists to produce.
+3. **A written rubric** is passed to the local model with the transcript, and **the same text is the human labelling instruction.** **Issue 036 added: every prompt lives in `v2/prompts/*.md`, readable and editable without touching Python** — code substitutes placeholders and does nothing else. A prompt assembled in an f-string is a prompt only an engineer can tune. It is `v2/docs/design_claim_rubric.md`. Read it before B1; it is the definition of the thing this whole pipeline exists to produce.
 
 4. **The model is local and open-weights. Not negotiable, and not a default to revisit when something is hard.** No hosted API, no frontier model, no transcript leaving this machine. Social Proof reads what named people said; that it never leaves the laptop is a property of the product, not a cost saving.
 
@@ -72,7 +70,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 
 **GLM and Qwen are equally acceptable if they measure better.** The constraint is local and open-weights, not a family.
 
-**The biggest of each family that fits is worked out in §11 (B6).** Short version: **Gemma 4 31B** and **GLM-4-32B-0414** at 4-bit, ~18 GB each. **GLM-4.5-Air does not fit** (66.7 GB at Q4_K_M) and **Inkling does not fit at any size** — 975B/41B, Inkling-Small 276B ≈ 138 GB in 4-bit — and its fine-tuning path is Thinking Machines' hosted Tinker platform, which decision 4 rules out.
+**The biggest of each family that fits is worked out in §12 (B6).** Short version: **Gemma 4 31B** and **GLM-4-32B-0414** at 4-bit, ~18 GB each. **GLM-4.5-Air does not fit** (66.7 GB at Q4_K_M) and **Inkling does not fit at any size** — 975B/41B, Inkling-Small 276B ≈ 138 GB in 4-bit — and its fine-tuning path is Thinking Machines' hosted Tinker platform, which decision 4 rules out.
 
 **Record the model identity in every artefact** — model id, quantisation, runtime, and the rubric's commit hash. V1 ran five prompt versions and could not say which produced which corpus without reading commit history.
 
@@ -87,14 +85,19 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
 | 1 | **G0** | V2 has no gates, and five items landed without them | none | `ruff check v2/` → **95 errors**; `mypy v2/src` **cannot resolve modules and has never run**. R0 carried the traps and not the gates. **A red gate outranks the queue** — and there is currently no gate to be red. |
-| 3 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
-| 4 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
-| 5 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
-| 6 | **B4** | Measure, and decide whether to go on | B3 | DELIVERED. Precision and recall reported; conclusion recorded in one sentence; Issue 036 filed in v2/docs/ongoing_errors.md. |
+| 2 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0 | Hours, not days. The rubric is an exclusion manual used as the prompt verbatim, on a task where "no" is right 92% of the time. **Do this before B6** — running three big models against a prompt known to induce collapse buys an expensive wrong conclusion. |
+| 3 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**) | C1 | Gemma, GLM and a third lab's model over the same 405 turns. **Agreement is evidence only if checked against the gold set** — three models wrong together is the row worth finding. Also settles whether a LoRA is worth attempting. |
+| 4 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
+| 5 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
+| 6 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
+| 7 | **B4** | Measure, and decide whether to go on | B3 | DELIVERED. Precision and recall reported; conclusion recorded in one sentence; Issue 036 filed in v2/docs/ongoing_errors.md. |
+| 8 | **B5** | A local page showing what was extracted, and what was not | B1 | DELIVERED. Rendered all 405 turns of E287 with side-by-side gold/model verdicts, gate distributions, and 33 disagreements. |
 
-| 7 | **B5** | A local page showing what was extracted, and what was not | B1 | DELIVERED. Rendered all 405 turns of E287 with side-by-side gold/model verdicts, gate distributions, and 33 disagreements. |
 
-| 2 | **B6** | Three local models on the same episode, and what agreement is worth | G0 | Gemma, GLM and a third lab's model over the same 405 turns. **Agreement is evidence only if checked against the gold set** — three models wrong together is the row worth finding. Also settles whether a LoRA is worth attempting. |
+| 8 | **B5** | A local page showing what was extracted, and what was not | B1 | DELIVERED. Rendered all 405 turns of E287 with side-by-side gold/model verdicts, gate distributions, and 33 disagreements. |
+
+| 2 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0 | Hours, not days. The rubric is an exclusion manual used as the prompt verbatim, on a task where "no" is right 92% of the time. **Do this before B6** — running three big models against a prompt known to induce collapse buys an expensive wrong conclusion. |
+| 3 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**) | C1 | Gemma, GLM and a third lab's model over the same 405 turns. **Agreement is evidence only if checked against the gold set** — three models wrong together is the row worth finding. Also settles whether a LoRA is worth attempting. |
 
 **IDs are labels, not sequence numbers — follow the Order column.**
 
@@ -104,7 +107,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 
 ## 5. G0 — V2 has no gates, and five items landed without them
 
-**Do this before B6.** A red gate outranks the queue (§13), and right now there is no gate at all to be red.
+**Do this before B6.** A red gate outranks the queue (§14), and right now there is no gate at all to be red.
 
 **User impact:** none directly. This is the item that makes every later "delivered" mean something.
 
@@ -161,10 +164,85 @@ v2/src/turns.py: Source file found twice under different module names:
 
 **Falsify.** Re-introduce one unused import and one `typing.List`; the block must go red naming both. Revert; record both.
 
-**Blast radius.** `v2/docs/agent_execution_guide.md` §3 and §13, `v2/src/*`, `v2/scripts/*`, `v2/tests/*`. **No behaviour changes** — if a fix alters behaviour, it is not a lint fix and belongs in its own commit.
+**Blast radius.** `v2/docs/agent_execution_guide.md` §3 and §14, `v2/src/*`, `v2/scripts/*`, `v2/tests/*`. **No behaviour changes** — if a fix alters behaviour, it is not a lint fix and belongs in its own commit.
 
 ---
-## 6. B1 — Turns, and how much of this show is question-anchored · **DELIVERED**
+## 6. C1 — Turn the rubric positive, and move every prompt into editable Markdown · *Issue 036 = C*
+
+**Blocked on G0** — a red gate outranks the queue, and G0 is the item that gives V2 gates at all.
+
+**User impact:** Louis can open the prompt, read it as prose, and change it without touching Python. And the model is asked what to find rather than given four ways to say no.
+
+**Contract:** `v2/docs/design_claim_rubric.md` · Issue 036 = C · B2's gold set (`v2/fixtures/gold/00251a80c868f535.json`).
+
+### Two jobs, and they are separable — do the plumbing first
+
+**Job 1 is mechanical: get every prompt out of Python.** `v2/src/extract.py` loads the rubric from Markdown — good — and then wraps it in an f-string holding the instructions, the gate ordering, the JSON schema and the output format. **Those are prompt text living in code**, and they are the part most likely to need tuning.
+
+**Job 2 is the substance: make the rubric ask a positive question.**
+
+**Do job 1 first and commit it separately.** It is a pure move with no behaviour change, so the measurement afterwards attributes cleanly to job 2. Mixing them means a changed number with two candidate causes.
+
+### Job 1 — prompts as Markdown
+
+```
+v2/prompts/
+  extract_claim.md        the real prompt: instructions + {rubric} + {context_turn} + {target_turn}
+  extract_falsify.md      the stripped "extract claims" control, so the baseline is editable too
+```
+
+**Code substitutes placeholders and does nothing else.** No conditional prompt assembly, no string concatenation in Python, no "if the model is X, add Y". A reader opening `extract_claim.md` sees exactly what the model sees, modulo three substitutions.
+
+> **Verify (no behaviour change):** re-run B3's rubric pass on E287 **before and after the move** and diff the outputs. **They must be byte-identical.** If they are not, the move changed the prompt and job 2's measurement is already contaminated. Paste the diff or state that it was empty.
+
+> **Verify (it is really editable):** change one word in `extract_claim.md`, re-run a single turn, and confirm the sent prompt changed. **A template that is loaded but then overridden in code is worse than one in code**, because it looks editable and is not.
+
+### Job 2 — the positive rewrite
+
+**Keep the four gates as reasoning. Change what the model is asked to do with them.**
+
+Today the rubric hands the model four tests to fail and eight worked examples of failure. **Ask instead for the thing to find:**
+
+> *Does this turn contain a position the speaker would defend if challenged? If so, quote it and state it.*
+
+**The gates stay, as the check applied to a candidate the model has already found** — not as a gauntlet it runs before being allowed to find anything. Exclusions become the residue of "no position found", carrying the gate that explains why, rather than the primary output.
+
+**Rebalance the worked examples.** §5 is 8 negative to 3 positive. **Make it at least balanced**, and lead with the positives. The examples are the part of a prompt a model imitates most directly, and a table that is mostly "not a claim" teaches "say not a claim".
+
+> **Verify:** count the positive and negative worked examples in the rewritten rubric and state both numbers. **If negatives still outnumber positives, job 2 has not been done** — it has been reworded.
+
+**Do not delete the gate definitions.** They are how B2's 405 labels were assigned, and they are the shared vocabulary between the prompt, the labeller and the verifier. **Reframing is not the same as removing**, and removing them silently invalidates the gold set.
+
+> **Verify:** the four gates and the five claim types survive the rewrite with their meanings intact. **Re-read 10 of B2's exclusions against the new text and confirm the same gate still catches each.** If any label would now change, say which and how many — that is a finding about the gold set and it must be surfaced, not absorbed.
+
+### Measure
+
+**Re-run on E287 and report against the same three numbers the old rubric produced**, so the comparison is like for like:
+
+| | old rubric | stripped control | new rubric |
+|---|---|---|---|
+| claims emitted | 0 | 393 | ? |
+| recall | 0.0% | **100%** | ? |
+| precision | — | 8.4% | ? |
+
+> **Verify:** all three columns in one table in the commit body. **The stripped control is the ceiling for recall and the floor for precision** — a new rubric that beats neither has not moved anything, and saying so plainly is the correct delivery.
+
+> **Verify:** report the gate distribution and compare it to B2's human distribution (gate_1 74.6%, gate_2 2.0%, gate_3 1.5%, gate_4 13.8%). **A model still assigning ~100% to gate 1 has not stopped collapsing**, whatever its recall does.
+
+### Validation
+
+- **(c)** — **recall on E287 is materially above 0%, precision is materially above 8.4%, and both are reported in the three-column table above with the gate distribution beside B2's.** *Either number alone is satisfiable by a degenerate answer: the stripped prompt already achieves 100% recall by saying yes to everything, and the old rubric achieves perfect precision-by-vacuity by saying no to everything. **The pair is the assertion.***
+- The before/after diff for job 1 was empty, or the difference is explained.
+- Positive worked examples ≥ negative, with both counts stated.
+- Ten gold exclusions re-checked against the new rubric text, with any label changes named.
+- `ruff` and `mypy` clean (G0 will have made this meaningful).
+
+**Falsify.** Restore the old rubric text through the new template — **the template must make this a one-file swap** — and confirm recall returns to ~0%. Record both. **If recall does not return to 0%, the collapse was not caused by the rubric text** and Issue 036's diagnosis was wrong, which is a more important finding than this item's success.
+
+**Blast radius.** `v2/prompts/` (new), `v2/src/extract.py`, `v2/docs/design_claim_rubric.md`, `v2/tests/`, `v2/artifacts/extraction/`. **No change to B2's gold set** — if it needs changing, that is a separate item.
+
+---
+## 7. B1 — Turns, and how much of this show is question-anchored · **DELIVERED**
 
 **Blocked on R0.** DELIVERED. Unblocks B2.
 
@@ -208,7 +286,7 @@ v2/src/turns.py: Source file found twice under different module names:
 
 ---
 
-## 7. B2 — Label one episode by hand · **DELIVERED**
+## 8. B2 — Label one episode by hand · **DELIVERED**
 
 **Blocked on B1.** DELIVERED. Unblocks B3.
 
@@ -226,13 +304,13 @@ v2/src/turns.py: Source file found twice under different module names:
 
 > **Verify:** the count of turns examined equals the count of turns in the episode. **Recall is the whole point** — a sample tells you whether what you found is good and nothing about what you missed, and missing is V1's failure mode.
 
-**Step 3 — For each claim record the rubric's fields**; for each **exclusion** record only the gate that caught it. Exclusions are data, not waste — their distribution is the health signal in rubric §7.
+**Step 3 — For each claim record the rubric's fields**; for each **exclusion** record only the gate that caught it. Exclusions are data, not waste — their distribution is the health signal in rubric §8.
 
-> **Verify:** report the four gate-failure rates. **If any is zero, re-read.** A gate that never fires is either unnecessary or not being applied, and rubric §7 says which is more likely.
+> **Verify:** report the four gate-failure rates. **If any is zero, re-read.** A gate that never fires is either unnecessary or not being applied, and rubric §8 says which is more likely.
 
-**Step 4 — Have the rubric's worked examples checked against your own judgements.** If you disagree with rubric §6's calibration table, **stop and raise it with Louis** rather than proceeding — the rubric is wrong, or your reading is, and both are worth more than a labelled set built on a disagreement.
+**Step 4 — Have the rubric's worked examples checked against your own judgements.** If you disagree with rubric §7's calibration table, **stop and raise it with Louis** rather than proceeding — the rubric is wrong, or your reading is, and both are worth more than a labelled set built on a disagreement.
 
-> **Verify:** state explicitly in the commit body that you applied §6 and agreed with it, or which row you disagreed with.
+> **Verify:** state explicitly in the commit body that you applied §7 and agreed with it, or which row you disagreed with.
 
 **Step 5 — Commit as `v2/fixtures/gold/<episode>.json`,** with the rubric's version or commit hash recorded in it.
 
@@ -250,7 +328,7 @@ v2/src/turns.py: Source file found twice under different module names:
 
 ---
 
-## 8. B3 — Extract against the rubric · **DELIVERED**
+## 9. B3 — Extract against the rubric · **DELIVERED**
 
 **Blocked on B2.** Running extraction before the gold set exists is how V1 tuned six parameters against its own output.
 
@@ -288,7 +366,7 @@ v2/src/turns.py: Source file found twice under different module names:
 
 ---
 
-## 9. B4 — Measure, and decide whether to go on · **DELIVERED**
+## 10. B4 — Measure, and decide whether to go on · **DELIVERED**
 
 **Blocked on B3.**
 
@@ -314,7 +392,7 @@ v2/src/turns.py: Source file found twice under different module names:
 **Blast radius.** `v2/docs/ongoing_errors.md`, `v2/docs/agent_execution_guide.md`.
 
 ---
-## 10. B5 — A local page showing what was extracted, and what was not · **DELIVERED**
+## 11. B5 — A local page showing what was extracted, and what was not · **DELIVERED**
 
 **Blocked on B1 only.** DELIVERED. Unblocks B6.
 
@@ -326,7 +404,7 @@ v2/src/turns.py: Source file found twice under different module names:
 
 **Show the turns that produced nothing, and why.** V1's site listed claims and nothing else, so you could see precision by eye and never recall — which is exactly the half that was broken for the whole of V1. **A page that only shows claims cannot tell you what the pipeline threw away.**
 
-Every turn appears. A turn either carries its claims or carries the gate that excluded it. **The gate distribution should be visible at a glance** — that is the health signal rubric §7 describes, and it is worth more than the claims themselves while the rubric is still being tuned.
+Every turn appears. A turn either carries its claims or carries the gate that excluded it. **The gate distribution should be visible at a glance** — that is the health signal rubric §8 describes, and it is worth more than the claims themselves while the rubric is still being tuned.
 
 ### Implementation
 
@@ -373,7 +451,7 @@ Print the URL on startup. Same posture as V1: `127.0.0.1` only, no writes, no ne
 **Blast radius.** `v2/scripts/serve_review.py`, `v2/templates/` or equivalent. **Reads artefacts, writes nothing.**
 
 ---
-## 11. B6 — Three local models on the same episode, and what agreement is worth
+## 12. B6 — Three local models on the same episode, and what agreement is worth
 
 **Blocked on B5** — you need the viewer before three models' output is worth looking at, and B5 is the thing that makes disagreement legible.
 
@@ -457,7 +535,7 @@ Agreement is only evidence when the things agreeing are independent. **Gemma (Go
 **Blast radius.** `v2/src/`, `v2/artifacts/extraction/`, model weights on disk (staged, then removed). **No changes to the rubric, the gold set, or V1.**
 
 ---
-## 12. Standing constraints, carried from V1
+## 13. Standing constraints, carried from V1
 
 - **One item = one commit**, the *why* in the body.
 - **Never fill in a `Your selection: _____` line.**
@@ -471,7 +549,7 @@ Agreement is only evidence when the things agreeing are independent. **Gemma (Go
 
 ---
 
-## 13. Traps (carried from V1 §7)
+## 14. Traps (carried from V1 §6)
 
 Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writing in their layer. The ones that have already bitten:
 
@@ -498,14 +576,14 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 37. **A test that opens the production database can write to it.** `subj_nonexistent_subject` holds an assessment in the live corpus and no row in `subjects`. Tests legitimately *read* the corpus — assertion (c) often needs real data — but a test that needs to *write* must take a copy, and the corpus should be opened `read_only=True` from tests.
 38. **A verdict computed from the evidence it gates is not a verdict.** E1 replaced `sufficiency.get("passed", True)` with `passed = any_scored` — so "did sufficiency pass?" became "did anything get scored?", and the check that asks *"if sufficiency failed, is any score present?"* can never find one. **A guard's input must be independent of its subject.** When a fix removes a default, check what replaced it: the same inertness survives a rewrite easily.
 39. **A uniqueness bug hides behind a coverage check.** `verify_role_coverage` asks whether every utterance *resolves to* a role and passes over a `source_roles` table where every row is duplicated. Resolution and uniqueness are different questions, and only the first was asked — the same error shape as trap 28 (*"is this citation real?"* vs *"does it support this claim?"*).
-74. **A pasted artefact is only better than a count if somebody resolves it.** X4 pasted forty claim ids with quotes and verdicts, exactly as its `(c)` required, and none of the forty exists. The convention that was supposed to make judgement checkable made it *look* checkable. **When an assertion cites rows, cite primary keys and make a script resolve them** (§13) — and note that the same commit's aggregate counts were all exactly correct, so "the numbers are right" is not evidence the sample is.
+74. **A pasted artefact is only better than a count if somebody resolves it.** X4 pasted forty claim ids with quotes and verdicts, exactly as its `(c)` required, and none of the forty exists. The convention that was supposed to make judgement checkable made it *look* checkable. **When an assertion cites rows, cite primary keys and make a script resolve them** (§14) — and note that the same commit's aggregate counts were all exactly correct, so "the numbers are right" is not evidence the sample is.
 75. **Aggregate accuracy and sample accuracy are independent.** Every count in that commit matched the database to the row; the qualitative sample was not drawn from it. **Check them separately** — a commit that gets the hard numbers right earns no credit for the soft ones.
 76. **Five attempts at the same fix in different clothes is a signal about the approach, not the wording.** W0/W2 → D1 → D6 → X2 → X4 each removed one failure and produced another, and the corpus fell from 3,669 claims to 401. **When the third iteration of anything lands, stop and ask what is being assumed** — here, that the format was the limiting factor, which nobody had measured (Issue 035).
 71. **A format that must emit something will invent what it needs.** D6's form produced propositions nobody could take a position on; X2's format produces positions nobody took, and almost always `FOR`, because the binary has no null. **Every extraction format needs a branch that returns nothing**, and it has to be reachable — "a claim it cannot phrase that way is not emitted" is not a branch if the phrasing always succeeds.
 72. **"Not zero" is as weak a floor as zero.** D8's (c) required the count of opposing-stance propositions to be reported and said a zero would mean the self-join had nothing to match. It came back **one**, which satisfied the letter while the singleton rate went to 99.5%. **State floors as rates over the table** — the same correction Parameter 033 made to "no source contributes zero claims" (trap 61), repeated one layer up by the person who wrote trap 61.
 73. **Report the cost of a fix, not only its benefit.** D8 drove frame-contradicted merges to zero and did not report that it did so by merging almost nothing. Both numbers existed and one was asked for. **When a threshold trades two quantities against each other, the item must require both at every candidate value** — a single-sided report makes a corner solution look like a win.
 69. **Storing the judgement turns the next check into code.** Three fabrications needed a careful read of quotes to spot. The fourth is a two-line diff of `position_frame`, because X2 persisted the sentence the model wrote instead of only its conclusion. **When a step depends on a judgement, store the artefact the judgement was made from** — the next person gets a query instead of an opinion.
-70. **A parameter measured on a distribution that a later item replaces is stale on the day that item lands.** `T_dedup = 0.84` was measured over v1.7 propositions and merged *"60 to 80 percent growth"* with *"10x growth for ever"* on v1.8 output. X2 correctly refused to retune it in the same commit; **the cost of that discipline is a follow-up item, and it must actually be filed** (§15).
+70. **A parameter measured on a distribution that a later item replaces is stale on the day that item lands.** `T_dedup = 0.84` was measured over v1.7 propositions and merged *"60 to 80 percent growth"* with *"10x growth for ever"* on v1.8 output. X2 correctly refused to retune it in the same commit; **the cost of that discipline is a follow-up item, and it must actually be filed** (§16).
 66. **An item whose effect is to publish must be checked against what it will publish.** D7 was told to make every accepted candidate produce a tension row, and did — publishing six findings that the same guide, two sections below, documented as false. The spec was followed exactly. **Before running an item that writes user-visible output, read what is currently in its input.**
 67. **A judgement gate is scored generously unless the judgement is written down.** Three times now a gate has been recorded as met while an independent reading disagreed — six false pairs "hand-read and verified", a failed (c) recorded verified, and a position test reported at 18/20 that a seeded redraw scores 9–13/20. **Require the artefact, not the count**: paste the two sentences, quote the pair, show the working. A number is not checkable; a sentence is.
 68. **A repair loop that shrinks its subject on every pass is not converging.** Three extraction-form passes took the corpus from 3,669 claims to 1,027 and the candidate set from 0 to 6 to 0. **Track the trajectory across passes, not the delta within one** — each pass improved its own metric and the sequence went nowhere.
@@ -539,7 +617,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 14. Validation standard (carried from V1 §9)
+## 15. Validation standard (carried from V1 §8)
 
 **This section is the difference between an item that lands and one that comes back.** Every rule below was paid for.
 
@@ -565,7 +643,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 **Prove the threshold is doing the work.** Set it to a value that must fail, watch the assertion go red, restore it. Record both outputs in the commit body. A repair with no falsification is a guess.
 
-**Re-run every gate yourself before trusting §10.** This file has recorded a gate result that did not match reality more than once.
+**Re-run every gate yourself before trusting §11.** This file has recorded a gate result that did not match reality more than once.
 
 **Report zero with its denominator.** "No tensions found" over an empty candidate set and "no tensions found" over 400 examined pairs look identical in a status table and mean opposite things.
 
@@ -576,7 +654,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 15. Invariants — do NOT change (carried from V1 §15)
+## 16. Invariants — do NOT change (carried from V1 §14)
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -597,9 +675,9 @@ Full invariant definitions (carried from `v1/docs/master_implementation_plan.md`
 
 ---
 
-## 16. Deliberately not built — do not re-propose (carried from V1)
+## 17. Deliberately not built — do not re-propose (carried from V1)
 
-Each of these was considered and rejected for a stated reason in `v1/docs/master_implementation_plan.md` §14. Re-proposing one costs a cycle.
+Each of these was considered and rejected for a stated reason in `v1/docs/master_implementation_plan.md` §15. Re-proposing one costs a cycle.
 
 Each of these was considered and rejected for a stated reason. Re-proposing one costs a cycle.
 
@@ -616,7 +694,7 @@ Each of these was considered and rejected for a stated reason. Re-proposing one 
 
 ---
 
-## 17. Evidence integrity and V1 reference contracts
+## 18. Evidence integrity and V1 reference contracts
 
 The integrity contract survives any rewrite of extraction:
 - **E1–E5 Operational Rules:** Every rendered claim carries a verbatim quote, a date, and a resolvable source locator (E1). Every quoted string `grep -F` matches stored source text (E2). Every quote supports the proposition attached to it (E2b). Nothing derived from page context ever persists (E3). Below sufficiency gates, scores are null, never computed-and-hidden (E4). Precondition failures quarantine tensions, never rendered (E5).
