@@ -4,21 +4,11 @@
 
 **Rules:**
 - **Open issues live in §1, newest first.** Anything needing your input is at the top of this file — you should never scroll to find it.
-- Every open issue ends with `> **Verification pass, September 13 2026 — how B6 relates to these options.**
->
-> **Option A is now an item.** §11 (B6) runs **Gemma 4 31B**, **GLM-4-32B-0414** and **Nemotron 3 Nano** — three ~18 GB 4-bit models from three labs — over the same 405 turns, measured against B2's gold set. **Selecting A means "run B6"**, not "design something new".
->
-> **Option B stays ruled out** by the local-only constraint (guide §3 decision 4, §12).
->
-> **Option C — a two-stage filter — is still genuinely open and independent of B6.** It is not superseded: a cheap high-recall first pass followed by rubric adjudication could work regardless of which base model wins, and B6 does not test it.
->
-> **So the live question is narrower than it was: A, C, or both.** B6 also produces the evidence C would need — if all three models fail the same way, a filter is unlikely to rescue them; if they fail differently, a filter has something to work with.
-
-Your selection: _____`. **That line is yours. An agent must never fill it in on its own behalf.**
-- **Once selected, a decision moves out of §1.** Its consequence is written into the design doc that owns it, and it becomes one row in §4. The full option text stays in git history — this file is a queue, not an archive.
+- Every open issue ends with a line reading exactly `Your selection: _____`. **That line is yours. An agent must never fill it in on its own behalf.**
+- **Once selected, a decision moves out of §1.** Its consequence is written into the design doc that owns it, and it becomes one row in §1b. The full option text stays in git history — this file is a queue, not an archive.
 - Recommendations are marked. A recommendation is not a decision.
 
-**Status: 0 decisions made in V2, 1 open (Issue 036).**
+**Status: 1 decision made in V2 (Issue 036 — C then A), 0 open.**
 
 ---
 
