@@ -4,7 +4,13 @@
 
 **V1 is finished and is not being continued.** It ingested 23 episodes, produced 401 claims, and never found a single contradiction that survived being read. Five consecutive rewrites of the extraction format each fixed one failure and produced another. **V1's pipeline is reference material; do not extend it, do not repair it, and do not import its extraction code into V2 without a stated reason.**
 
-**Exactly one item is queued: R0, the restructure.** Nothing else starts until the repository is split and this file lives at `v2/docs/agent_execution_guide.md`. **V2's design work has not been decided yet** — Louis is brainstorming the extraction approach, and the second item will be filed once he selects one. **Do not invent it.**
+**Where things stand, September 13 2026.** R0 split the repository; B1–B5 are delivered; the approach is decided (§3) and the rubric exists (`v2/docs/design_claim_rubric.md`).
+
+**`ruff check v2/` reports 95 errors and `mypy v2/src` has never resolved a module.** R0 carried the traps forward and not the gates, so five items landed with a green test suite and no static checking at all. **Start at §5 (G0).** This is V1's G1 repeating — there the unchecked directory was `scripts/`; here it is the entire new codebase.
+
+**B5 is delivered and verified independently.** All 405 turns of E287 render with their claims or their exclusion gate, the four gate rates are shown, and the model id and rubric commit appear on the page. Serve it with `.venv/bin/python v2/scripts/serve_review.py`.
+
+**One issue is open and needs Louis: 036**, on extraction model capacity. Its Option A is now item B6; Option B is ruled out by the local-only constraint; Option C, a two-stage filter, remains genuinely open. **Do not start B6 while that line is blank** — read the annotation in `v2/docs/ongoing_errors.md` §1.
 
 ---
 
@@ -62,7 +68,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 
 **GLM and Qwen are equally acceptable if they measure better.** The constraint is local and open-weights, not a family.
 
-**The biggest of each family that fits is worked out in §10 (B6).** Short version: **Gemma 4 31B** and **GLM-4-32B-0414** at 4-bit, ~18 GB each. **GLM-4.5-Air does not fit** (66.7 GB at Q4_K_M) and **Inkling does not fit at any size** — 975B/41B, Inkling-Small 276B ≈ 138 GB in 4-bit — and its fine-tuning path is Thinking Machines' hosted Tinker platform, which decision 4 rules out.
+**The biggest of each family that fits is worked out in §11 (B6).** Short version: **Gemma 4 31B** and **GLM-4-32B-0414** at 4-bit, ~18 GB each. **GLM-4.5-Air does not fit** (66.7 GB at Q4_K_M) and **Inkling does not fit at any size** — 975B/41B, Inkling-Small 276B ≈ 138 GB in 4-bit — and its fine-tuning path is Thinking Machines' hosted Tinker platform, which decision 4 rules out.
 
 **Record the model identity in every artefact** — model id, quantisation, runtime, and the rubric's commit hash. V1 ran five prompt versions and could not say which produced which corpus without reading commit history.
 
@@ -76,14 +82,15 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
-| 1 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
-| 2 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
-| 3 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
-| 4 | **B4** | Measure, and decide whether to go on | B3 | DELIVERED. Precision and recall reported; conclusion recorded in one sentence; Issue 036 filed in v2/docs/ongoing_errors.md. |
+| 1 | **G0** | V2 has no gates, and five items landed without them | none | `ruff check v2/` → **95 errors**; `mypy v2/src` **cannot resolve modules and has never run**. R0 carried the traps and not the gates. **A red gate outranks the queue** — and there is currently no gate to be red. |
+| 3 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
+| 4 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
+| 5 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
+| 6 | **B4** | Measure, and decide whether to go on | B3 | DELIVERED. Precision and recall reported; conclusion recorded in one sentence; Issue 036 filed in v2/docs/ongoing_errors.md. |
 
-| 5 | **B5** | A local page showing what was extracted, and what was not | B1 | DELIVERED. Rendered all 405 turns of E287 with side-by-side gold/model verdicts, gate distributions, and 33 disagreements. |
+| 7 | **B5** | A local page showing what was extracted, and what was not | B1 | DELIVERED. Rendered all 405 turns of E287 with side-by-side gold/model verdicts, gate distributions, and 33 disagreements. |
 
-| 6 | **B6** | Three local models on the same episode, and what agreement is worth | B5 | Gemma, GLM and a third lab's model over the same 405 turns. **Agreement is evidence only if checked against the gold set** — three models wrong together is the row worth finding. Also settles whether a LoRA is worth attempting. |
+| 2 | **B6** | Three local models on the same episode, and what agreement is worth | G0 | Gemma, GLM and a third lab's model over the same 405 turns. **Agreement is evidence only if checked against the gold set** — three models wrong together is the row worth finding. Also settles whether a LoRA is worth attempting. |
 
 **IDs are labels, not sequence numbers — follow the Order column.**
 
@@ -91,7 +98,69 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 
 ---
 
-## 5. B1 — Turns, and how much of this show is question-anchored · **DELIVERED**
+## 5. G0 — V2 has no gates, and five items landed without them
+
+**Do this before B6.** A red gate outranks the queue (§13), and right now there is no gate at all to be red.
+
+**User impact:** none directly. This is the item that makes every later "delivered" mean something.
+
+**Contract:** V1 guide §2's state-detection block — the thing R0 did not carry across.
+
+### Gap
+
+**`v2/` has never been linted or type-checked.** Measured September 13, 2026:
+
+```
+ruff check v2/   → 95 errors
+mypy v2/src      → cannot resolve modules; type checking never ran
+pytest v2/tests  → 35 passed
+```
+
+**R0 carried the traps, the validation standard, the invariants, the non-goals and the evidence-integrity contracts. It did not carry the gates** — and nothing in the V2 guide mentions `ruff`, `mypy` or `pytest`, so five items (B1–B5) landed with a green test suite and no static checking whatsoever.
+
+**This is V1's G1 repeating exactly.** There, `scripts/` sat outside the gate command and accumulated 17 mypy errors, four of which were integrity calls that could not execute. **Here the excluded directory is the entire new codebase.**
+
+The 95 are mostly mechanical — 33 `UP006` (`typing.List` → `list`), 17 `F401` unused imports, 12 `FURB167`, 9 `UP035`, 4 `I001` import ordering. **But 4 are `F841`, unused local variables, and those are worth reading rather than auto-fixing**: an assigned-and-never-used variable is sometimes a result someone forgot to check.
+
+The mypy failure is a configuration problem, not a code problem:
+
+```
+v2/src/turns.py: Source file found twice under different module names:
+                 "src.turns" and "v2.src.turns"
+```
+
+**mypy has never type-checked a line of V2.**
+
+### Implementation
+
+**Step 1 — Add the state-detection block to the guide, as §3, before fixing anything.** Copy V1's shape: `ruff`, `mypy`, `pytest`, and a line reporting which episode artefacts exist. **The block is the deliverable; the fixes are a consequence of having it.**
+
+> **Verify:** run the block and paste its output. **It must be red.** A state-detection block first seen green proves nothing about whether it would catch anything.
+
+**Step 2 — Fix the mypy configuration so it actually runs.** `__init__.py` placement, `--explicit-package-bases`, or `MYPYPATH` — whichever is least surprising. The `v2/src` and `src` double-naming comes from running mypy from the repository root against a nested package.
+
+> **Verify:** `mypy v2/src v2/scripts v2/tests` reports a **file count** and either errors or success. **A run that resolves nothing is not a passing run** — V1 recorded `mypy scripts/` as passing for weeks while it was silently checking zero files in one configuration and 17 errors in another.
+
+**Step 3 — Fix the 95, reading the `F841`s rather than auto-fixing them.** `ruff --fix` handles most. **For each of the four unused variables, say in the commit body what it was assigned from and why discarding it is correct.**
+
+> **Verify:** `ruff check v2/` clean, and the four `F841` resolutions explained. **If any turns out to be a dropped result, that is a bug found by this item** and should be called out rather than quietly deleted.
+
+**Step 4 — Wire the block into the guide's §3 so the next agent runs it first**, and add a standing constraint that a new directory is added to the gate command in the same commit that creates it.
+
+> **Verify:** the constraint names the failure it prevents — V1's `scripts/`, V2's whole tree — so a reader understands it is a scar, not a style preference.
+
+### Validation
+
+- **(c)** — **`ruff check v2/` and `mypy v2/src v2/scripts v2/tests` both pass, having first been shown red with their output pasted**, and the state-detection block in the guide runs both. *The red-first half is the assertion: a gate added and immediately green is indistinguishable from a gate that checks nothing, which is exactly how `mypy scripts/` passed in V1 while resolving no files.*
+- `pytest v2/tests` still reports 35 passed — **no test weakened or deleted to reach green.**
+- The four `F841`s are explained individually.
+
+**Falsify.** Re-introduce one unused import and one `typing.List`; the block must go red naming both. Revert; record both.
+
+**Blast radius.** `v2/docs/agent_execution_guide.md` §3 and §13, `v2/src/*`, `v2/scripts/*`, `v2/tests/*`. **No behaviour changes** — if a fix alters behaviour, it is not a lint fix and belongs in its own commit.
+
+---
+## 6. B1 — Turns, and how much of this show is question-anchored · **DELIVERED**
 
 **Blocked on R0.** DELIVERED. Unblocks B2.
 
@@ -135,7 +204,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 
 ---
 
-## 6. B2 — Label one episode by hand · **DELIVERED**
+## 7. B2 — Label one episode by hand · **DELIVERED**
 
 **Blocked on B1.** DELIVERED. Unblocks B3.
 
@@ -153,13 +222,13 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 
 > **Verify:** the count of turns examined equals the count of turns in the episode. **Recall is the whole point** — a sample tells you whether what you found is good and nothing about what you missed, and missing is V1's failure mode.
 
-**Step 3 — For each claim record the rubric's fields**; for each **exclusion** record only the gate that caught it. Exclusions are data, not waste — their distribution is the health signal in rubric §6.
+**Step 3 — For each claim record the rubric's fields**; for each **exclusion** record only the gate that caught it. Exclusions are data, not waste — their distribution is the health signal in rubric §7.
 
-> **Verify:** report the four gate-failure rates. **If any is zero, re-read.** A gate that never fires is either unnecessary or not being applied, and rubric §6 says which is more likely.
+> **Verify:** report the four gate-failure rates. **If any is zero, re-read.** A gate that never fires is either unnecessary or not being applied, and rubric §7 says which is more likely.
 
-**Step 4 — Have the rubric's worked examples checked against your own judgements.** If you disagree with rubric §5's calibration table, **stop and raise it with Louis** rather than proceeding — the rubric is wrong, or your reading is, and both are worth more than a labelled set built on a disagreement.
+**Step 4 — Have the rubric's worked examples checked against your own judgements.** If you disagree with rubric §6's calibration table, **stop and raise it with Louis** rather than proceeding — the rubric is wrong, or your reading is, and both are worth more than a labelled set built on a disagreement.
 
-> **Verify:** state explicitly in the commit body that you applied §5 and agreed with it, or which row you disagreed with.
+> **Verify:** state explicitly in the commit body that you applied §6 and agreed with it, or which row you disagreed with.
 
 **Step 5 — Commit as `v2/fixtures/gold/<episode>.json`,** with the rubric's version or commit hash recorded in it.
 
@@ -177,7 +246,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 
 ---
 
-## 7. B3 — Extract against the rubric · **DELIVERED**
+## 8. B3 — Extract against the rubric · **DELIVERED**
 
 **Blocked on B2.** Running extraction before the gold set exists is how V1 tuned six parameters against its own output.
 
@@ -215,7 +284,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 
 ---
 
-## 8. B4 — Measure, and decide whether to go on · **DELIVERED**
+## 9. B4 — Measure, and decide whether to go on · **DELIVERED**
 
 **Blocked on B3.**
 
@@ -241,7 +310,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 **Blast radius.** `v2/docs/ongoing_errors.md`, `v2/docs/agent_execution_guide.md`.
 
 ---
-## 9. B5 — A local page showing what was extracted, and what was not · **DELIVERED**
+## 10. B5 — A local page showing what was extracted, and what was not · **DELIVERED**
 
 **Blocked on B1 only.** DELIVERED. Unblocks B6.
 
@@ -253,7 +322,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 
 **Show the turns that produced nothing, and why.** V1's site listed claims and nothing else, so you could see precision by eye and never recall — which is exactly the half that was broken for the whole of V1. **A page that only shows claims cannot tell you what the pipeline threw away.**
 
-Every turn appears. A turn either carries its claims or carries the gate that excluded it. **The gate distribution should be visible at a glance** — that is the health signal rubric §6 describes, and it is worth more than the claims themselves while the rubric is still being tuned.
+Every turn appears. A turn either carries its claims or carries the gate that excluded it. **The gate distribution should be visible at a glance** — that is the health signal rubric §7 describes, and it is worth more than the claims themselves while the rubric is still being tuned.
 
 ### Implementation
 
@@ -300,7 +369,7 @@ Print the URL on startup. Same posture as V1: `127.0.0.1` only, no writes, no ne
 **Blast radius.** `v2/scripts/serve_review.py`, `v2/templates/` or equivalent. **Reads artefacts, writes nothing.**
 
 ---
-## 10. B6 — Three local models on the same episode, and what agreement is worth
+## 11. B6 — Three local models on the same episode, and what agreement is worth
 
 **Blocked on B5** — you need the viewer before three models' output is worth looking at, and B5 is the thing that makes disagreement legible.
 
@@ -384,7 +453,7 @@ Agreement is only evidence when the things agreeing are independent. **Gemma (Go
 **Blast radius.** `v2/src/`, `v2/artifacts/extraction/`, model weights on disk (staged, then removed). **No changes to the rubric, the gold set, or V1.**
 
 ---
-## 11. Standing constraints, carried from V1
+## 12. Standing constraints, carried from V1
 
 - **One item = one commit**, the *why* in the body.
 - **Never fill in a `Your selection: _____` line.**
@@ -398,7 +467,7 @@ Agreement is only evidence when the things agreeing are independent. **Gemma (Go
 
 ---
 
-## 12. Traps (carried from V1 §6)
+## 13. Traps (carried from V1 §7)
 
 Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writing in their layer. The ones that have already bitten:
 
@@ -425,14 +494,14 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 37. **A test that opens the production database can write to it.** `subj_nonexistent_subject` holds an assessment in the live corpus and no row in `subjects`. Tests legitimately *read* the corpus — assertion (c) often needs real data — but a test that needs to *write* must take a copy, and the corpus should be opened `read_only=True` from tests.
 38. **A verdict computed from the evidence it gates is not a verdict.** E1 replaced `sufficiency.get("passed", True)` with `passed = any_scored` — so "did sufficiency pass?" became "did anything get scored?", and the check that asks *"if sufficiency failed, is any score present?"* can never find one. **A guard's input must be independent of its subject.** When a fix removes a default, check what replaced it: the same inertness survives a rewrite easily.
 39. **A uniqueness bug hides behind a coverage check.** `verify_role_coverage` asks whether every utterance *resolves to* a role and passes over a `source_roles` table where every row is duplicated. Resolution and uniqueness are different questions, and only the first was asked — the same error shape as trap 28 (*"is this citation real?"* vs *"does it support this claim?"*).
-74. **A pasted artefact is only better than a count if somebody resolves it.** X4 pasted forty claim ids with quotes and verdicts, exactly as its `(c)` required, and none of the forty exists. The convention that was supposed to make judgement checkable made it *look* checkable. **When an assertion cites rows, cite primary keys and make a script resolve them** (§12) — and note that the same commit's aggregate counts were all exactly correct, so "the numbers are right" is not evidence the sample is.
+74. **A pasted artefact is only better than a count if somebody resolves it.** X4 pasted forty claim ids with quotes and verdicts, exactly as its `(c)` required, and none of the forty exists. The convention that was supposed to make judgement checkable made it *look* checkable. **When an assertion cites rows, cite primary keys and make a script resolve them** (§13) — and note that the same commit's aggregate counts were all exactly correct, so "the numbers are right" is not evidence the sample is.
 75. **Aggregate accuracy and sample accuracy are independent.** Every count in that commit matched the database to the row; the qualitative sample was not drawn from it. **Check them separately** — a commit that gets the hard numbers right earns no credit for the soft ones.
 76. **Five attempts at the same fix in different clothes is a signal about the approach, not the wording.** W0/W2 → D1 → D6 → X2 → X4 each removed one failure and produced another, and the corpus fell from 3,669 claims to 401. **When the third iteration of anything lands, stop and ask what is being assumed** — here, that the format was the limiting factor, which nobody had measured (Issue 035).
 71. **A format that must emit something will invent what it needs.** D6's form produced propositions nobody could take a position on; X2's format produces positions nobody took, and almost always `FOR`, because the binary has no null. **Every extraction format needs a branch that returns nothing**, and it has to be reachable — "a claim it cannot phrase that way is not emitted" is not a branch if the phrasing always succeeds.
 72. **"Not zero" is as weak a floor as zero.** D8's (c) required the count of opposing-stance propositions to be reported and said a zero would mean the self-join had nothing to match. It came back **one**, which satisfied the letter while the singleton rate went to 99.5%. **State floors as rates over the table** — the same correction Parameter 033 made to "no source contributes zero claims" (trap 61), repeated one layer up by the person who wrote trap 61.
 73. **Report the cost of a fix, not only its benefit.** D8 drove frame-contradicted merges to zero and did not report that it did so by merging almost nothing. Both numbers existed and one was asked for. **When a threshold trades two quantities against each other, the item must require both at every candidate value** — a single-sided report makes a corner solution look like a win.
 69. **Storing the judgement turns the next check into code.** Three fabrications needed a careful read of quotes to spot. The fourth is a two-line diff of `position_frame`, because X2 persisted the sentence the model wrote instead of only its conclusion. **When a step depends on a judgement, store the artefact the judgement was made from** — the next person gets a query instead of an opinion.
-70. **A parameter measured on a distribution that a later item replaces is stale on the day that item lands.** `T_dedup = 0.84` was measured over v1.7 propositions and merged *"60 to 80 percent growth"* with *"10x growth for ever"* on v1.8 output. X2 correctly refused to retune it in the same commit; **the cost of that discipline is a follow-up item, and it must actually be filed** (§14).
+70. **A parameter measured on a distribution that a later item replaces is stale on the day that item lands.** `T_dedup = 0.84` was measured over v1.7 propositions and merged *"60 to 80 percent growth"* with *"10x growth for ever"* on v1.8 output. X2 correctly refused to retune it in the same commit; **the cost of that discipline is a follow-up item, and it must actually be filed** (§15).
 66. **An item whose effect is to publish must be checked against what it will publish.** D7 was told to make every accepted candidate produce a tension row, and did — publishing six findings that the same guide, two sections below, documented as false. The spec was followed exactly. **Before running an item that writes user-visible output, read what is currently in its input.**
 67. **A judgement gate is scored generously unless the judgement is written down.** Three times now a gate has been recorded as met while an independent reading disagreed — six false pairs "hand-read and verified", a failed (c) recorded verified, and a position test reported at 18/20 that a seeded redraw scores 9–13/20. **Require the artefact, not the count**: paste the two sentences, quote the pair, show the working. A number is not checkable; a sentence is.
 68. **A repair loop that shrinks its subject on every pass is not converging.** Three extraction-form passes took the corpus from 3,669 claims to 1,027 and the candidate set from 0 to 6 to 0. **Track the trajectory across passes, not the delta within one** — each pass improved its own metric and the sequence went nowhere.
@@ -466,7 +535,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 13. Validation standard (carried from V1 §8)
+## 14. Validation standard (carried from V1 §9)
 
 **This section is the difference between an item that lands and one that comes back.** Every rule below was paid for.
 
@@ -492,7 +561,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 **Prove the threshold is doing the work.** Set it to a value that must fail, watch the assertion go red, restore it. Record both outputs in the commit body. A repair with no falsification is a guess.
 
-**Re-run every gate yourself before trusting §9.** This file has recorded a gate result that did not match reality more than once.
+**Re-run every gate yourself before trusting §10.** This file has recorded a gate result that did not match reality more than once.
 
 **Report zero with its denominator.** "No tensions found" over an empty candidate set and "no tensions found" over 400 examined pairs look identical in a status table and mean opposite things.
 
@@ -503,7 +572,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 14. Invariants — do NOT change (carried from V1 §14)
+## 15. Invariants — do NOT change (carried from V1 §15)
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -524,9 +593,9 @@ Full invariant definitions (carried from `v1/docs/master_implementation_plan.md`
 
 ---
 
-## 15. Deliberately not built — do not re-propose (carried from V1)
+## 16. Deliberately not built — do not re-propose (carried from V1)
 
-Each of these was considered and rejected for a stated reason in `v1/docs/master_implementation_plan.md` §13. Re-proposing one costs a cycle.
+Each of these was considered and rejected for a stated reason in `v1/docs/master_implementation_plan.md` §14. Re-proposing one costs a cycle.
 
 Each of these was considered and rejected for a stated reason. Re-proposing one costs a cycle.
 
@@ -543,7 +612,7 @@ Each of these was considered and rejected for a stated reason. Re-proposing one 
 
 ---
 
-## 16. Evidence integrity and V1 reference contracts
+## 17. Evidence integrity and V1 reference contracts
 
 The integrity contract survives any rewrite of extraction:
 - **E1–E5 Operational Rules:** Every rendered claim carries a verbatim quote, a date, and a resolvable source locator (E1). Every quoted string `grep -F` matches stored source text (E2). Every quote supports the proposition attached to it (E2b). Nothing derived from page context ever persists (E3). Below sufficiency gates, scores are null, never computed-and-hidden (E4). Precondition failures quarantine tensions, never rendered (E5).
