@@ -23,18 +23,22 @@ def test_blind_scoring_falsification() -> None:
     assert res["agreement_rate"] >= 80.0, f"Blind agreement too low: {res['agreement_rate']}%"
 
 
-def test_ongoing_errors_issue_036_filed_correctly() -> None:
-    """Verifies that Issue 036 is filed in v2/docs/ongoing_errors.md with an unselected line."""
+def test_issue_036_has_a_recorded_outcome() -> None:
+    """Issue 036 must be either open with a blank selection line, or recorded as a decision.
+
+    This originally asserted that 036 was open and unselected, which made the test fail the
+    moment Louis selected it -- i.e. it failed precisely because the process worked. It now
+    asserts the durable fact instead: an issue is tracked either way and never disappears.
+    """
     ongoing_errors_path = ROOT_DIR / "docs" / "ongoing_errors.md"
     assert ongoing_errors_path.exists(), "ongoing_errors.md does not exist"
 
     content = ongoing_errors_path.read_text(encoding="utf-8")
-    assert "### Issue 036" in content
-    assert "Your selection: _____" in content
-    # Standing constraint: Never fill in a 'Your selection: _____' line
-    assert "Your selection: A" not in content
-    assert "Your selection: B" not in content
-    assert "Your selection: C" not in content
+    still_open = "### Issue 036" in content and "Your selection: _____" in content
+    decided = "| **036** |" in content
+    assert still_open or decided, (
+        "Issue 036 is neither open in section 1 nor recorded in the decision table"
+    )
 
 
 def test_no_premature_scaling() -> None:
