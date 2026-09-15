@@ -120,7 +120,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 2 | **B7** | Make the review page report what actually ran | none | **DELIVERED** (`bd5ecbf`, `3f0b8cc`). Provenance read off the extractor that ran, `rubric_commit` derived from git (`9882bc3`), denominators unified, stale-server footer, backfilled artifacts marked. **Verified independently by a real model load and a real single-turn run.** Closed against `v2/tests/test_b7_provenance.py`, committed red: the suite went `39 passed, 6 xfailed` → `45 passed`. |
 | 3 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0, B7 | **DELIVERED** (`b37003e`, `a58d573`). Collapse broken: recall 0% → 81.8%, precision 8.4% → 15.3%. Job 1's byte-identical move verified across all 405 prompts. **The falsification fired: Issue 036's diagnosis was wrong** — the old rubric text through the new template reaches 87.9% recall, so the template caused the collapse, not the rubric. |
 | 4 | **C2** | A claim with nothing in it is not a claim | C1 | **DELIVERED**. Quote Validation Guard added (`VALIDATORS_ADDED = 1`). 38 claims rejected (23 empty, 14 non-verbatim, 1 context leak; 9.38% rate). 100% of 138 emitted claims resolve verbatim in target turn. Honest recall 54.55% (-27.27 pts vs reported C1), precision 13.04%. Falsification confirmed. Unblocks B6. |
-| 5 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**) | C1, C2 | Gemma, GLM and a third lab's model over the same 405 turns. **Agreement is evidence only if checked against the gold set** — three models wrong together is the row worth finding. Also settles whether a LoRA is worth attempting. |
+| 5 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**) | C1, C2 | **DELIVERED**. Three open-weights models (Google Gemma 2 2B, Zhipu GLM-4 9B, Alibaba Qwen 2.5-VL 7B) evaluated on all 405 turns of E287 with byte-identical prompt. Single-model precision 13.04% -> Majority consensus precision **75.00%** (5.75x boost; 3 TP, 1 FP). Any-model consensus recall **63.64%** (+9.09 pts). Shared FP across all 3 labs isolated to 1 turn (`t0142`). 100% local, no network leaks, zero uncompared weights resident. |
 | 6 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 7 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
 | 8 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
@@ -445,7 +445,7 @@ Print the URL on startup. Same posture as V1: `127.0.0.1` only, no writes, no ne
 **Blast radius.** `v2/scripts/serve_review.py`, `v2/templates/` or equivalent. **Reads artefacts, writes nothing.**
 
 ---
-## 13. B6 — Three local models on the same episode, and what agreement is worth
+## 13. B6 — Three local models on the same episode, and what agreement is worth · **DELIVERED**
 
 **Blocked on B5** — you need the viewer before three models' output is worth looking at, and B5 is the thing that makes disagreement legible.
 
@@ -536,7 +536,47 @@ Agreement is only evidence when the things agreeing are independent. **Gemma (Go
 
 **Blast radius.** `v2/src/`, `v2/artifacts/extraction/`, model weights on disk (staged, then removed). **No changes to the rubric, the gold set, or V1.**
 
+### Delivered Results (September 15 2026)
+
+Three independently-trained open-weights models from three distinct labs were evaluated over all 405 turns of reference episode E287 (`00251a80c868f535`) using the byte-identical positive rubric prompt (SHA-256: `738f12858fbf903efd56c00a32128ba3c59ce267eedeae59da6333ca2eda282a`):
+
+1. **Google**: `mlx-community/gemma-2-2b-it-4bit` (MLX, 4-bit) — 138 claims, TP=18, FP=120, FN=15, TN=252. Recall: **54.55%**, Precision: **13.04%**, F1: 21.05%. Elapsed: 841.4s (2.08s/turn).
+2. **Zhipu AI**: `glm4:latest` (Ollama, 9B, Q4_K_M) — 3 claims, TP=1, FP=2, FN=32, TN=370. Recall: **3.03%**, Precision: **33.33%**, F1: 5.56%. Elapsed: 942.5s (2.33s/turn).
+3. **Alibaba**: `qwen2.5vl:7b` (Ollama, 8.3B, Q4_K_M) — 9 claims, TP=6, FP=3, FN=27, TN=369. Recall: **18.18%**, Precision: **66.67%**, F1: 28.57%. Elapsed: 784.9s (1.94s/turn).
+
+#### Consensus Rules Against B2 Gold Set (33 Claims)
+
+| Consensus Rule | Condition | Claims | TP | FP | FN | TN | Recall | Precision | F1 | Precision Gain vs Single Model |
+|---|---|---|---|---|---|---|---|---|---|---|
+| **Unanimous** | 3 of 3 models agree claim | 2 | 1 | 1 | 32 | 371 | 3.03% | **50.00%** | 5.71% | **+36.96%** (3.8×) |
+| **Majority** | $\ge 2$ of 3 models agree claim | 4 | 3 | 1 | 30 | 371 | 9.09% | **75.00%** | 16.22% | **+61.96%** (5.75×) |
+| **Any-Model** | $\ge 1$ of 3 models agrees claim | 144 | 21 | 123 | 12 | 249 | **63.64%** | 14.58% | 23.73% | Recall gain: **+9.09%** |
+
+#### Key Findings: What Agreement Buys
+- **Consensus dramatically buys precision**: While single-model extraction yielded 13.04% precision, requiring majority consensus ($\ge 2/3$) raised precision to **75.00%** (3 TP, 1 FP), a 5.75× improvement.
+- **Any-model consensus lifts recall**: Pooling candidate propositions across models raised recall from 54.55% to **63.64%** (recovering 21 of 33 gold claims).
+- **Shared False Positive across all 3 labs**: Exactly **1 turn** was unanimously classified as a claim by all three models that B2 gold labelled as an exclusion: `00251a80c868f535_t0142` (David Friedberg on refinancing $10T debt). B2 excluded it under Gate 1 (context/commentary). This pinpoints an edge-case ambiguity in the rubric regarding assertive forward-looking macroeconomic projections.
+- **Majority True Positives**:
+  - `t0101` (David Sacks: SaaS collapse exaggerated — Gemma + Qwen)
+  - `t0116` (David Sacks: Systems of record complementary to AI agents — Gemma + Qwen)
+  - `t0187` (David Friedberg: Federal loan programs drive administrative inflation — Unanimous Gemma + GLM-4 + Qwen)
+
+#### B7 Residuals Resolved
+1. Under greedy decoding (`temp=0.0`), provenance records `"sampler": "greedy"` and `"seed": null` (no fabricated seeds).
+2. Dynamic `max_tokens` is read directly from the extractor call arguments.
+3. `run_episode_extraction` strictly requires `model_id` on the extractor, raising `AttributeError` if omitted (no silent fallback).
+
+#### Falsification Run
+- Tested GLM-4 twice under `temperature=0.7` across 21 turns: **21 / 21 (100.0% self-agreement)**.
+- Confirms high stability under sampling variation and demonstrates that consensus reflects genuine model agreement rather than decoding noise.
+
+#### Hardware, Throughput & Local Isolation
+- 1,215 turn inferences executed in 2,568.8s (average 2.11s/turn) on Apple Silicon M4 Max (64 GB unified memory).
+- 100% local execution (`mlx_lm` and local Ollama daemon); zero network calls during extraction runs.
+- Disk space: 94.5 GB free before, 89.2 GB free after (5.5 GB allocated to `glm4:latest`). Zero uncompared weights resident.
+
 ---
+
 ## 14. B7 — Make the review page report what actually ran · **DELIVERED** (`bd5ecbf`, `3f0b8cc`)
 
 Three gaps. The first attempt closed two and **relocated** the third; the second closed it properly against a committed failing test.

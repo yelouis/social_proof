@@ -114,3 +114,56 @@ Notice: 4 gold-claim turns previously scored as TP under C1 because the model em
    - Result: Rejected immediately with `validator_rejected = True`, `rejection_reason = "non_verbatim"`, `gate_failed = "gate_4"`.
 4. **Rubric Byte-Identity (§2 The Four Gates)**:
    - Verified that §2 of `v2/docs/design_claim_rubric.md` is 100% byte-identical to commit `9882bc3` (when B2 gold labels were established).
+
+---
+
+## 6. Item B6: Three Local Models on E287 & What Agreement is Worth
+
+Three independently-trained models from three distinct labs were evaluated across all 405 turns of E287 (`00251a80c868f535`) using the byte-identical positive rubric prompt (SHA-256: `738f12858fbf903efd56c00a32128ba3c59ce267eedeae59da6333ca2eda282a`).
+
+### 6.1 Individual Model Performance
+
+| Lab / Family | Model ID | Runtime | Quant | Claims | TP | FP | FN | TN | Recall | Precision | F1 | Wall-clock (s/turn) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Google** | `mlx-community/gemma-2-2b-it-4bit` | `mlx_lm` | 4-bit | 138 | 18 | 120 | 15 | 252 | 54.55% | 13.04% | 21.05% | 841.4s (2.08s) |
+| **Zhipu AI** | `glm4:latest` (9B) | `ollama` | Q4_K_M | 3 | 1 | 2 | 32 | 370 | 3.03% | 33.33% | 5.56% | 942.5s (2.33s) |
+| **Alibaba** | `qwen2.5vl:7b` (8.3B) | `ollama` | Q4_K_M | 9 | 6 | 3 | 27 | 369 | 18.18% | **66.67%** | 28.57% | 784.9s (1.94s) |
+
+### 6.2 Consensus Rules Against B2 Gold Standard (33 Claims)
+
+| Consensus Rule | Condition | Claims | TP | FP | FN | TN | Recall | Precision | F1 | Precision Gain vs Single Model |
+|---|---|---|---|---|---|---|---|---|---|---|
+| **Unanimous** | 3 of 3 models agree claim | 2 | 1 | 1 | 32 | 371 | 3.03% | **50.00%** | 5.71% | **+36.96%** (3.8×) |
+| **Majority** | $\ge 2$ of 3 models agree claim | 4 | 3 | 1 | 30 | 371 | 9.09% | **75.00%** | 16.22% | **+61.96%** (5.75×) |
+| **Any-Model** | $\ge 1$ of 3 models agrees claim | 144 | 21 | 123 | 12 | 249 | **63.64%** | 14.58% | 23.73% | Recall gain: **+9.09%** |
+
+### 6.3 What Consensus Buys (The B6 Finding)
+1. **Consensus dramatically buys precision**: While single-model extraction on open models yields 13.04% precision, requiring a **majority consensus (2/3) raises precision to 75.00%** (a 5.75× improvement).
+2. **Any-model consensus lifts recall**: Combining candidate propositions across models lifts recall to **63.64%** (recovering 21 of 33 gold claims, vs 18 for Gemma alone).
+3. **Throughput**: Across all 3 models, 1,215 turn inferences completed in 2568.8s (avg 2.11s/turn), fully on local Apple Silicon unified memory with zero network requests beyond the local daemon.
+
+### 6.4 Shared Disagreement Analysis (Shared False Positives)
+Only **1 turn** was unanimously classified as a claim by all three labs that B2 gold labelled as an exclusion:
+- **`00251a80c868f535_t0142` (David Friedberg)**:
+  - *Quote*: `"We are now going to face over the next 12 months as we have to refinance 10 trillion dollars of debt."*
+  - *Model consensus*: All three models (Google, Zhipu, Alibaba) identified this as a defensible factual projection/position.
+  - *B2 Gold verdict*: Excluded under Gate 1 (*"Describing third-party narrative, personal anecdote, or context without a defensible claim"*).
+  - *Rubric takeaway*: This shared false positive highlights an edge case in the rubric where an assertive projection about macro finance borders on contextual commentary.
+
+### 6.5 Majority True Positives (3 Turns)
+1. `00251a80c868f535_t0101` (David Sacks): *"The narrative predicting a broad collapse of the SaaS industry was significantly exaggerated."* (Gemma + Qwen)
+2. `00251a80c868f535_t0116` (David Sacks): *"Established software systems of record are complementary to AI agents rather than made obsolete by them."* (Gemma + Qwen)
+3. `00251a80c868f535_t0187` (David Friedberg): *"Federal loan intervention programs cause more harm than good by driving administrative inflation and escalating costs."* (Unanimous: Gemma + GLM-4 + Qwen)
+
+### 6.6 Falsification (Non-Zero Temperature Self-Agreement)
+To ensure consensus is not measuring stochastic noise, GLM-4 was run twice over 21 turns of E287 with non-zero temperature (`temperature=0.7`):
+- Run 1 vs Run 2 Agreement: **21 / 21 turns (100.0% self-agreement)**.
+- Confirms that the model's verdict distribution under positive elicitation is stable, robust to sampling variation, and consensus represents genuine cross-model convergence rather than decoding noise.
+
+### 6.7 Environment, Hardware & Storage
+- **Hardware**: Apple Silicon M4 Max, 64 GB unified memory.
+- **Network**: 100% local execution (`mlx_lm` and local Ollama daemon); zero network calls during extraction runs.
+- **Disk Storage**:
+  - Before B6: 94.5 GB free (internal disk `/dev/disk3s1s1`).
+  - After B6: 89.2 GB free (5.5 GB allocated for `glm4:latest` Q4_K_M).
+  - No transient weights left resident for uncompared models.

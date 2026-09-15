@@ -11,6 +11,7 @@ import json
 import re
 import subprocess
 import time
+import urllib.request
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
@@ -422,37 +423,49 @@ def evaluate_against_gold(
 
 
 class ModelExtractor:
-    """Extractor runtime running local MLX inference."""
+    """Extractor runtime running local MLX or Ollama inference."""
 
     def __init__(
         self,
         model_id: str = MODEL_ID,
         runtime: str = "mlx_lm",
         quantisation: str | None = None,
+        temperature: float = 0.0,
+        seed: int | None = None,
+        base_url: str = "http://127.0.0.1:11434",
     ) -> None:
-        from mlx_lm import generate, load
-        from mlx_lm.sample_utils import make_sampler
-
         self.model_id = model_id
         self.runtime = runtime
-        loaded = load(model_id, return_config=True)
-        self.model = loaded[0]
-        self.tokenizer = loaded[1]
-        config: dict[str, Any] = loaded[2] if len(loaded) > 2 and isinstance(loaded[2], dict) else {}
-        self.generate_fn = generate
-        self.sampler = make_sampler(temp=0.0)
+        self.temperature = temperature
+        self.seed = seed
+        self.base_url = base_url
 
-        if quantisation is not None:
-            self.quantisation = quantisation
-        else:
-            if "quantization" in config and isinstance(config["quantization"], dict):
-                q = config["quantization"]
-                bits = q.get("bits")
-                self.quantisation = f"{bits}-bit" if bits is not None else "unknown"
-            elif config.get("torch_dtype"):
-                self.quantisation = str(config["torch_dtype"])
+        if runtime == "mlx_lm":
+            from mlx_lm import generate, load
+            from mlx_lm.sample_utils import make_sampler
+
+            loaded = load(model_id, return_config=True)
+            self.model = loaded[0]
+            self.tokenizer = loaded[1]
+            config: dict[str, Any] = loaded[2] if len(loaded) > 2 and isinstance(loaded[2], dict) else {}
+            self.generate_fn = generate
+            self.sampler = make_sampler(temp=temperature)
+
+            if quantisation is not None:
+                self.quantisation = quantisation
             else:
-                self.quantisation = "unknown"
+                if "quantization" in config and isinstance(config["quantization"], dict):
+                    q = config["quantization"]
+                    bits = q.get("bits")
+                    self.quantisation = f"{bits}-bit" if bits is not None else "unknown"
+                elif config.get("torch_dtype"):
+                    self.quantisation = str(config["torch_dtype"])
+                else:
+                    self.quantisation = "unknown"
+        elif runtime == "ollama":
+            self.quantisation = quantisation or "Q4_K_M"
+        else:
+            raise ValueError(f"Unsupported runtime: {runtime}")
 
     def extract_turn(
         self,
@@ -462,15 +475,40 @@ class ModelExtractor:
         max_tokens: int = 250,
     ) -> dict[str, Any]:
         """Runs generation for a single turn and parses verdict."""
-        raw_output = self.generate_fn(
-            self.model,
-            self.tokenizer,
-            prompt=prompt,
-            max_tokens=max_tokens,
-            verbose=False,
-            sampler=self.sampler,
-        )
-        return parse_model_verdict(raw_output, target_turn, context_turn)
+        if self.runtime == "mlx_lm":
+            raw_output = self.generate_fn(
+                self.model,
+                self.tokenizer,
+                prompt=prompt,
+                max_tokens=max_tokens,
+                verbose=False,
+                sampler=self.sampler,
+            )
+        elif self.runtime == "ollama":
+            req_data: dict[str, Any] = {
+                "model": self.model_id,
+                "prompt": prompt,
+                "stream": False,
+                "options": {
+                    "temperature": self.temperature,
+                    "num_predict": max_tokens,
+                },
+            }
+            if self.temperature > 0.0 and self.seed is not None:
+                req_data["options"]["seed"] = self.seed
+
+            req = urllib.request.Request(
+                f"{self.base_url}/api/generate",
+                data=json.dumps(req_data).encode("utf-8"),
+                headers={"Content-Type": "application/json"},
+            )
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                resp_data = json.loads(resp.read().decode("utf-8"))
+            raw_output = str(resp_data.get("response", ""))
+        else:
+            raise ValueError(f"Unsupported runtime: {self.runtime}")
+
+        return parse_model_verdict(raw_output, target_turn, context_turn, apply_validator=True)
 
 
 def run_episode_extraction(
@@ -481,6 +519,7 @@ def run_episode_extraction(
     extractor: Any | None = None,
     output_dir: Path | None = None,
     output_filename: str | None = None,
+    max_tokens: int = 250,
 ) -> dict[str, Any]:
     """Runs extraction across all turns of an episode and saves the artifact."""
     transcript_file = DEFAULT_TRANSCRIPT_DIR / f"{source_id}.json"
@@ -497,11 +536,21 @@ def run_episode_extraction(
     rubric_text = load_rubric(DEFAULT_RUBRIC_PATH)
     active_extractor = extractor if extractor is not None else ModelExtractor()
 
-    # Decoding parameters pinned and recorded
-    decoding = {
-        "temperature": 0.0,
-        "max_tokens": 250,
-        "seed": 42,
+    # Trap 31 removal (residual 3 from B7): extractor must declare non-empty model_id
+    if not hasattr(active_extractor, "model_id") or not active_extractor.model_id:
+        raise AttributeError("Extractor must declare a non-empty 'model_id' attribute (silent default prohibited).")
+
+    # Decoding parameters pinned and recorded (residuals 1 & 2 from B7)
+    temp = float(getattr(active_extractor, "temperature", 0.0))
+    seed = getattr(active_extractor, "seed", None) if temp > 0.0 else None
+    sampler = "greedy" if temp == 0.0 else f"temp_{temp}"
+    tokens_val = int(max_tokens) if max_tokens is not None else 250
+
+    decoding: dict[str, Any] = {
+        "temperature": temp,
+        "sampler": sampler,
+        "max_tokens": tokens_val,
+        "seed": seed,
     }
 
     verdicts: list[dict[str, Any]] = []
@@ -515,7 +564,7 @@ def run_episode_extraction(
             prompt = build_rubric_prompt(rubric_text, target, context)
 
         verdict = active_extractor.extract_turn(
-            prompt, target, context, max_tokens=int(decoding["max_tokens"])
+            prompt, target, context, max_tokens=tokens_val
         )
         verdicts.append(verdict)
 
@@ -533,7 +582,7 @@ def run_episode_extraction(
         metrics = evaluate_against_gold(verdicts, gold_data, turns)
 
     # Provenance fields off the active extractor
-    model_id = getattr(active_extractor, "model_id", MODEL_ID)
+    model_id = str(active_extractor.model_id)
     runtime = getattr(active_extractor, "runtime", "unknown")
     quantisation = getattr(active_extractor, "quantisation", "unknown")
 
@@ -580,3 +629,113 @@ def run_episode_extraction(
         json.dump(result, f, indent=2)
 
     return result
+
+
+def evaluate_consensus_against_gold(
+    model_verdicts: dict[str, list[dict[str, Any]]],
+    gold_data: dict[str, Any],
+    turns: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Computes consensus metrics across multiple models against B2 gold set.
+
+    Evaluates:
+    - Unanimous rule (all models agree claim)
+    - Majority rule (>= 2 models agree claim for 3 models)
+    - Any-model rule (>= 1 model agree claim)
+    """
+    model_ids = list(model_verdicts.keys())
+    n_models = len(model_ids)
+    gold_by_id: dict[str, dict[str, Any]] = {
+        v["turn_id"]: v for v in gold_data.get("verdicts", [])
+    }
+
+    def score_rule(rule_name: str, pred_is_claim_fn: Callable[[list[str]], bool]) -> dict[str, Any]:
+        tp = fp = tn = fn = 0
+        disagreements: list[dict[str, Any]] = []
+        rule_claims = 0
+
+        for turn in turns:
+            tid = turn["turn_id"]
+            gold_entry = gold_by_id.get(tid)
+            if not gold_entry:
+                continue
+            gold_is_claim = bool(gold_entry.get("verdict") == "claim")
+
+            # Collect model predictions for this turn
+            preds: list[str] = []
+            for mid in model_ids:
+                m_map = {v["turn_id"]: v for v in model_verdicts[mid]}
+                preds.append(m_map.get(tid, {}).get("verdict", "exclusion"))
+
+            pred_is_claim = pred_is_claim_fn(preds)
+            if pred_is_claim:
+                rule_claims += 1
+
+            if pred_is_claim and gold_is_claim:
+                tp += 1
+            elif pred_is_claim and not gold_is_claim:
+                fp += 1
+                disagreements.append({
+                    "turn_id": tid,
+                    "type": "false_positive",
+                    "speaker": turn.get("speaker_label", ""),
+                    "rule": rule_name,
+                    "model_verdicts": dict(zip(model_ids, preds, strict=False)),
+                    "gold_verdict": "exclusion",
+                    "gold_gate": gold_entry.get("gate_failed", ""),
+                    "turn_text": turn.get("text", "")[:150],
+                })
+            elif not pred_is_claim and not gold_is_claim:
+                tn += 1
+            else:
+                fn += 1
+                disagreements.append({
+                    "turn_id": tid,
+                    "type": "false_negative",
+                    "speaker": turn.get("speaker_label", ""),
+                    "rule": rule_name,
+                    "model_verdicts": dict(zip(model_ids, preds, strict=False)),
+                    "gold_verdict": "claim",
+                    "gold_quote": gold_entry.get("quote", ""),
+                    "gold_claim": gold_entry.get("claim", ""),
+                    "turn_text": turn.get("text", "")[:150],
+                })
+
+        total = tp + fp + tn + fn
+        prec = (tp / (tp + fp)) if (tp + fp) > 0 else 0.0
+        rec = (tp / (tp + fn)) if (tp + fn) > 0 else 0.0
+        f1 = (2 * prec * rec / (prec + rec)) if (prec + rec) > 0 else 0.0
+
+        return {
+            "rule": rule_name,
+            "total_turns": total,
+            "claims_count": rule_claims,
+            "confusion_matrix": {"tp": tp, "fp": fp, "tn": tn, "fn": fn},
+            "precision": round(prec, 4),
+            "recall": round(rec, 4),
+            "f1": round(f1, 4),
+            "precision_pct": round(prec * 100.0, 2),
+            "recall_pct": round(rec * 100.0, 2),
+            "f1_pct": round(f1 * 100.0, 2),
+            "disagreements_count": len(disagreements),
+            "disagreements": disagreements,
+        }
+
+    unanimous = score_rule("unanimous", lambda preds: all(p == "claim" for p in preds))
+    majority = score_rule("majority", lambda preds: sum(1 for p in preds if p == "claim") >= (n_models // 2 + 1))
+    any_model = score_rule("any_model", lambda preds: any(p == "claim" for p in preds))
+
+    # Shared false positives (all models called claim, gold says exclusion)
+    shared_fps = [
+        d for d in unanimous["disagreements"] if d["type"] == "false_positive"
+    ]
+
+    return {
+        "models": model_ids,
+        "total_turns": len(turns),
+        "unanimous": unanimous,
+        "majority": majority,
+        "any_model": any_model,
+        "shared_false_positives_count": len(shared_fps),
+        "shared_false_positives": shared_fps,
+    }
