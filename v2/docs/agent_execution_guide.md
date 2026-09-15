@@ -117,7 +117,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
 | 1 | **G0** | V2 has no gates, and five items landed without them | none | **DELIVERED**. Wired §3 state detection into guide, clean ruff & mypy (17 files), pytest 35 passed. |
-| 2 | **B7** | Make the review page report what actually ran | none | **PARTIALLY DELIVERED** (`bd5ecbf`). Denominators unified and the stale-server footer added — both verified. **Provenance reopened:** the four constants moved from `review.py` into `extract.py` and are still stamped into every artifact unconditionally, so C1 will label its new prompt `rubric_prompt_v1` and B6's three models will all record as `gemma-2-2b-it-4bit`. **The spec is now a committed failing test — `v2/tests/test_b7_provenance.py`.** |
+| 2 | **B7** | Make the review page report what actually ran | none | **DELIVERED**. Provenance written off actual extractor instance, decoding params pinned/recorded, rubric_commit dynamically derived (9882bc3), backfilled artifacts marked reconstructed_b7, gate rates unified to share of all turns. 6 tests in test_b7_provenance.py pass. |
 | 3 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0, B7 | Hours, not days. The rubric is an exclusion manual used as the prompt verbatim, on a task where "no" is right 92% of the time. **Do this before B6** — running three big models against a prompt known to induce collapse buys an expensive wrong conclusion. |
 | 4 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**) | C1 | Gemma, GLM and a third lab's model over the same 405 turns. **Agreement is evidence only if checked against the gold set** — three models wrong together is the row worth finding. Also settles whether a LoRA is worth attempting. |
 | 5 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
@@ -568,7 +568,7 @@ Agreement is only evidence when the things agreeing are independent. **Gemma (Go
 **Blast radius.** `v2/src/`, `v2/artifacts/extraction/`, model weights on disk (staged, then removed). **No changes to the rubric, the gold set, or V1.**
 
 ---
-## 14. B7 — Make the review page report what actually ran · **PARTIALLY DELIVERED** (`bd5ecbf`)
+## 14. B7 — Make the review page report what actually ran · **DELIVERED**
 
 **Two of three gaps are closed and verified. Gap 1 was relocated, not fixed**, which is why this item is still at queue order 2.
 

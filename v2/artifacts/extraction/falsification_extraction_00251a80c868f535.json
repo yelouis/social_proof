@@ -5,7 +5,8 @@
   "quantisation": "4-bit",
   "runtime": "mlx_lm",
   "prompt_version": "falsification_prompt_v1",
-  "rubric_commit": "23da31c",
+  "rubric_commit": "9882bc3",
+  "provenance_source": "reconstructed_b7",
   "turns_processed": 405,
   "total_turns": 405,
   "elapsed_seconds": 393.83,
@@ -36,7 +37,7 @@
       "gate_4": 0
     },
     "gate_failure_rates_model": {
-      "gate_1": 100.0,
+      "gate_1": 2.96,
       "gate_2": 0.0,
       "gate_3": 0.0,
       "gate_4": 0.0
@@ -48,10 +49,10 @@
       "gate_4": 56
     },
     "gate_failure_rates_gold": {
-      "gate_1": 81.18,
-      "gate_2": 2.15,
-      "gate_3": 1.61,
-      "gate_4": 15.05
+      "gate_1": 74.57,
+      "gate_2": 1.98,
+      "gate_3": 1.48,
+      "gate_4": 13.83
     },
     "disagreements_count": 360,
     "disagreements": [

@@ -17,22 +17,6 @@ import pytest
 
 from v2.src.extract import run_episode_extraction
 
-# ---------------------------------------------------------------------------
-# These tests are committed RED, on purpose, before the code that satisfies them.
-#
-# strict=True means the suite stays green while they fail (reported as xfail),
-# and goes RED the moment they start passing while this marker is still here.
-# That is deliberate: it forces whoever fixes B7 to come back and delete these
-# three lines, which is the moment the item is actually finished.
-#
-# DO NOT satisfy these tests by editing this file.
-# ---------------------------------------------------------------------------
-pytestmark = pytest.mark.xfail(
-    strict=True,
-    reason="B7 gap 1: run_episode_extraction does not yet record the identity of the run",
-)
-
-
 ROOT_DIR = Path(__file__).resolve().parent.parent
 REPO_ROOT = ROOT_DIR.parent
 EPISODE = "00251a80c868f535"
@@ -70,7 +54,7 @@ class StubExtractor:
 
 def _run(tmp_path: Path, model_id: str, runtime: str, quantisation: str) -> dict[str, Any]:
     stub = StubExtractor(model_id, runtime, quantisation)
-    result = run_episode_extraction(  # type: ignore[call-arg]
+    result = run_episode_extraction(
         source_id=EPISODE,
         max_turns=2,
         extractor=stub,

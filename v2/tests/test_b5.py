@@ -199,10 +199,11 @@ def test_model_identity_displayed():
     html = render_review_html(data)
 
     # Model metadata fields must be present
-    assert "mlx-community/gemma-2-2b-it-4bit" in html
-    assert "4-bit" in html
-    assert "mlx" in html.lower()
-    assert "23da31c" in html  # Rubric commit
+    prov = data["model_provenance"]
+    assert prov["model_id"] in html
+    assert prov["quantisation"] in html
+    assert (prov["runtime"] or "mlx").lower() in html.lower()
+    assert prov["rubric_commit"] in html
 
 
 def test_zero_network_requests():

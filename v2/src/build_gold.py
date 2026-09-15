@@ -18,7 +18,7 @@ from typing import Any
 
 TRANSCRIPT_PATH = Path("v2/artifacts/transcripts/00251a80c868f535.json")
 GOLD_OUTPUT_PATH = Path("v2/fixtures/gold/00251a80c868f535.json")
-RUBRIC_COMMIT = "23da31c"
+RUBRIC_COMMIT = "9882bc3"
 RUBRIC_FILE = "v2/docs/design_claim_rubric.md"
 
 # Specific claims identified by human/agent reading against rubric gates 1-4.

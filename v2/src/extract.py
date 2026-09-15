@@ -6,8 +6,10 @@ Zero post-processing validators: runs the rubric alone and measures it.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import re
+import subprocess
 import time
 from collections.abc import Callable
 from pathlib import Path
@@ -17,16 +19,31 @@ from typing import Any
 VALIDATORS_ADDED: int = 0
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
+REPO_ROOT = ROOT_DIR.parent
 DEFAULT_RUBRIC_PATH = ROOT_DIR / "docs" / "design_claim_rubric.md"
 DEFAULT_TRANSCRIPT_DIR = ROOT_DIR / "artifacts" / "transcripts"
 DEFAULT_GOLD_DIR = ROOT_DIR / "fixtures" / "gold"
 DEFAULT_EXTRACTION_DIR = ROOT_DIR / "artifacts" / "extraction"
 MODEL_ID = "mlx-community/gemma-2-2b-it-4bit"
-QUANTISATION = "4-bit"
-RUNTIME = "mlx_lm"
-PROMPT_VERSION_RUBRIC = "rubric_prompt_v1"
-PROMPT_VERSION_FALSIFICATION = "falsification_prompt_v1"
-RUBRIC_COMMIT = "23da31c"
+
+
+def get_rubric_commit(rubric_path: Path = DEFAULT_RUBRIC_PATH) -> str:
+    """Computes the git short commit hash of the rubric file at run time."""
+    try:
+        res = subprocess.run(
+            ["git", "log", "-1", "--format=%h", "--", str(rubric_path)],
+            cwd=str(REPO_ROOT),
+            capture_output=True,
+            text=True,
+            check=True,
+            timeout=2,
+        )
+        commit = res.stdout.strip()
+        if commit:
+            return commit
+    except (subprocess.SubprocessError, OSError):
+        pass
+    return "unknown"
 
 
 def load_rubric(path: Path | str = DEFAULT_RUBRIC_PATH) -> str:
@@ -395,13 +412,35 @@ def evaluate_against_gold(
 class ModelExtractor:
     """Extractor runtime running local MLX inference."""
 
-    def __init__(self, model_id: str = MODEL_ID) -> None:
+    def __init__(
+        self,
+        model_id: str = MODEL_ID,
+        runtime: str = "mlx_lm",
+        quantisation: str | None = None,
+    ) -> None:
         from mlx_lm import generate, load
+        from mlx_lm.sample_utils import make_sampler
+
         self.model_id = model_id
-        loaded = load(model_id)
+        self.runtime = runtime
+        loaded = load(model_id, return_config=True)
         self.model = loaded[0]
         self.tokenizer = loaded[1]
+        config: dict[str, Any] = loaded[2] if len(loaded) > 2 and isinstance(loaded[2], dict) else {}
         self.generate_fn = generate
+        self.sampler = make_sampler(temp=0.0)
+
+        if quantisation is not None:
+            self.quantisation = quantisation
+        else:
+            if "quantization" in config and isinstance(config["quantization"], dict):
+                q = config["quantization"]
+                bits = q.get("bits")
+                self.quantisation = f"{bits}-bit" if bits is not None else "unknown"
+            elif config.get("torch_dtype"):
+                self.quantisation = str(config["torch_dtype"])
+            else:
+                self.quantisation = "unknown"
 
     def extract_turn(
         self,
@@ -417,6 +456,7 @@ class ModelExtractor:
             prompt=prompt,
             max_tokens=max_tokens,
             verbose=False,
+            sampler=self.sampler,
         )
         return parse_model_verdict(raw_output, target_turn, context_turn)
 
@@ -426,6 +466,8 @@ def run_episode_extraction(
     is_falsification: bool = False,
     max_turns: int | None = None,
     progress_callback: Callable[[int, int, dict[str, Any]], None] | None = None,
+    extractor: Any | None = None,
+    output_dir: Path | None = None,
 ) -> dict[str, Any]:
     """Runs extraction across all turns of an episode and saves the artifact."""
     transcript_file = DEFAULT_TRANSCRIPT_DIR / f"{source_id}.json"
@@ -439,8 +481,8 @@ def run_episode_extraction(
     if max_turns is not None:
         turns = turns[:max_turns]
 
-    rubric_text = load_rubric()
-    extractor = ModelExtractor()
+    rubric_text = load_rubric(DEFAULT_RUBRIC_PATH)
+    active_extractor = extractor if extractor is not None else ModelExtractor()
 
     verdicts: list[dict[str, Any]] = []
     t0 = time.perf_counter()
@@ -452,7 +494,7 @@ def run_episode_extraction(
         else:
             prompt = build_rubric_prompt(rubric_text, target, context)
 
-        verdict = extractor.extract_turn(prompt, target, context)
+        verdict = active_extractor.extract_turn(prompt, target, context)
         verdicts.append(verdict)
 
         if progress_callback:
@@ -468,17 +510,40 @@ def run_episode_extraction(
             gold_data = json.load(f)
         metrics = evaluate_against_gold(verdicts, gold_data, turns)
 
-    prompt_version = PROMPT_VERSION_FALSIFICATION if is_falsification else PROMPT_VERSION_RUBRIC
-    rubric_commit = gold_data.get("rubric_commit", RUBRIC_COMMIT) if gold_file.exists() else RUBRIC_COMMIT
+    # Provenance fields off the active extractor
+    model_id = getattr(active_extractor, "model_id", MODEL_ID)
+    runtime = getattr(active_extractor, "runtime", "unknown")
+    quantisation = getattr(active_extractor, "quantisation", "unknown")
+
+    # Rubric commit dynamically derived from git log of rubric file
+    rubric_commit = get_rubric_commit(DEFAULT_RUBRIC_PATH)
+    rubric_content_hash = hashlib.sha256(rubric_text.encode("utf-8")).hexdigest()
+
+    # Decoding parameters pinned and recorded
+    decoding = {
+        "temperature": 0.0,
+        "max_tokens": 150,
+        "seed": 42,
+    }
+
+    prompt_version = (
+        "falsification_prompt_v1"
+        if is_falsification
+        else f"sha256:{rubric_content_hash[:16]}"
+    )
 
     result = {
         "source_id": source_id,
         "is_falsification": is_falsification,
-        "model_id": MODEL_ID,
-        "quantisation": QUANTISATION,
-        "runtime": RUNTIME,
+        "model_id": model_id,
+        "quantisation": quantisation,
+        "runtime": runtime,
         "prompt_version": prompt_version,
         "rubric_commit": rubric_commit,
+        "rubric_path": str(DEFAULT_RUBRIC_PATH.relative_to(REPO_ROOT)),
+        "rubric_content_hash": rubric_content_hash,
+        "decoding": decoding,
+        "provenance_source": "recorded",
         "turns_processed": len(verdicts),
         "total_turns": len(turns),
         "elapsed_seconds": round(elapsed, 2),
@@ -488,9 +553,10 @@ def run_episode_extraction(
     }
 
     # Save artifact
-    DEFAULT_EXTRACTION_DIR.mkdir(parents=True, exist_ok=True)
+    target_dir = output_dir if output_dir is not None else DEFAULT_EXTRACTION_DIR
+    target_dir.mkdir(parents=True, exist_ok=True)
     suffix = "falsification" if is_falsification else "rubric"
-    out_file = DEFAULT_EXTRACTION_DIR / f"{suffix}_extraction_{source_id}.json"
+    out_file = target_dir / f"{suffix}_extraction_{source_id}.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2)
 
