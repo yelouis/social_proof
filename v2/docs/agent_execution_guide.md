@@ -117,7 +117,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
 | 1 | **G0** | V2 has no gates, and five items landed without them | none | **DELIVERED**. Wired §3 state detection into guide, clean ruff & mypy (17 files), pytest 35 passed. |
-| 2 | **B7** | Make the review page report what actually ran | none | Hours, not days. The page's provenance line is four constants behind a file-exists check, and the gate percentages use three denominators at once. **Before C1**, whose gate verify compares against fixture percentages the page restates differently, and **before B6**, which cannot label three models with one model's constants. |
+| 2 | **B7** | Make the review page report what actually ran | none | **DELIVERED**. Model provenance driven strictly by artifact without defaults; gold/model gate distributions unified to share-of-all-turns matching fixture; server HEAD and artifact mtimes rendered in footer. |
 | 3 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0, B7 | Hours, not days. The rubric is an exclusion manual used as the prompt verbatim, on a task where "no" is right 92% of the time. **Do this before B6** — running three big models against a prompt known to induce collapse buys an expensive wrong conclusion. |
 | 4 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**) | C1 | Gemma, GLM and a third lab's model over the same 405 turns. **Agreement is evidence only if checked against the gold set** — three models wrong together is the row worth finding. Also settles whether a LoRA is worth attempting. |
 | 5 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
@@ -566,7 +566,7 @@ Agreement is only evidence when the things agreeing are independent. **Gemma (Go
 **Blast radius.** `v2/src/`, `v2/artifacts/extraction/`, model weights on disk (staged, then removed). **No changes to the rubric, the gold set, or V1.**
 
 ---
-## 14. B7 — Make the review page report what actually ran
+## 14. B7 — Make the review page report what actually ran · **DELIVERED**
 
 **Blocked on nothing. Do it before C1** — C1's gate-distribution verify compares against numbers this item makes consistent, and B6 cannot label three models with one model's constants.
 

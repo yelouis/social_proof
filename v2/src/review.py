@@ -9,6 +9,8 @@ from __future__ import annotations
 
 import html
 import json
+import subprocess
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -18,6 +20,25 @@ DEFAULT_GOLD_DIR = ROOT_DIR / "fixtures" / "gold"
 DEFAULT_EXTRACTION_DIR = ROOT_DIR / "artifacts" / "extraction"
 
 REFERENCE_EPISODE = "00251a80c868f535"
+
+
+def get_git_head_short(repo_root: Path = ROOT_DIR.parent) -> str:
+    """Returns the short git HEAD commit hash."""
+    try:
+        res = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=str(repo_root),
+            capture_output=True,
+            text=True,
+            check=True,
+            timeout=2,
+        )
+        return res.stdout.strip()
+    except (subprocess.SubprocessError, OSError):
+        return "unknown"
+
+
+SERVER_START_HEAD = get_git_head_short()
 
 
 class TurnCountMismatchError(ValueError):
@@ -76,11 +97,16 @@ def load_episode_data(
     transcript_dir: Path = DEFAULT_TRANSCRIPT_DIR,
     gold_dir: Path = DEFAULT_GOLD_DIR,
     extraction_dir: Path = DEFAULT_EXTRACTION_DIR,
+    extraction_file: Path | str | None = None,
 ) -> dict[str, Any]:
     """Loads B1 transcript, B2 gold, and B3 extraction artefacts from disk."""
     transcript_file = transcript_dir / f"{source_id}.json"
     if not transcript_file.exists():
         raise FileNotFoundError(f"Transcript file not found: {transcript_file}")
+
+    artifacts_read: list[dict[str, str]] = []
+    t_mtime = datetime.fromtimestamp(transcript_file.stat().st_mtime, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ")
+    artifacts_read.append({"name": transcript_file.name, "path": str(transcript_file), "mtime": t_mtime})
 
     with open(transcript_file, "r", encoding="utf-8") as f:
         transcript_data = json.load(f)
@@ -97,35 +123,41 @@ def load_episode_data(
     gold_data: dict[str, Any] | None = None
     gold_verdicts: dict[str, dict[str, Any]] = {}
     if has_gold:
+        g_mtime = datetime.fromtimestamp(gold_file.stat().st_mtime, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ")
+        artifacts_read.append({"name": gold_file.name, "path": str(gold_file), "mtime": g_mtime})
         with open(gold_file, "r", encoding="utf-8") as f:
             gold_data = json.load(f)
         for v in gold_data.get("verdicts", []):
             gold_verdicts[v["turn_id"]] = v
 
     # Load B3 Extraction set if present
-    # Support rubric_extraction_<id>.json or extraction_<id>.json
-    extraction_file = extraction_dir / f"rubric_extraction_{source_id}.json"
-    if not extraction_file.exists():
-        fallback_file = extraction_dir / f"extraction_{source_id}.json"
-        if fallback_file.exists():
-            extraction_file = fallback_file
+    if extraction_file is not None:
+        target_extraction_file = Path(extraction_file)
+    else:
+        target_extraction_file = extraction_dir / f"rubric_extraction_{source_id}.json"
+        if not target_extraction_file.exists():
+            fallback_file = extraction_dir / f"extraction_{source_id}.json"
+            if fallback_file.exists():
+                target_extraction_file = fallback_file
 
-    has_extraction = extraction_file.exists()
+    has_extraction = target_extraction_file.exists()
     extraction_data: dict[str, Any] | None = None
     model_verdicts: dict[str, dict[str, Any]] = {}
     if has_extraction:
-        with open(extraction_file, "r", encoding="utf-8") as f:
+        e_mtime = datetime.fromtimestamp(target_extraction_file.stat().st_mtime, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ")
+        artifacts_read.append({"name": target_extraction_file.name, "path": str(target_extraction_file), "mtime": e_mtime})
+        with open(target_extraction_file, "r", encoding="utf-8") as f:
             extraction_data = json.load(f)
         for v in extraction_data.get("verdicts", []):
             model_verdicts[v["turn_id"]] = v
 
-    # Model provenance metadata (Step 5)
+    # Model provenance metadata (Step 5 & B7 Gap 1: driven strictly by artifact, zero defaults)
     model_provenance = {
-        "model_id": extraction_data.get("model_id", "mlx-community/gemma-2-2b-it-4bit") if extraction_data else None,
-        "quantisation": "4-bit" if (extraction_data and "4bit" in extraction_data.get("model_id", "")) else ("4-bit" if has_extraction else None),
-        "runtime": "mlx_lm" if has_extraction else None,
-        "prompt_version": "rubric_prompt_v1" if has_extraction else None,
-        "rubric_commit": gold_data.get("rubric_commit", "23da31c") if gold_data else "23da31c",
+        "model_id": extraction_data.get("model_id") if extraction_data else None,
+        "quantisation": extraction_data.get("quantisation") if extraction_data else None,
+        "runtime": extraction_data.get("runtime") if extraction_data else None,
+        "prompt_version": extraction_data.get("prompt_version") if extraction_data else None,
+        "rubric_commit": extraction_data.get("rubric_commit") if extraction_data else None,
     }
 
     # Merge turns with gold and model verdicts
@@ -235,16 +267,15 @@ def load_episode_data(
             "agreement_state": agreement_state,
         })
 
-    # Gate distribution calculations
+    # Gate distribution calculations (share-of-all-turns convention across both model and gold)
     total_turns = len(merged_turns)
-    total_gold_exclusions = sum(gold_gate_counts.values()) or 1
 
     model_gate_pcts = {
         g: round((c / total_turns) * 100.0, 2) if total_turns > 0 else 0.0
         for g, c in model_gate_counts.items()
     }
     gold_gate_pcts = {
-        g: round((c / total_gold_exclusions) * 100.0, 2) if total_gold_exclusions > 0 else 0.0
+        g: round((c / total_turns) * 100.0, 2) if total_turns > 0 else 0.0
         for g, c in gold_gate_counts.items()
     }
 
@@ -269,14 +300,19 @@ def load_episode_data(
                 "percentages": gold_gate_pcts,
             },
         },
+        "artifacts_read": artifacts_read,
     }
 
 
 def render_review_html(
     data: dict[str, Any],
     all_episodes: list[dict[str, Any]] | None = None,
+    server_head: str | None = None,
 ) -> str:
     """Renders the standalone review page HTML for an episode."""
+    if server_head is None:
+        server_head = SERVER_START_HEAD
+
     title = html.escape(data.get("title", "Episode Review"))
     source_id = html.escape(data.get("source_id", ""))
     turns = data.get("turns", [])
@@ -312,14 +348,20 @@ def render_review_html(
 
     gate_cards_html = []
     for g_key, g_title in gate_names.items():
-        if has_extraction:
+        if has_extraction and has_gold:
+            m_cnt = m_gates.get(g_key, 0)
+            m_pct = m_pcts.get(g_key, 0.0)
+            g_cnt = g_gates.get(g_key, 0)
+            g_pct = g_pcts.get(g_key, 0.0)
+            display_stat = f"{m_cnt} <span class='pct'>({m_pct:.1f}%)</span> <div class='stat-sub gold-substat'>Gold: {g_cnt} ({g_pct:.2f}%)</div>"
+        elif has_extraction:
             cnt = m_gates.get(g_key, 0)
             pct = m_pcts.get(g_key, 0.0)
             display_stat = f"{cnt} <span class='pct'>({pct:.1f}%)</span>"
         elif has_gold:
             cnt = g_gates.get(g_key, 0)
             pct = g_pcts.get(g_key, 0.0)
-            display_stat = f"{cnt} <span class='pct'>({pct:.1f}%)</span>"
+            display_stat = f"{cnt} <span class='pct'>({pct:.2f}%)</span>"
         else:
             display_stat = "0 <span class='pct'>(0.0%)</span>"
 
@@ -470,15 +512,15 @@ def render_review_html(
 
     turn_cards_str = "\n".join(turn_cards_html)
 
-    # Model provenance banner (Step 5)
+    # Model provenance banner (Step 5 & B7 Gap 1: driven strictly by artifact, zero defaults)
     if has_extraction:
         prov_html = f"""
         <div class="provenance-banner">
             <div class="prov-item"><span class="prov-k">Model:</span> <span class="prov-v">{html.escape(str(prov.get('model_id') or 'unknown'))}</span></div>
-            <div class="prov-item"><span class="prov-k">Quant:</span> <span class="prov-v">{html.escape(str(prov.get('quantisation') or '4-bit'))}</span></div>
-            <div class="prov-item"><span class="prov-k">Runtime:</span> <span class="prov-v">{html.escape(str(prov.get('runtime') or 'mlx_lm'))}</span></div>
-            <div class="prov-item"><span class="prov-k">Prompt:</span> <span class="prov-v">{html.escape(str(prov.get('prompt_version') or 'rubric_prompt_v1'))}</span></div>
-            <div class="prov-item"><span class="prov-k">Rubric Commit:</span> <span class="prov-v font-mono">{html.escape(str(prov.get('rubric_commit') or '23da31c'))}</span></div>
+            <div class="prov-item"><span class="prov-k">Quant:</span> <span class="prov-v">{html.escape(str(prov.get('quantisation') or 'unknown'))}</span></div>
+            <div class="prov-item"><span class="prov-k">Runtime:</span> <span class="prov-v">{html.escape(str(prov.get('runtime') or 'unknown'))}</span></div>
+            <div class="prov-item"><span class="prov-k">Prompt:</span> <span class="prov-v">{html.escape(str(prov.get('prompt_version') or 'unknown'))}</span></div>
+            <div class="prov-item"><span class="prov-k">Rubric Commit:</span> <span class="prov-v font-mono">{html.escape(str(prov.get('rubric_commit') or 'unknown'))}</span></div>
         </div>
         """
     else:
@@ -515,6 +557,17 @@ def render_review_html(
             <div class="ag-stat"><span class="ag-num">B1 Only</span> <span class="ag-lbl">No claims have been extracted yet</span></div>
         </div>
         """
+
+    # Format artifact provenance and mtimes for footer
+    artifacts_read = data.get("artifacts_read", [])
+    if artifacts_read:
+        artifacts_meta_items = [
+            f"{html.escape(a['name'])} ({html.escape(a['mtime'])})"
+            for a in artifacts_read
+        ]
+        artifacts_meta_str = " &bull; ".join(artifacts_meta_items)
+    else:
+        artifacts_meta_str = "None"
 
     # Assemble complete, standalone HTML document (Zero network requests)
     return f"""<!DOCTYPE html>
@@ -1088,6 +1141,21 @@ def render_review_html(
             font-size: 0.8rem;
             background: var(--surface);
         }}
+
+        .footer-primary {{
+            margin-bottom: 0.35rem;
+        }}
+
+        .footer-meta {{
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }}
+
+        .gold-substat {{
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }}
     </style>
 </head>
 <body>
@@ -1146,7 +1214,11 @@ def render_review_html(
     </main>
 
     <footer class="site-footer">
-        Social Proof V2 Reviewer &bull; B5 Delivered &bull; Read-only loopback server (127.0.0.1) &bull; Zero network egress
+        <div class="footer-primary">Social Proof V2 Reviewer &bull; Read-only loopback server (127.0.0.1) &bull; Zero network egress</div>
+        <div class="footer-meta">
+            Server HEAD: <span class="font-mono">{html.escape(server_head)}</span> &bull; 
+            Artifacts read: {artifacts_meta_str}
+        </div>
     </footer>
 
     <script>

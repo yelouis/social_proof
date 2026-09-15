@@ -21,8 +21,12 @@ DEFAULT_RUBRIC_PATH = ROOT_DIR / "docs" / "design_claim_rubric.md"
 DEFAULT_TRANSCRIPT_DIR = ROOT_DIR / "artifacts" / "transcripts"
 DEFAULT_GOLD_DIR = ROOT_DIR / "fixtures" / "gold"
 DEFAULT_EXTRACTION_DIR = ROOT_DIR / "artifacts" / "extraction"
-
 MODEL_ID = "mlx-community/gemma-2-2b-it-4bit"
+QUANTISATION = "4-bit"
+RUNTIME = "mlx_lm"
+PROMPT_VERSION_RUBRIC = "rubric_prompt_v1"
+PROMPT_VERSION_FALSIFICATION = "falsification_prompt_v1"
+RUBRIC_COMMIT = "23da31c"
 
 
 def load_rubric(path: Path | str = DEFAULT_RUBRIC_PATH) -> str:
@@ -350,14 +354,12 @@ def evaluate_against_gold(
 
     verbatim_quote_rate = (verbatim_quote_matches / total_model_claims * 100.0) if total_model_claims > 0 else 100.0
 
-    total_exclusions_model = sum(gate_counts_model.values())
     gate_rates_model = {
-        k: round(v / total_exclusions_model * 100.0, 2) if total_exclusions_model > 0 else 0.0
+        k: round(v / total * 100.0, 2) if total > 0 else 0.0
         for k, v in gate_counts_model.items()
     }
-    total_exclusions_gold = sum(gate_counts_gold.values())
     gate_rates_gold = {
-        k: round(v / total_exclusions_gold * 100.0, 2) if total_exclusions_gold > 0 else 0.0
+        k: round(v / total * 100.0, 2) if total > 0 else 0.0
         for k, v in gate_counts_gold.items()
     }
 
@@ -466,10 +468,17 @@ def run_episode_extraction(
             gold_data = json.load(f)
         metrics = evaluate_against_gold(verdicts, gold_data, turns)
 
+    prompt_version = PROMPT_VERSION_FALSIFICATION if is_falsification else PROMPT_VERSION_RUBRIC
+    rubric_commit = gold_data.get("rubric_commit", RUBRIC_COMMIT) if gold_file.exists() else RUBRIC_COMMIT
+
     result = {
         "source_id": source_id,
         "is_falsification": is_falsification,
         "model_id": MODEL_ID,
+        "quantisation": QUANTISATION,
+        "runtime": RUNTIME,
+        "prompt_version": prompt_version,
+        "rubric_commit": rubric_commit,
         "turns_processed": len(verdicts),
         "total_turns": len(turns),
         "elapsed_seconds": round(elapsed, 2),

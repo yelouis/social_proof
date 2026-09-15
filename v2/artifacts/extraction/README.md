@@ -23,14 +23,14 @@
 
 ## 2. Gate Failure Distribution
 
-Comparison of model exclusions vs human gold exclusions on B2 reference episode:
+Comparison of model exclusions vs human gold exclusions on B2 reference episode (rates as share of all 405 turns, per B7):
 
 | Gate | Gold Set Count (Rate) | Rubric Model Count (Rate) | Falsification Count (Rate) |
 |---|---|---|---|
-| **Gate 1** | 302 (81.18%) | 405 (100.00%) | 12 (100.00%) |
-| **Gate 2** | 8 (2.15%) | 0 (0.00%) | 0 (0.00%) |
-| **Gate 3** | 6 (1.61%) | 0 (0.00%) | 0 (0.00%) |
-| **Gate 4** | 56 (15.05%) | 0 (0.00%) | 0 (0.00%) |
+| **Gate 1** | 302 (74.57%) | 405 (100.00%) | 12 (2.96%) |
+| **Gate 2** | 8 (1.98%) | 0 (0.00%) | 0 (0.00%) |
+| **Gate 3** | 6 (1.48%) | 0 (0.00%) | 0 (0.00%) |
+| **Gate 4** | 56 (13.83%) | 0 (0.00%) | 0 (0.00%) |
 
 ## 3. Quote Integrity & Provenance
 

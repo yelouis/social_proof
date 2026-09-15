@@ -27,6 +27,7 @@ from v2.src.review import (
     DEFAULT_GOLD_DIR,
     DEFAULT_TRANSCRIPT_DIR,
     REFERENCE_EPISODE,
+    SERVER_START_HEAD,
     list_available_episodes,
     load_episode_data,
     render_review_html,
@@ -61,6 +62,9 @@ class ReviewRequestHandler(BaseHTTPRequestHandler):
             # Determine episode
             episodes = list_available_episodes(DEFAULT_TRANSCRIPT_DIR)
             episode_id = query.get("episode", [None])[0]
+            extraction_name = query.get("extraction", [None])[0]
+            extraction_file = (DEFAULT_EXTRACTION_DIR / extraction_name) if extraction_name else None
+
             if not episode_id:
                 # Default to reference episode if available, else first episode
                 available_ids = [e["source_id"] for e in episodes]
@@ -78,8 +82,9 @@ class ReviewRequestHandler(BaseHTTPRequestHandler):
                     transcript_dir=DEFAULT_TRANSCRIPT_DIR,
                     gold_dir=DEFAULT_GOLD_DIR,
                     extraction_dir=DEFAULT_EXTRACTION_DIR,
+                    extraction_file=extraction_file,
                 )
-                html_content = render_review_html(data, all_episodes=episodes)
+                html_content = render_review_html(data, all_episodes=episodes, server_head=SERVER_START_HEAD)
                 body = html_content.encode("utf-8")
 
                 self.send_response(HTTPStatus.OK)
