@@ -24,6 +24,9 @@ DEFAULT_RUBRIC_PATH = ROOT_DIR / "docs" / "design_claim_rubric.md"
 DEFAULT_TRANSCRIPT_DIR = ROOT_DIR / "artifacts" / "transcripts"
 DEFAULT_GOLD_DIR = ROOT_DIR / "fixtures" / "gold"
 DEFAULT_EXTRACTION_DIR = ROOT_DIR / "artifacts" / "extraction"
+DEFAULT_PROMPTS_DIR = ROOT_DIR / "prompts"
+DEFAULT_PROMPT_CLAIM_PATH = DEFAULT_PROMPTS_DIR / "extract_claim.md"
+DEFAULT_PROMPT_FALSIFY_PATH = DEFAULT_PROMPTS_DIR / "extract_falsify.md"
 MODEL_ID = "mlx-community/gemma-2-2b-it-4bit"
 
 
@@ -70,127 +73,74 @@ def extract_rubric_sections(rubric_text: str) -> dict[str, str]:
     }
 
 
+def load_prompt_template(path: Path | str) -> str:
+    """Loads a prompt template file verbatim."""
+    with open(path, "r", encoding="utf-8") as f:
+        return f.read()
+
+
+def format_context_turn(context_turn: dict[str, Any] | None, is_falsification: bool = False) -> str:
+    """Formats preceding context turn block."""
+    ctx_speaker = context_turn.get("speaker_label", "None") if context_turn else "None"
+    ctx_text = context_turn.get("text", "None") if context_turn else "None"
+    ctx_turn_id = context_turn.get("turn_id", "None") if context_turn else "None"
+    if is_falsification:
+        return f"Context turn (preceding turn {ctx_turn_id}):\nSpeaker: {ctx_speaker}\nText: {ctx_text}"
+    return (
+        f"Context turn (preceding turn {ctx_turn_id}, for reference only — DO NOT quote or extract from context):\n"
+        f"Speaker: {ctx_speaker}\n"
+        f"Text: {ctx_text}"
+    )
+
+
+def format_target_turn(target_turn: dict[str, Any]) -> str:
+    """Formats target turn block to evaluate."""
+    target_turn_id = target_turn["turn_id"]
+    target_speaker = target_turn.get("speaker_label", "unknown")
+    target_text = target_turn.get("text", "")
+    return f"Target turn to evaluate:\nTurn ID: {target_turn_id}\nSpeaker: {target_speaker}\nText: {target_text}"
+
+
 def build_rubric_prompt(
     rubric_text: str,
     target_turn: dict[str, Any],
     context_turn: dict[str, Any] | None = None,
+    template_path: Path | str = DEFAULT_PROMPT_CLAIM_PATH,
 ) -> str:
-    """Builds the extraction prompt interpolating the rubric verbatim.
+    """Builds the extraction prompt interpolating rubric and turn blocks into template."""
+    template = load_prompt_template(template_path)
+    ctx_block = format_context_turn(context_turn, is_falsification=False)
+    target_block = format_target_turn(target_turn)
+    target_turn_id = str(target_turn["turn_id"])
+    target_speaker = str(target_turn.get("speaker_label", "unknown"))
 
-    Preceding context turn is provided for reference only (context is read, never quoted from).
-    Target turn is evaluated against the 4 rubric gates in order.
-    """
-    ctx_speaker = context_turn.get("speaker_label", "None") if context_turn else "None"
-    ctx_text = context_turn.get("text", "None") if context_turn else "None"
-    ctx_turn_id = context_turn.get("turn_id", "None") if context_turn else "None"
-
-    target_turn_id = target_turn["turn_id"]
-    target_speaker = target_turn.get("speaker_label", "unknown")
-    target_text = target_turn.get("text", "")
-
-    prompt = f"""<start_of_turn>user
-You are an expert claim extraction engine applying the official claim rubric.
-
-{rubric_text}
-
----
-TASK:
-Analyze the target turn from the transcript and determine whether it contains a defensible claim under the rubric, or must be excluded under Gate 1, 2, 3, or 4.
-
-Context turn (preceding turn {ctx_turn_id}, for reference only — DO NOT quote or extract from context):
-Speaker: {ctx_speaker}
-Text: {ctx_text}
-
-Target turn to evaluate:
-Turn ID: {target_turn_id}
-Speaker: {target_speaker}
-Text: {target_text}
-
-INSTRUCTIONS:
-1. Apply the four gates in order:
-   - Gate 1 (Attributable): Is the speaker asserting it in their own voice? (Fails if guest, unknown speaker, reporting what others said, asking a question, banter, reading ad copy, or hypothetical).
-   - Gate 2 (About the world): Is it about something outside the podcast recording? (Fails if show mechanics, schedule, tickets, greetings, banter).
-   - Gate 3 (Contestable): Could a reasonable person disagree? (Fails on tautologies, undisputed facts, product specs).
-   - Gate 4 (Standalone): Can a reader tell what is being asserted without conversational context?
-2. If ANY gate fails, output an exclusion JSON with that gate:
-```json
-{{
-  "verdict": "exclusion",
-  "turn_id": "{target_turn_id}",
-  "gate_failed": "gate_1" | "gate_2" | "gate_3" | "gate_4",
-  "reason": "<one sentence reason>"
-}}
-```
-3. If ALL four gates pass, output a claim JSON:
-```json
-{{
-  "verdict": "claim",
-  "turn_id": "{target_turn_id}",
-  "speaker": "{target_speaker}",
-  "type": "position" | "prediction" | "causal" | "evaluative" | "contested fact",
-  "quote": "<exact verbatim substring from target turn text, NEVER from context>",
-  "claim": "<the assertion as a standalone sentence with pronouns resolved>",
-  "offset": <character start offset of quote in target turn text>
-}}
-```
-Respond strictly with a JSON object.
-<end_of_turn>
-<start_of_turn>model
-"""
-    return prompt
+    return (
+        template.replace("{rubric}", rubric_text)
+        .replace("{context_turn}", ctx_block)
+        .replace("{target_turn}", target_block)
+        .replace("{target_turn_id}", target_turn_id)
+        .replace("{target_speaker}", target_speaker)
+    )
 
 
 def build_falsification_prompt(
     target_turn: dict[str, Any],
     context_turn: dict[str, Any] | None = None,
+    template_path: Path | str = DEFAULT_PROMPT_FALSIFY_PATH,
 ) -> str:
-    """Builds the falsification prompt with the rubric stripped, leaving only 'extract claims'."""
-    ctx_speaker = context_turn.get("speaker_label", "None") if context_turn else "None"
-    ctx_text = context_turn.get("text", "None") if context_turn else "None"
-    ctx_turn_id = context_turn.get("turn_id", "None") if context_turn else "None"
+    """Builds the falsification prompt interpolating turn blocks into stripped template."""
+    template = load_prompt_template(template_path)
+    ctx_block = format_context_turn(context_turn, is_falsification=True)
+    target_block = format_target_turn(target_turn)
+    target_turn_id = str(target_turn["turn_id"])
+    target_speaker = str(target_turn.get("speaker_label", "unknown"))
 
-    target_turn_id = target_turn["turn_id"]
-    target_speaker = target_turn.get("speaker_label", "unknown")
-    target_text = target_turn.get("text", "")
-
-    prompt = f"""<start_of_turn>user
-You are a claim extraction tool. Extract claims from the following speaking turn.
-
-Context turn (preceding turn {ctx_turn_id}):
-Speaker: {ctx_speaker}
-Text: {ctx_text}
-
-Target turn to evaluate:
-Turn ID: {target_turn_id}
-Speaker: {target_speaker}
-Text: {target_text}
-
-If the target turn contains a claim, output:
-```json
-{{
-  "verdict": "claim",
-  "turn_id": "{target_turn_id}",
-  "speaker": "{target_speaker}",
-  "type": "position" | "prediction" | "causal" | "evaluative" | "contested fact",
-  "quote": "<verbatim quote>",
-  "claim": "<statement of claim>",
-  "offset": 0
-}}
-```
-
-If the target turn does not contain a claim, output:
-```json
-{{
-  "verdict": "exclusion",
-  "turn_id": "{target_turn_id}",
-  "gate_failed": "gate_1",
-  "reason": "No claim found"
-}}
-```
-<end_of_turn>
-<start_of_turn>model
-"""
-    return prompt
+    return (
+        template.replace("{context_turn}", ctx_block)
+        .replace("{target_turn}", target_block)
+        .replace("{target_turn_id}", target_turn_id)
+        .replace("{target_speaker}", target_speaker)
+    )
 
 
 def parse_model_verdict(
@@ -526,11 +476,10 @@ def run_episode_extraction(
         "seed": 42,
     }
 
-    prompt_version = (
-        "falsification_prompt_v1"
-        if is_falsification
-        else f"sha256:{rubric_content_hash[:16]}"
-    )
+    prompt_file = DEFAULT_PROMPT_FALSIFY_PATH if is_falsification else DEFAULT_PROMPT_CLAIM_PATH
+    prompt_content = prompt_file.read_text(encoding="utf-8") if prompt_file.exists() else ""
+    prompt_content_hash = hashlib.sha256(prompt_content.encode("utf-8")).hexdigest()
+    prompt_version = f"{prompt_file.stem}:{prompt_content_hash[:12]}"
 
     result = {
         "source_id": source_id,
@@ -539,6 +488,8 @@ def run_episode_extraction(
         "quantisation": quantisation,
         "runtime": runtime,
         "prompt_version": prompt_version,
+        "prompt_path": str(prompt_file.relative_to(REPO_ROOT)),
+        "prompt_content_hash": prompt_content_hash,
         "rubric_commit": rubric_commit,
         "rubric_path": str(DEFAULT_RUBRIC_PATH.relative_to(REPO_ROOT)),
         "rubric_content_hash": rubric_content_hash,
