@@ -19,37 +19,37 @@
   "turns_processed": 405,
   "total_turns": 405,
   "elapsed_seconds": 841.37,
-  "validators_added": 0,
+  "validators_added": 1,
   "metrics": {
     "total_turns": 405,
     "confusion_matrix": {
-      "tp": 27,
-      "fp": 149,
-      "tn": 223,
-      "fn": 6
+      "tp": 18,
+      "fp": 120,
+      "tn": 252,
+      "fn": 15
     },
-    "precision": 0.1534,
-    "recall": 0.8182,
-    "f1": 0.2584,
-    "precision_pct": 15.34,
-    "recall_pct": 81.82,
-    "f1_pct": 25.84,
+    "precision": 0.1304,
+    "recall": 0.5455,
+    "f1": 0.2105,
+    "precision_pct": 13.04,
+    "recall_pct": 54.55,
+    "f1_pct": 21.05,
     "gold_claims_count": 33,
-    "model_claims_count": 176,
+    "model_claims_count": 138,
     "verbatim_quote_matches": 138,
-    "verbatim_quote_rate": 78.41,
-    "context_leak_quotes": 1,
+    "verbatim_quote_rate": 100.0,
+    "context_leak_quotes": 0,
     "gate_failure_counts_model": {
-      "gate_1": 67,
+      "gate_1": 68,
       "gate_2": 54,
       "gate_3": 1,
-      "gate_4": 107
+      "gate_4": 144
     },
     "gate_failure_rates_model": {
-      "gate_1": 16.54,
+      "gate_1": 16.79,
       "gate_2": 13.33,
       "gate_3": 0.25,
-      "gate_4": 26.42
+      "gate_4": 35.56
     },
     "gate_failure_counts_gold": {
       "gate_1": 302,
@@ -63,7 +63,7 @@
       "gate_3": 1.48,
       "gate_4": 13.83
     },
-    "disagreements_count": 155,
+    "disagreements_count": 135,
     "disagreements": [
       {
         "turn_id": "00251a80c868f535_t0008",
@@ -75,6 +75,18 @@
         "model_quote": "What is his heterodoxical thought about science?",
         "model_claim": "What is his heterodoxical thought about science?",
         "turn_text": "What is his heterodoxical thought about science?"
+      },
+      {
+        "turn_id": "00251a80c868f535_t0009",
+        "type": "false_negative",
+        "speaker": "David Friedberg",
+        "model_verdict": "exclusion",
+        "model_gate": "gate_4",
+        "model_reason": "Rejected by quote validator: empty quote payload",
+        "gold_verdict": "claim",
+        "gold_quote": "so much of science has kind of followed this sheet like mentality where everyone has to line up, agree to the same general theory or you get outcasts, you don't get great. Funding, you don't get 10 -year, you don't get jobs",
+        "gold_claim": "Academic science enforces conformity around mainstream theories through funding, tenure, and hiring decisions.",
+        "turn_text": "There's all these things that everyone takes as fundamental premises and modern physics, like the string theory as an example. And he thought it was b"
       },
       {
         "turn_id": "00251a80c868f535_t0011",
@@ -108,17 +120,6 @@
         "model_quote": "Exactly right.",
         "model_claim": "Exactly right.",
         "turn_text": "Exactly right."
-      },
-      {
-        "turn_id": "00251a80c868f535_t0019",
-        "type": "false_positive",
-        "speaker": "David Friedberg",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_4",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "I mean, think about the general theory of relativity being published. It was completely outlandish, but people still studied it, assessed it. They did"
       },
       {
         "turn_id": "00251a80c868f535_t0025",
@@ -165,17 +166,6 @@
         "turn_text": "They're rooting for it. And then we got Dario saying all jobs are over."
       },
       {
-        "turn_id": "00251a80c868f535_t0038",
-        "type": "false_positive",
-        "speaker": "Chamath Palihapitiya",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "Your grand unifying theory is that in a country of a billion people they couldn't find 4,000 to show up to watch a bunch of robots run around to track.",
-        "model_claim": "Your grand unifying theory is that in a country of a billion people they couldn't find 4,000 to show up to watch a bunch of robots run around to track.",
-        "turn_text": "Your grand unifying theory is that in a country of a billion people they couldn't find 4 ,000 to show up to watch a bunch of robots run around to trac"
-      },
-      {
         "turn_id": "00251a80c868f535_t0039",
         "type": "false_positive",
         "speaker": "unknown",
@@ -185,6 +175,18 @@
         "model_quote": "Are you really brave?",
         "model_claim": "Are you really brave?",
         "turn_text": "Are you really brave? This is that your grand unifying theory."
+      },
+      {
+        "turn_id": "00251a80c868f535_t0040",
+        "type": "false_negative",
+        "speaker": "David Sacks",
+        "model_verdict": "exclusion",
+        "model_gate": "gate_4",
+        "model_reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+        "gold_verdict": "claim",
+        "gold_quote": "that is the biggest risk to us winning this AI race against China is doing something that will shoot ourselves in the foot because we're so pessimistic about what AI might do",
+        "gold_claim": "American societal pessimism regarding AI is the primary risk to the United States maintaining technological leadership over China.",
+        "turn_text": "It is true that China is much more optimistic about AI than we are. Optimism in China is over 80 % meaning they pull on the question do you think AI w"
       },
       {
         "turn_id": "00251a80c868f535_t0044",
@@ -288,6 +290,18 @@
         "turn_text": "I told him he should make it play our mode so like You can put two agents in the same room, but then being able to put two people from your team in th"
       },
       {
+        "turn_id": "00251a80c868f535_t0066",
+        "type": "false_negative",
+        "speaker": "David Sacks",
+        "model_verdict": "exclusion",
+        "model_gate": "gate_4",
+        "model_reason": "Rejected by quote validator: empty quote payload",
+        "gold_verdict": "claim",
+        "gold_quote": "It turns out that if you have multiple agents, then the agents develop more context and expertise. So they get more specific",
+        "gold_claim": "Specialized multi-agent swarms outperform single generalist agents because each agent develops deeper domain context and expertise.",
+        "turn_text": "That will make this thing go so freaking viral. If you can just add, because then what's cool about the agency is you actually have an agent swarm. Yo"
+      },
+      {
         "turn_id": "00251a80c868f535_t0070",
         "type": "false_positive",
         "speaker": "Jason Calacanis",
@@ -319,28 +333,6 @@
         "model_quote": "Our great partner, polymarkets. 79 % chance in video ends the year as number one, 6 .3 million in. volume.",
         "model_claim": "Our great partner, polymarkets, has a 79% chance of being number one in video volume by the end of the year.",
         "turn_text": "Our great partner, polymarkets. 79 % chance in video ends the year as number one, 6 .3 million in. volume. In other news, South swars up over 20 % on "
-      },
-      {
-        "turn_id": "00251a80c868f535_t0081",
-        "type": "false_positive",
-        "speaker": "Chamath Palihapitiya",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "I think we're a little oversold. Now I think this consolidation and the re-rating can happen in the opposite direction. So what is the opposite trade? The opposite trade is who has constructed net dollar retention, who has negative turn that's been really predictable, which is a way of saying who has the best relationships. Those guys I think are positioned to crush.",
-        "model_claim": "Those guys I think are positioned to crush.",
-        "turn_text": "I think. we're a little oversold. Now I think this consolidation and the re -rating can happen in the opposite direction. So what is the opposite trad"
-      },
-      {
-        "turn_id": "00251a80c868f535_t0084",
-        "type": "false_positive",
-        "speaker": "Chamath Palihapitiya",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "I don't know, it was pretty obvious to me in May that Salesforce specifically was meaningfully oversold. I think what I was trying to say there, and m"
       },
       {
         "turn_id": "00251a80c868f535_t0085",
@@ -376,17 +368,6 @@
         "turn_text": "And that's why the stock's ripped. I think was like a 43 % since I said it."
       },
       {
-        "turn_id": "00251a80c868f535_t0093",
-        "type": "false_positive",
-        "speaker": "David Friedberg",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "He goes to my office, he gets set up and then we're done. And then we realized, oh my god, this is actually much better way. for us to do this. So Mar"
-      },
-      {
         "turn_id": "00251a80c868f535_t0094",
         "type": "false_positive",
         "speaker": "unknown",
@@ -396,6 +377,18 @@
         "model_quote": "No one's going to go rebuild Excel.",
         "model_claim": "No one is going to rebuild Excel.",
         "turn_text": "No one's going to go rebuild Excel."
+      },
+      {
+        "turn_id": "00251a80c868f535_t0095",
+        "type": "false_negative",
+        "speaker": "David Friedberg",
+        "model_verdict": "exclusion",
+        "model_gate": "gate_4",
+        "model_reason": "Rejected by quote validator: empty quote payload",
+        "gold_verdict": "claim",
+        "gold_quote": "The real value is in the software that's unique for your vertical.",
+        "gold_claim": "The primary enterprise value from AI software accrues to vertical-specific applications rather than generic tools.",
+        "turn_text": "The real value is in the software that's unique for your vertical. That's where AI plays a role in building custom workflows and custom software. And "
       },
       {
         "turn_id": "00251a80c868f535_t0096",
@@ -420,26 +413,16 @@
         "turn_text": "Sex, let's talk about Mark Banyoff. He is just an incredible salesperson who just fought through the Sass Pac -Aleps and then figured out a way out of"
       },
       {
-        "turn_id": "00251a80c868f535_t0102",
-        "type": "false_positive",
+        "turn_id": "00251a80c868f535_t0103",
+        "type": "false_negative",
         "speaker": "David Sacks",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "So he's willing to again to give up a big piece of user relationship in order to make himself more relevant. Now why is this ultimately good for his b"
-      },
-      {
-        "turn_id": "00251a80c868f535_t0104",
-        "type": "false_positive",
-        "speaker": "Jason Calacanis",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "He's going to do a parallel link sacks. He's going to have his own agents. And he's going to let you come in with your agents.",
-        "model_claim": "He's going to do a parallel link sacks. He's going to have his own agents. And he's going to let you come in with your agents.",
-        "turn_text": "I got to say he's like one of the most underestimated and underappreciated product and sales executives in our industry because I was talking to him w"
+        "model_verdict": "exclusion",
+        "model_gate": "gate_4",
+        "model_reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+        "gold_verdict": "claim",
+        "gold_quote": "You have to think of agents created by the AI companies as being an extension of your platform and not feel threatened that you're losing the customer relationship",
+        "gold_claim": "SaaS platforms should treat external AI agents as complementary extensions rather than proprietary threats.",
+        "turn_text": "So I mean that's where this is headed, but now it raises the question, okay, so how do SaaS applications play into this AI and agent wave? You have to"
       },
       {
         "turn_id": "00251a80c868f535_t0105",
@@ -498,28 +481,6 @@
         "turn_text": "So it was a leverage trap where he's like, I need to be really massively net long these other names and his prime broker's like, well, you got to find"
       },
       {
-        "turn_id": "00251a80c868f535_t0119",
-        "type": "false_positive",
-        "speaker": "Jason Calacanis",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "I just wanted to also point out within videos, incredible results. Two things that happen very quietly. And Jensen is clearly open source maxing now. "
-      },
-      {
-        "turn_id": "00251a80c868f535_t0120",
-        "type": "false_positive",
-        "speaker": "Chamath Palihapitiya",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "I don't think that's what went over. My understanding is that But because Jason Warner tweeted this morning about a new model drop, I was confused by "
-      },
-      {
         "turn_id": "00251a80c868f535_t0121",
         "type": "false_positive",
         "speaker": "unknown",
@@ -575,17 +536,6 @@
         "turn_text": "He is going to own open source. But that is a really interesting moment in time for us to look at because we were sitting here six months ago, 12 mont"
       },
       {
-        "turn_id": "00251a80c868f535_t0131",
-        "type": "false_positive",
-        "speaker": "Chamath Palihapitiya",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "And then you're going to see them go up the stack and host the model. Then you're going to see them supply APIs and supply inference. And they're goin"
-      },
-      {
         "turn_id": "00251a80c868f535_t0132",
         "type": "false_positive",
         "speaker": "unknown",
@@ -595,17 +545,6 @@
         "model_quote": "What's your return on investment?",
         "model_claim": "What's your return on investment?",
         "turn_text": "What's your return on investment?"
-      },
-      {
-        "turn_id": "00251a80c868f535_t0133",
-        "type": "false_positive",
-        "speaker": "Chamath Palihapitiya",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "It's all melting together. Every company's gonna do everything. You're gonna look at these big companies in five years. They're all gonna have their o"
       },
       {
         "turn_id": "00251a80c868f535_t0135",
@@ -630,15 +569,16 @@
         "turn_text": "No more doge, no more cutting costs. And obviously we got a war that's quite expensive."
       },
       {
-        "turn_id": "00251a80c868f535_t0137",
-        "type": "false_positive",
-        "speaker": "Jason Calacanis",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "Every five months free burger, I think you said last episode, we had a trillion. So we're adding 2 .5 trillion a year. We'll attend trillion during th"
+        "turn_id": "00251a80c868f535_t0141",
+        "type": "false_negative",
+        "speaker": "David Friedberg",
+        "model_verdict": "exclusion",
+        "model_gate": "gate_4",
+        "model_reason": "Rejected by quote validator: empty quote payload",
+        "gold_verdict": "claim",
+        "gold_quote": "the market is saying we're worried about the US fiscal solvency over the long run",
+        "gold_claim": "Long-term US bond yields reflect growing market skepticism regarding United States sovereign fiscal solvency.",
+        "turn_text": "And as a result, the market is saying we're worried about the US fiscal solvency over the long run, or there's a higher risk. As a result, we're going"
       },
       {
         "turn_id": "00251a80c868f535_t0142",
@@ -650,17 +590,6 @@
         "model_quote": "So, best since doing his job as Treasury Secretary, he's saying, I'm going to market, I'm going to buy treasuries, I'm going to try and lower it, but he only has maximum maximum of trillion dollars he could use to buy debt. He still got to go sell 10 trillion dollars of treasuries in the next 12 months.",
         "model_claim": "The market is going to have to solve this deficit problem, and it is Congress's responsibility, it is the president's responsibility, it is the responsibility of the holders of the budget and the accounts that should stand up and say, we are going to cut spending, because if we don't cut spending, there is going to be a spiral.",
         "turn_text": "We are now going to face over the next 12 months as we have to refinance 10 trillion dollars of debt. So, best since doing his job as Treasury Secreta"
-      },
-      {
-        "turn_id": "00251a80c868f535_t0144",
-        "type": "false_positive",
-        "speaker": "David Friedberg",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "I don't think they're allowed to talk. I don't think they do talk. I don't think they drugs a lot of talk to Kevin or I don't think any of them are al"
       },
       {
         "turn_id": "00251a80c868f535_t0146",
@@ -705,6 +634,18 @@
         "model_quote": "They're marked against that 5 .1 print versus 5 .3.",
         "model_claim": "They are marking against that 5.1 print versus 5.3.",
         "turn_text": "They're marked against that 5 .1 print versus 5 .3."
+      },
+      {
+        "turn_id": "00251a80c868f535_t0156",
+        "type": "false_negative",
+        "speaker": "Chamath Palihapitiya",
+        "model_verdict": "exclusion",
+        "model_gate": "gate_4",
+        "model_reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+        "gold_verdict": "claim",
+        "gold_quote": "It's not a Democrat nor a Republican problem. It is a congressional problem, meaning both sides consistently spend",
+        "gold_claim": "Federal fiscal deficits are driven structurally by bipartisan congressional spending rather than either individual political party.",
+        "turn_text": "It's not a Democrat nor a Republican problem. It is a congressional problem, meaning both sides consistently spend way more than they should. So you h"
       },
       {
         "turn_id": "00251a80c868f535_t0158",
@@ -762,17 +703,6 @@
         "turn_text": "But it is the beginning of some extreme pain. And that pain will last years. And the only thing that solves it now is getting the budget. under contro"
       },
       {
-        "turn_id": "00251a80c868f535_t0169",
-        "type": "false_positive",
-        "speaker": "Jason Calacanis",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "Sex. The president was quite vocal about cutting costs early on in the presidency, but we haven't heard much from the commander in chief about this. I"
-      },
-      {
         "turn_id": "00251a80c868f535_t0172",
         "type": "false_negative",
         "speaker": "David Sacks",
@@ -785,28 +715,6 @@
         "turn_text": "Yeah, look part of it is it is a trashy the commons meaning you've got four hundred and thirty five members of the house, a hundred centers and they a"
       },
       {
-        "turn_id": "00251a80c868f535_t0173",
-        "type": "false_positive",
-        "speaker": "David Sacks",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "If there are Republicans lose control of Congress, I don't think that's going to make it better because you see now that the political energy and the Democrat party is all towards these massive new spending programs that the DSA wants.",
-        "model_claim": "If there are Republicans lose control of Congress, I don't think that's going to make it better because you see now that the political energy and the Democrat party is all towards these massive new spending programs that the DSA wants.",
-        "turn_text": "And let me just say that if there are Republicans lose control of Congress, I don't think that's going to make it better because you see now that the "
-      },
-      {
-        "turn_id": "00251a80c868f535_t0174",
-        "type": "false_positive",
-        "speaker": "Jason Calacanis",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "Republicans love to cut taxes and the Democrats love to increase spending.",
-        "model_claim": "Republicans love to cut taxes and the Democrats love to increase spending.",
-        "turn_text": "Freebra, give us a timeline here. Obviously, the Republicans... love to cut taxes and the Democrats love to increase spending."
-      },
-      {
         "turn_id": "00251a80c868f535_t0176",
         "type": "false_positive",
         "speaker": "Jason Calacanis",
@@ -816,6 +724,18 @@
         "model_quote": "This has not gotten better through three or four presidents. The last person who did this was, I guess, Clinton balanced the budget, but this has been getting worse and worse. At some point, we're all in agreement. This is going to come to do and we're going to have to have some austerity measures",
         "model_claim": "This has not gotten better through three or four presidents. The last person who did this was, I guess, Clinton balanced the budget, but this has been getting worse and worse. At some point, we're all in agreement. This is going to come to do and we're going to have to have some austerity measures",
         "turn_text": "This has not gotten better through three or four presidents. The last person who did this was, I guess, Clinton balanced the budget, but this has been"
+      },
+      {
+        "turn_id": "00251a80c868f535_t0178",
+        "type": "false_negative",
+        "speaker": "David Friedberg",
+        "model_verdict": "exclusion",
+        "model_gate": "gate_4",
+        "model_reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+        "gold_verdict": "claim",
+        "gold_quote": "inflation problem is fundamentally rooted in government spending. So deficit spending is correlated very nicely with the cost of housing",
+        "gold_claim": "Persistent inflation and rising housing costs are fundamentally driven by federal deficit spending.",
+        "turn_text": "Have this recursive solution, which is, as the people feel... some sort of pain they react with a vote. This goes back to this point about, do we brea"
       },
       {
         "turn_id": "00251a80c868f535_t0179",
@@ -849,17 +769,6 @@
         "model_quote": "Dollars. Especially if anybody who was in favor of a railway to nowhere should just be shamed out of exists for a train from San Francisco to Fresno that cost more than an airline ticket.",
         "model_claim": "Anybody who was in favor of a railway to nowhere should be shamed out of existence for a train from San Francisco to Fresno that cost more than an airline ticket.",
         "turn_text": "Dollars. Especially if anybody who was in favor of a railway to nowhere should just be shamed out of exists for a train from San Francisco to Fresno t"
-      },
-      {
-        "turn_id": "00251a80c868f535_t0185",
-        "type": "false_positive",
-        "speaker": "Jason Calacanis",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "Private industry would see an opportunity and they would have built it. Yes, free burn, private industry would see an opportunity and they would have built it.",
-        "model_claim": "Private industry would see an opportunity and they would have built it.",
-        "turn_text": "It tells you everything you need to know private company built a bright line in Florida and they seem to figure out how to do it at a fraction of the "
       },
       {
         "turn_id": "00251a80c868f535_t0188",
@@ -906,17 +815,6 @@
         "turn_text": "And we need to have, to your point, about media, sacked. a hundred and surely sixty minutes whoever it is to just say, hey, this spending, this fraud "
       },
       {
-        "turn_id": "00251a80c868f535_t0194",
-        "type": "false_positive",
-        "speaker": "David Sacks",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "And given the, the tragedy, the. structural nature of it that there's no one person who's in control of it you need mass of public pressure to control"
-      },
-      {
         "turn_id": "00251a80c868f535_t0195",
         "type": "false_positive",
         "speaker": "Chamath Palihapitiya",
@@ -926,17 +824,6 @@
         "model_quote": "Socialism is much more likely when, you know, 100 years ago when these things are less interconnected. America can't decide to do that.",
         "model_claim": "Socialism is much more likely when, you know, 100 years ago when these things are less interconnected. America can't decide to do that.",
         "turn_text": "Socialism is much more likely when, you know, 100 years ago when these things are less interconnected. America can't decide to do that."
-      },
-      {
-        "turn_id": "00251a80c868f535_t0197",
-        "type": "false_positive",
-        "speaker": "Chamath Palihapitiya",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "Why? Because all of our debt is interconnected. connected to domestic actors, international actors, it's not a decision. There is no button you can pu"
       },
       {
         "turn_id": "00251a80c868f535_t0198",
@@ -1049,6 +936,18 @@
         "turn_text": "Sack to you agree, you think that the opinion pieces in the Wall Street Journal New York Times should be written by AI, not the person who puts their "
       },
       {
+        "turn_id": "00251a80c868f535_t0238",
+        "type": "false_negative",
+        "speaker": "David Sacks",
+        "model_verdict": "exclusion",
+        "model_gate": "gate_1",
+        "model_reason": "Rejected by quote validator: quote resolves to context turn only (context leak)",
+        "gold_verdict": "claim",
+        "gold_quote": "the take is his. And then he uses the AI to help him write it.",
+        "gold_claim": "An article remains authentic as long as the underlying arguments belong to the author, regardless of AI text generation.",
+        "turn_text": "Yeah, I'm more precise way of putting it as the take is his. And then he uses the AI to help him write it. Look, I don't get all the pearl clutching a"
+      },
+      {
         "turn_id": "00251a80c868f535_t0239",
         "type": "false_positive",
         "speaker": "unknown",
@@ -1082,28 +981,6 @@
         "turn_text": "Yeah, the piece mentions the many times of the past he's waited on this. I think that this clearly came from his mind and he uses the AI to help him w"
       },
       {
-        "turn_id": "00251a80c868f535_t0243",
-        "type": "false_positive",
-        "speaker": "Chamath Palihapitiya",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "The morons on X should be like, wait a minute. How does this affect my company? How does it affect my portfolio? How will it affect my 401k? What will it do to my parents' retirement? How should I think about hedging this instead of that conversation? All of you people were like, oh my god, he had he was a guy.",
-        "model_claim": "The morons on X should be like, wait a minute. How does this affect my company? How does it affect my portfolio? How will it affect my 401k? What will it do to my parents' retirement? How should I think about hedging this instead of that conversation? All of you people were like, oh my god, he had he was a guy.",
-        "turn_text": "The morons on X should be like, wait a minute. How does this affect my company? How does it affect my portfolio? How will affect my 401k? What will it"
-      },
-      {
-        "turn_id": "00251a80c868f535_t0251",
-        "type": "false_positive",
-        "speaker": "Jason Calacanis",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "But if you were going to give your opinion, and it's not written by you, to me, that is disappointing that it's not disclosed. I think it's a much hig"
-      },
-      {
         "turn_id": "00251a80c868f535_t0252",
         "type": "false_positive",
         "speaker": "unknown",
@@ -1113,17 +990,6 @@
         "model_quote": "I find it personal.",
         "model_claim": "I find it personal.",
         "turn_text": "I find it personal."
-      },
-      {
-        "turn_id": "00251a80c868f535_t0255",
-        "type": "false_positive",
-        "speaker": "David Friedberg",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "What do you think is the difference between that concept and having artists be required to disclose whether or not they used Adobe Photoshop and the v"
       },
       {
         "turn_id": "00251a80c868f535_t0257",
@@ -1137,17 +1003,6 @@
         "turn_text": "The reason is the expectation of the reader. The reader has a high expectation and This is an important issue. And the reason why people were so disap"
       },
       {
-        "turn_id": "00251a80c868f535_t0259",
-        "type": "false_positive",
-        "speaker": "Jason Calacanis",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "They, I think they did, yes, because they also felt the Wall Street Journal betrayed them because the Wall Street Journal should be checking that anyt"
-      },
-      {
         "turn_id": "00251a80c868f535_t0261",
         "type": "false_positive",
         "speaker": "Chamath Palihapitiya",
@@ -1159,17 +1014,6 @@
         "turn_text": "Okay, Number one, are you suggesting that Stan didn't read this thing that was generated or do you think sure he did read it? Yes, okay, so when he re"
       },
       {
-        "turn_id": "00251a80c868f535_t0262",
-        "type": "false_positive",
-        "speaker": "unknown",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "Okay, he well he defended it. Yes, he really hope he did.",
-        "model_claim": "He defended it.",
-        "turn_text": "Okay, I think he well he defended it. Yes, he really hope he did."
-      },
-      {
         "turn_id": "00251a80c868f535_t0263",
         "type": "false_positive",
         "speaker": "Chamath Palihapitiya",
@@ -1179,17 +1023,6 @@
         "model_quote": "Okay, so you had do you have an issue with the that he read it he thought yeah this is what I think boom and hit the send button that's a betrayal to you.",
         "model_claim": "He thought this was what he wanted to do, and hit the send button, that's a betrayal to you.",
         "turn_text": "Okay, so you had do you have an issue with the that he read it he thought yeah this is what I think boom and hit the send button that's a betrayal to "
-      },
-      {
-        "turn_id": "00251a80c868f535_t0266",
-        "type": "false_positive",
-        "speaker": "David Sacks",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "I'm just so sure I'd like to make. But what is this standing disclosure for all future publications that I put out, including tweets, is that I try not to publish anything without running it through AI first, to fact-check it, to line edit it, and to help me make the best argument I can. So this is a standing disclosure that if I've written something and published it, it's probably been written on.",
-        "model_claim": "I try not to publish anything without running it through AI first, to fact-check it, to line edit it, and to help me make the best argument I can. So this is a standing disclosure that if I've written something and published it, it's probably been written on.",
-        "turn_text": "I'm just so sure I'd like to make. But what is this standing disclosure for all future publications that I put out, including tweets, is that I try no"
       },
       {
         "turn_id": "00251a80c868f535_t0268",
@@ -1256,17 +1089,6 @@
         "model_quote": "I'd be so proud if that was his process. I guess I don't know. This is just a guess.",
         "model_claim": "I'd be so proud if that was his process. I guess I don't know. This is just a guess.",
         "turn_text": "I'd be so proud if that was his process. I guess I don't know. This is just a guess."
-      },
-      {
-        "turn_id": "00251a80c868f535_t0285",
-        "type": "false_positive",
-        "speaker": "David Sacks",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "My guess is he had the take and he probably told the AI the take either. writing or just speaking to it or, you know, essentially speaking to his assi"
       },
       {
         "turn_id": "00251a80c868f535_t0289",
@@ -1401,17 +1223,6 @@
         "turn_text": "But it is. He's taking it. It's not leaking."
       },
       {
-        "turn_id": "00251a80c868f535_t0318",
-        "type": "false_positive",
-        "speaker": "Jason Calacanis",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "He's taking credit for what the AI wrote. And I would prefer him to take the time to respect the audience to write it himself because I have respect f"
-      },
-      {
         "turn_id": "00251a80c868f535_t0320",
         "type": "false_positive",
         "speaker": "Jason Calacanis",
@@ -1498,17 +1309,6 @@
         "model_quote": "It will make me wonder if that is actually his perfect opinion and crisply his because I think he's phoning it in.",
         "model_claim": "It will make me wonder if that is actually his perfect opinion and crisply his because I think he's phoning it in.",
         "turn_text": "It will make me wonder if that is actually his perfect opinion and crisply his because I think he's phoning it in."
-      },
-      {
-        "turn_id": "00251a80c868f535_t0339",
-        "type": "false_positive",
-        "speaker": "David Sacks",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "I think called into a show to basically say that story was... not true, and the contact was routine. And then the Russian readout said roughly the same thing. So the truth is we don't know what the meeting was about.",
-        "model_claim": "The truth is we don't know what the meeting was about.",
-        "turn_text": "I think called into a show to basically say that story was... not true, and the contact was routine. And then the Russian readout said roughly the sam"
       },
       {
         "turn_id": "00251a80c868f535_t0341",
@@ -1710,17 +1510,6 @@
         "turn_text": "Great idea."
       },
       {
-        "turn_id": "00251a80c868f535_t0389",
-        "type": "false_positive",
-        "speaker": "David Friedberg",
-        "model_verdict": "claim",
-        "gold_verdict": "exclusion",
-        "gold_gate": "gate_1",
-        "model_quote": "",
-        "model_claim": "",
-        "turn_text": "So why is Moderna saying that they're going to charge $500 ,000 for this? And that's what I think frustrates me about all this. Everyone's loading thi"
-      },
-      {
         "turn_id": "00251a80c868f535_t0390",
         "type": "false_positive",
         "speaker": "Jason Calacanis",
@@ -1777,7 +1566,19 @@
         "turn_text": "Yeah. And remember, there's a bunch of these new what are called modalities, new modes of therapy, therapeutic mode. that are being used to destroy ca"
       }
     ],
-    "validators_added": 0
+    "validators_added": 1,
+    "guard_rejections": {
+      "empty_quote": 23,
+      "non_verbatim": 14,
+      "context_leak": 1,
+      "total": 38
+    },
+    "guard_rejection_rates": {
+      "empty_quote": 5.68,
+      "non_verbatim": 3.46,
+      "context_leak": 0.25,
+      "total": 9.38
+    }
   },
   "verdicts": [
     {
@@ -1846,13 +1647,16 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0008\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"What is his heterodoxical thought about science?\",\n  \"claim\": \"What is his heterodoxical thought about science?\",\n  \"offset\": 10\n}\n```"
     },
     {
       "turn_id": "00251a80c868f535_t0009",
-      "verdict": "claim",
-      "speaker": "David Friedberg",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -1870,6 +1674,7 @@
       "offset": 39,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0010\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"until string theory is proved, it's unproved.\",\n  \"claim\": \"until string theory is proved, it's unproved.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -1882,6 +1687,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0011\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"It's unproved, right?\",\n  \"claim\": \"It's unproved, right?\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -1908,6 +1714,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0014\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"When there is no misinformation, if there's no absolute truth, that you're... talking about it's theory. Everyone was starting with theory on where the COVID came from.\",\n  \"claim\": \"When there is no misinformation, if there's no absolute truth, that you're talking about it's theory. Everyone was starting with theory on where the COVID came from.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -1927,6 +1734,7 @@
       "offset": 545,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0016\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"Now, that's why I went and talked to Cratsy Osmoans.\",\n  \"claim\": \"I don't know what has led to stagnation in science in America because if you do not part of the mainstream you get excluded and because everyone has to now think in the same way you don't have heterodox thinking you don't have outside of the scope thinking which means we're not pushing the envelope and discovering new things anymore and that's a very kind of pointed issue right now.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -1939,6 +1747,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0017\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"Just said differently, there's probably a lot of incrementalism in 2026 that didn't exist in 1926.\",\n  \"claim\": \"Just said differently, there's probably a lot of incrementalism in 2026 that didn't exist in 1926.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -1951,13 +1760,16 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0018\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"Exactly right.\",\n  \"claim\": \"Exactly right.\",\n  \"offset\": 2\n}\n```"
     },
     {
       "turn_id": "00251a80c868f535_t0019",
-      "verdict": "claim",
-      "speaker": "David Friedberg",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -2010,6 +1822,7 @@
       "offset": 22,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0025\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"That's like me skiing right there.\",\n  \"claim\": \"That's like me skiing right there.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -2050,6 +1863,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0030\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"I think you're 100 % right about the PR. And I realize. that the Chinese, the CCP is f***ing brilliant at PR.\",\n  \"claim\": \"The Chinese Communist Party is brilliant at public relations.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -2069,6 +1883,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0032\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"They got a bunch of Chinese people to fill a stadium and cheer for AI and robotics.\",\n  \"claim\": \"They got a bunch of Chinese people to fill a stadium and cheer for AI and robotics.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -2081,6 +1896,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0033\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"They're cheering for it.\",\n  \"claim\": \"They are cheering for AI.\",\n  \"offset\": 2\n}\n```"
     },
     {
@@ -2093,6 +1909,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0034\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"They're rooting for it. And then we got Dario saying all jobs are over.\",\n  \"claim\": \"They're rooting for it.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -2118,12 +1935,14 @@
     },
     {
       "turn_id": "00251a80c868f535_t0038",
-      "verdict": "claim",
-      "speaker": "Chamath Palihapitiya",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+      "validator_rejected": true,
+      "rejection_reason": "non_verbatim",
       "quote": "Your grand unifying theory is that in a country of a billion people they couldn't find 4,000 to show up to watch a bunch of robots run around to track.",
       "claim": "Your grand unifying theory is that in a country of a billion people they couldn't find 4,000 to show up to watch a bunch of robots run around to track.",
-      "offset": 109,
+      "offset": 0,
       "quote_resolves_verbatim": false,
       "quote_resolves_to_context_only": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0038\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"Your grand unifying theory is that in a country of a billion people they couldn't find 4,000 to show up to watch a bunch of robots run around to track.\",\n  \"claim\": \"Your grand unifying theory is that in a country of a billion people they couldn't find 4,000 to show up to watch a bunch of robots run around to track.\",\n  \"offset\": 109\n}\n```"
@@ -2138,16 +1957,19 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0039\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"Are you really brave?\",\n  \"claim\": \"Are you really brave?\",\n  \"offset\": 1\n}\n```"
     },
     {
       "turn_id": "00251a80c868f535_t0040",
-      "verdict": "claim",
-      "speaker": "David Sacks",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+      "validator_rejected": true,
+      "rejection_reason": "non_verbatim",
       "quote": "The US ahead of China and every category except one Which is optimism and that is the biggest risk to us winning this AI race against China is doing something that will shoot ourselves in the foot because we're so pessimistic about what AI might do.",
       "claim": "The US is ahead of China in every category except optimism, and that is the biggest risk to us winning this AI race against China is doing something that will shoot ourselves in the foot because we're so pessimistic about what AI might do.",
-      "offset": 139,
+      "offset": 0,
       "quote_resolves_verbatim": false,
       "quote_resolves_to_context_only": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0040\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"The US ahead of China and every category except one Which is optimism and that is the biggest risk to us winning this AI race against China is doing something that will shoot ourselves in the foot because we're so pessimistic about what AI might do.\",\n  \"claim\": \"The US is ahead of China in every category except optimism, and that is the biggest risk to us winning this AI race against China is doing something that will shoot ourselves in the foot because we're so pessimistic about what AI might do.\",\n  \"offset\": 139\n}\n```"
@@ -2183,6 +2005,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0044\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"This is a science. They make you feel bad. for the robots, they make you cheer for them. This is gonna be like a major thing.\",\n  \"claim\": \"This is a science. They make you feel bad. for the robots, they make you cheer for them. This is gonna be like a major thing.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -2209,6 +2032,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0047\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"And you just see the entire leg just snap off very, mean.\",\n  \"claim\": \"And you just see the entire leg just snap off very, mean.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -2242,6 +2066,7 @@
       "offset": 162,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0051\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"He's not showing it publicly, but I saw it.\",\n  \"claim\": \"He's not showing it publicly, but I saw it.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -2261,6 +2086,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0053\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"No sparks, but I saw a video that I said to him, I said, is this CGI or is this real? And he said, no, this is real. They just sent, to tell me this morning. And it's like, whoa, Optimus will be the best selling.\",\n  \"claim\": \"Jason Calacanis believes Optimus will be the best-selling product.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -2308,6 +2134,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0059\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"I just reached my grockbott uses limit and have to upgrade.\",\n  \"claim\": \"I just reached my grockbott uses limit and have to upgrade.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -2348,6 +2175,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0064\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"Yeah, it's pretty amazing.\",\n  \"claim\": \"Yeah, it's pretty amazing.\",\n  \"offset\": 1\n}\n```"
     },
     {
@@ -2360,13 +2188,16 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0065\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"I told him he should make it play our mode so like You can put two agents in the same room, but then being able to put two people from your team in the same room, and then having humans in the loop, it's going to be such a good idea.\",\n  \"claim\": \"I told him he should make it play our mode so like You can put two agents in the same room, but then being able to put two people from your team in the same room, and then having humans in the loop, it's going to be such a good idea.\",\n  \"offset\": 109\n}\n```"
     },
     {
       "turn_id": "00251a80c868f535_t0066",
-      "verdict": "claim",
-      "speaker": "David Sacks",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -2405,6 +2236,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0070\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"I just had a record setting earnings report. I mean, they blew the doors off this. And also, we'll talk a little bit about sales force, also coming back. And the SaaS apocalypse. Ending. Stock was up in videos that is 9 % on huge numbers and even huge your guidance 96 .2 billion in revenue in the quarter from up 106 % year over year.\",\n  \"claim\": \"They blew the doors off this earnings report.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -2424,6 +2256,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0072\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"Wall Street's expectation was 92 billion. They growth next year. That is well above what Wall Street was expecting at 45 % so but that sink in. The number people are growing crazy over 60 billion in net profit. That is the most profitable core business quarter of any public company ever Google and Amazon.\",\n  \"claim\": \"Wall Street's expectation was 92 billion. They growth next year. That is well above what Wall Street was expecting at 45 % so but that sink in. The number people are growing crazy over 60 billion in net profit. That is the most profitable core business quarter of any public company ever Google and Amazon.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -2457,6 +2290,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0076\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"Our great partner, polymarkets. 79 % chance in video ends the year as number one, 6 .3 million in. volume.\",\n  \"claim\": \"Our great partner, polymarkets, has a 79% chance of being number one in video volume by the end of the year.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -2483,6 +2317,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0079\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"I think the high end of the market where Mark operates where the large monoliths operate is quite safe. What people are finding is he hold on a second. This is a lot harder than we thought. It's not like Boop Boop put it up prompt and beat that Boop it all works.\",\n  \"claim\": \"I think the high end of the market where Mark operates where the large monoliths operate is quite safe. What people are finding is he hold on a second. This is a lot harder than we thought. It's not like Boop Boop put it up prompt and beat that Boop it all works.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -2494,12 +2329,14 @@
     },
     {
       "turn_id": "00251a80c868f535_t0081",
-      "verdict": "claim",
-      "speaker": "Chamath Palihapitiya",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+      "validator_rejected": true,
+      "rejection_reason": "non_verbatim",
       "quote": "I think we're a little oversold. Now I think this consolidation and the re-rating can happen in the opposite direction. So what is the opposite trade? The opposite trade is who has constructed net dollar retention, who has negative turn that's been really predictable, which is a way of saying who has the best relationships. Those guys I think are positioned to crush.",
       "claim": "Those guys I think are positioned to crush.",
-      "offset": 109,
+      "offset": 0,
       "quote_resolves_verbatim": false,
       "quote_resolves_to_context_only": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0081\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"I think we're a little oversold. Now I think this consolidation and the re-rating can happen in the opposite direction. So what is the opposite trade? The opposite trade is who has constructed net dollar retention, who has negative turn that's been really predictable, which is a way of saying who has the best relationships. Those guys I think are positioned to crush.\",\n  \"claim\": \"Those guys I think are positioned to crush.\",\n  \"offset\": 109\n}\n```"
@@ -2520,9 +2357,11 @@
     },
     {
       "turn_id": "00251a80c868f535_t0084",
-      "verdict": "claim",
-      "speaker": "Chamath Palihapitiya",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -2540,6 +2379,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0085\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"Next phase.\",\n  \"claim\": \"The speaker asserts that the 'next phase' refers to a specific phase of AI development.\",\n  \"offset\": 2\n}\n```"
     },
     {
@@ -2552,6 +2392,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0086\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"And I think that's why his net dollar attention is strong. That's why he's revenue is strong.\",\n  \"claim\": \"And I think that's why his net dollar attention is strong. That's why he's revenue is strong.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -2571,6 +2412,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0088\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"And that's why the stock's ripped. I think was like a 43 % since I said it.\",\n  \"claim\": \"And that's why the stock's ripped. I think was like a 43 % since I said it.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -2603,9 +2445,11 @@
     },
     {
       "turn_id": "00251a80c868f535_t0093",
-      "verdict": "claim",
-      "speaker": "David Friedberg",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -2623,13 +2467,16 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0094\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"No one's going to go rebuild Excel.\",\n  \"claim\": \"No one is going to rebuild Excel.\",\n  \"offset\": 10\n}\n```"
     },
     {
       "turn_id": "00251a80c868f535_t0095",
-      "verdict": "claim",
-      "speaker": "David Friedberg",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -2647,6 +2494,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0096\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"I totally agree with you.\",\n  \"claim\": \"I totally agree with you.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -2673,6 +2521,7 @@
       "offset": 294,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0099\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"Maybe you could talk about him as an executive, and what we can learn from what he just did in terms of going from in the market's mind, roadkill, to leading the pack, let's say.\",\n  \"claim\": \"Maybe you could talk about him as an executive, and what we can learn from what he just did in terms of going from in the market's mind, roadkill, to leading the pack, let's say.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -2692,13 +2541,16 @@
       "offset": 253,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0101\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"I do not believe that core systems of record like CRM are going to get ripped into replace with something.\",\n  \"claim\": \"I do not believe that core systems of record like CRM are going to get ripped into replace with something.\",\n  \"offset\": 109\n}\n```"
     },
     {
       "turn_id": "00251a80c868f535_t0102",
-      "verdict": "claim",
-      "speaker": "David Sacks",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -2708,24 +2560,28 @@
     },
     {
       "turn_id": "00251a80c868f535_t0103",
-      "verdict": "claim",
-      "speaker": "David Sacks",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+      "validator_rejected": true,
+      "rejection_reason": "non_verbatim",
       "quote": "You have to build the best agent interface, and you've got... to I think relax the idea that you're going to fully control the customer relationship. If you can do all those things become a source of truth and a system of record then you've got a big opportunity.",
       "claim": "You have to build the best agent interface, and you've got... to I think relax the idea that you're going to fully control the customer relationship. If you can do all those things become a source of truth and a system of record then you've got a big opportunity.",
-      "offset": 139,
+      "offset": 0,
       "quote_resolves_verbatim": false,
       "quote_resolves_to_context_only": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0103\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"You have to build the best agent interface, and you've got... to I think relax the idea that you're going to fully control the customer relationship. If you can do all those things become a source of truth and a system of record then you've got a big opportunity.\",\n  \"claim\": \"You have to build the best agent interface, and you've got... to I think relax the idea that you're going to fully control the customer relationship. If you can do all those things become a source of truth and a system of record then you've got a big opportunity.\",\n  \"offset\": 139\n}\n```"
     },
     {
       "turn_id": "00251a80c868f535_t0104",
-      "verdict": "claim",
-      "speaker": "Jason Calacanis",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+      "validator_rejected": true,
+      "rejection_reason": "non_verbatim",
       "quote": "He's going to do a parallel link sacks. He's going to have his own agents. And he's going to let you come in with your agents.",
       "claim": "He's going to do a parallel link sacks. He's going to have his own agents. And he's going to let you come in with your agents.",
-      "offset": 109,
+      "offset": 0,
       "quote_resolves_verbatim": false,
       "quote_resolves_to_context_only": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0104\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"He's going to do a parallel link sacks. He's going to have his own agents. And he's going to let you come in with your agents.\",\n  \"claim\": \"He's going to do a parallel link sacks. He's going to have his own agents. And he's going to let you come in with your agents.\",\n  \"offset\": 109\n}\n```"
@@ -2754,6 +2610,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0107\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"I think it's specific to the company and what its Mozart and how good a system of record is.\",\n  \"claim\": \"I think it's specific to the company and what its Mozart and how good a system of record is.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -2773,6 +2630,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0109\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"No, I don't think vertical sass has a system of record.\",\n  \"claim\": \"No, I don't think vertical sass has a system of record.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -2792,6 +2650,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0111\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"This is the key point where these horizontal monolithic companies like Salesforce. Are just unique, work day, or a goal with respect to their GL. It's just very difficult, SAP, IFS. It's very difficult to see a path where you can replicate these businesses. And they become the repository and the single source of truth, as you said. But vertical SaaS is workflows, and it's a process. And I just wonder what survives.\",\n  \"claim\": \"Vertical SaaS is workflows, and it's a process. And I just wonder what survives.\",\n  \"offset\": 119\n}\n```"
     },
     {
@@ -2804,6 +2663,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0112\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"Well, I look, I think it's a it's a good question and I think it's case by case, but look just a few months ago everyone's saying that horizontal sauce wasn't going to survive and one of Leopold's major positions in that fund was to short all these ass products including Salesforce and what we've seen is that has turned out to be.\",\n  \"claim\": \"Well, I think it's a good question and I think it's case by case, but look just a few months ago everyone's saying that horizontal sauce wasn't going to survive and one of Leopold's major positions in that fund was to short all these ass products including Salesforce and what we've seen is that has turned out to be.\",\n  \"offset\": 119\n}\n```"
     },
     {
@@ -2816,6 +2676,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0113\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"To be fair, I don't know that he understood the difference between vertical and horizontal sass because that was a funding short problem. Meaning he had to go to the big stocks in order to be able to short enough to be able to get the leverage that he wanted. So I think he may have just worked backwards from his own mental narrative to make it all sound correct.\",\n  \"claim\": \"He may have just worked backwards from his own mental narrative to make it all sound correct.\",\n  \"offset\": 139\n}\n```"
     },
     {
@@ -2835,6 +2696,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0115\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"So it was a leverage trap where he's like, I need to be really massively net long these other names and his prime broker's like, well, you got to find shorts, liquid shorts and he's like, okay, Adobe and Salesforce.\",\n  \"claim\": \"He suspects that the leverage trap is where he needs to be massively net long these other names and his prime broker's like, well, you got to find shorts, liquid shorts and he's like, okay, Adobe and Salesforce.\",\n  \"offset\": 117\n}\n```"
     },
     {
@@ -2847,6 +2709,7 @@
       "offset": 220,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0116\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"I think a lot of people were just indiscriminately selling all sass and I think That if I had to say there's like one takeaway from the news today is that I think simple extrapolations of the future based on These trends don't work out right the simple The simple extrapolation here was AI agents can code therefore all software is going to zero.\",\n  \"claim\": \"I think a lot of people were just indiscriminately selling all sass and I think That if I had to say there's like one takeaway from the news today is that I think simple extrapolations of the future based on These trends don't work out right the simple The simple extrapolation here was AI agents can code therefore all software is going to zero.\",\n  \"offset\": 119\n}\n```"
     },
     {
@@ -2865,9 +2728,11 @@
     },
     {
       "turn_id": "00251a80c868f535_t0119",
-      "verdict": "claim",
-      "speaker": "Jason Calacanis",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -2877,9 +2742,11 @@
     },
     {
       "turn_id": "00251a80c868f535_t0120",
-      "verdict": "claim",
-      "speaker": "Chamath Palihapitiya",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -2897,6 +2764,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0121\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"Yeah. What is it they bought?\",\n  \"claim\": \"What is it they bought?\",\n  \"offset\": 1\n}\n```"
     },
     {
@@ -2909,6 +2777,7 @@
       "offset": 886,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0122\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"And that's 70 % number would have been higher, but they said they were supply constraint. So, you know, what is the takeaway I think for the larger market here?\",\n  \"claim\": \"The AI boom is continuing. The other narrative that's going shredded today is that this AI cap. effects is a bubble. It's basically going to end very soon.\",\n  \"offset\": 139\n}\n```"
     },
     {
@@ -2921,6 +2790,7 @@
       "offset": 399,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0123\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"Jensen was clearly not pleased about that. And he talked about right after Sam kind of did this announcement that he's going to make his own inference shift.\",\n  \"claim\": \"Jensen was clearly not pleased about that. And he talked about right after Sam kind of did this announcement that he's going to make his own inference shift.\",\n  \"offset\": 139\n}\n```"
     },
     {
@@ -2947,6 +2817,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0126\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"He is going for it.\",\n  \"claim\": \"He is going for it.\",\n  \"offset\": 1\n}\n```"
     },
     {
@@ -2959,6 +2830,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0127\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"He is going to own open source. But that is a really interesting moment in time for us to look at because we were sitting here six months ago, 12 months ago, open source would never catch up. He's doing an open source self -driving project and now he owns hugging face the leading open source indexer where everybody goes to try the new models. I think this is a, this is actually the huge story.\",\n  \"claim\": \"He is going to own open source.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -2978,6 +2850,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0129\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"That you're going to see all of these businesses converge and they're all going to be competing with each other in every which way possible. \",\n  \"claim\": \"That you're going to see all of these businesses converge and they're all going to be competing with each other in every which way possible.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -2989,9 +2862,11 @@
     },
     {
       "turn_id": "00251a80c868f535_t0131",
-      "verdict": "claim",
-      "speaker": "Chamath Palihapitiya",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -3009,13 +2884,16 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0132\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"What's your return on investment?\",\n  \"claim\": \"What's your return on investment?\",\n  \"offset\": 10\n}\n```"
     },
     {
       "turn_id": "00251a80c868f535_t0133",
-      "verdict": "claim",
-      "speaker": "Chamath Palihapitiya",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -3040,6 +2918,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0135\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"Let's keep moving through the dock at Bezos' new bond strategy. \",\n  \"claim\": \"Let's keep moving through the dock at Bezos' new bond strategy.\",\n  \"offset\": 1\n}\n```"
     },
     {
@@ -3052,13 +2931,16 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0136\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"No more doge, no more cutting costs. And obviously we got a war that's quite expensive.\",\n  \"claim\": \"No more doge, no more cutting costs. And obviously we got a war that's quite expensive.\",\n  \"offset\": 10\n}\n```"
     },
     {
       "turn_id": "00251a80c868f535_t0137",
-      "verdict": "claim",
-      "speaker": "Jason Calacanis",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -3089,9 +2971,11 @@
     },
     {
       "turn_id": "00251a80c868f535_t0141",
-      "verdict": "claim",
-      "speaker": "David Friedberg",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -3109,6 +2993,7 @@
       "offset": 102,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0142\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"So, best since doing his job as Treasury Secretary, he's saying, I'm going to market, I'm going to buy treasuries, I'm going to try and lower it, but he only has maximum maximum of trillion dollars he could use to buy debt. He still got to go sell 10 trillion dollars of treasuries in the next 12 months.\",\n  \"claim\": \"The market is going to have to solve this deficit problem, and it is Congress's responsibility, it is the president's responsibility, it is the responsibility of the holders of the budget and the accounts that should stand up and say, we are going to cut spending, because if we don't cut spending, there is going to be a spiral.\",\n  \"offset\": 139\n}\n```"
     },
     {
@@ -3120,9 +3005,11 @@
     },
     {
       "turn_id": "00251a80c868f535_t0144",
-      "verdict": "claim",
-      "speaker": "David Friedberg",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -3147,6 +3034,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0146\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"He can't solve this problem. You guys have to act.\",\n  \"claim\": \"He can't solve this problem. You guys have to act.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -3166,6 +3054,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0148\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"I think it's a coverage for Besset.\",\n  \"claim\": \"I think it's a coverage for Besset.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -3185,6 +3074,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0150\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"Chumov, your take here on what's going to happen going forward. You know, we're past five percent. Does this break? What does it do to interest rate cuts?\",\n  \"claim\": \"Chumov's take on what will happen going forward, particularly regarding interest rate cuts, is a key point of contention.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -3211,6 +3101,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0153\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"They're marked against that 5 .1 print versus 5 .3.\",\n  \"claim\": \"They are marking against that 5.1 print versus 5.3.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -3229,12 +3120,14 @@
     },
     {
       "turn_id": "00251a80c868f535_t0156",
-      "verdict": "claim",
-      "speaker": "Chamath Palihapitiya",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+      "validator_rejected": true,
+      "rejection_reason": "non_verbatim",
       "quote": "It is not a Democrat nor a Republican problem. It is a congressional problem, meaning both sides consistently spend way more than they should. So you have the debt growing at 7 % and you have GDP between, you know, 2 % and 4%.",
       "claim": "It is a congressional problem, meaning both sides consistently spend way more than they should. So you have the debt growing at 7 % and you have GDP between, you know, 2 % and 4%.",
-      "offset": 13,
+      "offset": 0,
       "quote_resolves_verbatim": false,
       "quote_resolves_to_context_only": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0156\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"It is not a Democrat nor a Republican problem. It is a congressional problem, meaning both sides consistently spend way more than they should. So you have the debt growing at 7 % and you have GDP between, you know, 2 % and 4%. \",\n  \"claim\": \"It is a congressional problem, meaning both sides consistently spend way more than they should. So you have the debt growing at 7 % and you have GDP between, you know, 2 % and 4%. \",\n  \"offset\": 13\n}\n```"
@@ -3256,6 +3149,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0158\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"What drugs said in that note is you have to cut it. entitlements.\",\n  \"claim\": \"What drugs said in that note is you have to cut it. entitlements.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -3268,6 +3162,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0159\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"He's probably right.\",\n  \"claim\": \"He's probably right.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -3308,6 +3203,7 @@
       "offset": 122,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0164\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"So, you have the situation where all this money has to... be invested, it should be backed up by the US government.\",\n  \"claim\": \"The US government should back up all this money invested in the build-up.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -3327,6 +3223,7 @@
       "offset": 112,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0166\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"The real solution, as Freebrook says, is Congress needs to come together and realize that they must now fix this problem. Because if... you see yields. If you see the 30 year at 6 % it is the beginning of a death spiral.\",\n  \"claim\": \"Congress needs to come together and realize that they must now fix this problem.\",\n  \"offset\": 169\n}\n```"
     },
     {
@@ -3346,13 +3243,16 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0168\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"But it is the beginning of some extreme pain. And that pain will last years. And the only thing that solves it now is getting the budget. under control, which is a congressional act, it must happen. Whether it's this year or the next year, it just has to happen.\",\n  \"claim\": \"The only thing that solves it now is getting the budget under control, which is a congressional act, it must happen. Whether it's this year or the next year, it just has to happen.\",\n  \"offset\": 109\n}\n```"
     },
     {
       "turn_id": "00251a80c868f535_t0169",
-      "verdict": "claim",
-      "speaker": "Jason Calacanis",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -3383,24 +3283,28 @@
     },
     {
       "turn_id": "00251a80c868f535_t0173",
-      "verdict": "claim",
-      "speaker": "David Sacks",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+      "validator_rejected": true,
+      "rejection_reason": "non_verbatim",
       "quote": "If there are Republicans lose control of Congress, I don't think that's going to make it better because you see now that the political energy and the Democrat party is all towards these massive new spending programs that the DSA wants.",
       "claim": "If there are Republicans lose control of Congress, I don't think that's going to make it better because you see now that the political energy and the Democrat party is all towards these massive new spending programs that the DSA wants.",
-      "offset": 139,
+      "offset": 0,
       "quote_resolves_verbatim": false,
       "quote_resolves_to_context_only": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0173\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"If there are Republicans lose control of Congress, I don't think that's going to make it better because you see now that the political energy and the Democrat party is all towards these massive new spending programs that the DSA wants. \",\n  \"claim\": \"If there are Republicans lose control of Congress, I don't think that's going to make it better because you see now that the political energy and the Democrat party is all towards these massive new spending programs that the DSA wants.\",\n  \"offset\": 139\n}\n```"
     },
     {
       "turn_id": "00251a80c868f535_t0174",
-      "verdict": "claim",
-      "speaker": "Jason Calacanis",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+      "validator_rejected": true,
+      "rejection_reason": "non_verbatim",
       "quote": "Republicans love to cut taxes and the Democrats love to increase spending.",
       "claim": "Republicans love to cut taxes and the Democrats love to increase spending.",
-      "offset": 10,
+      "offset": 0,
       "quote_resolves_verbatim": false,
       "quote_resolves_to_context_only": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0174\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"Republicans love to cut taxes and the Democrats love to increase spending.\",\n  \"claim\": \"Republicans love to cut taxes and the Democrats love to increase spending.\",\n  \"offset\": 10\n}\n```"
@@ -3422,6 +3326,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0176\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"This has not gotten better through three or four presidents. The last person who did this was, I guess, Clinton balanced the budget, but this has been getting worse and worse. At some point, we're all in agreement. This is going to come to do and we're going to have to have some austerity measures\",\n  \"claim\": \"This has not gotten better through three or four presidents. The last person who did this was, I guess, Clinton balanced the budget, but this has been getting worse and worse. At some point, we're all in agreement. This is going to come to do and we're going to have to have some austerity measures\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -3433,12 +3338,14 @@
     },
     {
       "turn_id": "00251a80c868f535_t0178",
-      "verdict": "claim",
-      "speaker": "David Friedberg",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+      "validator_rejected": true,
+      "rejection_reason": "non_verbatim",
       "quote": "The question check-out is really like what happens next. So if the inflation remains high, people's affordability continues to go low, they're going to vote for something that's going to give them a solution.",
       "claim": "If the inflation remains high, people's affordability continues to go low, they're going to vote for something that's going to give them a solution.",
-      "offset": 179,
+      "offset": 0,
       "quote_resolves_verbatim": false,
       "quote_resolves_to_context_only": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0178\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"The question check-out is really like what happens next. So if the inflation remains high, people's affordability continues to go low, they're going to vote for something that's going to give them a solution.\",\n  \"claim\": \"If the inflation remains high, people's affordability continues to go low, they're going to vote for something that's going to give them a solution.\",\n  \"offset\": 179\n}\n```"
@@ -3453,6 +3360,7 @@
       "offset": 160,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0179\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"I think that's kind of the more of like a, you know, spectrum and then the reaction during that kind of transition phase 26 to 28 can be negative. Then the next big thing is going to happen around 20 30 to 20 32. And that's really where social security doesn't have any money to pay anymore.\",\n  \"claim\": \"I think that's kind of the more of like a, you know, spectrum and then the reaction during that kind of transition phase 26 to 28 can be negative. Then the next big thing is going to happen around 20 30 to 20 32. And that's really where social security doesn't have any money to pay anymore.\",\n  \"offset\": 179\n}\n```"
     },
     {
@@ -3465,6 +3373,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0180\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"To your saying, we'll see, Munis, yeah, and people will default on their debt in the states.\",\n  \"claim\": \"To your saying, we'll see, Munis, yeah, and people will default on their debt in the states.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -3491,6 +3400,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0183\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"Dollars. Especially if anybody who was in favor of a railway to nowhere should just be shamed out of exists for a train from San Francisco to Fresno that cost more than an airline ticket.\",\n  \"claim\": \"Anybody who was in favor of a railway to nowhere should be shamed out of existence for a train from San Francisco to Fresno that cost more than an airline ticket.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -3502,12 +3412,14 @@
     },
     {
       "turn_id": "00251a80c868f535_t0185",
-      "verdict": "claim",
-      "speaker": "Jason Calacanis",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+      "validator_rejected": true,
+      "rejection_reason": "non_verbatim",
       "quote": "Private industry would see an opportunity and they would have built it. Yes, free burn, private industry would see an opportunity and they would have built it.",
       "claim": "Private industry would see an opportunity and they would have built it.",
-      "offset": 109,
+      "offset": 0,
       "quote_resolves_verbatim": false,
       "quote_resolves_to_context_only": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0185\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"Private industry would see an opportunity and they would have built it. Yes, free burn, private industry would see an opportunity and they would have built it.\",\n  \"claim\": \"Private industry would see an opportunity and they would have built it.\",\n  \"offset\": 109\n}\n```"
@@ -3529,6 +3441,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0187\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"These government programs cause more harm than good. When the government intervenes in underwriting student loans and gives everyone a loan, administrative costs one up by 6x and tuition skyrocketed, 8 % a year, compounding for 30 years, because the government said we'll underwrite any student loan. The same with housing and now no young people can afford a house. The same with health care, where they said we'll pay people to stay home and not work to take care of people and we won't. check on whether or not they're actually taking care of people and the cost of health care skyrocketed.\",\n  \"claim\": \"These government programs cause more harm than good.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -3541,6 +3454,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0188\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"We need to run root of inflation in this country.\",\n  \"claim\": \"We need to run root of inflation in this country.\",\n  \"offset\": 0\n}\n```"
     },
     {
@@ -3553,6 +3467,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0189\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"The core root of it is government spending and the reason we are going to end up becoming a socialist country is because we aren't raining in the government spending and looking it in the mirror and saying, guys, this is idiotic.\",\n  \"claim\": \"The core root of inflation in this country is government spending, and the reason we are going to end up becoming a socialist country is because we aren't raining in the government spending and looking it in the mirror and saying, guys, this is idiotic.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -3572,6 +3487,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0191\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"We need to now the markets to Jamoth's point are telling us, this is idiotic. We are not going to underwrite this bullshit anymore.\",\n  \"claim\": \"We need to now the markets to Jamoth's point are telling us, this is idiotic. We are not going to underwrite this bullshit anymore.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -3584,6 +3500,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0192\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"And we need to have, to your point, about media, sacked. a hundred and surely sixty minutes whoever it is to just say, hey, this spending, this fraud is not acceptable and we need to send people in to go recapture that money. This is like we're burning money that we don't, the fraud is the layer one.\",\n  \"claim\": \"We need to have, to your point, about media, sacked. a hundred and surely sixty minutes whoever it is to just say, hey, this spending, this fraud is not acceptable and we need to send people in to go recapture that money. This is like we're burning money that we don't, the fraud is the layer one.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -3595,9 +3512,11 @@
     },
     {
       "turn_id": "00251a80c868f535_t0194",
-      "verdict": "claim",
-      "speaker": "David Sacks",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -3615,6 +3534,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0195\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"Socialism is much more likely when, you know, 100 years ago when these things are less interconnected. America can't decide to do that.\",\n  \"claim\": \"Socialism is much more likely when, you know, 100 years ago when these things are less interconnected. America can't decide to do that.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -3626,9 +3546,11 @@
     },
     {
       "turn_id": "00251a80c868f535_t0197",
-      "verdict": "claim",
-      "speaker": "Chamath Palihapitiya",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -3646,6 +3568,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0198\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"Yeah, and every one of them, it ended up becoming a... never let a crisis go to waste moment where it always argued in favor of some big power by the government.\",\n  \"claim\": \"Every crisis goes to waste, and it always argues in favor of some big power by the government.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -3665,6 +3588,7 @@
       "offset": 240,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0200\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"do you think the average person can connect the dots here or that higher spending means higher treasury rates, which means higher mortgage rates? And that leads you to not be able to afford the same level of house that you would because... You're monthly payments much higher. I mean, do people connect those dots about what's happening?\",\n  \"claim\": \"do you think the average person can connect the dots here or that higher spending means higher treasury rates, which means higher mortgage rates? And that leads you to not be able to afford the same level of house that you would because... You're monthly payments much higher. I mean, do people connect those dots about what's happening?\",\n  \"offset\": 179\n}\n```"
     },
     {
@@ -3712,6 +3636,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0206\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"That's the first thing you're about. You don't think you don't think objectively what's the solution to the problem.\",\n  \"claim\": \"That's the first thing you're about. You don't think you don't think objectively what's the solution to the problem.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -3731,6 +3656,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0208\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"That's the first thing you want to do. And then the question is, when mortgage rates go up, who do you blame? The current president, my conc... Well, blah, blah, re -elect someone. That's the response. And the person that shows up and says, I'm going to give you free housing.\",\n  \"claim\": \"That's the first thing you want to do. And then the question is, when mortgage rates go up, who do you blame? The current president, my conc... Well, blah, blah, re -elect someone. That's the response. And the person that shows up and says, I'm going to give you free housing.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -3771,6 +3697,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0213\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"Our only hope is AI, right?\",\n  \"claim\": \"Our only hope is AI, right?\",\n  \"offset\": 1\n}\n```"
     },
     {
@@ -3790,6 +3717,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0215\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"We can go out of the palm. Yes, and if we hold back AI by creating some new regulatory apparatus that takes years to approve new model releases Then we're cooked.\",\n  \"claim\": \"We can go out of the palm. Yes, and if we hold back AI by creating some new regulatory apparatus that takes years to approve new model releases Then we're cooked.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -3823,6 +3751,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0219\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"One of the things that is a great silver lining is that we're seeing people migrate around the country or to other countries as a way to vote against out of control spending. \",\n  \"claim\": \"One of the things that is a great silver lining is that we're seeing people migrate around the country or to other countries as a way to vote against out of control spending.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -3842,6 +3771,7 @@
       "offset": 212,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0221\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"You need to have leadership that says housing is a priority. Therefore, we're going to let you build more houses.\",\n  \"claim\": \"You need to have leadership that says housing is a priority. Therefore, we're going to let you build more houses.\",\n  \"offset\": 139\n}\n```"
     },
     {
@@ -3854,6 +3784,7 @@
       "offset": 28,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0222\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"It just takes leadership.\",\n  \"claim\": \"It just takes leadership.\",\n  \"offset\": 1\n}\n```"
     },
     {
@@ -3866,6 +3797,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0223\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"It's leaders saying enough already. We're just going to let people build more houses. All right, let's keep moving to the docket.\",\n  \"claim\": \"It's leaders saying enough already. We're just going to let people build more houses. All right, let's keep moving to the docket.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -3948,6 +3880,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0234\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"And they judge and their judge mental, and they can't see the force from the trees, and this is probably they're like the loudest troopers in the peanut gallery. Stand -druck and Miller is the most incredible investor of our generation. Maybe, sorry, maybe like top four and so just shut the f*** up and read what he says and you have an opinion and you're like, oh my god, he has an M -dash. Oh my god, he used the AI flourish. It's like you're missing the script. He's telling you what's about that happen.\",\n  \"claim\": \"Chamath Palihapitiya believes that Chamath Palihapitiya is the most incredible investor of our generation.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -3960,6 +3893,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0235\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"Sack to you agree, you think that the opinion pieces in the Wall Street Journal New York Times should be written by AI, not the person who puts their names still written by him.\",\n  \"claim\": \"Sack to you agree, the opinion pieces in the Wall Street Journal New York Times should be written by AI, not the person who puts their names still written by him.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -3978,12 +3912,14 @@
     },
     {
       "turn_id": "00251a80c868f535_t0238",
-      "verdict": "claim",
-      "speaker": "David Sacks",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_1",
+      "reason": "Rejected by quote validator: quote resolves to context turn only (context leak)",
+      "validator_rejected": true,
+      "rejection_reason": "context_leak",
       "quote": "He prompts it. He shapes it and guides it.",
       "claim": "He uses the AI to help him write it. Look, I don't get all the pearl clutching about this. I mean, you gotta be pretty dumb. These days not to use AI to help you write, and he's definitely not dumb. This is his opinion.",
-      "offset": 10,
+      "offset": 0,
       "quote_resolves_verbatim": false,
       "quote_resolves_to_context_only": true,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0238\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"He prompts it. He shapes it and guides it. \",\n  \"claim\": \"He uses the AI to help him write it. Look, I don't get all the pearl clutching about this. I mean, you gotta be pretty dumb. These days not to use AI to help you write, and he's definitely not dumb. This is his opinion.\",\n  \"offset\": 10\n}\n```"
@@ -3998,6 +3934,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0239\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"It's his take.\",\n  \"claim\": \"It's his take.\",\n  \"offset\": 1\n}\n```"
     },
     {
@@ -4010,6 +3947,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0240\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"It's consistent with everything he's been saying in the past for decades. And in fact, the piece sites.\",\n  \"claim\": \"It's consistent with everything he's been saying in the past for decades.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4029,16 +3967,19 @@
       "offset": 73,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0242\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"I think that this clearly came from his mind and he uses the AI to help him write it.\",\n  \"claim\": \"I think that this clearly came from his mind and he uses the AI to help him write it.\",\n  \"offset\": 109\n}\n```"
     },
     {
       "turn_id": "00251a80c868f535_t0243",
-      "verdict": "claim",
-      "speaker": "Chamath Palihapitiya",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+      "validator_rejected": true,
+      "rejection_reason": "non_verbatim",
       "quote": "The morons on X should be like, wait a minute. How does this affect my company? How does it affect my portfolio? How will it affect my 401k? What will it do to my parents' retirement? How should I think about hedging this instead of that conversation? All of you people were like, oh my god, he had he was a guy.",
       "claim": "The morons on X should be like, wait a minute. How does this affect my company? How does it affect my portfolio? How will it affect my 401k? What will it do to my parents' retirement? How should I think about hedging this instead of that conversation? All of you people were like, oh my god, he had he was a guy.",
-      "offset": 139,
+      "offset": 0,
       "quote_resolves_verbatim": false,
       "quote_resolves_to_context_only": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0243\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"The morons on X should be like, wait a minute. How does this affect my company? How does it affect my portfolio? How will it affect my 401k? What will it do to my parents' retirement? How should I think about hedging this instead of that conversation? All of you people were like, oh my god, he had he was a guy.\",\n  \"claim\": \"The morons on X should be like, wait a minute. How does this affect my company? How does it affect my portfolio? How will it affect my 401k? What will it do to my parents' retirement? How should I think about hedging this instead of that conversation? All of you people were like, oh my god, he had he was a guy.\",\n  \"offset\": 139\n}\n```"
@@ -4060,6 +4001,7 @@
       "offset": 64,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0245\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"I find it offensive to like let the system give your entire opinion and as opposed to using it for research, which is totally fine, use it for proofreading, totally fine. But to me, it feels like I went to see Adele and she's lip syncing. I really wanna hear him.\",\n  \"claim\": \"I find it offensive to let the system give your entire opinion and as opposed to using it for research, which is totally fine, use it for proofreading, totally fine. But to me, it feels like I went to see Adele and she's lip syncing. I really wanna hear him.\",\n  \"offset\": 139\n}\n```"
     },
     {
@@ -4099,9 +4041,11 @@
     },
     {
       "turn_id": "00251a80c868f535_t0251",
-      "verdict": "claim",
-      "speaker": "Jason Calacanis",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -4119,6 +4063,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0252\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"I find it personal.\",\n  \"claim\": \"I find it personal.\",\n  \"offset\": 4\n}\n```"
     },
     {
@@ -4137,9 +4082,11 @@
     },
     {
       "turn_id": "00251a80c868f535_t0255",
-      "verdict": "claim",
-      "speaker": "David Friedberg",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -4164,6 +4111,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0257\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"The reason is the expectation of the reader. The reader has a high expectation and This is an important issue. And the reason why people were so disappointed in this in a very large way was not because they're virtually, because they actually care about Stan's opinion. And they want to consume his opinion and make sure it's not the AI -slop opinion. That's why people felt betrayed by what he did.\",\n  \"claim\": \"People felt betrayed by what he did because they expected Stan's opinion and it was not the AI -slop opinion.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -4175,9 +4123,11 @@
     },
     {
       "turn_id": "00251a80c868f535_t0259",
-      "verdict": "claim",
-      "speaker": "Jason Calacanis",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -4202,16 +4152,19 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0261\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"Okay, Number one, are you suggesting that Stan didn't read this thing that was generated or do you think sure he did read it?\",\n  \"claim\": \"Number one, are you suggesting that Stan didn't read this thing that was generated or do you think sure he did read it?\",\n  \"offset\": 10\n}\n```"
     },
     {
       "turn_id": "00251a80c868f535_t0262",
-      "verdict": "claim",
-      "speaker": "unknown",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+      "validator_rejected": true,
+      "rejection_reason": "non_verbatim",
       "quote": "Okay, he well he defended it. Yes, he really hope he did.",
       "claim": "He defended it.",
-      "offset": 79,
+      "offset": 0,
       "quote_resolves_verbatim": false,
       "quote_resolves_to_context_only": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0262\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"Okay, he well he defended it. Yes, he really hope he did.\",\n  \"claim\": \"He defended it.\",\n  \"offset\": 79\n}\n```"
@@ -4226,6 +4179,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0263\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"Okay, so you had do you have an issue with the that he read it he thought yeah this is what I think boom and hit the send button that's a betrayal to you.\",\n  \"claim\": \"He thought this was what he wanted to do, and hit the send button, that's a betrayal to you.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -4238,6 +4192,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0264\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"I think not disclosing it is the betrayal. If you want to give me your opinion as interpreted with the AI magic guessing word box you need to send me. I think it's what's now to tell everybody.\",\n  \"claim\": \"Not disclosing it is the betrayal. If you want to give me your opinion as interpreted with the AI magic guessing word box you need to send me. I think it's what's now to tell everybody.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -4249,12 +4204,14 @@
     },
     {
       "turn_id": "00251a80c868f535_t0266",
-      "verdict": "claim",
-      "speaker": "David Sacks",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+      "validator_rejected": true,
+      "rejection_reason": "non_verbatim",
       "quote": "I'm just so sure I'd like to make. But what is this standing disclosure for all future publications that I put out, including tweets, is that I try not to publish anything without running it through AI first, to fact-check it, to line edit it, and to help me make the best argument I can. So this is a standing disclosure that if I've written something and published it, it's probably been written on.",
       "claim": "I try not to publish anything without running it through AI first, to fact-check it, to line edit it, and to help me make the best argument I can. So this is a standing disclosure that if I've written something and published it, it's probably been written on.",
-      "offset": 109,
+      "offset": 0,
       "quote_resolves_verbatim": false,
       "quote_resolves_to_context_only": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0266\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"I'm just so sure I'd like to make. But what is this standing disclosure for all future publications that I put out, including tweets, is that I try not to publish anything without running it through AI first, to fact-check it, to line edit it, and to help me make the best argument I can. So this is a standing disclosure that if I've written something and published it, it's probably been written on.\",\n  \"claim\": \"I try not to publish anything without running it through AI first, to fact-check it, to line edit it, and to help me make the best argument I can. So this is a standing disclosure that if I've written something and published it, it's probably been written on.\",\n  \"offset\": 109\n}\n```"
@@ -4276,6 +4233,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0268\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"I have more or less of it's proofing to be clear, proofing fact checking, great uses of AI, grammar check, great use of AI.\",\n  \"claim\": \"I have more or less of it's proofing to be clear, proofing fact checking, great uses of AI, grammar check, great use of AI.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4323,6 +4281,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0274\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"Is he allowed to use a computer?\",\n  \"claim\": \"Is he allowed to use a computer?\",\n  \"offset\": 0\n}\n```"
     },
     {
@@ -4363,6 +4322,7 @@
       "offset": 22,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0279\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"Is he allowed to use Grammarly?\",\n  \"claim\": \"Is he allowed to use Grammarly?\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4375,6 +4335,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0280\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"I'm sure he'll use Grammarly. I'm sure he'll use Grammarly.\",\n  \"claim\": \"I'm sure he'll use Grammarly.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4387,6 +4348,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0281\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"Grammarly. Jacob, what do you think his process was on this post? Do you think that it was simply delivered to him full? he baked and then he just said go with that.\",\n  \"claim\": \"Grammarly. Jacob, what do you think his process was on this post? Do you think that it was simply delivered to him full? he baked and then he just said go with that.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4406,6 +4368,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0283\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"I'd be so proud if that was his process. I guess I don't know. This is just a guess.\",\n  \"claim\": \"I'd be so proud if that was his process. I guess I don't know. This is just a guess.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4417,9 +4380,11 @@
     },
     {
       "turn_id": "00251a80c868f535_t0285",
-      "verdict": "claim",
-      "speaker": "David Sacks",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -4458,6 +4423,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0289\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"And he writes, Yields up bad.\",\n  \"claim\": \"And he writes, Yields up bad.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4477,6 +4443,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0291\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"He emails the app.\",\n  \"claim\": \"He emails the app.\",\n  \"offset\": 1\n}\n```"
     },
     {
@@ -4496,6 +4463,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0293\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"If you can't appreciate the taste thinking, must have come from him. If you can't appreciate the lip syncing analogy, it would have been a lip synch.\",\n  \"claim\": \"If you can't appreciate the taste thinking, it must have come from him. If you can't appreciate the lip syncing analogy, it would have been a lip synch.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4508,6 +4476,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0294\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"Okay, here's the problem with the lip synch analogy is he's criticizing something that just happened. It was this best buyback policy, right? He's criticizing his former colleague. about something very specific that the Secretary of the Treasury just did.\",\n  \"claim\": \"The problem with the lip synch analogy is that he's criticizing something that just happened. It was this best buyback policy, right? He's criticizing his former colleague about something very specific that the Secretary of the Treasury just did.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -4527,6 +4496,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0296\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"A lip sink is when you have a song that's been performed a thousand times. This is novel and new.\",\n  \"claim\": \"A lip sink is when you have a song that's been performed a thousand times. This is novel and new.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4539,6 +4509,7 @@
       "offset": 97,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0297\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"You should respect the audience enough. I'm saying it to take the time to write it yourself, not let the end.\",\n  \"claim\": \"You should respect the audience enough. I'm saying it to take the time to write it yourself, not let the end.\",\n  \"offset\": 117\n}\n```"
     },
     {
@@ -4558,6 +4529,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0299\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"I was like, oh, this is a useful data point for me about totally fine.\",\n  \"claim\": \"I was like, oh, this is a useful data point for me about totally fine.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4612,6 +4584,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0306\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"It came up first. I saw the plagiarism, the AI Slop, whatever.\",\n  \"claim\": \"It came up first. I saw the plagiarism, the AI Slop, whatever.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4624,6 +4597,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0307\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"It's people afraid of you.\",\n  \"claim\": \"It's people afraid of you.\",\n  \"offset\": 1\n}\n```"
     },
     {
@@ -4657,6 +4631,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0311\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"I read it when it first came out. I didn't see the stuff in the timeline about the software supposedly detecting it.\",\n  \"claim\": \"I read it when it first came out. I didn't see the stuff in the timeline about the software supposedly detecting it.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4690,6 +4665,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0315\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"So if he's plagiarizing from someone, he's plagiarizing himself.\",\n  \"claim\": \"If he's plagiarizing from someone, he's plagiarizing himself.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4709,13 +4685,16 @@
       "offset": 27,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0317\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"It's not leaking.\",\n  \"claim\": \"He's taking it. It's not leaking.\",\n  \"offset\": 2\n}\n```"
     },
     {
       "turn_id": "00251a80c868f535_t0318",
-      "verdict": "claim",
-      "speaker": "Jason Calacanis",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -4740,6 +4719,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0320\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"I believe the artist should give you their actual art, giving you their actual position without using the eye.\",\n  \"claim\": \"The artist should give you their actual art, giving you their actual position without using the eye.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4780,6 +4760,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0325\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"I just don't like the idea that it wrote it in full, which is what the claim is.\",\n  \"claim\": \"I don't like the idea that it wrote it in full, which is what the claim is.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -4799,6 +4780,7 @@
       "offset": 72,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0327\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"I prefer listening to a band like Mark Noffler where he actually can write the song, play the guitar riffs, I prefer that in my art, or in an opinion, or in a novel, too, being written by AI.\",\n  \"claim\": \"I prefer listening to a band like Mark Noffler where he actually can write the song, play the guitar riffs, I prefer that in my art, or in an opinion, or in a novel, too, being written by AI.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -4811,6 +4793,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0328\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"But this is a new, now that you know. drop will continue to use AI because he said it. Will you just ignore what he asked to say?\",\n  \"claim\": \"Chamath Palihapitiya believes drop will continue to use AI because he said it. Will you just ignore what he asked to say?\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -4823,6 +4806,7 @@
       "offset": 8,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0329\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"I will not think it's highly of him and I don't think it's respected.\",\n  \"claim\": \"I will not think it's highly of him and I don't think it's respected.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4835,6 +4819,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0330\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"So you're saying the substance of what he says will no longer matter to you or you're going to for me, I will wonder, I will wonder what is his actual opinion and what you're saying. The great, which we came out of there personally, you're going to trust the greatest macro trader in the world less tomorrow than today because he used the tool to write it.\",\n  \"claim\": \"The substance of what he says will no longer matter to me.\",\n  \"offset\": 139\n}\n```"
     },
     {
@@ -4847,6 +4832,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0331\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"I will wonder if it's actually his opinion and how much work. did and I feel as disrespectful that he didn't do it himself.\",\n  \"claim\": \"I will wonder if it's actually his opinion and how much work. did and I feel as disrespectful that he didn't do it himself.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -4866,6 +4852,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0333\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"It will make me wonder if that is actually his perfect opinion and crisply his because I think he's phoning it in.\",\n  \"claim\": \"It will make me wonder if that is actually his perfect opinion and crisply his because I think he's phoning it in.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -4905,12 +4892,14 @@
     },
     {
       "turn_id": "00251a80c868f535_t0339",
-      "verdict": "claim",
-      "speaker": "David Sacks",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: quote does not resolve as a substring of target turn",
+      "validator_rejected": true,
+      "rejection_reason": "non_verbatim",
       "quote": "I think called into a show to basically say that story was... not true, and the contact was routine. And then the Russian readout said roughly the same thing. So the truth is we don't know what the meeting was about.",
       "claim": "The truth is we don't know what the meeting was about.",
-      "offset": 109,
+      "offset": 0,
       "quote_resolves_verbatim": false,
       "quote_resolves_to_context_only": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0339\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"I think called into a show to basically say that story was... not true, and the contact was routine. And then the Russian readout said roughly the same thing. So the truth is we don't know what the meeting was about.\",\n  \"claim\": \"The truth is we don't know what the meeting was about.\",\n  \"offset\": 109\n}\n```"
@@ -4932,6 +4921,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0341\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"I think it's all speculation.\",\n  \"claim\": \"I think it's all speculation.\",\n  \"offset\": 3\n}\n```"
     },
     {
@@ -4951,6 +4941,7 @@
       "offset": 41,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0343\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"He was warning Putin to not use AI to write his next Putin warning his next day maybe we flew over there to deliver a very strict message Which is we expect non -AI tool usage because we are journal the set of our core.\",\n  \"claim\": \"He was warning Putin to not use AI to write his next Putin warning his next day maybe we flew over there to deliver a very strict message Which is we expect non -AI tool usage because we are journal the set of our core.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -4998,6 +4989,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0349\",\n  \"speaker\": \"David Sacks\",\n  \"type\": \"position\",\n  \"quote\": \"You don't have the cards in this war. You should make a deal. So let's he didn't want to do that. He didn't want to make a deal. He still doesn't want to make a deal. He should make a deal. And frankly, I don't think Ukraine's going to come out on top on this thing.\",\n  \"claim\": \"He should make a deal.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -5017,6 +5009,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0351\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"Yeah. Thanks to Meta 4. or solving my biggest problem, which is imposing limits on Instagram.\",\n  \"claim\": \"Yeah. Thanks to Meta 4. or solving my biggest problem, which is imposing limits on Instagram.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -5036,6 +5029,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0353\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"I started playing guacamole with my kids and I can't do it and they have fake accounts and secret accounts and this and that.\",\n  \"claim\": \"I started playing guacamole with my kids and I can't do it and they have fake accounts and secret accounts and this and that.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -5055,6 +5049,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0355\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"Yeah, they got your ad kicking and screaming to do the right thing, but now they're talking to you too.\",\n  \"claim\": \"They got your ad kicking and screaming to do the right thing, but now they're talking to you too.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -5067,6 +5062,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0356\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"I hope to talk to you to do the same thing. And it'll make the life of the parent much simpler. It'll allow us to actually parent versus just policing device usage.\",\n  \"claim\": \"I hope to talk to you to do the same thing. And it'll make the life of the parent much simpler. It'll allow us to actually parent versus just policing device usage.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -5107,6 +5103,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0361\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"No, my kids aren't allowed until they're 16, but If that's not the point, it's just that, look, we've talked about this, I've been very consistent about this. This could have happened a lot sooner.\",\n  \"claim\": \"No, my kids aren't allowed until they're 16, but if that's not the point, it's just that, look, we've talked about this, I've been very consistent about this. This could have happened a lot sooner.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -5126,6 +5123,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0363\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"I hope that TikTok and YouTube do the same thing. These limitations are coming around in Australia and Canada and the UK, they'll probably period other places. It's physiologically and psychologically, really helpful for kids to have these limits. So yeah, these parental control apps aren't that great. They do a decent job.\",\n  \"claim\": \"I hope that TikTok and YouTube do the same thing. These limitations are coming around in Australia and Canada and the UK, they'll probably period other places. It's physiologically and psychologically, really helpful for kids to have these limits. So yeah, these parental control apps aren't that great. They do a decent job.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -5145,6 +5143,7 @@
       "offset": 24,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0365\",\n  \"speaker\": \"Chamath Palihapitiya\",\n  \"type\": \"position\",\n  \"quote\": \"I'm always on my back foot as a parent and it's frustrating and I would rather they're just spent time with my kids on other things other than screaming at them to get out their phone.\",\n  \"claim\": \"I'm always on my back foot as a parent and it's frustrating and I would rather they're just spent time with my kids on other things other than screaming at them to get out their phone.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -5164,6 +5163,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0367\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"How are we doing for the Summit?\",\n  \"claim\": \"How are we doing for the Summit?\",\n  \"offset\": 0\n}\n```"
     },
     {
@@ -5225,6 +5225,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0375\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"We will see you all at the all in some.\",\n  \"claim\": \"We will see you all at the all in some.\",\n  \"offset\": 49\n}\n```"
     },
     {
@@ -5244,6 +5245,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0377\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"It's this cancer vaccine and the stock that tripled in the last two weeks.\",\n  \"claim\": \"The stock that tripled in the last two weeks is a cancer vaccine.\",\n  \"offset\": 7\n}\n```"
     },
     {
@@ -5270,6 +5272,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0380\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"Yeah, I'm going to turn this stock. I think it's what you're talking about, right? Yes, I think they went from like a 20 billion market cap to 60 billion market cap on the positive readouts from this thing that's being called a cancer vaccine.\",\n  \"claim\": \"I think they went from like a 20 billion market cap to 60 billion market cap on the positive readouts from this thing that's being called a cancer vaccine.\",\n  \"offset\": 109\n}\n```"
     },
     {
@@ -5296,6 +5299,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0383\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"So the idea with the mRNA concept is you can get one shot.\",\n  \"claim\": \"The idea with the mRNA concept is you can get one shot.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -5308,6 +5312,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0384\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"That shot goes into your body.\",\n  \"claim\": \"That shot goes into your body.\",\n  \"offset\": 6\n}\n```"
     },
     {
@@ -5327,6 +5332,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0386\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"Right. And it's a customized per person, so there's some cost to doing it per person.\",\n  \"claim\": \"Right. And it's a customized per person, so there's some cost to doing it per person.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -5339,6 +5345,7 @@
       "offset": 1096,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0387\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"The process is take the DNA sequence from my cancer, make a protein, put it back in my body, my immune system goes into stories to cancer in my body.\",\n  \"claim\": \"The process is take the DNA sequence from my cancer, make a protein, put it back in my body, my immune system goes into stories to cancer in my body.\",\n  \"offset\": 119\n}\n```"
     },
     {
@@ -5351,13 +5358,16 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0388\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"Great idea.\",\n  \"claim\": \"Great idea.\",\n  \"offset\": 3\n}\n```"
     },
     {
       "turn_id": "00251a80c868f535_t0389",
-      "verdict": "claim",
-      "speaker": "David Friedberg",
-      "type": "position",
+      "verdict": "exclusion",
+      "gate_failed": "gate_4",
+      "reason": "Rejected by quote validator: empty quote payload",
+      "validator_rejected": true,
+      "rejection_reason": "empty_quote",
       "quote": "",
       "claim": "",
       "offset": 0,
@@ -5375,6 +5385,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0390\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"Do you think that people have two questions that we can end it on that? But do you think they're going to be able to successfully defend this patent in the United States and then also globally?\",\n  \"claim\": \"Do you think that people have two questions that we can end it on that? But do you think they're going to be able to successfully defend this patent in the United States and then also globally?\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -5394,6 +5405,7 @@
       "offset": 1048,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0392\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"I think that they do have strong patented coverage on their particular set of tools for mRNA.\",\n  \"claim\": \"They do have strong patented coverage on their particular set of tools for mRNA.\",\n  \"offset\": 139\n}\n```"
     },
     {
@@ -5434,6 +5446,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0397\",\n  \"speaker\": \"unknown\",\n  \"type\": \"position\",\n  \"quote\": \"The blood test. Yeah. The blood test.\",\n  \"claim\": \"The blood test is a good thing.\",\n  \"offset\": 4\n}\n```"
     },
     {
@@ -5446,6 +5459,7 @@
       "offset": 0,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0398\",\n  \"speaker\": \"Jason Calacanis\",\n  \"type\": \"position\",\n  \"quote\": \"Yeah. Just early testing is the key piece for all of us to keep in mind. Get tested early and often for cancer.\",\n  \"claim\": \"Get tested early and often for cancer.\",\n  \"offset\": 10\n}\n```"
     },
     {
@@ -5458,6 +5472,7 @@
       "offset": 1148,
       "quote_resolves_verbatim": true,
       "quote_resolves_to_context_only": false,
+      "validator_rejected": false,
       "raw_output": "```json\n{\n  \"verdict\": \"claim\",\n  \"turn_id\": \"00251a80c868f535_t0399\",\n  \"speaker\": \"David Friedberg\",\n  \"type\": \"position\",\n  \"quote\": \"So there's all these new techniques that are being used to destroy cancer and I think in aggregate we should be very excited and optimistic about where this has had it.\",\n  \"claim\": \"We should be very excited and optimistic about where this has had it.\",\n  \"offset\": 109\n}\n```"
     },
     {

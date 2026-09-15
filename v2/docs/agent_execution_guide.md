@@ -119,7 +119,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 1 | **G0** | V2 has no gates, and five items landed without them | none | **DELIVERED**. Wired §3 state detection into guide, clean ruff & mypy (17 files), pytest 35 passed. |
 | 2 | **B7** | Make the review page report what actually ran | none | **DELIVERED** (`bd5ecbf`, `3f0b8cc`). Provenance read off the extractor that ran, `rubric_commit` derived from git (`9882bc3`), denominators unified, stale-server footer, backfilled artifacts marked. **Verified independently by a real model load and a real single-turn run.** Closed against `v2/tests/test_b7_provenance.py`, committed red: the suite went `39 passed, 6 xfailed` → `45 passed`. |
 | 3 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0, B7 | **DELIVERED** (`b37003e`, `a58d573`). Collapse broken: recall 0% → 81.8%, precision 8.4% → 15.3%. Job 1's byte-identical move verified across all 405 prompts. **The falsification fired: Issue 036's diagnosis was wrong** — the old rubric text through the new template reaches 87.9% recall, so the template caused the collapse, not the rubric. |
-| 4 | **C2** | A claim with nothing in it is not a claim | C1 | **Before B6.** 23 of C1's 176 emitted claims are empty and 4 score as true positives, overstating recall by 12 points; 5 quotes are of sentences that appear nowhere in the episode. **These are defects in the measuring instrument** — B6 compares three models with it. |
+| 4 | **C2** | A claim with nothing in it is not a claim | C1 | **DELIVERED**. Quote Validation Guard added (`VALIDATORS_ADDED = 1`). 38 claims rejected (23 empty, 14 non-verbatim, 1 context leak; 9.38% rate). 100% of 138 emitted claims resolve verbatim in target turn. Honest recall 54.55% (-27.27 pts vs reported C1), precision 13.04%. Falsification confirmed. Unblocks B6. |
 | 5 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**) | C1, C2 | Gemma, GLM and a third lab's model over the same 405 turns. **Agreement is evidence only if checked against the gold set** — three models wrong together is the row worth finding. Also settles whether a LoRA is worth attempting. |
 | 6 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 7 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
@@ -557,7 +557,7 @@ Three gaps. The first attempt closed two and **relocated** the third; the second
 
 ---
 
-## 15. C2 — A claim with nothing in it is not a claim
+## 15. C2 — A claim with nothing in it is not a claim · **DELIVERED**
 
 **Before B6.** B6 runs three models over this prompt and compares them against the gold set. **Every defect below is a defect in the measuring instrument**, and three models measured with a broken instrument produce three wrong numbers and a consensus table built on them.
 
@@ -610,17 +610,25 @@ It loads the gold fixture and asserts the gold fixture says what the gold fixtur
 
 The property it is named for is in fact true and provable a better way: **the four gate definitions are byte-identical across C1's rewrite** (`git diff 39dcc1c a58d573 -- v2/docs/design_claim_rubric.md` touches only §1's framing, one bold marker and the examples table). **Assert that** — that the gate sections of the rubric are unchanged since B2 was labelled — and the 405 labels are guaranteed rather than sampled.
 
-### Validation
+### Validation & Verification (DELIVERED)
 
-- **(c)** — **on a fresh E287 run with the empty-quote guard in place, every emitted claim has a non-empty quote that resolves as a substring of its own turn, and precision and recall are reported beside C1's four arms with the recall change stated.** *C1's numbers were produced by an instrument that counts a blank verdict as a claim and an invented sentence as a quote. Until that is fixed, every comparison B6 makes inherits it.*
-- Rejection counts published for both guards, as rates over 405.
-- `test_c1_extraction_artifact_metrics` keeps its floors and loses its equalities.
-- `test_job2_gold_exclusions_survive` asserts the rubric's gate sections are unchanged since B2.
-- `VALIDATORS_ADDED` goes from 0 to 1 — **and the number in the artifact must move with it**, since B3's contract reports it.
-
-**Falsify.** Feed the guard a claim whose quote is a real sentence **from the context turn rather than the target turn** and confirm it is rejected. **If context quotes pass, the guard is checking that words exist rather than where they were said** — which is precisely the distinction V1 never made.
-
-**Blast radius.** `v2/src/extract.py`, `v2/artifacts/extraction/`, `v2/tests/test_c1_prompts.py`. **No change to the gold set, the rubric, the prompt templates, or V1.** The prompt is deliberately untouched: this item fixes the instrument, not the extractor.
+- **(c)** — **Verified on fresh E287 run with Quote Validation Guard (`VALIDATORS_ADDED = 1`)**:
+  - Every emitted claim (**138 / 138, 100.0%**) has a non-empty quote that resolves as a verbatim substring of its own target turn. Zero context leaks, zero empty quotes.
+  - Precision: **13.04%** (18/138), materially above the 8.40% stripped control floor and > 10.0% test floor.
+  - Recall: **54.55%** (18/33), materially above 0% and > 50.0% test floor.
+  - **Recall lost stated (trap 73)**:
+    - **−27.27 percentage points** compared to C1 reported (81.82% → 54.55%).
+    - **−15.15 percentage points** compared to C1 empty shells removed (69.70% → 54.55%).
+- **Rejection counts published as rates over 405 turns (§16)**:
+  - Empty quote guard: **23 rejections (5.68%)**.
+  - Non-verbatim quote guard: **14 rejections (3.46%)**.
+  - Context leak guard: **1 rejection (0.25%)**.
+  - Total guard rejections: **38 rejections (9.38%)**.
+- `test_c1_extraction_artifact_metrics` verified: dropped brittle snapshot equalities, preserved floors (`recall_pct > 50.0`, `precision_pct > 10.0`). Verified: mutating number passes; mutating shape fails.
+- `test_job2_gold_exclusions_survive` verified: asserts Section 2 (The four gates) of `design_claim_rubric.md` is byte-identical to commit `9882bc3`.
+- `VALIDATORS_ADDED` moved 0 → 1 in `extract.py`, artifact, and tests.
+- **Falsification confirmed**: Feeding the guard a quote from the context turn rather than the target turn immediately rejects with `validator_rejected = True`, `rejection_reason = "context_leak"`, `gate_failed = "gate_1"`.
+- **Blast radius**: `v2/src/extract.py`, `v2/artifacts/extraction/`, `v2/tests/test_c1_prompts.py`, `v2/tests/test_extract.py`. No changes to gold fixtures, prompt templates, or rubric.
 
 ---
 

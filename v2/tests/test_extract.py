@@ -25,9 +25,9 @@ from v2.src.extract import (
 )
 
 
-def test_validators_added_is_zero() -> None:
-    """Standing constraint: B3 adds zero validators to the pipeline."""
-    assert VALIDATORS_ADDED == 0
+def test_validators_added_count() -> None:
+    """Standing constraint: B3 had zero validators; C2 authorized exactly 1 (Quote Validation Guard)."""
+    assert VALIDATORS_ADDED == 1
 
 
 def test_rubric_sections_2_and_3_appear_verbatim_in_prompt() -> None:
@@ -87,7 +87,7 @@ def test_context_turn_quote_provenance_check() -> None:
     assert verdict1["quote_resolves_verbatim"] is True
     assert verdict1["quote_resolves_to_context_only"] is False
 
-    # Case 2: Quote hallucinated from context turn
+    # Case 2: Quote hallucinated from context turn (rejected under C2 validator)
     leak_output = json.dumps({
         "verdict": "claim",
         "turn_id": "test_t001",
@@ -98,9 +98,16 @@ def test_context_turn_quote_provenance_check() -> None:
         "offset": 0,
     })
     verdict2 = parse_model_verdict(leak_output, target_turn, context_turn)
-    assert verdict2["verdict"] == "claim"
-    assert verdict2["quote_resolves_verbatim"] is False
-    assert verdict2["quote_resolves_to_context_only"] is True, "Should detect quote resolving to context turn only!"
+    assert verdict2["verdict"] == "exclusion"
+    assert verdict2["validator_rejected"] is True
+    assert verdict2["rejection_reason"] == "context_leak"
+    assert verdict2["quote_resolves_to_context_only"] is True
+
+    # Unvalidated diagnostic mode still detects without rejecting
+    verdict_unval = parse_model_verdict(leak_output, target_turn, context_turn, apply_validator=False)
+    assert verdict_unval["verdict"] == "claim"
+    assert verdict_unval["quote_resolves_verbatim"] is False
+    assert verdict_unval["quote_resolves_to_context_only"] is True
 
 
 def test_parse_model_verdict_exclusion_and_normalization() -> None:

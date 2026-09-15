@@ -15,8 +15,8 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
-# Standing requirement Step 4: validators added = 0
-VALIDATORS_ADDED: int = 0
+# Standing requirement: validators added = 1 (C2 Quote Validation Guard)
+VALIDATORS_ADDED: int = 1
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 REPO_ROOT = ROOT_DIR.parent
@@ -147,11 +147,15 @@ def parse_model_verdict(
     raw_output: str,
     target_turn: dict[str, Any],
     context_turn: dict[str, Any] | None = None,
+    apply_validator: bool = True,
 ) -> dict[str, Any]:
     """Parses model output JSON into a standardized verdict dictionary.
 
-    Enforces zero validators: does not suppress, discard, or rewrite model output.
-    Computes diagnostic fields: verbatim quote match, context quote leak check, offset.
+    Under C2 (VALIDATORS_ADDED=1), applies the Quote Validation Guard:
+    - Guard 1: Empty quote payloads are rejected as exclusions (gate_4).
+    - Guard 2: Quotes that do not resolve as a verbatim substring in target turn are rejected
+      (context leaks -> gate_1, non-verbatim / hallucinations -> gate_4).
+    Emitted claims are guaranteed to have a non-empty quote that resolves verbatim in the target turn.
     """
     turn_id = target_turn["turn_id"]
     target_text = target_turn.get("text", "")
@@ -201,6 +205,45 @@ def parse_model_verdict(
         quote_in_context = bool(quote and ctx_text and quote in ctx_text)
         resolves_to_context_only = bool(quote and (not quote_in_target) and quote_in_context)
 
+        # C2 Quote Validation Guard (VALIDATORS_ADDED = 1)
+        if apply_validator:
+            # Guard 1: Empty quote
+            if not quote:
+                return {
+                    "turn_id": turn_id,
+                    "verdict": "exclusion",
+                    "gate_failed": "gate_4",
+                    "reason": "Rejected by quote validator: empty quote payload",
+                    "validator_rejected": True,
+                    "rejection_reason": "empty_quote",
+                    "quote": "",
+                    "claim": claim_text,
+                    "offset": 0,
+                    "quote_resolves_verbatim": False,
+                    "quote_resolves_to_context_only": False,
+                    "raw_output": raw_output.strip(),
+                }
+
+            # Guard 2: Quote does not resolve verbatim as a substring of target turn
+            if not quote_in_target:
+                gate_failed = "gate_1" if resolves_to_context_only else "gate_4"
+                rej_reason = "context_leak" if resolves_to_context_only else "non_verbatim"
+                detail = "quote resolves to context turn only (context leak)" if resolves_to_context_only else "quote does not resolve as a substring of target turn"
+                return {
+                    "turn_id": turn_id,
+                    "verdict": "exclusion",
+                    "gate_failed": gate_failed,
+                    "reason": f"Rejected by quote validator: {detail}",
+                    "validator_rejected": True,
+                    "rejection_reason": rej_reason,
+                    "quote": quote,
+                    "claim": claim_text,
+                    "offset": 0,
+                    "quote_resolves_verbatim": False,
+                    "quote_resolves_to_context_only": resolves_to_context_only,
+                    "raw_output": raw_output.strip(),
+                }
+
         offset = target_text.find(quote) if quote_in_target else int(parsed_obj.get("offset", 0))
 
         return {
@@ -213,6 +256,7 @@ def parse_model_verdict(
             "offset": offset,
             "quote_resolves_verbatim": quote_in_target,
             "quote_resolves_to_context_only": resolves_to_context_only,
+            "validator_rejected": False,
             "raw_output": raw_output.strip(),
         }
     else:
@@ -257,8 +301,20 @@ def evaluate_against_gold(
     verbatim_quote_matches = 0
     total_model_claims = 0
     context_leak_quotes = 0
+    guard_rejections = {
+        "empty_quote": 0,
+        "non_verbatim": 0,
+        "context_leak": 0,
+        "total": 0,
+    }
 
     for ext in extracted_verdicts:
+        if ext.get("validator_rejected", False):
+            guard_rejections["total"] += 1
+            rej_reason = str(ext.get("rejection_reason", "empty_quote"))
+            if rej_reason in guard_rejections:
+                guard_rejections[rej_reason] += 1
+
         tid = ext["turn_id"]
         gold_entry = gold_verdicts.get(tid)
         if not gold_entry:
@@ -329,6 +385,10 @@ def evaluate_against_gold(
         k: round(v / total * 100.0, 2) if total > 0 else 0.0
         for k, v in gate_counts_gold.items()
     }
+    guard_rejection_rates = {
+        k: round(v / total * 100.0, 2) if total > 0 else 0.0
+        for k, v in guard_rejections.items()
+    }
 
     return {
         "total_turns": total,
@@ -356,6 +416,8 @@ def evaluate_against_gold(
         "disagreements_count": len(disagreements),
         "disagreements": disagreements,
         "validators_added": VALIDATORS_ADDED,
+        "guard_rejections": guard_rejections,
+        "guard_rejection_rates": guard_rejection_rates,
     }
 
 

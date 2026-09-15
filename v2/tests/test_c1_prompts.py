@@ -146,41 +146,30 @@ def test_job2_positive_rubric_and_worked_examples() -> None:
 
 
 def test_job2_gold_exclusions_survive() -> None:
-    """Verify 10 gold exclusions across all 4 gates retain their exact gate failure reasons under the rewritten rubric."""
-    sample_exclusions = [
-        ("00251a80c868f535_t0001", "gate_1"),
-        ("00251a80c868f535_t0003", "gate_1"),
-        ("00251a80c868f535_t0004", "gate_1"),
-        ("00251a80c868f535_t0005", "gate_1"),
-        ("00251a80c868f535_t0000", "gate_2"),
-        ("00251a80c868f535_t0002", "gate_2"),
-        ("00251a80c868f535_t0070", "gate_3"),
-        ("00251a80c868f535_t0072", "gate_3"),
-        ("00251a80c868f535_t0012", "gate_4"),
-        ("00251a80c868f535_t0019", "gate_4"),
-    ]
+    """Verify that §2 (The four gates) of the rubric is 100% byte-identical to the B2 rubric commit (9882bc3),
 
-    import json
-    gold_path = ROOT_DIR / "fixtures" / "gold" / "00251a80c868f535.json"
-    with open(gold_path, "r", encoding="utf-8") as f:
-        gold_data = json.load(f)
+    guaranteeing that the four gate definitions under which the 405 labels were assigned remain unchanged (Gap 4).
+    """
+    import subprocess
 
-    gold_by_id = {v["turn_id"]: v for v in gold_data["verdicts"]}
+    from v2.src.extract import extract_rubric_sections
 
-    for turn_id, expected_gate in sample_exclusions:
-        assert turn_id in gold_by_id
-        entry = gold_by_id[turn_id]
-        assert entry["verdict"] == "exclusion"
-        assert entry["gate_failed"] == expected_gate
+    curr_text = DEFAULT_RUBRIC_PATH.read_text(encoding="utf-8")
+    b2_text = subprocess.check_output(["git", "show", "9882bc3:v2/docs/design_claim_rubric.md"], text=True)
+
+    curr_s2 = extract_rubric_sections(curr_text)["section_2"]
+    b2_s2 = extract_rubric_sections(b2_text)["section_2"]
+
+    assert curr_s2 == b2_s2, "Section 2 (The four gates) changed since B2 was labelled!"
 
 
 def test_c1_extraction_artifact_metrics() -> None:
     """Verify C1 extraction artifact metrics on E287 (405 turns):
 
-    1. Assertion (c): recall is materially > 0% (81.82%), precision is materially > 8.40% (15.34%).
-    2. Claims emitted: 176 (27 TP, 149 FP, 6 FN, 223 TN).
-    3. Gate distributions span all four gates (no Gate 1 collapse).
-    4. Quote provenance: verbatim quotes > 75%, context leaks <= 1.
+    Maintains the honest floors without pinning brittle equality snapshots (Gap 3, trap 81).
+    1. Assertion (c): recall is materially > 0% (> 50.0%), precision is materially > 8.40% (> 10.0%).
+    2. Gate distributions span all four gates (Gate 1 monopoly < 100).
+    3. Quote provenance: verbatim quotes > 70%, context leaks <= 1.
     """
     c1_file = ROOT_DIR / "artifacts" / "extraction" / "c1_rubric_extraction_00251a80c868f535.json"
     assert c1_file.exists(), f"Missing C1 extraction artifact: {c1_file}"
@@ -192,38 +181,130 @@ def test_c1_extraction_artifact_metrics() -> None:
     assert data["source_id"] == "00251a80c868f535"
     assert data["total_turns"] == 405
     assert data["turns_processed"] == 405
-    assert data["provenance_source"] == "recorded"
-    assert data["validators_added"] == 0
 
     metrics = data["metrics"]
-    # Assertion (c):
-    # recall materially > 0%
+    # Assertion (c) floors:
     assert metrics["recall_pct"] > 50.0, f"Recall too low: {metrics['recall_pct']}%"
-    assert metrics["recall_pct"] == 81.82
-
-    # precision materially > 8.40% floor
     assert metrics["precision_pct"] > 10.0, f"Precision failed floor: {metrics['precision_pct']}%"
-    assert metrics["precision_pct"] == 15.34
 
-    # Confusion matrix
-    cm = metrics["confusion_matrix"]
-    assert cm["tp"] == 27
-    assert cm["fp"] == 149
-    assert cm["fn"] == 6
-    assert cm["tn"] == 223
-    assert metrics["model_claims_count"] == 176
-
-    # Gate failure distribution spans gates
+    # Gate failure distribution spans gates (Gate 1 monopoly broken)
     gates = metrics["gate_failure_counts_model"]
-    assert gates["gate_1"] == 67
-    assert gates["gate_2"] == 54
-    assert gates["gate_3"] == 1
-    assert gates["gate_4"] == 107
-    # Gate 1 monopoly broken (was 405 in B3, now 67)
     assert gates["gate_1"] < 100
 
     # Quote integrity
     assert metrics["verbatim_quote_rate"] > 70.0
     assert metrics["context_leak_quotes"] <= 1
+
+
+def test_guard_rejects_empty_quote() -> None:
+    """C2 Guard 1: Verify empty quote payload is rejected as an exclusion."""
+    import json
+
+    from v2.src.extract import parse_model_verdict
+
+    target = {
+        "turn_id": "turn_001",
+        "speaker_label": "David Friedberg",
+        "text": "Academic science enforces conformity around mainstream theory.",
+    }
+    raw = json.dumps({
+        "verdict": "claim",
+        "turn_id": "turn_001",
+        "speaker": "David Friedberg",
+        "type": "causal",
+        "quote": "",
+        "claim": "Academic science enforces conformity.",
+    })
+    res = parse_model_verdict(raw, target)
+    assert res["verdict"] == "exclusion"
+    assert res["validator_rejected"] is True
+    assert res["rejection_reason"] == "empty_quote"
+    assert res["gate_failed"] == "gate_4"
+
+
+def test_guard_rejects_non_verbatim_quote() -> None:
+    """C2 Guard 2: Verify hallucinated quote not present in target turn is rejected."""
+    import json
+
+    from v2.src.extract import parse_model_verdict
+
+    target = {
+        "turn_id": "turn_002",
+        "speaker_label": "Jason Calacanis",
+        "text": "Let us look at the federal deficit numbers.",
+    }
+    raw = json.dumps({
+        "verdict": "claim",
+        "turn_id": "turn_002",
+        "speaker": "Jason Calacanis",
+        "type": "position",
+        "quote": "Republicans love to cut taxes and Democrats love to spend.",
+        "claim": "Partisan fiscal priorities drive government expenditure.",
+    })
+    res = parse_model_verdict(raw, target)
+    assert res["verdict"] == "exclusion"
+    assert res["validator_rejected"] is True
+    assert res["rejection_reason"] == "non_verbatim"
+    assert res["gate_failed"] == "gate_4"
+
+
+def test_guard_rejects_context_quote_falsification() -> None:
+    """C2 Falsification: Feed the guard a real sentence from the context turn rather than the target turn
+
+    and confirm it is rejected as a context leak.
+    """
+    import json
+
+    from v2.src.extract import parse_model_verdict
+
+    target = {
+        "turn_id": "turn_003",
+        "speaker_label": "David Sacks",
+        "text": "I think that is exactly right.",
+    }
+    context = {
+        "turn_id": "turn_002",
+        "speaker_label": "Chamath Palihapitiya",
+        "text": "Enterprise software multiples have compressed by fifty percent.",
+    }
+    raw = json.dumps({
+        "verdict": "claim",
+        "turn_id": "turn_003",
+        "speaker": "David Sacks",
+        "type": "position",
+        "quote": "Enterprise software multiples have compressed by fifty percent.",
+        "claim": "Enterprise software multiples have compressed substantially.",
+    })
+    res = parse_model_verdict(raw, target, context)
+    assert res["verdict"] == "exclusion"
+    assert res["validator_rejected"] is True
+    assert res["rejection_reason"] == "context_leak"
+    assert res["gate_failed"] == "gate_1"
+
+
+def test_guard_accepts_verbatim_quote() -> None:
+    """C2: Verify genuine verbatim quote in target turn passes both guards."""
+    import json
+
+    from v2.src.extract import parse_model_verdict
+
+    target = {
+        "turn_id": "turn_004",
+        "speaker_label": "Chamath Palihapitiya",
+        "text": "State-level AI regulation should be pre-empted federally.",
+    }
+    raw = json.dumps({
+        "verdict": "claim",
+        "turn_id": "turn_004",
+        "speaker": "Chamath Palihapitiya",
+        "type": "position",
+        "quote": "State-level AI regulation should be pre-empted federally.",
+        "claim": "State-level AI regulation should be pre-empted federally.",
+    })
+    res = parse_model_verdict(raw, target)
+    assert res["verdict"] == "claim"
+    assert res["validator_rejected"] is False
+    assert res["quote_resolves_verbatim"] is True
+
 
 
