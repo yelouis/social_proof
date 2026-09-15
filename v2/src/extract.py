@@ -397,7 +397,7 @@ class ModelExtractor:
         prompt: str,
         target_turn: dict[str, Any],
         context_turn: dict[str, Any] | None = None,
-        max_tokens: int = 150,
+        max_tokens: int = 250,
     ) -> dict[str, Any]:
         """Runs generation for a single turn and parses verdict."""
         raw_output = self.generate_fn(
@@ -418,6 +418,7 @@ def run_episode_extraction(
     progress_callback: Callable[[int, int, dict[str, Any]], None] | None = None,
     extractor: Any | None = None,
     output_dir: Path | None = None,
+    output_filename: str | None = None,
 ) -> dict[str, Any]:
     """Runs extraction across all turns of an episode and saves the artifact."""
     transcript_file = DEFAULT_TRANSCRIPT_DIR / f"{source_id}.json"
@@ -434,6 +435,13 @@ def run_episode_extraction(
     rubric_text = load_rubric(DEFAULT_RUBRIC_PATH)
     active_extractor = extractor if extractor is not None else ModelExtractor()
 
+    # Decoding parameters pinned and recorded
+    decoding = {
+        "temperature": 0.0,
+        "max_tokens": 250,
+        "seed": 42,
+    }
+
     verdicts: list[dict[str, Any]] = []
     t0 = time.perf_counter()
 
@@ -444,7 +452,9 @@ def run_episode_extraction(
         else:
             prompt = build_rubric_prompt(rubric_text, target, context)
 
-        verdict = active_extractor.extract_turn(prompt, target, context)
+        verdict = active_extractor.extract_turn(
+            prompt, target, context, max_tokens=int(decoding["max_tokens"])
+        )
         verdicts.append(verdict)
 
         if progress_callback:
@@ -468,13 +478,6 @@ def run_episode_extraction(
     # Rubric commit dynamically derived from git log of rubric file
     rubric_commit = get_rubric_commit(DEFAULT_RUBRIC_PATH)
     rubric_content_hash = hashlib.sha256(rubric_text.encode("utf-8")).hexdigest()
-
-    # Decoding parameters pinned and recorded
-    decoding = {
-        "temperature": 0.0,
-        "max_tokens": 150,
-        "seed": 42,
-    }
 
     prompt_file = DEFAULT_PROMPT_FALSIFY_PATH if is_falsification else DEFAULT_PROMPT_CLAIM_PATH
     prompt_content = prompt_file.read_text(encoding="utf-8") if prompt_file.exists() else ""
@@ -506,8 +509,11 @@ def run_episode_extraction(
     # Save artifact
     target_dir = output_dir if output_dir is not None else DEFAULT_EXTRACTION_DIR
     target_dir.mkdir(parents=True, exist_ok=True)
-    suffix = "falsification" if is_falsification else "rubric"
-    out_file = target_dir / f"{suffix}_extraction_{source_id}.json"
+    if output_filename is not None:
+        out_file = target_dir / output_filename
+    else:
+        suffix = "falsification" if is_falsification else "rubric"
+        out_file = target_dir / f"{suffix}_extraction_{source_id}.json"
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2)
 

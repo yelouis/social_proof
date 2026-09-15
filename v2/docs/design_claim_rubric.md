@@ -9,12 +9,13 @@
 **If you change this file, the prompt and the labelling instruction change in the same commit.**
 
 ---
+## 1. The primary test
 
-## 1. The one-sentence test
+> **Does this turn contain a position the speaker would defend if challenged? If so, quote it and state it.**
 
-> **A claim is a sentence the speaker would defend if someone challenged it.**
+Everything below is that question made operational. The goal is to identify defensible commitments — positions, predictions, causal explanations, evaluations, or contested assertions made in the speaker's own voice.
 
-Everything below is that sentence made decidable. When a case is genuinely ambiguous after applying the four gates, **exclude it** and record why — V1's failure was never too few claims, it was claims that were not claims.
+The four gates serve as verification checks on candidate claims, ensuring that only genuine, attributable, world-directed, contestable, standalone assertions are recorded. When no defensible position is asserted (or when a candidate fails a gate), exclude it and record which gate failed.
 
 ---
 
@@ -88,7 +89,7 @@ Fails on unresolved pronouns, deixis, and back-references.
 | **evaluative** | X is good / bad / overrated / a mistake | *Anthropic's safety positioning is regulatory capture* |
 | **contested fact** | X is the case, and it is genuinely disputed | *the leading open source models come from China* |
 
-**If no type fits, it is not a claim.** That is the intended behaviour, not a gap to be patched by adding a sixth type.
+If no type fits, it is not a claim. That is the intended behaviour, not a gap to be patched by adding a sixth type.
 
 ---
 
@@ -111,7 +112,7 @@ For each claim:
 
 ## 5. Worked examples
 
-Drawn from V1's live corpus. **These are the calibration set — a labeller who disagrees with these should stop and raise it rather than proceed.**
+Drawn from V1's live corpus and B2 reference labelling. **Lead with positive examples of defensible claims, followed by boundary exclusions.**
 
 | quote | verdict |
 |---|---|
@@ -119,10 +120,13 @@ Drawn from V1's live corpus. **These are the calibration set — a labeller who 
 | *"I could see AI easily becoming another tech market that becomes a duopoly"* | **CLAIM** · prediction (hedged — hedging is recorded, not disqualifying) |
 | *"anthropic is guilty of regulatory capture"* | **CLAIM** · evaluative |
 | *"I don't think Democrats have the solution to the problem"* | **CLAIM** · evaluative |
+| *"so much of science has kind of followed this sheet like mentality where everyone has to line up, agree to the same general theory or you get outcasts"* | **CLAIM** · causal |
+| *"string theory is basically like the ultimate DEI program for mediocre physicists"* | **CLAIM** · evaluative |
+| *"the leading open source models are from China these days"* | **CLAIM** · contested fact |
+| *"state-level AI regulation should be pre-empted federally"* | **CLAIM** · position |
 | *"Number one, brand yourself as a safe AI company."* | **not a claim** · gate 1 — narrating another's playbook |
 | *"They wanted regulatory approval for models that use 10 to the 25th Flops, right?"* | **not a claim** · gate 1 — reporting |
 | *"That was the whole thrust of the speech…"* | **not a claim** · gate 1 — describing a speech |
-| *"The question is whether at lower levels of the bureaucracy you can get mistakes"* | **not a claim** · gate 1 — raises a question |
 | *"A couple of tickets left."* | **not a claim** · gate 2 |
 | *"Azure holds a FedRAMP High authorization"* | **not a claim** · gate 3 |
 | *"I think that's right."* | **not a claim** · gate 4 |

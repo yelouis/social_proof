@@ -1,86 +1,91 @@
-# B3 Extraction & Falsification Report — Episode 00251a80c868f535
+# Extraction & Falsification Report — Episode 00251a80c868f535 (C1 Delivery)
 
 - **Model**: `mlx-community/gemma-2-2b-it-4bit`
 - **Episode**: `00251a80c868f535` (All-In E287: Nvidia's Historic Quarter, SaaS Comeback)
 - **Total Turns Processed**: 405
-- **Rubric Run Duration**: 737.8s (1.82s / turn)
-- **Falsification Run Duration**: 395.2s (0.98s / turn)
+- **C1 Rubric Run Duration**: 841.4s (2.08s / turn)
+- **Prompt Versions**:
+  - Rubric Extraction: `extract_claim:738f12858fbf`
+  - Falsification Extraction: `extract_falsify:8b9d09c21ef4`
+- **Rubric Path**: `v2/docs/design_claim_rubric.md`
+- **Decoding Configuration**: `{"temperature": 0.0, "max_tokens": 250, "seed": 42}`
 - **Validators Added**: 0 (strictly zero)
+
+---
 
 ## 1. Primary Metrics Against B2 Gold Standard
 
-| Metric | Rubric Prompt | Falsification (Stripped) | Delta |
-|---|---|---|---|
-| **Gold Claims (P)** | 33 | 33 | 0 |
-| **Model Claims** | 0 | 393 | -393 |
-| **True Positives (TP)** | 0 | 33 | -33 |
-| **False Positives (FP)** | 0 | 360 | -360 |
-| **False Negatives (FN)** | 33 | 0 | +33 |
-| **True Negatives (TN)** | 372 | 12 | +360 |
-| **Precision** | **0.0%** | **8.4%** | **-8.40%** |
-| **Recall** | **0.0%** | **100.0%** | **-100.00%** |
-| **F1 Score** | **0.0%** | **15.49%** | **-15.49%** |
+| Metric | Old Rubric (B3) | Stripped Control (B3) | New Rubric (C1) | Delta (C1 vs Old) | Delta (C1 vs Stripped) |
+|---|---|---|---|---|---|
+| **Gold Claims (P)** | 33 | 33 | 33 | 0 | 0 |
+| **Model Claims** | 0 | 393 | 176 | +176 | -217 |
+| **True Positives (TP)** | 0 | 33 | 27 | +27 | -6 |
+| **False Positives (FP)** | 0 | 360 | 149 | +149 | -211 |
+| **False Negatives (FN)** | 33 | 0 | 6 | -27 | +6 |
+| **True Negatives (TN)** | 372 | 12 | 223 | -149 | +211 |
+| **Precision** | **—** (0.0%) | **8.40%** | **15.34%** | **+15.34%** | **+6.94%** |
+| **Recall** | **0.00%** | **100.00%** | **81.82%** | **+81.82%** | **-18.18%** |
+| **F1 Score** | **0.00%** | **15.49%** | **25.84%** | **+25.84%** | **+10.35%** |
+
+> **Assertion (c) Verification**:
+> - **Recall on E287 (81.82%) is materially above 0%** (27 of 33 gold claims retrieved).
+> - **Precision on E287 (15.34%) is materially above the 8.40% precision floor** set by the degenerate stripped baseline, representing an 82.6% relative improvement in precision while eliminating 211 false positives.
+
+---
 
 ## 2. Gate Failure Distribution
 
-Comparison of model exclusions vs human gold exclusions on B2 reference episode (rates as share of all 405 turns, per B7):
+All rates are reported as shares of all 405 turns (per B7 standing constraint §15):
 
-| Gate | Gold Set Count (Rate) | Rubric Model Count (Rate) | Falsification Count (Rate) |
-|---|---|---|---|
-| **Gate 1** | 302 (74.57%) | 405 (100.00%) | 12 (2.96%) |
-| **Gate 2** | 8 (1.98%) | 0 (0.00%) | 0 (0.00%) |
-| **Gate 3** | 6 (1.48%) | 0 (0.00%) | 0 (0.00%) |
-| **Gate 4** | 56 (13.83%) | 0 (0.00%) | 0 (0.00%) |
+| Gate / Verdict | B2 Gold Count (Rate) | Old Rubric (B3) | Stripped Control (B3) | New Rubric (C1) |
+|---|---|---|---|---|
+| **Gate 1 (Attributable)** | 302 (74.57%) | 405 (100.00%) | 12 (2.96%) | 67 (16.54%) |
+| **Gate 2 (About the world)** | 8 (1.98%) | 0 (0.00%) | 0 (0.00%) | 54 (13.33%) |
+| **Gate 3 (Contestable)** | 6 (1.48%) | 0 (0.00%) | 0 (0.00%) | 1 (0.25%) |
+| **Gate 4 (Standalone)** | 56 (13.83%) | 0 (0.00%) | 0 (0.00%) | 107 (26.42%) |
+| **Claims Emitted** | 33 (8.15%) | 0 (0.00%) | 393 (97.04%) | 176 (43.46%) |
+| **Total Turns** | 405 (100.00%) | 405 (100.00%) | 405 (100.00%) | 405 (100.00%) |
+
+**Distribution Takeaway**:
+Under the Old Rubric, the model suffered total gate collapse (100% Gate 1, 0 claims). Under C1's positive rubric and elicitation prompt, Gate 1 monopoly is broken: the model actively reasons across Gate 1 (16.5%), Gate 2 (13.3%), Gate 3 (0.3%), and Gate 4 (26.4%), successfully distinguishing conversational deixis and mechanics from defensible positions.
+
+---
 
 ## 3. Quote Integrity & Provenance
 
-- **Model Claims Emitted**: 0
-- **Quotes Resolving Verbatim in Target Turn**: 0 / 0 (100.0%)
-- **Quotes Resolving to Context Turn Only (Hallucinated Context Leaks)**: 0
+- **Model Claims Emitted**: 176
+- **Verbatim Quote Matches in Target Turn**: 138 / 176 (78.41%)
+- **Quotes Resolving to Context Turn Only (Hallucinated Context Leaks)**: 1 / 176 (0.57%)
 
-## 4. Disagreements by Turn ID (Rubric Run vs Gold Standard)
+---
 
-Total disagreements: 33 turns out of 405.
+## 4. Disagreements by Turn ID (C1 Run vs Gold Standard)
 
-### False Positives (Model emitted Claim, Gold excluded)
+Total disagreements: 155 turns out of 405 (down from 360 disagreements in the stripped control).
 
-| Turn ID | Speaker | Gold Gate | Model Type | Quote Snippet | Claim Stated |
-|---|---|---|---|---|---|
+### False Negatives (Gold had Claim, Model excluded) — 6 turns
 
-### False Negatives (Gold had Claim, Model excluded)
-
-| Turn ID | Speaker | Model Gate | Gold Claim | Turn Text Snippet |
+| Turn ID | Speaker | Model Gate | Model Reason | Gold Claim |
 |---|---|---|---|---|
-| `00251a80c868f535_t0009` | David Friedberg | `gate_1` | Academic science enforces conformity around mainstream theor | *"There's all these things that everyone takes as fundamental "* |
-| `00251a80c868f535_t0010` | Chamath Palihapitiya | `gate_1` | Eric Weinstein is more right than wrong on the substance of  | *"I know, but it's very rational to say, until string theory i"* |
-| `00251a80c868f535_t0016` | David Friedberg | `gate_1` | Conformity in American science suppresses heterodox thinking | *"And so if you don't follow the voting, the methods, the theo"* |
-| `00251a80c868f535_t0017` | Chamath Palihapitiya | `gate_1` | Modern scientific research is significantly more incremental | *"Just said differently, there's probably a lot of incremental"* |
-| `00251a80c868f535_t0030` | Jason Calacanis | `gate_1` | The Chinese Communist Party is exceptionally effective at pu | *"I think you're 100 % right about the PR. And I realize. that"* |
-| `00251a80c868f535_t0040` | David Sacks | `gate_1` | American societal pessimism regarding AI is the primary risk | *"It is true that China is much more optimistic about AI than "* |
-| `00251a80c868f535_t0055` | David Sacks | `gate_1` | Generalizing to unprogrammed physical conditions is the prim | *"Yeah, and you know, the hard part, as I understand it with t"* |
-| `00251a80c868f535_t0063` | David Sacks | `gate_1` | Cloud-hosted always-on agent architectures are superior to l | *"Like, it's just, Yeah, what's great about Grockbot is that i"* |
-| `00251a80c868f535_t0066` | David Sacks | `gate_1` | Specialized multi-agent swarms outperform single generalist  | *"That will make this thing go so freaking viral. If you can j"* |
-| `00251a80c868f535_t0079` | Chamath Palihapitiya | `gate_1` | Large enterprise horizontal SaaS monoliths are relatively in | *"I think the high end of the market where Mark operates where"* |
-| `00251a80c868f535_t0095` | David Friedberg | `gate_1` | The primary enterprise value from AI software accrues to ver | *"The real value is in the software that's unique for your ver"* |
-| `00251a80c868f535_t0101` | David Sacks | `gate_1` | The narrative predicting a broad collapse of the SaaS indust | *"Well, this narrative of the Sass Poculus was totally overdon"* |
-| `00251a80c868f535_t0103` | David Sacks | `gate_1` | SaaS platforms should treat external AI agents as complement | *"So I mean that's where this is headed, but now it raises the"* |
-| `00251a80c868f535_t0105` | David Sacks | `gate_1` | Most agentic activity will occur outside native SaaS applica | *"It's like a two. ways to win, you know, I mean, look, I thin"* |
-| `00251a80c868f535_t0109` | Chamath Palihapitiya | `gate_1` | Vertical SaaS applications lack durable enterprise systems o | *"No, I don't think vertical sass has a system of record."* |
-| `00251a80c868f535_t0111` | Chamath Palihapitiya | `gate_1` | Core horizontal enterprise systems of record like Salesforce | *"This is the key point where these horizontal monolithic comp"* |
-| `00251a80c868f535_t0116` | David Sacks | `gate_1` | Established software systems of record are complementary to  | *"Well, but look, I mean, to be fair, I think that was the dom"* |
-| `00251a80c868f535_t0129` | Chamath Palihapitiya | `gate_1` | Major technology platform companies are converging toward id | *"That you're going to see all of these businesses converge an"* |
-| `00251a80c868f535_t0141` | David Friedberg | `gate_1` | Long-term US bond yields reflect growing market skepticism r | *"And as a result, the market is saying we're worried about th"* |
-| `00251a80c868f535_t0156` | Chamath Palihapitiya | `gate_1` | Federal fiscal deficits are driven structurally by bipartisa | *"It's not a Democrat nor a Republican problem. It is a congre"* |
-| `00251a80c868f535_t0172` | David Sacks | `gate_1` | Federal expenditure growth is a tragedy of the commons drive | *"Yeah, look part of it is it is a trashy the commons meaning "* |
-| `00251a80c868f535_t0178` | David Friedberg | `gate_1` | Persistent inflation and rising housing costs are fundamenta | *"Have this recursive solution, which is, as the people feel.."* |
-| `00251a80c868f535_t0187` | David Friedberg | `gate_1` | Federal loan intervention programs cause more harm than good | *"These government programs cause more harm than good. When th"* |
-| `00251a80c868f535_t0213` | David Sacks | `gate_1` | Artificial intelligence productivity growth is the sole viab | *"Our only hope is AI, right? Because only AI can create the e"* |
-| `00251a80c868f535_t0215` | David Sacks | `gate_1` | New regulatory restrictions on AI will suppress the economic | *"We can go out of the palm. Yes, and if we hold back AI by cr"* |
-| `00251a80c868f535_t0238` | David Sacks | `gate_1` | An article remains authentic as long as the underlying argum | *"Yeah, I'm more precise way of putting it as the take is his."* |
-| `00251a80c868f535_t0245` | Jason Calacanis | `gate_1` | Publishing machine-generated prose as personal writing witho | *"I do think it's kind of the lip syncing of Writing as a writ"* |
-| `00251a80c868f535_t0264` | Jason Calacanis | `gate_1` | Publishing AI-assisted articles without explicit disclosure  | *"I think not disclosing it is the betrayal. If you want to gi"* |
-| `00251a80c868f535_t0359` | Jason Calacanis | `gate_1` | Instagram exposure causes serious psychological and emotiona | *"It's exhaust and it's terrible for young women to be on this"* |
-| `00251a80c868f535_t0363` | Chamath Palihapitiya | `gate_1` | Enforcing age and screen time limits on social media is phys | *"I hope that TikTok and YouTube do the same thing. These limi"* |
-| `00251a80c868f535_t0387` | David Friedberg | `gate_1` | The laboratory cost of tumor sequencing and neoantigen ident | *"That's right, but the cost, because I do DNA sequencing in m"* |
-| `00251a80c868f535_t0394` | David Friedberg | `gate_1` | Personalized neoantigen cancer therapies can be manufactured | *"Now I take that sequence of DNA, and I can stick it in a bac"* |
-| `00251a80c868f535_t0398` | Jason Calacanis | `gate_1` | Routine early diagnostic testing is the most critical interv | *"Yeah. Just early testing is the key piece for all of us to k"* |
+| `00251a80c868f535_t0055` | David Sacks | `gate_4` | Discussion of challenges without a standalone assertion | Generalizing to unprogrammed physical conditions is the primary technical bottleneck in robotics development. |
+| `00251a80c868f535_t0063` | David Sacks | `gate_2` | Discusses features of Grockbot product | Cloud-hosted always-on agent architectures are superior to local desktop agent execution. |
+| `00251a80c868f535_t0105` | David Sacks | `gate_2` | Discusses potential interactions with SaaS products | Most agentic activity will occur outside native SaaS applications, interacting with them primarily as systems of record. |
+| `00251a80c868f535_t0172` | David Sacks | `gate_2` | Discusses structure of US House and President's power | Federal expenditure growth is a tragedy of the commons driven by individual congressional district spending incentives. |
+| `00251a80c868f535_t0359` | Jason Calacanis | `gate_2` | Social commentary rather than defensible claim | Instagram exposure causes serious psychological and emotional harm to adolescent girls. |
+| `00251a80c868f535_t0394` | David Friedberg | `gate_1` | Speaker narrating another's playbook | Personalized neoantigen cancer therapies can be manufactured overseas safely, efficaciously, and at low cost. |
+
+---
+
+## 5. Falsification & Scientific Diagnosis
+
+We conducted two controlled falsification checks to isolate the mechanism of the 0% collapse:
+
+1. **Old Prompt Template + Old Rubric**:
+   - Evaluated on sample turns (9, 10, 40, 60).
+   - Result: **0 claims, 100% Gate 1 exclusions** (identical to B3 collapse).
+2. **Old Rubric Text through New Positive Prompt Template**:
+   - Evaluated across all 33 gold claims.
+   - Result: **29 / 33 claims recovered (87.9% recall)**.
+
+**Diagnosis for Issue 036**:
+The collapse in B3 was primarily driven by the **negative, exclusion-first prompt structure** (`"Apply the four gates in order... If ANY gate fails, output an exclusion JSON"`), which handed the model four reasons to say "no" before ever asking what to find. Moving the prompts to editable Markdown (`v2/prompts/extract_claim.md`) and restructuring them to elicit defensible claims first—using the gates as verification rather than a gauntlet—completely resolved the collapse.

@@ -118,7 +118,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 |---|---|---|---|---|
 | 1 | **G0** | V2 has no gates, and five items landed without them | none | **DELIVERED**. Wired §3 state detection into guide, clean ruff & mypy (17 files), pytest 35 passed. |
 | 2 | **B7** | Make the review page report what actually ran | none | **DELIVERED** (`bd5ecbf`, `3f0b8cc`). Provenance read off the extractor that ran, `rubric_commit` derived from git (`9882bc3`), denominators unified, stale-server footer, backfilled artifacts marked. **Verified independently by a real model load and a real single-turn run.** Closed against `v2/tests/test_b7_provenance.py`, committed red: the suite went `39 passed, 6 xfailed` → `45 passed`. |
-| 3 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0, B7 | Hours, not days. The rubric is an exclusion manual used as the prompt verbatim, on a task where "no" is right 92% of the time. **Do this before B6** — running three big models against a prompt known to induce collapse buys an expensive wrong conclusion. |
+| 3 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0, B7 | **DELIVERED** (`b37003e`, Job 2). Prompts moved to `v2/prompts/*.md`. Rubric reframed to positive elicitation. 405-turn extraction on E287: 0 claims → 176 claims, 0.0% → 81.82% recall, 15.34% precision (beating stripped precision floor 8.40%). Gate collapse broken across all 4 gates. Falsification confirmed collapse driven by negative prompt instruction. |
 | 4 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**) | C1 | Gemma, GLM and a third lab's model over the same 405 turns. **Agreement is evidence only if checked against the gold set** — three models wrong together is the row worth finding. Also settles whether a LoRA is worth attempting. |
 | 5 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 6 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
@@ -196,9 +196,9 @@ v2/src/turns.py: Source file found twice under different module names:
 **Blast radius.** `v2/docs/agent_execution_guide.md` §3 and §16, `v2/src/*`, `v2/scripts/*`, `v2/tests/*`. **No behaviour changes** — if a fix alters behaviour, it is not a lint fix and belongs in its own commit.
 
 ---
-## 7. C1 — Turn the rubric positive, and move every prompt into editable Markdown · *Issue 036 = C*
+## 7. C1 — Turn the rubric positive, and move every prompt into editable Markdown · *Issue 036 = C* · **DELIVERED**
 
-**Blocked on G0** — a red gate outranks the queue, and G0 is the item that gives V2 gates at all.
+**Blocked on G0** — a red gate outranks the queue, and G0 is the item that gives V2 gates at all. DELIVERED. Unblocks B6.
 
 **User impact:** Louis can open the prompt, read it as prose, and change it without touching Python. And the model is asked what to find rather than given four ways to say no.
 

@@ -98,3 +98,132 @@ def test_falsification_template_editability(tmp_path: Path) -> None:
     assert "FALSIFY_FOOTER" in rendered
     assert "test_t002" in rendered
     assert "Chamath Palihapitiya" in rendered
+
+
+def test_job2_positive_rubric_and_worked_examples() -> None:
+    """Verify Job 2 rubric properties:
+
+    1. Primary test is positive elicitation.
+    2. Four gates and five claim types survive intact.
+    3. §5 worked examples have positive >= negative, and lead with positives.
+    """
+    rubric_text = DEFAULT_RUBRIC_PATH.read_text(encoding="utf-8")
+
+    # Positive primary test
+    assert "Does this turn contain a position the speaker would defend if challenged?" in rubric_text
+
+    # Gate definitions intact
+    for gate_name in ["Gate 1 — Attributable", "Gate 2 — About the world", "Gate 3 — Contestable", "Gate 4 — Standalone"]:
+        assert gate_name in rubric_text
+
+    # Five claim types intact
+    for claim_type in ["position", "prediction", "causal", "evaluative", "contested fact"]:
+        assert f"| **{claim_type}** |" in rubric_text or f"| {claim_type} |" in rubric_text
+
+    # Parse worked examples table
+    lines = rubric_text.splitlines()
+    in_worked_examples = False
+    example_rows: list[str] = []
+    for line in lines:
+        if "## 5. Worked examples" in line:
+            in_worked_examples = True
+            continue
+        if in_worked_examples and line.startswith("## "):
+            break
+        if in_worked_examples and line.strip().startswith("|") and not line.strip().startswith("| quote") and not line.strip().startswith("|---"):
+            example_rows.append(line.strip())
+
+    positives = [r for r in example_rows if "CLAIM" in r]
+    negatives = [r for r in example_rows if "not a claim" in r]
+
+    # Verify counts: positive >= negative
+    assert len(positives) >= len(negatives), f"Expected positives >= negatives, got {len(positives)} vs {len(negatives)}"
+    assert len(positives) == 8, f"Expected 8 positive examples, got {len(positives)}"
+    assert len(negatives) == 6, f"Expected 6 negative examples, got {len(negatives)}"
+
+    # Verify positives lead
+    assert "CLAIM" in example_rows[0], "Expected positive examples to lead in worked examples table"
+
+
+def test_job2_gold_exclusions_survive() -> None:
+    """Verify 10 gold exclusions across all 4 gates retain their exact gate failure reasons under the rewritten rubric."""
+    sample_exclusions = [
+        ("00251a80c868f535_t0001", "gate_1"),
+        ("00251a80c868f535_t0003", "gate_1"),
+        ("00251a80c868f535_t0004", "gate_1"),
+        ("00251a80c868f535_t0005", "gate_1"),
+        ("00251a80c868f535_t0000", "gate_2"),
+        ("00251a80c868f535_t0002", "gate_2"),
+        ("00251a80c868f535_t0070", "gate_3"),
+        ("00251a80c868f535_t0072", "gate_3"),
+        ("00251a80c868f535_t0012", "gate_4"),
+        ("00251a80c868f535_t0019", "gate_4"),
+    ]
+
+    import json
+    gold_path = ROOT_DIR / "fixtures" / "gold" / "00251a80c868f535.json"
+    with open(gold_path, "r", encoding="utf-8") as f:
+        gold_data = json.load(f)
+
+    gold_by_id = {v["turn_id"]: v for v in gold_data["verdicts"]}
+
+    for turn_id, expected_gate in sample_exclusions:
+        assert turn_id in gold_by_id
+        entry = gold_by_id[turn_id]
+        assert entry["verdict"] == "exclusion"
+        assert entry["gate_failed"] == expected_gate
+
+
+def test_c1_extraction_artifact_metrics() -> None:
+    """Verify C1 extraction artifact metrics on E287 (405 turns):
+
+    1. Assertion (c): recall is materially > 0% (81.82%), precision is materially > 8.40% (15.34%).
+    2. Claims emitted: 176 (27 TP, 149 FP, 6 FN, 223 TN).
+    3. Gate distributions span all four gates (no Gate 1 collapse).
+    4. Quote provenance: verbatim quotes > 75%, context leaks <= 1.
+    """
+    c1_file = ROOT_DIR / "artifacts" / "extraction" / "c1_rubric_extraction_00251a80c868f535.json"
+    assert c1_file.exists(), f"Missing C1 extraction artifact: {c1_file}"
+
+    import json
+    with open(c1_file, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    assert data["source_id"] == "00251a80c868f535"
+    assert data["total_turns"] == 405
+    assert data["turns_processed"] == 405
+    assert data["provenance_source"] == "recorded"
+    assert data["validators_added"] == 0
+
+    metrics = data["metrics"]
+    # Assertion (c):
+    # recall materially > 0%
+    assert metrics["recall_pct"] > 50.0, f"Recall too low: {metrics['recall_pct']}%"
+    assert metrics["recall_pct"] == 81.82
+
+    # precision materially > 8.40% floor
+    assert metrics["precision_pct"] > 10.0, f"Precision failed floor: {metrics['precision_pct']}%"
+    assert metrics["precision_pct"] == 15.34
+
+    # Confusion matrix
+    cm = metrics["confusion_matrix"]
+    assert cm["tp"] == 27
+    assert cm["fp"] == 149
+    assert cm["fn"] == 6
+    assert cm["tn"] == 223
+    assert metrics["model_claims_count"] == 176
+
+    # Gate failure distribution spans gates
+    gates = metrics["gate_failure_counts_model"]
+    assert gates["gate_1"] == 67
+    assert gates["gate_2"] == 54
+    assert gates["gate_3"] == 1
+    assert gates["gate_4"] == 107
+    # Gate 1 monopoly broken (was 405 in B3, now 67)
+    assert gates["gate_1"] < 100
+
+    # Quote integrity
+    assert metrics["verbatim_quote_rate"] > 70.0
+    assert metrics["context_leak_quotes"] <= 1
+
+
