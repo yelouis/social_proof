@@ -117,7 +117,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | Order | ID | Item | Blocked | Why here |
 |---|---|---|---|---|
 | 1 | **G0** | V2 has no gates, and five items landed without them | none | **DELIVERED**. Wired §3 state detection into guide, clean ruff & mypy (17 files), pytest 35 passed. |
-| 2 | **B7** | Make the review page report what actually ran | none | **DELIVERED**. Provenance written off actual extractor instance, decoding params pinned/recorded, rubric_commit dynamically derived (9882bc3), backfilled artifacts marked reconstructed_b7, gate rates unified to share of all turns. 6 tests in test_b7_provenance.py pass. |
+| 2 | **B7** | Make the review page report what actually ran | none | **DELIVERED** (`bd5ecbf`, `3f0b8cc`). Provenance read off the extractor that ran, `rubric_commit` derived from git (`9882bc3`), denominators unified, stale-server footer, backfilled artifacts marked. **Verified independently by a real model load and a real single-turn run.** Closed against `v2/tests/test_b7_provenance.py`, committed red: the suite went `39 passed, 6 xfailed` → `45 passed`. |
 | 3 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0, B7 | Hours, not days. The rubric is an exclusion manual used as the prompt verbatim, on a task where "no" is right 92% of the time. **Do this before B6** — running three big models against a prompt known to induce collapse buys an expensive wrong conclusion. |
 | 4 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**) | C1 | Gemma, GLM and a third lab's model over the same 405 turns. **Agreement is evidence only if checked against the gold set** — three models wrong together is the row worth finding. Also settles whether a LoRA is worth attempting. |
 | 5 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
@@ -533,6 +533,12 @@ Agreement is only evidence when the things agreeing are independent. **Gemma (Go
 
 **And the failure mode to keep in view: models sharing an architecture or data lineage agree on the same mistakes.** Consensus measures reliability only if it is itself checked against the gold set. **It is not a substitute for B2** — a claim all three models call a claim, that the gold set says is not one, is exactly the case worth finding.
 
+### Three residuals from B7 land here, because this is the item they break
+
+1. **`decoding["seed"] = 42` is a literal wired to nothing.** `mx.random.seed` is never called, and `extract.py` mentions `seed` exactly once — in the dict that records it. Under the pinned greedy sampler a seed is genuinely irrelevant, so the honest record is the sampler, not an invented number. **Record `"sampler": "greedy"` with `"seed": null`, and wire a real seed only when temperature becomes non-zero.** A recorded value that describes nothing is the defect B7 was filed against, surviving inside B7's own fix.
+2. **`decoding["max_tokens"] = 150` is restated as a literal** rather than read from the call that ran. Correct today only because nothing passes a different value.
+3. **`run_episode_extraction` still falls back to the module default** — `getattr(active_extractor, "model_id", MODEL_ID)`. An extractor without `model_id` silently records `gemma-2-2b-it-4bit`. **Raise instead**; this is the trap-31 shape inside the fix that removed trap-31 shapes.
+
 ### Implementation
 
 **Step 1 — Run each model over all 405 turns of E287, same rubric prompt, byte-identical.** No per-model prompt tuning. A prompt adjusted per model makes the comparison meaningless, which is the same reason V1's model experiment required an empty prompt diff.
@@ -563,179 +569,34 @@ Agreement is only evidence when the things agreeing are independent. **Gemma (Go
 - Disk free reported before and after; **no weights left resident for models no longer being compared.**
 - **Nothing left this machine.** Assert no network calls beyond the model download.
 
-**Falsify.** Run one model twice with different seeds or at a different temperature and report the agreement between the two runs. **If a model agrees with itself less than the three models agree with each other, the consensus signal is noise** and the whole approach needs rethinking before it is built on.
+**Falsify.** Run one model twice **at a non-zero temperature** and report the agreement between the two runs. **Varying the seed proves nothing here:** decoding is pinned greedy, so two runs are identical by construction — B7 measured exactly that, three turns twice, byte-identical (parameter 036). A self-agreement number obtained without varying anything is not evidence, and the seed knob is not connected in the first place. **If a model agrees with itself less than the three models agree with each other, the consensus signal is noise** and the whole approach needs rethinking before it is built on.
 
 **Blast radius.** `v2/src/`, `v2/artifacts/extraction/`, model weights on disk (staged, then removed). **No changes to the rubric, the gold set, or V1.**
 
 ---
-## 14. B7 — Make the review page report what actually ran · **DELIVERED**
+## 14. B7 — Make the review page report what actually ran · **DELIVERED** (`bd5ecbf`, `3f0b8cc`)
 
-**Two of three gaps are closed and verified. Gap 1 was relocated, not fixed**, which is why this item is still at queue order 2.
+Three gaps. The first attempt closed two and **relocated** the third; the second closed it properly against a committed failing test.
 
-**Still before C1** — C1 re-runs extraction and will stamp its new prompt with the old prompt's label and with a rubric commit that never touched the rubric.
+**What it established, now the contract:**
 
-**Contract:** `v2/src/extract.py` · `v2/src/run_b3.py` · `v2/artifacts/extraction/` · `v2/tests/`.
+- **Provenance is read off the extractor instance that actually ran.** `model_id`, `runtime` and `quantisation` come from the object; `quantisation` is derived from the loaded model's own config (`config["quantization"]["bits"]`), not by matching a substring. `rubric_commit` is computed at run time by `get_rubric_commit()` from `git log -1 --format=%h -- <rubric path>`; `prompt_version` is a SHA-256 of the rubric text actually sent.
+- **Gate failure rates are shares of all turns** — promoted to a standing constraint (§15).
+- **A running server displays the HEAD it started with**, so a stale process is visible rather than merely plausible.
 
-### Gap 2 — the gate percentages used three denominators · **DELIVERED**
+**Verified independently, not from the commit body.** A real `ModelExtractor()` load reports `quantisation: 4-bit` derived from config. A real single-turn run records `rubric_commit: 9882bc3` — the commit that actually touched the rubric; the previous `23da31c` is the B1 commit and never did. The gold fixture's 405 verdicts, 33 claims and 372 exclusions are unchanged across that correction. Both artifacts' stored `gate_failure_rates_*` were recomputed: gold `81.18 → 74.57`, falsification model `100.0 → 2.96`. And **three turns run twice produced identical verdicts**, so extraction is reproducible under the pinned greedy sampler (parameter 036).
 
-`evaluate_against_gold` now divides both the model and gold gate counts by the turn total rather than by each side's exclusion total. Verified independently: `review.py`'s gold percentages equal the fixture's recorded `gate_failure_rates` exactly — `{gate_1: 74.57, gate_2: 1.98, gate_3: 1.48, gate_4: 13.83}` — and the README's falsification column moved from a meaningless `100.00%` to `2.96%`. That is the whole point: **12 exclusions and 405 exclusions no longer render identically.** The convention is now a standing constraint (§15).
+`test_b5.py`'s four literal assertions — trap 81, a test that pinned the defect in place — were rewritten to assert against `model_provenance`, rather than deleted or reverted around.
 
-> **Residue, still open.** The two artifacts' *stored* `metrics.gate_failure_rates_*` were never recomputed and still carry the old denominator — `{gate_1: 81.18, gate_2: 2.15, gate_3: 1.61, gate_4: 15.05}` — so each artifact now disagrees with the README derived from it. `run_b3.py` reads exactly those keys, so a genuine re-run self-heals and only the historical files are wrong. B7's validation allowed "regenerated **or** stated as stale"; the README was regenerated and the artifacts were neither. **Recompute them from the stored verdicts, or add `"metrics_convention": "share_of_exclusions_pre_b7"` to both.**
+**The method that worked, and why it is now §17's rule.** The first attempt satisfied a prose assertion by moving the constants one file upstream. The second was handed `v2/tests/test_b7_provenance.py`: committed red, `xfail(strict=True)`, with `warn_unused_ignores` in `mypy.ini`. It made the tests pass with the file otherwise unmodified — `git diff` shows only the marker and the `type: ignore` deleted — and **both tripwires fired as designed**, the suite going from `39 passed, 6 xfailed` to `45 passed`.
 
-### Gap 3 — a stale server was indistinguishable from a fresh one · **DELIVERED**
-
-`SERVER_START_HEAD` is captured at module import, so a long-running server keeps displaying the hash it started with while `git HEAD` moves on. Verified live: the footer renders `Server HEAD: bd5ecbf` beside the mtime of every artifact read. **Freezing at import rather than reading per request is what makes this work** — a per-request hash would always match and would detect nothing.
-
-### Gap 1 — provenance is still four constants, one file upstream · **REOPENED**
-
-The constants moved out of `review.py` and into `extract.py`:
-
-```python
-QUANTISATION = "4-bit"
-RUNTIME      = "mlx_lm"
-PROMPT_VERSION_RUBRIC = "rubric_prompt_v1"
-RUBRIC_COMMIT = "23da31c"
-```
-
-They are stamped into every artifact unconditionally, and `review.py` now faithfully reads them. **The page reports a constant correctly instead of substituting one.** Every breakage this item was filed to prevent is still live:
-
-- **`run_episode_extraction` cannot record a second model.** It takes no `model_id` parameter, constructs `ModelExtractor()` with the default, and writes `"model_id": MODEL_ID`. **B6 runs three models through this function and all three artifacts will say `gemma-2-2b-it-4bit`.**
-- Even with `MODEL_ID` edited globally, `RUNTIME` and `QUANTISATION` stay `mlx_lm` and `4-bit` — wrong for GLM or Nemotron under Ollama.
-- `prompt_version` is a literal, so **C1's rewritten prompt will be stamped `rubric_prompt_v1`.**
-- **`rubric_commit = "23da31c"` is wrong.** That commit is *"B1: build turns, strip non-show spans, and measure question-anchoring"*. The only commit that has ever touched `v2/docs/design_claim_rubric.md` is **`9882bc3`**. The wrong value came from B2's fixture, and B7 propagated it into `extract.py` and into both artifacts.
-- The two existing artifacts were **hand-backfilled** with these four fields after the fact. **A backfilled value is indistinguishable from a recorded one.**
-
-**Why this passed: the assertion was the weak half of the property.** B7's `(c)` read *"editing runtime, quantisation or prompt_version in an extraction file changes what renders"* — that is read→render. The property that matters is **run→artifact**. `v2/tests/test_b7.py` contains no reference to `run_episode_extraction`, `MODEL_ID`, `RUNTIME` or `QUANTISATION`, so it could not have caught this. **The assertion was mine and it was wrong** (trap 80).
-
-### Start here — the test is already written and already red
-
-**`v2/tests/test_b7_provenance.py` is committed, and it fails today.** You do not have to infer what "recording provenance" means; make those six tests pass with real code.
-
-```bash
-.venv/bin/python -m pytest v2/tests/test_b7_provenance.py -q -rx
-```
-
-Its headline test fails right now with exactly this, and this is the shape of the whole item:
-
-```
-E   TypeError: run_episode_extraction() got an unexpected keyword argument 'extractor'
-```
-
-**Do not edit that file to make it pass.** It is the specification. If you believe one of its assertions is wrong, say so in `v2/docs/ongoing_errors.md` §1 with options and stop — do not quietly relax it.
-
-**Two tripwires are armed, and both are supposed to catch you.**
-
-| Tripwire | Green today because | Goes red when |
-|---|---|---|
-| `pytestmark = pytest.mark.xfail(strict=True, …)` | the six tests fail, so they report as `xfail` | your fix makes them pass while the marker is still there — `[XPASS(strict)]` counts as **FAILED** |
-| `warn_unused_ignores = True` in `mypy.ini` | the `# type: ignore[call-arg]` is genuinely needed | `run_episode_extraction` accepts the new parameters, making the ignore unused |
-
-**Both are finished by deleting three lines and one comment, and that deletion is the last step of the item, not an afterthought.** A suite that reports `6 xfailed` after you have done the work means you have not done the work.
-
-### The signature the tests require
-
-```python
-def run_episode_extraction(
-    source_id: str = "00251a80c868f535",
-    is_falsification: bool = False,
-    max_turns: int | None = None,
-    progress_callback: Callable[[int, int, dict[str, Any]], None] | None = None,
-    extractor: Any | None = None,          # injected; None builds ModelExtractor() as today
-    output_dir: Path | None = None,        # None keeps DEFAULT_EXTRACTION_DIR
-) -> dict[str, Any]:
-```
-
-`output_dir` is not decoration: without it the tests write over `v2/artifacts/extraction/`, which holds the only B3 run in existence.
-
-### Implementation
-
-**Step 1 — record the extractor's identity, not the module's.** `ModelExtractor.__init__` already takes `model_id` and already stores `self.model_id`; `run_episode_extraction` simply never passes it and writes `"model_id": MODEL_ID` instead. Give `ModelExtractor` `runtime` and `quantisation` attributes too, and write all three **off the extractor instance that actually ran**.
-
-> **Verify:** `test_two_models_record_two_identities` and `test_recorded_identity_survives_to_disk` pass. **One call cannot demonstrate this** — a constant and a correct reading are identical when only one value has ever existed, which is precisely how the first attempt passed.
-
-**Step 2 — derive `quantisation` from the resolved model**, not from a module constant. If it cannot be derived, record `"unknown"`. **Do not guess, and do not infer it by substring-matching the old default.**
-
-**Step 3 — compute `rubric_commit` at run time:**
-
-```python
-subprocess.run(["git", "log", "-1", "--format=%h", "--", str(rubric_path)],
-               cwd=REPO_ROOT, capture_output=True, text=True, check=True).stdout.strip()
-```
-
-Record the rubric's path and a content hash beside it. **A commit hash not derived from the file it names is a label, not provenance.** Today's value, `23da31c`, is the B1 commit and has never touched the rubric; the correct value right now is **`9882bc3`**.
-
-> **Verify:** `test_rubric_commit_is_derived_from_the_rubric_file` passes. **Then correct `23da31c` → `9882bc3` in `v2/fixtures/gold/00251a80c868f535.json`.** That touches the `rubric_commit` field only — assert `len(verdicts) == 405` and `claims_count == 33` are unchanged, and say so in the commit body.
-
-**Step 4 — take `prompt_version` from the prompt file C1 introduces**, not from a literal. Until `v2/prompts/` exists, record the SHA-256 of the prompt string actually sent.
-
-**Step 5 — pin and record the decoding parameters.** `ModelExtractor.extract_turn` calls `mlx_lm.generate` with `max_tokens` and `verbose` only; the sampler arrives through `**kwargs` as whatever the library defaults to. Recent `mlx_lm` defaults to greedy, so the B3 run was almost certainly deterministic — **but nothing in this repository says so, and nothing would notice if it changed.** Set it explicitly and record `{"temperature": 0.0, "max_tokens": …, "seed": …}` in the artifact.
-
-**B6 depends on this more than any other item:** its premise is that three models agreeing is evidence, and its own falsification is running one model twice. **If decoding is not pinned, part of the disagreement B6 measures is sampling noise and the consensus number cannot be interpreted.**
-
-> **Verify:** `test_decoding_parameters_are_pinned_and_recorded` passes, and running the same turn twice gives byte-identical output.
-
-**Step 6 — mark the two backfilled artifacts** with `"provenance_source": "reconstructed_b7"`. Their four provenance fields were hand-written after the fact by the previous attempt and are **not** what the September 13 run recorded. C1 and B6 write `"recorded"`.
-
-> **Verify:** `test_backfilled_artifacts_are_marked_reconstructed` passes.
-
-**Step 7 — deal with gap 2's residue.** Both artifacts' stored `metrics.gate_failure_rates_*` still hold the pre-B7 denominator `{81.18, 2.15, 1.61, 15.05}`, so each file disagrees with the README derived from it. Recompute them from the stored verdicts, **or** add `"metrics_convention": "share_of_exclusions_pre_b7"`. Either is acceptable; silence is not.
-
-### What a wrong fix looks like
-
-**These will be rejected. The first one has already happened once.**
-
-1. **Moving the constants somewhere else.** `RUNTIME = "mlx_lm"` in `extract.py` instead of `review.py` is the same defect one file upstream. `test_provenance_constants_are_gone_from_extract` is a tripwire for exactly this, and it is *not* the real assertion — renaming the constant defeats the tripwire and still fails the behavioural tests.
-2. **Adding an `extractor` parameter and still writing `MODEL_ID`.** The parameter must reach the artifact.
-3. **Hand-editing the artifacts so the tests pass.** That is what created step 6's problem.
-4. **Deriving `quantisation` by matching `"4bit"` in the model id.** It happens to work for one model and fails for `Q4_K_M`, `8-bit` and `fp16` — all three of which the tests use.
-5. **Weakening, skipping, `xfail`-ing or deleting any test in `test_b7_provenance.py`.**
-6. **Reporting the item done while `pytest -q` still says `6 xfailed`.**
-
-### Before you commit
-
-Run this and paste the output in the commit body:
-
-```bash
-.venv/bin/ruff check v2/
-.venv/bin/mypy v2/src v2/scripts v2/tests
-.venv/bin/python -m pytest v2/tests -q
-grep -c "xfail" v2/tests/test_b7_provenance.py          # must be 0
-grep -c "type: ignore" v2/tests/test_b7_provenance.py   # must be 0
-grep -rn '"23da31c"' v2/src v2/fixtures v2/artifacts   # must be empty
-```
-
-**Expected when the item is genuinely done:** ruff clean · mypy clean · `45 passed` with **no xfailed** · all three greps empty or `0`.
-
-**Scope the last grep to `v2/src v2/fixtures v2/artifacts`.** `test_b7_provenance.py` mentions `23da31c` on purpose — it asserts the recorded value is *not* that — so a repository-wide grep never comes back empty and will send you chasing your own test.
-
-**`23da31c` is in five places, not one:**
-
-| File | What it is |
-|---|---|
-| `v2/src/extract.py:29` | `RUBRIC_COMMIT` constant |
-| `v2/src/build_gold.py:21` | a second copy of the same constant |
-| `v2/fixtures/gold/00251a80c868f535.json:2` | B2's recorded metadata — **this field only**, nothing else in the file moves |
-| `v2/artifacts/extraction/rubric_extraction_00251a80c868f535.json:8` | backfilled by the previous attempt |
-| `v2/artifacts/extraction/falsification_extraction_00251a80c868f535.json:8` | backfilled by the previous attempt |
-
-> **A landmine you will hit: `v2/tests/test_b5.py:202-205` pins the defect.** It asserts `"mlx-community/gemma-2-2b-it-4bit" in html`, `"4-bit" in html`, `"mlx" in html.lower()` and `"23da31c" in html`. **Those four assertions hard-code the constants this item exists to remove**, so the moment `rubric_commit` becomes `9882bc3` that test goes red. **Update it to assert the value the artifact carries, not a literal — do not revert your fix to keep it green, and do not delete the test.** It is a real test of B5's rendering; it was simply written against constants. B6 would have broken it too, three models later.
-
-### Validation
-
-- **(c)** — **`run_episode_extraction` records the identity of the run that actually happened: called twice with two different model ids it writes two different `model_id`s, `runtime`s and `quantisation`s to disk, and the recorded `rubric_commit` equals `git log -1 --format=%h -- v2/docs/design_claim_rubric.md` evaluated at run time.** *The previous assertion tested read→render — that the page reflects the file — and was satisfied by moving the constants one file upstream, where they are stamped into every artifact unconditionally. Assert on the write path or the same fix passes again.*
-- All six tests in `test_b7_provenance.py` pass **with the `xfail` marker removed**, and the file is otherwise unmodified — `git diff` on it shows only the marker deletion.
-- `23da31c` corrected to `9882bc3`, with the gold set's 405 verdicts and 33 claims asserted unchanged.
-- Gap 2's stored-metrics residue recomputed or marked.
-- `ruff`, `mypy` and `pytest` clean, with `warn_unused_ignores` satisfied.
-
-**Falsify.** After the tests are green, **revert `run_episode_extraction` to writing `MODEL_ID` and confirm `test_two_models_record_two_identities` goes red.** Paste both states. A write-path assertion that stays green when the write path is removed is testing nothing — which is the entire lesson of this item.
-
-**Blast radius.** `v2/src/extract.py`, `v2/src/run_b3.py`, `v2/artifacts/extraction/`, `v2/tests/test_b7_provenance.py` (marker removal only), and the `rubric_commit` metadata field of `v2/fixtures/gold/00251a80c868f535.json`. **No change to any verdict, label or count.**
+**Residue carried to B6 (§13)**, which is the item it breaks: the recorded `decoding` block claims a seed that is wired to nothing.
 
 ---
 
 ## 15. Standing constraints, carried from V1
 
+- **Provenance is read off the object that did the work, never from a module constant.** Model id, runtime and quantisation come from the extractor instance that ran; a commit hash is computed from the file it names; a prompt version is a hash of the text actually sent. **If a value cannot be derived, record `unknown` — never a default that is right today.** B7 was filed, half-fixed by relocating the constants one file upstream, and closed only once the assertion moved to the write path.
 - **Gate failure rates are shares of all turns in the episode, never of the exclusion subset.** 302 of 405 is **74.57%**. Share-of-exclusions renders a 12-exclusion run and a 405-exclusion run identically at 100%, which is how three denominators for one number coexisted across B2's fixture, B3's report and B5's page until B7.
 
 - **One item = one commit**, the *why* in the body.
@@ -791,6 +652,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 79. **A dev server that walks to a free port lets a stale process answer the documented URL.** `serve_review.py` auto-increments 8787→8807, so a forgotten instance kept serving pre-commit output on 8788 while the new one moved silently to 8789 — HTTP 200, a plausible page, two commits out of date. **Stamp the HEAD hash and artifact mtimes into anything you will later cite as "I looked at it"**, and run `lsof -nP -iTCP:<port> -sTCP:LISTEN` before believing a page.
 80. **An assertion that tests the read path is satisfied by moving the constant upstream.** B7's `(c)` required that editing an extraction artifact changed what the page rendered. It did — because the constants had been relocated out of the renderer and into the writer, where they are stamped into every artifact unconditionally. The page then reported a constant correctly. **When the defect is "this value is not measured", the assertion has to name the point of measurement, not the point of display**; a test that never imports the function which writes the value cannot see the bug. Written by the same person who wrote trap 17, about the same mistake one layer along.
 81. **A test that asserts a literal appears on the page pins the defect in place.** `test_b5.py:202-205` asserts `"4-bit" in html`, `"mlx" in html.lower()` and `"23da31c" in html`. All three pass today and all three fail the moment those values become real rather than constant — so the test **defends the defect and rewards reverting the fix.** **Assert that the page shows what the source of truth holds, not that it shows a particular string.** A pinning test converts every later correction into a regression, and the agent hitting that red is being told, wrongly, that its fix broke something.
+82. **One fabricated field discredits an otherwise correct provenance block.** B7's fix records model id, runtime, quantisation, rubric commit and prompt hash — every one genuinely derived — and then `"seed": 42`, wired to nothing. **A block that is four-fifths measured reads as fully measured**, and the next item to trust it is B6, whose own falsification was written as "run one model twice with different seeds". **Check each field of a provenance record separately against the thing it claims to describe** — the trustworthy neighbours are what make the invented one invisible.
 66. **An item whose effect is to publish must be checked against what it will publish.** D7 was told to make every accepted candidate produce a tension row, and did — publishing six findings that the same guide, two sections below, documented as false. The spec was followed exactly. **Before running an item that writes user-visible output, read what is currently in its input.**
 67. **A judgement gate is scored generously unless the judgement is written down.** Three times now a gate has been recorded as met while an independent reading disagreed — six false pairs "hand-read and verified", a failed (c) recorded verified, and a position test reported at 18/20 that a seeded redraw scores 9–13/20. **Require the artefact, not the count**: paste the two sentences, quote the pair, show the working. A number is not checkable; a sentence is.
 68. **A repair loop that shrinks its subject on every pass is not converging.** Three extraction-form passes took the corpus from 3,669 claims to 1,027 and the candidate set from 0 to 6 to 0. **Track the trajectory across passes, not the delta within one** — each pass improved its own metric and the sequence went nowhere.

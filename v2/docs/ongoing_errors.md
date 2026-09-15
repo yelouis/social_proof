@@ -8,7 +8,7 @@
 - **Once selected, a decision moves out of §1.** Its consequence is written into the design doc that owns it, and it becomes one row in §1b. The full option text stays in git history — this file is a queue, not an archive.
 - Recommendations are marked. A recommendation is not a decision.
 
-**Status: 1 decision made in V2 (Issue 036 — C then A), 0 open.**
+**Status: 1 decision made in V2 (Issue 036 — C then A), 0 open. 3 parameters measured (034, 035, 037).**
 
 ---
 
@@ -32,6 +32,7 @@
 |---|---|---|---|
 | **034** | `QUESTION_ANCHORED_SHARE = 11.13%` — question-anchoring corpus share across 23 episodes (B1) | B1 | **Measured fact.** Demonstrates that question-anchoring is a high-precision slice (< 30%) and cannot serve as the sole extraction backbone for All-In. |
 | **035** | `CLAIM_TURN_RATE = 8.15%` — defensible claim density per speaking turn on reference episode E287 (B2) | B2 | **Measured fact.** Out of 405 turns, 33 carry defensible claims; 372 are excluded (Gate 1: 74.57%, Gate 2: 1.98%, Gate 3: 1.48%, Gate 4: 13.83%). |
+| **037** | `EXTRACTION_IS_DETERMINISTIC = true` — identical verdicts across repeat runs of the same turns (B7) | B7 | **Measured fact.** `ModelExtractor` pins `make_sampler(temp=0.0)`; three turns of E287 run twice produced byte-identical verdicts. **Holds only while decoding stays greedy** — and the recorded `decoding.seed` is wired to nothing, so varying it changes no output. B6's self-agreement falsification must vary **temperature**, not seed. |
 
 ---
 
