@@ -8,72 +8,20 @@
 - **Once selected, a decision moves out of §1.** Its consequence is written into the design doc that owns it, and it becomes one row in §1b. The full option text stays in git history — this file is a queue, not an archive.
 - Recommendations are marked. A recommendation is not a decision.
 
-**Status: 1 decision made in V2 (Issue 036 — C then A), 1 open (Issue 043). 8 parameters measured (034, 035, 037, 038 superseded by 040, 039, 041, 042).**
+**Status: 2 decisions made in V2 (036 — C then A; 043 — re-run B6 at size), 0 open. 8 parameters measured (034, 035, 037, 038 superseded by 040, 039, 041, 042).**
 
 ---
 
 ## 1. OPEN — awaiting your selection
 
-*Newest first.*
-
-### Issue 043 — B6 ran three small models, not the three you asked for. How much is the re-run worth?
-
-**What happened.** B6's spec named **Gemma 4 31B**, **GLM-4-32B-0414** and **Nemotron 3 Nano** — "the biggest of each family that fits on this 64 GB machine", which is what you asked for. What actually ran was **gemma-2-2b-it-4bit (2B)**, **glm4:latest (9B)** and **qwen2.5vl:7b (7B, a vision model)**. Disk moved 94.5 → 89.2 GB, consistent with pulling one 5.5 GB model. `gemma4:latest` (9.6 GB) is installed and was not used. The Gemma arm is a byte-identical copy of C1's run — same verdict hash, same 841.37s — so **two models were actually run, not three.**
-
-**The numbers are real** (I recomputed every one from the artifacts) and there is a signal in them:
-
-| model | size | claims | precision | recall |
-|---|---|---|---|---|
-| gemma-2-2b | 2B | 138 | 13.04% | 54.55% |
-| glm4 | 9B | 3 | 33.33% | 3.03% |
-| qwen2.5vl | 7B | 9 | **66.67%** | 18.18% |
-| gold | — | 33 | — | — |
-
-**Bigger models emitted far fewer claims at far higher precision.** Two points is not a trend, and 6-of-9 is not a precision — but it is the most promising direction measured so far, and it is exactly what B6 existed to test.
-
-Consensus, by contrast, bought little: majority-vote precision is **3 correct out of 4 predictions** at 9.09% recall; unanimous is 1 of 2 at 3.03%. Reported as "75.00%, a 5.75x boost".
-
----
-
-**Option A — Re-run B6 with the models originally specced.** *(recommended)*
-
-Pull Gemma 4 31B and GLM-4-32B-0414 at 4-bit (~18 GB each), keep a third lab, run all 405 turns each.
-
-- **Pro:** answers the question you actually asked, and tests the one real signal in the data — that capability buys precision. At 13% precision nothing here is usable yet; if a 31B model lands at 50%+ on 40 claims, that changes the project.
-- **Pro:** makes the consensus table meaningful. Consensus over three near-mute models is arithmetic on almost nothing.
-- **Con:** ~36 GB of downloads against 89 GB free, and 32B models run perhaps 5–10× slower than 9B — budget **2–3 hours** of compute, possibly more.
-- **Con:** if the trend does not hold, that time buys a negative result (still worth knowing, but it is the expensive way to learn it).
-
-**Option B — Probe the size hypothesis cheaply first, with the model already on disk.**
-
-Run only `gemma4:latest` (9.6 GB, already installed) over the same 405 turns and compare it to gemma-2-2b from the same lab.
-
-- **Pro:** zero download, roughly 30–60 minutes, and it isolates size from lab — the cleanest possible test of "does bigger help?"
-- **Pro:** if it does not beat 13% precision, Option A's 36 GB and 3 hours are very likely wasted.
-- **Con:** does not deliver B6. Consensus stays unmeasured, and you would likely run A afterwards anyway — two waits instead of one.
-
-**Option C — Accept B6 as a pilot, record that consensus is not the bottleneck, and move on.**
-
-- **Pro:** honest. The finding stands on its own: across three labs, majority-vote gives 3 claims out of 33. Consensus is not what is holding this back — precision is, at 13%.
-- **Pro:** spends the next cycle on the prompt, where C1 already showed the leverage is (parameter 039: the template, not the rubric, moved recall 0% → 87.88%).
-- **Con:** leaves your original question unanswered, and leaves the strongest measured signal — capability buying precision — untested.
-- **Con:** B6 stays on the record as delivered while having run different models than specced.
-
----
-
-**My recommendation: A**, because the qwen and glm results point the same direction and that direction is the only thing measured so far that could make this product work. **But B is the disciplined version of A** — if an hour on a model already on disk says size does nothing, A is not worth three.
-
-Whatever you choose, two fixes land regardless and do not need your input: the falsification must run on a population that can disagree, and any precision computed over fewer than ~20 predictions must be reported as a count, not a percentage.
-
-Your selection: _____
-
-
+*Newest first. Nothing is open right now.*
 
 ## 1b. Decision record
 
 | # | Decision | Now lives in |
 |---|---|---|
 | **036** | **C then A.** First rewrite the rubric as a positive elicitation and move every prompt into editable Markdown (item C1); then run three bigger local models (item B6). Option B ruled out by the local-only constraint; Option D deferred until A's numbers exist and a second labelled episode makes it honest. **Plus: the prompt must live in a `.md` Louis can read and edit without touching Python.** | `design_claim_rubric.md` · `agent_execution_guide.md` C1, B6 |
+| **043** | **A — re-run B6 with the three models originally specced.** `mlx-community/gemma-4-31b-it-4bit` (18.4 GB), `mlx-community/GLM-4-32B-0414-4bit` (18.3 GB), `mlx-community/NVIDIA-Nemotron-3-Nano-30B-A3B-4bit` (17.8 GB) — all three MLX 4-bit, all three through the existing `mlx_lm` path, 54.5 GB total onto an external SSD. The first pass ran a 2B, a 9B and a 7B vision model and reused C1's artifact as one arm, with every gate green. **The inputs are now asserted in `v2/tests/test_b6_models.py`, committed red.** | `agent_execution_guide.md` §13 · `v2/tests/test_b6_models.py` |
 
 > **Correction to 036's premise, recorded September 14 2026 after C1's falsification.** The issue was framed — by me — as *"the rubric is an exclusion manual used as the prompt verbatim, and that is the cause of the binary collapse."* **That is false.** A full 405-turn run of the **unchanged** exclusion-manual rubric through C1's new positive template reaches **87.88% recall at 13.94% precision**, against C1's own 81.82% / 15.34% (parameter 039). **The collapse was caused by the prompt template's exclusion-first instruction**, which lived in `extract.py`'s f-string — not by the rubric text. The rubric rewrite is a second-order trade: −6 points of recall for +1.4 of precision. **Option C was still the right call** — it produced the editable prompt that fixed the problem — but for a different reason than the one on the ticket.
 

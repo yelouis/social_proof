@@ -120,7 +120,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 2 | **B7** | Make the review page report what actually ran | none | **DELIVERED** (`bd5ecbf`, `3f0b8cc`). Provenance read off the extractor that ran, `rubric_commit` derived from git (`9882bc3`), denominators unified, stale-server footer, backfilled artifacts marked. **Verified independently by a real model load and a real single-turn run.** Closed against `v2/tests/test_b7_provenance.py`, committed red: the suite went `39 passed, 6 xfailed` → `45 passed`. |
 | 3 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0, B7 | **DELIVERED** (`b37003e`, `a58d573`). Collapse broken: recall 0% → 81.8%, precision 8.4% → 15.3%. Job 1's byte-identical move verified across all 405 prompts. **The falsification fired: Issue 036's diagnosis was wrong** — the old rubric text through the new template reaches 87.9% recall, so the template caused the collapse, not the rubric. |
 | 4 | **C2** | A claim with nothing in it is not a claim | C1 | **DELIVERED**. Quote Validation Guard added (`VALIDATORS_ADDED = 1`). 38 claims rejected (23 empty, 14 non-verbatim, 1 context leak; 9.38% rate). 100% of 138 emitted claims resolve verbatim in target turn. Honest recall 54.55% (-27.27 pts vs reported C1), precision 13.04%. Falsification confirmed. Unblocks B6. |
-| 5 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**) | C1, C2, **Issue 043** | **REOPENED** (`2d28b88`). Numbers verified and real, but the models are not the ones specced — 2B / 9B / 7B-vision instead of Gemma 4 31B, GLM-4-32B and Nemotron, with `gemma4:latest` installed and unused. Two arms ran, not three (the Gemma arm is byte-identical to C1's). Majority precision "75.00%, a 5.75x boost" is 3 of 4 predictions. The self-agreement falsification could not fail. **Scope of the re-run is Issue 043.** |
+| 5 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**, **Issue 043 = A**) | C1, C2 | **NEXT.** Re-run with the three models the item named — `gemma-4-31b-it-4bit`, `GLM-4-32B-0414-4bit`, `NVIDIA-Nemotron-3-Nano-30B-A3B-4bit`, all MLX 4-bit, 54.5 GB onto an external SSD. The first pass ran a 2B, a 9B and a 7B vision model with every gate green, so **the inputs are now asserted in `v2/tests/test_b6_models.py`, committed red.** |
 | 6 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 7 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
 | 8 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
@@ -445,57 +445,105 @@ Print the URL on startup. Same posture as V1: `127.0.0.1` only, no writes, no ne
 **Blast radius.** `v2/scripts/serve_review.py`, `v2/templates/` or equivalent. **Reads artefacts, writes nothing.**
 
 ---
-## 13. B6 — Three local models on the same episode, and what agreement is worth · **REOPENED** (`2d28b88`)
+## 13. B6 — Three local models on the same episode, and what agreement is worth · **Issue 043 = A**
 
-**The numbers are real — I recomputed every one from the artifacts. The experiment is not the one this item specified.** Scope of the re-run is **Issue 043**, awaiting Louis.
+**Re-run with the three models the item named.** The first pass (`2d28b88`) produced correct, reproducible numbers from a 2B, a 9B and a 7B vision model, and reused C1's artifact as one of its three arms. **Every gate was green and the arithmetic was right**, which is why the inputs are now asserted in a test rather than described in prose.
 
-### What was delivered and holds
+**User impact:** Louis asked whether the biggest open-weight models that fit on this machine extract claims better than the small one, and whether three labs agreeing makes a claim more trustworthy. Neither question is answered yet.
 
-Three independently-trained models from three labs ran the byte-identical positive prompt over all 405 turns of E287, each artifact carrying correct per-model provenance (B7's machinery, working: `runtime: ollama`, `quantisation: Q4_K_M`, recorded per run). The consensus table reproduces exactly:
+**Contract:** `v2/src/run_b6.py` · `v2/artifacts/extraction/` · `v2/tests/test_b6_models.py` (do not edit) · B2's gold set (read-only).
 
-| rule | claims | TP | FP | precision | recall |
-|---|---|---|---|---|---|
-| unanimous 3/3 | 2 | 1 | 1 | 50.00% | 3.03% |
-| majority ≥2/3 | 4 | 3 | 1 | 75.00% | 9.09% |
-| any ≥1/3 | 144 | 21 | 123 | 14.58% | 63.64% |
+### Start here — the inputs are asserted, and the test is already red
 
-**The shared false positive is the item's best output.** All three labs call `t0142` a claim — *"we have to refinance 10 trillion dollars of debt"* — where the gold set says gate 1, narration. Three independent models reading it as a prediction is evidence the **rubric** is ambiguous here, not that the models are weak. That is the row worth having.
+```bash
+.venv/bin/python -m pytest v2/tests/test_b6_models.py -q -rx
+```
 
-### Four defects
+Seven tests, all failing today. **Do not edit that file.** If a model tag cannot be resolved or a conversion is broken, that is an escalation to `v2/docs/ongoing_errors.md` §1 with options — **not a substitution.** Substituting the inputs is exactly what happened last time, and nothing caught it.
 
-**1. The models are not the ones specified.** This item named **Gemma 4 31B**, **GLM-4-32B-0414** and **Nemotron 3 Nano** — the biggest of each family that fits in 64 GB, which is what Louis asked for. What ran was **gemma-2-2b-it-4bit**, **glm4:latest (9B)** and **qwen2.5vl:7b** (a *vision* model). Disk moved 94.5 → 89.2 GB, consistent with pulling one 5.5 GB model. **`gemma4:latest` (9.6 GB) is installed and was not used.**
+The `xfail(strict=True)` marker keeps the suite green while these fail and turns it **red once they pass with the marker still present**. Deleting those lines is the last step of this item, not an afterthought.
 
-**2. Two models ran, not three.** `b6_extraction_mlx-community_gemma-2-2b-it-4bit…json` is byte-identical to C1's artifact — same verdict SHA, same `841.37` elapsed — and is reported as a B6 throughput measurement of "841.4s (2.08s/turn)". **Reusing a deterministic run is legitimate; presenting it as this item's measurement is not.**
+### The three models — tags verified to resolve, September 15 2026
 
-**3. "75.00% precision, a 5.75x boost" is three correct predictions out of four.** Unanimous is one of two. **A metric over four examples is not a metric** (trap 20), and both are bought at 9.09% and 3.03% recall — a corner solution reported by its flattering side (trap 73).
+| lab | tag | download | note |
+|---|---|---|---|
+| Google | `mlx-community/gemma-4-31b-it-4bit` | **18.4 GB** | dense 31B |
+| Zhipu | `mlx-community/GLM-4-32B-0414-4bit` | **18.3 GB** | dense 32B |
+| NVIDIA | `mlx-community/NVIDIA-Nemotron-3-Nano-30B-A3B-4bit` | **17.8 GB** | 30B total, **3B active** (MoE) — expect it to be the fastest of the three |
 
-**4. The falsification could not fail.** It ran GLM twice at temperature 0.7 over 21 arbitrary turns and reported 21/21 agreement. **GLM emits a claim on 0.7% of turns**, so that sample almost certainly contained none, and the test measured agreement on "no". I re-ran it on the **33 gold-claim turns** — the population that can disagree: run 1 gave 2 claims, run 2 gave 3, overall agreement 32/33 (97.0%), but **only 2 of the 3 turns where a claim was ever emitted agreed**, with a real disagreement at `t0141`. **Verdict stability under sampling is not established.**
+**All three are MLX 4-bit, so all three run through `ModelExtractor`'s existing `mlx_lm` branch.** No Ollama, no second code path, and `quantisation` derives itself from each model's config — B7 already built that. **54.5 GB total.**
 
-### What lands regardless of Issue 043
+**`glm4:latest`, `qwen2.5vl:7b` and `gemma-2-2b-it-4bit` are not in this experiment.** gemma-2-2b stays as the *baseline* to compare against; it is not a fourth arm.
 
-**Step 1 — run the falsification on a population that can disagree.** Self-agreement over turns the model almost never fires on measures the floor, not the model.
+### Disk — the constraint the September 13 research worried about is gone
 
-> **Verify:** report agreement **restricted to turns where either run emitted a claim**, beside the overall figure. **If those two numbers are far apart, the overall one is describing the exclusion rate.**
+Measured today: **internal 73 GB free**; `/Volumes/Extreme SSD` **328 GB free**; `/Volumes/Extreme SSD 1` **496 GB free**. **`~/.ollama/models` is already a symlink to `/Volumes/Extreme SSD/models/ollama`**, so Ollama has been running off the external SSD all along; the HuggingFace cache (`~/.cache/huggingface`, 3.0 GB) is still internal.
 
-**Step 2 — report small-n rates as counts.** Any precision or recall computed over fewer than ~20 predictions is written `3 of 4`, never `75.00%`, and never with a multiplier attached.
+**Point `HF_HOME` at an external volume and keep all three resident** — 54.5 GB fits on either SSD with room to spare, and staging (pull, run, delete, repeat) is unnecessary:
 
-> **Verify:** grep the commit body and the README for a percentage whose denominator is under 20. There must be none.
+```bash
+export HF_HOME="/Volumes/Extreme SSD 1/hf"
+```
 
-**Step 3 — say which arms were executed for this item and which were reused.** A reused deterministic run is fine and cheap; it is recorded as reused, with the commit it came from, and its throughput is not restated as new.
+> **Verify before pulling:** `df -h` on whichever volume `HF_HOME` points at, and paste it. **If free space is under ~80 GB, stop and say so.** Note `df` lags after deletions — APFS local snapshots hold freed space; `tmutil listlocalsnapshots /` tells you whether that is what you are seeing.
 
-> **Verify:** every arm's `elapsed_seconds` either differs from every prior artifact's, or the arm is labelled reused with its source commit.
+### Implementation
+
+**Step 1 — run each model over all 405 turns, same prompt, byte-identical.** No per-model prompt tuning. Write one artifact per arm as `b6_extraction_<model>_00251a80c868f535.json`, in B3's shape so B5 renders it without special-casing.
+
+> **Verify:** `test_the_three_specified_models_each_have_an_arm`, `test_no_unspecified_model_is_reported_as_a_b6_arm` and `test_all_arms_used_a_byte_identical_prompt` pass. **Clear the three old arms in the same commit** — leaving them makes the second test fail, which is intended: the consensus table must not silently span six models.
+
+**Step 2 — every arm must actually run.** `test_every_arm_ran_rather_than_being_copied` rejects any arm whose `elapsed_seconds` matches a prior artifact, and any two arms with identical verdicts.
+
+> **Verify:** report wall-clock per model. **A 31B dense model at 4-bit will be several times slower than the 2B was** — if an arm comes back at roughly 2s/turn, check what actually ran before believing it.
+
+**Step 3 — run with C2's quote guard on** (`validators_added == 1`). An arm measured without it is not comparable to parameter 040's baseline.
+
+**Step 4 — compute the consensus table** for unanimous (3/3), majority (≥2/3) and any-model (≥1/3), each against B2's 33 gold claims. **Where a rule emits fewer than 20 claims, write the result as a count and set `"report_as": "count"` with no `precision_pct` field.** Last time "3 correct of 4" was published as "75.00%, a 5.75x boost".
+
+> **Verify:** `test_small_denominators_are_reported_as_counts` passes. **This is the item's whole product:** report, for each rule, how often the gold set says the models were right — and if unanimous precision is not clearly better than the best single model, **say plainly that consensus is not buying anything.**
+
+**Step 5 — read the disagreements.** Every turn where the models split 2-1, and every turn all three call a claim that the gold set does not contain. **A shared false positive across three labs is the most interesting row in this experiment** — it says the rubric is ambiguous, not that the models are weak. `t0142` was that row last time and is worth re-checking against the new arms.
+
+**Step 6 — compare against the baselines, in one table.** gemma-2-2b under the same guard is **18 of 138 (13.04% precision, 54.55% recall)** — parameter 040. **Parameter 042 is the hypothesis under test:** the smaller models emitted fewer claims at higher precision (glm4 1 of 3, qwen 6 of 9). Say explicitly whether the 31B-class models continue that trend or break it.
+
+**Step 7 — self-agreement, on a population that can disagree.** Run one model twice at temperature 0.7 **over the 33 gold-claim turns**, and write `b6_self_agreement_00251a80c868f535.json` with `population: "gold_claim_turns"`, `agreement_overall`, `agreement_on_claim_bearing_turns` and `claim_bearing_turns_n`.
+
+> **Verify:** `test_self_agreement_was_measured_where_the_model_fires` passes. **For reference, GLM-4 9B on this population gave 2 claims then 3 — 32/33 overall but 2 of 3 on claim-bearing turns.** An overall figure near 100% with a small claim-bearing figure means you measured the exclusion rate.
+
+### What a wrong run looks like
+
+1. **A different model than the three named** — including a smaller build of the same family, an Ollama tag, or a vision variant.
+2. **An arm copied from an earlier artifact** and its throughput reported as new.
+3. **Old arms left in `v2/artifacts/extraction/`** so the consensus spans six models.
+4. **A percentage whose denominator is under 20**, with or without a multiplier attached.
+5. **Self-agreement measured over arbitrary turns** rather than claim-bearing ones.
+6. **Weakening, skipping or deleting any test in `test_b6_models.py`.**
+
+### Before you commit
+
+```bash
+df -h "$HF_HOME"
+.venv/bin/ruff check v2/
+.venv/bin/mypy v2/src v2/scripts v2/tests
+.venv/bin/python -m pytest v2/tests -q
+grep -c "xfail" v2/tests/test_b6_models.py                    # must be 0
+ls v2/artifacts/extraction/b6_extraction_*.json               # must be exactly 3
+```
+
+**Expected when the item is genuinely done:** ruff clean · mypy clean · **68 passed with no xfailed** · exactly three `b6_extraction_*` artifacts, one per named model.
 
 ### Validation
 
-- **(c)** — **precision and recall for each model individually and for the unanimous, majority and any-model rules, all against B2's gold set, with every disagreement listed by turn id, and every rate whose denominator is under 20 written as a count.** *Three models' raw output is not a result; the comparison against a human-labelled set is. The first pass satisfied the shape of this and reported a four-sample precision as a percentage with a multiplier.*
-- Each arm's model id, runtime, quantisation and prompt hash recorded, and the prompt hash identical across arms.
-- Self-agreement reported both overall and restricted to claim-bearing turns.
-- Disk free before and after; no weights resident for models no longer compared.
-- **Nothing left this machine** beyond the model download.
+- **(c)** — **precision and recall for each of the three named models individually and for the unanimous, majority and any-model rules, all against B2's gold set, every disagreement listed by turn id, and every rate whose denominator is under 20 written as a count.** *Three models' raw output is not a result; the comparison against a human-labelled set is. The first pass satisfied the shape of this with three models nobody chose.*
+- All seven tests in `test_b6_models.py` pass **with the `xfail` marker removed**, and `git diff` on that file shows only the marker deletion.
+- Model id, runtime, quantisation and prompt hash recorded per arm, prompt hash identical across arms.
+- Disk free reported before and after, on the volume `HF_HOME` points at.
+- **Nothing left this machine** beyond the model downloads.
 
-**Falsify.** Run one model twice at non-zero temperature **over the 33 gold-claim turns** and report agreement on that population. **If a model agrees with itself less on turns where it fires than three models agree with each other, the consensus signal is noise.**
+**Falsify.** After the table is built, **drop the weakest model and recompute the consensus rules over the remaining two.** If majority-of-three and agreement-of-two land in the same place, the third model is not contributing and the item should say so — that is a cheaper finding than it looks, and it decides whether three models are worth keeping.
 
-**Blast radius.** `v2/src/run_b6.py`, `v2/artifacts/extraction/`, model weights on disk (staged, then removed). **No changes to the rubric, the prompt templates, the gold set, or V1.**
+**Blast radius.** `v2/src/run_b6.py`, `v2/artifacts/extraction/` (three old arms removed, three new written), `v2/tests/test_b6_models.py` (marker deletion only), model weights under `HF_HOME`. **No changes to the rubric, the prompt templates, the gold set, `extract.py`, or V1.**
 
 ---
 
@@ -636,6 +684,10 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 **When an item comes back a second time, stop specifying it in prose and commit the test.** B7 was described carefully and still came back, because prose leaves the implementer deciding what counts as satisfying it — and the fix that got chosen satisfied the sentence while leaving the defect in place. A committed failing test removes that discretion: the agent's job becomes making code pass a test it did not write and may not edit. **Commit it red, marked `xfail(strict=True)` so the suite stays green until the work lands and then goes red until the marker is removed.** See `v2/tests/test_b7_provenance.py`.
 
 **Assert at the point of measurement, never at the point of display.** When the defect is "this value is not measured", an assertion that the page reflects the file is satisfied by writing the constant into the file. **Name the function that produces the value and assert on what it wrote** — and check the test imports that function at all. `test_b7.py` never imported `run_episode_extraction`, so it could not have caught the bug it was written for.
+
+**Assert the inputs, not only the outputs.** B6 produced correct, reproducible numbers from three models nobody chose, and reused an earlier run as one arm. Ruff, mypy, pytest and the arithmetic were all green and none of them could see it. **When an item names specific inputs — a model, a corpus, a file — assert on the identity the artifact records.** It is one line, and it is the only thing standing between a careful-looking result and a different experiment.
+
+**A test gated on nothing passes vacuously; a test gated on the old state passes wrongly.** The first draft of `test_b6_models.py` iterated whatever arms were on disk: two assertions went green against the *old* models, and would have gone green against an empty directory once those were cleared. **Route every per-item check through a helper that first asserts the expected inputs are present**, so the test is red before the work and meaningful after it.
 
 **One call cannot distinguish a constant from a correct reading.** Any assertion about a recorded value needs two runs with two different inputs and a comparison between them. A single run agrees with a hard-coded answer perfectly.
 
