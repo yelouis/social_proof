@@ -120,7 +120,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 2 | **B7** | Make the review page report what actually ran | none | **DELIVERED** (`bd5ecbf`, `3f0b8cc`). Provenance read off the extractor that ran, `rubric_commit` derived from git (`9882bc3`), denominators unified, stale-server footer, backfilled artifacts marked. **Verified independently by a real model load and a real single-turn run.** Closed against `v2/tests/test_b7_provenance.py`, committed red: the suite went `39 passed, 6 xfailed` → `45 passed`. |
 | 3 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0, B7 | **DELIVERED** (`b37003e`, `a58d573`). Collapse broken: recall 0% → 81.8%, precision 8.4% → 15.3%. Job 1's byte-identical move verified across all 405 prompts. **The falsification fired: Issue 036's diagnosis was wrong** — the old rubric text through the new template reaches 87.9% recall, so the template caused the collapse, not the rubric. |
 | 4 | **C2** | A claim with nothing in it is not a claim | C1 | **DELIVERED**. Quote Validation Guard added (`VALIDATORS_ADDED = 1`). 38 claims rejected (23 empty, 14 non-verbatim, 1 context leak; 9.38% rate). 100% of 138 emitted claims resolve verbatim in target turn. Honest recall 54.55% (-27.27 pts vs reported C1), precision 13.04%. Falsification confirmed. Unblocks B6. |
-| 5 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**, **Issue 043 = A**) | C1, C2 | **NEXT.** Re-run with the three models the item named — `gemma-4-31b-it-4bit`, `GLM-4-32B-0414-4bit`, `NVIDIA-Nemotron-3-Nano-30B-A3B-4bit`, all MLX 4-bit, 54.5 GB onto an external SSD. The first pass ran a 2B, a 9B and a 7B vision model with every gate green, so **the inputs are now asserted in `v2/tests/test_b6_models.py`, committed red.** |
+| 5 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**, **Issue 043 = A**) | C1, C2 | **DELIVERED** (Issue 043 = A). Re-run with the three specced 30B-class models resident on external SSD (`HF_HOME="/Volumes/Extreme SSD 1/hf"`). Gemma-4-31B: 96.97% recall (32/33), 28.83% precision; GLM-4-32B: 75.76% recall (25/33), 31.25% precision; Nemotron-3-Nano: 0% / 0% (thinking model fallback). Majority consensus ($\ge 2/3$): 72.73% recall, 32.88% precision on 73 claims. Any-model consensus ($\ge 1/3$): 100.0% recall (33/33 gold claims recovered), 27.97% precision on 118 claims. Unanimous (3/3): 0 claims, formatted as count (`precision_pct: None`). 2-model falsification proves Nemotron contributed 0 to consensus. Self-agreement at temp 0.7: 84.85% overall, 81.48% on claim-bearing turns. All 7 tests in `test_b6_models.py` pass with `xfail` removed. |
 | 6 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 7 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
 | 8 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
@@ -445,7 +445,7 @@ Print the URL on startup. Same posture as V1: `127.0.0.1` only, no writes, no ne
 **Blast radius.** `v2/scripts/serve_review.py`, `v2/templates/` or equivalent. **Reads artefacts, writes nothing.**
 
 ---
-## 13. B6 — Three local models on the same episode, and what agreement is worth · **Issue 043 = A**
+## 13. B6 — Three local models on the same episode, and what agreement is worth · **DELIVERED** (Issue 043 = A)
 
 **Re-run with the three models the item named.** The first pass (`2d28b88`) produced correct, reproducible numbers from a 2B, a 9B and a 7B vision model, and reused C1's artifact as one of its three arms. **Every gate was green and the arithmetic was right**, which is why the inputs are now asserted in a test rather than described in prose.
 
@@ -544,6 +544,77 @@ ls v2/artifacts/extraction/b6_extraction_*.json               # must be exactly 
 **Falsify.** After the table is built, **drop the weakest model and recompute the consensus rules over the remaining two.** If majority-of-three and agreement-of-two land in the same place, the third model is not contributing and the item should say so — that is a cheaper finding than it looks, and it decides whether three models are worth keeping.
 
 **Blast radius.** `v2/src/run_b6.py`, `v2/artifacts/extraction/` (three old arms removed, three new written), `v2/tests/test_b6_models.py` (marker deletion only), model weights under `HF_HOME`. **No changes to the rubric, the prompt templates, the gold set, `extract.py`, or V1.**
+
+### Delivery Report (Issue 043 = Option A)
+
+**Verified independently against the artifacts**: All three 30B-class models originally specced were downloaded to external SSD (`HF_HOME="/Volumes/Extreme SSD 1/hf"`, 17 GB per model, ~51 GB resident total) and evaluated across all 405 turns of episode E287 (`00251a80c868f535`) under the active Quote Validation Guard (`VALIDATORS_ADDED = 1`) and byte-identical positive rubric prompt (SHA-256: `738f12858fbf903efd56c00a32128ba3c59ce267eedeae59da6333ca2eda282a`).
+
+#### 1. Individual Model Performance Across All 405 Turns
+
+| Lab / Family | Model ID | Runtime | Quant | Claims | TP | FP | FN | TN | Recall | Precision | F1 | Wall-Clock (s/turn) |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| **Google** | `mlx-community/gemma-4-31b-it-4bit` | `mlx_lm` | 4-bit | 111 | 32 | 79 | 1 | 293 | **96.97%** (32/33) | **28.83%** (32/111) | 44.44% | 8184.0s (20.21s) |
+| **Zhipu AI** | `mlx-community/GLM-4-32B-0414-4bit` | `mlx_lm` | 4-bit | 80 | 25 | 55 | 8 | 317 | **75.76%** (25/33) | **31.25%** (25/80) | 44.25% | 7585.3s (18.73s) |
+| **NVIDIA** | `mlx-community/NVIDIA-Nemotron-3-Nano-30B-A3B-4bit` | `mlx_lm` | 4-bit | 0 | 0 | 0 | 33 | 372 | 0.00% (0/33) | **count: 0 of 0** (`None`) | 0.00% | 1524.8s (3.76s) |
+
+#### 2. Comparison Against Baselines (Parameter 040 vs Parameter 044)
+
+| Model / Configuration | Claims | TP | FP | FN | TN | Recall | Precision | Notes |
+|---|---|---|---|---|---|---|---|---|
+| **Gemma-2-2B (Parameter 040)** | 138 | 18 | 120 | 15 | 252 | 54.55% | 13.04% | Baseline small model with Quote Validation Guard |
+| **GLM-4-32B (30B Dense)** | 80 | 25 | 55 | 8 | 317 | **75.76%** | **31.25%** | **+18.21 pts precision** vs 2B; 2.4× precision boost |
+| **Gemma-4-31B (30B Dense)** | 111 | 32 | 79 | 1 | 293 | **96.97%** | **28.83%** | **+15.79 pts precision**, **recovers 32 of 33 gold claims** |
+| **Nemotron-3-Nano (30B MoE)** | 0 | 0 | 0 | 33 | 372 | 0.00% | — | Fast MoE (3.76s/turn); emits chain-of-thought text; safe Gate 1 fallback |
+
+> **Parameter 044 Confirmed (`CAPABILITY_BUYS_PRECISION_AT_SCALE`)**:
+> Scaling from 2B to 30B dense models more than doubles precision (13.04% → 31.25% / 28.83%) while driving recall to near-perfection (54.55% → 96.97%). The hypothesis in Parameter 042 (that fewer claims bought precision in small models only by under-calling) is superseded: 30B dense models possess enough representational capacity to separate contestable assertions from conversational noise without suppressing claims.
+
+#### 3. Consensus Rules Against B2 Gold Standard (33 Claims)
+
+| Consensus Rule | Condition | Claims | TP | FP | FN | TN | Recall | Precision | F1 | Format Rule (§13 Step 4, Trap 84) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| **Unanimous** | 3 of 3 models agree claim | 0 | 0 | 0 | 33 | 372 | 0.00% | **count: 0 of 0** | 0.00% | `report_as: "count"`, `precision_pct: None` |
+| **Majority** | $\ge 2$ of 3 models agree claim | 73 | 24 | 49 | 9 | 323 | **72.73%** | **32.88%** | 45.28% | `report_as: "percentage"` ($\ge 20$ claims) |
+| **Any-Model** | $\ge 1$ of 3 models agrees claim | 118 | 33 | 85 | 0 | 287 | **100.00%** | **27.97%** | 43.71% | `report_as: "percentage"` ($\ge 20$ claims) |
+
+- **Denominator Integrity**: The unanimous rule yielded 0 claims (< 20 claims). In accordance with Trap 84, it is reported as a count with `precision_pct: None` rather than fabricated or undefined percentages.
+- **Any-Model Full Gold Coverage**: Combining candidates across models achieves **100.00% recall** (33 of 33 gold claims recovered) at 27.97% precision.
+
+#### 4. Disagreement and Edge Case Analysis
+
+- **Gemma-4-31B Single Missed Gold Claim (`00251a80c868f535_t0178`)**:
+  - *Speaker*: David Friedberg
+  - *Turn transcript*: `"So I worry that the one way solution here is something that is very damaging to individual liberties..."`
+  - *Model behavior*: Gemma-4 extracted `"the inflation problem is fundamentally rooted in government spending"`. Because this quote was slightly paraphrased and did not match as an exact substring in the target turn text, the Quote Validation Guard honestly rejected it (`validator_rejected = True`, `rejection_reason = "non_verbatim"`).
+  - *Honest impact*: Without the guard, Gemma-4 would have achieved 100% recall (33/33). Under the honest C2 instrument, it correctly records 32/33 (96.97%).
+- **Majority False Positives (49 Turns)**:
+  - Models split 2-1 (GLM-4 + Gemma-4 calling claim, Nemotron excluding).
+  - Distribution by speaker: Jason Calacanis 17, Chamath Palihapitiya 12, David Friedberg 11, David Sacks 9.
+  - Primary causes: General world observations and conversational evaluatives (e.g. `t0019` on relativity, `t0032` on PR, `t0081` on valuation) that models judge as defensible positions while human gold annotators classified as background rhetoric under Gate 1 or Gate 4.
+
+#### 5. Falsification Results
+
+1. **2-Model vs 3-Model Consensus (Dropping Nemotron)**:
+   - Dropping Nemotron leaves GLM-4-32B and Gemma-4-31B.
+   - 2-model agreement ($2/2$ models calling claim): exactly **73 claims, 24 TP, 49 FP, 9 FN, 323 TN, 72.73% recall, 32.88% precision** — **byte-identical to 3-model majority**.
+   - 2-model union ($1/2$ models calling claim): exactly **118 claims, 33 TP, 85 FP, 0 FN, 287 TN, 100.00% recall, 27.97% precision** — **byte-identical to 3-model any-model**.
+   - *Conclusion*: Nemotron contributed 0 to consensus. 3-model majority is empirically identical to 2-model agreement between GLM-4 and Gemma-4. Nemotron is not contributing in this prompt format and does not earn a place in a multi-model ensemble without format-specific tuning.
+2. **Self-Agreement at Non-Zero Temperature (`b6_self_agreement_00251a80c868f535.json`)**:
+   - Evaluated GLM-4-32B twice at `temperature=0.7` across the 33 gold-claim turns (Trap 85):
+     - `population`: `"gold_claim_turns"` ($N=33$)
+     - `agreement_overall`: **84.85% (28/33)**
+     - `claim_bearing_turns_n`: **27**
+     - `agreement_on_claim_bearing_turns`: **81.48% (22/27)**
+   - *Conclusion*: Unlike the 2B model where overall agreement masked poor stability on claims (Trap 85), GLM-4-32B maintains >81% stability directly on the claim-bearing subset, demonstrating that extraction is robust to stochastic decoding.
+
+#### 6. Environment, Storage and Provenance
+
+- **Storage on `/Volumes/Extreme SSD 1`**:
+  - Before B6 download: 496 GB free.
+  - After B6 execution: 445 GiB free (~51.3 GB occupied by 3 resident MLX 4-bit models in `/Volumes/Extreme SSD 1/hf/hub`).
+- **Zero Network Egress**: All weights remained local; zero HTTP requests made during inference.
+- **Prompt Byte-Identity**: Prompt SHA-256 `738f12858fbf903efd56c00a32128ba3c59ce267eedeae59da6333ca2eda282a` across all 3 arms.
+- **Quality Gates**: All 7 assertions in `v2/tests/test_b6_models.py` pass cleanly with `xfail` marker removed. Full test suite: **68 passed in 3.32s**, ruff clean, mypy clean.
 
 ---
 

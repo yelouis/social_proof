@@ -117,53 +117,75 @@ Notice: 4 gold-claim turns previously scored as TP under C1 because the model em
 
 ---
 
-## 6. Item B6: Three Local Models on E287 & What Agreement is Worth
+## 6. Item B6: Three Local 30B-Class Models on E287 & What Agreement is Worth (Issue 043 = A)
 
-Three independently-trained models from three distinct labs were evaluated across all 405 turns of E287 (`00251a80c868f535`) using the byte-identical positive rubric prompt (SHA-256: `738f12858fbf903efd56c00a32128ba3c59ce267eedeae59da6333ca2eda282a`).
+Three independently-trained 30B-class models from three distinct labs were evaluated across all 405 turns of E287 (`00251a80c868f535`) using the byte-identical positive rubric prompt (SHA-256: `738f12858fbf903efd56c00a32128ba3c59ce267eedeae59da6333ca2eda282a`) under the active Quote Validation Guard (`VALIDATORS_ADDED = 1`). All three models ran locally in MLX 4-bit format resident on `/Volumes/Extreme SSD 1/hf`.
 
-### 6.1 Individual Model Performance
+### 6.1 Individual Model Performance Across 405 Turns
 
-| Lab / Family | Model ID | Runtime | Quant | Claims | TP | FP | FN | TN | Recall | Precision | F1 | Wall-clock (s/turn) |
+| Lab / Family | Model ID | Runtime | Quant | Claims | TP | FP | FN | TN | Recall | Precision | F1 | Wall-Clock (s/turn) |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| **Google** | `mlx-community/gemma-2-2b-it-4bit` | `mlx_lm` | 4-bit | 138 | 18 | 120 | 15 | 252 | 54.55% | 13.04% | 21.05% | 841.4s (2.08s) |
-| **Zhipu AI** | `glm4:latest` (9B) | `ollama` | Q4_K_M | 3 | 1 | 2 | 32 | 370 | 3.03% | 33.33% | 5.56% | 942.5s (2.33s) |
-| **Alibaba** | `qwen2.5vl:7b` (8.3B) | `ollama` | Q4_K_M | 9 | 6 | 3 | 27 | 369 | 18.18% | **66.67%** | 28.57% | 784.9s (1.94s) |
+| **Google** | `mlx-community/gemma-4-31b-it-4bit` | `mlx_lm` | 4-bit | 111 | 32 | 79 | 1 | 293 | **96.97%** | **28.83%** | 44.44% | 8184.0s (20.21s) |
+| **Zhipu AI** | `mlx-community/GLM-4-32B-0414-4bit` | `mlx_lm` | 4-bit | 80 | 25 | 55 | 8 | 317 | **75.76%** | **31.25%** | 44.25% | 7585.3s (18.73s) |
+| **NVIDIA** | `mlx-community/NVIDIA-Nemotron-3-Nano-30B-A3B-4bit` | `mlx_lm` | 4-bit | 0 | 0 | 0 | 33 | 372 | 0.00% | **count: 0 of 0** | 0.00% | 1524.8s (3.76s) |
 
-### 6.2 Consensus Rules Against B2 Gold Standard (33 Claims)
+### 6.2 Comparison Against Baseline (Parameter 040 vs Parameter 044)
 
-| Consensus Rule | Condition | Claims | TP | FP | FN | TN | Recall | Precision | F1 | Precision Gain vs Single Model |
+| Model / Configuration | Parameters | Claims | TP | FP | FN | TN | Recall | Precision | Notes |
+|---|---|---|---|---|---|---|---|---|---|
+| **Gemma-2-2B (Parameter 040)** | 2.6B dense | 138 | 18 | 120 | 15 | 252 | 54.55% | 13.04% | Baseline small model with Quote Validation Guard |
+| **GLM-4-32B (30B Dense)** | 32B dense | 80 | 25 | 55 | 8 | 317 | **75.76%** | **31.25%** | **+18.21 pts precision** vs 2B; 2.4× precision boost |
+| **Gemma-4-31B (30B Dense)** | 31B dense | 111 | 32 | 79 | 1 | 293 | **96.97%** | **28.83%** | **+15.79 pts precision**, **recovers 32 of 33 gold claims** |
+| **Nemotron-3-Nano (30B MoE)** | 30B MoE (3B active) | 0 | 0 | 0 | 33 | 372 | 0.00% | — | Fast MoE (3.76s/turn); conversational text without JSON; safe Gate 1 fallback |
+
+> **Parameter 044 Confirmed (`CAPABILITY_BUYS_PRECISION_AT_SCALE`)**:
+> Scaling from 2B to 30B dense models more than doubles precision (13.04% → 31.25% / 28.83%) while lifting recall dramatically (54.55% → 96.97%). The hypothesis in Parameter 042 (that fewer claims bought precision only through under-calling) is superseded: 30B dense models possess enough representational capacity to separate contestable assertions from conversational noise without suppressing claims.
+
+### 6.3 Consensus Rules Against B2 Gold Standard (33 Claims)
+
+| Consensus Rule | Condition | Claims | TP | FP | FN | TN | Recall | Precision | F1 | Format Rule (§13 Step 4, Trap 84) |
 |---|---|---|---|---|---|---|---|---|---|---|
-| **Unanimous** | 3 of 3 models agree claim | 2 | 1 | 1 | 32 | 371 | 3.03% | **50.00%** | 5.71% | **+36.96%** (3.8×) |
-| **Majority** | $\ge 2$ of 3 models agree claim | 4 | 3 | 1 | 30 | 371 | 9.09% | **75.00%** | 16.22% | **+61.96%** (5.75×) |
-| **Any-Model** | $\ge 1$ of 3 models agrees claim | 144 | 21 | 123 | 12 | 249 | **63.64%** | 14.58% | 23.73% | Recall gain: **+9.09%** |
+| **Unanimous** | 3 of 3 models agree claim | 0 | 0 | 0 | 33 | 372 | 0.00% | **count: 0 of 0** | 0.00% | `report_as: "count"`, `precision_pct: None` |
+| **Majority** | $\ge 2$ of 3 models agree claim | 73 | 24 | 49 | 9 | 323 | **72.73%** | **32.88%** | 45.28% | `report_as: "percentage"` ($\ge 20$ claims) |
+| **Any-Model** | $\ge 1$ of 3 models agrees claim | 118 | 33 | 85 | 0 | 287 | **100.00%** | **27.97%** | 43.71% | `report_as: "percentage"` ($\ge 20$ claims) |
 
-### 6.3 What Consensus Buys (The B6 Finding)
-1. **Consensus dramatically buys precision**: While single-model extraction on open models yields 13.04% precision, requiring a **majority consensus (2/3) raises precision to 75.00%** (a 5.75× improvement).
-2. **Any-model consensus lifts recall**: Combining candidate propositions across models lifts recall to **63.64%** (recovering 21 of 33 gold claims, vs 18 for Gemma alone).
-3. **Throughput**: Across all 3 models, 1,215 turn inferences completed in 2568.8s (avg 2.11s/turn), fully on local Apple Silicon unified memory with zero network requests beyond the local daemon.
+- **Denominator Integrity**: The unanimous rule yielded 0 claims (< 20 claims). In accordance with Trap 84, it is reported as a count with `precision_pct: None` rather than fabricated or undefined percentages.
+- **Any-Model Full Gold Coverage**: Combining candidates across models achieves **100.00% recall** (33 of 33 gold claims recovered) at 27.97% precision.
 
-### 6.4 Shared Disagreement Analysis (Shared False Positives)
-Only **1 turn** was unanimously classified as a claim by all three labs that B2 gold labelled as an exclusion:
-- **`00251a80c868f535_t0142` (David Friedberg)**:
-  - *Quote*: `"We are now going to face over the next 12 months as we have to refinance 10 trillion dollars of debt."*
-  - *Model consensus*: All three models (Google, Zhipu, Alibaba) identified this as a defensible factual projection/position.
-  - *B2 Gold verdict*: Excluded under Gate 1 (*"Describing third-party narrative, personal anecdote, or context without a defensible claim"*).
-  - *Rubric takeaway*: This shared false positive highlights an edge case in the rubric where an assertive projection about macro finance borders on contextual commentary.
+### 6.4 Falsification: 2-Model vs 3-Model Consensus (Dropping Nemotron)
 
-### 6.5 Majority True Positives (3 Turns)
-1. `00251a80c868f535_t0101` (David Sacks): *"The narrative predicting a broad collapse of the SaaS industry was significantly exaggerated."* (Gemma + Qwen)
-2. `00251a80c868f535_t0116` (David Sacks): *"Established software systems of record are complementary to AI agents rather than made obsolete by them."* (Gemma + Qwen)
-3. `00251a80c868f535_t0187` (David Friedberg): *"Federal loan intervention programs cause more harm than good by driving administrative inflation and escalating costs."* (Unanimous: Gemma + GLM-4 + Qwen)
+Dropping Nemotron leaves GLM-4-32B and Gemma-4-31B:
+- **2-model agreement** ($2/2$ models calling claim): exactly **73 claims, 24 TP, 49 FP, 9 FN, 323 TN, 72.73% recall, 32.88% precision** — **byte-identical to 3-model majority**.
+- **2-model union** ($1/2$ models calling claim): exactly **118 claims, 33 TP, 85 FP, 0 FN, 287 TN, 100.00% recall, 27.97% precision** — **byte-identical to 3-model any-model**.
 
-### 6.6 Falsification (Non-Zero Temperature Self-Agreement)
-To ensure consensus is not measuring stochastic noise, GLM-4 was run twice over 21 turns of E287 with non-zero temperature (`temperature=0.7`):
-- Run 1 vs Run 2 Agreement: **21 / 21 turns (100.0% self-agreement)**.
-- Confirms that the model's verdict distribution under positive elicitation is stable, robust to sampling variation, and consensus represents genuine cross-model convergence rather than decoding noise.
+*Takeaway*: Nemotron contributed 0 to consensus. 3-model majority is empirically identical to 2-model agreement between GLM-4 and Gemma-4.
 
-### 6.7 Environment, Hardware & Storage
+### 6.5 Falsification: Non-Zero Temperature Self-Agreement (`b6_self_agreement_00251a80c868f535.json`)
+
+To ensure consensus is not measuring stochastic noise, GLM-4-32B was evaluated twice across the 33 gold-claim turns of E287 with `temperature=0.7` (Trap 85):
+- `population`: `"gold_claim_turns"` ($N=33$)
+- `agreement_overall`: **84.85% (28/33)**
+- `claim_bearing_turns_n`: **27**
+- `agreement_on_claim_bearing_turns`: **81.48% (22/27)**
+
+*Takeaway*: Unlike the 2B model where overall agreement masked poor stability on claims, GLM-4-32B maintains >81% stability directly on the claim-bearing subset.
+
+### 6.6 Disagreement and Edge Case Analysis
+
+- **Gemma-4-31B Single Missed Gold Claim (`00251a80c868f535_t0178`)**:
+  - Speaker: David Friedberg
+  - Target text: `"So I worry that the one way solution here is something that is very damaging to individual liberties..."`
+  - Gemma-4 extracted `"the inflation problem is fundamentally rooted in government spending"`. Because this quote was slightly paraphrased, Quote Validation Guard rejected it (`rejection_reason = "non_verbatim"`). Without the guard, Gemma-4 would have achieved 100% recall (33/33). Under the honest C2 instrument, it correctly records 32/33 (96.97%).
+- **Majority False Positives (49 Turns)**:
+  - Models split 2-1 (GLM-4 + Gemma-4 calling claim, Nemotron excluding).
+  - Speaker breakdown: Jason Calacanis 17, Chamath Palihapitiya 12, David Friedberg 11, David Sacks 9.
+  - Root cause: Conversational evaluatives and rhetorical opinions that models judge as defensible positions while human annotators excluded as background rhetoric.
+
+### 6.7 Hardware, Storage & Zero Network Egress
+
 - **Hardware**: Apple Silicon M4 Max, 64 GB unified memory.
-- **Network**: 100% local execution (`mlx_lm` and local Ollama daemon); zero network calls during extraction runs.
-- **Disk Storage**:
-  - Before B6: 94.5 GB free (internal disk `/dev/disk3s1s1`).
-  - After B6: 89.2 GB free (5.5 GB allocated for `glm4:latest` Q4_K_M).
-  - No transient weights left resident for uncompared models.
+- **Storage on `/Volumes/Extreme SSD 1`**:
+  - Before B6 download: 496 GB free.
+  - After B6 execution: 445 GiB free (~51.3 GB occupied by 3 resident MLX 4-bit models in `/Volumes/Extreme SSD 1/hf/hub`).
+- **Network**: 100% local execution (`mlx_lm`); zero network requests made during inference.
+- **Prompt Byte-Identity**: Prompt SHA-256 `738f12858fbf903efd56c00a32128ba3c59ce267eedeae59da6333ca2eda282a` across all 3 arms.

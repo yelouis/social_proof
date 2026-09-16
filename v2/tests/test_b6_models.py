@@ -18,18 +18,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-import pytest
-
-# ---------------------------------------------------------------------------
-# Committed RED before the run that satisfies it. strict=True keeps the suite
-# green while these fail and turns them RED once they pass with this marker
-# still present -- deleting these lines is the last step of the item.
-# ---------------------------------------------------------------------------
-pytestmark = pytest.mark.xfail(
-    strict=True,
-    reason="B6 re-run (Issue 043 = A) has not been executed with the specified models",
-)
-
 ROOT_DIR = Path(__file__).resolve().parent.parent
 EXTRACTION_DIR = ROOT_DIR / "artifacts" / "extraction"
 EPISODE = "00251a80c868f535"
