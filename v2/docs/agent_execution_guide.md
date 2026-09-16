@@ -120,7 +120,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 2 | **B7** | Make the review page report what actually ran | none | **DELIVERED** (`bd5ecbf`, `3f0b8cc`). Provenance read off the extractor that ran, `rubric_commit` derived from git (`9882bc3`), denominators unified, stale-server footer, backfilled artifacts marked. **Verified independently by a real model load and a real single-turn run.** Closed against `v2/tests/test_b7_provenance.py`, committed red: the suite went `39 passed, 6 xfailed` → `45 passed`. |
 | 3 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0, B7 | **DELIVERED** (`b37003e`, `a58d573`). Collapse broken: recall 0% → 81.8%, precision 8.4% → 15.3%. Job 1's byte-identical move verified across all 405 prompts. **The falsification fired: Issue 036's diagnosis was wrong** — the old rubric text through the new template reaches 87.9% recall, so the template caused the collapse, not the rubric. |
 | 4 | **C2** | A claim with nothing in it is not a claim | C1 | **DELIVERED**. Quote Validation Guard added (`VALIDATORS_ADDED = 1`). 38 claims rejected (23 empty, 14 non-verbatim, 1 context leak; 9.38% rate). 100% of 138 emitted claims resolve verbatim in target turn. Honest recall 54.55% (-27.27 pts vs reported C1), precision 13.04%. Falsification confirmed. Unblocks B6. |
-| 5 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**) | C1, C2 | **DELIVERED**. Three open-weights models (Google Gemma 2 2B, Zhipu GLM-4 9B, Alibaba Qwen 2.5-VL 7B) evaluated on all 405 turns of E287 with byte-identical prompt. Single-model precision 13.04% -> Majority consensus precision **75.00%** (5.75x boost; 3 TP, 1 FP). Any-model consensus recall **63.64%** (+9.09 pts). Shared FP across all 3 labs isolated to 1 turn (`t0142`). 100% local, no network leaks, zero uncompared weights resident. |
+| 5 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**) | C1, C2, **Issue 043** | **REOPENED** (`2d28b88`). Numbers verified and real, but the models are not the ones specced — 2B / 9B / 7B-vision instead of Gemma 4 31B, GLM-4-32B and Nemotron, with `gemma4:latest` installed and unused. Two arms ran, not three (the Gemma arm is byte-identical to C1's). Majority precision "75.00%, a 5.75x boost" is 3 of 4 predictions. The self-agreement falsification could not fail. **Scope of the re-run is Issue 043.** |
 | 6 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 7 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
 | 8 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
@@ -445,135 +445,57 @@ Print the URL on startup. Same posture as V1: `127.0.0.1` only, no writes, no ne
 **Blast radius.** `v2/scripts/serve_review.py`, `v2/templates/` or equivalent. **Reads artefacts, writes nothing.**
 
 ---
-## 13. B6 — Three local models on the same episode, and what agreement is worth · **DELIVERED**
+## 13. B6 — Three local models on the same episode, and what agreement is worth · **REOPENED** (`2d28b88`)
 
-**Blocked on B5** — you need the viewer before three models' output is worth looking at, and B5 is the thing that makes disagreement legible.
+**The numbers are real — I recomputed every one from the artifacts. The experiment is not the one this item specified.** Scope of the re-run is **Issue 043**, awaiting Louis.
 
-**User impact:** a claim that three independently-trained models all call a claim is more trustworthy than one model's verdict. **How much more is the thing this item measures.**
+### What was delivered and holds
 
-**Contract:** `v2/docs/design_claim_rubric.md` · B2's gold set (405 labelled turns of E287) · guide §4 decision 4 — **local, open-weights, nothing leaves this machine**.
+Three independently-trained models from three labs ran the byte-identical positive prompt over all 405 turns of E287, each artifact carrying correct per-model provenance (B7's machinery, working: `runtime: ollama`, `quantisation: Q4_K_M`, recorded per run). The consensus table reproduces exactly:
 
-### What actually fits — measured on this machine, September 13 2026
+| rule | claims | TP | FP | precision | recall |
+|---|---|---|---|---|---|
+| unanimous 3/3 | 2 | 1 | 1 | 50.00% | 3.03% |
+| majority ≥2/3 | 4 | 3 | 1 | 75.00% | 9.09% |
+| any ≥1/3 | 144 | 21 | 123 | 14.58% | 63.64% |
 
-**Mac Studio, M4 Max, 64 GB unified memory. `iogpu.wired_limit_mb` is 0 (default ≈ 48 GB available to the GPU) — a 30B-class 4-bit model needs ~18 GB, so it does not need raising.**
+**The shared false positive is the item's best output.** All three labs call `t0142` a claim — *"we have to refinance 10 trillion dollars of debt"* — where the gold set says gate 1, narration. Three independent models reading it as a prediction is evidence the **rubric** is ambiguous here, not that the models are weak. That is the row worth having.
 
-**The binding constraint is disk, not memory: 58 GB free of 460 GB.**
+### Four defects
 
-| family | biggest that fits | 4-bit size | note |
-|---|---|---|---|
-| **Gemma** | `gemma-4-31B` (dense, 30.7B active) | ~18 GB | Gemma 4, Apache 2.0, April 2026. `26B-A4B` (MoE, 3.8B active) is ~14 GB and runs at roughly 4B speed — **worth taking as well if throughput hurts** |
-| **GLM** | `mlx-community/GLM-4-32B-0414-4bit` | ~18 GB | **GLM-4.5-Air does not fit** — 106B/12B needs **66.7 GB at Q4_K_M**, over both the RAM and the disk. GLM-4.6 needs ~205 GB |
-| **Nemotron** | **`Nemotron 3 Nano`** — 31.6B total, **3B active** (hybrid Mamba-Transformer MoE) | ~18 GB | **This is the third slot.** Nemotron 3 Super is 120B/12B ≈ 65 GB — does not fit, same wall as GLM-4.5-Air. Ultra is 550B — no. |
+**1. The models are not the ones specified.** This item named **Gemma 4 31B**, **GLM-4-32B-0414** and **Nemotron 3 Nano** — the biggest of each family that fits in 64 GB, which is what Louis asked for. What ran was **gemma-2-2b-it-4bit**, **glm4:latest (9B)** and **qwen2.5vl:7b** (a *vision* model). Disk moved 94.5 → 89.2 GB, consistent with pulling one 5.5 GB model. **`gemma4:latest` (9.6 GB) is installed and was not used.**
 
-Three at ~18 GB is ~54 GB against ~57 GB free on the internal disk. Two ways out, and the second is better if the hardware is there: **stage them** — pull one, run the episode, write the output, delete the weights, pull the next; outputs are small JSON and weights are not. **Or put the cache on an external SSD** and skip staging entirely, which is the preferred option since all three stay resident and can be re-run without re-downloading.
+**2. Two models ran, not three.** `b6_extraction_mlx-community_gemma-2-2b-it-4bit…json` is byte-identical to C1's artifact — same verdict SHA, same `841.37` elapsed — and is reported as a B6 throughput measurement of "841.4s (2.08s/turn)". **Reusing a deterministic run is legitimate; presenting it as this item's measurement is not.**
 
-**External SSDs are a supported answer and remove the staging constraint entirely.** Point the caches at the volume and both runtimes follow:
+**3. "75.00% precision, a 5.75x boost" is three correct predictions out of four.** Unanimous is one of two. **A metric over four examples is not a metric** (trap 20), and both are bought at 9.09% and 3.03% recall — a corner solution reported by its flattering side (trap 73).
 
-```bash
-export HF_HOME=/Volumes/<SSD>/hf          # MLX / transformers
-export OLLAMA_MODELS=/Volumes/<SSD>/ollama # Ollama
-```
+**4. The falsification could not fail.** It ran GLM twice at temperature 0.7 over 21 arbitrary turns and reported 21/21 agreement. **GLM emits a claim on 0.7% of turns**, so that sample almost certainly contained none, and the test measured agreement on "no". I re-ran it on the **33 gold-claim turns** — the population that can disagree: run 1 gave 2 claims, run 2 gave 3, overall agreement 32/33 (97.0%), but **only 2 of the 3 turns where a claim was ever emitted agreed**, with a real disagreement at `t0141`. **Verdict stability under sampling is not established.**
 
-**Weights load from the SSD into unified memory once; inference speed afterwards is unaffected by where they came from.** Thunderbolt (3–6 GB/s) loads an 18 GB model in seconds; USB 3.2 (~1 GB/s) takes ~20 s. **Neither changes tokens/sec.** Format the volume APFS or exFAT — not FAT32, which caps files at 4 GB and will corrupt a sharded download in a way that looks like a model bug.
+### What lands regardless of Issue 043
 
-> **Verify before pulling anything:** `df -h` on whichever volume the cache points at. **If free space is under ~25 GB, stop and say so** rather than filling the disk — a Mac that runs out mid-download fails in ways that are tedious to unpick. **Note that `df` can lag after a delete:** APFS Time Machine local snapshots hold freed space until macOS reclaims it under pressure, so a recent deletion may not show up. `tmutil listlocalsnapshots /` tells you whether that is what you are looking at.
+**Step 1 — run the falsification on a population that can disagree.** Self-agreement over turns the model almost never fires on measures the floor, not the model.
 
-### Inkling does not fit, and this is not a close call
+> **Verify:** report agreement **restricted to turns where either run emitted a claim**, beside the overall figure. **If those two numbers are far apart, the overall one is describing the exclusion rate.**
 
-**[Inkling](https://thinkingmachines.ai/news/introducing-inkling/)** (Thinking Machines Lab, July 2026) is **975B total / 41B active** MoE. **Inkling-Small** is **276B / 12B active**.
+**Step 2 — report small-n rates as counts.** Any precision or recall computed over fewer than ~20 predictions is written `3 of 4`, never `75.00%`, and never with a multiplier attached.
 
-**MoE needs all weights resident, not just the active ones.** Inkling-Small at 4-bit is roughly **138 GB** — over twice this machine's total RAM, and more than twice its free disk. There is no quantisation that closes a gap that size without destroying the model.
+> **Verify:** grep the commit body and the README for a percentage whose denominator is under 20. There must be none.
 
-**And finetuning it is not local either.** Inkling is designed to be customised through **Tinker**, Thinking Machines' hosted fine-tuning platform. That sends training data off this machine, which guide §4 decision 4 rules out. **Both halves of the Inkling idea — running it and tuning it — fail on this hardware and on the constraint.**
+**Step 3 — say which arms were executed for this item and which were reused.** A reused deterministic run is fine and cheap; it is recorded as reused, with the commit it came from, and its throughput is not restated as new.
 
-**Nemotron 3 Nano replaces Inkling in both roles, and is the better answer for the second one.** It fits at ~18 GB, its 3B active parameters make it fast enough to run 405 turns repeatedly, and **NVIDIA published the training data, the RL environments and the post-training recipes alongside the weights** under OpenMDW-1.1. **For a model you intend to finetune, published recipes are worth more than raw benchmark position** — it is the difference between adapting a known procedure and reverse-engineering one.
-
-**Finetuning is live, locally, on the right model.** A 30B-class LoRA runs on 64 GB under MLX, and **B2's 405 hand-labelled turns are exactly the shape a narrow-task LoRA wants** — small, consistent, single-domain. **Do not start it inside this item.** Measure the three base models first; if one is close and its errors are systematic, file the LoRA as its own issue with the base-model numbers attached. **On current evidence Nemotron Nano is the candidate**, on recipe availability rather than on any measurement yet taken.
-
-### Why three labs rather than three sizes
-
-Agreement is only evidence when the things agreeing are independent. **Gemma (Google), GLM (Zhipu) and a third lab's model give three different pretraining corpora and three different instruction-tuning regimes.** Three Gemma sizes would agree with each other for reasons that have nothing to do with the claim being real.
-
-**And the failure mode to keep in view: models sharing an architecture or data lineage agree on the same mistakes.** Consensus measures reliability only if it is itself checked against the gold set. **It is not a substitute for B2** — a claim all three models call a claim, that the gold set says is not one, is exactly the case worth finding.
-
-### Three residuals from B7 land here, because this is the item they break
-
-1. **`decoding["seed"] = 42` is a literal wired to nothing.** `mx.random.seed` is never called, and `extract.py` mentions `seed` exactly once — in the dict that records it. Under the pinned greedy sampler a seed is genuinely irrelevant, so the honest record is the sampler, not an invented number. **Record `"sampler": "greedy"` with `"seed": null`, and wire a real seed only when temperature becomes non-zero.** A recorded value that describes nothing is the defect B7 was filed against, surviving inside B7's own fix.
-2. **`decoding["max_tokens"] = 150` is restated as a literal** rather than read from the call that ran. Correct today only because nothing passes a different value.
-3. **`run_episode_extraction` still falls back to the module default** — `getattr(active_extractor, "model_id", MODEL_ID)`. An extractor without `model_id` silently records `gemma-2-2b-it-4bit`. **Raise instead**; this is the trap-31 shape inside the fix that removed trap-31 shapes.
-
-### Implementation
-
-**Step 1 — Run each model over all 405 turns of E287, same rubric prompt, byte-identical.** No per-model prompt tuning. A prompt adjusted per model makes the comparison meaningless, which is the same reason V1's model experiment required an empty prompt diff.
-
-> **Verify:** paste the prompt hash for each run and confirm all three match. **Record model id, quantisation, runtime and rubric commit hash** per guide §4, in the output file.
-
-> **This is blocked until B7's gap 1 closes.** `run_episode_extraction` takes no model parameter, builds `ModelExtractor()` from the module default, and writes `"model_id": MODEL_ID` with `RUNTIME` and `QUANTISATION` as module constants. **Run three models through it today and all three artifacts say `gemma-2-2b-it-4bit`, `mlx_lm`, `4-bit`** — the agreement table would then be three columns of identically-labelled provenance, and nothing downstream could tell which row came from which model.
-
-**Step 2 — Record per-model output in the same shape as B3's**, so B5 renders it without special-casing.
-
-> **Verify:** B5 displays all three side by side on one turn. If it needs a new template per model, the output shapes have diverged and later comparison will be arithmetic on incompatible things.
-
-**Step 3 — Compute the agreement table against the gold set.** For each of the four cells — all three agree claim, all three agree not, two-one split, and every other combination — report **how often the gold set says they were right.**
-
-> **Verify:** this is the item's whole product. **Report precision for unanimous-claim, for 2-1 majority, and for any-model-says-claim**, all against B2's 33 gold claims. If unanimous precision is not clearly higher than single-model precision, **consensus is not buying anything and the item should say so plainly.**
-
-**Step 4 — Read the disagreements.** Specifically the turns where models split 2-1, and every turn all three called a claim that the gold set does not contain.
-
-> **Verify:** list them by turn id in the commit body and say what they have in common. **A shared false positive across three labs is the most interesting row in this experiment** — it says the rubric is ambiguous, not that the models are weak.
-
-**Step 5 — Report throughput honestly.** Wall-clock per model for 405 turns. A model that is twice as good and ten times slower is a different decision from one that is twice as good and equally fast.
+> **Verify:** every arm's `elapsed_seconds` either differs from every prior artifact's, or the arm is labelled reused with its source commit.
 
 ### Validation
 
-- **(c)** — **precision and recall reported for each model individually and for the unanimous, majority and any-model consensus rules, all against B2's gold set**, with every disagreement listed by turn id. *Three models' raw output is not a result; the comparison against a human-labelled set is. Without the gold column this item produces three opinions and no way to rank them.*
-- All three runs used a byte-identical prompt — hashes pasted.
-- Model id, quantisation, runtime and rubric hash recorded per run.
-- Disk free reported before and after; **no weights left resident for models no longer being compared.**
-- **Nothing left this machine.** Assert no network calls beyond the model download.
+- **(c)** — **precision and recall for each model individually and for the unanimous, majority and any-model rules, all against B2's gold set, with every disagreement listed by turn id, and every rate whose denominator is under 20 written as a count.** *Three models' raw output is not a result; the comparison against a human-labelled set is. The first pass satisfied the shape of this and reported a four-sample precision as a percentage with a multiplier.*
+- Each arm's model id, runtime, quantisation and prompt hash recorded, and the prompt hash identical across arms.
+- Self-agreement reported both overall and restricted to claim-bearing turns.
+- Disk free before and after; no weights resident for models no longer compared.
+- **Nothing left this machine** beyond the model download.
 
-**Falsify.** Run one model twice **at a non-zero temperature** and report the agreement between the two runs. **Varying the seed proves nothing here:** decoding is pinned greedy, so two runs are identical by construction — B7 measured exactly that, three turns twice, byte-identical (parameter 036). A self-agreement number obtained without varying anything is not evidence, and the seed knob is not connected in the first place. **If a model agrees with itself less than the three models agree with each other, the consensus signal is noise** and the whole approach needs rethinking before it is built on.
+**Falsify.** Run one model twice at non-zero temperature **over the 33 gold-claim turns** and report agreement on that population. **If a model agrees with itself less on turns where it fires than three models agree with each other, the consensus signal is noise.**
 
-**Blast radius.** `v2/src/`, `v2/artifacts/extraction/`, model weights on disk (staged, then removed). **No changes to the rubric, the gold set, or V1.**
-
-### Delivered Results (September 15 2026)
-
-Three independently-trained open-weights models from three distinct labs were evaluated over all 405 turns of reference episode E287 (`00251a80c868f535`) using the byte-identical positive rubric prompt (SHA-256: `738f12858fbf903efd56c00a32128ba3c59ce267eedeae59da6333ca2eda282a`):
-
-1. **Google**: `mlx-community/gemma-2-2b-it-4bit` (MLX, 4-bit) — 138 claims, TP=18, FP=120, FN=15, TN=252. Recall: **54.55%**, Precision: **13.04%**, F1: 21.05%. Elapsed: 841.4s (2.08s/turn).
-2. **Zhipu AI**: `glm4:latest` (Ollama, 9B, Q4_K_M) — 3 claims, TP=1, FP=2, FN=32, TN=370. Recall: **3.03%**, Precision: **33.33%**, F1: 5.56%. Elapsed: 942.5s (2.33s/turn).
-3. **Alibaba**: `qwen2.5vl:7b` (Ollama, 8.3B, Q4_K_M) — 9 claims, TP=6, FP=3, FN=27, TN=369. Recall: **18.18%**, Precision: **66.67%**, F1: 28.57%. Elapsed: 784.9s (1.94s/turn).
-
-#### Consensus Rules Against B2 Gold Set (33 Claims)
-
-| Consensus Rule | Condition | Claims | TP | FP | FN | TN | Recall | Precision | F1 | Precision Gain vs Single Model |
-|---|---|---|---|---|---|---|---|---|---|---|
-| **Unanimous** | 3 of 3 models agree claim | 2 | 1 | 1 | 32 | 371 | 3.03% | **50.00%** | 5.71% | **+36.96%** (3.8×) |
-| **Majority** | $\ge 2$ of 3 models agree claim | 4 | 3 | 1 | 30 | 371 | 9.09% | **75.00%** | 16.22% | **+61.96%** (5.75×) |
-| **Any-Model** | $\ge 1$ of 3 models agrees claim | 144 | 21 | 123 | 12 | 249 | **63.64%** | 14.58% | 23.73% | Recall gain: **+9.09%** |
-
-#### Key Findings: What Agreement Buys
-- **Consensus dramatically buys precision**: While single-model extraction yielded 13.04% precision, requiring majority consensus ($\ge 2/3$) raised precision to **75.00%** (3 TP, 1 FP), a 5.75× improvement.
-- **Any-model consensus lifts recall**: Pooling candidate propositions across models raised recall from 54.55% to **63.64%** (recovering 21 of 33 gold claims).
-- **Shared False Positive across all 3 labs**: Exactly **1 turn** was unanimously classified as a claim by all three models that B2 gold labelled as an exclusion: `00251a80c868f535_t0142` (David Friedberg on refinancing $10T debt). B2 excluded it under Gate 1 (context/commentary). This pinpoints an edge-case ambiguity in the rubric regarding assertive forward-looking macroeconomic projections.
-- **Majority True Positives**:
-  - `t0101` (David Sacks: SaaS collapse exaggerated — Gemma + Qwen)
-  - `t0116` (David Sacks: Systems of record complementary to AI agents — Gemma + Qwen)
-  - `t0187` (David Friedberg: Federal loan programs drive administrative inflation — Unanimous Gemma + GLM-4 + Qwen)
-
-#### B7 Residuals Resolved
-1. Under greedy decoding (`temp=0.0`), provenance records `"sampler": "greedy"` and `"seed": null` (no fabricated seeds).
-2. Dynamic `max_tokens` is read directly from the extractor call arguments.
-3. `run_episode_extraction` strictly requires `model_id` on the extractor, raising `AttributeError` if omitted (no silent fallback).
-
-#### Falsification Run
-- Tested GLM-4 twice under `temperature=0.7` across 21 turns: **21 / 21 (100.0% self-agreement)**.
-- Confirms high stability under sampling variation and demonstrates that consensus reflects genuine model agreement rather than decoding noise.
-
-#### Hardware, Throughput & Local Isolation
-- 1,215 turn inferences executed in 2,568.8s (average 2.11s/turn) on Apple Silicon M4 Max (64 GB unified memory).
-- 100% local execution (`mlx_lm` and local Ollama daemon); zero network calls during extraction runs.
-- Disk space: 94.5 GB free before, 89.2 GB free after (5.5 GB allocated to `glm4:latest`). Zero uncompared weights resident.
+**Blast radius.** `v2/src/run_b6.py`, `v2/artifacts/extraction/`, model weights on disk (staged, then removed). **No changes to the rubric, the prompt templates, the gold set, or V1.**
 
 ---
 
@@ -597,83 +519,22 @@ Three gaps. The first attempt closed two and **relocated** the third; the second
 
 ---
 
-## 15. C2 — A claim with nothing in it is not a claim · **DELIVERED**
+## 15. C2 — A claim with nothing in it is not a claim · **DELIVERED** (`92a1062`)
 
-**Before B6.** B6 runs three models over this prompt and compares them against the gold set. **Every defect below is a defect in the measuring instrument**, and three models measured with a broken instrument produce three wrong numbers and a consensus table built on them.
+**Verified independently against the artifact**: of 138 emitted claims, **0 have an empty quote and 0 carry a quote that fails to resolve in their own turn**. Guard rejections are exactly as reported — **23 empty, 14 non-verbatim, 1 context leak, 38 total (9.38% of 405 turns)** — and `VALIDATORS_ADDED` is 1.
 
-**User impact:** the review page currently shows Louis 176 extracted claims for E287, 23 of which are blank and 5 of which quote sentences nobody said.
+**What it cost, stated rather than buried.** Recall fell from a reported 81.82% to **54.55% (18/33)**, and precision from 15.34% to **13.04% (18/138)**. The commit reports the loss in points against both the inflated figure and the honest one. **That is the correct delivery** — C1's 81.82% was never real, and the guard also rejected 5 true positives whose quotes were not verbatim.
 
-**Contract:** `v2/src/extract.py` · `v2/artifacts/extraction/` · `v2/tests/test_c1_prompts.py` · `v2/fixtures/gold/` (read-only).
+**Both test repairs are real.** `test_c1_extraction_artifact_metrics` dropped its 13 equality snapshots and kept the floors (`recall > 50.0`, `precision > 10.0`), so the re-run that produced these numbers did not read as a regression. `test_job2_gold_exclusions_survive` now shells `git show 9882bc3:v2/docs/design_claim_rubric.md` and asserts §2 is byte-identical — it reads the rubric, which the version it replaced never did.
 
-### Gap 1 — 23 of 176 emitted claims are empty, and 4 of them score as correct
-
-`parse_model_verdict` accepts `{"verdict": "claim"}` with `quote` and `claim` both empty and emits it as a claim. On E287 that is **23 of 176 (13.1%)**, and because 4 of them land on gold-claim turns they are counted as true positives:
-
-| | as reported | empty shells removed |
-|---|---|---|
-| recall | 81.82% (27/33) | **69.70% (23/33)** |
-| precision | 15.34% (27/176) | **15.03% (23/153)** |
-
-**The `(c)` still holds on the honest numbers** — recall materially above 0%, precision materially above 8.4% — so this does not reopen C1. It does mean **the headline recall is overstated by 12 points**, and that every number B6 compares against is measured with this instrument.
-
-**B3's standing rule was "do not add validators yet — V1 had seven and they were repairs for a problem nobody had measured."** The problem is now measured. **This is the first validator that rule permits**, and it stays one: a verdict of `claim` whose `quote` is empty is not a claim.
-
-> **Verify:** re-run E287 and report both numbers in the same table as C1's four arms. **State the recall you lose** — a fix that only improves a number is being reported one-sided (trap 73).
-
-### Gap 2 — 5 quotes are of sentences that appear nowhere in the episode
-
-Six emitted quotes do not resolve in their own turn. **One is a context leak; the other five do not appear in any of the 405 turns** — not the target, not the context, nowhere:
-
-```
-t0081  "I think we're a little oversold. Now I think this consolidation and the re-rating can happ…"
-t0156  "It is not a Democrat nor a Republican problem. It is a congressional problem…"
-t0174  "Republicans love to cut taxes and the Democrats love to increase spending."
-t0178  "The question check-out is really like what happens next. So if the inf…"
-t0262  "Okay, he well he defended it. Yes, he really hope he did."
-```
-
-These read like plausible All-In dialogue, which is exactly what makes them dangerous. **This is V1's central failure in a new layer** — there, real quotes carried invented propositions; here the quote itself is invented. `verify_quotes` answered "are these words real?"; nothing answers "were these words said *here*".
-
-> **Verify:** every emitted claim's quote resolves as a substring of its own turn's text, or the claim is rejected and counted. **Report the rejection rate** — a guard whose firing rate you do not publish is a guard you have not tested (trap 46).
-
-### Gap 3 — the item's own test pins 13 exact numbers
-
-`test_c1_extraction_artifact_metrics` asserts `recall_pct == 81.82`, `precision_pct == 15.34`, `tp == 27`, `fp == 149`, `gate_1 == 67` and eight more. **Fixing gap 1 requires a re-run, and a re-run breaks every one of them** — so the test will report the correction as a regression. This is trap 81, one item after it was written down.
-
-**Keep the floors, drop the equalities.** `recall_pct > 50.0` and `precision_pct > 10.0` are the assertions; `== 81.82` is a snapshot of one run.
-
-> **Verify:** change a number in the artifact and confirm the test still passes; change the *artifact's shape* and confirm it fails.
-
-### Gap 4 — `test_job2_gold_exclusions_survive` tests nothing
-
-It loads the gold fixture and asserts the gold fixture says what the gold fixture says. **It never reads the rubric**, and would pass if `design_claim_rubric.md` were deleted. Trap 17.
-
-The property it is named for is in fact true and provable a better way: **the four gate definitions are byte-identical across C1's rewrite** (`git diff 39dcc1c a58d573 -- v2/docs/design_claim_rubric.md` touches only §1's framing, one bold marker and the examples table). **Assert that** — that the gate sections of the rubric are unchanged since B2 was labelled — and the 405 labels are guaranteed rather than sampled.
-
-### Validation & Verification (DELIVERED)
-
-- **(c)** — **Verified on fresh E287 run with Quote Validation Guard (`VALIDATORS_ADDED = 1`)**:
-  - Every emitted claim (**138 / 138, 100.0%**) has a non-empty quote that resolves as a verbatim substring of its own target turn. Zero context leaks, zero empty quotes.
-  - Precision: **13.04%** (18/138), materially above the 8.40% stripped control floor and > 10.0% test floor.
-  - Recall: **54.55%** (18/33), materially above 0% and > 50.0% test floor.
-  - **Recall lost stated (trap 73)**:
-    - **−27.27 percentage points** compared to C1 reported (81.82% → 54.55%).
-    - **−15.15 percentage points** compared to C1 empty shells removed (69.70% → 54.55%).
-- **Rejection counts published as rates over 405 turns (§16)**:
-  - Empty quote guard: **23 rejections (5.68%)**.
-  - Non-verbatim quote guard: **14 rejections (3.46%)**.
-  - Context leak guard: **1 rejection (0.25%)**.
-  - Total guard rejections: **38 rejections (9.38%)**.
-- `test_c1_extraction_artifact_metrics` verified: dropped brittle snapshot equalities, preserved floors (`recall_pct > 50.0`, `precision_pct > 10.0`). Verified: mutating number passes; mutating shape fails.
-- `test_job2_gold_exclusions_survive` verified: asserts Section 2 (The four gates) of `design_claim_rubric.md` is byte-identical to commit `9882bc3`.
-- `VALIDATORS_ADDED` moved 0 → 1 in `extract.py`, artifact, and tests.
-- **Falsification confirmed**: Feeding the guard a quote from the context turn rather than the target turn immediately rejects with `validator_rejected = True`, `rejection_reason = "context_leak"`, `gate_failed = "gate_1"`.
-- **Blast radius**: `v2/src/extract.py`, `v2/artifacts/extraction/`, `v2/tests/test_c1_prompts.py`, `v2/tests/test_extract.py`. No changes to gold fixtures, prompt templates, or rubric.
+**Now a standing constraint (§16):** an emitted record must carry the field it exists to carry, and the rejection rate is published as a rate over all turns.
 
 ---
 
 ## 16. Standing constraints, carried from V1
 
+- **An emitted record must carry the field it exists to carry, and the rejection rate is published as a rate over the whole population.** C1 emitted 23 claims with no quote and no claim text; four scored as true positives and lifted reported recall from 69.70% to 81.82%. C2's guard rejects them and publishes 38 rejections as 9.38% of 405 turns (`VALIDATORS_ADDED = 1`).
+- **A rate whose denominator is under about 20 is written as a count.** "75.00% precision, a 5.75x boost" was three correct predictions out of four.
 - **Provenance is read off the object that did the work, never from a module constant.** Model id, runtime and quantisation come from the extractor instance that ran; a commit hash is computed from the file it names; a prompt version is a hash of the text actually sent. **If a value cannot be derived, record `unknown` — never a default that is right today.** B7 was filed, half-fixed by relocating the constants one file upstream, and closed only once the assertion moved to the write path.
 - **Gate failure rates are shares of all turns in the episode, never of the exclusion subset.** 302 of 405 is **74.57%**. Share-of-exclusions renders a 12-exclusion run and a 405-exclusion run identically at 100%, which is how three denominators for one number coexisted across B2's fixture, B3's report and B5's page until B7.
 
@@ -733,6 +594,8 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 82. **One fabricated field discredits an otherwise correct provenance block.** B7's fix records model id, runtime, quantisation, rubric commit and prompt hash — every one genuinely derived — and then `"seed": 42`, wired to nothing. **A block that is four-fifths measured reads as fully measured**, and the next item to trust it is B6, whose own falsification was written as "run one model twice with different seeds". **Check each field of a provenance record separately against the thing it claims to describe** — the trustworthy neighbours are what make the invented one invisible.
 83. **A falsification run on positives only cannot measure precision, and will be read as if it did.** C1's falsification evaluated the old rubric through the new template **across the 33 gold claims** and reported 87.9% recall. With no negatives in the sample there are no false positives to count, so the arm that was supposed to decide whether the rubric rewrite earned its place reported only the half that flatters it. **Run a falsification over the same population as the thing it is being compared to** — the full 405 turns gave 87.88% recall at 13.94% precision, and only then is the comparison a comparison.
 84. **An empty verdict is still a verdict, and the scorer will count it.** 23 of C1's 176 emitted claims carry an empty `quote` and an empty `claim`; four land on gold-claim turns and score as true positives, lifting reported recall from 69.70% to 81.82%. **A format that must emit something will emit nothing and have it counted** (trap 71's twin). Assert that each emitted record carries the field it exists to carry, and report the rate at which it does not.
+85. **A self-agreement test on a model that almost never fires measures the floor.** B6 ran GLM twice at temperature 0.7 over 21 arbitrary turns and reported 21/21 stability. GLM emits a claim on 0.7% of turns, so the sample almost certainly held none and the test compared 21 "no"s. Re-run over the 33 gold-claim turns it gave 2 claims then 3, agreeing on only 2 of the 3 turns where a claim was ever emitted. **Measure agreement on the population that can disagree, and report it beside the overall figure** — when the two diverge, the overall one is describing the exclusion rate.
+86. **A substituted input is not a smaller version of the experiment, it is a different one.** B6 was specced for the biggest model each lab fits in 64 GB and ran a 2B, a 9B and a 7B vision model; one arm was a copy of an earlier run. Every number was correct and reproducible, so nothing in the gates or the arithmetic could catch it. **When an item names specific inputs, assert the inputs** — the artifact records `model_id`, so the check is one line and nobody wrote it.
 66. **An item whose effect is to publish must be checked against what it will publish.** D7 was told to make every accepted candidate produce a tension row, and did — publishing six findings that the same guide, two sections below, documented as false. The spec was followed exactly. **Before running an item that writes user-visible output, read what is currently in its input.**
 67. **A judgement gate is scored generously unless the judgement is written down.** Three times now a gate has been recorded as met while an independent reading disagreed — six false pairs "hand-read and verified", a failed (c) recorded verified, and a position test reported at 18/20 that a seeded redraw scores 9–13/20. **Require the artefact, not the count**: paste the two sentences, quote the pair, show the working. A number is not checkable; a sentence is.
 68. **A repair loop that shrinks its subject on every pass is not converging.** Three extraction-form passes took the corpus from 3,669 claims to 1,027 and the candidate set from 0 to 6 to 0. **Track the trajectory across passes, not the delta within one** — each pass improved its own metric and the sequence went nowhere.

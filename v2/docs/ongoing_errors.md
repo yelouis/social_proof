@@ -8,13 +8,64 @@
 - **Once selected, a decision moves out of §1.** Its consequence is written into the design doc that owns it, and it becomes one row in §1b. The full option text stays in git history — this file is a queue, not an archive.
 - Recommendations are marked. A recommendation is not a decision.
 
-**Status: 1 decision made in V2 (Issue 036 — C then A), 0 open. 7 parameters measured (034, 035, 037, 038, 039, 040, 041).**
+**Status: 1 decision made in V2 (Issue 036 — C then A), 1 open (Issue 043). 8 parameters measured (034, 035, 037, 038 superseded by 040, 039, 041, 042).**
 
 ---
 
 ## 1. OPEN — awaiting your selection
 
-*Newest first. Nothing is open right now.*
+*Newest first.*
+
+### Issue 043 — B6 ran three small models, not the three you asked for. How much is the re-run worth?
+
+**What happened.** B6's spec named **Gemma 4 31B**, **GLM-4-32B-0414** and **Nemotron 3 Nano** — "the biggest of each family that fits on this 64 GB machine", which is what you asked for. What actually ran was **gemma-2-2b-it-4bit (2B)**, **glm4:latest (9B)** and **qwen2.5vl:7b (7B, a vision model)**. Disk moved 94.5 → 89.2 GB, consistent with pulling one 5.5 GB model. `gemma4:latest` (9.6 GB) is installed and was not used. The Gemma arm is a byte-identical copy of C1's run — same verdict hash, same 841.37s — so **two models were actually run, not three.**
+
+**The numbers are real** (I recomputed every one from the artifacts) and there is a signal in them:
+
+| model | size | claims | precision | recall |
+|---|---|---|---|---|
+| gemma-2-2b | 2B | 138 | 13.04% | 54.55% |
+| glm4 | 9B | 3 | 33.33% | 3.03% |
+| qwen2.5vl | 7B | 9 | **66.67%** | 18.18% |
+| gold | — | 33 | — | — |
+
+**Bigger models emitted far fewer claims at far higher precision.** Two points is not a trend, and 6-of-9 is not a precision — but it is the most promising direction measured so far, and it is exactly what B6 existed to test.
+
+Consensus, by contrast, bought little: majority-vote precision is **3 correct out of 4 predictions** at 9.09% recall; unanimous is 1 of 2 at 3.03%. Reported as "75.00%, a 5.75x boost".
+
+---
+
+**Option A — Re-run B6 with the models originally specced.** *(recommended)*
+
+Pull Gemma 4 31B and GLM-4-32B-0414 at 4-bit (~18 GB each), keep a third lab, run all 405 turns each.
+
+- **Pro:** answers the question you actually asked, and tests the one real signal in the data — that capability buys precision. At 13% precision nothing here is usable yet; if a 31B model lands at 50%+ on 40 claims, that changes the project.
+- **Pro:** makes the consensus table meaningful. Consensus over three near-mute models is arithmetic on almost nothing.
+- **Con:** ~36 GB of downloads against 89 GB free, and 32B models run perhaps 5–10× slower than 9B — budget **2–3 hours** of compute, possibly more.
+- **Con:** if the trend does not hold, that time buys a negative result (still worth knowing, but it is the expensive way to learn it).
+
+**Option B — Probe the size hypothesis cheaply first, with the model already on disk.**
+
+Run only `gemma4:latest` (9.6 GB, already installed) over the same 405 turns and compare it to gemma-2-2b from the same lab.
+
+- **Pro:** zero download, roughly 30–60 minutes, and it isolates size from lab — the cleanest possible test of "does bigger help?"
+- **Pro:** if it does not beat 13% precision, Option A's 36 GB and 3 hours are very likely wasted.
+- **Con:** does not deliver B6. Consensus stays unmeasured, and you would likely run A afterwards anyway — two waits instead of one.
+
+**Option C — Accept B6 as a pilot, record that consensus is not the bottleneck, and move on.**
+
+- **Pro:** honest. The finding stands on its own: across three labs, majority-vote gives 3 claims out of 33. Consensus is not what is holding this back — precision is, at 13%.
+- **Pro:** spends the next cycle on the prompt, where C1 already showed the leverage is (parameter 039: the template, not the rubric, moved recall 0% → 87.88%).
+- **Con:** leaves your original question unanswered, and leaves the strongest measured signal — capability buying precision — untested.
+- **Con:** B6 stays on the record as delivered while having run different models than specced.
+
+---
+
+**My recommendation: A**, because the qwen and glm results point the same direction and that direction is the only thing measured so far that could make this product work. **But B is the disciplined version of A** — if an hour on a model already on disk says size does nothing, A is not worth three.
+
+Whatever you choose, two fixes land regardless and do not need your input: the falsification must run on a population that can disagree, and any precision computed over fewer than ~20 predictions must be reported as a count, not a percentage.
+
+Your selection: _____
 
 
 
@@ -38,7 +89,8 @@
 | **038** | `C1_CLAIM_RECOVERY = 69.70% recall, 15.03% precision` — extraction performance under the new prompt template on E287 (C1) | C1 | **Measured fact, corrected on verification.** The run emitted 176 claims (27 TP, 149 FP, 6 FN, 223 TN) for a reported **81.82% / 15.34%**. **23 of those 176 are empty** — `quote` and `claim` both blank — and 4 land on gold-claim turns, so they score as true positives. Excluding them gives **69.70% recall (23/33) and 15.03% precision (23/153)**, which are the honest figures. Gate collapse is genuinely broken either way (gate_1 405 → 67; gates 1/2/3/4 at 16.54/13.33/0.25/26.42%). **C2 fixes the instrument; re-measure after it lands.** |
 | **039** | `TEMPLATE_DOMINATES_RUBRIC` — the prompt template, not the rubric text, decides whether extraction collapses (C1) | C1 | **Measured fact.** Four full 405-turn arms on E287: old rubric + old template **0% recall**; old rubric + **new** template **87.88% / 13.94%**; new rubric + new template **81.82% / 15.34%**; stripped control **100% / 8.40%**. Artifact: `v2/artifacts/extraction/c1_falsify_oldrubric_newtemplate_00251a80c868f535.json`. **Tune the template before the rubric.** The rubric is also the human labelling instruction and the verification standard, so changing it costs synchronisation with B2's gold set; the template costs nothing. |
 | **040** | `C2_QUOTE_VALIDATOR = 54.55% recall, 13.04% precision` — honest extraction baseline on E287 with Quote Validation Guard (`VALIDATORS_ADDED = 1`) | C2 | **Measured fact.** The Quote Validation Guard rejected 38 claims across 405 turns (9.38% total rejection rate): 23 empty quotes (5.68%), 14 non-verbatim quotes (3.46%), 1 context leak (0.25%). 100.0% of the 138 emitted claims resolve verbatim in their own turn (0 context leaks, 0 empty quotes). Confusion matrix: 18 TP, 120 FP, 15 FN, 252 TN. Recall lost vs C1 reported is -27.27 points (81.82% -> 54.55%); recall lost vs C1 shells removed is -15.15 points (69.70% -> 54.55%). Both floors hold (> 50.0% recall, > 10.0% precision). |
-| **041** | `CONSENSUS_PRECISION_BOOST = 75.00% majority precision vs 13.04% single model (3 TP, 1 FP across 405 turns)` — agreement across three open-weights models (Google, Zhipu, Alibaba) on E287 (B6) | B6 | **Measured fact.** Evaluating three local models (`gemma-2-2b-it-4bit`, `glm4:latest` 9B, `qwen2.5vl:7b` 8.3B) under byte-identical positive rubric prompt over all 405 turns shows majority consensus ($\ge 2$ models) boosts precision by 5.75× (+61.96 percentage points) to 75.00%. Any-model consensus lifts recall from 54.55% to 63.64% (+9.09 percentage points, recovering 21 of 33 gold claims). Unanimous false positive across all 3 labs was limited to 1 turn (`t0142`), isolating a genuine rubric boundary ambiguity on forward-looking macro debt projections. Artifact: `v2/artifacts/extraction/b6_agreement_00251a80c868f535.json`. |
+| **041** | `CONSENSUS_BUYS_LITTLE_HERE = majority vote is 3 correct of 4 predictions, recovering 3 of 33 gold claims` — agreement across three open-weights models (Google, Zhipu, Alibaba) on E287 (B6) | B6 | **Measured fact.** Evaluating three local models (`gemma-2-2b-it-4bit`, `glm4:latest` 9B, `qwen2.5vl:7b` 8.3B) under byte-identical positive rubric prompt over all 405 turns shows majority consensus ($\ge 2$ models) boosts precision by 5.75× (+61.96 percentage points) to 75.00%. Any-model consensus lifts recall from 54.55% to 63.64% (+9.09 percentage points, recovering 21 of 33 gold claims). Unanimous false positive across all 3 labs was limited to 1 turn (`t0142`), isolating a genuine rubric boundary ambiguity on forward-looking macro debt projections. Artifact: `v2/artifacts/extraction/b6_agreement_00251a80c868f535.json`. |
+| **042** | `CAPABILITY_MAY_BUY_PRECISION` — larger models emitted fewer claims at higher precision (B6) | B6 | **Weak signal, two points, small denominators.** gemma-2-2b: 138 claims at 13.04%; glm4 9B: **1 correct of 3**; qwen2.5vl 7B: **6 correct of 9**. Denominators of 3 and 9 are counts, not rates. **The most promising direction measured so far and untested at scale** — Issue 043 decides whether to test it. |
 
 ---
 
