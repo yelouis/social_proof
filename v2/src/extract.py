@@ -18,6 +18,12 @@ from typing import Any
 
 # Standing requirement: validators added = 1 (C2 Quote Validation Guard)
 VALIDATORS_ADDED: int = 1
+MAX_UNPARSEABLE_RATE: float = 0.05
+
+
+class UnparseableRateError(ValueError):
+    """Raised when the rate of unparseable model generations exceeds the allowable threshold."""
+
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 REPO_ROOT = ROOT_DIR.parent
@@ -173,27 +179,33 @@ def parse_model_verdict(
             clean_json = obj_match.group(1)
 
     parsed_obj: dict[str, Any] = {}
+    is_valid_json = False
     try:
-        parsed_obj = json.loads(clean_json)
+        loaded = json.loads(clean_json)
+        if isinstance(loaded, dict) and "verdict" in loaded:
+            v_raw = str(loaded["verdict"]).lower().strip()
+            if "claim" in v_raw or "exclusion" in v_raw:
+                parsed_obj = loaded
+                is_valid_json = True
     except (json.JSONDecodeError, ValueError, TypeError):
-        # Fallback: attempt to salvage verdict and gate_failed if JSON was slightly malformed
-        verdict = "claim" if '"verdict": "claim"' in raw_output else "exclusion"
-        gate = "gate_1"
-        for g in ["gate_1", "gate_2", "gate_3", "gate_4"]:
-            if g in raw_output:
-                gate = g
-                break
-        parsed_obj = {
-            "verdict": verdict,
+        is_valid_json = False
+
+    if not is_valid_json:
+        return {
             "turn_id": turn_id,
-            "gate_failed": gate,
-            "reason": f"Malformed JSON parsed from model: {raw_output[:120]}",
+            "verdict": "unparseable",
+            "parse_status": "unparseable",
+            "gate_failed": None,
+            "reason": f"Unparseable output from model: {raw_output[:120]}",
+            "raw_output": raw_output.strip(),
         }
 
     # Normalize verdict
-    verdict = parsed_obj.get("verdict", "exclusion").lower()
-    if verdict not in ("claim", "exclusion"):
-        verdict = "claim" if "claim" in verdict else "exclusion"
+    verdict = parsed_obj.get("verdict", "exclusion").lower().strip()
+    if "claim" in verdict:
+        verdict = "claim"
+    else:
+        verdict = "exclusion"
 
     if verdict == "claim":
         quote = str(parsed_obj.get("quote", "")).strip()
@@ -213,6 +225,7 @@ def parse_model_verdict(
                 return {
                     "turn_id": turn_id,
                     "verdict": "exclusion",
+                    "parse_status": "ok",
                     "gate_failed": "gate_4",
                     "reason": "Rejected by quote validator: empty quote payload",
                     "validator_rejected": True,
@@ -233,6 +246,7 @@ def parse_model_verdict(
                 return {
                     "turn_id": turn_id,
                     "verdict": "exclusion",
+                    "parse_status": "ok",
                     "gate_failed": gate_failed,
                     "reason": f"Rejected by quote validator: {detail}",
                     "validator_rejected": True,
@@ -250,6 +264,7 @@ def parse_model_verdict(
         return {
             "turn_id": turn_id,
             "verdict": "claim",
+            "parse_status": "ok",
             "speaker": speaker,
             "type": claim_type,
             "quote": quote,
@@ -275,6 +290,7 @@ def parse_model_verdict(
         return {
             "turn_id": turn_id,
             "verdict": "exclusion",
+            "parse_status": "ok",
             "gate_failed": gate_failed,
             "reason": reason,
             "raw_output": raw_output.strip(),
@@ -285,17 +301,36 @@ def evaluate_against_gold(
     extracted_verdicts: list[dict[str, Any]],
     gold_data: dict[str, Any],
     turns_data: list[dict[str, Any]],
+    max_unparseable_rate: float = MAX_UNPARSEABLE_RATE,
+    raise_on_high_unparseable: bool = False,
 ) -> dict[str, Any]:
-    """Computes precision, recall, confusion matrix, gate distributions, and quote resolutions."""
+    """Computes precision, recall, confusion matrix, gate distributions, quote resolutions,
+
+    and parse status integrity metrics.
+
+    Under C3:
+    - Excludes unparseable turns from precision, recall, and confusion matrix.
+    - If unparseable rate exceeds max_unparseable_rate (default 5%):
+      fails loudly by raising UnparseableRateError if raise_on_high_unparseable is True,
+      or returning a result marked is_valid=False with confusion_matrix=None.
+    """
     gold_verdicts = {v["turn_id"]: v for v in gold_data["verdicts"]}
     turns_by_id = {t["turn_id"]: t for t in turns_data}
+
+    total_turns = len(extracted_verdicts)
+    unparseable_count = sum(
+        1 for ext in extracted_verdicts
+        if ext.get("parse_status") == "unparseable" or ext.get("verdict") == "unparseable"
+    )
+    unparseable_rate = (unparseable_count / total_turns) if total_turns > 0 else 0.0
+    unparseable_rate_pct = round(unparseable_rate * 100.0, 2)
 
     tp = 0
     fp = 0
     tn = 0
     fn = 0
 
-    disagreements = []
+    disagreements: list[dict[str, Any]] = []
     gate_counts_model = {"gate_1": 0, "gate_2": 0, "gate_3": 0, "gate_4": 0}
     gate_counts_gold = gold_data.get("gate_failure_counts", {"gate_1": 0, "gate_2": 0, "gate_3": 0, "gate_4": 0})
 
@@ -319,6 +354,10 @@ def evaluate_against_gold(
         tid = ext["turn_id"]
         gold_entry = gold_verdicts.get(tid)
         if not gold_entry:
+            continue
+
+        # C3: Exclude unparseable turns from precision, recall, and confusion matrix
+        if ext.get("parse_status") == "unparseable" or ext.get("verdict") == "unparseable":
             continue
 
         pred_verdict = ext["verdict"]
@@ -371,7 +410,7 @@ def evaluate_against_gold(
                     "turn_text": turns_by_id.get(tid, {}).get("text", "")[:150],
                 })
 
-    total = tp + fp + tn + fn
+    parseable_turns = tp + fp + tn + fn
     precision = (tp / (tp + fp)) if (tp + fp) > 0 else 0.0
     recall = (tp / (tp + fn)) if (tp + fn) > 0 else 0.0
     f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) > 0 else 0.0
@@ -379,20 +418,68 @@ def evaluate_against_gold(
     verbatim_quote_rate = (verbatim_quote_matches / total_model_claims * 100.0) if total_model_claims > 0 else 100.0
 
     gate_rates_model = {
-        k: round(v / total * 100.0, 2) if total > 0 else 0.0
+        k: round(v / total_turns * 100.0, 2) if total_turns > 0 else 0.0
         for k, v in gate_counts_model.items()
     }
     gate_rates_gold = {
-        k: round(v / total * 100.0, 2) if total > 0 else 0.0
+        k: round(v / total_turns * 100.0, 2) if total_turns > 0 else 0.0
         for k, v in gate_counts_gold.items()
     }
     guard_rejection_rates = {
-        k: round(v / total * 100.0, 2) if total > 0 else 0.0
+        k: round(v / total_turns * 100.0, 2) if total_turns > 0 else 0.0
         for k, v in guard_rejections.items()
     }
 
+    # High unparseable rate check (> 5%)
+    if unparseable_rate > max_unparseable_rate:
+        err_msg = (
+            f"Unparseable generation rate {unparseable_rate_pct:.2f}% ({unparseable_count}/{total_turns}) "
+            f"exceeds allowable threshold of {max_unparseable_rate * 100.0:.1f}%. "
+            f"Run marked invalid; confusion matrix suppressed."
+        )
+        if raise_on_high_unparseable:
+            raise UnparseableRateError(err_msg)
+
+        return {
+            "is_valid": False,
+            "status": "invalid",
+            "error": err_msg,
+            "total_turns": total_turns,
+            "parseable_turns": parseable_turns,
+            "unparseable_count": unparseable_count,
+            "unparseable_rate": round(unparseable_rate, 4),
+            "unparseable_rate_pct": unparseable_rate_pct,
+            "confusion_matrix": None,
+            "precision": None,
+            "recall": None,
+            "f1": None,
+            "precision_pct": None,
+            "recall_pct": None,
+            "f1_pct": None,
+            "gold_claims_count": sum(1 for v in gold_data.get("verdicts", []) if v.get("verdict") == "claim"),
+            "model_claims_count": total_model_claims,
+            "verbatim_quote_matches": verbatim_quote_matches,
+            "verbatim_quote_rate": None,
+            "context_leak_quotes": context_leak_quotes,
+            "gate_failure_counts_model": gate_counts_model,
+            "gate_failure_rates_model": gate_rates_model,
+            "gate_failure_counts_gold": gate_counts_gold,
+            "gate_failure_rates_gold": gate_rates_gold,
+            "disagreements_count": len(disagreements),
+            "disagreements": disagreements,
+            "validators_added": VALIDATORS_ADDED,
+            "guard_rejections": guard_rejections,
+            "guard_rejection_rates": guard_rejection_rates,
+        }
+
     return {
-        "total_turns": total,
+        "is_valid": True,
+        "status": "ok",
+        "total_turns": total_turns,
+        "parseable_turns": parseable_turns,
+        "unparseable_count": unparseable_count,
+        "unparseable_rate": round(unparseable_rate, 4),
+        "unparseable_rate_pct": unparseable_rate_pct,
         "confusion_matrix": {
             "tp": tp,
             "fp": fp,
@@ -420,6 +507,55 @@ def evaluate_against_gold(
         "guard_rejections": guard_rejections,
         "guard_rejection_rates": guard_rejection_rates,
     }
+
+
+def rescore_extraction_artifact(
+    artifact_path: Path | str,
+    gold_dir: Path = DEFAULT_GOLD_DIR,
+    transcript_dir: Path = DEFAULT_TRANSCRIPT_DIR,
+    max_unparseable_rate: float = MAX_UNPARSEABLE_RATE,
+    raise_on_high_unparseable: bool = False,
+) -> dict[str, Any]:
+    """Re-scores an extraction artifact from disk, re-parsing raw outputs under current parser.
+
+    Used for audit and verification of unparseable generation rates across historical artifacts.
+    """
+    path = Path(artifact_path)
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+    source_id = data.get("source_id", "00251a80c868f535")
+    gold_file = gold_dir / f"{source_id}.json"
+    transcript_file = transcript_dir / f"{source_id}.json"
+
+    with open(gold_file, "r", encoding="utf-8") as f:
+        gold_data = json.load(f)
+    with open(transcript_file, "r", encoding="utf-8") as f:
+        transcript_data = json.load(f)
+
+    turns = transcript_data["turns"]
+    turns_by_id = {t["turn_id"]: t for t in turns}
+
+    rescored_verdicts: list[dict[str, Any]] = []
+    for idx, v in enumerate(data.get("verdicts", [])):
+        tid = v["turn_id"]
+        target = turns_by_id.get(tid, {"turn_id": tid, "text": ""})
+        context = turns[idx - 1] if idx > 0 else None
+        raw_output = v.get("raw_output", "")
+
+        if "raw_output" in v:
+            new_v = parse_model_verdict(raw_output, target, context, apply_validator=True)
+            rescored_verdicts.append(new_v)
+        else:
+            rescored_verdicts.append(v)
+
+    return evaluate_against_gold(
+        rescored_verdicts,
+        gold_data,
+        turns,
+        max_unparseable_rate=max_unparseable_rate,
+        raise_on_high_unparseable=raise_on_high_unparseable,
+    )
 
 
 class ModelExtractor:
@@ -520,6 +656,8 @@ def run_episode_extraction(
     output_dir: Path | None = None,
     output_filename: str | None = None,
     max_tokens: int = 250,
+    max_unparseable_rate: float = MAX_UNPARSEABLE_RATE,
+    raise_on_high_unparseable: bool = False,
 ) -> dict[str, Any]:
     """Runs extraction across all turns of an episode and saves the artifact."""
     transcript_file = DEFAULT_TRANSCRIPT_DIR / f"{source_id}.json"
@@ -579,7 +717,13 @@ def run_episode_extraction(
     if gold_file.exists():
         with open(gold_file, "r", encoding="utf-8") as f:
             gold_data = json.load(f)
-        metrics = evaluate_against_gold(verdicts, gold_data, turns)
+        metrics = evaluate_against_gold(
+            verdicts,
+            gold_data,
+            turns,
+            max_unparseable_rate=max_unparseable_rate,
+            raise_on_high_unparseable=raise_on_high_unparseable,
+        )
 
     # Provenance fields off the active extractor
     model_id = str(active_extractor.model_id)

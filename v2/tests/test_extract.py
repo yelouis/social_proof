@@ -131,7 +131,7 @@ def test_parse_model_verdict_exclusion_and_normalization() -> None:
 
 
 def test_parse_model_verdict_malformed_json_fallback() -> None:
-    """Robustness check: unparseable output falls back to explicit exclusion rather than silence."""
+    """C3 contract: unparseable output records parse_status: 'unparseable', never defaults to gate_1 exclusion."""
     target_turn = {
         "turn_id": "test_t003",
         "speaker_label": "unknown",
@@ -139,8 +139,9 @@ def test_parse_model_verdict_malformed_json_fallback() -> None:
     }
     raw = "I think this turn should be excluded under gate 1 because speaker is unknown."
     verdict = parse_model_verdict(raw, target_turn)
-    assert verdict["verdict"] == "exclusion"
-    assert verdict["gate_failed"] == "gate_1"
+    assert verdict["verdict"] == "unparseable"
+    assert verdict["parse_status"] == "unparseable"
+    assert verdict.get("gate_failed") is None
     assert verdict["turn_id"] == "test_t003"
 
 

@@ -121,8 +121,8 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 3 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0, B7 | **DELIVERED** (`b37003e`, `a58d573`). Collapse broken: recall 0% → 81.8%, precision 8.4% → 15.3%. Job 1's byte-identical move verified across all 405 prompts. **The falsification fired: Issue 036's diagnosis was wrong** — the old rubric text through the new template reaches 87.9% recall, so the template caused the collapse, not the rubric. |
 | 4 | **C2** | A claim with nothing in it is not a claim | C1 | **DELIVERED**. Quote Validation Guard added (`VALIDATORS_ADDED = 1`). 38 claims rejected (23 empty, 14 non-verbatim, 1 context leak; 9.38% rate). 100% of 138 emitted claims resolve verbatim in target turn. Honest recall 54.55% (-27.27 pts vs reported C1), precision 13.04%. Falsification confirmed. Unblocks B6. |
 | 5 | **B6** | Three local models on the same episode, and what agreement is worth (**036 = A**, **043 = A**, **044 = C**) | C1, C2 | **CLOSED at two labs** (`1c95cbd`). `gemma-4-31b` **28.83% precision / 96.97% recall**, `GLM-4-32B` **31.25% / 75.76%**, against gemma-2-2b's 13.04% / 54.55%. **Capability bought precision and recall; consensus bought +1.6 points of precision for −24 of recall.** Nemotron never ran — 99% unparseable — and is not re-run. |
-| 6 | **C3** | A generation we could not read is not a verdict | none | **NEXT, independent of Issue 044.** The prompt asks every model for an `offset` that `extract.py:248` computes and discards — fatal for a reasoning model. And an unparseable generation is recorded as a gate-1 exclusion, which is how a silent arm came to be reported as scoring 0%. |
-| 7 | **C4** | Score every candidate on the eight axes, and report the episode | C3 | **The flow change.** Finding is solved — 96.97% recall. Judging is not. Two passes: pass 1 finds, pass 2 scores each candidate on `design_claim_axes.md`'s eight axes. **Speaker panel and Extraction panel reported separately**, because a number mixing them cannot tell "the hosts were vague" from "our extractor got worse". |
+| 6 | **C3** | A generation we could not read is not a verdict | none | **DELIVERED**. Deleted discarded `offset` from `extract_claim.md` (prompt hash `738f12858fbf` → `503a35f05563`); offsets verified byte-identical. Added `parse_status: "ok" | "unparseable"`. Stopped defaulting parse failures to gate 1 exclusions. Excluded unparseable turns from confusion matrix/precision/recall. Added 5% unparseable gating (`UnparseableRateError` / suppressed confusion matrix). Verified assertion (c): 20 turns at `max_tokens=40` fails loudly (100% unparseable); Nemotron flagged at 401/405 (99.01%), Gemma-4-31B and GLM-4-32B at 0. Unblocks C4. |
+| 7 | **C4** | Score every candidate on the eight axes, and report the episode | none | **NEXT**. The flow change. Finding is solved — 96.97% recall. Judging is not. Two passes: pass 1 finds, pass 2 scores each candidate on `design_claim_axes.md`'s eight axes. **Speaker panel and Extraction panel reported separately**, because a number mixing them cannot tell "the hosts were vague" from "our extractor got worse". |
 | 8 | **C5** | Validate the scorer without human labels (**Issue 045 = B**) | C4 | **Agreement measures consistency, not correctness**, so the item does not rest on it. Three axes are checkable mechanically; all eight get a known answer by **perturbation** — damage a real claim on one axis and assert only that axis falls. Agreement is kept for the one thing it is good at: finding axes whose definitions are ambiguous. |
 | 9 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 10 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
@@ -508,57 +508,18 @@ Three gaps. The first attempt closed two and **relocated** the third; the second
 
 ---
 
-## 16. C3 — A generation we could not read is not a verdict
+## 16. C3 — A generation we could not read is not a verdict · **DELIVERED**
 
-**Independent of Issue 044.** Both fixes are required whichever way the third arm goes, and both are small.
+**Both fixes delivered and independently verified against the contract.**
 
-**User impact:** the review page currently attributes 401 gate-1 exclusions to a model that never expressed an opinion, and every model pays a token tax on a field the code throws away.
-
-**Contract:** `v2/src/extract.py` · `v2/prompts/extract_claim.md` · `v2/tests/`.
-
-### Gap 1 — the prompt asks for a value the code discards
-
-`v2/prompts/extract_claim.md` requests `"offset": <character start offset of quote in target turn text>`. `v2/src/extract.py:248` reads:
-
-```python
-offset = target_text.find(quote) if quote_in_target else int(parsed_obj.get("offset", 0))
-```
-
-**The code computes it.** The model's value is used only when the quote does not resolve in the target turn — and C2's guard returns an exclusion before that line is ever reached, so with `validators_added = 1` **the `else` branch is unreachable and the model's `offset` is never used at all.**
-
-It is not free. Every model spends tokens on it across all 405 turns, and for a reasoning model it is fatal: measured, Nemotron burns its whole budget counting characters.
-
-**Delete the field from the template.** Do not delete the `offset` key from the emitted record — `build_gold.py` writes one and B5 may render it; keep computing it in code.
-
-> **Verify:** re-run a handful of turns on `gemma-4-31b-it-4bit` before and after, and confirm the emitted `offset` values are unchanged. **The field is being removed from the prompt, not from the data.**
-
-> **Verify:** state the prompt hash before and after. It **must** change — that is what tells you the template is really what gets sent, and it is why Issue 044 exists.
-
-### Gap 2 — an unparseable generation is recorded as an exclusion
-
-`parse_model_verdict`'s fallback assigns `verdict="exclusion"`, `gate_failed="gate_1"` to anything it cannot parse. **That is how a model which said nothing intelligible came to be reported as scoring 0% recall** — and how "unanimous agreement" was computed across an arm that never voted.
-
-**Record it as what it is.** Add `parse_status: "ok" | "unparseable"` to every verdict, count it, and put the rate in the artifact's metrics beside the confusion matrix.
-
-**A run whose unparseable rate exceeds 5% must fail loudly** — raise, or return a result explicitly marked invalid — rather than produce a confusion matrix. A 99% rate produced a clean-looking table that took a separate investigation to catch.
-
-> **Verify (red first):** run 20 turns through a model with `max_tokens=40` so nothing can parse, and confirm the run raises or is marked invalid rather than reporting exclusions. **Then confirm the existing Nemotron artifact is flagged** when re-scored: its rate is 401/405.
-
-> **Verify:** confirm `gemma-4-31b` and `GLM-4-32B` score 0 unparseable, so the threshold does not fire on the arms that are real.
-
-**Exclude unparseable turns from precision and recall, and report the count beside them.** A model that could not be read has no verdict to score; folding it into `tn` silently flatters every rule that depends on it.
-
-### Validation
-
-- **(c)** — **a run in which most generations cannot be parsed fails loudly instead of producing a confusion matrix, and the existing Nemotron artifact is flagged at 401/405 when re-scored, while `gemma-4-31b` and `GLM-4-32B` are flagged at 0.** *The defect is not that parsing failed — it is that failure was indistinguishable from a verdict. Assert on the distinction, or the same 0% comes back as a fact about the next model.*
-- Emitted `offset` values byte-identical before and after the template change, on a sample stated in the commit.
-- Prompt hash before and after, both pasted.
-- Unparseable count reported in every artifact's metrics and excluded from the confusion matrix.
-- `ruff`, `mypy`, `pytest` clean.
-
-**Falsify.** Re-score the three B6 arms with the new counter. **If any arm other than Nemotron shows a non-zero unparseable rate, the B6 numbers already on the record need revisiting** — say so rather than absorbing it.
-
-**Blast radius.** `v2/src/extract.py`, `v2/prompts/extract_claim.md`, `v2/tests/`. **No re-running of B6's arms inside this item** — that is Issue 044's call. **No change to the rubric, the gold set, or V1.**
+- **Gap 1 (Prompt offset removed):** Deleted discarded `offset` field from `v2/prompts/extract_claim.md`. Emitted `offset` values continue to be computed deterministically in code via `target_text.find(quote)`. Live sample verified on `gemma-4-31b`: turns `t0007`, `t0009`, `t0010`, `t0014` produced identical offsets (115, 520, 189, 105), and `t0015` computed offset 0 from target turn. Prompt hash changed from `738f12858fbf903efd56c00a32128ba3c59ce267eedeae59da6333ca2eda282a` to `503a35f05563c66ef68f9f7b51c1e12df69bf08294cb59c829e38fed0635af57` (`extract_claim:503a35f05563`).
+- **Gap 2 (Parse status and gating):** Added `parse_status: "ok" | "unparseable"` to `parse_model_verdict`. Stopped defaulting unparseable output to `gate_1` exclusions (`gate_failed: None`, `verdict: "unparseable"`). Excluded unparseable turns from confusion matrix/precision/recall. Implemented `MAX_UNPARSEABLE_RATE = 0.05` (5%) threshold: runs exceeding 5% fail loudly (`UnparseableRateError` when `raise_on_high_unparseable=True` or `is_valid: False` with `confusion_matrix: None`).
+- **Assertion (c) verified:**
+  - Red-first live probe: 20 turns on `gemma-2-2b` with `max_tokens=40` failed loudly with `UnparseableRateError` (100.0% unparseable, 20/20) and marked `is_valid: False` with `confusion_matrix: None`.
+  - Artifact re-scoring: Existing Nemotron artifact re-scored at **401/405 unparseable (99.01%)**, marked `is_valid: False` with `confusion_matrix: None`.
+  - Clean arms: Existing `gemma-4-31b` and `GLM-4-32B` artifacts re-scored at **0/405 unparseable (0.0%)**, marked `is_valid: True` with recorded confusion matrices intact (`gemma-4-31b` 32 TP, 79 FP, 293 TN, 1 FN; `GLM-4-32B` 25 TP, 55 FP, 317 TN, 8 FN).
+- **Falsification:** 0 unparseable turns on Gemma-4-31B and GLM-4-32B confirms real B6 arms require no revision.
+- Test coverage: `v2/tests/test_c3_unparseable.py` (7 tests), `v2/tests/test_extract.py` updated. Full suite: 75 passed; ruff and mypy clean across 25 source files.
 
 ---
 

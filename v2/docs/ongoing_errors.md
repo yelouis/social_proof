@@ -8,7 +8,7 @@
 - **Once selected, a decision moves out of §1.** Its consequence is written into the design doc that owns it, and it becomes one row in §1b. The full option text stays in git history — this file is a queue, not an archive.
 - Recommendations are marked. A recommendation is not a decision.
 
-**Status: 2 decisions made in V2 (036 — C then A; 043 — re-run B6 at size; 044 — close B6 at two labs, next cycle on precision; 045 — cross-model agreement, no hand labels), 0 open. 13 parameters measured (034, 035, 037, 038 superseded by 040, 039, 040, 041, 042 superseded by 044, 044).**
+**Status: 4 decisions made in V2 (036 — C then A; 043 — re-run B6 at size; 044 — close B6 at two labs, next cycle on precision; 045 — cross-model agreement, no hand labels), 0 open. 14 parameters measured (034, 035, 037, 038 superseded by 040, 039, 040, 041, 042 superseded by 044, 044, 045, 046, 047, 048, 049).**
 
 ---
 
@@ -46,6 +46,7 @@
 | **046** | `CONSENSUS_COSTS_MORE_THAN_IT_BUYS` — majority of two 30B models: +1.6 precision, −24.2 recall (B6) | B6 | **Measured fact.** Best single model 31.25% precision at 75.76% recall; majority 32.88% at 72.73%; any-model 27.97% at 100%. **Cross-model voting is not where the remaining error is.** The third arm was void, but a third lab reversing a −24-point recall cost is not plausible. |
 | **047** | `REASONING_MODELS_DO_NOT_FIT_THIS_HARNESS` — Nemotron 3 Nano: 401/405 generations unparseable (B6) | B6 | **Measured fact, and a harness defect not a model result.** It reasons in prose, exhausts the budget, and the parser scores "didn't finish" as a gate-1 exclusion. At 2,500 tokens it counted characters to satisfy the discarded `offset` field. **Its 0% recall is retracted; it was never measured.** C3 fixes the harness; Issue 044 decides whether it is re-run. |
 | **048** | `FP_RATE_SCALES_WITH_TURN_LENGTH` — 1.3% at ≤20 words to 92.9% at 200+, recall flat (B6 / C4) | B6 | **Measured fact.** Among the 372 gold-exclusion turns of E287, `gemma-4-31b` false-positive rate by length: 0–20w **3/223 (1.3%)**, 20–50w 16/68, 50–100w 28/43, 100–200w 19/24, 200+w **13/14 (92.9%)**. Recall is ~100% in every band. **B2 labelled turns; the extractor finds spans** — on short turns the same question, on long turns not. **This is a unit mismatch before it is a precision problem**, and C4 adjudicates 30 of the 79 disagreements before anything is tuned. |
+| **049** | `UNPARSEABLE_GENERATION_GATE = 5.0% threshold` — unparseable rate gating on extraction runs (C3) | C3 | **Measured fact.** Under C3, unparseable generations record `parse_status: "unparseable"`, are excluded from precision/recall, and runs > 5% unparseable fail loudly. Existing Nemotron artifact re-scored at 401/405 (99.01%) unparseable (flagged invalid, confusion matrix suppressed); Gemma-4-31B and GLM-4-32B re-scored at 0/405 unparseable. Template prompt hash updated 738f12858fbf -> 503a35f05563 with offset field removed. |
 
 ---
 

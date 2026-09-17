@@ -29,8 +29,7 @@ INSTRUCTIONS:
   "speaker": "{target_speaker}",
   "type": "position" | "prediction" | "causal" | "evaluative" | "contested fact",
   "quote": "<exact verbatim substring from target turn text, NEVER from context>",
-  "claim": "<the assertion as a standalone sentence with pronouns resolved>",
-  "offset": <character start offset of quote in target turn text>
+  "claim": "<the assertion as a standalone sentence with pronouns resolved>"
 }
 ```
 4. Only if NO defensible claim is found in the turn (or the candidate fails a gate), output an exclusion JSON with that gate:
