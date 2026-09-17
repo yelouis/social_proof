@@ -8,57 +8,13 @@
 - **Once selected, a decision moves out of §1.** Its consequence is written into the design doc that owns it, and it becomes one row in §1b. The full option text stays in git history — this file is a queue, not an archive.
 - Recommendations are marked. A recommendation is not a decision.
 
-**Status: 2 decisions made in V2 (036 — C then A; 043 — re-run B6 at size), 1 open (Issue 044). 12 parameters measured (034, 035, 037, 038 superseded by 040, 039, 040, 041, 042 superseded by 044, 044).**
+**Status: 2 decisions made in V2 (036 — C then A; 043 — re-run B6 at size; 044 — close B6 at two labs, next cycle on precision), 0 open. 13 parameters measured (034, 035, 037, 038 superseded by 040, 039, 040, 041, 042 superseded by 044, 044).**
 
 ---
 
 ## 1. OPEN — awaiting your selection
 
-*Newest first.*
-
-### Issue 044 — B6 answered its question with two arms. The third never ran, and it was our fault.
-
-**The result is the best news this project has had.** Verified independently — I recomputed every number from the artifacts:
-
-| model | claims | precision | recall |
-|---|---|---|---|
-| gemma-2-2b (old baseline) | 138 | 13.04% | 54.55% |
-| **gemma-4-31b** | 111 | **28.83%** | **96.97%** |
-| **GLM-4-32B** | 80 | **31.25%** | 75.76% |
-| majority of the two | 73 | 32.88% | 72.73% |
-
-**Capability bought precision *and* recall — not a trade.** Gemma 4 finds 32 of your 33 hand-labelled claims, and the one it missed was rejected by our own quote guard for paraphrasing, not by the model. **Consensus, by contrast, bought +1.6 points of precision for −24 points of recall.** On this evidence agreement between models is not worth much; capability is.
-
-**The third arm is void, and not because of Nemotron.** 401 of its 405 verdicts (99.0%) are parse failures silently recorded as gate-1 exclusions. It is a reasoning model: it thinks in prose before answering, runs out of tokens, and our harness scores "didn't finish" as "not a claim". Raising the budget to 2,500 tokens made it worse — it started counting characters one at a time to compute the `offset` field the prompt asks for, **which `extract.py` computes itself and throws the model's value away.** Removing that dead field took it from 99% unparseable to about 50% in a 4-turn probe, and produced one clean verbatim claim. So "Nemotron scores 0%" has to be retracted; it was never measured.
-
-**Two fixes land regardless and need no decision from you** (filed as C3): delete the discarded `offset` field from the prompt, and stop recording an unparseable generation as an exclusion — it must be counted as `unparseable` and a run with a high rate must fail loudly instead of quietly reporting 0%.
-
----
-
-**Option A — Re-run all three arms with the corrected prompt.**
-
-- **Pro:** the only way to get a byte-identical three-lab comparison, which is what B6 was for and what you asked for.
-- **Pro:** the prompt fix may lift Gemma and GLM too — they are spending tokens on the same discarded field.
-- **Con:** ~5–6 hours, and Nemotron may still not parse reliably; a 50% rate in a 4-turn probe is not a promise.
-- **Con:** spends the next cycle re-measuring a question that already has an answer.
-
-**Option B — Fix the harness, re-run Nemotron alone, footnote the prompt difference.**
-
-- **Pro:** ~1.5–2 hours, and gets a third lab into the table.
-- **Con:** the arms no longer share a prompt, which is the one thing B6's design insisted on. A consensus table with a footnote is weaker than one without.
-
-**Option C — Close B6 at two labs, record why the third is absent, and spend the next cycle on precision.** *(recommended)*
-
-- **Pro:** B6's question is answered. Size matters, consensus does not, and a third small-ish lab is unlikely to reverse a −24-point recall cost.
-- **Pro:** **gemma-4-31b at 97% recall is the first extractor worth building on.** It finds nearly everything; the problem is now the 79 false positives, not the misses. That is a different and more tractable problem than the one B6 was posed to solve.
-- **Pro:** "a reasoning model does not fit this harness" is itself a finding worth keeping for model selection later.
-- **Con:** leaves your three-lab question half-answered on the record, with Nemotron untested rather than tested-and-poor.
-
----
-
-**My recommendation: C.** B6 has told us what it can. **The binding constraint is no longer which model — it is that 71% of what the best model emits is not a claim**, and no amount of cross-model voting fixes that at an acceptable recall cost. I would take the C3 fixes, close B6 honestly at two labs, and put the next cycle into precision. **If you would rather have the complete three-lab table on the record, A is the right version of that** — B's footnote would undercut the comparison it is meant to produce.
-
-Your selection: _____
+*Newest first. Nothing is open right now.*
 
 ## 1b. Decision record
 
@@ -66,6 +22,7 @@ Your selection: _____
 |---|---|---|
 | **036** | **C then A.** First rewrite the rubric as a positive elicitation and move every prompt into editable Markdown (item C1); then run three bigger local models (item B6). Option B ruled out by the local-only constraint; Option D deferred until A's numbers exist and a second labelled episode makes it honest. **Plus: the prompt must live in a `.md` Louis can read and edit without touching Python.** | `design_claim_rubric.md` · `agent_execution_guide.md` C1, B6 |
 | **043** | **A — re-run B6 with the three models originally specced.** `mlx-community/gemma-4-31b-it-4bit` (18.4 GB), `mlx-community/GLM-4-32B-0414-4bit` (18.3 GB), `mlx-community/NVIDIA-Nemotron-3-Nano-30B-A3B-4bit` (17.8 GB) — all three MLX 4-bit, all three through the existing `mlx_lm` path, 54.5 GB total onto an external SSD. The first pass ran a 2B, a 9B and a 7B vision model and reused C1's artifact as one arm, with every gate green. **The inputs are now asserted in `v2/tests/test_b6_models.py`, committed red.** | `agent_execution_guide.md` §13 · `v2/tests/test_b6_models.py` |
+| **044** | **C — close B6 at two labs and spend the next cycle on precision.** The Nemotron arm is not re-run: it was never measured (401/405 unparseable) and a third lab reversing a −24-point recall cost is not plausible. **C3's two harness fixes land regardless**, and the next item is **C4**, which adjudicates the 79 false positives before anything is tuned. | `agent_execution_guide.md` §13 (B6, closed), §16 (C3), §17 (C4) |
 
 > **Correction to 036's premise, recorded September 14 2026 after C1's falsification.** The issue was framed — by me — as *"the rubric is an exclusion manual used as the prompt verbatim, and that is the cause of the binary collapse."* **That is false.** A full 405-turn run of the **unchanged** exclusion-manual rubric through C1's new positive template reaches **87.88% recall at 13.94% precision**, against C1's own 81.82% / 15.34% (parameter 039). **The collapse was caused by the prompt template's exclusion-first instruction**, which lived in `extract.py`'s f-string — not by the rubric text. The rubric rewrite is a second-order trade: −6 points of recall for +1.4 of precision. **Option C was still the right call** — it produced the editable prompt that fixed the problem — but for a different reason than the one on the ticket.
 
@@ -87,6 +44,7 @@ Your selection: _____
 | **045** | `SIZE_BUYS_BOTH = gemma-4-31b at 28.83% precision / 96.97% recall` — 30B-class vs 2B on E287 (B6) | B6 | **Measured fact.** Against gemma-2-2b's 13.04% / 54.55% under the same guard and prompt: precision **2.2x**, recall **1.8x**. GLM-4-32B: 31.25% / 75.76%. **Capability improved both at once — this was not a trade.** Gemma 4 missed one gold claim, and that one was rejected by our own quote guard for paraphrasing. |
 | **046** | `CONSENSUS_COSTS_MORE_THAN_IT_BUYS` — majority of two 30B models: +1.6 precision, −24.2 recall (B6) | B6 | **Measured fact.** Best single model 31.25% precision at 75.76% recall; majority 32.88% at 72.73%; any-model 27.97% at 100%. **Cross-model voting is not where the remaining error is.** The third arm was void, but a third lab reversing a −24-point recall cost is not plausible. |
 | **047** | `REASONING_MODELS_DO_NOT_FIT_THIS_HARNESS` — Nemotron 3 Nano: 401/405 generations unparseable (B6) | B6 | **Measured fact, and a harness defect not a model result.** It reasons in prose, exhausts the budget, and the parser scores "didn't finish" as a gate-1 exclusion. At 2,500 tokens it counted characters to satisfy the discarded `offset` field. **Its 0% recall is retracted; it was never measured.** C3 fixes the harness; Issue 044 decides whether it is re-run. |
+| **048** | `FP_RATE_SCALES_WITH_TURN_LENGTH` — 1.3% at ≤20 words to 92.9% at 200+, recall flat (B6 / C4) | B6 | **Measured fact.** Among the 372 gold-exclusion turns of E287, `gemma-4-31b` false-positive rate by length: 0–20w **3/223 (1.3%)**, 20–50w 16/68, 50–100w 28/43, 100–200w 19/24, 200+w **13/14 (92.9%)**. Recall is ~100% in every band. **B2 labelled turns; the extractor finds spans** — on short turns the same question, on long turns not. **This is a unit mismatch before it is a precision problem**, and C4 adjudicates 30 of the 79 disagreements before anything is tuned. |
 
 ---
 

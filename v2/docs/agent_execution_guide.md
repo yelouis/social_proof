@@ -120,13 +120,14 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 2 | **B7** | Make the review page report what actually ran | none | **DELIVERED** (`bd5ecbf`, `3f0b8cc`). Provenance read off the extractor that ran, `rubric_commit` derived from git (`9882bc3`), denominators unified, stale-server footer, backfilled artifacts marked. **Verified independently by a real model load and a real single-turn run.** Closed against `v2/tests/test_b7_provenance.py`, committed red: the suite went `39 passed, 6 xfailed` → `45 passed`. |
 | 3 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0, B7 | **DELIVERED** (`b37003e`, `a58d573`). Collapse broken: recall 0% → 81.8%, precision 8.4% → 15.3%. Job 1's byte-identical move verified across all 405 prompts. **The falsification fired: Issue 036's diagnosis was wrong** — the old rubric text through the new template reaches 87.9% recall, so the template caused the collapse, not the rubric. |
 | 4 | **C2** | A claim with nothing in it is not a claim | C1 | **DELIVERED**. Quote Validation Guard added (`VALIDATORS_ADDED = 1`). 38 claims rejected (23 empty, 14 non-verbatim, 1 context leak; 9.38% rate). 100% of 138 emitted claims resolve verbatim in target turn. Honest recall 54.55% (-27.27 pts vs reported C1), precision 13.04%. Falsification confirmed. Unblocks B6. |
-| 5 | **B6** | Three local models on the same episode, and what agreement is worth (**036 = A**, **043 = A**) | C1, C2 | **DELIVERED, two arms of three** (`1c95cbd`). `gemma-4-31b` **28.83% precision / 96.97% recall**, `GLM-4-32B` **31.25% / 75.76%**, against gemma-2-2b's 13.04% / 54.55%. **Capability bought precision and recall; consensus bought +1.6 points of precision for −24 of recall.** The Nemotron arm is void — 99% parse failures scored as exclusions. **Issue 044 decides its fate.** |
+| 5 | **B6** | Three local models on the same episode, and what agreement is worth (**036 = A**, **043 = A**, **044 = C**) | C1, C2 | **CLOSED at two labs** (`1c95cbd`). `gemma-4-31b` **28.83% precision / 96.97% recall**, `GLM-4-32B` **31.25% / 75.76%**, against gemma-2-2b's 13.04% / 54.55%. **Capability bought precision and recall; consensus bought +1.6 points of precision for −24 of recall.** Nemotron never ran — 99% unparseable — and is not re-run. |
 | 6 | **C3** | A generation we could not read is not a verdict | none | **NEXT, independent of Issue 044.** The prompt asks every model for an `offset` that `extract.py:248` computes and discards — fatal for a reasoning model. And an unparseable generation is recorded as a gate-1 exclusion, which is how a silent arm came to be reported as scoring 0%. |
-| 7 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
-| 8 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
-| 9 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
-| 10 | **B4** | Measure, and decide whether to go on | B3 | DELIVERED. Precision and recall reported; conclusion recorded in one sentence; Issue 036 filed in v2/docs/ongoing_errors.md. |
-| 11 | **B5** | A local page showing what was extracted, and what was not | B1 | DELIVERED. Rendered all 405 turns of E287 with side-by-side gold/model verdicts, gate distributions, and 33 disagreements. |
+| 7 | **C4** | Precision is a function of turn length, and nobody has checked who is right | C3 | **The next cycle, per Issue 044 = C.** Among gold-exclusion turns the model's false-positive rate runs **1.3% at ≤20 words to 92.9% at 200+**, while recall stays ~100% everywhere. **B2 labelled turns; the model extracts spans**, and on a 300-word turn those are different questions. Adjudicate the 79 before tuning anything. |
+| 8 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
+| 9 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
+| 10 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
+| 11 | **B4** | Measure, and decide whether to go on | B3 | DELIVERED. Precision and recall reported; conclusion recorded in one sentence; Issue 036 filed in v2/docs/ongoing_errors.md. |
+| 12 | **B5** | A local page showing what was extracted, and what was not | B1 | DELIVERED. Rendered all 405 turns of E287 with side-by-side gold/model verdicts, gate distributions, and 33 disagreements. |
 
 **IDs are labels, not sequence numbers — follow the Order column.**
 
@@ -136,7 +137,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 
 ## 6. G0 — V2 has no gates, and five items landed without them · **DELIVERED**
 
-**Do this before B6.** A red gate outranks the queue (§18), and right now there is no gate at all to be red.
+**Do this before B6.** A red gate outranks the queue (§19), and right now there is no gate at all to be red.
 
 **User impact:** none directly. This is the item that makes every later "delivered" mean something.
 
@@ -195,7 +196,7 @@ v2/src/turns.py: Source file found twice under different module names:
 
 **Falsify.** Re-introduce one unused import and one `typing.List`; the block must go red naming both. Revert; record both.
 
-**Blast radius.** `v2/docs/agent_execution_guide.md` §3 and §18, `v2/src/*`, `v2/scripts/*`, `v2/tests/*`. **No behaviour changes** — if a fix alters behaviour, it is not a lint fix and belongs in its own commit.
+**Blast radius.** `v2/docs/agent_execution_guide.md` §3 and §19, `v2/src/*`, `v2/scripts/*`, `v2/tests/*`. **No behaviour changes** — if a fix alters behaviour, it is not a lint fix and belongs in its own commit.
 
 ---
 ## 7. C1 — Turn the rubric positive, and move every prompt into editable Markdown · *Issue 036 = C* · **DELIVERED** (`b37003e`, `a58d573`)
@@ -446,7 +447,7 @@ Print the URL on startup. Same posture as V1: `127.0.0.1` only, no writes, no ne
 **Blast radius.** `v2/scripts/serve_review.py`, `v2/templates/` or equivalent. **Reads artefacts, writes nothing.**
 
 ---
-## 13. B6 — Three local models on the same episode, and what agreement is worth · **DELIVERED, two arms of three** (`1c95cbd`) · *Issue 044 open*
+## 13. B6 — Three local models on the same episode, and what agreement is worth · **CLOSED at two labs** (`1c95cbd`) · *Issue 044 = C*
 
 **Issue 043 = A was executed properly.** The three named models ran, the inputs held, and `test_b6_models.py` passes with only its `xfail` marker deleted — `git diff` on that file shows nothing else. Wall-clocks are physically coherent: **8,184s and 7,585s for the dense 31B/32B (~20s per turn), 1,525s for Nemotron's 3B-active MoE.**
 
@@ -470,7 +471,7 @@ Self-agreement was measured where it can disagree: GLM-4-32B at temperature 0.7 
 
 **"Nemotron 3 Nano scores 0%" is retracted. It was never measured**, and "unanimous = 0 claims" is an artifact of a silent arm, not a fact about three-lab agreement.
 
-**What happens to the third arm is Issue 044. The two harness fixes are C3 (§16) and land regardless.**
+**Issue 044 = C: the third arm is not re-run.** It was never measured, and a third lab reversing a −24-point recall cost is not plausible on this evidence. **"A reasoning model does not fit this harness" is kept as a finding for model selection** (parameter 047). The harness itself is fixed by C3 (§16); the next cycle goes to precision, which is C4 (§17).
 
 ---
 
@@ -481,14 +482,14 @@ Three gaps. The first attempt closed two and **relocated** the third; the second
 **What it established, now the contract:**
 
 - **Provenance is read off the extractor instance that actually ran.** `model_id`, `runtime` and `quantisation` come from the object; `quantisation` is derived from the loaded model's own config (`config["quantization"]["bits"]`), not by matching a substring. `rubric_commit` is computed at run time by `get_rubric_commit()` from `git log -1 --format=%h -- <rubric path>`; `prompt_version` is a SHA-256 of the rubric text actually sent.
-- **Gate failure rates are shares of all turns** — promoted to a standing constraint (§17).
+- **Gate failure rates are shares of all turns** — promoted to a standing constraint (§18).
 - **A running server displays the HEAD it started with**, so a stale process is visible rather than merely plausible.
 
 **Verified independently, not from the commit body.** A real `ModelExtractor()` load reports `quantisation: 4-bit` derived from config. A real single-turn run records `rubric_commit: 9882bc3` — the commit that actually touched the rubric; the previous `23da31c` is the B1 commit and never did. The gold fixture's 405 verdicts, 33 claims and 372 exclusions are unchanged across that correction. Both artifacts' stored `gate_failure_rates_*` were recomputed: gold `81.18 → 74.57`, falsification model `100.0 → 2.96`. And **three turns run twice produced identical verdicts**, so extraction is reproducible under the pinned greedy sampler (parameter 036).
 
 `test_b5.py`'s four literal assertions — trap 81, a test that pinned the defect in place — were rewritten to assert against `model_provenance`, rather than deleted or reverted around.
 
-**The method that worked, and why it is now §19's rule.** The first attempt satisfied a prose assertion by moving the constants one file upstream. The second was handed `v2/tests/test_b7_provenance.py`: committed red, `xfail(strict=True)`, with `warn_unused_ignores` in `mypy.ini`. It made the tests pass with the file otherwise unmodified — `git diff` shows only the marker and the `type: ignore` deleted — and **both tripwires fired as designed**, the suite going from `39 passed, 6 xfailed` to `45 passed`.
+**The method that worked, and why it is now §20's rule.** The first attempt satisfied a prose assertion by moving the constants one file upstream. The second was handed `v2/tests/test_b7_provenance.py`: committed red, `xfail(strict=True)`, with `warn_unused_ignores` in `mypy.ini`. It made the tests pass with the file otherwise unmodified — `git diff` shows only the marker and the `type: ignore` deleted — and **both tripwires fired as designed**, the suite going from `39 passed, 6 xfailed` to `45 passed`.
 
 **Residue carried to B6 (§13)**, which is the item it breaks: the recorded `decoding` block claims a seed that is wired to nothing.
 
@@ -502,7 +503,7 @@ Three gaps. The first attempt closed two and **relocated** the third; the second
 
 **Both test repairs are real.** `test_c1_extraction_artifact_metrics` dropped its 13 equality snapshots and kept the floors (`recall > 50.0`, `precision > 10.0`), so the re-run that produced these numbers did not read as a regression. `test_job2_gold_exclusions_survive` now shells `git show 9882bc3:v2/docs/design_claim_rubric.md` and asserts §2 is byte-identical — it reads the rubric, which the version it replaced never did.
 
-**Now a standing constraint (§17):** an emitted record must carry the field it exists to carry, and the rejection rate is published as a rate over all turns.
+**Now a standing constraint (§18):** an emitted record must carry the field it exists to carry, and the rejection rate is published as a rate over all turns.
 
 ---
 
@@ -560,7 +561,83 @@ It is not free. Every model spends tokens on it across all 405 turns, and for a 
 
 ---
 
-## 17. Standing constraints, carried from V1
+## 17. C4 — Precision is a function of turn length, and nobody has checked who is right
+
+**Blocked on C3** — C3 changes the prompt, so measure after it lands. **Step 1 needs no re-run** and can start immediately against the existing artifact.
+
+**User impact:** the review page shows Louis 111 extracted claims for E287. 32 match his labels. **Nobody has read the other 79 to find out whether the model is wrong or he is.**
+
+**Contract:** `v2/artifacts/extraction/b6_extraction_mlx-community_gemma-4-31b-it-4bit_00251a80c868f535.json` · `v2/fixtures/gold/00251a80c868f535.json` · `v2/docs/design_claim_rubric.md`.
+
+### The gap, measured
+
+`gemma-4-31b` finds **32 of 33** gold claims and emits **79** the gold set does not contain. Precision 28.83%, recall 96.97%. **The 79 are not spread evenly.** Among gold-*exclusion* turns, the false-positive rate is almost entirely a function of length:
+
+| turn length | gold-exclusion turns | model says claim | rate |
+|---|---|---|---|
+| 0–20 words | 223 | 3 | **1.3%** |
+| 20–50 | 68 | 16 | 23.5% |
+| 50–100 | 43 | 28 | 65.1% |
+| 100–200 | 24 | 19 | 79.2% |
+| 200+ | 14 | 13 | **92.9%** |
+
+Recall is ~100% in every band. **On short turns this extractor is already excellent — 98.7% specificity. All of the disagreement lives in long turns.**
+
+And **86% of the 79 fail gold's gate 1** (attributable), of which 59 carry the reason *"describing third-party narrative, personal anecdote, or context"* and 9 *"interrogative question or prompt"*.
+
+### Why this is not simply a model error
+
+**B2 labelled turns. The model extracts spans. On a 20-word turn those are the same question; on a 300-word turn they are not.** Worked example, `t0084` — 310 words, Chamath:
+
+> *"I don't know, it was pretty obvious to me in May that **Salesforce specifically was meaningfully oversold**. I think what I was trying to say there… is we're getting to the end of this second phase of AI…"*
+
+Gold: `exclusion · gate_1 · describing third-party narrative, personal anecdote, or context`. Model: *"Salesforce was meaningfully oversold in May."* **The model is right.** That is an evaluative claim, in Chamath's own voice, that he would defend. The turn *as a whole* is mostly narrative, which is what the labeller answered.
+
+Two other samples go the other way. `t0032` — *"They got a bunch of Chinese people to fill a stadium and cheer for AI and robotics"* — is reporting an event, and gold's gate 1 is right. `t0053` trails off into *"and it's like, whoa, Optimus will be the best selling"*, which is genuinely arguable.
+
+**So the 79 contain gold misses, model errors and real ambiguity in unknown proportions, and every decision about what to do next depends on which dominates.** Tuning the prompt to reject all 79 would train the extractor against a target that is partly wrong.
+
+### Implementation
+
+**Step 1 — adjudicate a stratified sample of the 79, before changing anything.** Draw **30**, stratified by the length bands above in proportion to where the FPs actually are (roughly: 2 from under 20 words, 6 from 20–50, 11 from 50–100, 7 from 100–200, 4 from 200+). Read each turn in full, against `design_claim_rubric.md`, and classify into exactly three buckets:
+
+- **gold miss** — the turn contains a defensible claim in the speaker's own voice that passes all four gates; the model found it and B2 did not.
+- **model error** — the quote is narration, reporting, a question, banter, or a hypothetical; gate 1 genuinely fails.
+- **ambiguous** — two careful readers would disagree.
+
+> **Verify:** publish the 30 turn ids with their bucket and a one-line reason, in the commit body and in `v2/artifacts/extraction/README.md`. **Cite turn ids, not counts** — a count nobody can resolve is what trap 74 was written for. Each id must resolve in the gold set and in the extraction artifact.
+
+> **Verify (this is the item's product):** report the three-way split **per length band**. **If the gold-miss share rises with turn length, the unit mismatch is confirmed** and the problem is the gold set's granularity, not the model's judgement.
+
+**Step 2 — recompute precision under each reading.** Report three numbers: precision as-measured (28.83%), precision counting adjudicated gold misses as correct, and precision counting ambiguous cases as correct. **The spread between them is how much of the "precision problem" is real.**
+
+> **Verify:** all three in one table, with the sample size beside each. **A 30-turn sample of 79 gives a wide interval — state it as a count and a proportion, never as a bare percentage** (§17 standing constraint).
+
+**Step 3 — do not change the gold set inside this item.** If the gold-miss share is material, **file it in `v2/docs/ongoing_errors.md` §1 with options and stop.** B2 is the project's only ground truth; re-labelling it is Louis's call, not a side effect of a precision item.
+
+**Step 4 — name the cheapest intervention the evidence supports, and do not implement it here.** On present evidence there are three candidates and the adjudication decides between them:
+
+1. **Prompt-side** — if most are model errors, gate 1 needs strengthening against narration and reported speech. Note that C1 already showed the template, not the rubric, is where prompt leverage lives (parameter 039).
+2. **Unit-side** — if most are gold misses on long turns, the turn is the wrong unit for extraction. B1's segmentation caps turns at 400 words; a sentence- or paragraph-level unit inside long turns would let gold and model answer the same question.
+3. **Gold-side** — if long turns are systematically under-labelled, B2 needs a second pass at span level, which is Step 3's escalation.
+
+> **Verify:** the item ends with one recommendation, the evidence for it, and the two it rejected with a reason. **"Improve precision" is not a conclusion** — B4's rule, that a conclusion names the next decision rather than the next task, applies here.
+
+### Validation
+
+- **(c)** — **30 adjudicated false positives, published by turn id with bucket and reason, split three ways per length band, and precision recomputed under each reading.** *The item's product is knowing what the 79 are. Any tuning done before that adjudication is optimisation against a target nobody has checked, and at 97% recall there is very little room to be wrong in the other direction.*
+- Every published turn id resolves in both the gold set and the extraction artifact — **assert this with a script, do not eyeball it.**
+- Sample counts stated alongside every proportion.
+- No change to `v2/fixtures/gold/`, `v2/prompts/`, or `design_claim_rubric.md` in this commit.
+- `ruff`, `mypy`, `pytest` clean.
+
+**Falsify.** Take **10 gold-*claim* turns the model also called claims** (true positives) and run them through the same adjudication blind, mixed in with the 30. **If the adjudicator marks true positives as "model error" at a meaningful rate, the adjudication is not reliable** and its three-way split cannot carry the conclusion. Report the blind-set accuracy beside the split.
+
+**Blast radius.** `v2/artifacts/extraction/README.md`, a new adjudication fixture under `v2/fixtures/`, `v2/tests/`. **No change to the gold set, the rubric, the prompts, or any extraction artifact.**
+
+---
+
+## 18. Standing constraints, carried from V1
 
 - **A generation that could not be parsed is not a verdict.** Count it as `unparseable`, report the rate, exclude it from precision and recall, and fail loudly above ~5%. Nemotron's 401 unreadable generations of 405 were recorded as gate-1 exclusions and reported as 0% recall for the model.
 - **Do not ask a model for a value the code computes.** The prompt's `offset` field is overwritten at `extract.py:248` and unreachable under C2's guard; it cost every model tokens on every turn and made a reasoning model unusable.
@@ -582,7 +659,7 @@ It is not free. Every model spends tokens on it across all 405 turns, and for a 
 
 ---
 
-## 18. Traps (carried from V1 §6)
+## 19. Traps (carried from V1 §6)
 
 Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writing in their layer. The ones that have already bitten:
 
@@ -610,14 +687,14 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 38. **A verdict computed from the evidence it gates is not a verdict.** E1 replaced `sufficiency.get("passed", True)` with `passed = any_scored` — so "did sufficiency pass?" became "did anything get scored?", and the check that asks *"if sufficiency failed, is any score present?"* can never find one. **A guard's input must be independent of its subject.** When a fix removes a default, check what replaced it: the same inertness survives a rewrite easily.
 39. **A uniqueness bug hides behind a coverage check.** `verify_role_coverage` asks whether every utterance *resolves to* a role and passes over a `source_roles` table where every row is duplicated. Resolution and uniqueness are different questions, and only the first was asked — the same error shape as trap 28 (*"is this citation real?"* vs *"does it support this claim?"*).
 77. **A test that asserts an issue is still open fails when the process works.** `test_ongoing_errors_issue_036_filed_correctly` asserted that Issue 036 was present with a blank selection line; it went red the moment Louis decided. **Assert the durable fact — that the issue is tracked, open or recorded — not the transient one.** The same test also asserted no line began "Your selection: C", which a test cannot distinguish from the user's own answer and so was never sound.
-74. **A pasted artefact is only better than a count if somebody resolves it.** X4 pasted forty claim ids with quotes and verdicts, exactly as its `(c)` required, and none of the forty exists. The convention that was supposed to make judgement checkable made it *look* checkable. **When an assertion cites rows, cite primary keys and make a script resolve them** (§17) — and note that the same commit's aggregate counts were all exactly correct, so "the numbers are right" is not evidence the sample is.
+74. **A pasted artefact is only better than a count if somebody resolves it.** X4 pasted forty claim ids with quotes and verdicts, exactly as its `(c)` required, and none of the forty exists. The convention that was supposed to make judgement checkable made it *look* checkable. **When an assertion cites rows, cite primary keys and make a script resolve them** (§18) — and note that the same commit's aggregate counts were all exactly correct, so "the numbers are right" is not evidence the sample is.
 75. **Aggregate accuracy and sample accuracy are independent.** Every count in that commit matched the database to the row; the qualitative sample was not drawn from it. **Check them separately** — a commit that gets the hard numbers right earns no credit for the soft ones.
 76. **Five attempts at the same fix in different clothes is a signal about the approach, not the wording.** W0/W2 → D1 → D6 → X2 → X4 each removed one failure and produced another, and the corpus fell from 3,669 claims to 401. **When the third iteration of anything lands, stop and ask what is being assumed** — here, that the format was the limiting factor, which nobody had measured (Issue 035).
 71. **A format that must emit something will invent what it needs.** D6's form produced propositions nobody could take a position on; X2's format produces positions nobody took, and almost always `FOR`, because the binary has no null. **Every extraction format needs a branch that returns nothing**, and it has to be reachable — "a claim it cannot phrase that way is not emitted" is not a branch if the phrasing always succeeds.
 72. **"Not zero" is as weak a floor as zero.** D8's (c) required the count of opposing-stance propositions to be reported and said a zero would mean the self-join had nothing to match. It came back **one**, which satisfied the letter while the singleton rate went to 99.5%. **State floors as rates over the table** — the same correction Parameter 033 made to "no source contributes zero claims" (trap 61), repeated one layer up by the person who wrote trap 61.
 73. **Report the cost of a fix, not only its benefit.** D8 drove frame-contradicted merges to zero and did not report that it did so by merging almost nothing. Both numbers existed and one was asked for. **When a threshold trades two quantities against each other, the item must require both at every candidate value** — a single-sided report makes a corner solution look like a win.
 69. **Storing the judgement turns the next check into code.** Three fabrications needed a careful read of quotes to spot. The fourth is a two-line diff of `position_frame`, because X2 persisted the sentence the model wrote instead of only its conclusion. **When a step depends on a judgement, store the artefact the judgement was made from** — the next person gets a query instead of an opinion.
-70. **A parameter measured on a distribution that a later item replaces is stale on the day that item lands.** `T_dedup = 0.84` was measured over v1.7 propositions and merged *"60 to 80 percent growth"* with *"10x growth for ever"* on v1.8 output. X2 correctly refused to retune it in the same commit; **the cost of that discipline is a follow-up item, and it must actually be filed** (§19).
+70. **A parameter measured on a distribution that a later item replaces is stale on the day that item lands.** `T_dedup = 0.84` was measured over v1.7 propositions and merged *"60 to 80 percent growth"* with *"10x growth for ever"* on v1.8 output. X2 correctly refused to retune it in the same commit; **the cost of that discipline is a follow-up item, and it must actually be filed** (§20).
 78. **An unused variable can be the answer, not the leftover.** G0's `F841` sweep discarded `total_model_exclusions = sum(model_gate_counts.values())` as dead; it was the correct denominator for the column rendered beside it, computed and never applied. Three of that sweep's four discards were genuinely dead, which is what made the fourth easy to wave through. **Audit every `F841` against what the surrounding code divides by, returns or renders — an unused result is a dropped one until you show otherwise.**
 79. **A dev server that walks to a free port lets a stale process answer the documented URL.** `serve_review.py` auto-increments 8787→8807, so a forgotten instance kept serving pre-commit output on 8788 while the new one moved silently to 8789 — HTTP 200, a plausible page, two commits out of date. **Stamp the HEAD hash and artifact mtimes into anything you will later cite as "I looked at it"**, and run `lsof -nP -iTCP:<port> -sTCP:LISTEN` before believing a page.
 80. **An assertion that tests the read path is satisfied by moving the constant upstream.** B7's `(c)` required that editing an extraction artifact changed what the page rendered. It did — because the constants had been relocated out of the renderer and into the writer, where they are stamped into every artifact unconditionally. The page then reported a constant correctly. **When the defect is "this value is not measured", the assertion has to name the point of measurement, not the point of display**; a test that never imports the function which writes the value cannot see the bug. Written by the same person who wrote trap 17, about the same mistake one layer along.
@@ -629,6 +706,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 86. **A substituted input is not a smaller version of the experiment, it is a different one.** B6 was specced for the biggest model each lab fits in 64 GB and ran a 2B, a 9B and a 7B vision model; one arm was a copy of an earlier run. Every number was correct and reproducible, so nothing in the gates or the arithmetic could catch it. **When an item names specific inputs, assert the inputs** — the artifact records `model_id`, so the check is one line and nobody wrote it.
 87. **A parse failure that defaults to a valid-looking verdict turns "we could not read this" into "the model said no".** `parse_model_verdict` scores anything it cannot parse as `exclusion`/`gate_1`. Nemotron hit that path on 401 of 405 turns and was published as scoring 0% recall, with "unanimous agreement" computed across an arm that never voted. **Every fallback needs a status field and a rate** — and a rate that high has to stop the run, because the output was a clean, plausible, entirely fictional confusion matrix.
 88. **A field the code overwrites still costs whatever it costs to produce.** The prompt asks for a character `offset` that `extract.py` recomputes and, under C2's guard, can never read. Cheap for most models; for a reasoning model it was fatal — measured, it spent 2,500 tokens counting characters one at a time. **Grep the prompt's output schema against what the parser actually uses**, the same way trap 29 says to grep a parameter against its body.
+89. **A per-turn label and a per-span extraction are different questions, and the metric between them silently measures the difference.** B2 labelled whether a *turn* asserts a claim; the extractor answers whether a turn *contains* one. On short turns they coincide — 1.3% disagreement under 20 words — and on 200+ word turns they disagree 92.9% of the time, with recall unaffected at every length. `t0084` is 310 words of narrative containing *"Salesforce specifically was meaningfully oversold"*: the gold says exclusion, the model is right. **When precision varies monotonically with an input dimension nobody chose, suspect the unit before the model** — and adjudicate a sample before tuning against the target.
 66. **An item whose effect is to publish must be checked against what it will publish.** D7 was told to make every accepted candidate produce a tension row, and did — publishing six findings that the same guide, two sections below, documented as false. The spec was followed exactly. **Before running an item that writes user-visible output, read what is currently in its input.**
 67. **A judgement gate is scored generously unless the judgement is written down.** Three times now a gate has been recorded as met while an independent reading disagreed — six false pairs "hand-read and verified", a failed (c) recorded verified, and a position test reported at 18/20 that a seeded redraw scores 9–13/20. **Require the artefact, not the count**: paste the two sentences, quote the pair, show the working. A number is not checkable; a sentence is.
 68. **A repair loop that shrinks its subject on every pass is not converging.** Three extraction-form passes took the corpus from 3,669 claims to 1,027 and the candidate set from 0 to 6 to 0. **Track the trajectory across passes, not the delta within one** — each pass improved its own metric and the sequence went nowhere.
@@ -662,7 +740,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 19. Validation standard (carried from V1 §8)
+## 20. Validation standard (carried from V1 §8)
 
 **This section is the difference between an item that lands and one that comes back.** Every rule below was paid for.
 
@@ -709,7 +787,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 20. Invariants — do NOT change (carried from V1 §14)
+## 21. Invariants — do NOT change (carried from V1 §14)
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -730,7 +808,7 @@ Full invariant definitions (carried from `v1/docs/master_implementation_plan.md`
 
 ---
 
-## 21. Deliberately not built — do not re-propose (carried from V1)
+## 22. Deliberately not built — do not re-propose (carried from V1)
 
 Each of these was considered and rejected for a stated reason in `v1/docs/master_implementation_plan.md` §15. Re-proposing one costs a cycle.
 
@@ -749,7 +827,7 @@ Each of these was considered and rejected for a stated reason. Re-proposing one 
 
 ---
 
-## 22. Evidence integrity and V1 reference contracts
+## 23. Evidence integrity and V1 reference contracts
 
 The integrity contract survives any rewrite of extraction:
 - **E1–E5 Operational Rules:** Every rendered claim carries a verbatim quote, a date, and a resolvable source locator (E1). Every quoted string `grep -F` matches stored source text (E2). Every quote supports the proposition attached to it (E2b). Nothing derived from page context ever persists (E3). Below sufficiency gates, scores are null, never computed-and-hidden (E4). Precondition failures quarantine tensions, never rendered (E5).
