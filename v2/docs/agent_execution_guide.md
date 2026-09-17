@@ -120,12 +120,13 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 2 | **B7** | Make the review page report what actually ran | none | **DELIVERED** (`bd5ecbf`, `3f0b8cc`). Provenance read off the extractor that ran, `rubric_commit` derived from git (`9882bc3`), denominators unified, stale-server footer, backfilled artifacts marked. **Verified independently by a real model load and a real single-turn run.** Closed against `v2/tests/test_b7_provenance.py`, committed red: the suite went `39 passed, 6 xfailed` → `45 passed`. |
 | 3 | **C1** | Turn the rubric positive; move every prompt into editable Markdown (**Issue 036 = C**) | G0, B7 | **DELIVERED** (`b37003e`, `a58d573`). Collapse broken: recall 0% → 81.8%, precision 8.4% → 15.3%. Job 1's byte-identical move verified across all 405 prompts. **The falsification fired: Issue 036's diagnosis was wrong** — the old rubric text through the new template reaches 87.9% recall, so the template caused the collapse, not the rubric. |
 | 4 | **C2** | A claim with nothing in it is not a claim | C1 | **DELIVERED**. Quote Validation Guard added (`VALIDATORS_ADDED = 1`). 38 claims rejected (23 empty, 14 non-verbatim, 1 context leak; 9.38% rate). 100% of 138 emitted claims resolve verbatim in target turn. Honest recall 54.55% (-27.27 pts vs reported C1), precision 13.04%. Falsification confirmed. Unblocks B6. |
-| 5 | **B6** | Three local models on the same episode, and what agreement is worth (**Issue 036 = A**, **Issue 043 = A**) | C1, C2 | **DELIVERED** (Issue 043 = A). Re-run with the three specced 30B-class models resident on external SSD (`HF_HOME="/Volumes/Extreme SSD 1/hf"`). Gemma-4-31B: 96.97% recall (32/33), 28.83% precision; GLM-4-32B: 75.76% recall (25/33), 31.25% precision; Nemotron-3-Nano: 0% / 0% (thinking model fallback). Majority consensus ($\ge 2/3$): 72.73% recall, 32.88% precision on 73 claims. Any-model consensus ($\ge 1/3$): 100.0% recall (33/33 gold claims recovered), 27.97% precision on 118 claims. Unanimous (3/3): 0 claims, formatted as count (`precision_pct: None`). 2-model falsification proves Nemotron contributed 0 to consensus. Self-agreement at temp 0.7: 84.85% overall, 81.48% on claim-bearing turns. All 7 tests in `test_b6_models.py` pass with `xfail` removed. |
-| 6 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
-| 7 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
-| 8 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
-| 9 | **B4** | Measure, and decide whether to go on | B3 | DELIVERED. Precision and recall reported; conclusion recorded in one sentence; Issue 036 filed in v2/docs/ongoing_errors.md. |
-| 10 | **B5** | A local page showing what was extracted, and what was not | B1 | DELIVERED. Rendered all 405 turns of E287 with side-by-side gold/model verdicts, gate distributions, and 33 disagreements. |
+| 5 | **B6** | Three local models on the same episode, and what agreement is worth (**036 = A**, **043 = A**) | C1, C2 | **DELIVERED, two arms of three** (`1c95cbd`). `gemma-4-31b` **28.83% precision / 96.97% recall**, `GLM-4-32B` **31.25% / 75.76%**, against gemma-2-2b's 13.04% / 54.55%. **Capability bought precision and recall; consensus bought +1.6 points of precision for −24 of recall.** The Nemotron arm is void — 99% parse failures scored as exclusions. **Issue 044 decides its fate.** |
+| 6 | **C3** | A generation we could not read is not a verdict | none | **NEXT, independent of Issue 044.** The prompt asks every model for an `offset` that `extract.py:248` computes and discards — fatal for a reasoning model. And an unparseable generation is recorded as a gate-1 exclusion, which is how a silent arm came to be reported as scoring 0%. |
+| 7 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
+| 8 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
+| 9 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
+| 10 | **B4** | Measure, and decide whether to go on | B3 | DELIVERED. Precision and recall reported; conclusion recorded in one sentence; Issue 036 filed in v2/docs/ongoing_errors.md. |
+| 11 | **B5** | A local page showing what was extracted, and what was not | B1 | DELIVERED. Rendered all 405 turns of E287 with side-by-side gold/model verdicts, gate distributions, and 33 disagreements. |
 
 **IDs are labels, not sequence numbers — follow the Order column.**
 
@@ -135,7 +136,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 
 ## 6. G0 — V2 has no gates, and five items landed without them · **DELIVERED**
 
-**Do this before B6.** A red gate outranks the queue (§17), and right now there is no gate at all to be red.
+**Do this before B6.** A red gate outranks the queue (§18), and right now there is no gate at all to be red.
 
 **User impact:** none directly. This is the item that makes every later "delivered" mean something.
 
@@ -194,7 +195,7 @@ v2/src/turns.py: Source file found twice under different module names:
 
 **Falsify.** Re-introduce one unused import and one `typing.List`; the block must go red naming both. Revert; record both.
 
-**Blast radius.** `v2/docs/agent_execution_guide.md` §3 and §17, `v2/src/*`, `v2/scripts/*`, `v2/tests/*`. **No behaviour changes** — if a fix alters behaviour, it is not a lint fix and belongs in its own commit.
+**Blast radius.** `v2/docs/agent_execution_guide.md` §3 and §18, `v2/src/*`, `v2/scripts/*`, `v2/tests/*`. **No behaviour changes** — if a fix alters behaviour, it is not a lint fix and belongs in its own commit.
 
 ---
 ## 7. C1 — Turn the rubric positive, and move every prompt into editable Markdown · *Issue 036 = C* · **DELIVERED** (`b37003e`, `a58d573`)
@@ -445,176 +446,31 @@ Print the URL on startup. Same posture as V1: `127.0.0.1` only, no writes, no ne
 **Blast radius.** `v2/scripts/serve_review.py`, `v2/templates/` or equivalent. **Reads artefacts, writes nothing.**
 
 ---
-## 13. B6 — Three local models on the same episode, and what agreement is worth · **DELIVERED** (Issue 043 = A)
+## 13. B6 — Three local models on the same episode, and what agreement is worth · **DELIVERED, two arms of three** (`1c95cbd`) · *Issue 044 open*
 
-**Re-run with the three models the item named.** The first pass (`2d28b88`) produced correct, reproducible numbers from a 2B, a 9B and a 7B vision model, and reused C1's artifact as one of its three arms. **Every gate was green and the arithmetic was right**, which is why the inputs are now asserted in a test rather than described in prose.
+**Issue 043 = A was executed properly.** The three named models ran, the inputs held, and `test_b6_models.py` passes with only its `xfail` marker deleted — `git diff` on that file shows nothing else. Wall-clocks are physically coherent: **8,184s and 7,585s for the dense 31B/32B (~20s per turn), 1,525s for Nemotron's 3B-active MoE.**
 
-**User impact:** Louis asked whether the biggest open-weight models that fit on this machine extract claims better than the small one, and whether three labs agreeing makes a claim more trustworthy. Neither question is answered yet.
+### The finding, recomputed independently from the artifacts
 
-**Contract:** `v2/src/run_b6.py` · `v2/artifacts/extraction/` · `v2/tests/test_b6_models.py` (do not edit) · B2's gold set (read-only).
+| model | claims | TP | precision | recall |
+|---|---|---|---|---|
+| gemma-2-2b (parameter 040 baseline) | 138 | 18 | 13.04% | 54.55% |
+| **`gemma-4-31b-it-4bit`** | 111 | 32 | **28.83%** | **96.97%** |
+| **`GLM-4-32B-0414-4bit`** | 80 | 25 | **31.25%** | 75.76% |
+| majority ≥2/3 | 73 | 24 | 32.88% | 72.73% |
+| any ≥1/3 | 118 | 33 | 27.97% | 100% |
 
-### Start here — the inputs are asserted, and the test is already red
+**Capability bought precision *and* recall — not a trade.** That settles parameter 042's hypothesis in the strongest form available. **Consensus bought +1.6 points of precision for −24 points of recall**, so on this evidence agreement between models is worth little and capability is worth a lot. Gemma 4's single missed gold claim, `t0178`, was rejected by C2's own quote guard for paraphrasing — **the model found all 33.**
 
-```bash
-.venv/bin/python -m pytest v2/tests/test_b6_models.py -q -rx
-```
+Self-agreement was measured where it can disagree: GLM-4-32B at temperature 0.7 over the 33 gold-claim turns gives **84.85% overall and 81.48% across the 27 claim-bearing turns** — two figures close together, which is what a real stability measurement looks like.
 
-Seven tests, all failing today. **Do not edit that file.** If a model tag cannot be resolved or a conversion is broken, that is an escalation to `v2/docs/ongoing_errors.md` §1 with options — **not a substitution.** Substituting the inputs is exactly what happened last time, and nothing caught it.
+### The third arm is void, and the cause is ours
 
-The `xfail(strict=True)` marker keeps the suite green while these fail and turns it **red once they pass with the marker still present**. Deleting those lines is the last step of this item, not an afterthought.
+**401 of Nemotron's 405 verdicts (99.0%) are parse failures silently recorded as gate-1 exclusions.** Gemma and GLM had **0**. It is a reasoning model: it thinks in prose, exhausts the token budget, and `parse_model_verdict` scores "didn't finish" as "not a claim". Raising the budget to 2,500 tokens made it worse — it began counting characters one at a time to compute the `offset` field, **which `extract.py` computes itself at line 248 and discards** (with C2's guard on, the branch that reads the model's value is unreachable). Removing that field took a 4-turn probe from 99% unparseable to ~50% and produced one clean verbatim claim.
 
-### The three models — tags verified to resolve, September 15 2026
+**"Nemotron 3 Nano scores 0%" is retracted. It was never measured**, and "unanimous = 0 claims" is an artifact of a silent arm, not a fact about three-lab agreement.
 
-| lab | tag | download | note |
-|---|---|---|---|
-| Google | `mlx-community/gemma-4-31b-it-4bit` | **18.4 GB** | dense 31B |
-| Zhipu | `mlx-community/GLM-4-32B-0414-4bit` | **18.3 GB** | dense 32B |
-| NVIDIA | `mlx-community/NVIDIA-Nemotron-3-Nano-30B-A3B-4bit` | **17.8 GB** | 30B total, **3B active** (MoE) — expect it to be the fastest of the three |
-
-**All three are MLX 4-bit, so all three run through `ModelExtractor`'s existing `mlx_lm` branch.** No Ollama, no second code path, and `quantisation` derives itself from each model's config — B7 already built that. **54.5 GB total.**
-
-**`glm4:latest`, `qwen2.5vl:7b` and `gemma-2-2b-it-4bit` are not in this experiment.** gemma-2-2b stays as the *baseline* to compare against; it is not a fourth arm.
-
-### Disk — the constraint the September 13 research worried about is gone
-
-Measured today: **internal 73 GB free**; `/Volumes/Extreme SSD` **328 GB free**; `/Volumes/Extreme SSD 1` **496 GB free**. **`~/.ollama/models` is already a symlink to `/Volumes/Extreme SSD/models/ollama`**, so Ollama has been running off the external SSD all along; the HuggingFace cache (`~/.cache/huggingface`, 3.0 GB) is still internal.
-
-**Point `HF_HOME` at an external volume and keep all three resident** — 54.5 GB fits on either SSD with room to spare, and staging (pull, run, delete, repeat) is unnecessary:
-
-```bash
-export HF_HOME="/Volumes/Extreme SSD 1/hf"
-```
-
-> **Verify before pulling:** `df -h` on whichever volume `HF_HOME` points at, and paste it. **If free space is under ~80 GB, stop and say so.** Note `df` lags after deletions — APFS local snapshots hold freed space; `tmutil listlocalsnapshots /` tells you whether that is what you are seeing.
-
-### Implementation
-
-**Step 1 — run each model over all 405 turns, same prompt, byte-identical.** No per-model prompt tuning. Write one artifact per arm as `b6_extraction_<model>_00251a80c868f535.json`, in B3's shape so B5 renders it without special-casing.
-
-> **Verify:** `test_the_three_specified_models_each_have_an_arm`, `test_no_unspecified_model_is_reported_as_a_b6_arm` and `test_all_arms_used_a_byte_identical_prompt` pass. **Clear the three old arms in the same commit** — leaving them makes the second test fail, which is intended: the consensus table must not silently span six models.
-
-**Step 2 — every arm must actually run.** `test_every_arm_ran_rather_than_being_copied` rejects any arm whose `elapsed_seconds` matches a prior artifact, and any two arms with identical verdicts.
-
-> **Verify:** report wall-clock per model. **A 31B dense model at 4-bit will be several times slower than the 2B was** — if an arm comes back at roughly 2s/turn, check what actually ran before believing it.
-
-**Step 3 — run with C2's quote guard on** (`validators_added == 1`). An arm measured without it is not comparable to parameter 040's baseline.
-
-**Step 4 — compute the consensus table** for unanimous (3/3), majority (≥2/3) and any-model (≥1/3), each against B2's 33 gold claims. **Where a rule emits fewer than 20 claims, write the result as a count and set `"report_as": "count"` with no `precision_pct` field.** Last time "3 correct of 4" was published as "75.00%, a 5.75x boost".
-
-> **Verify:** `test_small_denominators_are_reported_as_counts` passes. **This is the item's whole product:** report, for each rule, how often the gold set says the models were right — and if unanimous precision is not clearly better than the best single model, **say plainly that consensus is not buying anything.**
-
-**Step 5 — read the disagreements.** Every turn where the models split 2-1, and every turn all three call a claim that the gold set does not contain. **A shared false positive across three labs is the most interesting row in this experiment** — it says the rubric is ambiguous, not that the models are weak. `t0142` was that row last time and is worth re-checking against the new arms.
-
-**Step 6 — compare against the baselines, in one table.** gemma-2-2b under the same guard is **18 of 138 (13.04% precision, 54.55% recall)** — parameter 040. **Parameter 042 is the hypothesis under test:** the smaller models emitted fewer claims at higher precision (glm4 1 of 3, qwen 6 of 9). Say explicitly whether the 31B-class models continue that trend or break it.
-
-**Step 7 — self-agreement, on a population that can disagree.** Run one model twice at temperature 0.7 **over the 33 gold-claim turns**, and write `b6_self_agreement_00251a80c868f535.json` with `population: "gold_claim_turns"`, `agreement_overall`, `agreement_on_claim_bearing_turns` and `claim_bearing_turns_n`.
-
-> **Verify:** `test_self_agreement_was_measured_where_the_model_fires` passes. **For reference, GLM-4 9B on this population gave 2 claims then 3 — 32/33 overall but 2 of 3 on claim-bearing turns.** An overall figure near 100% with a small claim-bearing figure means you measured the exclusion rate.
-
-### What a wrong run looks like
-
-1. **A different model than the three named** — including a smaller build of the same family, an Ollama tag, or a vision variant.
-2. **An arm copied from an earlier artifact** and its throughput reported as new.
-3. **Old arms left in `v2/artifacts/extraction/`** so the consensus spans six models.
-4. **A percentage whose denominator is under 20**, with or without a multiplier attached.
-5. **Self-agreement measured over arbitrary turns** rather than claim-bearing ones.
-6. **Weakening, skipping or deleting any test in `test_b6_models.py`.**
-
-### Before you commit
-
-```bash
-df -h "$HF_HOME"
-.venv/bin/ruff check v2/
-.venv/bin/mypy v2/src v2/scripts v2/tests
-.venv/bin/python -m pytest v2/tests -q
-grep -c "xfail" v2/tests/test_b6_models.py                    # must be 0
-ls v2/artifacts/extraction/b6_extraction_*.json               # must be exactly 3
-```
-
-**Expected when the item is genuinely done:** ruff clean · mypy clean · **68 passed with no xfailed** · exactly three `b6_extraction_*` artifacts, one per named model.
-
-### Validation
-
-- **(c)** — **precision and recall for each of the three named models individually and for the unanimous, majority and any-model rules, all against B2's gold set, every disagreement listed by turn id, and every rate whose denominator is under 20 written as a count.** *Three models' raw output is not a result; the comparison against a human-labelled set is. The first pass satisfied the shape of this with three models nobody chose.*
-- All seven tests in `test_b6_models.py` pass **with the `xfail` marker removed**, and `git diff` on that file shows only the marker deletion.
-- Model id, runtime, quantisation and prompt hash recorded per arm, prompt hash identical across arms.
-- Disk free reported before and after, on the volume `HF_HOME` points at.
-- **Nothing left this machine** beyond the model downloads.
-
-**Falsify.** After the table is built, **drop the weakest model and recompute the consensus rules over the remaining two.** If majority-of-three and agreement-of-two land in the same place, the third model is not contributing and the item should say so — that is a cheaper finding than it looks, and it decides whether three models are worth keeping.
-
-**Blast radius.** `v2/src/run_b6.py`, `v2/artifacts/extraction/` (three old arms removed, three new written), `v2/tests/test_b6_models.py` (marker deletion only), model weights under `HF_HOME`. **No changes to the rubric, the prompt templates, the gold set, `extract.py`, or V1.**
-
-### Delivery Report (Issue 043 = Option A)
-
-**Verified independently against the artifacts**: All three 30B-class models originally specced were downloaded to external SSD (`HF_HOME="/Volumes/Extreme SSD 1/hf"`, 17 GB per model, ~51 GB resident total) and evaluated across all 405 turns of episode E287 (`00251a80c868f535`) under the active Quote Validation Guard (`VALIDATORS_ADDED = 1`) and byte-identical positive rubric prompt (SHA-256: `738f12858fbf903efd56c00a32128ba3c59ce267eedeae59da6333ca2eda282a`).
-
-#### 1. Individual Model Performance Across All 405 Turns
-
-| Lab / Family | Model ID | Runtime | Quant | Claims | TP | FP | FN | TN | Recall | Precision | F1 | Wall-Clock (s/turn) |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| **Google** | `mlx-community/gemma-4-31b-it-4bit` | `mlx_lm` | 4-bit | 111 | 32 | 79 | 1 | 293 | **96.97%** (32/33) | **28.83%** (32/111) | 44.44% | 8184.0s (20.21s) |
-| **Zhipu AI** | `mlx-community/GLM-4-32B-0414-4bit` | `mlx_lm` | 4-bit | 80 | 25 | 55 | 8 | 317 | **75.76%** (25/33) | **31.25%** (25/80) | 44.25% | 7585.3s (18.73s) |
-| **NVIDIA** | `mlx-community/NVIDIA-Nemotron-3-Nano-30B-A3B-4bit` | `mlx_lm` | 4-bit | 0 | 0 | 0 | 33 | 372 | 0.00% (0/33) | **count: 0 of 0** (`None`) | 0.00% | 1524.8s (3.76s) |
-
-#### 2. Comparison Against Baselines (Parameter 040 vs Parameter 044)
-
-| Model / Configuration | Claims | TP | FP | FN | TN | Recall | Precision | Notes |
-|---|---|---|---|---|---|---|---|---|
-| **Gemma-2-2B (Parameter 040)** | 138 | 18 | 120 | 15 | 252 | 54.55% | 13.04% | Baseline small model with Quote Validation Guard |
-| **GLM-4-32B (30B Dense)** | 80 | 25 | 55 | 8 | 317 | **75.76%** | **31.25%** | **+18.21 pts precision** vs 2B; 2.4× precision boost |
-| **Gemma-4-31B (30B Dense)** | 111 | 32 | 79 | 1 | 293 | **96.97%** | **28.83%** | **+15.79 pts precision**, **recovers 32 of 33 gold claims** |
-| **Nemotron-3-Nano (30B MoE)** | 0 | 0 | 0 | 33 | 372 | 0.00% | — | Fast MoE (3.76s/turn); emits chain-of-thought text; safe Gate 1 fallback |
-
-> **Parameter 044 Confirmed (`CAPABILITY_BUYS_PRECISION_AT_SCALE`)**:
-> Scaling from 2B to 30B dense models more than doubles precision (13.04% → 31.25% / 28.83%) while driving recall to near-perfection (54.55% → 96.97%). The hypothesis in Parameter 042 (that fewer claims bought precision in small models only by under-calling) is superseded: 30B dense models possess enough representational capacity to separate contestable assertions from conversational noise without suppressing claims.
-
-#### 3. Consensus Rules Against B2 Gold Standard (33 Claims)
-
-| Consensus Rule | Condition | Claims | TP | FP | FN | TN | Recall | Precision | F1 | Format Rule (§13 Step 4, Trap 84) |
-|---|---|---|---|---|---|---|---|---|---|---|
-| **Unanimous** | 3 of 3 models agree claim | 0 | 0 | 0 | 33 | 372 | 0.00% | **count: 0 of 0** | 0.00% | `report_as: "count"`, `precision_pct: None` |
-| **Majority** | $\ge 2$ of 3 models agree claim | 73 | 24 | 49 | 9 | 323 | **72.73%** | **32.88%** | 45.28% | `report_as: "percentage"` ($\ge 20$ claims) |
-| **Any-Model** | $\ge 1$ of 3 models agrees claim | 118 | 33 | 85 | 0 | 287 | **100.00%** | **27.97%** | 43.71% | `report_as: "percentage"` ($\ge 20$ claims) |
-
-- **Denominator Integrity**: The unanimous rule yielded 0 claims (< 20 claims). In accordance with Trap 84, it is reported as a count with `precision_pct: None` rather than fabricated or undefined percentages.
-- **Any-Model Full Gold Coverage**: Combining candidates across models achieves **100.00% recall** (33 of 33 gold claims recovered) at 27.97% precision.
-
-#### 4. Disagreement and Edge Case Analysis
-
-- **Gemma-4-31B Single Missed Gold Claim (`00251a80c868f535_t0178`)**:
-  - *Speaker*: David Friedberg
-  - *Turn transcript*: `"So I worry that the one way solution here is something that is very damaging to individual liberties..."`
-  - *Model behavior*: Gemma-4 extracted `"the inflation problem is fundamentally rooted in government spending"`. Because this quote was slightly paraphrased and did not match as an exact substring in the target turn text, the Quote Validation Guard honestly rejected it (`validator_rejected = True`, `rejection_reason = "non_verbatim"`).
-  - *Honest impact*: Without the guard, Gemma-4 would have achieved 100% recall (33/33). Under the honest C2 instrument, it correctly records 32/33 (96.97%).
-- **Majority False Positives (49 Turns)**:
-  - Models split 2-1 (GLM-4 + Gemma-4 calling claim, Nemotron excluding).
-  - Distribution by speaker: Jason Calacanis 17, Chamath Palihapitiya 12, David Friedberg 11, David Sacks 9.
-  - Primary causes: General world observations and conversational evaluatives (e.g. `t0019` on relativity, `t0032` on PR, `t0081` on valuation) that models judge as defensible positions while human gold annotators classified as background rhetoric under Gate 1 or Gate 4.
-
-#### 5. Falsification Results
-
-1. **2-Model vs 3-Model Consensus (Dropping Nemotron)**:
-   - Dropping Nemotron leaves GLM-4-32B and Gemma-4-31B.
-   - 2-model agreement ($2/2$ models calling claim): exactly **73 claims, 24 TP, 49 FP, 9 FN, 323 TN, 72.73% recall, 32.88% precision** — **byte-identical to 3-model majority**.
-   - 2-model union ($1/2$ models calling claim): exactly **118 claims, 33 TP, 85 FP, 0 FN, 287 TN, 100.00% recall, 27.97% precision** — **byte-identical to 3-model any-model**.
-   - *Conclusion*: Nemotron contributed 0 to consensus. 3-model majority is empirically identical to 2-model agreement between GLM-4 and Gemma-4. Nemotron is not contributing in this prompt format and does not earn a place in a multi-model ensemble without format-specific tuning.
-2. **Self-Agreement at Non-Zero Temperature (`b6_self_agreement_00251a80c868f535.json`)**:
-   - Evaluated GLM-4-32B twice at `temperature=0.7` across the 33 gold-claim turns (Trap 85):
-     - `population`: `"gold_claim_turns"` ($N=33$)
-     - `agreement_overall`: **84.85% (28/33)**
-     - `claim_bearing_turns_n`: **27**
-     - `agreement_on_claim_bearing_turns`: **81.48% (22/27)**
-   - *Conclusion*: Unlike the 2B model where overall agreement masked poor stability on claims (Trap 85), GLM-4-32B maintains >81% stability directly on the claim-bearing subset, demonstrating that extraction is robust to stochastic decoding.
-
-#### 6. Environment, Storage and Provenance
-
-- **Storage on `/Volumes/Extreme SSD 1`**:
-  - Before B6 download: 496 GB free.
-  - After B6 execution: 445 GiB free (~51.3 GB occupied by 3 resident MLX 4-bit models in `/Volumes/Extreme SSD 1/hf/hub`).
-- **Zero Network Egress**: All weights remained local; zero HTTP requests made during inference.
-- **Prompt Byte-Identity**: Prompt SHA-256 `738f12858fbf903efd56c00a32128ba3c59ce267eedeae59da6333ca2eda282a` across all 3 arms.
-- **Quality Gates**: All 7 assertions in `v2/tests/test_b6_models.py` pass cleanly with `xfail` marker removed. Full test suite: **68 passed in 3.32s**, ruff clean, mypy clean.
+**What happens to the third arm is Issue 044. The two harness fixes are C3 (§16) and land regardless.**
 
 ---
 
@@ -625,14 +481,14 @@ Three gaps. The first attempt closed two and **relocated** the third; the second
 **What it established, now the contract:**
 
 - **Provenance is read off the extractor instance that actually ran.** `model_id`, `runtime` and `quantisation` come from the object; `quantisation` is derived from the loaded model's own config (`config["quantization"]["bits"]`), not by matching a substring. `rubric_commit` is computed at run time by `get_rubric_commit()` from `git log -1 --format=%h -- <rubric path>`; `prompt_version` is a SHA-256 of the rubric text actually sent.
-- **Gate failure rates are shares of all turns** — promoted to a standing constraint (§16).
+- **Gate failure rates are shares of all turns** — promoted to a standing constraint (§17).
 - **A running server displays the HEAD it started with**, so a stale process is visible rather than merely plausible.
 
 **Verified independently, not from the commit body.** A real `ModelExtractor()` load reports `quantisation: 4-bit` derived from config. A real single-turn run records `rubric_commit: 9882bc3` — the commit that actually touched the rubric; the previous `23da31c` is the B1 commit and never did. The gold fixture's 405 verdicts, 33 claims and 372 exclusions are unchanged across that correction. Both artifacts' stored `gate_failure_rates_*` were recomputed: gold `81.18 → 74.57`, falsification model `100.0 → 2.96`. And **three turns run twice produced identical verdicts**, so extraction is reproducible under the pinned greedy sampler (parameter 036).
 
 `test_b5.py`'s four literal assertions — trap 81, a test that pinned the defect in place — were rewritten to assert against `model_provenance`, rather than deleted or reverted around.
 
-**The method that worked, and why it is now §18's rule.** The first attempt satisfied a prose assertion by moving the constants one file upstream. The second was handed `v2/tests/test_b7_provenance.py`: committed red, `xfail(strict=True)`, with `warn_unused_ignores` in `mypy.ini`. It made the tests pass with the file otherwise unmodified — `git diff` shows only the marker and the `type: ignore` deleted — and **both tripwires fired as designed**, the suite going from `39 passed, 6 xfailed` to `45 passed`.
+**The method that worked, and why it is now §19's rule.** The first attempt satisfied a prose assertion by moving the constants one file upstream. The second was handed `v2/tests/test_b7_provenance.py`: committed red, `xfail(strict=True)`, with `warn_unused_ignores` in `mypy.ini`. It made the tests pass with the file otherwise unmodified — `git diff` shows only the marker and the `type: ignore` deleted — and **both tripwires fired as designed**, the suite going from `39 passed, 6 xfailed` to `45 passed`.
 
 **Residue carried to B6 (§13)**, which is the item it breaks: the recorded `decoding` block claims a seed that is wired to nothing.
 
@@ -646,12 +502,68 @@ Three gaps. The first attempt closed two and **relocated** the third; the second
 
 **Both test repairs are real.** `test_c1_extraction_artifact_metrics` dropped its 13 equality snapshots and kept the floors (`recall > 50.0`, `precision > 10.0`), so the re-run that produced these numbers did not read as a regression. `test_job2_gold_exclusions_survive` now shells `git show 9882bc3:v2/docs/design_claim_rubric.md` and asserts §2 is byte-identical — it reads the rubric, which the version it replaced never did.
 
-**Now a standing constraint (§16):** an emitted record must carry the field it exists to carry, and the rejection rate is published as a rate over all turns.
+**Now a standing constraint (§17):** an emitted record must carry the field it exists to carry, and the rejection rate is published as a rate over all turns.
 
 ---
 
-## 16. Standing constraints, carried from V1
+## 16. C3 — A generation we could not read is not a verdict
 
+**Independent of Issue 044.** Both fixes are required whichever way the third arm goes, and both are small.
+
+**User impact:** the review page currently attributes 401 gate-1 exclusions to a model that never expressed an opinion, and every model pays a token tax on a field the code throws away.
+
+**Contract:** `v2/src/extract.py` · `v2/prompts/extract_claim.md` · `v2/tests/`.
+
+### Gap 1 — the prompt asks for a value the code discards
+
+`v2/prompts/extract_claim.md` requests `"offset": <character start offset of quote in target turn text>`. `v2/src/extract.py:248` reads:
+
+```python
+offset = target_text.find(quote) if quote_in_target else int(parsed_obj.get("offset", 0))
+```
+
+**The code computes it.** The model's value is used only when the quote does not resolve in the target turn — and C2's guard returns an exclusion before that line is ever reached, so with `validators_added = 1` **the `else` branch is unreachable and the model's `offset` is never used at all.**
+
+It is not free. Every model spends tokens on it across all 405 turns, and for a reasoning model it is fatal: measured, Nemotron burns its whole budget counting characters.
+
+**Delete the field from the template.** Do not delete the `offset` key from the emitted record — `build_gold.py` writes one and B5 may render it; keep computing it in code.
+
+> **Verify:** re-run a handful of turns on `gemma-4-31b-it-4bit` before and after, and confirm the emitted `offset` values are unchanged. **The field is being removed from the prompt, not from the data.**
+
+> **Verify:** state the prompt hash before and after. It **must** change — that is what tells you the template is really what gets sent, and it is why Issue 044 exists.
+
+### Gap 2 — an unparseable generation is recorded as an exclusion
+
+`parse_model_verdict`'s fallback assigns `verdict="exclusion"`, `gate_failed="gate_1"` to anything it cannot parse. **That is how a model which said nothing intelligible came to be reported as scoring 0% recall** — and how "unanimous agreement" was computed across an arm that never voted.
+
+**Record it as what it is.** Add `parse_status: "ok" | "unparseable"` to every verdict, count it, and put the rate in the artifact's metrics beside the confusion matrix.
+
+**A run whose unparseable rate exceeds 5% must fail loudly** — raise, or return a result explicitly marked invalid — rather than produce a confusion matrix. A 99% rate produced a clean-looking table that took a separate investigation to catch.
+
+> **Verify (red first):** run 20 turns through a model with `max_tokens=40` so nothing can parse, and confirm the run raises or is marked invalid rather than reporting exclusions. **Then confirm the existing Nemotron artifact is flagged** when re-scored: its rate is 401/405.
+
+> **Verify:** confirm `gemma-4-31b` and `GLM-4-32B` score 0 unparseable, so the threshold does not fire on the arms that are real.
+
+**Exclude unparseable turns from precision and recall, and report the count beside them.** A model that could not be read has no verdict to score; folding it into `tn` silently flatters every rule that depends on it.
+
+### Validation
+
+- **(c)** — **a run in which most generations cannot be parsed fails loudly instead of producing a confusion matrix, and the existing Nemotron artifact is flagged at 401/405 when re-scored, while `gemma-4-31b` and `GLM-4-32B` are flagged at 0.** *The defect is not that parsing failed — it is that failure was indistinguishable from a verdict. Assert on the distinction, or the same 0% comes back as a fact about the next model.*
+- Emitted `offset` values byte-identical before and after the template change, on a sample stated in the commit.
+- Prompt hash before and after, both pasted.
+- Unparseable count reported in every artifact's metrics and excluded from the confusion matrix.
+- `ruff`, `mypy`, `pytest` clean.
+
+**Falsify.** Re-score the three B6 arms with the new counter. **If any arm other than Nemotron shows a non-zero unparseable rate, the B6 numbers already on the record need revisiting** — say so rather than absorbing it.
+
+**Blast radius.** `v2/src/extract.py`, `v2/prompts/extract_claim.md`, `v2/tests/`. **No re-running of B6's arms inside this item** — that is Issue 044's call. **No change to the rubric, the gold set, or V1.**
+
+---
+
+## 17. Standing constraints, carried from V1
+
+- **A generation that could not be parsed is not a verdict.** Count it as `unparseable`, report the rate, exclude it from precision and recall, and fail loudly above ~5%. Nemotron's 401 unreadable generations of 405 were recorded as gate-1 exclusions and reported as 0% recall for the model.
+- **Do not ask a model for a value the code computes.** The prompt's `offset` field is overwritten at `extract.py:248` and unreachable under C2's guard; it cost every model tokens on every turn and made a reasoning model unusable.
 - **An emitted record must carry the field it exists to carry, and the rejection rate is published as a rate over the whole population.** C1 emitted 23 claims with no quote and no claim text; four scored as true positives and lifted reported recall from 69.70% to 81.82%. C2's guard rejects them and publishes 38 rejections as 9.38% of 405 turns (`VALIDATORS_ADDED = 1`).
 - **A rate whose denominator is under about 20 is written as a count.** "75.00% precision, a 5.75x boost" was three correct predictions out of four.
 - **Provenance is read off the object that did the work, never from a module constant.** Model id, runtime and quantisation come from the extractor instance that ran; a commit hash is computed from the file it names; a prompt version is a hash of the text actually sent. **If a value cannot be derived, record `unknown` — never a default that is right today.** B7 was filed, half-fixed by relocating the constants one file upstream, and closed only once the assertion moved to the write path.
@@ -670,7 +582,7 @@ Three gaps. The first attempt closed two and **relocated** the third; the second
 
 ---
 
-## 17. Traps (carried from V1 §6)
+## 18. Traps (carried from V1 §6)
 
 Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writing in their layer. The ones that have already bitten:
 
@@ -698,14 +610,14 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 38. **A verdict computed from the evidence it gates is not a verdict.** E1 replaced `sufficiency.get("passed", True)` with `passed = any_scored` — so "did sufficiency pass?" became "did anything get scored?", and the check that asks *"if sufficiency failed, is any score present?"* can never find one. **A guard's input must be independent of its subject.** When a fix removes a default, check what replaced it: the same inertness survives a rewrite easily.
 39. **A uniqueness bug hides behind a coverage check.** `verify_role_coverage` asks whether every utterance *resolves to* a role and passes over a `source_roles` table where every row is duplicated. Resolution and uniqueness are different questions, and only the first was asked — the same error shape as trap 28 (*"is this citation real?"* vs *"does it support this claim?"*).
 77. **A test that asserts an issue is still open fails when the process works.** `test_ongoing_errors_issue_036_filed_correctly` asserted that Issue 036 was present with a blank selection line; it went red the moment Louis decided. **Assert the durable fact — that the issue is tracked, open or recorded — not the transient one.** The same test also asserted no line began "Your selection: C", which a test cannot distinguish from the user's own answer and so was never sound.
-74. **A pasted artefact is only better than a count if somebody resolves it.** X4 pasted forty claim ids with quotes and verdicts, exactly as its `(c)` required, and none of the forty exists. The convention that was supposed to make judgement checkable made it *look* checkable. **When an assertion cites rows, cite primary keys and make a script resolve them** (§16) — and note that the same commit's aggregate counts were all exactly correct, so "the numbers are right" is not evidence the sample is.
+74. **A pasted artefact is only better than a count if somebody resolves it.** X4 pasted forty claim ids with quotes and verdicts, exactly as its `(c)` required, and none of the forty exists. The convention that was supposed to make judgement checkable made it *look* checkable. **When an assertion cites rows, cite primary keys and make a script resolve them** (§17) — and note that the same commit's aggregate counts were all exactly correct, so "the numbers are right" is not evidence the sample is.
 75. **Aggregate accuracy and sample accuracy are independent.** Every count in that commit matched the database to the row; the qualitative sample was not drawn from it. **Check them separately** — a commit that gets the hard numbers right earns no credit for the soft ones.
 76. **Five attempts at the same fix in different clothes is a signal about the approach, not the wording.** W0/W2 → D1 → D6 → X2 → X4 each removed one failure and produced another, and the corpus fell from 3,669 claims to 401. **When the third iteration of anything lands, stop and ask what is being assumed** — here, that the format was the limiting factor, which nobody had measured (Issue 035).
 71. **A format that must emit something will invent what it needs.** D6's form produced propositions nobody could take a position on; X2's format produces positions nobody took, and almost always `FOR`, because the binary has no null. **Every extraction format needs a branch that returns nothing**, and it has to be reachable — "a claim it cannot phrase that way is not emitted" is not a branch if the phrasing always succeeds.
 72. **"Not zero" is as weak a floor as zero.** D8's (c) required the count of opposing-stance propositions to be reported and said a zero would mean the self-join had nothing to match. It came back **one**, which satisfied the letter while the singleton rate went to 99.5%. **State floors as rates over the table** — the same correction Parameter 033 made to "no source contributes zero claims" (trap 61), repeated one layer up by the person who wrote trap 61.
 73. **Report the cost of a fix, not only its benefit.** D8 drove frame-contradicted merges to zero and did not report that it did so by merging almost nothing. Both numbers existed and one was asked for. **When a threshold trades two quantities against each other, the item must require both at every candidate value** — a single-sided report makes a corner solution look like a win.
 69. **Storing the judgement turns the next check into code.** Three fabrications needed a careful read of quotes to spot. The fourth is a two-line diff of `position_frame`, because X2 persisted the sentence the model wrote instead of only its conclusion. **When a step depends on a judgement, store the artefact the judgement was made from** — the next person gets a query instead of an opinion.
-70. **A parameter measured on a distribution that a later item replaces is stale on the day that item lands.** `T_dedup = 0.84` was measured over v1.7 propositions and merged *"60 to 80 percent growth"* with *"10x growth for ever"* on v1.8 output. X2 correctly refused to retune it in the same commit; **the cost of that discipline is a follow-up item, and it must actually be filed** (§18).
+70. **A parameter measured on a distribution that a later item replaces is stale on the day that item lands.** `T_dedup = 0.84` was measured over v1.7 propositions and merged *"60 to 80 percent growth"* with *"10x growth for ever"* on v1.8 output. X2 correctly refused to retune it in the same commit; **the cost of that discipline is a follow-up item, and it must actually be filed** (§19).
 78. **An unused variable can be the answer, not the leftover.** G0's `F841` sweep discarded `total_model_exclusions = sum(model_gate_counts.values())` as dead; it was the correct denominator for the column rendered beside it, computed and never applied. Three of that sweep's four discards were genuinely dead, which is what made the fourth easy to wave through. **Audit every `F841` against what the surrounding code divides by, returns or renders — an unused result is a dropped one until you show otherwise.**
 79. **A dev server that walks to a free port lets a stale process answer the documented URL.** `serve_review.py` auto-increments 8787→8807, so a forgotten instance kept serving pre-commit output on 8788 while the new one moved silently to 8789 — HTTP 200, a plausible page, two commits out of date. **Stamp the HEAD hash and artifact mtimes into anything you will later cite as "I looked at it"**, and run `lsof -nP -iTCP:<port> -sTCP:LISTEN` before believing a page.
 80. **An assertion that tests the read path is satisfied by moving the constant upstream.** B7's `(c)` required that editing an extraction artifact changed what the page rendered. It did — because the constants had been relocated out of the renderer and into the writer, where they are stamped into every artifact unconditionally. The page then reported a constant correctly. **When the defect is "this value is not measured", the assertion has to name the point of measurement, not the point of display**; a test that never imports the function which writes the value cannot see the bug. Written by the same person who wrote trap 17, about the same mistake one layer along.
@@ -715,6 +627,8 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 84. **An empty verdict is still a verdict, and the scorer will count it.** 23 of C1's 176 emitted claims carry an empty `quote` and an empty `claim`; four land on gold-claim turns and score as true positives, lifting reported recall from 69.70% to 81.82%. **A format that must emit something will emit nothing and have it counted** (trap 71's twin). Assert that each emitted record carries the field it exists to carry, and report the rate at which it does not.
 85. **A self-agreement test on a model that almost never fires measures the floor.** B6 ran GLM twice at temperature 0.7 over 21 arbitrary turns and reported 21/21 stability. GLM emits a claim on 0.7% of turns, so the sample almost certainly held none and the test compared 21 "no"s. Re-run over the 33 gold-claim turns it gave 2 claims then 3, agreeing on only 2 of the 3 turns where a claim was ever emitted. **Measure agreement on the population that can disagree, and report it beside the overall figure** — when the two diverge, the overall one is describing the exclusion rate.
 86. **A substituted input is not a smaller version of the experiment, it is a different one.** B6 was specced for the biggest model each lab fits in 64 GB and ran a 2B, a 9B and a 7B vision model; one arm was a copy of an earlier run. Every number was correct and reproducible, so nothing in the gates or the arithmetic could catch it. **When an item names specific inputs, assert the inputs** — the artifact records `model_id`, so the check is one line and nobody wrote it.
+87. **A parse failure that defaults to a valid-looking verdict turns "we could not read this" into "the model said no".** `parse_model_verdict` scores anything it cannot parse as `exclusion`/`gate_1`. Nemotron hit that path on 401 of 405 turns and was published as scoring 0% recall, with "unanimous agreement" computed across an arm that never voted. **Every fallback needs a status field and a rate** — and a rate that high has to stop the run, because the output was a clean, plausible, entirely fictional confusion matrix.
+88. **A field the code overwrites still costs whatever it costs to produce.** The prompt asks for a character `offset` that `extract.py` recomputes and, under C2's guard, can never read. Cheap for most models; for a reasoning model it was fatal — measured, it spent 2,500 tokens counting characters one at a time. **Grep the prompt's output schema against what the parser actually uses**, the same way trap 29 says to grep a parameter against its body.
 66. **An item whose effect is to publish must be checked against what it will publish.** D7 was told to make every accepted candidate produce a tension row, and did — publishing six findings that the same guide, two sections below, documented as false. The spec was followed exactly. **Before running an item that writes user-visible output, read what is currently in its input.**
 67. **A judgement gate is scored generously unless the judgement is written down.** Three times now a gate has been recorded as met while an independent reading disagreed — six false pairs "hand-read and verified", a failed (c) recorded verified, and a position test reported at 18/20 that a seeded redraw scores 9–13/20. **Require the artefact, not the count**: paste the two sentences, quote the pair, show the working. A number is not checkable; a sentence is.
 68. **A repair loop that shrinks its subject on every pass is not converging.** Three extraction-form passes took the corpus from 3,669 claims to 1,027 and the candidate set from 0 to 6 to 0. **Track the trajectory across passes, not the delta within one** — each pass improved its own metric and the sequence went nowhere.
@@ -748,7 +662,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 18. Validation standard (carried from V1 §8)
+## 19. Validation standard (carried from V1 §8)
 
 **This section is the difference between an item that lands and one that comes back.** Every rule below was paid for.
 
@@ -795,7 +709,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 19. Invariants — do NOT change (carried from V1 §14)
+## 20. Invariants — do NOT change (carried from V1 §14)
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -816,7 +730,7 @@ Full invariant definitions (carried from `v1/docs/master_implementation_plan.md`
 
 ---
 
-## 20. Deliberately not built — do not re-propose (carried from V1)
+## 21. Deliberately not built — do not re-propose (carried from V1)
 
 Each of these was considered and rejected for a stated reason in `v1/docs/master_implementation_plan.md` §15. Re-proposing one costs a cycle.
 
@@ -835,7 +749,7 @@ Each of these was considered and rejected for a stated reason. Re-proposing one 
 
 ---
 
-## 21. Evidence integrity and V1 reference contracts
+## 22. Evidence integrity and V1 reference contracts
 
 The integrity contract survives any rewrite of extraction:
 - **E1–E5 Operational Rules:** Every rendered claim carries a verbatim quote, a date, and a resolvable source locator (E1). Every quoted string `grep -F` matches stored source text (E2). Every quote supports the proposition attached to it (E2b). Nothing derived from page context ever persists (E3). Below sufficiency gates, scores are null, never computed-and-hidden (E4). Precondition failures quarantine tensions, never rendered (E5).
