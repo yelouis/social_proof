@@ -1,0 +1,1219 @@
+{
+  "sample_size": 20,
+  "worst_axis": "contestability",
+  "worst_axis_agreement_pct": 73.3,
+  "axis_analysis": {
+    "voice": {
+      "axis": "voice",
+      "varied_prompt_cross_model_agreement_pct": 80.0,
+      "varied_agreed_pairs": 12,
+      "total_pairs": 15
+    },
+    "target": {
+      "axis": "target",
+      "varied_prompt_cross_model_agreement_pct": 100.0,
+      "varied_agreed_pairs": 15,
+      "total_pairs": 15
+    },
+    "propositionality": {
+      "axis": "propositionality",
+      "varied_prompt_cross_model_agreement_pct": 93.3,
+      "varied_agreed_pairs": 14,
+      "total_pairs": 15
+    },
+    "contestability": {
+      "axis": "contestability",
+      "varied_prompt_cross_model_agreement_pct": 73.3,
+      "varied_agreed_pairs": 11,
+      "total_pairs": 15
+    },
+    "typing": {
+      "axis": "typing",
+      "varied_prompt_cross_model_agreement_pct": 93.3,
+      "varied_agreed_pairs": 14,
+      "total_pairs": 15
+    },
+    "decontextualisation": {
+      "axis": "decontextualisation",
+      "varied_prompt_cross_model_agreement_pct": 80.0,
+      "varied_agreed_pairs": 12,
+      "total_pairs": 15
+    },
+    "fidelity": {
+      "axis": "fidelity",
+      "varied_prompt_cross_model_agreement_pct": 93.3,
+      "varied_agreed_pairs": 14,
+      "total_pairs": 15
+    },
+    "granularity": {
+      "axis": "granularity",
+      "varied_prompt_cross_model_agreement_pct": 93.3,
+      "varied_agreed_pairs": 14,
+      "total_pairs": 15
+    }
+  },
+  "glm_varied": [
+    {
+      "turn_id": "00251a80c868f535_t0007",
+      "speaker": "Jason Calacanis",
+      "quote": "He is a heterodox thinker in science",
+      "claim": "Eric Weinstein is a heterodox thinker in science",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 1,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Direct personal assertion in own voice about the individual",
+        "target_reason": "About an external individual and their intellectual characteristics",
+        "propositionality_reason": "Clear predicate relating subject (Eric Weinstein) to attribute (heterodox thinker)",
+        "contestability_reason": "Mildly contestable - some might disagree with the characterization",
+        "typing_reason": "Clear evaluative type - making a judgment about someone's thinking",
+        "decontextualisation_reason": "Unresolved referent - 'He' doesn't specify who",
+        "fidelity_reason": "Standalone claim strictly entails from the source quote",
+        "granularity_reason": "Single clear proposition about one person's characteristics"
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0007\",\n  \"voice\": 2,\n  \"voice_reason\": \"Direct personal assertion in own voice about the individual\",\n  \"target\": 2,\n  \"target_reason\": \"About an external individual and their intellectual characteristics\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"Clear predicate relating subject (Eric Weinstein) to attribute (heterodox thinker)\",\n  \"contestability\": 1,\n  \"contestability_reason\": \"Mildly contestable - some might disagree with the characterization\",\n  \"typing\": 2,\n  \"typing_reason\": \"Clear evaluative type - making a judgment about someone's thinking\",\n  \"decontextualisation\": 0,\n  \"decontextualisation_reason\": \"Unresolved referent - 'He' doesn't specify who\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"Standalone claim strictly entails from the source quote\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"Single clear proposition about one person's characteristics\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 27.84
+    },
+    {
+      "turn_id": "00251a80c868f535_t0009",
+      "speaker": "David Friedberg",
+      "quote": "And over time, you know, the point is similar to what Cratio has said, like so much of science has kind of followed this sheet like mentality where everyone has to line up, agree to the same general theory or you get outcasts, you don't get great. Funding, you don't get 10 -year, you don't get jobs, you don't get invited to do lectures, you have to follow the mainstream and science for your outcasts, and it used to be the science, but that's true.",
+      "claim": "So much of science has followed a mentality where everyone has to line up, agree to the same general theory or you get outcasts, you don't get great funding, jobs, or invitations to lectures, and you have to follow the mainstream in science.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "David Friedberg directly asserts his view about scientific community dynamics without hedging or attribution.",
+        "target_reason": "The claim concerns the external world of scientific community practices and funding structures, not show mechanics.",
+        "propositionality_reason": "The claim makes a clear relational assertion about scientific community dynamics with a predicate ('has followed a mentality')",
+        "contestability_reason": "This is a substantially contested claim about scientific community practices that could reasonably be disputed by those who believe science operates differently.",
+        "typing_reason": "The claim fits cleanly into the 'evaluative' category as a judgment about scientific community practices.",
+        "decontextualisation_reason": "The standalone claim resolves all indexicals and temporal references, making it fully understandable without context.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the source quote without adding unsupported specificity.",
+        "granularity_reason": "The claim presents a single coherent assertion about scientific community practices without tangling multiple distinct claims."
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0009\",\n  \"voice\": 2,\n  \"voice_reason\": \"David Friedberg directly asserts his view about scientific community dynamics without hedging or attribution.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns the external world of scientific community practices and funding structures, not show mechanics.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"The claim makes a clear relational assertion about scientific community dynamics with a predicate ('has followed a mentality')\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"This is a substantially contested claim about scientific community practices that could reasonably be disputed by those who believe science operates differently.\",\n  \"typing\": 2,\n  \"typing_reason\": \"The claim fits cleanly into the 'evaluative' category as a judgment about scientific community practices.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim resolves all indexicals and temporal references, making it fully understandable without context.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is strictly entailed by the source quote without adding unsupported specificity.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim presents a single coherent assertion about scientific community practices without tangling multiple distinct claims.\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 31.84
+    },
+    {
+      "turn_id": "00251a80c868f535_t0010",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "he's more right on the substance of what he's saying than he is wrong",
+      "claim": "The individual discussed is more right on the substance of what he is saying than he is wrong.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 0,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Chamath Palihapitiya directly asserts his opinion using 'he's more right...'",
+        "target_reason": "The claim concerns the substance of what someone said, an external evaluation",
+        "propositionality_reason": "Clear relational structure comparing rightness and wrongness",
+        "contestability_reason": "This is a tautology - by definition, someone cannot be more wrong than right and vice versa",
+        "typing_reason": "Clear evaluative judgment about the substance of someone's statements",
+        "decontextualisation_reason": "Contains unresolved referent 'the individual discussed'",
+        "fidelity_reason": "The standalone claim strictly follows from the source quote",
+        "granularity_reason": "Single evaluative proposition about someone's statements"
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0010\",\n  \"voice\": 2,\n  \"voice_reason\": \"Chamath Palihapitiya directly asserts his opinion using 'he's more right...'\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns the substance of what someone said, an external evaluation\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"Clear relational structure comparing rightness and wrongness\",\n  \"contestability\": 0,\n  \"contestability_reason\": \"This is a tautology - by definition, someone cannot be more wrong than right and vice versa\",\n  \"typing\": 2,\n  \"typing_reason\": \"Clear evaluative judgment about the substance of someone's statements\",\n  \"decontextualisation\": 0,\n  \"decontextualisation_reason\": \"Contains unresolved referent 'the individual discussed'\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim strictly follows from the source quote\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"Single evaluative proposition about someone's statements\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 28.59
+    },
+    {
+      "turn_id": "00251a80c868f535_t0014",
+      "speaker": "David Friedberg",
+      "quote": "Everyone was starting with theory on where the COVID came from",
+      "claim": "Everyone was starting with a theory on where COVID-19 originated.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 1,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Direct, committed personal assertion about the starting point of COVID origin theories",
+        "target_reason": "Focuses on external world events (COVID origin theories)",
+        "propositionality_reason": "Clear relational structure: 'Everyone was starting with a theory on where COVID-19 originated'",
+        "contestability_reason": "Mildly contestable - some might argue about the universality of 'everyone'",
+        "typing_reason": "Clear fit as a contested fact (disputed empirical claim about COVID origins)",
+        "decontextualisation_reason": "Fully resolved statement that stands alone without indexicals",
+        "fidelity_reason": "Strict entailment of the source quote with no added specificity",
+        "granularity_reason": "Single, atomic proposition about COVID origin theories"
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0014\",\n  \"voice\": 2,\n  \"voice_reason\": \"Direct, committed personal assertion about the starting point of COVID origin theories\",\n  \"target\": 2,\n  \"target_reason\": \"Focuses on external world events (COVID origin theories)\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"Clear relational structure: 'Everyone was starting with a theory on where COVID-19 originated'\",\n  \"contestability\": 1,\n  \"contestability_reason\": \"Mildly contestable - some might argue about the universality of 'everyone'\",\n  \"typing\": 2,\n  \"typing_reason\": \"Clear fit as a contested fact (disputed empirical claim about COVID origins)\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"Fully resolved statement that stands alone without indexicals\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"Strict entailment of the source quote with no added specificity\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"Single, atomic proposition about COVID origin theories\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 28.32
+    },
+    {
+      "turn_id": "00251a80c868f535_t0015",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "a level of corruption in a very narrow specific realm of science, which is the funding and grant approval apparatus",
+      "claim": "There is a level of corruption in a very narrow specific realm of science, specifically the funding and grant approval apparatus.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Chamath Palihapitiya makes a direct assertion in his own voice about corruption in science funding.",
+        "target_reason": "The claim concerns the external world, specifically the realm of scientific funding and grant approval apparatus.",
+        "propositionality_reason": "The claim asserts a clear relationship between corruption and a specific scientific funding domain.",
+        "contestability_reason": "The existence and level of corruption in scientific funding is a genuinely disputed topic that could be challenged.",
+        "typing_reason": "This is a clear causal claim about the nature of corruption in a specific scientific funding system.",
+        "decontextualisation_reason": "The standalone claim is fully resolved and understandable without reference to the surrounding conversation.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the source quote, preserving its original meaning.",
+        "granularity_reason": "The claim presents a single, coherent assertion about corruption in scientific funding."
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0015\",\n  \"voice\": 2,\n  \"voice_reason\": \"Chamath Palihapitiya makes a direct assertion in his own voice about corruption in science funding.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns the external world, specifically the realm of scientific funding and grant approval apparatus.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"The claim asserts a clear relationship between corruption and a specific scientific funding domain.\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"The existence and level of corruption in scientific funding is a genuinely disputed topic that could be challenged.\",\n  \"typing\": 2,\n  \"typing_reason\": \"This is a clear causal claim about the nature of corruption in a specific scientific funding system.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim is fully resolved and understandable without reference to the surrounding conversation.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is strictly entailed by the source quote, preserving its original meaning.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim presents a single, coherent assertion about corruption in scientific funding.\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 29.85
+    },
+    {
+      "turn_id": "00251a80c868f535_t0016",
+      "speaker": "David Friedberg",
+      "quote": "if you do not part of the mainstream you get excluded and because everyone has to now think in the same way you don't have heterodox thinking you don't have outside of the scope thinking which means we're not pushing the envelope and discovering new things anymore",
+      "claim": "If you are not part of the mainstream, you get excluded, and because everyone has to think in the same way, you don't have heterodox thinking, you don't have outside-of-the-scope thinking, which means we're not pushing the envelope and discovering new things anymore.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Direct personal assertion without hedging or distancing",
+        "target_reason": "Focuses on scientific stagnation in America, external to the show",
+        "propositionality_reason": "Clear causal mechanism: mainstream exclusion \u2192 lack of heterodox thinking \u2192 lack of discovery",
+        "contestability_reason": "Substantially contestable causal theory about scientific stagnation",
+        "typing_reason": "Clear causal theory about scientific dynamics",
+        "decontextualisation_reason": "Fully resolved statement with no unresolved referents or indexicals",
+        "fidelity_reason": "Strict semantic entailment from the source quote",
+        "granularity_reason": "Single causal claim about scientific stagnation"
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0016\",\n  \"voice\": 2,\n  \"voice_reason\": \"Direct personal assertion without hedging or distancing\",\n  \"target\": 2,\n  \"target_reason\": \"Focuses on scientific stagnation in America, external to the show\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"Clear causal mechanism: mainstream exclusion \u2192 lack of heterodox thinking \u2192 lack of discovery\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"Substantially contestable causal theory about scientific stagnation\",\n  \"typing\": 2,\n  \"typing_reason\": \"Clear causal theory about scientific dynamics\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"Fully resolved statement with no unresolved referents or indexicals\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"Strict semantic entailment from the source quote\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"Single causal claim about scientific stagnation\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 28.52
+    },
+    {
+      "turn_id": "00251a80c868f535_t0017",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "Just said differently, there's probably a lot of incrementalism in 2026 that didn't exist in 1926.",
+      "claim": "There will be a lot of incrementalism in 2026 that didn't exist in 1926.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 1,
+        "typing": 1,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Chamath Palihapitiya directly asserts his view using 'Just said differently, there's probably...'",
+        "target_reason": "The claim concerns historical comparison of incrementalism between 1926 and 2026, external to the show.",
+        "propositionality_reason": "The claim contains a clear subject ('incrementalism') and predicate ('will be a lot of... that didn't exist') with temporal comparison.",
+        "contestability_reason": "The claim is mildly contestable as it involves a judgment about historical trends that could be debated.",
+        "typing_reason": "The claim is primarily a prediction (about future incrementalism) but also contains evaluative elements ('a lot of'), making it ambiguous between prediction and evaluative.",
+        "decontextualisation_reason": "The claim is fully resolved with clear reference to 1926 and 2026, requiring no contextual knowledge to understand.",
+        "fidelity_reason": "The standalone claim strictly entails the original quote, preserving the core meaning about incrementalism comparison between 1926 and 2026.",
+        "granularity_reason": "The claim presents a single, coherent assertion about historical incrementalism without combining multiple distinct claims."
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0017\",\n  \"voice\": 2,\n  \"voice_reason\": \"Chamath Palihapitiya directly asserts his view using 'Just said differently, there's probably...'\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns historical comparison of incrementalism between 1926 and 2026, external to the show.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"The claim contains a clear subject ('incrementalism') and predicate ('will be a lot of... that didn't exist') with temporal comparison.\",\n  \"contestability\": 1,\n  \"contestability_reason\": \"The claim is mildly contestable as it involves a judgment about historical trends that could be debated.\",\n  \"typing\": 1,\n  \"typing_reason\": \"The claim is primarily a prediction (about future incrementalism) but also contains evaluative elements ('a lot of'), making it ambiguous between prediction and evaluative.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The claim is fully resolved with clear reference to 1926 and 2026, requiring no contextual knowledge to understand.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim strictly entails the original quote, preserving the core meaning about incrementalism comparison between 1926 and 2026.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim presents a single, coherent assertion about historical incrementalism without combining multiple distinct claims.\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 32.19
+    },
+    {
+      "turn_id": "00251a80c868f535_t0019",
+      "speaker": "David Friedberg",
+      "quote": "where if you say stuff that's too far outside of the realm of the standard approach to things, your, chastise, your outcast, you're excluded.",
+      "claim": "In science, if you say stuff that's too far outside of the standard approach to things, you are chastised, outcast, and excluded.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "David Friedberg directly asserts a claim about scientific practice in his own voice without hedging.",
+        "target_reason": "The claim concerns the external world of scientific practice and norms, not show mechanics or industry self-reference.",
+        "propositionality_reason": "The claim makes a clear, relational assertion about consequences in scientific communities.",
+        "contestability_reason": "This describes a potentially controversial aspect of scientific culture that could be disputed by those who believe science is more open to radical ideas.",
+        "typing_reason": "This is a clear evaluative claim about scientific norms and practices.",
+        "decontextualisation_reason": "The standalone claim resolves all indexicals and is fully understandable without context.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the source quote, capturing its core meaning without addition.",
+        "granularity_reason": "The claim presents a single, coherent evaluative statement about scientific practice."
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0019\",\n  \"voice\": 2,\n  \"voice_reason\": \"David Friedberg directly asserts a claim about scientific practice in his own voice without hedging.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns the external world of scientific practice and norms, not show mechanics or industry self-reference.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"The claim makes a clear, relational assertion about consequences in scientific communities.\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"This describes a potentially controversial aspect of scientific culture that could be disputed by those who believe science is more open to radical ideas.\",\n  \"typing\": 2,\n  \"typing_reason\": \"This is a clear evaluative claim about scientific norms and practices.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim resolves all indexicals and is fully understandable without context.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is strictly entailed by the source quote, capturing its core meaning without addition.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim presents a single, coherent evaluative statement about scientific practice.\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 30.28
+    },
+    {
+      "turn_id": "00251a80c868f535_t0022",
+      "speaker": "Jason Calacanis",
+      "quote": "they copied how Friedberg actually runs in with it",
+      "claim": "China copied how Friedberg actually runs in with it",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 0,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 1,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Reporting an action ('they copied') without personal commitment",
+        "target_reason": "About external world event (China Olympics)",
+        "propositionality_reason": "Clear relational claim ('China copied how Friedberg runs')",
+        "contestability_reason": "Mildly contestable - could be debated but not highly controversial",
+        "typing_reason": "Clear causal claim ('China copied how Friedberg runs')",
+        "decontextualisation_reason": "Unresolved referent 'Friedberg' and unclear 'it'",
+        "fidelity_reason": "Standalone claim strictly follows from source quote",
+        "granularity_reason": "Single causal claim about copying behavior"
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0022\",\n  \"voice\": 0,\n  \"voice_reason\": \"Reporting an action ('they copied') without personal commitment\",\n  \"target\": 2,\n  \"target_reason\": \"About external world event (China Olympics)\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"Clear relational claim ('China copied how Friedberg runs')\",\n  \"contestability\": 1,\n  \"contestability_reason\": \"Mildly contestable - could be debated but not highly controversial\",\n  \"typing\": 2,\n  \"typing_reason\": \"Clear causal claim ('China copied how Friedberg runs')\",\n  \"decontextualisation\": 0,\n  \"decontextualisation_reason\": \"Unresolved referent 'Friedberg' and unclear 'it'\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"Standalone claim strictly follows from source quote\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"Single causal claim about copying behavior\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 27.48
+    },
+    {
+      "turn_id": "00251a80c868f535_t0030",
+      "speaker": "Jason Calacanis",
+      "quote": "the Chinese, the CCP is f***ing brilliant at PR.",
+      "claim": "The Chinese Communist Party is brilliant at public relations.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Direct personal assertion with strong conviction ('100% right', 'f***ing brilliant')",
+        "target_reason": "About external political entity (CCP) and its PR capabilities, not show mechanics",
+        "propositionality_reason": "Clear relational structure: subject (CCP) + predicate (is brilliant at PR)",
+        "contestability_reason": "Substantially contested position about political entity's capabilities",
+        "typing_reason": "Clear evaluative judgment about political entity's PR effectiveness",
+        "decontextualisation_reason": "Fully resolved statement with no pronouns or indexicals requiring context",
+        "fidelity_reason": "Standalone claim strictly entails the source quote's meaning",
+        "granularity_reason": "Single atomic claim about CCP's PR effectiveness"
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0030\",\n  \"voice\": 2,\n  \"voice_reason\": \"Direct personal assertion with strong conviction ('100% right', 'f***ing brilliant')\",\n  \"target\": 2,\n  \"target_reason\": \"About external political entity (CCP) and its PR capabilities, not show mechanics\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"Clear relational structure: subject (CCP) + predicate (is brilliant at PR)\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"Substantially contested position about political entity's capabilities\",\n  \"typing\": 2,\n  \"typing_reason\": \"Clear evaluative judgment about political entity's PR effectiveness\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"Fully resolved statement with no pronouns or indexicals requiring context\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"Standalone claim strictly entails the source quote's meaning\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"Single atomic claim about CCP's PR effectiveness\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 28.41
+    },
+    {
+      "turn_id": "00251a80c868f535_t0009",
+      "speaker": "David Friedberg",
+      "quote": "And over time, you know, the point is similar to what Cratio has said, like so much of science has kind of followed this sheet like mentality where everyone has to line up, agree to the same general theory or you get outcasts, you don't get great. Funding, you don't get 10 -year, you don't get jobs, you don't get invited to do lectures, you have to follow the mainstream and science for your outcasts, and it used to be the science, but that's true.",
+      "claim": "So much of science has followed a mentality where everyone has to line up, agree to the same general theory or you get outcasts, you don't get great funding, jobs, or invitations to lectures, and you have to follow the mainstream in science.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "David Friedberg directly asserts his view about scientific community dynamics without hedging or attribution.",
+        "target_reason": "The claim concerns the external world of scientific community practices and funding structures, not show mechanics.",
+        "propositionality_reason": "The claim makes a clear relational assertion about scientific community dynamics with a predicate ('has followed a mentality')",
+        "contestability_reason": "This is a substantially contested claim about scientific community practices that could reasonably be disputed by those who believe science operates differently.",
+        "typing_reason": "The claim fits cleanly into the 'evaluative' category as a judgment about scientific community practices.",
+        "decontextualisation_reason": "The standalone claim resolves all indexicals and temporal references, making it fully understandable without context.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the source quote without adding unsupported specificity.",
+        "granularity_reason": "The claim presents a single coherent assertion about scientific community practices without tangling multiple distinct claims."
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0009\",\n  \"voice\": 2,\n  \"voice_reason\": \"David Friedberg directly asserts his view about scientific community dynamics without hedging or attribution.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns the external world of scientific community practices and funding structures, not show mechanics.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"The claim makes a clear relational assertion about scientific community dynamics with a predicate ('has followed a mentality')\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"This is a substantially contested claim about scientific community practices that could reasonably be disputed by those who believe science operates differently.\",\n  \"typing\": 2,\n  \"typing_reason\": \"The claim fits cleanly into the 'evaluative' category as a judgment about scientific community practices.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim resolves all indexicals and temporal references, making it fully understandable without context.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is strictly entailed by the source quote without adding unsupported specificity.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim presents a single coherent assertion about scientific community practices without tangling multiple distinct claims.\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 31.91
+    },
+    {
+      "turn_id": "00251a80c868f535_t0016",
+      "speaker": "David Friedberg",
+      "quote": "if you do not part of the mainstream you get excluded and because everyone has to now think in the same way you don't have heterodox thinking you don't have outside of the scope thinking which means we're not pushing the envelope and discovering new things anymore",
+      "claim": "If you are not part of the mainstream, you get excluded, and because everyone has to think in the same way, you don't have heterodox thinking, you don't have outside-of-the-scope thinking, which means we're not pushing the envelope and discovering new things anymore.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Direct personal assertion without hedging or distancing",
+        "target_reason": "Focuses on scientific stagnation in America, external to the show",
+        "propositionality_reason": "Clear causal mechanism: mainstream exclusion \u2192 lack of heterodox thinking \u2192 lack of discovery",
+        "contestability_reason": "Substantially contestable causal theory about scientific stagnation",
+        "typing_reason": "Clear causal theory about scientific dynamics",
+        "decontextualisation_reason": "Fully resolved statement with no unresolved referents or indexicals",
+        "fidelity_reason": "Strict semantic entailment from the source quote",
+        "granularity_reason": "Single causal claim about scientific stagnation"
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0016\",\n  \"voice\": 2,\n  \"voice_reason\": \"Direct personal assertion without hedging or distancing\",\n  \"target\": 2,\n  \"target_reason\": \"Focuses on scientific stagnation in America, external to the show\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"Clear causal mechanism: mainstream exclusion \u2192 lack of heterodox thinking \u2192 lack of discovery\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"Substantially contestable causal theory about scientific stagnation\",\n  \"typing\": 2,\n  \"typing_reason\": \"Clear causal theory about scientific dynamics\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"Fully resolved statement with no unresolved referents or indexicals\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"Strict semantic entailment from the source quote\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"Single causal claim about scientific stagnation\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 28.52
+    },
+    {
+      "turn_id": "00251a80c868f535_t0017",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "Just said differently, there's probably a lot of incrementalism in 2026 that didn't exist in 1926.",
+      "claim": "There will be a lot of incrementalism in 2026 that didn't exist in 1926.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 1,
+        "typing": 1,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Chamath Palihapitiya directly asserts his view using 'Just said differently, there's probably...'",
+        "target_reason": "The claim concerns historical comparison of incrementalism between 1926 and 2026, external to the show.",
+        "propositionality_reason": "The claim contains a clear subject ('incrementalism') and predicate ('will be a lot of... that didn't exist') with temporal comparison.",
+        "contestability_reason": "The claim is mildly contestable as it involves a judgment about historical trends that could be debated.",
+        "typing_reason": "The claim is primarily a prediction (about future incrementalism) but also contains evaluative elements ('a lot of'), making it ambiguous between prediction and evaluative.",
+        "decontextualisation_reason": "The claim is fully resolved with clear reference to 1926 and 2026, requiring no contextual knowledge to understand.",
+        "fidelity_reason": "The standalone claim strictly entails the original quote, preserving the core meaning about incrementalism comparison between 1926 and 2026.",
+        "granularity_reason": "The claim presents a single, coherent assertion about historical incrementalism without combining multiple distinct claims."
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0017\",\n  \"voice\": 2,\n  \"voice_reason\": \"Chamath Palihapitiya directly asserts his view using 'Just said differently, there's probably...'\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns historical comparison of incrementalism between 1926 and 2026, external to the show.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"The claim contains a clear subject ('incrementalism') and predicate ('will be a lot of... that didn't exist') with temporal comparison.\",\n  \"contestability\": 1,\n  \"contestability_reason\": \"The claim is mildly contestable as it involves a judgment about historical trends that could be debated.\",\n  \"typing\": 1,\n  \"typing_reason\": \"The claim is primarily a prediction (about future incrementalism) but also contains evaluative elements ('a lot of'), making it ambiguous between prediction and evaluative.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The claim is fully resolved with clear reference to 1926 and 2026, requiring no contextual knowledge to understand.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim strictly entails the original quote, preserving the core meaning about incrementalism comparison between 1926 and 2026.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim presents a single, coherent assertion about historical incrementalism without combining multiple distinct claims.\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 32.19
+    },
+    {
+      "turn_id": "00251a80c868f535_t0019",
+      "speaker": "David Friedberg",
+      "quote": "where if you say stuff that's too far outside of the realm of the standard approach to things, your, chastise, your outcast, you're excluded.",
+      "claim": "In science, if you say stuff that's too far outside of the standard approach to things, you are chastised, outcast, and excluded.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "David Friedberg directly asserts a claim about scientific practice in his own voice without hedging.",
+        "target_reason": "The claim concerns the external world of scientific practice and norms, not show mechanics or industry self-reference.",
+        "propositionality_reason": "The claim makes a clear, relational assertion about consequences in scientific communities.",
+        "contestability_reason": "This describes a potentially controversial aspect of scientific culture that could be disputed by those who believe science is more open to radical ideas.",
+        "typing_reason": "This is a clear evaluative claim about scientific norms and practices.",
+        "decontextualisation_reason": "The standalone claim resolves all indexicals and is fully understandable without context.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the source quote, capturing its core meaning without addition.",
+        "granularity_reason": "The claim presents a single, coherent evaluative statement about scientific practice."
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0019\",\n  \"voice\": 2,\n  \"voice_reason\": \"David Friedberg directly asserts a claim about scientific practice in his own voice without hedging.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns the external world of scientific practice and norms, not show mechanics or industry self-reference.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"The claim makes a clear, relational assertion about consequences in scientific communities.\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"This describes a potentially controversial aspect of scientific culture that could be disputed by those who believe science is more open to radical ideas.\",\n  \"typing\": 2,\n  \"typing_reason\": \"This is a clear evaluative claim about scientific norms and practices.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim resolves all indexicals and is fully understandable without context.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is strictly entailed by the source quote, capturing its core meaning without addition.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim presents a single, coherent evaluative statement about scientific practice.\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 30.28
+    },
+    {
+      "turn_id": "00251a80c868f535_t0030",
+      "speaker": "Jason Calacanis",
+      "quote": "the Chinese, the CCP is f***ing brilliant at PR.",
+      "claim": "The Chinese Communist Party is brilliant at public relations.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Direct personal assertion with strong conviction ('100% right', 'f***ing brilliant')",
+        "target_reason": "About external political entity (CCP) and its PR capabilities, not show mechanics",
+        "propositionality_reason": "Clear relational structure: subject (CCP) + predicate (is brilliant at PR)",
+        "contestability_reason": "Substantially contested position about political entity's capabilities",
+        "typing_reason": "Clear evaluative judgment about political entity's PR effectiveness",
+        "decontextualisation_reason": "Fully resolved statement with no pronouns or indexicals requiring context",
+        "fidelity_reason": "Standalone claim strictly entails the source quote's meaning",
+        "granularity_reason": "Single atomic claim about CCP's PR effectiveness"
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0030\",\n  \"voice\": 2,\n  \"voice_reason\": \"Direct personal assertion with strong conviction ('100% right', 'f***ing brilliant')\",\n  \"target\": 2,\n  \"target_reason\": \"About external political entity (CCP) and its PR capabilities, not show mechanics\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"Clear relational structure: subject (CCP) + predicate (is brilliant at PR)\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"Substantially contested position about political entity's capabilities\",\n  \"typing\": 2,\n  \"typing_reason\": \"Clear evaluative judgment about political entity's PR effectiveness\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"Fully resolved statement with no pronouns or indexicals requiring context\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"Standalone claim strictly entails the source quote's meaning\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"Single atomic claim about CCP's PR effectiveness\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 28.39
+    },
+    {
+      "turn_id": "00251a80c868f535_t0032",
+      "speaker": "Jason Calacanis",
+      "quote": "They got a bunch of Chinese people to fill a stadium and cheer for AI and robotics.",
+      "claim": "A bunch of Chinese people were gathered in a stadium to cheer for AI and robotics.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 1,
+        "typing": 1,
+        "decontextualisation": 0,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Jason Calacanis directly asserts the claim in his own voice without hedging or attribution",
+        "target_reason": "The claim concerns external world events (Chinese people in a stadium) rather than show mechanics or industry commentary",
+        "propositionality_reason": "The claim contains a clear subject-predicate structure describing an event with a truth value",
+        "contestability_reason": "The claim is mildly contestable as it could be debated whether this specific event occurred as described",
+        "typing_reason": "The claim fits between a contested fact and an evaluative statement, as it describes an event that could be verified",
+        "decontextualisation_reason": "The claim contains the unresolved pronoun 'They' which makes it impossible to understand without context",
+        "fidelity_reason": "The standalone claim strictly entails what is said in the source quote",
+        "granularity_reason": "The claim presents a single, coherent assertion about an event"
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0032\",\n  \"voice\": 2,\n  \"voice_reason\": \"Jason Calacanis directly asserts the claim in his own voice without hedging or attribution\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns external world events (Chinese people in a stadium) rather than show mechanics or industry commentary\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"The claim contains a clear subject-predicate structure describing an event with a truth value\",\n  \"contestability\": 1,\n  \"contestability_reason\": \"The claim is mildly contestable as it could be debated whether this specific event occurred as described\",\n  \"typing\": 1,\n  \"typing_reason\": \"The claim fits between a contested fact and an evaluative statement, as it describes an event that could be verified\",\n  \"decontextualisation\": 0,\n  \"decontextualisation_reason\": \"The claim contains the unresolved pronoun 'They' which makes it impossible to understand without context\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim strictly entails what is said in the source quote\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim presents a single, coherent assertion about an event\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 29.89
+    },
+    {
+      "turn_id": "00251a80c868f535_t0040",
+      "speaker": "David Sacks",
+      "quote": "It is true that China is much more optimistic about AI than we are.",
+      "claim": "China is much more optimistic about AI than the US is.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Direct personal assertion with epistemic commitment",
+        "target_reason": "About external world (China/US AI optimism comparison)",
+        "propositionality_reason": "Clear relational structure comparing optimism levels",
+        "contestability_reason": "Substantially contestable cultural/psychological claim",
+        "typing_reason": "Clear contested fact (disputed empirical comparison)",
+        "decontextualisation_reason": "Fully resolved standalone claim without indexicals",
+        "fidelity_reason": "Strict entailment of the source quote's core claim",
+        "granularity_reason": "Single atomic claim comparing optimism levels"
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0040\",\n  \"voice\": 2,\n  \"voice_reason\": \"Direct personal assertion with epistemic commitment\",\n  \"target\": 2,\n  \"target_reason\": \"About external world (China/US AI optimism comparison)\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"Clear relational structure comparing optimism levels\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"Substantially contestable cultural/psychological claim\",\n  \"typing\": 2,\n  \"typing_reason\": \"Clear contested fact (disputed empirical comparison)\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"Fully resolved standalone claim without indexicals\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"Strict entailment of the source quote's core claim\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"Single atomic claim comparing optimism levels\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 27.43
+    },
+    {
+      "turn_id": "00251a80c868f535_t0065",
+      "speaker": "Jason Calacanis",
+      "quote": "it's going to be such a good idea",
+      "claim": "Having humans in the loop with agents in the same room is going to be such a good idea",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 1,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Jason Calacanis directly asserts his opinion about the idea",
+        "target_reason": "The claim concerns the potential value of a specific technological approach (humans in loop with agents)",
+        "propositionality_reason": "Clear relational structure: humans in loop with agents will be good",
+        "contestability_reason": "Mildly contestable - it's an opinion about value that others might disagree with",
+        "typing_reason": "Clear evaluative claim about the value of a technological approach",
+        "decontextualisation_reason": "The standalone claim is fully resolved and understandable without context",
+        "fidelity_reason": "The standalone claim is strictly entailed by the source quote",
+        "granularity_reason": "Single evaluative proposition about a technological approach"
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0065\",\n  \"voice\": 2,\n  \"voice_reason\": \"Jason Calacanis directly asserts his opinion about the idea\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns the potential value of a specific technological approach (humans in loop with agents)\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"Clear relational structure: humans in loop with agents will be good\",\n  \"contestability\": 1,\n  \"contestability_reason\": \"Mildly contestable - it's an opinion about value that others might disagree with\",\n  \"typing\": 2,\n  \"typing_reason\": \"Clear evaluative claim about the value of a technological approach\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim is fully resolved and understandable without context\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is strictly entailed by the source quote\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"Single evaluative proposition about a technological approach\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 28.51
+    },
+    {
+      "turn_id": "00251a80c868f535_t0079",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "I think the high end of the market where Mark operates where the large monoliths operate is quite safe.",
+      "claim": "The high end of the market where Mark operates and the large monoliths operate is quite safe.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Direct personal assertion with 'I think'",
+        "target_reason": "About market dynamics and large companies",
+        "propositionality_reason": "Clear relational structure about market safety",
+        "contestability_reason": "Substantially contestable market position claim",
+        "typing_reason": "Clear evaluative position about market safety",
+        "decontextualisation_reason": "Fully resolved with clear subject and predicate",
+        "fidelity_reason": "Strict entailment from the source quote",
+        "granularity_reason": "Single clear proposition about market safety"
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0079\",\n  \"voice\": 2,\n  \"voice_reason\": \"Direct personal assertion with 'I think'\",\n  \"target\": 2,\n  \"target_reason\": \"About market dynamics and large companies\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"Clear relational structure about market safety\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"Substantially contestable market position claim\",\n  \"typing\": 2,\n  \"typing_reason\": \"Clear evaluative position about market safety\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"Fully resolved with clear subject and predicate\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"Strict entailment from the source quote\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"Single clear proposition about market safety\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 26.74
+    },
+    {
+      "turn_id": "00251a80c868f535_t0081",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "I think. we're a little oversold.",
+      "claim": "We are a little oversold.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "Chamath Palihapitiya directly asserts his own opinion with 'I think'",
+        "target_reason": "The claim concerns market valuation (oversold status), an external market dynamic",
+        "propositionality_reason": "The claim contains a clear predicate ('we're a little oversold') relating a subject ('we') to a state",
+        "contestability_reason": "Market valuation claims are inherently contestable as different investors may disagree on timing and degree",
+        "typing_reason": "This is a clear evaluative claim about market valuation",
+        "decontextualisation_reason": "The standalone claim 'We are a little oversold' is fully resolved and understandable without context",
+        "fidelity_reason": "The standalone claim is strictly entailed by the source quote 'I think. we're a little oversold.'",
+        "granularity_reason": "The claim is a single, atomic proposition about market valuation"
+      },
+      "raw_output": "```json\n{\n  \"turn_id\": \"00251a80c868f535_t0081\",\n  \"voice\": 2,\n  \"voice_reason\": \"Chamath Palihapitiya directly asserts his own opinion with 'I think'\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns market valuation (oversold status), an external market dynamic\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"The claim contains a clear predicate ('we're a little oversold') relating a subject ('we') to a state\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"Market valuation claims are inherently contestable as different investors may disagree on timing and degree\",\n  \"typing\": 2,\n  \"typing_reason\": \"This is a clear evaluative claim about market valuation\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim 'We are a little oversold' is fully resolved and understandable without context\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is strictly entailed by the source quote 'I think. we're a little oversold.'\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is a single, atomic proposition about market valuation\"\n}\n```<end_of_turn>",
+      "elapsed_seconds": 29.93
+    }
+  ],
+  "gemma_varied": [
+    {
+      "turn_id": "00251a80c868f535_t0007",
+      "speaker": "Jason Calacanis",
+      "quote": "He is a heterodox thinker in science",
+      "claim": "Eric Weinstein is a heterodox thinker in science",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker makes a direct, unhedged assertion in his own voice.",
+        "target_reason": "The claim is about a person's intellectual standing in the external world, not about the show.",
+        "propositionality_reason": "It asserts a clear predicate (being a heterodox thinker) about a subject.",
+        "contestability_reason": "Whether someone is a 'heterodox thinker' is a subjective evaluation that a well-informed person could dispute.",
+        "typing_reason": "This is a clear evaluative judgment regarding a person's intellectual approach.",
+        "decontextualisation_reason": "The standalone claim resolves the pronoun 'He' to 'Eric Weinstein', making it fully autonomous.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote once the referent is resolved.",
+        "granularity_reason": "The claim is a single, atomic proposition."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0007\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker makes a direct, unhedged assertion in his own voice.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim is about a person's intellectual standing in the external world, not about the show.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a clear predicate (being a heterodox thinker) about a subject.\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"Whether someone is a 'heterodox thinker' is a subjective evaluation that a well-informed person could dispute.\",\n  \"typing\": 2,\n  \"typing_reason\": \"This is a clear evaluative judgment regarding a person's intellectual approach.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim resolves the pronoun 'He' to 'Eric Weinstein', making it fully autonomous.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote once the referent is resolved.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is a single, atomic proposition.\"\n}\n```",
+      "elapsed_seconds": 35.54
+    },
+    {
+      "turn_id": "00251a80c868f535_t0009",
+      "speaker": "David Friedberg",
+      "quote": "And over time, you know, the point is similar to what Cratio has said, like so much of science has kind of followed this sheet like mentality where everyone has to line up, agree to the same general theory or you get outcasts, you don't get great. Funding, you don't get 10 -year, you don't get jobs, you don't get invited to do lectures, you have to follow the mainstream and science for your outcasts, and it used to be the science, but that's true.",
+      "claim": "So much of science has followed a mentality where everyone has to line up, agree to the same general theory or you get outcasts, you don't get great funding, jobs, or invitations to lectures, and you have to follow the mainstream in science.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker asserts the claim in their own voice, concluding the thought with 'but that's true'.",
+        "target_reason": "The claim concerns the systemic dynamics of the scientific community and funding, which are external to the show.",
+        "propositionality_reason": "It asserts a clear relational mechanism: a specific mentality leads to the exclusion of those who do not conform.",
+        "contestability_reason": "This is a substantial sociological claim about science that a well-informed person could reasonably dispute.",
+        "typing_reason": "Fits cleanly as a causal/mechanistic claim regarding how scientific conformity affects professional outcomes.",
+        "decontextualisation_reason": "The standalone claim is fully resolved and requires no external context to be understood.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote, cleaning up the disfluencies.",
+        "granularity_reason": "The claim represents a single, tight causal link between a systemic mentality and its resulting consequences."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0009\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker asserts the claim in their own voice, concluding the thought with 'but that's true'.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns the systemic dynamics of the scientific community and funding, which are external to the show.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a clear relational mechanism: a specific mentality leads to the exclusion of those who do not conform.\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"This is a substantial sociological claim about science that a well-informed person could reasonably dispute.\",\n  \"typing\": 2,\n  \"typing_reason\": \"Fits cleanly as a causal/mechanistic claim regarding how scientific conformity affects professional outcomes.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim is fully resolved and requires no external context to be understood.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote, cleaning up the disfluencies.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim represents a single, tight causal link between a systemic mentality and its resulting consequences.\"\n}\n```",
+      "elapsed_seconds": 34.36
+    },
+    {
+      "turn_id": "00251a80c868f535_t0010",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "he's more right on the substance of what he's saying than he is wrong",
+      "claim": "The individual discussed is more right on the substance of what he is saying than he is wrong.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 1,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker asserts the judgment in his own voice without hedging.",
+        "target_reason": "The claim concerns the substance of an external individual's arguments, not show mechanics.",
+        "propositionality_reason": "It asserts a clear relational judgment (more right than wrong) regarding a specific subject.",
+        "contestability_reason": "Whether someone is 'more right than wrong' is a matter of interpretation and mildly contestable.",
+        "typing_reason": "Fits cleanly into the 'evaluative' category as a judgment of correctness.",
+        "decontextualisation_reason": "The referent 'The individual discussed' is an unresolved indexical that requires external context to identify.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote.",
+        "granularity_reason": "The claim is an atomic proposition consisting of a single evaluative judgment."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0010\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker asserts the judgment in his own voice without hedging.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns the substance of an external individual's arguments, not show mechanics.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a clear relational judgment (more right than wrong) regarding a specific subject.\",\n  \"contestability\": 1,\n  \"contestability_reason\": \"Whether someone is 'more right than wrong' is a matter of interpretation and mildly contestable.\",\n  \"typing\": 2,\n  \"typing_reason\": \"Fits cleanly into the 'evaluative' category as a judgment of correctness.\",\n  \"decontextualisation\": 0,\n  \"decontextualisation_reason\": \"The referent 'The individual discussed' is an unresolved indexical that requires external context to identify.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is an atomic proposition consisting of a single evaluative judgment.\"\n}\n```",
+      "elapsed_seconds": 32.0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0014",
+      "speaker": "David Friedberg",
+      "quote": "Everyone was starting with theory on where the COVID came from",
+      "claim": "Everyone was starting with a theory on where COVID-19 originated.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 1,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker asserts this as a fact about the starting point of the discussion in his own voice.",
+        "target_reason": "The claim concerns the origins of COVID-19, an external world event.",
+        "propositionality_reason": "It asserts a clear predicate (starting with a theory) regarding a specific subject (COVID-19 origins).",
+        "contestability_reason": "While likely true that theories were used, the specific nature and universality of these 'theories' could be mildly debated.",
+        "typing_reason": "Fits clearly as an evaluative judgement or a contested fact regarding the history of the pandemic discourse.",
+        "decontextualisation_reason": "The standalone claim resolves 'COVID' to 'COVID-19' and 'where it came from' to 'originated', making it fully autonomous.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote.",
+        "granularity_reason": "The claim is a single, atomic proposition."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0014\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker asserts this as a fact about the starting point of the discussion in his own voice.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns the origins of COVID-19, an external world event.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a clear predicate (starting with a theory) regarding a specific subject (COVID-19 origins).\",\n  \"contestability\": 1,\n  \"contestability_reason\": \"While likely true that theories were used, the specific nature and universality of these 'theories' could be mildly debated.\",\n  \"typing\": 2,\n  \"typing_reason\": \"Fits clearly as an evaluative judgement or a contested fact regarding the history of the pandemic discourse.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim resolves 'COVID' to 'COVID-19' and 'where it came from' to 'originated', making it fully autonomous.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is a single, atomic proposition.\"\n}\n```",
+      "elapsed_seconds": 32.79
+    },
+    {
+      "turn_id": "00251a80c868f535_t0015",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "a level of corruption in a very narrow specific realm of science, which is the funding and grant approval apparatus",
+      "claim": "There is a level of corruption in a very narrow specific realm of science, specifically the funding and grant approval apparatus.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker asserts the claim directly in his own voice without hedging or attribution.",
+        "target_reason": "The claim concerns external scientific funding and grant apparatus, not the show or industry meta-commentary.",
+        "propositionality_reason": "It asserts a clear relational mechanism: the existence of corruption within a specific scientific apparatus.",
+        "contestability_reason": "The level and existence of corruption in scientific funding is a genuinely disputed and debatable topic.",
+        "typing_reason": "Fits cleanly as an evaluative claim (a judgement on the state of the funding apparatus).",
+        "decontextualisation_reason": "The standalone claim is fully resolved and requires no external context to be understood.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote.",
+        "granularity_reason": "The claim is atomic, focusing on a single proposition regarding corruption in a specific realm."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0015\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker asserts the claim directly in his own voice without hedging or attribution.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns external scientific funding and grant apparatus, not the show or industry meta-commentary.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a clear relational mechanism: the existence of corruption within a specific scientific apparatus.\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"The level and existence of corruption in scientific funding is a genuinely disputed and debatable topic.\",\n  \"typing\": 2,\n  \"typing_reason\": \"Fits cleanly as an evaluative claim (a judgement on the state of the funding apparatus).\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim is fully resolved and requires no external context to be understood.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is atomic, focusing on a single proposition regarding corruption in a specific realm.\"\n}\n```",
+      "elapsed_seconds": 32.04
+    },
+    {
+      "turn_id": "00251a80c868f535_t0016",
+      "speaker": "David Friedberg",
+      "quote": "if you do not part of the mainstream you get excluded and because everyone has to now think in the same way you don't have heterodox thinking you don't have outside of the scope thinking which means we're not pushing the envelope and discovering new things anymore",
+      "claim": "If you are not part of the mainstream, you get excluded, and because everyone has to think in the same way, you don't have heterodox thinking, you don't have outside-of-the-scope thinking, which means we're not pushing the envelope and discovering new things anymore.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 1
+      },
+      "reasons": {
+        "voice_reason": "The speaker makes a direct, unhedged assertion in his own voice regarding the state of scientific thinking.",
+        "target_reason": "The claim focuses on external intellectual dynamics and the process of scientific discovery, not show mechanics.",
+        "propositionality_reason": "It asserts a clear causal mechanism: lack of heterodox thinking leads to a failure in pushing the envelope of discovery.",
+        "contestability_reason": "This is a substantially contested position; many would argue that mainstream science remains productive or that heterodoxy is not the primary driver.",
+        "typing_reason": "Fits cleanly as a causal theory explaining why scientific progress has stagnated.",
+        "decontextualisation_reason": "The claim is fully self-contained with no unresolved pronouns or indexicals requiring external context.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote, with minor grammatical cleanup for readability.",
+        "granularity_reason": "It is a series of linked assertions (exclusion -> lack of heterodoxy -> lack of discovery) that form a single cohesive argument."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0016\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker makes a direct, unhedged assertion in his own voice regarding the state of scientific thinking.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim focuses on external intellectual dynamics and the process of scientific discovery, not show mechanics.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a clear causal mechanism: lack of heterodox thinking leads to a failure in pushing the envelope of discovery.\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"This is a substantially contested position; many would argue that mainstream science remains productive or that heterodoxy is not the primary driver.\",\n  \"typing\": 2,\n  \"typing_reason\": \"Fits cleanly as a causal theory explaining why scientific progress has stagnated.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The claim is fully self-contained with no unresolved pronouns or indexicals requiring external context.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote, with minor grammatical cleanup for readability.\",\n  \"granularity\": 1,\n  \"granularity_reason\": \"It is a series of linked assertions (exclusion -> lack of heterodoxy -> lack of discovery) that form a single cohesive argument.\"\n}\n```",
+      "elapsed_seconds": 34.28
+    },
+    {
+      "turn_id": "00251a80c868f535_t0017",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "Just said differently, there's probably a lot of incrementalism in 2026 that didn't exist in 1926.",
+      "claim": "There will be a lot of incrementalism in 2026 that didn't exist in 1926.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 1,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 1,
+        "typing": 1,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker uses the hedge 'probably', indicating a distanced or probabilistic stance rather than a direct assertion.",
+        "target_reason": "The claim concerns external historical and future phenomena (incrementalism in 2026 vs 1926).",
+        "propositionality_reason": "",
+        "contestability_reason": "The assertion is a plausible interpretation of progress that a well-informed person could mildly disagree with.",
+        "typing_reason": "The claim blends a prediction (about 2026) with an evaluative judgment of historical trends, making the type slightly ambiguous.",
+        "decontextualisation_reason": "The standalone claim is fully self-contained with no unresolved referents or indexicals.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote, simply removing the conversational filler.",
+        "granularity_reason": "The claim is an atomic proposition comparing two points in time."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0017\",\n  \"voice\": 1,\n  \"voice_reason\": \"The speaker uses the hedge 'probably', indicating a distanced or probabilistic stance rather than a direct assertion.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns external historical and future phenomena (incrementalism in 2026 vs 1926).\",\n  \"propositionality\": 2,\n  \"proposition_reason\": \"The claim asserts a clear relational mechanism comparing the state of incrementalism across two different eras.\",\n  \"contestability\": 1,\n  \"contestability_reason\": \"The assertion is a plausible interpretation of progress that a well-informed person could mildly disagree with.\",\n  \"typing\": 1,\n  \"typing_reason\": \"The claim blends a prediction (about 2026) with an evaluative judgment of historical trends, making the type slightly ambiguous.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim is fully self-contained with no unresolved referents or indexicals.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote, simply removing the conversational filler.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is an atomic proposition comparing two points in time.\"\n}\n```",
+      "elapsed_seconds": 33.07
+    },
+    {
+      "turn_id": "00251a80c868f535_t0019",
+      "speaker": "David Friedberg",
+      "quote": "where if you say stuff that's too far outside of the realm of the standard approach to things, your, chastise, your outcast, you're excluded.",
+      "claim": "In science, if you say stuff that's too far outside of the standard approach to things, you are chastised, outcast, and excluded.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker asserts this as a direct observation of how science operates in his own voice.",
+        "target_reason": "The claim concerns the external phenomenon of scientific culture and social dynamics.",
+        "propositionality_reason": "It asserts a clear causal mechanism: acting outside the standard approach leads to social exclusion.",
+        "contestability_reason": "This is a substantive sociological claim about science that a reasonable person could disagree with.",
+        "typing_reason": "Fits cleanly as an evaluative judgement or a causal theory regarding scientific social dynamics.",
+        "decontextualisation_reason": "The standalone claim resolves the implied subject ('In science') and contains no unbound referents.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote.",
+        "granularity_reason": "The claim is an atomic proposition describing a single causal link."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0019\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker asserts this as a direct observation of how science operates in his own voice.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns the external phenomenon of scientific culture and social dynamics.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a clear causal mechanism: acting outside the standard approach leads to social exclusion.\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"This is a substantive sociological claim about science that a reasonable person could disagree with.\",\n  \"typing\": 2,\n  \"typing_reason\": \"Fits cleanly as an evaluative judgement or a causal theory regarding scientific social dynamics.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim resolves the implied subject ('In science') and contains no unbound referents.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is an atomic proposition describing a single causal link.\"\n}\n```",
+      "elapsed_seconds": 32.1
+    },
+    {
+      "turn_id": "00251a80c868f535_t0022",
+      "speaker": "Jason Calacanis",
+      "quote": "they copied how Friedberg actually runs in with it",
+      "claim": "China copied how Friedberg actually runs in with it",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker makes a direct, unhedged assertion in his own voice.",
+        "target_reason": "The claim concerns external events (China's actions) rather than show mechanics.",
+        "propositionality_reason": "It asserts a clear relational mechanism (copying a specific method of operation).",
+        "contestability_reason": "Whether China actually copied a specific individual's method is a substantially contestable claim.",
+        "typing_reason": "Fits cleanly as a causal/mechanistic claim regarding how something was executed.",
+        "decontextualisation_reason": "The claim contains an unresolved referent ('it') at the end, making it not stand alone.",
+        "fidelity_reason": "The standalone claim strictly entails the source quote, with 'they' correctly resolved to 'China'.",
+        "granularity_reason": "The claim is an atomic proposition describing a single action."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0022\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker makes a direct, unhedged assertion in his own voice.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns external events (China's actions) rather than show mechanics.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a clear relational mechanism (copying a specific method of operation).\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"Whether China actually copied a specific individual's method is a substantially contestable claim.\",\n  \"typing\": 2,\n  \"typing_reason\": \"Fits cleanly as a causal/mechanistic claim regarding how something was executed.\",\n  \"decontextualisation\": 0,\n  \"decontextualisation_reason\": \"The claim contains an unresolved referent ('it') at the end, making it not stand alone.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim strictly entails the source quote, with 'they' correctly resolved to 'China'.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is an atomic proposition describing a single action.\"\n}\n```",
+      "elapsed_seconds": 31.71
+    },
+    {
+      "turn_id": "00251a80c868f535_t0030",
+      "speaker": "Jason Calacanis",
+      "quote": "the Chinese, the CCP is f***ing brilliant at PR.",
+      "claim": "The Chinese Communist Party is brilliant at public relations.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker makes a direct, unhedged assertion in his own voice.",
+        "target_reason": "The claim focuses on the external actions and strategies of a sovereign entity (the CCP).",
+        "propositionality_reason": "It asserts a clear relational property (the CCP is brilliant at PR) that carries a judgment.",
+        "contestability_reason": "The effectiveness of the CCP's public relations is a genuinely disputed topic of geopolitical analysis.",
+        "typing_reason": "Fits cleanly as an evaluative judgment regarding a state's capability.",
+        "decontextualisation_reason": "The claim is fully self-contained with no unresolved pronouns or indexicals.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote.",
+        "granularity_reason": "The claim is an atomic proposition focusing on a single assertion."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0030\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker makes a direct, unhedged assertion in his own voice.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim focuses on the external actions and strategies of a sovereign entity (the CCP).\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a clear relational property (the CCP is brilliant at PR) that carries a judgment.\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"The effectiveness of the CCP's public relations is a genuinely disputed topic of geopolitical analysis.\",\n  \"typing\": 2,\n  \"typing_reason\": \"Fits cleanly as an evaluative judgment regarding a state's capability.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The claim is fully self-contained with no unresolved pronouns or indexicals.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is an atomic proposition focusing on a single assertion.\"\n}\n```",
+      "elapsed_seconds": 31.51
+    },
+    {
+      "turn_id": "00251a80c868f535_t0009",
+      "speaker": "David Friedberg",
+      "quote": "And over time, you know, the point is similar to what Cratio has said, like so much of science has kind of followed this sheet like mentality where everyone has to line up, agree to the same general theory or you get outcasts, you don't get great. Funding, you don't get 10 -year, you don't get jobs, you don't get invited to do lectures, you have to follow the mainstream and science for your outcasts, and it used to be the science, but that's true.",
+      "claim": "So much of science has followed a mentality where everyone has to line up, agree to the same general theory or you get outcasts, you don't get great funding, jobs, or invitations to lectures, and you have to follow the mainstream in science.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker asserts the claim in their own voice, concluding the thought with 'but that's true'.",
+        "target_reason": "The claim concerns the systemic dynamics of the scientific community and funding, which are external to the show.",
+        "propositionality_reason": "It asserts a clear relational mechanism: a specific mentality leads to the exclusion of those who do not conform.",
+        "contestability_reason": "This is a substantial sociological claim about science that a well-informed person could reasonably dispute.",
+        "typing_reason": "Fits cleanly as a causal/mechanistic claim regarding how scientific conformity affects professional outcomes.",
+        "decontextualisation_reason": "The standalone claim is fully resolved and requires no external context to be understood.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote, cleaning up the disfluencies.",
+        "granularity_reason": "The claim represents a single, tight causal link between a systemic mentality and its resulting consequences."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0009\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker asserts the claim in their own voice, concluding the thought with 'but that's true'.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns the systemic dynamics of the scientific community and funding, which are external to the show.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a clear relational mechanism: a specific mentality leads to the exclusion of those who do not conform.\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"This is a substantial sociological claim about science that a well-informed person could reasonably dispute.\",\n  \"typing\": 2,\n  \"typing_reason\": \"Fits cleanly as a causal/mechanistic claim regarding how scientific conformity affects professional outcomes.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim is fully resolved and requires no external context to be understood.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote, cleaning up the disfluencies.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim represents a single, tight causal link between a systemic mentality and its resulting consequences.\"\n}\n```",
+      "elapsed_seconds": 34.36
+    },
+    {
+      "turn_id": "00251a80c868f535_t0016",
+      "speaker": "David Friedberg",
+      "quote": "if you do not part of the mainstream you get excluded and because everyone has to now think in the same way you don't have heterodox thinking you don't have outside of the scope thinking which means we're not pushing the envelope and discovering new things anymore",
+      "claim": "If you are not part of the mainstream, you get excluded, and because everyone has to think in the same way, you don't have heterodox thinking, you don't have outside-of-the-scope thinking, which means we're not pushing the envelope and discovering new things anymore.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 1
+      },
+      "reasons": {
+        "voice_reason": "The speaker makes a direct, unhedged assertion in his own voice regarding the state of scientific thinking.",
+        "target_reason": "The claim focuses on external intellectual dynamics and the process of scientific discovery, not show mechanics.",
+        "propositionality_reason": "It asserts a clear causal mechanism: lack of heterodox thinking leads to a failure in pushing the envelope of discovery.",
+        "contestability_reason": "This is a substantially contested position; many would argue that mainstream science remains productive or that heterodoxy is not the primary driver.",
+        "typing_reason": "Fits cleanly as a causal theory explaining why scientific progress has stagnated.",
+        "decontextualisation_reason": "The claim is fully self-contained with no unresolved pronouns or indexicals requiring external context.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote, with minor grammatical cleanup for readability.",
+        "granularity_reason": "It is a series of linked assertions (exclusion -> lack of heterodoxy -> lack of discovery) that form a single cohesive argument."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0016\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker makes a direct, unhedged assertion in his own voice regarding the state of scientific thinking.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim focuses on external intellectual dynamics and the process of scientific discovery, not show mechanics.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a clear causal mechanism: lack of heterodox thinking leads to a failure in pushing the envelope of discovery.\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"This is a substantially contested position; many would argue that mainstream science remains productive or that heterodoxy is not the primary driver.\",\n  \"typing\": 2,\n  \"typing_reason\": \"Fits cleanly as a causal theory explaining why scientific progress has stagnated.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The claim is fully self-contained with no unresolved pronouns or indexicals requiring external context.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote, with minor grammatical cleanup for readability.\",\n  \"granularity\": 1,\n  \"granularity_reason\": \"It is a series of linked assertions (exclusion -> lack of heterodoxy -> lack of discovery) that form a single cohesive argument.\"\n}\n```",
+      "elapsed_seconds": 34.29
+    },
+    {
+      "turn_id": "00251a80c868f535_t0017",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "Just said differently, there's probably a lot of incrementalism in 2026 that didn't exist in 1926.",
+      "claim": "There will be a lot of incrementalism in 2026 that didn't exist in 1926.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 1,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 1,
+        "typing": 1,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker uses the hedge 'probably', indicating a distanced or probabilistic stance rather than a direct assertion.",
+        "target_reason": "The claim concerns external historical and future phenomena (incrementalism in 2026 vs 1926).",
+        "propositionality_reason": "",
+        "contestability_reason": "The assertion is a plausible interpretation of progress that a well-informed person could mildly disagree with.",
+        "typing_reason": "The claim blends a prediction (about 2026) with an evaluative judgment of historical trends, making the type slightly ambiguous.",
+        "decontextualisation_reason": "The standalone claim is fully self-contained with no unresolved referents or indexicals.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote, simply removing the conversational filler.",
+        "granularity_reason": "The claim is an atomic proposition comparing two points in time."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0017\",\n  \"voice\": 1,\n  \"voice_reason\": \"The speaker uses the hedge 'probably', indicating a distanced or probabilistic stance rather than a direct assertion.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns external historical and future phenomena (incrementalism in 2026 vs 1926).\",\n  \"propositionality\": 2,\n  \"proposition_reason\": \"The claim asserts a clear relational mechanism comparing the state of incrementalism across two different eras.\",\n  \"contestability\": 1,\n  \"contestability_reason\": \"The assertion is a plausible interpretation of progress that a well-informed person could mildly disagree with.\",\n  \"typing\": 1,\n  \"typing_reason\": \"The claim blends a prediction (about 2026) with an evaluative judgment of historical trends, making the type slightly ambiguous.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim is fully self-contained with no unresolved referents or indexicals.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote, simply removing the conversational filler.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is an atomic proposition comparing two points in time.\"\n}\n```",
+      "elapsed_seconds": 33.1
+    },
+    {
+      "turn_id": "00251a80c868f535_t0019",
+      "speaker": "David Friedberg",
+      "quote": "where if you say stuff that's too far outside of the realm of the standard approach to things, your, chastise, your outcast, you're excluded.",
+      "claim": "In science, if you say stuff that's too far outside of the standard approach to things, you are chastised, outcast, and excluded.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker asserts this as a direct observation of how science operates in his own voice.",
+        "target_reason": "The claim concerns the external phenomenon of scientific culture and social dynamics.",
+        "propositionality_reason": "It asserts a clear causal mechanism: acting outside the standard approach leads to social exclusion.",
+        "contestability_reason": "This is a substantive sociological claim about science that a reasonable person could disagree with.",
+        "typing_reason": "Fits cleanly as an evaluative judgement or a causal theory regarding scientific social dynamics.",
+        "decontextualisation_reason": "The standalone claim resolves the implied subject ('In science') and contains no unbound referents.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote.",
+        "granularity_reason": "The claim is an atomic proposition describing a single causal link."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0019\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker asserts this as a direct observation of how science operates in his own voice.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns the external phenomenon of scientific culture and social dynamics.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a clear causal mechanism: acting outside the standard approach leads to social exclusion.\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"This is a substantive sociological claim about science that a reasonable person could disagree with.\",\n  \"typing\": 2,\n  \"typing_reason\": \"Fits cleanly as an evaluative judgement or a causal theory regarding scientific social dynamics.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim resolves the implied subject ('In science') and contains no unbound referents.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is an atomic proposition describing a single causal link.\"\n}\n```",
+      "elapsed_seconds": 32.08
+    },
+    {
+      "turn_id": "00251a80c868f535_t0030",
+      "speaker": "Jason Calacanis",
+      "quote": "the Chinese, the CCP is f***ing brilliant at PR.",
+      "claim": "The Chinese Communist Party is brilliant at public relations.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker makes a direct, unhedged assertion in his own voice.",
+        "target_reason": "The claim focuses on the external actions and strategies of a sovereign entity (the CCP).",
+        "propositionality_reason": "It asserts a clear relational property (the CCP is brilliant at PR) that carries a judgment.",
+        "contestability_reason": "The effectiveness of the CCP's public relations is a genuinely disputed topic of geopolitical analysis.",
+        "typing_reason": "Fits cleanly as an evaluative judgment regarding a state's capability.",
+        "decontextualisation_reason": "The claim is fully self-contained with no unresolved pronouns or indexicals.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote.",
+        "granularity_reason": "The claim is an atomic proposition focusing on a single assertion."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0030\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker makes a direct, unhedged assertion in his own voice.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim focuses on the external actions and strategies of a sovereign entity (the CCP).\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a clear relational property (the CCP is brilliant at PR) that carries a judgment.\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"The effectiveness of the CCP's public relations is a genuinely disputed topic of geopolitical analysis.\",\n  \"typing\": 2,\n  \"typing_reason\": \"Fits cleanly as an evaluative judgment regarding a state's capability.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The claim is fully self-contained with no unresolved pronouns or indexicals.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is an atomic proposition focusing on a single assertion.\"\n}\n```",
+      "elapsed_seconds": 31.5
+    },
+    {
+      "turn_id": "00251a80c868f535_t0032",
+      "speaker": "Jason Calacanis",
+      "quote": "They got a bunch of Chinese people to fill a stadium and cheer for AI and robotics.",
+      "claim": "A bunch of Chinese people were gathered in a stadium to cheer for AI and robotics.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 0,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 1,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker is narrating an event ('They got a bunch of...') rather than asserting a personal position or commitment.",
+        "target_reason": "The claim concerns external world events (Chinese people in a stadium) rather than show mechanics.",
+        "propositionality_reason": "The claim asserts a clear relational event with a subject and a predicate that carries a truth value.",
+        "contestability_reason": "While the event may have happened, the nature of the gathering (organized vs. spontaneous) is mildly contestable.",
+        "typing_reason": "Fits cleanly as a contested fact (disputed empirical event).",
+        "decontextualisation_reason": "The proposed claim resolves the pronoun 'They' into 'Chinese people', making the statement fully autonomous.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote.",
+        "granularity_reason": "The claim is an atomic proposition describing a single event."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0032\",\n  \"voice\": 0,\n  \"voice_reason\": \"The speaker is narrating an event ('They got a bunch of...') rather than asserting a personal position or commitment.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns external world events (Chinese people in a stadium) rather than show mechanics.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"The claim asserts a clear relational event with a subject and a predicate that carries a truth value.\",\n  \"contestability\": 1,\n  \"contestability_reason\": \"While the event may have happened, the nature of the gathering (organized vs. spontaneous) is mildly contestable.\",\n  \"typing\": 2,\n  \"typing_reason\": \"Fits cleanly as a contested fact (disputed empirical event).\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The proposed claim resolves the pronoun 'They' into 'Chinese people', making the statement fully autonomous.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is an atomic proposition describing a single event.\"\n}\n```",
+      "elapsed_seconds": 32.2
+    },
+    {
+      "turn_id": "00251a80c868f535_t0040",
+      "speaker": "David Sacks",
+      "quote": "It is true that China is much more optimistic about AI than we are.",
+      "claim": "China is much more optimistic about AI than the US is.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 1,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker makes a direct, unhedged assertion in his own voice.",
+        "target_reason": "The claim focuses on geopolitical dynamics and attitudes toward AI in China and the US.",
+        "propositionality_reason": "It asserts a clear relational comparison between two entities regarding their level of optimism.",
+        "contestability_reason": "While likely supported by data, the degree of 'optimism' is a descriptive assessment that could be mildly debated.",
+        "typing_reason": "Fits cleanly as an evaluative judgment regarding the state of national attitudes.",
+        "decontextualisation_reason": "The standalone claim resolves 'we' to 'the US', making it fully autonomous and comprehensible.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote.",
+        "granularity_reason": "The claim is a single, atomic proposition."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0040\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker makes a direct, unhedged assertion in his own voice.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim focuses on geopolitical dynamics and attitudes toward AI in China and the US.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a clear relational comparison between two entities regarding their level of optimism.\",\n  \"contestability\": 1,\n  \"contestability_reason\": \"While likely supported by data, the degree of 'optimism' is a descriptive assessment that could be mildly debated.\",\n  \"typing\": 2,\n  \"typing_reason\": \"Fits cleanly as an evaluative judgment regarding the state of national attitudes.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim resolves 'we' to 'the US', making it fully autonomous and comprehensible.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is a single, atomic proposition.\"\n}\n```",
+      "elapsed_seconds": 32.03
+    },
+    {
+      "turn_id": "00251a80c868f535_t0065",
+      "speaker": "Jason Calacanis",
+      "quote": "it's going to be such a good idea",
+      "claim": "Having humans in the loop with agents in the same room is going to be such a good idea",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 1,
+        "contestability": 1,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 1,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker makes a direct, unhedged personal assertion about the quality of the idea.",
+        "target_reason": "The claim concerns a technical product feature (agents and humans in the loop) outside the show's mechanics.",
+        "propositionality_reason": "It asserts a value judgment ('good idea'), which is a thin descriptive remark rather than a complex mechanism.",
+        "contestability_reason": "Whether a specific product design is a 'good idea' is mildly contestable and subject to opinion.",
+        "typing_reason": "This is a clear evaluative commitment (a judgment of quality).",
+        "decontextualisation_reason": "The standalone claim resolves the pronoun 'it' and provides a self-contained statement.",
+        "fidelity_reason": "The quote 'it's going to be such a good idea' is entailed, but the standalone claim adds specific context ('humans in the loop with agents') not present in the source quote itself.",
+        "granularity_reason": "The claim is a single, atomic proposition regarding the quality of one idea."
+      },
+      "raw_output": "---\n<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0065\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker makes a direct, unhedged personal assertion about the quality of the idea.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim concerns a technical product feature (agents and humans in the loop) outside the show's mechanics.\",\n  \"propositionality\": 1,\n  \"propositionality_reason\": \"It asserts a value judgment ('good idea'), which is a thin descriptive remark rather than a complex mechanism.\",\n  \"contestability\": 1,\n  \"contestability_reason\": \"Whether a specific product design is a 'good idea' is mildly contestable and subject to opinion.\",\n  \"typing\": 2,\n  \"typing_reason\": \"This is a clear evaluative commitment (a judgment of quality).\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The standalone claim resolves the pronoun 'it' and provides a self-contained statement.\",\n  \"fidelity\": 1,\n  \"fidelity_reason\": \"The quote 'it's going to be such a good idea' is entailed, but the standalone claim adds specific context ('humans in the loop with agents') not present in the source quote itself.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is a single, atomic proposition regarding the quality of one idea.\"\n}\n```",
+      "elapsed_seconds": 33.55
+    },
+    {
+      "turn_id": "00251a80c868f535_t0079",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "I think the high end of the market where Mark operates where the large monoliths operate is quite safe.",
+      "claim": "The high end of the market where Mark operates and the large monoliths operate is quite safe.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker uses his own voice to make a direct assertion about market safety.",
+        "target_reason": "The claim focuses on external market dynamics and the operations of specific entities.",
+        "propositionality_reason": "It asserts a clear relational property (safety) regarding a specific market segment.",
+        "contestability_reason": "Whether a specific market segment is 'safe' is a substantially contestable position.",
+        "typing_reason": "This is a clear evaluative judgement regarding the state of a market.",
+        "decontextualisation_reason": "The claim is fully self-contained and requires no external context to be understood.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote.",
+        "granularity_reason": "The claim is an atomic proposition focusing on a single assertion of safety."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0079\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker uses his own voice to make a direct assertion about market safety.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim focuses on external market dynamics and the operations of specific entities.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a clear relational property (safety) regarding a specific market segment.\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"Whether a specific market segment is 'safe' is a substantially contestable position.\",\n  \"typing\": 2,\n  \"typing_reason\": \"This is a clear evaluative judgement regarding the state of a market.\",\n  \"decontextualisation\": 2,\n  \"decontextualisation_reason\": \"The claim is fully self-contained and requires no external context to be understood.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is an atomic proposition focusing on a single assertion of safety.\"\n}\n```",
+      "elapsed_seconds": 31.39
+    },
+    {
+      "turn_id": "00251a80c868f535_t0081",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "I think. we're a little oversold.",
+      "claim": "We are a little oversold.",
+      "parse_status": "ok",
+      "scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "reasons": {
+        "voice_reason": "The speaker uses 'I think' to signal a personal, committed assertion of his own view.",
+        "target_reason": "The claim refers to market dynamics (being 'oversold'), which is an external world phenomenon.",
+        "propositionality_reason": "It asserts a specific state (oversold) regarding a subject, which carries a clear evaluative truth value.",
+        "contestability_reason": "Whether a market or asset is 'oversold' is a highly contested position that reasonable analysts can disagree on.",
+        "typing_reason": "This is a clear evaluative judgement regarding market valuation.",
+        "decontextualisation_reason": "The pronoun 'We' is an unresolved referent; it is unclear who or what is being referred to without the broader conversation context.",
+        "fidelity_reason": "The standalone claim is a strict semantic entailment of the source quote.",
+        "granularity_reason": "The claim is a single, atomic proposition."
+      },
+      "raw_output": "<|channel>thought\n<channel|>```json\n{\n  \"turn_id\": \"00251a80c868f535_t0081\",\n  \"voice\": 2,\n  \"voice_reason\": \"The speaker uses 'I think' to signal a personal, committed assertion of his own view.\",\n  \"target\": 2,\n  \"target_reason\": \"The claim refers to market dynamics (being 'oversold'), which is an external world phenomenon.\",\n  \"propositionality\": 2,\n  \"propositionality_reason\": \"It asserts a specific state (oversold) regarding a subject, which carries a clear evaluative truth value.\",\n  \"contestability\": 2,\n  \"contestability_reason\": \"Whether a market or asset is 'oversold' is a highly contested position that reasonable analysts can disagree on.\",\n  \"typing\": 2,\n  \"typing_reason\": \"This is a clear evaluative judgement regarding market valuation.\",\n  \"decontextualisation\": 0,\n  \"decontextualisation_reason\": \"The pronoun 'We' is an unresolved referent; it is unclear who or what is being referred to without the broader conversation context.\",\n  \"fidelity\": 2,\n  \"fidelity_reason\": \"The standalone claim is a strict semantic entailment of the source quote.\",\n  \"granularity\": 2,\n  \"granularity_reason\": \"The claim is a single, atomic proposition.\"\n}\n```",
+      "elapsed_seconds": 32.44
+    }
+  ]
+}

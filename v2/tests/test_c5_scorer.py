@@ -12,8 +12,6 @@ from __future__ import annotations
 
 import json
 
-import pytest
-
 from v2.src.extract import (
     AXIS_NAMES,
     DEFAULT_EXTRACTION_DIR,
@@ -21,7 +19,7 @@ from v2.src.extract import (
     evaluate_perturbation_results,
 )
 
-SCORED_PERTURBATIONS_FILE = DEFAULT_EXTRACTION_DIR / "c5_perturbations_scored.json"
+SCORED_PERTURBATIONS_FILE = DEFAULT_EXTRACTION_DIR / "c5_perturbations_scored_00251a80c868f535.json"
 
 
 def test_perturbations_fixture_validity() -> None:
@@ -84,7 +82,6 @@ def test_falsification_constant_scorer_fails() -> None:
         assert ax_res["passes_target_threshold"] is False, f"Axis {ax} should have failed under constant scoring"
 
 
-@pytest.mark.xfail(strict=True, reason="Committed RED before C5 runner produces c5_perturbations_scored.json")
 def test_c5_assertion_c_perturbation_sensitivity() -> None:
     """Assertion (c): for each of the eight axes, perturbed items score strictly lower
 

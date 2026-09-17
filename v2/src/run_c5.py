@@ -232,6 +232,7 @@ def run_tier4_floor(
 
 
 def run_tier2_perturbations(
+    source_id: str = "00251a80c868f535",
     model_id: str = "mlx-community/GLM-4-32B-0414-4bit",
     output_dir: Path | None = None,
 ) -> dict[str, Any]:
@@ -241,8 +242,8 @@ def run_tier2_perturbations(
     in at least 4 of 5 pairs, with off-target movement reported.
     """
     out_dir = output_dir or DEFAULT_EXTRACTION_DIR
-    out_file = out_dir / "c5_perturbations_scored.json"
-    ckpt_file = out_dir / "c5_perturbations_scored_ckpt.json"
+    out_file = out_dir / f"c5_perturbations_scored_{source_id}.json"
+    ckpt_file = out_dir / f"c5_perturbations_scored_{source_id}_ckpt.json"
 
     with open(DEFAULT_PERTURBATIONS_PATH, "r", encoding="utf-8") as f:
         perturbations = json.load(f)
@@ -291,9 +292,17 @@ def run_tier2_perturbations(
         orig_reasons = orig_entry.get("reasons", {})
 
         # Score perturbed claim
+        pert_quote = item.get("perturbed_quote", item["quote"])
+        pert_turn_text = item.get("perturbed_turn_text", item.get("turn_text", turn["text"]))
+        pert_turn = {
+            "turn_id": tid,
+            "speaker_label": item["speaker"],
+            "text": pert_turn_text,
+        }
+
         pert_scored = score_single_item(
-            item={"turn_id": tid, "speaker": item["speaker"], "quote": item["quote"], "claim": item["perturbed_claim"]},
-            turn=turn,
+            item={"turn_id": tid, "speaker": item["speaker"], "quote": pert_quote, "claim": item["perturbed_claim"]},
+            turn=pert_turn,
             extractor=extractor,
             axes_text=axes_text,
             prompt_template_path=DEFAULT_PROMPT_SCORE_AXES_PATH,
@@ -577,20 +586,37 @@ def compile_tier1_proxies(
     }
 
 
-def run_c5_pipeline(source_id: str = "00251a80c868f535") -> dict[str, Any]:
+def run_c5_pipeline(source_id: str = "00251a80c868f535", recompute: bool = False) -> dict[str, Any]:
     """Runs all 4 tiers of Item C5 validation and generates the master C5 report."""
     print("=" * 70)
     print("STARTING C5 VALIDATION PIPELINE (Issue 045 = B)")
     print("=" * 70)
 
+    out_dir = DEFAULT_EXTRACTION_DIR
+    tier4_file = out_dir / f"c5_tier4_floor_{source_id}.json"
+    tier2_file = out_dir / f"c5_perturbations_scored_{source_id}.json"
+    tier3_file = out_dir / f"c5_tier3_agreement_{source_id}.json"
+
     # 1. Tier 4 Floor
-    tier4_res = run_tier4_floor(source_id=source_id)
+    if not recompute and tier4_file.exists():
+        with open(tier4_file, "r", encoding="utf-8") as f:
+            tier4_res = json.load(f)
+    else:
+        tier4_res = run_tier4_floor(source_id=source_id)
 
     # 2. Tier 2 Perturbations
-    tier2_res = run_tier2_perturbations()
+    if not recompute and tier2_file.exists():
+        with open(tier2_file, "r", encoding="utf-8") as f:
+            tier2_res = json.load(f)
+    else:
+        tier2_res = run_tier2_perturbations(source_id=source_id)
 
     # 3. Tier 3 Agreement & Diagnostics
-    tier3_res = run_tier3_diagnostics(source_id=source_id)
+    if not recompute and tier3_file.exists():
+        with open(tier3_file, "r", encoding="utf-8") as f:
+            tier3_res = json.load(f)
+    else:
+        tier3_res = run_tier3_diagnostics(source_id=source_id)
 
     # 4. Tier 1 Mechanical Proxies Confusion
     tier1_res = compile_tier1_proxies(source_id=source_id)

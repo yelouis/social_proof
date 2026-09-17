@@ -122,8 +122,8 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 4 | **C2** | A claim with nothing in it is not a claim | C1 | **DELIVERED**. Quote Validation Guard added (`VALIDATORS_ADDED = 1`). 38 claims rejected (23 empty, 14 non-verbatim, 1 context leak; 9.38% rate). 100% of 138 emitted claims resolve verbatim in target turn. Honest recall 54.55% (-27.27 pts vs reported C1), precision 13.04%. Falsification confirmed. Unblocks B6. |
 | 5 | **B6** | Three local models on the same episode, and what agreement is worth (**036 = A**, **043 = A**, **044 = C**) | C1, C2 | **CLOSED at two labs** (`1c95cbd`). `gemma-4-31b` **28.83% precision / 96.97% recall**, `GLM-4-32B` **31.25% / 75.76%**, against gemma-2-2b's 13.04% / 54.55%. **Capability bought precision and recall; consensus bought +1.6 points of precision for −24 of recall.** Nemotron never ran — 99% unparseable — and is not re-run. |
 | 6 | **C3** | A generation we could not read is not a verdict | none | **DELIVERED**. Deleted discarded `offset` from `extract_claim.md` (prompt hash `738f12858fbf` → `503a35f05563`); offsets verified byte-identical. Added `parse_status: "ok" | "unparseable"`. Stopped defaulting parse failures to gate 1 exclusions. Excluded unparseable turns from confusion matrix/precision/recall. Added 5% unparseable gating (`UnparseableRateError` / suppressed confusion matrix). Verified assertion (c): 20 turns at `max_tokens=40` fails loudly (100% unparseable); Nemotron flagged at 401/405 (99.01%), Gemma-4-31B and GLM-4-32B at 0. Unblocks C4. |
-| 7 | **C4** | Score every candidate on the eight axes, and report the episode | none | **NEXT**. The flow change. Finding is solved — 96.97% recall. Judging is not. Two passes: pass 1 finds, pass 2 scores each candidate on `design_claim_axes.md`'s eight axes. **Speaker panel and Extraction panel reported separately**, because a number mixing them cannot tell "the hosts were vague" from "our extractor got worse". |
-| 8 | **C5** | Validate the scorer without human labels (**Issue 045 = B**) | C4 | **Agreement measures consistency, not correctness**, so the item does not rest on it. Three axes are checkable mechanically; all eight get a known answer by **perturbation** — damage a real claim on one axis and assert only that axis falls. Agreement is kept for the one thing it is good at: finding axes whose definitions are ambiguous. |
+| 7 | **C4** | Score every candidate on the eight axes, and report the episode | none | **DELIVERED** (`7fe5c0f`). Two-pass architecture: Pass 1 candidate retrieval pinned byte-identical; Pass 2 scored all 111 candidates via independent model GLM-4-32B-0414-4bit across 8 axes from `design_claim_axes.md`. Speaker and Extraction panels reported strictly separately; mechanical proxies cross-checked; Episode Claim Quality Profile card rendered in review UI; 20-claim falsification swap completed (80% Fidelity agreement, 0.20 mean delta). |
+| 8 | **C5** | Validate the scorer without human labels (**Issue 045 = B**) | C4 | **DELIVERED**. Four-tier validation: Tier 4 Floor passed (86.7% self-agreement, 93.3% Fidelity vs 80.0% cross-model); Tier 2 Perturbation sensitivity verified across all 8 axes (all >= 4/5, overall 27.1% off-target drop rate); Tier 3 Diagnostic agreement on surface-varied prompt completed (Contestability worst at 73.3%); Tier 1 Mechanical proxies resolved (6/6). Falsification against constant scorer confirmed. |
 | 9 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 10 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
 | 11 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
@@ -523,7 +523,7 @@ Three gaps. The first attempt closed two and **relocated** the third; the second
 
 ---
 
-## 17. C4 — Score every candidate on the eight axes, and report the episode
+## 17. C4 — Score candidate claims on eight axes, and report the episode · **DELIVERED** (`7fe5c0f`)
 
 **Blocked on C3** — C3 changes the prompt and fixes the parse-status defect; measure after it lands.
 
@@ -581,7 +581,7 @@ pass 2  SCORE  new prompt, one candidate at a time        -> 8 axis scores + one
 
 ---
 
-## 18. C5 — Validate the scorer without human labels · *Issue 045 = B*
+## 18. C5 — Validate the scorer without human labels · *Issue 045 = B* · **DELIVERED**
 
 **Blocked on C4.** Louis chose cross-model agreement over a hand-labelled calibration set.
 

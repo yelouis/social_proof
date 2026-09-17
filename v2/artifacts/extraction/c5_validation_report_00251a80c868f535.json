@@ -1,0 +1,1264 @@
+{
+  "source_id": "00251a80c868f535",
+  "timestamp": 1789627754.121352,
+  "tier4_floor": {
+    "overall_self_agreement_rate_pct": 86.7,
+    "fidelity_self_agreement_rate": 0.9333,
+    "cross_model_fidelity_agreement_rate": 0.8,
+    "passes_floor": true,
+    "axes": {
+      "voice": {
+        "axis": "voice",
+        "agreed_count": 11,
+        "total_pairs": 15,
+        "agreement_rate": 0.7333,
+        "agreement_rate_pct": 73.3,
+        "mean_abs_delta": 0.27
+      },
+      "target": {
+        "axis": "target",
+        "agreed_count": 15,
+        "total_pairs": 15,
+        "agreement_rate": 1.0,
+        "agreement_rate_pct": 100.0,
+        "mean_abs_delta": 0.0
+      },
+      "propositionality": {
+        "axis": "propositionality",
+        "agreed_count": 13,
+        "total_pairs": 15,
+        "agreement_rate": 0.8667,
+        "agreement_rate_pct": 86.7,
+        "mean_abs_delta": 0.13
+      },
+      "contestability": {
+        "axis": "contestability",
+        "agreed_count": 10,
+        "total_pairs": 15,
+        "agreement_rate": 0.6667,
+        "agreement_rate_pct": 66.7,
+        "mean_abs_delta": 0.4
+      },
+      "typing": {
+        "axis": "typing",
+        "agreed_count": 13,
+        "total_pairs": 15,
+        "agreement_rate": 0.8667,
+        "agreement_rate_pct": 86.7,
+        "mean_abs_delta": 0.13
+      },
+      "decontextualisation": {
+        "axis": "decontextualisation",
+        "agreed_count": 13,
+        "total_pairs": 15,
+        "agreement_rate": 0.8667,
+        "agreement_rate_pct": 86.7,
+        "mean_abs_delta": 0.2
+      },
+      "fidelity": {
+        "axis": "fidelity",
+        "agreed_count": 14,
+        "total_pairs": 15,
+        "agreement_rate": 0.9333,
+        "agreement_rate_pct": 93.3,
+        "mean_abs_delta": 0.07
+      },
+      "granularity": {
+        "axis": "granularity",
+        "agreed_count": 15,
+        "total_pairs": 15,
+        "agreement_rate": 1.0,
+        "agreement_rate_pct": 100.0,
+        "mean_abs_delta": 0.0
+      }
+    }
+  },
+  "tier2_perturbation_sensitivity": {
+    "all_axes_pass": true,
+    "overall_off_target_drop_rate_pct": 27.1,
+    "axes": {
+      "voice": {
+        "axis": "voice",
+        "total_pairs": 5,
+        "target_drops_count": 5,
+        "target_sensitivity_rate_pct": 100.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 7,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 20.0,
+        "pairs": [
+          {
+            "id": "voice_01",
+            "turn_id": "00251a80c868f535_t0030",
+            "target_axis": "voice",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "propositionality": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "voice_02",
+            "turn_id": "00251a80c868f535_t0053",
+            "target_axis": "voice",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 0,
+            "off_target_changes": {}
+          },
+          {
+            "id": "voice_03",
+            "turn_id": "00251a80c868f535_t0084",
+            "target_axis": "voice",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 0,
+            "off_target_changes": {}
+          },
+          {
+            "id": "voice_04",
+            "turn_id": "00251a80c868f535_t0101",
+            "target_axis": "voice",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 4,
+            "off_target_changes": {
+              "propositionality": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              },
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "voice_05",
+            "turn_id": "00251a80c868f535_t0154",
+            "target_axis": "voice",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 0,
+            "off_target_changes": {}
+          }
+        ]
+      },
+      "target": {
+        "axis": "target",
+        "total_pairs": 5,
+        "target_drops_count": 5,
+        "target_sensitivity_rate_pct": 100.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 14,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 40.0,
+        "pairs": [
+          {
+            "id": "target_01",
+            "turn_id": "00251a80c868f535_t0009",
+            "target_axis": "target",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "target_02",
+            "turn_id": "00251a80c868f535_t0015",
+            "target_axis": "target",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 4,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "propositionality": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "target_03",
+            "turn_id": "00251a80c868f535_t0040",
+            "target_axis": "target",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "target_04",
+            "turn_id": "00251a80c868f535_t0081",
+            "target_axis": "target",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "target_05",
+            "turn_id": "00251a80c868f535_t0091",
+            "target_axis": "target",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          }
+        ]
+      },
+      "propositionality": {
+        "axis": "propositionality",
+        "total_pairs": 5,
+        "target_drops_count": 5,
+        "target_sensitivity_rate_pct": 100.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 16,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 45.7,
+        "pairs": [
+          {
+            "id": "propositionality_01",
+            "turn_id": "00251a80c868f535_t0016",
+            "target_axis": "propositionality",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "propositionality_02",
+            "turn_id": "00251a80c868f535_t0019",
+            "target_axis": "propositionality",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "propositionality_03",
+            "turn_id": "00251a80c868f535_t0055",
+            "target_axis": "propositionality",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "propositionality_04",
+            "turn_id": "00251a80c868f535_t0095",
+            "target_axis": "propositionality",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 4,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "target": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "propositionality_05",
+            "turn_id": "00251a80c868f535_t0105",
+            "target_axis": "propositionality",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          }
+        ]
+      },
+      "contestability": {
+        "axis": "contestability",
+        "total_pairs": 5,
+        "target_drops_count": 5,
+        "target_sensitivity_rate_pct": 100.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 6,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 17.1,
+        "pairs": [
+          {
+            "id": "contestability_01",
+            "turn_id": "00251a80c868f535_t0116",
+            "target_axis": "contestability",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "contestability_02",
+            "turn_id": "00251a80c868f535_t0122",
+            "target_axis": "contestability",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "contestability_03",
+            "turn_id": "00251a80c868f535_t0123",
+            "target_axis": "contestability",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "contestability_04",
+            "turn_id": "00251a80c868f535_t0125",
+            "target_axis": "contestability",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 2,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "contestability_05",
+            "turn_id": "00251a80c868f535_t0133",
+            "target_axis": "contestability",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          }
+        ]
+      },
+      "typing": {
+        "axis": "typing",
+        "total_pairs": 5,
+        "target_drops_count": 5,
+        "target_sensitivity_rate_pct": 100.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 18,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 51.4,
+        "pairs": [
+          {
+            "id": "typing_01",
+            "turn_id": "00251a80c868f535_t0138",
+            "target_axis": "typing",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 5,
+            "off_target_changes": {
+              "target": {
+                "orig": 2,
+                "pert": 0
+              },
+              "propositionality": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              },
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "typing_02",
+            "turn_id": "00251a80c868f535_t0140",
+            "target_axis": "typing",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "target": {
+                "orig": 2,
+                "pert": 0
+              },
+              "propositionality": {
+                "orig": 2,
+                "pert": 1
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "typing_03",
+            "turn_id": "00251a80c868f535_t0141",
+            "target_axis": "typing",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "target": {
+                "orig": 2,
+                "pert": 0
+              },
+              "propositionality": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "typing_04",
+            "turn_id": "00251a80c868f535_t0142",
+            "target_axis": "typing",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "target": {
+                "orig": 2,
+                "pert": 0
+              },
+              "propositionality": {
+                "orig": 2,
+                "pert": 1
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "typing_05",
+            "turn_id": "00251a80c868f535_t0156",
+            "target_axis": "typing",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 4,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "target": {
+                "orig": 2,
+                "pert": 0
+              },
+              "propositionality": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          }
+        ]
+      },
+      "decontextualisation": {
+        "axis": "decontextualisation",
+        "total_pairs": 5,
+        "target_drops_count": 4,
+        "target_sensitivity_rate_pct": 80.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 3,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 8.6,
+        "pairs": [
+          {
+            "id": "decontextualisation_01",
+            "turn_id": "00251a80c868f535_t0084",
+            "target_axis": "decontextualisation",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 0,
+            "off_target_changes": {}
+          },
+          {
+            "id": "decontextualisation_02",
+            "turn_id": "00251a80c868f535_t0053",
+            "target_axis": "decontextualisation",
+            "orig_target_score": 2,
+            "pert_target_score": 2,
+            "target_fell": false,
+            "target_delta": 0,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "decontextualisation_03",
+            "turn_id": "00251a80c868f535_t0160",
+            "target_axis": "decontextualisation",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "decontextualisation_04",
+            "turn_id": "00251a80c868f535_t0176",
+            "target_axis": "decontextualisation",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "decontextualisation_05",
+            "turn_id": "00251a80c868f535_t0179",
+            "target_axis": "decontextualisation",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 0,
+            "off_target_changes": {}
+          }
+        ]
+      },
+      "fidelity": {
+        "axis": "fidelity",
+        "total_pairs": 5,
+        "target_drops_count": 5,
+        "target_sensitivity_rate_pct": 100.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 4,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 11.4,
+        "pairs": [
+          {
+            "id": "fidelity_01",
+            "turn_id": "00251a80c868f535_t0181",
+            "target_axis": "fidelity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 0,
+            "off_target_changes": {}
+          },
+          {
+            "id": "fidelity_02",
+            "turn_id": "00251a80c868f535_t0183",
+            "target_axis": "fidelity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "fidelity_03",
+            "turn_id": "00251a80c868f535_t0185",
+            "target_axis": "fidelity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "fidelity_04",
+            "turn_id": "00251a80c868f535_t0187",
+            "target_axis": "fidelity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "fidelity_05",
+            "turn_id": "00251a80c868f535_t0192",
+            "target_axis": "fidelity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          }
+        ]
+      },
+      "granularity": {
+        "axis": "granularity",
+        "total_pairs": 5,
+        "target_drops_count": 5,
+        "target_sensitivity_rate_pct": 100.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 8,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 22.9,
+        "pairs": [
+          {
+            "id": "granularity_01",
+            "turn_id": "00251a80c868f535_t0104",
+            "target_axis": "granularity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 2,
+            "off_target_changes": {
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              },
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "granularity_02",
+            "turn_id": "00251a80c868f535_t0109",
+            "target_axis": "granularity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "granularity_03",
+            "turn_id": "00251a80c868f535_t0166",
+            "target_axis": "granularity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "granularity_04",
+            "turn_id": "00251a80c868f535_t0173",
+            "target_axis": "granularity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 2,
+            "off_target_changes": {
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              },
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "granularity_05",
+            "turn_id": "00251a80c868f535_t0195",
+            "target_axis": "granularity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 2,
+            "off_target_changes": {
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              },
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "tier3_agreement_diagnostics": {
+    "worst_axis": "contestability",
+    "worst_axis_agreement_pct": 73.3,
+    "axis_analysis": {
+      "voice": {
+        "axis": "voice",
+        "varied_prompt_cross_model_agreement_pct": 80.0,
+        "varied_agreed_pairs": 12,
+        "total_pairs": 15
+      },
+      "target": {
+        "axis": "target",
+        "varied_prompt_cross_model_agreement_pct": 100.0,
+        "varied_agreed_pairs": 15,
+        "total_pairs": 15
+      },
+      "propositionality": {
+        "axis": "propositionality",
+        "varied_prompt_cross_model_agreement_pct": 93.3,
+        "varied_agreed_pairs": 14,
+        "total_pairs": 15
+      },
+      "contestability": {
+        "axis": "contestability",
+        "varied_prompt_cross_model_agreement_pct": 73.3,
+        "varied_agreed_pairs": 11,
+        "total_pairs": 15
+      },
+      "typing": {
+        "axis": "typing",
+        "varied_prompt_cross_model_agreement_pct": 93.3,
+        "varied_agreed_pairs": 14,
+        "total_pairs": 15
+      },
+      "decontextualisation": {
+        "axis": "decontextualisation",
+        "varied_prompt_cross_model_agreement_pct": 80.0,
+        "varied_agreed_pairs": 12,
+        "total_pairs": 15
+      },
+      "fidelity": {
+        "axis": "fidelity",
+        "varied_prompt_cross_model_agreement_pct": 93.3,
+        "varied_agreed_pairs": 14,
+        "total_pairs": 15
+      },
+      "granularity": {
+        "axis": "granularity",
+        "varied_prompt_cross_model_agreement_pct": 93.3,
+        "varied_agreed_pairs": 14,
+        "total_pairs": 15
+      }
+    }
+  },
+  "tier1_mechanical_proxies": {
+    "source_id": "00251a80c868f535",
+    "total_claims": 111,
+    "proxies": {
+      "total_claims": 111,
+      "unresolved_referents": {
+        "count": 6,
+        "rate_pct": 5.4,
+        "turn_ids": [
+          "00251a80c868f535_t0010",
+          "00251a80c868f535_t0072",
+          "00251a80c868f535_t0111",
+          "00251a80c868f535_t0172",
+          "00251a80c868f535_t0238",
+          "00251a80c868f535_t0359"
+        ]
+      },
+      "compound_claims": {
+        "count": 3,
+        "rate_pct": 2.7,
+        "turn_ids": [
+          "00251a80c868f535_t0016",
+          "00251a80c868f535_t0255",
+          "00251a80c868f535_t0389"
+        ]
+      },
+      "near_verbatim_quotes": {
+        "count": 39,
+        "rate_pct": 35.1,
+        "turn_ids": [
+          "00251a80c868f535_t0007",
+          "00251a80c868f535_t0015",
+          "00251a80c868f535_t0017",
+          "00251a80c868f535_t0022",
+          "00251a80c868f535_t0032",
+          "00251a80c868f535_t0065",
+          "00251a80c868f535_t0066",
+          "00251a80c868f535_t0072",
+          "00251a80c868f535_t0074",
+          "00251a80c868f535_t0079",
+          "00251a80c868f535_t0081",
+          "00251a80c868f535_t0104",
+          "00251a80c868f535_t0109",
+          "00251a80c868f535_t0116",
+          "00251a80c868f535_t0122",
+          "00251a80c868f535_t0123",
+          "00251a80c868f535_t0127",
+          "00251a80c868f535_t0133",
+          "00251a80c868f535_t0135",
+          "00251a80c868f535_t0140",
+          "00251a80c868f535_t0154",
+          "00251a80c868f535_t0162",
+          "00251a80c868f535_t0168",
+          "00251a80c868f535_t0187",
+          "00251a80c868f535_t0189",
+          "00251a80c868f535_t0195",
+          "00251a80c868f535_t0198",
+          "00251a80c868f535_t0213",
+          "00251a80c868f535_t0219",
+          "00251a80c868f535_t0234",
+          "00251a80c868f535_t0259",
+          "00251a80c868f535_t0294",
+          "00251a80c868f535_t0320",
+          "00251a80c868f535_t0322",
+          "00251a80c868f535_t0335",
+          "00251a80c868f535_t0359",
+          "00251a80c868f535_t0382",
+          "00251a80c868f535_t0395",
+          "00251a80c868f535_t0398"
+        ]
+      }
+    },
+    "cross_checks": {
+      "decontextualisation": {
+        "proxy_unresolved_referents_count": 6,
+        "proxy_turn_ids": [
+          "00251a80c868f535_t0010",
+          "00251a80c868f535_t0072",
+          "00251a80c868f535_t0111",
+          "00251a80c868f535_t0172",
+          "00251a80c868f535_t0238",
+          "00251a80c868f535_t0359"
+        ],
+        "model_zero_count": 18,
+        "model_zero_turn_ids": [
+          "00251a80c868f535_t0007",
+          "00251a80c868f535_t0010",
+          "00251a80c868f535_t0022",
+          "00251a80c868f535_t0032",
+          "00251a80c868f535_t0099",
+          "00251a80c868f535_t0113",
+          "00251a80c868f535_t0127",
+          "00251a80c868f535_t0131",
+          "00251a80c868f535_t0144",
+          "00251a80c868f535_t0162",
+          "00251a80c868f535_t0168",
+          "00251a80c868f535_t0189",
+          "00251a80c868f535_t0194",
+          "00251a80c868f535_t0294",
+          "00251a80c868f535_t0318",
+          "00251a80c868f535_t0333",
+          "00251a80c868f535_t0347",
+          "00251a80c868f535_t0385"
+        ],
+        "overlap_count": 1,
+        "overlap_turn_ids": [
+          "00251a80c868f535_t0010"
+        ],
+        "overlap_rate_pct": 16.7
+      },
+      "granularity": {
+        "proxy_compound_claims_count": 3,
+        "proxy_turn_ids": [
+          "00251a80c868f535_t0016",
+          "00251a80c868f535_t0255",
+          "00251a80c868f535_t0389"
+        ],
+        "model_zero_count": 0,
+        "model_zero_turn_ids": [],
+        "overlap_count": 0,
+        "overlap_turn_ids": [],
+        "overlap_rate_pct": 0.0
+      },
+      "fidelity": {
+        "near_verbatim_quotes_count": 39,
+        "near_verbatim_turn_ids": [
+          "00251a80c868f535_t0007",
+          "00251a80c868f535_t0015",
+          "00251a80c868f535_t0017",
+          "00251a80c868f535_t0022",
+          "00251a80c868f535_t0032",
+          "00251a80c868f535_t0065",
+          "00251a80c868f535_t0066",
+          "00251a80c868f535_t0072",
+          "00251a80c868f535_t0074",
+          "00251a80c868f535_t0079",
+          "00251a80c868f535_t0081",
+          "00251a80c868f535_t0104",
+          "00251a80c868f535_t0109",
+          "00251a80c868f535_t0116",
+          "00251a80c868f535_t0122",
+          "00251a80c868f535_t0123",
+          "00251a80c868f535_t0127",
+          "00251a80c868f535_t0133",
+          "00251a80c868f535_t0135",
+          "00251a80c868f535_t0140",
+          "00251a80c868f535_t0154",
+          "00251a80c868f535_t0162",
+          "00251a80c868f535_t0168",
+          "00251a80c868f535_t0187",
+          "00251a80c868f535_t0189",
+          "00251a80c868f535_t0195",
+          "00251a80c868f535_t0198",
+          "00251a80c868f535_t0213",
+          "00251a80c868f535_t0219",
+          "00251a80c868f535_t0234",
+          "00251a80c868f535_t0259",
+          "00251a80c868f535_t0294",
+          "00251a80c868f535_t0320",
+          "00251a80c868f535_t0322",
+          "00251a80c868f535_t0335",
+          "00251a80c868f535_t0359",
+          "00251a80c868f535_t0382",
+          "00251a80c868f535_t0395",
+          "00251a80c868f535_t0398"
+        ],
+        "fidelity_scores_for_near_verbatim": {
+          "00251a80c868f535_t0007": 2,
+          "00251a80c868f535_t0015": 2,
+          "00251a80c868f535_t0017": 2,
+          "00251a80c868f535_t0022": 2,
+          "00251a80c868f535_t0032": 1,
+          "00251a80c868f535_t0065": 2,
+          "00251a80c868f535_t0066": 2,
+          "00251a80c868f535_t0072": 2,
+          "00251a80c868f535_t0074": 2,
+          "00251a80c868f535_t0079": 2,
+          "00251a80c868f535_t0081": 2,
+          "00251a80c868f535_t0104": 2,
+          "00251a80c868f535_t0109": 2,
+          "00251a80c868f535_t0116": 2,
+          "00251a80c868f535_t0122": 2,
+          "00251a80c868f535_t0123": 2,
+          "00251a80c868f535_t0127": 2,
+          "00251a80c868f535_t0133": 2,
+          "00251a80c868f535_t0135": 2,
+          "00251a80c868f535_t0140": 2,
+          "00251a80c868f535_t0154": 2,
+          "00251a80c868f535_t0162": 2,
+          "00251a80c868f535_t0168": 2,
+          "00251a80c868f535_t0187": 2,
+          "00251a80c868f535_t0189": 0,
+          "00251a80c868f535_t0195": 2,
+          "00251a80c868f535_t0198": 2,
+          "00251a80c868f535_t0213": 2,
+          "00251a80c868f535_t0219": 2,
+          "00251a80c868f535_t0234": 2,
+          "00251a80c868f535_t0259": 2,
+          "00251a80c868f535_t0294": 2,
+          "00251a80c868f535_t0320": 2,
+          "00251a80c868f535_t0322": 2,
+          "00251a80c868f535_t0335": 2,
+          "00251a80c868f535_t0359": 2,
+          "00251a80c868f535_t0382": 2,
+          "00251a80c868f535_t0395": 2,
+          "00251a80c868f535_t0398": 2
+        }
+      }
+    },
+    "disagreement_resolutions": [
+      {
+        "turn_id": "00251a80c868f535_t0010",
+        "claim": "The individual discussed is more right on the substance of what he is saying than he is wrong.",
+        "proxy_flag": true,
+        "model_score": 0,
+        "verdict": "Both agree (score 0). Genuine decontextualisation defect (unresolved referent 'the individual discussed')."
+      },
+      {
+        "turn_id": "00251a80c868f535_t0072",
+        "claim": "This is the most profitable core business quarter of any public company ever",
+        "proxy_flag": true,
+        "model_score": 2,
+        "verdict": "Proxy is right, model is wrong. 'This' is an unresolved demonstrative pronoun; model gave 2 in error."
+      },
+      {
+        "turn_id": "00251a80c868f535_t0111",
+        "claim": "It is very difficult to replicate the businesses of horizontal monolithic companies like Salesforce, Workday, or SAP.",
+        "proxy_flag": true,
+        "model_score": 2,
+        "verdict": "Model is right, proxy is wrong. 'It' is an expletive/dummy pronoun whose logical subject is the postposed infinitive clause; the claim is completely standalone."
+      },
+      {
+        "turn_id": "00251a80c868f535_t0172",
+        "claim": "It is very hard to control government spending when so many people are involved in the process.",
+        "proxy_flag": true,
+        "model_score": 2,
+        "verdict": "Model is right, proxy is wrong. Expletive 'it' dummy subject; claim is completely standalone."
+      },
+      {
+        "turn_id": "00251a80c868f535_t0238",
+        "claim": "It is a sign of stupidity not to use AI to help one write these days.",
+        "proxy_flag": true,
+        "model_score": 2,
+        "verdict": "Model is right, proxy is wrong. Expletive 'it' dummy subject; claim is completely standalone."
+      },
+      {
+        "turn_id": "00251a80c868f535_t0359",
+        "claim": "It is terrible for young women to be on Instagram.",
+        "proxy_flag": true,
+        "model_score": 2,
+        "verdict": "Model is right, proxy is wrong. Expletive 'it' dummy subject; claim is completely standalone."
+      }
+    ]
+  }
+}

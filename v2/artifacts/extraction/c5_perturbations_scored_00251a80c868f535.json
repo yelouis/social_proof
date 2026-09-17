@@ -1,0 +1,2969 @@
+{
+  "model_id": "mlx-community/GLM-4-32B-0414-4bit",
+  "total_pairs": 40,
+  "evaluation": {
+    "all_axes_pass": true,
+    "axes": {
+      "voice": {
+        "axis": "voice",
+        "total_pairs": 5,
+        "target_drops_count": 5,
+        "target_sensitivity_rate_pct": 100.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 7,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 20.0,
+        "pairs": [
+          {
+            "id": "voice_01",
+            "turn_id": "00251a80c868f535_t0030",
+            "target_axis": "voice",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "propositionality": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "voice_02",
+            "turn_id": "00251a80c868f535_t0053",
+            "target_axis": "voice",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 0,
+            "off_target_changes": {}
+          },
+          {
+            "id": "voice_03",
+            "turn_id": "00251a80c868f535_t0084",
+            "target_axis": "voice",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 0,
+            "off_target_changes": {}
+          },
+          {
+            "id": "voice_04",
+            "turn_id": "00251a80c868f535_t0101",
+            "target_axis": "voice",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 4,
+            "off_target_changes": {
+              "propositionality": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              },
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "voice_05",
+            "turn_id": "00251a80c868f535_t0154",
+            "target_axis": "voice",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 0,
+            "off_target_changes": {}
+          }
+        ]
+      },
+      "target": {
+        "axis": "target",
+        "total_pairs": 5,
+        "target_drops_count": 5,
+        "target_sensitivity_rate_pct": 100.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 14,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 40.0,
+        "pairs": [
+          {
+            "id": "target_01",
+            "turn_id": "00251a80c868f535_t0009",
+            "target_axis": "target",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "target_02",
+            "turn_id": "00251a80c868f535_t0015",
+            "target_axis": "target",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 4,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "propositionality": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "target_03",
+            "turn_id": "00251a80c868f535_t0040",
+            "target_axis": "target",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "target_04",
+            "turn_id": "00251a80c868f535_t0081",
+            "target_axis": "target",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "target_05",
+            "turn_id": "00251a80c868f535_t0091",
+            "target_axis": "target",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          }
+        ]
+      },
+      "propositionality": {
+        "axis": "propositionality",
+        "total_pairs": 5,
+        "target_drops_count": 5,
+        "target_sensitivity_rate_pct": 100.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 16,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 45.7,
+        "pairs": [
+          {
+            "id": "propositionality_01",
+            "turn_id": "00251a80c868f535_t0016",
+            "target_axis": "propositionality",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "propositionality_02",
+            "turn_id": "00251a80c868f535_t0019",
+            "target_axis": "propositionality",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "propositionality_03",
+            "turn_id": "00251a80c868f535_t0055",
+            "target_axis": "propositionality",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "propositionality_04",
+            "turn_id": "00251a80c868f535_t0095",
+            "target_axis": "propositionality",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 4,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "target": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "propositionality_05",
+            "turn_id": "00251a80c868f535_t0105",
+            "target_axis": "propositionality",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          }
+        ]
+      },
+      "contestability": {
+        "axis": "contestability",
+        "total_pairs": 5,
+        "target_drops_count": 5,
+        "target_sensitivity_rate_pct": 100.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 6,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 17.1,
+        "pairs": [
+          {
+            "id": "contestability_01",
+            "turn_id": "00251a80c868f535_t0116",
+            "target_axis": "contestability",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "contestability_02",
+            "turn_id": "00251a80c868f535_t0122",
+            "target_axis": "contestability",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "contestability_03",
+            "turn_id": "00251a80c868f535_t0123",
+            "target_axis": "contestability",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "contestability_04",
+            "turn_id": "00251a80c868f535_t0125",
+            "target_axis": "contestability",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 2,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "contestability_05",
+            "turn_id": "00251a80c868f535_t0133",
+            "target_axis": "contestability",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "typing": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          }
+        ]
+      },
+      "typing": {
+        "axis": "typing",
+        "total_pairs": 5,
+        "target_drops_count": 5,
+        "target_sensitivity_rate_pct": 100.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 18,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 51.4,
+        "pairs": [
+          {
+            "id": "typing_01",
+            "turn_id": "00251a80c868f535_t0138",
+            "target_axis": "typing",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 5,
+            "off_target_changes": {
+              "target": {
+                "orig": 2,
+                "pert": 0
+              },
+              "propositionality": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              },
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              },
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "typing_02",
+            "turn_id": "00251a80c868f535_t0140",
+            "target_axis": "typing",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "target": {
+                "orig": 2,
+                "pert": 0
+              },
+              "propositionality": {
+                "orig": 2,
+                "pert": 1
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "typing_03",
+            "turn_id": "00251a80c868f535_t0141",
+            "target_axis": "typing",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "target": {
+                "orig": 2,
+                "pert": 0
+              },
+              "propositionality": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "typing_04",
+            "turn_id": "00251a80c868f535_t0142",
+            "target_axis": "typing",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 3,
+            "off_target_changes": {
+              "target": {
+                "orig": 2,
+                "pert": 0
+              },
+              "propositionality": {
+                "orig": 2,
+                "pert": 1
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "typing_05",
+            "turn_id": "00251a80c868f535_t0156",
+            "target_axis": "typing",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 4,
+            "off_target_changes": {
+              "voice": {
+                "orig": 2,
+                "pert": 0
+              },
+              "target": {
+                "orig": 2,
+                "pert": 0
+              },
+              "propositionality": {
+                "orig": 2,
+                "pert": 0
+              },
+              "contestability": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          }
+        ]
+      },
+      "decontextualisation": {
+        "axis": "decontextualisation",
+        "total_pairs": 5,
+        "target_drops_count": 4,
+        "target_sensitivity_rate_pct": 80.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 3,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 8.6,
+        "pairs": [
+          {
+            "id": "decontextualisation_01",
+            "turn_id": "00251a80c868f535_t0084",
+            "target_axis": "decontextualisation",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 0,
+            "off_target_changes": {}
+          },
+          {
+            "id": "decontextualisation_02",
+            "turn_id": "00251a80c868f535_t0053",
+            "target_axis": "decontextualisation",
+            "orig_target_score": 2,
+            "pert_target_score": 2,
+            "target_fell": false,
+            "target_delta": 0,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "decontextualisation_03",
+            "turn_id": "00251a80c868f535_t0160",
+            "target_axis": "decontextualisation",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "decontextualisation_04",
+            "turn_id": "00251a80c868f535_t0176",
+            "target_axis": "decontextualisation",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "decontextualisation_05",
+            "turn_id": "00251a80c868f535_t0179",
+            "target_axis": "decontextualisation",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 0,
+            "off_target_changes": {}
+          }
+        ]
+      },
+      "fidelity": {
+        "axis": "fidelity",
+        "total_pairs": 5,
+        "target_drops_count": 5,
+        "target_sensitivity_rate_pct": 100.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 4,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 11.4,
+        "pairs": [
+          {
+            "id": "fidelity_01",
+            "turn_id": "00251a80c868f535_t0181",
+            "target_axis": "fidelity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 0,
+            "off_target_changes": {}
+          },
+          {
+            "id": "fidelity_02",
+            "turn_id": "00251a80c868f535_t0183",
+            "target_axis": "fidelity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "fidelity_03",
+            "turn_id": "00251a80c868f535_t0185",
+            "target_axis": "fidelity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "fidelity_04",
+            "turn_id": "00251a80c868f535_t0187",
+            "target_axis": "fidelity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "fidelity_05",
+            "turn_id": "00251a80c868f535_t0192",
+            "target_axis": "fidelity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          }
+        ]
+      },
+      "granularity": {
+        "axis": "granularity",
+        "total_pairs": 5,
+        "target_drops_count": 5,
+        "target_sensitivity_rate_pct": 100.0,
+        "passes_target_threshold": true,
+        "off_target_drops_count": 8,
+        "off_target_comparisons_count": 35,
+        "off_target_drop_rate_pct": 22.9,
+        "pairs": [
+          {
+            "id": "granularity_01",
+            "turn_id": "00251a80c868f535_t0104",
+            "target_axis": "granularity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 2,
+            "off_target_changes": {
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              },
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "granularity_02",
+            "turn_id": "00251a80c868f535_t0109",
+            "target_axis": "granularity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "granularity_03",
+            "turn_id": "00251a80c868f535_t0166",
+            "target_axis": "granularity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 1,
+            "off_target_changes": {
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "granularity_04",
+            "turn_id": "00251a80c868f535_t0173",
+            "target_axis": "granularity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 2,
+            "off_target_changes": {
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              },
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          },
+          {
+            "id": "granularity_05",
+            "turn_id": "00251a80c868f535_t0195",
+            "target_axis": "granularity",
+            "orig_target_score": 2,
+            "pert_target_score": 0,
+            "target_fell": true,
+            "target_delta": 2,
+            "off_target_drops_count": 2,
+            "off_target_changes": {
+              "decontextualisation": {
+                "orig": 2,
+                "pert": 0
+              },
+              "fidelity": {
+                "orig": 2,
+                "pert": 0
+              }
+            }
+          }
+        ]
+      }
+    },
+    "total_pairs_evaluated": 40,
+    "total_off_target_drops": 76,
+    "total_off_target_comparisons": 280,
+    "overall_off_target_drop_rate_pct": 27.1
+  },
+  "perturbation_results": [
+    {
+      "id": "voice_01",
+      "target_axis": "voice",
+      "turn_id": "00251a80c868f535_t0030",
+      "speaker": "Jason Calacanis",
+      "quote": "the Chinese, the CCP is f***ing brilliant at PR",
+      "original_claim": "The Chinese Communist Party is brilliant at PR",
+      "perturbed_claim": "Is the Chinese Communist Party brilliant at public relations?",
+      "perturbation_description": "Rewritten as an interrogative question rather than a speaker-committed assertion.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker asserts in own voice with high confidence ('f***ing brilliant')",
+        "target_reason": "About external entity (Chinese Communist Party) and its PR capabilities",
+        "propositionality_reason": "Clear predicate relating subject (CCP) to attribute (brilliant at PR)",
+        "contestability_reason": "Genuinely disputed claim about political entity's PR effectiveness",
+        "typing_reason": "Clean fit as a position claim (normative judgement)",
+        "decontextualisation_reason": "All pronouns resolved in standalone claim ('The Chinese Communist Party')",
+        "fidelity_reason": "Standalone claim strictly entails the quote's meaning",
+        "granularity_reason": "Single atomic claim about CCP's PR effectiveness"
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 2,
+        "propositionality": 0,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "It is a question/quote, not an assertion in the speaker's own voice.",
+        "target_reason": "It concerns the Chinese Communist Party, an external entity.",
+        "propositionality_reason": "It is a question, not an assertion with a predicate.",
+        "contestability_reason": "It is a question, not a claim that could be disputed.",
+        "typing_reason": "It is a question, not a position, prediction, causal, evaluative, or contested fact.",
+        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote.",
+        "granularity_reason": "It is a single atomic claim."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 28.28
+    },
+    {
+      "id": "voice_02",
+      "target_axis": "voice",
+      "turn_id": "00251a80c868f535_t0053",
+      "speaker": "Jason Calacanis",
+      "quote": "Optimus will be the best selling",
+      "original_claim": "Tesla's Optimus robot will be the best selling",
+      "perturbed_claim": "Will Tesla's Optimus robot be the best selling product in history?",
+      "perturbation_description": "Rewritten as an interrogative question rather than a speaker-committed assertion.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Asserted in the speaker's own voice with commitment about a future product",
+        "target_reason": "About external entities (Tesla's Optimus robot) and market dynamics",
+        "propositionality_reason": "Clear predicate relating subject (Optimus) to a future market position (best selling)",
+        "contestability_reason": "Genuinely disputed claim about future market success that could be challenged",
+        "typing_reason": "Clean prediction about future market performance",
+        "decontextualisation_reason": "Fully resolved standalone claim with no pronouns or indexicals",
+        "fidelity_reason": "Standalone claim strictly entails the quote's core assertion",
+        "granularity_reason": "Single atomic claim about Optimus's future market position"
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "The text is a question, not an assertion by the speaker.",
+        "target_reason": "The claim is about Tesla's Optimus robot, an external product.",
+        "propositionality_reason": "The claim asserts a relationship between Optimus and being the best selling product.",
+        "contestability_reason": "Whether Optimus will be the best selling product is genuinely disputed.",
+        "typing_reason": "The claim is a clear prediction about the future success of a product.",
+        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote.",
+        "granularity_reason": "The claim is atomic, making a single assertion."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 28.31
+    },
+    {
+      "id": "voice_03",
+      "target_axis": "voice",
+      "turn_id": "00251a80c868f535_t0084",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "Salesforce specifically was meaningfully oversold",
+      "original_claim": "Salesforce was meaningfully oversold in May.",
+      "perturbed_claim": "Was Salesforce meaningfully oversold in May?",
+      "perturbation_description": "Rewritten as an interrogative question rather than a speaker-committed assertion.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker asserts claim in own voice with clear commitment",
+        "target_reason": "Claim concerns external entity (Salesforce) and market dynamics",
+        "propositionality_reason": "Explicit predicate stating Salesforce was meaningfully oversold",
+        "contestability_reason": "Genuinely disputed claim about market valuation",
+        "typing_reason": "Clean fit as a contested fact about market valuation",
+        "decontextualisation_reason": "All pronouns and indexicals resolved in standalone claim",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote",
+        "granularity_reason": "Single atomic claim about Salesforce's market valuation"
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker is posing a hypothetical question, not making a commitment.",
+        "target_reason": "The claim is about Salesforce (external entity) and its market valuation (external dynamic).",
+        "propositionality_reason": "The question asserts a specific relationship (oversold status) between Salesforce and May.",
+        "contestability_reason": "A well-informed investor could reasonably dispute whether Salesforce was meaningfully oversold in May.",
+        "typing_reason": "Clean fit as a contested fact (disputed empirical claim).",
+        "decontextualisation_reason": "The standalone claim resolves all indexicals (Salesforce, May) and stands alone.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote.",
+        "granularity_reason": "The claim is atomic, making a single point about Salesforce's oversold status."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 28.98
+    },
+    {
+      "id": "voice_04",
+      "target_axis": "voice",
+      "turn_id": "00251a80c868f535_t0101",
+      "speaker": "David Sacks",
+      "quote": "I do not believe that core systems of record like CRM are going to get ripped into replace with something",
+      "original_claim": "Core systems of record like CRM are not going to be ripped out and replaced with something else.",
+      "perturbed_claim": "Are core systems of record like CRM not going to be replaced?",
+      "perturbation_description": "Rewritten as an interrogative question rather than a speaker-committed assertion.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Sacks asserts his own belief directly with 'I do not believe...'",
+        "target_reason": "The claim concerns core systems of record (CRM) and their replacement, an external industry topic.",
+        "propositionality_reason": "The claim makes a clear assertion about what will not happen (CRM systems not being replaced).",
+        "contestability_reason": "The claim is contestable as others might argue core systems *will* be replaced with new technologies.",
+        "typing_reason": "The claim is a clear position statement expressing a belief about future technological adoption.",
+        "decontextualisation_reason": "The standalone claim resolves all references (core systems of record like CRM) and stands alone.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote, preserving the original meaning.",
+        "granularity_reason": "The claim is atomic, focusing on a single assertion about CRM replacement."
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 2,
+        "propositionality": 0,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "The claim is phrased as a question, not an assertion, indicating lack of epistemic commitment.",
+        "target_reason": "The claim concerns CRM systems, which are external business entities, not show mechanics.",
+        "propositionality_reason": "The claim is a question about the future, not an assertion with a clear predicate or relationship.",
+        "contestability_reason": "The claim is a question, not a statement that could be disputed by an informed opponent.",
+        "typing_reason": "The question format doesn't cleanly fit any of the defined commitment types (position, prediction, causal, evaluative, or contested fact).",
+        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals, standing alone without semantic drift.",
+        "fidelity_reason": "The standalone claim asserts a definitive position ('not going to be replaced') while the quote is a question ('Are they going to get ripped out?').",
+        "granularity_reason": "The claim is atomic, focusing on a single question about CRM systems."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 30.83
+    },
+    {
+      "id": "voice_05",
+      "target_axis": "voice",
+      "turn_id": "00251a80c868f535_t0154",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "Congress is completely unable to do anything to get these budget deficits under control",
+      "original_claim": "The United States Congress is completely unable to do anything to get budget deficits under control",
+      "perturbed_claim": "Is the United States Congress completely unable to get budget deficits under control?",
+      "perturbation_description": "Rewritten as an interrogative question rather than a speaker-committed assertion.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker Chamath Palihapitiya asserts in own voice with clear commitment",
+        "target_reason": "Claim concerns external political entity (Congress) and budget deficits",
+        "propositionality_reason": "Clear predicate stating Congress's inability to control deficits",
+        "contestability_reason": "Genuinely disputed claim about political capability that opponents could challenge",
+        "typing_reason": "Clean fit as a position claim about political capability",
+        "decontextualisation_reason": "Standalone claim resolves all references (Congress, budget deficits)",
+        "fidelity_reason": "Standalone claim strictly entails the original quote",
+        "granularity_reason": "Single atomic claim about Congress's inability to control deficits"
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "It is a question, not an assertion of commitment",
+        "target_reason": "It concerns Congress and budget deficits, external to the show",
+        "propositionality_reason": "It asserts a clear predicate relationship between Congress and its ability to control deficits",
+        "contestability_reason": "It is a genuine dispute about government capability, which informed opponents could disagree on",
+        "typing_reason": "It cleanly fits as a contested fact about government capability",
+        "decontextualisation_reason": "The standalone claim resolves all indexicals and stands alone",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote",
+        "granularity_reason": "It is a single atomic claim about Congress's ability to control deficits"
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 28.12
+    },
+    {
+      "id": "target_01",
+      "target_axis": "target",
+      "turn_id": "00251a80c868f535_t0009",
+      "speaker": "David Friedberg",
+      "quote": "so much of science has kind of followed this sheet like mentality where everyone has to line up, agree to the same general theory or you get outcasts",
+      "original_claim": "Much of science has followed a mentality where researchers must align with the same general theory or become outcasts.",
+      "perturbed_claim": "The All-In podcast has a great episode lined up for all listeners today.",
+      "perturbation_description": "Replaced external world claim with conversational show-mechanics / podcast meta statement.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Friedberg asserts in own voice with clear commitment about science.",
+        "target_reason": "Claim concerns external dynamics of the scientific community, not show mechanics.",
+        "propositionality_reason": "Explicit predicate asserts a relationship between scientific mentality and researcher alignment/outcasting.",
+        "contestability_reason": "Genuinely disputed claim about scientific community dynamics that could be opposed.",
+        "typing_reason": "Clean fit as an evaluative claim judging scientific community practices.",
+        "decontextualisation_reason": "Standalone claim resolves all pronouns and indexicals to create a fully resolved statement.",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote without adding specificity.",
+        "granularity_reason": "Single atomic claim about scientific community practices without mashing distinct points."
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 0,
+        "propositionality": 2,
+        "contestability": 0,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker asserts in own voice, though about the show.",
+        "target_reason": "About show mechanics (tuning in, great episode).",
+        "propositionality_reason": "Explicit predicate: 'has a great episode lined up'.",
+        "contestability_reason": "Undisputed fact about the show's content.",
+        "typing_reason": "Clean fit as a contested fact (about the show).",
+        "decontextualisation_reason": "All pronouns/indexicals resolved in standalone claim.",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote.",
+        "granularity_reason": "Single atomic claim about the show's content."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 27.49
+    },
+    {
+      "id": "target_02",
+      "target_axis": "target",
+      "turn_id": "00251a80c868f535_t0015",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "a level of corruption in a very narrow specific realm of science, which is the funding and grant approval apparatus",
+      "original_claim": "There is a level of corruption in a very narrow specific realm of science, specifically the funding and grant approval apparatus.",
+      "perturbed_claim": "David Friedberg is being welcomed back to the podcast discussion.",
+      "perturbation_description": "Replaced external world claim with conversational show-mechanics / podcast meta statement.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker Chamath Palihapitiya asserts in own voice about corruption in science funding.",
+        "target_reason": "Claim concerns external entities (science funding apparatus) outside the recording.",
+        "propositionality_reason": "Explicit predicate asserts a relationship (corruption exists in a specific realm).",
+        "contestability_reason": "Genuinely disputed claim about the level of corruption in scientific funding.",
+        "typing_reason": "Clean fit as a contested fact (disputed empirical claim about corruption).",
+        "decontextualisation_reason": "Standalone claim resolves all indexicals and pronouns from the original quote.",
+        "fidelity_reason": "Standalone claim is strictly entailed by the original quote.",
+        "granularity_reason": "Single atomic claim about corruption in a specific scientific funding realm."
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 0,
+        "propositionality": 0,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Reporting show mechanics (welcoming guest) rather than making a commitment.",
+        "target_reason": "About show mechanics (welcoming guest) rather than external entities/events.",
+        "propositionality_reason": "A procedural statement about show operations, not an assertion with a predicate.",
+        "contestability_reason": "Undisputed show procedure, not a claim that could be disputed.",
+        "typing_reason": "No commitment type (position, prediction, causal, evaluative, contested fact) fits.",
+        "decontextualisation_reason": "The standalone claim resolves all indexicals and stands alone.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote.",
+        "granularity_reason": "The claim is atomic, expressing a single procedural statement."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 28.35
+    },
+    {
+      "id": "target_03",
+      "target_axis": "target",
+      "turn_id": "00251a80c868f535_t0040",
+      "speaker": "David Sacks",
+      "quote": "the biggest risk to us winning this AI race against China is doing something that will shoot ourselves in the foot because we're so pessimistic about what AI might do",
+      "original_claim": "The biggest risk to the United States winning the AI race against China is taking actions that are self-defeating due to excessive pessimism about what AI might do.",
+      "perturbed_claim": "The studio audio engineer fixed the microphone audio levels.",
+      "perturbation_description": "Replaced external world claim with conversational show-mechanics / podcast meta statement.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Sacks asserts in own voice with clear commitment about China's AI optimism.",
+        "target_reason": "Claim concerns external entities (US/China) and dynamics (AI race), not show mechanics.",
+        "propositionality_reason": "Explicit predicate relates concepts (risk to winning race is self-defeating actions due to pessimism).",
+        "contestability_reason": "Genuinely disputed claim about risk assessment in geopolitical tech competition.",
+        "typing_reason": "Clean fit as a causal claim (excessive pessimism causes self-defeating actions).",
+        "decontextualisation_reason": "Standalone claim resolves all pronouns and indexicals (US/China, AI race, pessimism).",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote's core assertion.",
+        "granularity_reason": "Single atomic claim about risk in AI competition, not a compound blob."
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 0,
+        "propositionality": 2,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Reporting show mechanics (audio levels) rather than making a commitment.",
+        "target_reason": "About show mechanics (audio levels) rather than external entities/events.",
+        "propositionality_reason": "Explicit predicate: 'audio engineer fixed microphone audio levels'.",
+        "contestability_reason": "Undisputed fact about show production.",
+        "typing_reason": "No commitment type fits (not position, prediction, causal, evaluative, or contested fact).",
+        "decontextualisation_reason": "Fully resolved standalone claim with no pronouns/indexicals.",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote.",
+        "granularity_reason": "Single atomic claim about audio levels."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 27.89
+    },
+    {
+      "id": "target_04",
+      "target_axis": "target",
+      "turn_id": "00251a80c868f535_t0081",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "this consolidation and the re -rating can happen in the opposite direction",
+      "original_claim": "The current market consolidation and re-rating can happen in the opposite direction.",
+      "perturbed_claim": "The podcast is taking a commercial break before the next segment.",
+      "perturbation_description": "Replaced external world claim with conversational show-mechanics / podcast meta statement.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker asserts in own voice with 'I think' followed by clear commitment",
+        "target_reason": "About market dynamics (consolidation and re-rating) external to the show",
+        "propositionality_reason": "Clear predicate: 'consolidation and re-rating can happen in the opposite direction'",
+        "contestability_reason": "Genuinely disputed claim about market direction that experts could disagree on",
+        "typing_reason": "Clean fit as a prediction about future market movement",
+        "decontextualisation_reason": "All terms resolved: 'consolidation' and 're-rating' are clear market concepts",
+        "fidelity_reason": "Standalone claim strictly follows from the quote's content",
+        "granularity_reason": "Single atomic claim about market direction"
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 0,
+        "propositionality": 2,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Reporting show mechanics (commercial break) rather than making a commitment.",
+        "target_reason": "About show mechanics (commercial break) rather than external entities/events.",
+        "propositionality_reason": "Explicit predicate: 'The podcast is taking a commercial break'.",
+        "contestability_reason": "Undisputed show mechanic - no reasonable person would dispute it.",
+        "typing_reason": "No commitment type fits (not position, prediction, causal, evaluative, or contested fact).",
+        "decontextualisation_reason": "All pronouns/indexicals resolved in standalone claim.",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote.",
+        "granularity_reason": "Single atomic claim about taking a commercial break."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 28.37
+    },
+    {
+      "id": "target_05",
+      "target_axis": "target",
+      "turn_id": "00251a80c868f535_t0091",
+      "speaker": "David Friedberg",
+      "quote": "our time, our efforts, our energy is better spent building the workflows that are unique and create values for our organization uniquely. Versus Re -Create trading a bunch of software that other people have already made",
+      "original_claim": "David Friedberg's time, efforts, and energy are better spent building unique workflows that create value for his organization than recreating software that already exists.",
+      "perturbed_claim": "Listeners can find all show notes and links in the podcast description.",
+      "perturbation_description": "Replaced external world claim with conversational show-mechanics / podcast meta statement.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Friedberg asserts in own voice with clear commitment about time/effort allocation",
+        "target_reason": "Claim concerns internal company strategy and software development decisions (external to show)",
+        "propositionality_reason": "Clear predicate comparing two approaches to software development with explicit value judgment",
+        "contestability_reason": "Genuinely contestable claim about optimal resource allocation that could be debated by different business strategists",
+        "typing_reason": "Clean fit as an evaluative claim about optimal resource allocation",
+        "decontextualisation_reason": "All pronouns resolved in standalone claim (David Friedberg's time/efforts/energy)",
+        "fidelity_reason": "Standalone claim strictly entails the original quote's core assertion about resource allocation",
+        "granularity_reason": "Single atomic claim comparing two approaches to resource allocation"
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 0,
+        "propositionality": 2,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Reporting show mechanics, not a personal commitment.",
+        "target_reason": "About show mechanics (podcast description), not external entities/events.",
+        "propositionality_reason": "Explicit predicate: 'Listeners can find show notes and links in the podcast description'.",
+        "contestability_reason": "Undisputed fact about show structure, not contestable.",
+        "typing_reason": "No commitment type fits (not position, prediction, causal, evaluative, or contested fact).",
+        "decontextualisation_reason": "All pronouns/indexicals resolved in standalone claim.",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote.",
+        "granularity_reason": "Single atomic claim about show notes location."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 28.09
+    },
+    {
+      "id": "propositionality_01",
+      "target_axis": "propositionality",
+      "turn_id": "00251a80c868f535_t0016",
+      "speaker": "David Friedberg",
+      "quote": "because if you do not part of the mainstream you get excluded and because everyone has to now think in the same way you don't have heterodox thinking you don't have outside of the scope thinking which means we're not pushing the envelope and discovering new things anymore",
+      "original_claim": "The lack of heterodox and outside-the-scope thinking, caused by the exclusion of those not part of the mainstream and the requirement for everyone to think in the same way, means that science is no longer pushing the envelope and discovering new things.",
+      "perturbed_claim": "Enterprise AI deployment and organizational workflow integration.",
+      "perturbation_description": "Replaced propositional clause with a bare noun phrase topic devoid of a truth-evaluable predicate.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Friedberg asserts his own view in own voice with commitment.",
+        "target_reason": "Claim concerns external dynamics of science in America, not show mechanics.",
+        "propositionality_reason": "Explicit predicate explains causal relationship between mainstream thinking and scientific stagnation.",
+        "contestability_reason": "Genuinely disputed claim about scientific stagnation and mainstream thinking that could be opposed.",
+        "typing_reason": "Clean fit as a causal claim explaining scientific stagnation.",
+        "decontextualisation_reason": "All pronouns and indexicals resolved in the standalone claim.",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote.",
+        "granularity_reason": "Single causal claim about scientific stagnation and mainstream thinking."
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 2,
+        "propositionality": 0,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Reporting next topic, not a personal commitment",
+        "target_reason": "About enterprise AI deployment, external to the show",
+        "propositionality_reason": "Bare topic listing, no explicit predicate/relationship",
+        "contestability_reason": "Undisputed industry topic, not a claim that can be disputed",
+        "typing_reason": "No commitment type (position, prediction, etc.) fits",
+        "decontextualisation_reason": "Fully resolved standalone claim with no pronouns/indexicals",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote",
+        "granularity_reason": "Atomic claim about enterprise AI deployment"
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 27.41
+    },
+    {
+      "id": "propositionality_02",
+      "target_axis": "propositionality",
+      "turn_id": "00251a80c868f535_t0019",
+      "speaker": "David Friedberg",
+      "quote": "that's what goes on today in science, where if you say stuff that's too far outside of the realm of the standard approach to things, your, chastise, your outcast, you're excluded",
+      "original_claim": "In modern science, individuals who propose ideas that are too far outside the realm of the standard approach are chastised, cast as outcasts, and excluded.",
+      "perturbed_claim": "Academic peer review practices and scientific grant allocation.",
+      "perturbation_description": "Replaced propositional clause with a bare noun phrase topic devoid of a truth-evaluable predicate.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Friedberg asserts in own voice about science practices, showing epistemic commitment.",
+        "target_reason": "Claim concerns external entities (science community) and dynamics (exclusion practices), not show mechanics.",
+        "propositionality_reason": "Explicit predicate relates concepts: 'individuals who propose ideas... are chastised, cast as outcasts, and excluded'.",
+        "contestability_reason": "Genuinely disputed claim about scientific community practices that could be challenged by opponents.",
+        "typing_reason": "Clean fit as an evaluative claim judging scientific community behavior.",
+        "decontextualisation_reason": "All pronouns and indexicals resolved in standalone claim ('individuals' replaces 'your', 'cast as outcasts' replaces 'your outcast').",
+        "fidelity_reason": "Standalone claim strictly entails the quote's meaning about exclusion practices in science.",
+        "granularity_reason": "Single atomic claim about scientific community behavior, not a compound of distinct points."
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 2,
+        "propositionality": 0,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Reporting a topic category, not making a personal commitment.",
+        "target_reason": "About academic systems, which are external to the show.",
+        "propositionality_reason": "A bare topic list, not an assertion with a predicate.",
+        "contestability_reason": "Describes a system, not a disputable claim about it.",
+        "typing_reason": "No clear commitment type (position, prediction, etc.) fits.",
+        "decontextualisation_reason": "The standalone claim resolves to the same topic list.",
+        "fidelity_reason": "The standalone claim is exactly the same as the quote.",
+        "granularity_reason": "A single topic category, not a compound claim."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 27.66
+    },
+    {
+      "id": "propositionality_03",
+      "target_axis": "propositionality",
+      "turn_id": "00251a80c868f535_t0055",
+      "speaker": "David Sacks",
+      "quote": "the hard part is when they encounter a condition that they weren't programmed to expect, and specifically when they have to interact. with something in the physical world",
+      "original_claim": "The most difficult aspect of robotics is when robots encounter a condition they were not programmed to expect, specifically when they must interact with something in the physical world.",
+      "perturbed_claim": "Humanoid robotics development challenges in physical environments.",
+      "perturbation_description": "Replaced propositional clause with a bare noun phrase topic devoid of a truth-evaluable predicate.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Sacks asserts in own voice with clear commitment about robotics challenges.",
+        "target_reason": "Claim concerns external entities (robots) and their interaction with the physical world, not show mechanics.",
+        "propositionality_reason": "Explicit predicate relates concepts: difficulty of robotics when encountering unexpected conditions and physical interaction.",
+        "contestability_reason": "Genuinely disputed claim about the most difficult aspect of robotics that experts could reasonably disagree on.",
+        "typing_reason": "Clean fit as a causal claim about the mechanism of robotics difficulty.",
+        "decontextualisation_reason": "Standalone claim resolves all pronouns and indexicals, standing alone without reference to prior context.",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote, capturing the essence of the original statement.",
+        "granularity_reason": "Single atomic claim about the difficulty of robotics in unexpected physical interactions."
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 2,
+        "propositionality": 0,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Reporting a topic rather than making a commitment in own voice",
+        "target_reason": "About external entities (humanoid robotics) and their development challenges",
+        "propositionality_reason": "Bare topic without explicit predicate or assertion",
+        "contestability_reason": "Undisputed fact about the existence of challenges in the field",
+        "typing_reason": "No clear commitment type (position, prediction, causal, etc.)",
+        "decontextualisation_reason": "Standalone claim resolves all pronouns and indexicals",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote",
+        "granularity_reason": "Single atomic claim about challenges in humanoid robotics"
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 27.75
+    },
+    {
+      "id": "propositionality_04",
+      "target_axis": "propositionality",
+      "turn_id": "00251a80c868f535_t0095",
+      "speaker": "David Friedberg",
+      "quote": "It's more of a vertical SaaS apocalypse, which is software that's designed for just one vertical, hundred percent. That's where I think things get blown up.",
+      "original_claim": "The SaaS apocalypse will primarily affect vertical SaaS, which is software designed for just one vertical.",
+      "perturbed_claim": "Vertical software market dynamics and cloud infrastructure pricing.",
+      "perturbation_description": "Replaced propositional clause with a bare noun phrase topic devoid of a truth-evaluable predicate.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Friedberg asserts in own voice with clear commitment ('I think that's kind of how I view this')",
+        "target_reason": "About external industry dynamics (vertical SaaS apocalypse), not show mechanics",
+        "propositionality_reason": "Clear predicate relating concepts (SaaS apocalypse affects vertical SaaS)",
+        "contestability_reason": "Genuinely disputed claim about future industry disruption patterns",
+        "typing_reason": "Clean fit as a position (normative view of industry disruption)",
+        "decontextualisation_reason": "All pronouns resolved in standalone claim ('The SaaS apocalypse will primarily affect vertical SaaS')",
+        "fidelity_reason": "Standalone claim strictly entailed by quote's core assertion",
+        "granularity_reason": "Single atomic claim about industry disruption pattern"
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 0,
+        "propositionality": 0,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Reporting segment title, not a personal commitment.",
+        "target_reason": "About show segment mechanics, not external world.",
+        "propositionality_reason": "Bare topic listing, no explicit predicate/relationship.",
+        "contestability_reason": "Undisputed show structure, not a claim about the world.",
+        "typing_reason": "No commitment type (position, prediction, etc.) fits.",
+        "decontextualisation_reason": "Standalone claim resolves to the same topic as the quote.",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote.",
+        "granularity_reason": "Single atomic topic presented, not a compound claim."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 27.52
+    },
+    {
+      "id": "propositionality_05",
+      "target_axis": "propositionality",
+      "turn_id": "00251a80c868f535_t0105",
+      "speaker": "David Sacks",
+      "quote": "most of the action with agents is going to happen outside those products",
+      "original_claim": "Most of the activity involving AI agents will occur outside of SaaS products.",
+      "perturbed_claim": "Autonomous software agents in workflow automation and execution.",
+      "perturbation_description": "Replaced propositional clause with a bare noun phrase topic devoid of a truth-evaluable predicate.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Sacks asserts in own voice with clear commitment about future trends.",
+        "target_reason": "Claim concerns external industry dynamics (SaaS products and AI agents), not show mechanics.",
+        "propositionality_reason": "Explicit predicate relates concepts (most activity with agents will occur outside SaaS products).",
+        "contestability_reason": "Genuinely disputed claim about future industry trends that opponents could reasonably disagree with.",
+        "typing_reason": "Clean fit as a prediction about future industry trends (temporal commitment).",
+        "decontextualisation_reason": "Standalone claim resolves all pronouns and indexicals (refers to SaaS products and agents clearly).",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote without adding specificity not in the quote.",
+        "granularity_reason": "Atomic claim about a single future trend in the industry, not a compound blob."
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 2,
+        "propositionality": 0,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Reporting a topic category, not making a personal commitment.",
+        "target_reason": "About external entities (autonomous software agents) and their application domains.",
+        "propositionality_reason": "A bare topic category, not an assertion with a predicate.",
+        "contestability_reason": "Describes a domain, not a claim that can be disputed.",
+        "typing_reason": "No commitment type (position, prediction, causal, evaluative, contested fact) fits.",
+        "decontextualisation_reason": "The standalone claim resolves to a clear topic without unresolved pronouns.",
+        "fidelity_reason": "The standalone claim is directly derived from the quote text.",
+        "granularity_reason": "A single topic category, not a compound claim."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 28.13
+    },
+    {
+      "id": "contestability_01",
+      "target_axis": "contestability",
+      "turn_id": "00251a80c868f535_t0116",
+      "speaker": "David Sacks",
+      "quote": "simple extrapolations of the future based on These trends don't work out",
+      "original_claim": "Simple extrapolations of the future based on current trends do not work out.",
+      "perturbed_claim": "Until string theory is proven true, it remains unproven.",
+      "perturbation_description": "Replaced contestable stance with an undisputed tautology / definitional truism.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Sacks asserts in own voice with epistemic commitment ('I think')",
+        "target_reason": "Claim concerns external market dynamics and extrapolations, not show mechanics",
+        "propositionality_reason": "Explicit predicate: 'simple extrapolations...do not work out'",
+        "contestability_reason": "Genuinely disputed claim about market behavior and future extrapolations",
+        "typing_reason": "Clean fit as an evaluative claim about market behavior",
+        "decontextualisation_reason": "All pronouns and indexicals resolved in standalone claim",
+        "fidelity_reason": "Standalone claim strictly entails the quote's meaning",
+        "granularity_reason": "Single atomic claim about extrapolations, not a compound blob"
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker asserts in own voice with logical certainty",
+        "target_reason": "About external scientific concept (string theory), not show",
+        "propositionality_reason": "Clear predicate: 'remains unproved' relates to 'mathematically proved'",
+        "contestability_reason": "Tautology - a logical fact that cannot be disputed",
+        "typing_reason": "No commitment type fits - merely states a logical principle",
+        "decontextualisation_reason": "All indexicals resolved in standalone claim",
+        "fidelity_reason": "Standalone claim strictly entails the quote",
+        "granularity_reason": "Single atomic claim about logical status of string theory"
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 27.66
+    },
+    {
+      "id": "contestability_02",
+      "target_axis": "contestability",
+      "turn_id": "00251a80c868f535_t0122",
+      "speaker": "David Sacks",
+      "quote": "this AI capex is going to continue well into the future",
+      "original_claim": "AI capital expenditure is going to continue well into the future",
+      "perturbed_claim": "If a commercial investment generates profits, then it is profitable.",
+      "perturbation_description": "Replaced contestable stance with an undisputed tautology / definitional truism.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Sacks asserts in own voice with commitment about Nvidia's future",
+        "target_reason": "Claim concerns external entity (Nvidia) and market dynamics (AI capex future)",
+        "propositionality_reason": "Clear predicate stating AI capital expenditure will continue into future",
+        "contestability_reason": "Genuinely disputed claim that could be opposed by those believing AI is a bubble",
+        "typing_reason": "Clean fit as a prediction about future market dynamics",
+        "decontextualisation_reason": "Standalone claim resolves all indexicals and stands alone clearly",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote without adding specificity",
+        "granularity_reason": "Single atomic claim about AI capital expenditure future"
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker David Sacks asserts in own voice with 'obviously' indicating commitment",
+        "target_reason": "About external entities (investment) and dynamics (profitability)",
+        "propositionality_reason": "Clear predicate relationship between investment making profit and being profitable",
+        "contestability_reason": "Tautology - definitionally true by nature of the terms",
+        "typing_reason": "No clear commitment type fits - merely states a definitional relationship",
+        "decontextualisation_reason": "All terms fully resolved in standalone claim",
+        "fidelity_reason": "Standalone claim strictly entails the quote's meaning",
+        "granularity_reason": "Single atomic claim about definitional relationship"
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 27.71
+    },
+    {
+      "id": "contestability_03",
+      "target_axis": "contestability",
+      "turn_id": "00251a80c868f535_t0123",
+      "speaker": "Jason Calacanis",
+      "quote": "I think Jensen is going all in on open source",
+      "original_claim": "Jensen Huang is going all in on open source",
+      "perturbed_claim": "A corporation that operates in business commerce is an enterprise.",
+      "perturbation_description": "Replaced contestable stance with an undisputed tautology / definitional truism.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker Jason Calacanis asserts in own voice with clear commitment ('I think')",
+        "target_reason": "Claim concerns external entities (Jensen Huang) and their actions, not show mechanics",
+        "propositionality_reason": "Explicit predicate relating subject (Jensen Huang) to action (going all in on open source)",
+        "contestability_reason": "Genuinely disputed claim about corporate strategy that could be opposed",
+        "typing_reason": "Clean fit as a prediction about corporate strategy direction",
+        "decontextualisation_reason": "Standalone claim resolves all references (Jensen Huang is now named explicitly)",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote's content",
+        "granularity_reason": "Single atomic claim about one person's strategic direction"
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Asserted in the speaker's own voice, unhedged and committed.",
+        "target_reason": "About external entities (corporations) and their definition, not show mechanics.",
+        "propositionality_reason": "Clear predicate relating concepts (corporation operating in business is an enterprise).",
+        "contestability_reason": "Tautology based on dictionary definition, undisputed by definition.",
+        "typing_reason": "No commitment type fits (position, prediction, causal, evaluative, or contested fact).",
+        "decontextualisation_reason": "Fully resolved standalone claim with no pronouns or indexicals.",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote.",
+        "granularity_reason": "Atomic claim expressing a single relationship."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 28.47
+    },
+    {
+      "id": "contestability_04",
+      "target_axis": "contestability",
+      "turn_id": "00251a80c868f535_t0125",
+      "speaker": "Jason Calacanis",
+      "quote": "you're going to be able to buy from Nvidia next year, just your entire stack",
+      "original_claim": "Customers will be able to buy their entire technology stack from Nvidia next year.",
+      "perturbed_claim": "Manufactured products that are purchased by customers have buyers.",
+      "perturbation_description": "Replaced contestable stance with an undisputed tautology / definitional truism.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker Jason Calacanis makes an unhedged assertion in his own voice about future capabilities.",
+        "target_reason": "The claim concerns Nvidia's future product offerings, which is about external market dynamics.",
+        "propositionality_reason": "The claim explicitly asserts a future capability (customers buying entire stack from Nvidia next year).",
+        "contestability_reason": "A well-informed opponent could dispute Nvidia's ability to offer complete stacks next year.",
+        "typing_reason": "Cleanly fits as a prediction about future market capabilities.",
+        "decontextualisation_reason": "The standalone claim resolves all indexicals ('you're' becomes 'Customers') and stands alone.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote, capturing the core assertion without adding new information.",
+        "granularity_reason": "The claim is atomic, making a single assertion about future product availability."
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "The claim is presented as a hypothetical comparison ('That's like saying...') rather than a direct assertion.",
+        "target_reason": "The claim discusses a general principle about products and buyers, not show mechanics or industry meta.",
+        "propositionality_reason": "The claim asserts a clear relationship between products being bought and having buyers.",
+        "contestability_reason": "The claim is a tautology ('products that get bought have buyers') that is undisputedly true.",
+        "typing_reason": "The claim doesn't fit any of the specified commitment types (position, prediction, causal, evaluative, or contested fact).",
+        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals, making it fully understandable on its own.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote, without adding any specificity not present in the original.",
+        "granularity_reason": "The claim is atomic, expressing a single, coherent idea without mashing distinct points."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 30.58
+    },
+    {
+      "id": "contestability_05",
+      "target_axis": "contestability",
+      "turn_id": "00251a80c868f535_t0133",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "Every company's gonna do everything",
+      "original_claim": "Every company is going to do everything",
+      "perturbed_claim": "A competitive marketplace consists of market participants who compete.",
+      "perturbation_description": "Replaced contestable stance with an undisputed tautology / definitional truism.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker Chamath Palihapitiya asserts in own voice with future tense commitment",
+        "target_reason": "Claim concerns future market dynamics of companies developing their own infrastructure",
+        "propositionality_reason": "Clear predicate relating companies to future actions (doing everything)",
+        "contestability_reason": "Genuinely disputed prediction about market consolidation that experts could disagree on",
+        "typing_reason": "Clean fit as a prediction about future market structure",
+        "decontextualisation_reason": "Standalone claim resolves all indexicals and stands alone",
+        "fidelity_reason": "Standalone claim strictly entails the quote's core assertion",
+        "granularity_reason": "Single atomic claim about companies' future actions"
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker Chamath Palihapitiya asserted in own voice without hedging",
+        "target_reason": "Statement about market dynamics, not show mechanics",
+        "propositionality_reason": "Clear predicate relating 'competitive market' to 'competitors competing'",
+        "contestability_reason": "Statement is a definition/tautology, not contestable",
+        "typing_reason": "No clear commitment type (position, prediction, causal, etc.) fits",
+        "decontextualisation_reason": "Standalone claim resolves all indexicals and stands alone",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote",
+        "granularity_reason": "Single atomic claim about market structure"
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 27.86
+    },
+    {
+      "id": "typing_01",
+      "target_axis": "typing",
+      "turn_id": "00251a80c868f535_t0138",
+      "speaker": "David Friedberg",
+      "quote": "This is a triumvirate that I don't think in history. You've had three people who are so close in these positions",
+      "original_claim": "There has never been a triumvirate in history with three people who were as close in those specific positions",
+      "perturbed_claim": "I think that is totally right.",
+      "perturbation_description": "Replaced typed stance claim with conversational agreement filler devoid of clear claim type.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Friedberg asserts in own voice with clear commitment about historical precedent",
+        "target_reason": "Claim concerns historical political relationships (external entities/dynamics)",
+        "propositionality_reason": "Explicit predicate claiming unprecedented historical closeness in specific positions",
+        "contestability_reason": "Genuinely disputed historical claim that could be challenged by historians",
+        "typing_reason": "Clean fit as a historical claim (contested fact type)",
+        "decontextualisation_reason": "Standalone claim resolves all pronouns and indexicals (positions specified)",
+        "fidelity_reason": "Standalone claim strictly entails the original quote's meaning",
+        "granularity_reason": "Single atomic claim about historical precedent"
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 0,
+        "propositionality": 0,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 0,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker asserts in own voice with 'I think that is totally right.'",
+        "target_reason": "Statement is meta-commentary about agreement, not about external world or show industry.",
+        "propositionality_reason": "Statement is a bare agreement ('I think that is totally right') without explicit predicate/relationship.",
+        "contestability_reason": "Statement is a tautology ('I think that is totally right') that cannot be disputed.",
+        "typing_reason": "Statement is a meta-commentary about agreement, not a position, prediction, causal, evaluative, or contested fact.",
+        "decontextualisation_reason": "Standalone claim 'I think that is totally right' contains unresolved pronoun 'that' referring to unstated context.",
+        "fidelity_reason": "Standalone claim 'I think that is totally right' adds 'totally' and changes 'that's' to 'that is', which are not entailed by the quote.",
+        "granularity_reason": "Statement is a single atomic claim about agreement."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 30.75
+    },
+    {
+      "id": "typing_02",
+      "target_axis": "typing",
+      "turn_id": "00251a80c868f535_t0140",
+      "speaker": "David Friedberg",
+      "quote": "the reason is persistent inflation, I would argue because of excess government spending on social programs and other things",
+      "original_claim": "Persistent inflation is caused by excess government spending on social programs and other things.",
+      "perturbed_claim": "Yeah, that is exactly what I was thinking too.",
+      "perturbation_description": "Replaced typed stance claim with conversational agreement filler devoid of clear claim type.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker makes a committed assertion in their own voice ('I would argue')",
+        "target_reason": "Claim concerns external economic dynamics (inflation, government spending)",
+        "propositionality_reason": "Explicit causal relationship asserted ('Persistent inflation is caused by excess government spending')",
+        "contestability_reason": "Genuinely disputed claim (economic causality is subject to debate)",
+        "typing_reason": "Clean causal claim ('Persistent inflation is caused by excess government spending')",
+        "decontextualisation_reason": "All pronouns and indexicals resolved in standalone claim",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote",
+        "granularity_reason": "Single atomic causal claim"
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 0,
+        "propositionality": 1,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker asserts agreement in own voice with commitment ('100 percent')",
+        "target_reason": "Statement is about the show's interaction ('I was thinking too')",
+        "propositionality_reason": "Thin assertion of agreement without substantive content",
+        "contestability_reason": "Statement is a tautology about personal agreement",
+        "typing_reason": "No clear commitment type fits (not position, prediction, causal, evaluative, or contested fact)",
+        "decontextualisation_reason": "Standalone claim resolves all pronouns and indexicals",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote",
+        "granularity_reason": "Single atomic claim of agreement"
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 27.79
+    },
+    {
+      "id": "typing_03",
+      "target_axis": "typing",
+      "turn_id": "00251a80c868f535_t0141",
+      "speaker": "David Friedberg",
+      "quote": "We have fundamental fiscal spending problem with the federal government right now",
+      "original_claim": "The United States federal government has a fundamental fiscal spending problem.",
+      "perturbed_claim": "A hundred percent, I definitely agree with your point.",
+      "perturbation_description": "Replaced typed stance claim with conversational agreement filler devoid of clear claim type.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Asserted in the speaker's own voice with clear commitment to the statement.",
+        "target_reason": "About external entities (federal government) and dynamics (fiscal spending problem).",
+        "propositionality_reason": "Explicit predicate relating concepts (federal government has a problem).",
+        "contestability_reason": "Genuinely disputed - a reasonable opponent could argue the government's fiscal spending is not fundamental or problematic.",
+        "typing_reason": "Clean fit as a position (normative claim about the government's problem).",
+        "decontextualisation_reason": "Fully resolved standalone claim with no pronouns or indexicals.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote.",
+        "granularity_reason": "Atomic single claim about the government's fiscal spending problem."
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 0,
+        "propositionality": 0,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker asserts agreement in own voice without hedging",
+        "target_reason": "Statement is about agreement in the conversation itself (show mechanics)",
+        "propositionality_reason": "Statement expresses agreement but lacks an explicit predicate about the world",
+        "contestability_reason": "Expressing agreement is a tautology/undisputed interaction mechanic",
+        "typing_reason": "Statement expresses agreement but doesn't fit any commitment type (position, prediction, causal, evaluative, contested fact)",
+        "decontextualisation_reason": "Standalone claim resolves all pronouns and indexicals (refers to the listener's point)",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote",
+        "granularity_reason": "Statement is a single atomic claim of agreement"
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 28.51
+    },
+    {
+      "id": "typing_04",
+      "target_axis": "typing",
+      "turn_id": "00251a80c868f535_t0142",
+      "speaker": "David Friedberg",
+      "quote": "Brooks drugs note is coverage for best and at a pointing responsibility back to Congress back to the president to say guys We have to solve this deficit problem",
+      "original_claim": "The note written by Brooks is providing cover for Treasury Secretary Janet Yellen by pointing the responsibility for solving the deficit problem back to Congress and the president.",
+      "perturbed_claim": "That makes a whole lot of sense to me.",
+      "perturbation_description": "Replaced typed stance claim with conversational agreement filler devoid of clear claim type.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Friedberg is making an assertive statement in his own voice about Treasury Secretary Janet Yellen.",
+        "target_reason": "The claim is about external entities (Treasury Secretary, Congress, President, deficit problem) outside the show.",
+        "propositionality_reason": "The claim asserts a clear relationship: the note provides cover for Treasury Secretary by pointing responsibility back to Congress and the president.",
+        "contestability_reason": "A well-informed opponent could dispute whether the note actually provides cover and whether it effectively points responsibility back to Congress and the president.",
+        "typing_reason": "The claim fits cleanly as a causal statement: it explains a mechanism (the note pointing responsibility back to Congress and the president).",
+        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals, making it understandable without the original context.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote, capturing the essence of the speaker's statement without adding anything not in the quote.",
+        "granularity_reason": "The claim is atomic, making a single point about the note providing cover for Treasury Secretary."
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 0,
+        "propositionality": 1,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Asserted in the speaker's own voice, expressing agreement.",
+        "target_reason": "Refers to the immediate conversation context, not external entities/events.",
+        "propositionality_reason": "Thin assertion expressing agreement without a clear predicate relationship.",
+        "contestability_reason": "Expresses personal agreement, not a disputable claim about the world.",
+        "typing_reason": "No clear commitment type (position, prediction, causal, evaluative, or contested fact) fits.",
+        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote.",
+        "granularity_reason": "Atomic claim expressing a single point of agreement."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 28.09
+    },
+    {
+      "id": "typing_05",
+      "target_axis": "typing",
+      "turn_id": "00251a80c868f535_t0156",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "both sides consistently spend way more than they should",
+      "original_claim": "Both Democrats and Republicans in Congress consistently spend way more than they should.",
+      "perturbed_claim": "Right on, I totally see where you are coming from on that.",
+      "perturbation_description": "Replaced typed stance claim with conversational agreement filler devoid of clear claim type.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker Chamath Palihapitiya asserts in own voice with clear commitment.",
+        "target_reason": "Claim concerns congressional spending dynamics, an external political issue.",
+        "propositionality_reason": "Clear predicate stating both parties spend excessively with supporting evidence.",
+        "contestability_reason": "Genuinely disputed claim about political spending habits that opponents could challenge.",
+        "typing_reason": "Clean fit as a position claim making a normative judgment about political behavior.",
+        "decontextualisation_reason": "Standalone claim fully resolves all references (Democrats/Republicans) without ambiguity.",
+        "fidelity_reason": "Standalone claim strictly entails the original quote's core assertion about excessive spending.",
+        "granularity_reason": "Single atomic claim about political spending without mashing distinct points."
+      },
+      "perturbed_scores": {
+        "voice": 0,
+        "target": 0,
+        "propositionality": 0,
+        "contestability": 0,
+        "typing": 0,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Reporting agreement, not making a substantive claim",
+        "target_reason": "Purely interpersonal banter about the conversation itself",
+        "propositionality_reason": "No substantive assertion beyond expressing agreement",
+        "contestability_reason": "Cannot be disputed as it's merely expressing agreement",
+        "typing_reason": "No clear commitment type (position, prediction, etc.)",
+        "decontextualisation_reason": "All words are resolved in the standalone claim",
+        "fidelity_reason": "The standalone claim is exactly what was said",
+        "granularity_reason": "Single atomic expression of agreement"
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 26.88
+    },
+    {
+      "id": "decontextualisation_01",
+      "target_axis": "decontextualisation",
+      "turn_id": "00251a80c868f535_t0084",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "Salesforce specifically was meaningfully oversold",
+      "original_claim": "Salesforce was meaningfully oversold in May.",
+      "perturbed_claim": "The individual discussed was meaningfully oversold in May.",
+      "perturbation_description": "Replaced resolved named entities with unbound pronouns / indexicals.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker asserts claim in own voice with clear commitment",
+        "target_reason": "Claim concerns external entity (Salesforce) and market dynamics",
+        "propositionality_reason": "Explicit predicate stating Salesforce was meaningfully oversold",
+        "contestability_reason": "Genuinely disputed claim about market valuation",
+        "typing_reason": "Clean fit as a contested fact about market valuation",
+        "decontextualisation_reason": "All pronouns and indexicals resolved in standalone claim",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote",
+        "granularity_reason": "Single atomic claim about Salesforce's market valuation"
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker asserts claim in own voice with clear commitment",
+        "target_reason": "Claim concerns external entity (Salesforce) and market dynamics",
+        "propositionality_reason": "Explicit predicate stating Salesforce was meaningfully oversold in May",
+        "contestability_reason": "Genuinely disputed claim about market valuation",
+        "typing_reason": "Clean fit as a contested fact about market valuation",
+        "decontextualisation_reason": "Standalone claim refers to 'the individual discussed' which is unresolved",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote",
+        "granularity_reason": "Single atomic claim about Salesforce's market valuation"
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 29.33
+    },
+    {
+      "id": "decontextualisation_02",
+      "target_axis": "decontextualisation",
+      "turn_id": "00251a80c868f535_t0053",
+      "speaker": "Jason Calacanis",
+      "quote": "Optimus will be the best selling",
+      "original_claim": "Tesla's Optimus robot will be the best selling",
+      "perturbed_claim": "They are going to build the best selling product in history.",
+      "perturbation_description": "Replaced resolved named entities with unbound pronouns / indexicals.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Asserted in the speaker's own voice with commitment about a future product",
+        "target_reason": "About external entities (Tesla's Optimus robot) and market dynamics",
+        "propositionality_reason": "Clear predicate relating subject (Optimus) to a future market position (best selling)",
+        "contestability_reason": "Genuinely disputed claim about future market success that could be challenged",
+        "typing_reason": "Clean prediction about future market performance",
+        "decontextualisation_reason": "Fully resolved standalone claim with no pronouns or indexicals",
+        "fidelity_reason": "Standalone claim strictly entails the quote's core assertion",
+        "granularity_reason": "Single atomic claim about Optimus's future market position"
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker Jason Calacanis makes an unhedged assertion in his own voice.",
+        "target_reason": "The claim is about an external entity (Optimus) and its market performance.",
+        "propositionality_reason": "The claim asserts a clear relationship (Optimus will be the best selling).",
+        "contestability_reason": "A well-informed person could genuinely dispute whether Optimus will be the best selling product.",
+        "typing_reason": "The claim is a clear prediction about future market performance.",
+        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals (refers to Optimus explicitly).",
+        "fidelity_reason": "The standalone claim 'They are going to build the best selling product in history' asserts something not in the quote ('They are going to build', 'in history').",
+        "granularity_reason": "The claim is atomic, making a single prediction about Optimus' sales."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 30.28
+    },
+    {
+      "id": "decontextualisation_03",
+      "target_axis": "decontextualisation",
+      "turn_id": "00251a80c868f535_t0160",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "the bond market is going to start to do this because that single price. is the true reflection of the good faith and trust in the United States",
+      "original_claim": "The bond market will force the United States to confront the issue because the bond price is the true reflection of the good faith and trust in the United States.",
+      "perturbed_claim": "They will force this to confront its debt.",
+      "perturbation_description": "Replaced resolved named entities with unbound pronouns / indexicals.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Chamath Palihapitiya speaks in his own voice with clear commitment to the claim.",
+        "target_reason": "The claim concerns the bond market and U.S. government dynamics, which are external to the show.",
+        "propositionality_reason": "The claim asserts a clear causal relationship between bond market actions and reflection of trust in the U.S.",
+        "contestability_reason": "The claim is a prediction about future market behavior that could be disputed by economic experts.",
+        "typing_reason": "The claim is a clear prediction about future market behavior.",
+        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals, standing alone clearly.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote, capturing the core prediction and reasoning.",
+        "granularity_reason": "The claim presents a single causal assertion about bond market behavior and its implications."
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker Chamath Palihapitiya asserts in own voice with clear commitment about the bond market.",
+        "target_reason": "Claim concerns external entities (bond market, U.S. Congress) and financial dynamics, not show mechanics.",
+        "propositionality_reason": "Explicit predicate: bond market will force U.S. to confront debt, with clear mechanism (yield/trust relationship).",
+        "contestability_reason": "Genuinely disputed claim about financial market forcing political action, which could be opposed by different economic theories.",
+        "typing_reason": "Clean fit as a causal claim: bond market causes political confrontation via yield mechanism.",
+        "decontextualisation_reason": "Standalone claim ",
+        "fidelity_reason": "Standalone claim ",
+        "granularity_reason": "Standalone claim is atomic, though it fails on other axes, it presents a single causal assertion."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 33.42
+    },
+    {
+      "id": "decontextualisation_04",
+      "target_axis": "decontextualisation",
+      "turn_id": "00251a80c868f535_t0176",
+      "speaker": "Jason Calacanis",
+      "quote": "This is going to come to do and we're going to have to have some austerity measures",
+      "original_claim": "The United States is going to have to implement austerity measures.",
+      "perturbed_claim": "They are going to have to implement this.",
+      "perturbation_description": "Replaced resolved named entities with unbound pronouns / indexicals.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Jason Calacanis speaks in his own voice with clear commitment to the statement.",
+        "target_reason": "The claim concerns U.S. fiscal policy and austerity measures, which are external to the show.",
+        "propositionality_reason": "The claim asserts a clear relationship between future events (austerity measures) and a cause (fiscal situation).",
+        "contestability_reason": "A well-informed person could reasonably dispute the necessity or timing of austerity measures.",
+        "typing_reason": "The claim is a clear prediction about future policy actions.",
+        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals, making it fully understandable on its own.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote, capturing the core assertion without adding new information.",
+        "granularity_reason": "The claim is atomic, focusing on a single assertion about future policy."
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Jason Calacanis speaks in his own voice with clear commitment about government finances.",
+        "target_reason": "The claim concerns government finances and austerity measures, which are external to the show.",
+        "propositionality_reason": "The claim asserts a clear relationship between future events (austerity measures) and a cause (financial issues).",
+        "contestability_reason": "A well-informed person could reasonably dispute the timing or necessity of austerity measures.",
+        "typing_reason": "The claim is a clear prediction about future government actions.",
+        "decontextualisation_reason": "The standalone claim 'They are going to have to implement this' has an unresolved pronoun 'They' and lacks context about what 'this' refers to.",
+        "fidelity_reason": "The standalone claim 'They are going to have to implement this' asserts specific actions not present in the original quote, which refers to austerity measures.",
+        "granularity_reason": "The standalone claim presents a single prediction about future actions."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 31.12
+    },
+    {
+      "id": "decontextualisation_05",
+      "target_axis": "decontextualisation",
+      "turn_id": "00251a80c868f535_t0179",
+      "speaker": "David Friedberg",
+      "quote": "that's really where social security doesn't have any money to pay anymore",
+      "original_claim": "Social Security will not have any money to pay by approximately 2030 to 2032.",
+      "perturbed_claim": "It will not have any money to pay by then.",
+      "perturbation_description": "Replaced resolved named entities with unbound pronouns / indexicals.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Friedberg makes an unhedged assertion in their own voice.",
+        "target_reason": "The claim concerns Social Security and state finances, external entities outside the show.",
+        "propositionality_reason": "The claim asserts a clear predicate: Social Security will not have money to pay by a specific timeframe.",
+        "contestability_reason": "A well-informed person could reasonably dispute the timing and certainty of Social Security's financial status.",
+        "typing_reason": "The claim is a clear prediction about future events (Social Security's financial status).",
+        "decontextualisation_reason": "The standalone claim resolves all indexicals (approximate timeframe 2030-2032) and stands alone.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote, capturing the core assertion without adding new information.",
+        "granularity_reason": "The claim is atomic, focusing on a single prediction about Social Security's financial status."
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker David Friedberg asserts in own voice with clear commitment about future events.",
+        "target_reason": "Claim concerns external entities (social security) and future events, not show mechanics.",
+        "propositionality_reason": "Explicit predicate stating a future state (social security won't have money to pay)",
+        "contestability_reason": "Genuinely disputed claim about future financial state of social security system",
+        "typing_reason": "Clean prediction about future events (social security financial state)",
+        "decontextualisation_reason": "Standalone claim has unresolved pronoun 'It' referring to social security",
+        "fidelity_reason": "Standalone claim strictly entails the quote's core assertion about social security finances",
+        "granularity_reason": "Single atomic claim about social security financial state"
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 29.58
+    },
+    {
+      "id": "fidelity_01",
+      "target_axis": "fidelity",
+      "turn_id": "00251a80c868f535_t0181",
+      "speaker": "David Friedberg",
+      "quote": "That would be, a cataclysmic to have to bail out something like California because the obligations on the unfunded pensions in the states are so significant and not to mention just the debts",
+      "original_claim": "Bailing out California would be cataclysmic because the obligations on the unfunded pensions in the states are so significant, in addition to the debts.",
+      "perturbed_claim": "Tesla's Optimus robot will be the best selling product in history.",
+      "perturbation_description": "Replaced claim with an assertion about an entirely different topic completely unsupported by quote.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Friedberg asserts in own voice with strong conviction (cataclysmic, idiocy, f*** railway)",
+        "target_reason": "About external entities (California, pensions, debts, railway) outside the recording",
+        "propositionality_reason": "Explicit predicate: bailing out California would be cataclysmic due to significant pension obligations and debts",
+        "contestability_reason": "Genuinely disputed claim about financial impact of California's obligations that experts could reasonably disagree on",
+        "typing_reason": "Clean causal claim: bailing out California would be cataclysmic because of pension obligations and debts",
+        "decontextualisation_reason": "All pronouns and indexicals resolved in standalone claim (California, pensions, debts)",
+        "fidelity_reason": "Standalone claim strictly entails the quote's core proposition about bailing out California",
+        "granularity_reason": "Single atomic claim about the financial impact of California's obligations"
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker David Friedberg asserts in own voice with strong conviction (cataclysmic, idiocy, f*** railway)",
+        "target_reason": "About external entities (California, pensions, debts, railway) outside the recording",
+        "propositionality_reason": "Explicit predicate: bailing out California would be cataclysmic due to significant pension obligations and debts",
+        "contestability_reason": "Genuinely disputed: reasonable opponents could argue California's fiscal situation is manageable or the railway is justified",
+        "typing_reason": "Clean causal type: explains mechanism (pension obligations and debts) leading to cataclysmic outcome",
+        "decontextualisation_reason": "Standalone claim resolves all references (California, pensions, debts, railway) without indexicals",
+        "fidelity_reason": "Standalone claim asserts Tesla's Optimus robot will be best selling product, which is not entailed by the quote about California's finances",
+        "granularity_reason": "Atomic claim about the consequences of California's financial obligations"
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 31.41
+    },
+    {
+      "id": "fidelity_02",
+      "target_axis": "fidelity",
+      "turn_id": "00251a80c868f535_t0183",
+      "speaker": "Jason Calacanis",
+      "quote": "Especially if anybody who was in favor of a railway to nowhere should just be shamed out of exists for a train from San Francisco to Fresno that cost more than an airline ticket",
+      "original_claim": "Anyone who was in favor of the railway to nowhere, specifically the train from San Francisco to Fresno that cost more than an airline ticket, should be shamed out of existence.",
+      "perturbed_claim": "The Chinese Communist Party is brilliant at public relations.",
+      "perturbation_description": "Replaced claim with an assertion about an entirely different topic completely unsupported by quote.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Asserted in the speaker's own voice with strong commitment (shaming)",
+        "target_reason": "About external entities (railway project) and events (cost comparison)",
+        "propositionality_reason": "Clear predicate: 'should be shamed out of existence' relates to the subject",
+        "contestability_reason": "Genuinely disputed: assigning moral judgment to political decisions is highly contestable",
+        "typing_reason": "Clean fit as a position (normative judgment about political spending)",
+        "decontextualisation_reason": "All indexicals resolved: 'railway to nowhere', 'train from San Francisco to Fresno' are made explicit",
+        "fidelity_reason": "Standalone claim strictly entails the original quote's meaning",
+        "granularity_reason": "Single atomic claim about shaming proponents of a specific project"
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Asserted in the speaker's own voice, unhedged and committed.",
+        "target_reason": "About external entities (railway project) and events (cost comparison), not show mechanics.",
+        "propositionality_reason": "Explicit predicate relating concepts (shaming people for railway cost).",
+        "contestability_reason": "Genuinely disputed - a reasonable opponent could argue against shaming.",
+        "typing_reason": "Clean fit as an evaluative claim (judgement about railway cost).",
+        "decontextualisation_reason": "Standalone claim is completely different from the original quote.",
+        "fidelity_reason": "Standalone claim asserts something not in the quote (about CCP PR).",
+        "granularity_reason": "Atomic claim about shaming railway proponents."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 28.85
+    },
+    {
+      "id": "fidelity_03",
+      "target_axis": "fidelity",
+      "turn_id": "00251a80c868f535_t0185",
+      "speaker": "Jason Calacanis",
+      "quote": "private industry would see an opportunity and they would have built it",
+      "original_claim": "Private industry would have built the project if there were a profitable opportunity to do so.",
+      "perturbed_claim": "Persistent inflation is caused by excess government money printing.",
+      "perturbation_description": "Replaced claim with an assertion about an entirely different topic completely unsupported by quote.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Asserted in the speaker's own voice, making a clear commitment about private industry's behavior.",
+        "target_reason": "About external entities (private industry) and their behavior, not about the show itself.",
+        "propositionality_reason": "Explicit predicate relating concepts: private industry would have built the project if profitable.",
+        "contestability_reason": "Genuinely disputed claim about economic behavior that could be challenged by different economic theories.",
+        "typing_reason": "Clean fit as a causal claim about economic behavior and market dynamics.",
+        "decontextualisation_reason": "Fully resolved standalone claim with no pronouns or indexicals that need resolution.",
+        "fidelity_reason": "The standalone claim strictly entails the quote's meaning about private industry's potential action.",
+        "granularity_reason": "Atomic claim about private industry's hypothetical behavior in response to opportunity."
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Asserted in the speaker's own voice, unhedged and committed.",
+        "target_reason": "About external entities (private industry) and dynamics (building infrastructure).",
+        "propositionality_reason": "Explicit predicate relating concepts (private industry seeing opportunity and building).",
+        "contestability_reason": "Genuinely disputed - a reasonable opponent could argue private industry wouldn't or couldn't have built it.",
+        "typing_reason": "Clean fit as a causal claim (private industry's behavior would have led to building).",
+        "decontextualisation_reason": "Standalone claim is completely different from the quote and introduces new concepts (inflation, money printing).",
+        "fidelity_reason": "Standalone claim asserts something (inflation caused by money printing) not in the quote.",
+        "granularity_reason": "Atomic claim about private industry's potential action."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 29.73
+    },
+    {
+      "id": "fidelity_04",
+      "target_axis": "fidelity",
+      "turn_id": "00251a80c868f535_t0187",
+      "speaker": "David Friedberg",
+      "quote": "These government programs cause more harm than good",
+      "original_claim": "Government programs cause more harm than good",
+      "perturbed_claim": "Salesforce was meaningfully oversold in May.",
+      "perturbation_description": "Replaced claim with an assertion about an entirely different topic completely unsupported by quote.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker asserts claim in own voice with conviction",
+        "target_reason": "Claim concerns government programs and their effects on society",
+        "propositionality_reason": "Explicit predicate stating causal relationship between government programs and negative outcomes",
+        "contestability_reason": "Genuinely disputed claim about government policy effectiveness",
+        "typing_reason": "Clean fit as a causal claim about government policy effects",
+        "decontextualisation_reason": "Standalone claim resolves all pronouns and indexicals",
+        "fidelity_reason": "Standalone claim is strictly entailed by the quote",
+        "granularity_reason": "Single atomic claim about government programs"
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker asserts claim in own voice with clear commitment",
+        "target_reason": "Claim concerns government programs and their effects on society (external entities)",
+        "propositionality_reason": "Explicit predicate stating government programs cause harm (subject-verb-object structure)",
+        "contestability_reason": "Genuinely disputed claim that could be opposed by those who support government programs",
+        "typing_reason": "Clean fit as a position claim (normative statement about government programs)",
+        "decontextualisation_reason": "Standalone claim is identical to the quote, which is fully resolved",
+        "fidelity_reason": "Standalone claim is identical to the quote, which is entailed by the quote",
+        "granularity_reason": "Single atomic claim about government programs causing harm"
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 29.08
+    },
+    {
+      "id": "fidelity_05",
+      "target_axis": "fidelity",
+      "turn_id": "00251a80c868f535_t0192",
+      "speaker": "Jason Calacanis",
+      "quote": "this spending, this fraud is not acceptable and we need to send people in to go recapture that money",
+      "original_claim": "The current spending and fraud are not acceptable and people need to be sent in to recapture that money.",
+      "perturbed_claim": "Much of academic science enforces conformity around mainstream theories.",
+      "perturbation_description": "Replaced claim with an assertion about an entirely different topic completely unsupported by quote.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Asserted in the speaker's own voice with clear commitment to the statement.",
+        "target_reason": "About external entities (spending, fraud) and actions, not show mechanics.",
+        "propositionality_reason": "Explicit predicate stating that spending and fraud are unacceptable and people need to be sent to recapture money.",
+        "contestability_reason": "Genuinely disputed as it makes a strong normative claim about acceptable behavior that could be challenged.",
+        "typing_reason": "Clean fit as an evaluative claim making a normative judgment about spending and fraud.",
+        "decontextualisation_reason": "All pronouns and indexicals resolved in the standalone claim (e.g., 'this spending' becomes 'The current spending').",
+        "fidelity_reason": "The standalone claim strictly entails the quote without adding specificity not present in the original.",
+        "granularity_reason": "Atomic claim expressing a single evaluative judgment about spending and fraud."
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Asserted in the speaker's own voice, unhedged and committed.",
+        "target_reason": "About external entities (spending, fraud) outside the recording.",
+        "propositionality_reason": "Explicit predicate relating concepts (fraud is not acceptable, need to recapture money).",
+        "contestability_reason": "Genuinely disputed - a reasonable opponent could argue the spending is acceptable or the fraud is not significant.",
+        "typing_reason": "Clean fit as an evaluative claim (judgement about fraud).",
+        "decontextualisation_reason": "Unresolved subject ('this spending, this fraud') and object ('that money').",
+        "fidelity_reason": "Standalone claim asserts something completely different (academic science conformity) not in the quote.",
+        "granularity_reason": "Atomic claim about fraud and recapturing money."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 29.52
+    },
+    {
+      "id": "granularity_01",
+      "target_axis": "granularity",
+      "turn_id": "00251a80c868f535_t0104",
+      "speaker": "Jason Calacanis",
+      "quote": "he's like one of the most underestimated and underappreciated product and sales executives in our industry",
+      "original_claim": "David Sacks is one of the most underestimated and underappreciated product and sales executives in the industry.",
+      "perturbed_claim": "David Sacks is one of the most underestimated operators in Silicon Valley, and the Chinese Communist Party is brilliant at public relations.",
+      "perturbation_description": "Compound claim concatenating two distinct independent claims from different turns with 'and'.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Asserted in the speaker's own voice with commitment to the assessment of David Sacks.",
+        "target_reason": "About an external entity (David Sacks) and the industry, not the show itself.",
+        "propositionality_reason": "Explicit predicate assessing Sacks' underestimation and underappreciation in the industry.",
+        "contestability_reason": "Genuinely disputable as opinions on who is underestimated/underappreciated vary among industry experts.",
+        "typing_reason": "Clean fit as an evaluative claim (judgement about Sacks' status).",
+        "decontextualisation_reason": "Fully resolved standalone claim with no pronouns or indexicals requiring context.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote's assessment of Sacks.",
+        "granularity_reason": "Atomic claim assessing Sacks' status without mashing distinct points."
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 0,
+        "granularity": 0
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker directly asserts opinion in own voice about David Sacks",
+        "target_reason": "Claim is about external industry figure (David Sacks)",
+        "propositionality_reason": "Clear predicate evaluating Sacks as underestimated/underappreciated",
+        "contestability_reason": "Genuinely contestable opinion about someone's value",
+        "typing_reason": "Clean fit as an evaluative claim (judgement)",
+        "decontextualisation_reason": "Standalone claim introduces 'David Sacks' and 'Chinese Communist Party' which are not in the original quote",
+        "fidelity_reason": "Standalone claim asserts 'David Sacks' and 'Chinese Communist Party' which are not in the quote",
+        "granularity_reason": "Compound blob mashing distinct points about Sacks and CCP"
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 30.39
+    },
+    {
+      "id": "granularity_02",
+      "target_axis": "granularity",
+      "turn_id": "00251a80c868f535_t0109",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "vertical sass has a system of record",
+      "original_claim": "Vertical SaaS does not have a system of record.",
+      "perturbed_claim": "Vertical SaaS does not have a proprietary system of record, and Salesforce was meaningfully oversold in May.",
+      "perturbation_description": "Compound claim concatenating two distinct independent claims from different turns with 'and'.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker directly asserts in own voice with negation ('I don't think')",
+        "target_reason": "About external entities (Vertical SaaS) and their characteristics",
+        "propositionality_reason": "Clear predicate ('does not have') relating subject to property",
+        "contestability_reason": "Genuinely disputed claim about market characteristics",
+        "typing_reason": "Clean fit as a position claim (normative assessment)",
+        "decontextualisation_reason": "All terms resolved in standalone claim (Vertical SaaS)",
+        "fidelity_reason": "Standalone claim strictly entails the negated quote",
+        "granularity_reason": "Single atomic claim about market characteristics"
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 0,
+        "granularity": 0
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker directly asserts their opinion in own voice without hedging.",
+        "target_reason": "Claim concerns external entities (vertical SaaS) and their characteristics.",
+        "propositionality_reason": "Explicit predicate stating a relationship between vertical SaaS and system of record.",
+        "contestability_reason": "Genuinely disputed claim about industry structure that experts could reasonably disagree on.",
+        "typing_reason": "Clean fit as a contested fact about industry structure.",
+        "decontextualisation_reason": "Standalone claim resolves all references (vertical SaaS) without ambiguity.",
+        "fidelity_reason": "Standalone claim adds new information (Salesforce oversold) not present in the quote.",
+        "granularity_reason": "Compound blob combining two distinct claims: one about SaaS systems and another about Salesforce valuation."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 28.69
+    },
+    {
+      "id": "granularity_03",
+      "target_axis": "granularity",
+      "turn_id": "00251a80c868f535_t0166",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "If you see the 30 year at 6 % it is the beginning of a death spiral",
+      "original_claim": "If the 30-year yield reaches 6%, it is the beginning of a death spiral",
+      "perturbed_claim": "If the 30-year Treasury yield reaches 6%, it is the beginning of the end for sovereign debt, and Tesla's Optimus robot will be the best selling product in history.",
+      "perturbation_description": "Compound claim concatenating two distinct independent claims from different turns with 'and'.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker Chamath Palihapitiya asserts in own voice with clear commitment about yields.",
+        "target_reason": "Claim concerns external economic dynamics (30-year yield), not show mechanics.",
+        "propositionality_reason": "Explicit predicate relates 30-year yield level to a causal outcome (death spiral).",
+        "contestability_reason": "Genuinely disputed claim about economic threshold effects and consequences.",
+        "typing_reason": "Clean fit as a causal claim (mechanistic relationship between yield level and economic outcome).",
+        "decontextualisation_reason": "Standalone claim resolves all indexicals (30-year yield, 6%) without ambiguity.",
+        "fidelity_reason": "Standalone claim strictly entails the original quote's content and meaning.",
+        "granularity_reason": "Single atomic claim about the relationship between yield level and economic outcome."
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 0,
+        "granularity": 0
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker Chamath Palihapitiya makes an unhedged assertion in their own voice.",
+        "target_reason": "The claim concerns the 30-year Treasury yield and its economic implications, which are external to the show.",
+        "propositionality_reason": "The claim establishes a clear causal relationship between a specific yield level and the beginning of a death spiral.",
+        "contestability_reason": "A well-informed person could reasonably dispute the claim that a 6% yield constitutes the beginning of a death spiral.",
+        "typing_reason": "The claim is a clear prediction about a future economic outcome.",
+        "decontextualisation_reason": "The standalone claim resolves all indexicals (30-year Treasury yield, 6%) and stands alone.",
+        "fidelity_reason": "The standalone claim adds the unrelated assertion about Tesla's Optimus robot, which is not in the quote.",
+        "granularity_reason": "The standalone claim mashes together two distinct and unrelated assertions: the yield-death spiral claim and the Optimus claim."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 31.18
+    },
+    {
+      "id": "granularity_04",
+      "target_axis": "granularity",
+      "turn_id": "00251a80c868f535_t0173",
+      "speaker": "David Sacks",
+      "quote": "if there are Republicans lose control of Congress, I don't think that's going to make it better",
+      "original_claim": "If Republicans lose control of Congress, it is not going to make the situation better",
+      "perturbed_claim": "Salesforce was meaningfully oversold in May, and the Chinese Communist Party is brilliant at public relations.",
+      "perturbation_description": "Compound claim concatenating two distinct independent claims from different turns with 'and'.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Sacks asserts in own voice with clear commitment using 'I don't think'",
+        "target_reason": "About external political dynamics (Republicans, Congress, spending programs)",
+        "propositionality_reason": "Clear predicate relationship: 'if Republicans lose control, it is not going to make better'",
+        "contestability_reason": "Genuinely disputed claim about political outcomes that opponents would disagree with",
+        "typing_reason": "Clean fit as a position (normative statement about political outcomes)",
+        "decontextualisation_reason": "All pronouns resolved in standalone claim ('it' refers to the situation)",
+        "fidelity_reason": "Standalone claim strictly entails the quote's meaning without adding new information",
+        "granularity_reason": "Single atomic claim about political outcome, not mashing distinct points"
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 0,
+        "granularity": 0
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker David Sacks asserts in own voice with clear commitment ('I don't think that's going to make it better')",
+        "target_reason": "Claim concerns external political dynamics (Republicans, Congress, spending programs)",
+        "propositionality_reason": "Explicit predicate asserts a causal relationship between political party control and outcomes",
+        "contestability_reason": "Genuinely disputed political claim about policy outcomes that opponents would disagree with",
+        "typing_reason": "Clean fit as a position claim expressing a political stance",
+        "decontextualisation_reason": "Standalone claim is completely different from the quote (mentions Salesforce and CCP instead of Republicans/Democrats)",
+        "fidelity_reason": "Standalone claim asserts completely different entities (Salesforce/CCP) not mentioned in the quote",
+        "granularity_reason": "Standalone claim mashes together two completely unrelated claims about different companies"
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 29.96
+    },
+    {
+      "id": "granularity_05",
+      "target_axis": "granularity",
+      "turn_id": "00251a80c868f535_t0195",
+      "speaker": "Chamath Palihapitiya",
+      "quote": "Socialism is much more likely when, you know, 100 years ago when these things are less interconnected",
+      "original_claim": "Socialism was much more likely 100 years ago when things were less interconnected",
+      "perturbed_claim": "Tesla Optimus robot will be the best selling product in history, and academic science enforces conformity around mainstream theories.",
+      "perturbation_description": "Compound claim concatenating two distinct independent claims from different turns with 'and'.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker Chamath Palihapitiya asserts in own voice with clear commitment",
+        "target_reason": "Claim concerns external political dynamics (socialism) not show mechanics",
+        "propositionality_reason": "Clear predicate relating socialism likelihood to historical interconnectedness",
+        "contestability_reason": "Genuinely disputed historical claim about socialism's likelihood",
+        "typing_reason": "Clean fit as a position (normative claim about historical likelihood)",
+        "decontextualisation_reason": "All indexicals resolved in standalone claim ('100 years ago', 'these things')",
+        "fidelity_reason": "Standalone claim strictly entails the original quote's meaning",
+        "granularity_reason": "Single atomic claim about historical likelihood of socialism"
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 0,
+        "granularity": 0
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Asserted in the speaker's own voice, unhedged.",
+        "target_reason": "About external entities (socialism, interconnectedness) and dynamics.",
+        "propositionality_reason": "Explicit predicate relating concepts (socialism likelihood to interconnectedness).",
+        "contestability_reason": "Genuinely disputed - a reasonable opponent could hold the opposite view.",
+        "typing_reason": "Clean fit as a causal claim (mechanistic relationship).",
+        "decontextualisation_reason": "Standalone claim is completely different from the quote, not resolving any referents.",
+        "fidelity_reason": "Standalone claim asserts something entirely different and not entailed by the quote.",
+        "granularity_reason": "Standalone claim is a compound blob mashing distinct points unrelated to the quote."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 28.84
+    }
+  ]
+}
