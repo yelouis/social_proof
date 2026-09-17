@@ -1244,3 +1244,106 @@ def evaluate_consensus_against_gold(
         "shared_false_positives_count": len(shared_fps),
         "shared_false_positives": shared_fps,
     }
+
+
+DEFAULT_FIXTURES_AXES_DIR: Path = REPO_ROOT / "v2" / "fixtures" / "axes"
+DEFAULT_PERTURBATIONS_PATH: Path = DEFAULT_FIXTURES_AXES_DIR / "perturbations.json"
+
+
+def evaluate_perturbation_results(
+    perturbation_results: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Evaluates the Tier 2 perturbation sensitivity property.
+
+    Assertion (c): for each of the eight axes, perturbed items score strictly lower
+    on that axis than their unperturbed originals in at least 4 of 5 pairs,
+    with off-target movement reported.
+    """
+    by_axis: dict[str, list[dict[str, Any]]] = {ax: [] for ax in AXIS_NAMES}
+    for item in perturbation_results:
+        ax = item["target_axis"]
+        if ax in by_axis:
+            by_axis[ax].append(item)
+
+    axis_results: dict[str, Any] = {}
+    all_axes_pass = True
+
+    total_off_target_drops = 0
+    total_off_target_comparisons = 0
+
+    for axis in AXIS_NAMES:
+        pairs = by_axis[axis]
+        total_pairs = len(pairs)
+        target_drops = 0
+        axis_off_target_drops = 0
+        axis_off_target_comparisons = 0
+
+        pair_details: list[dict[str, Any]] = []
+
+        for p in pairs:
+            orig_scores = p.get("original_scores", {})
+            pert_scores = p.get("perturbed_scores", {})
+
+            orig_val = orig_scores.get(axis)
+            pert_val = pert_scores.get(axis)
+
+            target_fell = bool(orig_val is not None and pert_val is not None and pert_val < orig_val)
+            if target_fell:
+                target_drops += 1
+
+            # Check off-target movements
+            off_target_changes = {}
+            for other_ax in AXIS_NAMES:
+                if other_ax == axis:
+                    continue
+                o_val = orig_scores.get(other_ax)
+                p_val = pert_scores.get(other_ax)
+                if o_val is not None and p_val is not None:
+                    axis_off_target_comparisons += 1
+                    total_off_target_comparisons += 1
+                    if p_val < o_val:
+                        axis_off_target_drops += 1
+                        total_off_target_drops += 1
+                        off_target_changes[other_ax] = {"orig": o_val, "pert": p_val}
+
+            pair_details.append({
+                "id": p.get("id"),
+                "turn_id": p.get("turn_id"),
+                "target_axis": axis,
+                "orig_target_score": orig_val,
+                "pert_target_score": pert_val,
+                "target_fell": target_fell,
+                "target_delta": (orig_val - pert_val) if orig_val is not None and pert_val is not None else None,
+                "off_target_drops_count": len(off_target_changes),
+                "off_target_changes": off_target_changes,
+            })
+
+        axis_pass = bool(target_drops >= 4 and total_pairs >= 4)
+        if not axis_pass:
+            all_axes_pass = False
+
+        off_target_rate = round(axis_off_target_drops / axis_off_target_comparisons * 100.0, 1) if axis_off_target_comparisons > 0 else 0.0
+
+        axis_results[axis] = {
+            "axis": axis,
+            "total_pairs": total_pairs,
+            "target_drops_count": target_drops,
+            "target_sensitivity_rate_pct": round(target_drops / total_pairs * 100.0, 1) if total_pairs > 0 else 0.0,
+            "passes_target_threshold": axis_pass,
+            "off_target_drops_count": axis_off_target_drops,
+            "off_target_comparisons_count": axis_off_target_comparisons,
+            "off_target_drop_rate_pct": off_target_rate,
+            "pairs": pair_details,
+        }
+
+    overall_off_target_rate = round(total_off_target_drops / total_off_target_comparisons * 100.0, 1) if total_off_target_comparisons > 0 else 0.0
+
+    return {
+        "all_axes_pass": all_axes_pass,
+        "axes": axis_results,
+        "total_pairs_evaluated": len(perturbation_results),
+        "total_off_target_drops": total_off_target_drops,
+        "total_off_target_comparisons": total_off_target_comparisons,
+        "overall_off_target_drop_rate_pct": overall_off_target_rate,
+    }
+
