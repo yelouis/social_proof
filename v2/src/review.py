@@ -151,13 +151,35 @@ def load_episode_data(
         for v in extraction_data.get("verdicts", []):
             model_verdicts[v["turn_id"]] = v
 
+    # Load C4 Scored Axes if present (final artifact or live checkpoint)
+    scored_axes_file = extraction_dir / f"c4_scored_axes_{source_id}.json"
+    ckpt_axes_file = extraction_dir / f"c4_scored_axes_{source_id}_ckpt.json"
+    target_axes_file: Path | None = None
+    if scored_axes_file.exists():
+        target_axes_file = scored_axes_file
+    elif ckpt_axes_file.exists():
+        target_axes_file = ckpt_axes_file
+
+    has_scored_axes = target_axes_file is not None
+    scored_axes_data: dict[str, Any] | None = None
+    turn_axes_map: dict[str, dict[str, Any]] = {}
+    if target_axes_file is not None:
+        a_mtime = datetime.fromtimestamp(target_axes_file.stat().st_mtime, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%SZ")
+        artifacts_read.append({"name": target_axes_file.name, "path": str(target_axes_file), "mtime": a_mtime})
+        with open(target_axes_file, "r", encoding="utf-8") as f:
+            scored_axes_data = json.load(f)
+        for sc in scored_axes_data.get("scored_claims", []):
+            turn_axes_map[sc["turn_id"]] = sc
+
     # Model provenance metadata (Step 5 & B7 Gap 1: driven strictly by artifact, zero defaults)
     model_provenance = {
         "model_id": extraction_data.get("model_id") if extraction_data else None,
+        "scoring_model_id": scored_axes_data.get("scoring_model_id") if scored_axes_data else None,
         "quantisation": extraction_data.get("quantisation") if extraction_data else None,
         "runtime": extraction_data.get("runtime") if extraction_data else None,
         "prompt_version": extraction_data.get("prompt_version") if extraction_data else None,
         "rubric_commit": extraction_data.get("rubric_commit") if extraction_data else None,
+        "axes_commit": scored_axes_data.get("report", {}).get("provenance", {}).get("axes_commit") if scored_axes_data else None,
     }
 
     # Merge turns with gold and model verdicts
@@ -240,6 +262,10 @@ def load_episode_data(
         else:
             agreement_state = "b1_only"
 
+        ax_item = turn_axes_map.get(turn_id)
+        axes_scores = ax_item.get("scores") if ax_item else None
+        axes_reasons = ax_item.get("reasons") if ax_item else None
+
         merged_turns.append({
             "index": idx,
             "turn_id": turn_id,
@@ -265,6 +291,8 @@ def load_episode_data(
             "gold_quote": g_quote,
             "gold_type": g_type,
             "agreement_state": agreement_state,
+            "axes_scores": axes_scores,
+            "axes_reasons": axes_reasons,
         })
 
     # Gate distribution calculations (share-of-all-turns convention across both model and gold)
@@ -286,6 +314,8 @@ def load_episode_data(
         "turns": merged_turns,
         "has_gold": has_gold,
         "has_extraction": has_extraction,
+        "has_scored_axes": has_scored_axes,
+        "axes_report": scored_axes_data.get("report") if scored_axes_data else None,
         "model_provenance": model_provenance,
         "model_claims_count": model_claims_count,
         "gold_claims_count": gold_claims_count,
@@ -302,6 +332,138 @@ def load_episode_data(
         },
         "artifacts_read": artifacts_read,
     }
+
+
+def render_quality_profile_html(axes_report: dict[str, Any] | None) -> str:
+    """Renders the Episode Claim Quality Profile report (§4) above the turn list."""
+    if not axes_report:
+        return ""
+
+    claims_found = axes_report.get("claims_found", axes_report.get("episode", {}).get("claims_found", 0))
+    total_turns = axes_report.get("total_turns", axes_report.get("episode", {}).get("total_turns", 405))
+    density_pct = axes_report.get("claim_density_pct", axes_report.get("density_pct", axes_report.get("episode", {}).get("density_pct", 0.0)))
+    prov = axes_report.get("provenance", {})
+    scoring_model = html.escape(str(prov.get("scoring_model_id", "GLM-4-32B")))
+    extractor_model = html.escape(str(prov.get("model_id", "Gemma-4-31B")))
+
+    sp_panel = axes_report.get("speaker_panel", {})
+    ex_panel = axes_report.get("extraction_panel", {})
+    cross_checks = axes_report.get("proxy_cross_checks") or axes_report.get("cross_checks", {})
+
+    def render_axis_row(axis_data: dict[str, Any], is_extraction: bool = False) -> str:
+        name = axis_data.get("axis", "").capitalize()
+        mean_val = axis_data.get("mean", 0.0)
+        counts = axis_data.get("counts", {})
+        pcts = axis_data.get("percentages", {})
+        zeros = axis_data.get("zero_scores_turn_ids", [])
+        if zeros:
+            links = [f'<a class="zero-turn-link" href="#{tid}">{tid[-5:]}</a>' for tid in zeros]
+            zeros_str = f'<div class="zero-turns-list"><span class="zero-tag">0s ({len(zeros)}):</span> {" ".join(links)}</div>'
+        else:
+            zeros_str = '<div class="zero-turns-list"><span class="zero-none">0s: none</span></div>'
+
+        return f"""
+        <div class="axis-row">
+            <div class="axis-name-col">
+                <span class="axis-title">{name}</span>
+                <span class="axis-mean font-mono">mean {mean_val:.2f}</span>
+            </div>
+            <div class="axis-dist-col">
+                <div class="dist-bar-track">
+                    <div class="dist-seg seg-2" style="width: {pcts.get('2', 0.0)}%" title="Score 2: {counts.get('2', 0)} ({pcts.get('2', 0.0):.1f}%)"></div>
+                    <div class="dist-seg seg-1" style="width: {pcts.get('1', 0.0)}%" title="Score 1: {counts.get('1', 0)} ({pcts.get('1', 0.0):.1f}%)"></div>
+                    <div class="dist-seg seg-0" style="width: {pcts.get('0', 0.0)}%" title="Score 0: {counts.get('0', 0)} ({pcts.get('0', 0.0):.1f}%)"></div>
+                </div>
+                <div class="dist-numbers">
+                    <span class="d-val d-2">2: {pcts.get('2', 0.0):.1f}% ({counts.get('2', 0)})</span>
+                    <span class="d-val d-1">1: {pcts.get('1', 0.0):.1f}% ({counts.get('1', 0)})</span>
+                    <span class="d-val d-0">0: {pcts.get('0', 0.0):.1f}% ({counts.get('0', 0)})</span>
+                </div>
+            </div>
+            <div class="axis-zeros-col">
+                {zeros_str}
+            </div>
+        </div>
+        """
+
+    sp_order = ["voice", "target", "propositionality", "contestability", "typing"]
+    ex_order = ["decontextualisation", "fidelity", "granularity"]
+
+    sp_rows = "\n".join(render_axis_row(sp_panel[ax]) for ax in sp_order if ax in sp_panel)
+    ex_rows = "\n".join(render_axis_row(ex_panel[ax], is_extraction=True) for ax in ex_order if ax in ex_panel)
+
+    ref_cc = cross_checks.get("decontextualisation", {})
+    comp_cc = cross_checks.get("granularity", {})
+    fid_cc = cross_checks.get("fidelity", {})
+
+    return f"""
+    <section class="quality-profile-section" id="claim-quality-profile">
+        <header class="qp-header">
+            <div class="qp-title-block">
+                <span class="qp-pill">C4 Episode Quality Profile</span>
+                <h2 class="qp-title">Claim Quality Across Eight Axes</h2>
+                <div class="qp-meta">
+                    Two-Pass Architecture &bull; Extractor: <span class="font-mono">{extractor_model}</span> &bull; Scorer: <span class="font-mono">{scoring_model}</span> (Independent Scorer)
+                </div>
+            </div>
+            <div class="qp-stats-box">
+                <div class="qp-stat">
+                    <span class="qp-stat-num">{claims_found}</span>
+                    <span class="qp-stat-lbl">Claims Found</span>
+                </div>
+                <div class="qp-stat">
+                    <span class="qp-stat-num">{density_pct:.1f}%</span>
+                    <span class="qp-stat-lbl">Density ({claims_found}/{total_turns} turns)</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="qp-panels-grid">
+            <div class="qp-panel-card speaker-card">
+                <div class="panel-card-header">
+                    <div class="panel-heading">Speaker Panel</div>
+                    <div class="panel-sub">How good were the claims made &bull; Epistemic commitment of the speaker</div>
+                </div>
+                <div class="axis-rows-container">
+                    {sp_rows}
+                </div>
+            </div>
+
+            <div class="qp-panel-card extraction-card">
+                <div class="panel-card-header">
+                    <div class="panel-heading">Extraction Panel</div>
+                    <div class="panel-sub">How well we captured them &bull; Quality gate on extraction pipeline (scored by {scoring_model})</div>
+                </div>
+                <div class="axis-rows-container">
+                    {ex_rows}
+                </div>
+
+                <div class="mechanical-proxies-block">
+                    <div class="proxies-title">Mechanical Proxy Cross-Checks (§4 &amp; §18)</div>
+                    <div class="proxy-stat-row">
+                        <span class="proxy-name">Unresolved referents:</span>
+                        <span class="proxy-num">{ref_cc.get('proxy_unresolved_referents_count', 0)} of {claims_found}</span>
+                        <span class="proxy-overlap">&bull; Decontextualisation 0s overlap: {ref_cc.get('overlap_count', 0)}/{ref_cc.get('proxy_unresolved_referents_count', 0)} ({ref_cc.get('overlap_rate_pct', 0.0):.1f}%)</span>
+                    </div>
+                    <div class="proxy-stat-row">
+                        <span class="proxy-name">Compound claims &gt; 35w:</span>
+                        <span class="proxy-num">{comp_cc.get('proxy_compound_claims_count', 0)} of {claims_found}</span>
+                        <span class="proxy-overlap">&bull; Granularity 0s overlap: {comp_cc.get('overlap_count', 0)}/{comp_cc.get('proxy_compound_claims_count', 0)} ({comp_cc.get('overlap_rate_pct', 0.0):.1f}%)</span>
+                    </div>
+                    <div class="proxy-stat-row">
+                        <span class="proxy-name">Near-verbatim quotes:</span>
+                        <span class="proxy-num">{fid_cc.get('near_verbatim_quotes_count', 0)} of {claims_found}</span>
+                        <span class="proxy-overlap">&bull; Token overlap &ge; 83%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="qp-caveat-footer">
+            <span class="caveat-label">Validation Note:</span> Speaker panel and Extraction panel are reported strictly separately and never blended into a composite score. Scored by independent model (<span class="font-mono">{scoring_model}</span>).
+        </div>
+    </section>
+    """
 
 
 def render_review_html(
@@ -431,6 +593,25 @@ def render_review_html(
                 q = html.escape(t.get("model_quote", "") or "")
                 c = html.escape(t.get("model_claim", "") or "")
                 tp = html.escape(t.get("model_type", "position") or "")
+
+                axes_badges_html = ""
+                if t.get("axes_scores"):
+                    sc = t["axes_scores"]
+                    rs = t.get("axes_reasons") or {}
+                    pills = []
+                    for ax in ["voice", "target", "propositionality", "contestability", "typing"]:
+                        v = sc.get(ax)
+                        if v is not None:
+                            r = html.escape(str(rs.get(f"{ax}_reason", "")))
+                            pills.append(f'<span class="axis-pill score-{v}" title="{ax.capitalize()} ({v}): {r}"><span class="ax-name">{ax[:4].upper()}</span> <span class="ax-val">{v}</span></span>')
+                    for ax in ["decontextualisation", "fidelity", "granularity"]:
+                        v = sc.get(ax)
+                        if v is not None:
+                            r = html.escape(str(rs.get(f"{ax}_reason", "")))
+                            pills.append(f'<span class="axis-pill score-{v} extraction-pill" title="{ax.capitalize()} ({v}): {r}"><span class="ax-name">{ax[:5].upper()}</span> <span class="ax-val">{v}</span></span>')
+                    if pills:
+                        axes_badges_html = f'<div class="card-axes-row"><span class="axes-label">Quality:</span> <div class="axes-pills">{" ".join(pills)}</div></div>'
+
                 model_col_html = f"""
                 <div class="verdict-col model-col has-claim">
                     <div class="col-header"><span class="verdict-tag tag-claim">CLAIM</span> <span class="claim-type">{tp}</span></div>
@@ -438,6 +619,7 @@ def render_review_html(
                     <div class="claim-text">{c}</div>
                     <div class="field-label">Quote:</div>
                     <blockquote class="verbatim-quote">&ldquo;{q}&rdquo;</blockquote>
+                    {axes_badges_html}
                 </div>
                 """
             else:
@@ -511,16 +693,26 @@ def render_review_html(
         """)
 
     turn_cards_str = "\n".join(turn_cards_html)
+    quality_profile_html = render_quality_profile_html(data.get("axes_report"))
 
     # Model provenance banner (Step 5 & B7 Gap 1: driven strictly by artifact, zero defaults)
     if has_extraction:
+        scoring_item = ""
+        if prov.get("scoring_model_id"):
+            scoring_item = f'<div class="prov-item"><span class="prov-k">Scoring Model:</span> <span class="prov-v">{html.escape(str(prov.get("scoring_model_id")))}</span></div>'
+        axes_commit_item = ""
+        if prov.get("axes_commit"):
+            axes_commit_item = f'<div class="prov-item"><span class="prov-k">Axes Commit:</span> <span class="prov-v font-mono">{html.escape(str(prov.get("axes_commit")))}</span></div>'
+
         prov_html = f"""
         <div class="provenance-banner">
             <div class="prov-item"><span class="prov-k">Model:</span> <span class="prov-v">{html.escape(str(prov.get('model_id') or 'unknown'))}</span></div>
+            {scoring_item}
             <div class="prov-item"><span class="prov-k">Quant:</span> <span class="prov-v">{html.escape(str(prov.get('quantisation') or 'unknown'))}</span></div>
             <div class="prov-item"><span class="prov-k">Runtime:</span> <span class="prov-v">{html.escape(str(prov.get('runtime') or 'unknown'))}</span></div>
             <div class="prov-item"><span class="prov-k">Prompt:</span> <span class="prov-v">{html.escape(str(prov.get('prompt_version') or 'unknown'))}</span></div>
             <div class="prov-item"><span class="prov-k">Rubric Commit:</span> <span class="prov-v font-mono">{html.escape(str(prov.get('rubric_commit') or 'unknown'))}</span></div>
+            {axes_commit_item}
         </div>
         """
     else:
@@ -1156,6 +1348,346 @@ def render_review_html(
             color: var(--text-muted);
             margin-top: 0.25rem;
         }}
+
+        /* Quality Profile Section */
+        .quality-profile-section {{
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }}
+
+        .qp-header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }}
+
+        .qp-pill {{
+            font-size: 0.75rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.15rem 0.6rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 0.4rem;
+        }}
+
+        .qp-title {{
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text-main);
+            margin-bottom: 0.25rem;
+        }}
+
+        .qp-meta {{
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }}
+
+        .qp-stats-box {{
+            display: flex;
+            gap: 1.5rem;
+            background: var(--surface-elevated);
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            padding: 0.6rem 1.2rem;
+        }}
+
+        .qp-stat {{
+            display: flex;
+            flex-direction: column;
+        }}
+
+        .qp-stat-num {{
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }}
+
+        .qp-stat-lbl {{
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }}
+
+        .qp-panels-grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.25rem;
+        }}
+
+        .qp-panel-card {{
+            background: var(--surface-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }}
+
+        .panel-card-header {{
+            margin-bottom: 1rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }}
+
+        .panel-heading {{
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }}
+
+        .panel-sub {{
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }}
+
+        .axis-rows-container {{
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }}
+
+        .axis-row {{
+            display: grid;
+            grid-template-columns: 140px 1fr 140px;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.4rem 0;
+            border-bottom: 1px dashed rgba(55, 65, 81, 0.4);
+        }}
+
+        .axis-row:last-child {{
+            border-bottom: none;
+        }}
+
+        .axis-name-tag {{
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-main);
+        }}
+
+        .axis-def {{
+            font-size: 0.7rem;
+            color: var(--text-subtle);
+        }}
+
+        .zero-flag-msg {{
+            display: block;
+            color: var(--red);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }}
+
+        .axis-dist-col {{
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }}
+
+        .dist-bar-track {{
+            height: 10px;
+            background: rgba(31, 41, 55, 0.8);
+            border-radius: 9999px;
+            overflow: hidden;
+            display: flex;
+        }}
+
+        .dist-seg {{
+            height: 100%;
+            transition: width 0.3s ease;
+        }}
+
+        .seg-2 {{
+            background: var(--green);
+        }}
+
+        .seg-1 {{
+            background: var(--amber);
+        }}
+
+        .seg-0 {{
+            background: var(--red);
+        }}
+
+        .dist-legend {{
+            display: flex;
+            gap: 0.75rem;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }}
+
+        .d-val {{
+            font-family: ui-monospace, monospace;
+        }}
+
+        .d-2 {{
+            color: var(--green);
+        }}
+
+        .d-1 {{
+            color: var(--amber);
+        }}
+
+        .d-0 {{
+            color: var(--red);
+        }}
+
+        .axis-zeros-col {{
+            font-size: 0.75rem;
+            text-align: right;
+        }}
+
+        .zeros-header {{
+            color: var(--text-subtle);
+            font-size: 0.7rem;
+            margin-bottom: 0.15rem;
+        }}
+
+        .zeros-none {{
+            color: var(--green);
+            font-size: 0.75rem;
+        }}
+
+        .zero-turn-link {{
+            color: var(--red);
+            text-decoration: none;
+            font-family: ui-monospace, monospace;
+            font-weight: 600;
+            margin-left: 0.25rem;
+        }}
+
+        .zero-turn-link:hover {{
+            text-decoration: underline;
+        }}
+
+        .mechanical-proxies-block {{
+            margin-top: 1.25rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-subtle);
+            background: rgba(17, 24, 39, 0.5);
+            border-radius: 6px;
+            padding: 0.85rem;
+        }}
+
+        .proxies-title {{
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }}
+
+        .proxy-stat-row {{
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.35rem;
+            flex-wrap: wrap;
+        }}
+
+        .proxy-name {{
+            color: var(--text-subtle);
+        }}
+
+        .proxy-num {{
+            font-weight: 600;
+            color: var(--text-main);
+            font-family: ui-monospace, monospace;
+        }}
+
+        .proxy-overlap {{
+            color: var(--amber);
+            font-size: 0.75rem;
+        }}
+
+        .qp-caveat-footer {{
+            font-size: 0.75rem;
+            color: var(--text-subtle);
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 0.75rem;
+        }}
+
+        .caveat-label {{
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }}
+
+        /* Turn Card Axes Row & Badges */
+        .card-axes-row {{
+            margin-top: 0.75rem;
+            padding-top: 0.6rem;
+            border-top: 1px dashed var(--border-subtle);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }}
+
+        .axes-label {{
+            font-size: 0.7rem;
+            color: var(--text-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }}
+
+        .axes-pills {{
+            display: flex;
+            gap: 0.35rem;
+            flex-wrap: wrap;
+        }}
+
+        .axis-pill {{
+            font-size: 0.7rem;
+            font-family: ui-monospace, monospace;
+            padding: 0.1rem 0.35rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: help;
+            display: inline-flex;
+            gap: 0.2rem;
+            border: 1px solid transparent;
+        }}
+
+        .axis-pill.score-2 {{
+            background: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            border-color: rgba(16, 185, 129, 0.3);
+        }}
+
+        .axis-pill.score-1 {{
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            border-color: rgba(245, 158, 11, 0.3);
+        }}
+
+        .axis-pill.score-0 {{
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border-color: rgba(239, 68, 68, 0.4);
+            font-weight: 700;
+        }}
+
+        .axis-pill.extraction-pill {{
+            border-style: dashed;
+        }}
     </style>
 </head>
 <body>
@@ -1196,6 +1728,8 @@ def render_review_html(
                 {gate_cards_str}
             </div>
         </section>
+
+        {quality_profile_html}
 
         <section class="controls-toolbar">
             <div class="filter-buttons">

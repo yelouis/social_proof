@@ -1,0 +1,214 @@
+{
+  "source_id": "00251a80c868f535",
+  "sample_size": 20,
+  "models": [
+    "mlx-community/GLM-4-32B-0414-4bit",
+    "mlx-community/gemma-4-31b-it-4bit"
+  ],
+  "fidelity_agreement_count": 16,
+  "fidelity_agreement_rate": 0.8,
+  "fidelity_agreement_rate_pct": 80.0,
+  "fidelity_mean_abs_delta": 0.2,
+  "comparisons": [
+    {
+      "turn_id": "00251a80c868f535_t0007",
+      "quote": "He is a heterodox thinker in science",
+      "claim": "Eric Weinstein is a heterodox thinker in science",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim is strictly entailed by the quote",
+      "gemma_fidelity": 1,
+      "gemma_reason": "The quote strictly entails the claim, but the standalone version adds the specific name 'Eric Weinstein' not present in the quote.",
+      "fidelity_delta": 1
+    },
+    {
+      "turn_id": "00251a80c868f535_t0009",
+      "quote": "And over time, you know, the point is similar to what Cratio has said, like so much of science has kind of followed this sheet like mentality where everyone has to line up, agree to the same general theory or you get outcasts, you don't get great. Funding, you don't get 10 -year, you don't get jobs, you don't get invited to do lectures, you have to follow the mainstream and science for your outcasts, and it used to be the science, but that's true.",
+      "claim": "So much of science has followed a mentality where everyone has to line up, agree to the same general theory or you get outcasts, you don't get great funding, jobs, or invitations to lectures, and you have to follow the mainstream in science.",
+      "glm_fidelity": 2,
+      "glm_reason": "The standalone claim is strictly entailed by the quote's content.",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim is a direct and strict entailment of the provided quote.",
+      "fidelity_delta": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0010",
+      "quote": "he's more right on the substance of what he's saying than he is wrong",
+      "claim": "The individual discussed is more right on the substance of what he is saying than he is wrong.",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim strictly entails the quote.",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim strictly entails the quote provided.",
+      "fidelity_delta": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0014",
+      "quote": "Everyone was starting with theory on where the COVID came from",
+      "claim": "Everyone was starting with a theory on where COVID-19 originated.",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim strictly entails the quote's meaning.",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim is strictly entailed by the quote provided.",
+      "fidelity_delta": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0015",
+      "quote": "a level of corruption in a very narrow specific realm of science, which is the funding and grant approval apparatus",
+      "claim": "There is a level of corruption in a very narrow specific realm of science, specifically the funding and grant approval apparatus.",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim is strictly entailed by the original quote.",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim is strictly entailed by the provided quote.",
+      "fidelity_delta": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0016",
+      "quote": "if you do not part of the mainstream you get excluded and because everyone has to now think in the same way you don't have heterodox thinking you don't have outside of the scope thinking which means we're not pushing the envelope and discovering new things anymore",
+      "claim": "If you are not part of the mainstream, you get excluded, and because everyone has to think in the same way, you don't have heterodox thinking, you don't have outside-of-the-scope thinking, which means we're not pushing the envelope and discovering new things anymore.",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim strictly entails the original quote's meaning.",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim is a strict entailment of the provided quote.",
+      "fidelity_delta": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0017",
+      "quote": "Just said differently, there's probably a lot of incrementalism in 2026 that didn't exist in 1926.",
+      "claim": "There will be a lot of incrementalism in 2026 that didn't exist in 1926.",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim strictly entails the quote's meaning",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim is a strict entailment of the provided quote.",
+      "fidelity_delta": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0019",
+      "quote": "where if you say stuff that's too far outside of the realm of the standard approach to things, your, chastise, your outcast, you're excluded.",
+      "claim": "In science, if you say stuff that's too far outside of the standard approach to things, you are chastised, outcast, and excluded.",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim strictly entails the meaning of the quoted text without adding new information.",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim is a direct and strict entailment of the provided quote.",
+      "fidelity_delta": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0022",
+      "quote": "they copied how Friedberg actually runs in with it",
+      "claim": "China copied how Friedberg actually runs in with it",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim strictly follows from the quote",
+      "gemma_fidelity": 1,
+      "gemma_reason": "The standalone claim adds 'China' as the subject, which is implied by the turn context but not strictly in the quote.",
+      "fidelity_delta": 1
+    },
+    {
+      "turn_id": "00251a80c868f535_t0030",
+      "quote": "the Chinese, the CCP is f***ing brilliant at PR.",
+      "claim": "The Chinese Communist Party is brilliant at public relations.",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim strictly entails the quote's core assertion",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim is strictly entailed by the provided quote.",
+      "fidelity_delta": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0009",
+      "quote": "And over time, you know, the point is similar to what Cratio has said, like so much of science has kind of followed this sheet like mentality where everyone has to line up, agree to the same general theory or you get outcasts, you don't get great. Funding, you don't get 10 -year, you don't get jobs, you don't get invited to do lectures, you have to follow the mainstream and science for your outcasts, and it used to be the science, but that's true.",
+      "claim": "So much of science has followed a mentality where everyone has to line up, agree to the same general theory or you get outcasts, you don't get great funding, jobs, or invitations to lectures, and you have to follow the mainstream in science.",
+      "glm_fidelity": 2,
+      "glm_reason": "The standalone claim is strictly entailed by the quote's content.",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim is a direct and strict entailment of the provided quote.",
+      "fidelity_delta": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0016",
+      "quote": "if you do not part of the mainstream you get excluded and because everyone has to now think in the same way you don't have heterodox thinking you don't have outside of the scope thinking which means we're not pushing the envelope and discovering new things anymore",
+      "claim": "If you are not part of the mainstream, you get excluded, and because everyone has to think in the same way, you don't have heterodox thinking, you don't have outside-of-the-scope thinking, which means we're not pushing the envelope and discovering new things anymore.",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim strictly entails the original quote's meaning.",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim strictly entails the provided quote, correcting only minor grammatical errors for clarity.",
+      "fidelity_delta": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0017",
+      "quote": "Just said differently, there's probably a lot of incrementalism in 2026 that didn't exist in 1926.",
+      "claim": "There will be a lot of incrementalism in 2026 that didn't exist in 1926.",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim strictly entails the quote's meaning",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim is strictly entailed by the quote provided.",
+      "fidelity_delta": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0019",
+      "quote": "where if you say stuff that's too far outside of the realm of the standard approach to things, your, chastise, your outcast, you're excluded.",
+      "claim": "In science, if you say stuff that's too far outside of the standard approach to things, you are chastised, outcast, and excluded.",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim strictly entails the meaning of the quoted text without adding new information.",
+      "gemma_fidelity": 1,
+      "gemma_reason": "The quote is a fragment; the standalone claim adds the specific context 'In science' which is implied by the turn but not explicitly in the quote.",
+      "fidelity_delta": 1
+    },
+    {
+      "turn_id": "00251a80c868f535_t0030",
+      "quote": "the Chinese, the CCP is f***ing brilliant at PR.",
+      "claim": "The Chinese Communist Party is brilliant at public relations.",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim strictly entails the quote's core assertion",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim is strictly entailed by the quote provided.",
+      "fidelity_delta": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0032",
+      "quote": "They got a bunch of Chinese people to fill a stadium and cheer for AI and robotics.",
+      "claim": "A bunch of Chinese people were gathered in a stadium to cheer for AI and robotics.",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim strictly entails the quote's meaning",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim is strictly entailed by the quote provided.",
+      "fidelity_delta": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0040",
+      "quote": "It is true that China is much more optimistic about AI than we are.",
+      "claim": "China is much more optimistic about AI than the US is.",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim is strictly entailed by the quote's assertion.",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim is strictly entailed by the quote provided.",
+      "fidelity_delta": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0065",
+      "quote": "it's going to be such a good idea",
+      "claim": "Having humans in the loop with agents in the same room is going to be such a good idea",
+      "glm_fidelity": 2,
+      "glm_reason": "The standalone claim is strictly entailed by the quote.",
+      "gemma_fidelity": 1,
+      "gemma_reason": "The quote 'it's going to be such a good idea' is entailed, but the standalone claim adds specific context not present in the short quote.",
+      "fidelity_delta": 1
+    },
+    {
+      "turn_id": "00251a80c868f535_t0079",
+      "quote": "I think the high end of the market where Mark operates where the large monoliths operate is quite safe.",
+      "claim": "The high end of the market where Mark operates and the large monoliths operate is quite safe.",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim is strictly entailed by the quote.",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim is a strict entailment of the provided quote.",
+      "fidelity_delta": 0
+    },
+    {
+      "turn_id": "00251a80c868f535_t0081",
+      "quote": "I think. we're a little oversold.",
+      "claim": "We are a little oversold.",
+      "glm_fidelity": 2,
+      "glm_reason": "Standalone claim strictly entails the core assertion from the quote.",
+      "gemma_fidelity": 2,
+      "gemma_reason": "The standalone claim is a direct and strict entailment of the provided quote.",
+      "fidelity_delta": 0
+    }
+  ]
+}

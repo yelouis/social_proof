@@ -6,6 +6,7 @@ Zero post-processing validators: runs the rubric alone and measures it.
 
 from __future__ import annotations
 
+import difflib
 import hashlib
 import json
 import re
@@ -28,13 +29,16 @@ class UnparseableRateError(ValueError):
 ROOT_DIR = Path(__file__).resolve().parent.parent
 REPO_ROOT = ROOT_DIR.parent
 DEFAULT_RUBRIC_PATH = ROOT_DIR / "docs" / "design_claim_rubric.md"
+DEFAULT_AXES_PATH = ROOT_DIR / "docs" / "design_claim_axes.md"
 DEFAULT_TRANSCRIPT_DIR = ROOT_DIR / "artifacts" / "transcripts"
 DEFAULT_GOLD_DIR = ROOT_DIR / "fixtures" / "gold"
 DEFAULT_EXTRACTION_DIR = ROOT_DIR / "artifacts" / "extraction"
 DEFAULT_PROMPTS_DIR = ROOT_DIR / "prompts"
 DEFAULT_PROMPT_CLAIM_PATH = DEFAULT_PROMPTS_DIR / "extract_claim.md"
 DEFAULT_PROMPT_FALSIFY_PATH = DEFAULT_PROMPTS_DIR / "extract_falsify.md"
+DEFAULT_PROMPT_SCORE_AXES_PATH = DEFAULT_PROMPTS_DIR / "score_axes.md"
 MODEL_ID = "mlx-community/gemma-2-2b-it-4bit"
+DEFAULT_SCORING_MODEL_ID = "mlx-community/GLM-4-32B-0414-4bit"
 
 
 def get_rubric_commit(rubric_path: Path = DEFAULT_RUBRIC_PATH) -> str:
@@ -148,6 +152,363 @@ def build_falsification_prompt(
         .replace("{target_turn_id}", target_turn_id)
         .replace("{target_speaker}", target_speaker)
     )
+
+
+def load_axes(path: Path | str = DEFAULT_AXES_PATH) -> str:
+    """Loads the axes markdown file verbatim."""
+    with open(path, "r", encoding="utf-8") as f:
+        return f.read()
+
+
+def build_score_axes_prompt(
+    axes_text: str,
+    target_turn: dict[str, Any],
+    quote: str,
+    claim: str,
+    template_path: Path | str = DEFAULT_PROMPT_SCORE_AXES_PATH,
+) -> str:
+    """Builds the Pass 2 scoring prompt interpolating axes and candidate claim into template."""
+    template = load_prompt_template(template_path)
+    target_turn_id = str(target_turn["turn_id"])
+    target_speaker = str(target_turn.get("speaker_label", target_turn.get("speaker", "unknown")))
+    target_text = str(target_turn.get("text", ""))
+
+    return (
+        template.replace("{axes}", axes_text)
+        .replace("{turn_id}", target_turn_id)
+        .replace("{speaker}", target_speaker)
+        .replace("{turn_text}", target_text)
+        .replace("{quote}", quote)
+        .replace("{claim}", claim)
+    )
+
+
+AXIS_NAMES: list[str] = [
+    "voice",
+    "target",
+    "propositionality",
+    "contestability",
+    "typing",
+    "decontextualisation",
+    "fidelity",
+    "granularity",
+]
+
+SPEAKER_PANEL_AXES: list[str] = [
+    "voice",
+    "target",
+    "propositionality",
+    "contestability",
+    "typing",
+]
+
+EXTRACTION_PANEL_AXES: list[str] = [
+    "decontextualisation",
+    "fidelity",
+    "granularity",
+]
+
+
+def parse_axes_verdict(raw_output: str, turn_id: str) -> dict[str, Any]:
+    """Parses model output JSON for Pass 2 quality axis scoring.
+
+    Extracts scores for all 8 axes (0, 1, or 2) and their one-line reasons.
+    If any axis is missing or output is unparseable JSON, flags parse_status='unparseable'.
+    """
+    clean_json = raw_output.strip()
+    json_match = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", raw_output, re.DOTALL)
+    if json_match:
+        clean_json = json_match.group(1)
+    else:
+        obj_match = re.search(r"(\{.*\})", raw_output, re.DOTALL)
+        if obj_match:
+            clean_json = obj_match.group(1)
+
+    parsed_obj: dict[str, Any] = {}
+    is_valid_json = False
+    try:
+        loaded = json.loads(clean_json)
+        if isinstance(loaded, dict):
+            parsed_obj = loaded
+            is_valid_json = True
+    except (json.JSONDecodeError, ValueError, TypeError):
+        is_valid_json = False
+
+    if not is_valid_json:
+        # Regex fallback: try to extract all 8 axes and reasons directly from raw_output
+        extracted_scores: dict[str, int] = {}
+        extracted_reasons: dict[str, str] = {}
+        for axis in AXIS_NAMES:
+            s_match = re.search(rf'"{axis}"\s*:\s*([0-2])\b', raw_output)
+            if not s_match:
+                break
+            extracted_scores[axis] = int(s_match.group(1))
+            r_match = re.search(rf'"{axis}_reason"\s*:\s*"([^"\\]*(?:\\.[^"\\]*)*)"?', raw_output)
+            extracted_reasons[f"{axis}_reason"] = r_match.group(1).replace('\\"', '"') if r_match else ""
+
+        if len(extracted_scores) == len(AXIS_NAMES):
+            return {
+                "turn_id": turn_id,
+                "parse_status": "ok",
+                "scores": extracted_scores,
+                "reasons": extracted_reasons,
+                "raw_output": raw_output.strip(),
+            }
+
+        return {
+            "turn_id": turn_id,
+            "parse_status": "unparseable",
+            "scores": {},
+            "reasons": {},
+            "raw_output": raw_output.strip(),
+        }
+
+    scores: dict[str, int] = {}
+    reasons: dict[str, str] = {}
+
+    for axis in AXIS_NAMES:
+        if axis not in parsed_obj:
+            return {
+                "turn_id": turn_id,
+                "parse_status": "unparseable",
+                "scores": {},
+                "reasons": {},
+                "raw_output": raw_output.strip(),
+            }
+        val = parsed_obj[axis]
+        try:
+            int_val = int(val)
+        except (ValueError, TypeError):
+            return {
+                "turn_id": turn_id,
+                "parse_status": "unparseable",
+                "scores": {},
+                "reasons": {},
+                "raw_output": raw_output.strip(),
+            }
+        if int_val not in (0, 1, 2):
+            return {
+                "turn_id": turn_id,
+                "parse_status": "unparseable",
+                "scores": {},
+                "reasons": {},
+                "raw_output": raw_output.strip(),
+            }
+        scores[axis] = int_val
+        reason_key = f"{axis}_reason"
+        reasons[reason_key] = str(parsed_obj.get(reason_key, parsed_obj.get("reason", "")))
+
+    return {
+        "turn_id": turn_id,
+        "parse_status": "ok",
+        "scores": scores,
+        "reasons": reasons,
+        "raw_output": raw_output.strip(),
+    }
+
+
+def compute_mechanical_proxies(claims: list[dict[str, Any]]) -> dict[str, Any]:
+    """Computes the three mechanical proxies defined in C4 / C5:
+    1. Unresolved referents: claim opens with an unbound referent
+       ('it', 'this', 'they', 'the individual', 'the speaker').
+       Measured on E287: 6 of 111 (5.4%) (turns t0010, t0072, t0111, t0172, t0238, t0359).
+    2. Compound claims over 35 words: len(claim.split()) > 35.
+       Measured on E287: 3 of 111 (2.7%) (turns t0016, t0255, t0389).
+    3. Claims that restate their quote near-verbatim: difflib ratio >= 0.83.
+       Measured on E287: 39 of 111 (35.1%).
+    """
+    total = len(claims)
+    if total == 0:
+        return {
+            "total_claims": 0,
+            "unresolved_referents": {"count": 0, "rate_pct": 0.0, "turn_ids": []},
+            "compound_claims": {"count": 0, "rate_pct": 0.0, "turn_ids": []},
+            "near_verbatim_quotes": {"count": 0, "rate_pct": 0.0, "turn_ids": []},
+        }
+
+    ref_pattern = re.compile(r"^(it\b|this\b|they\b|the individual\b|the speaker\b)", re.IGNORECASE)
+
+    unresolved_tids: list[str] = []
+    compound_tids: list[str] = []
+    near_verbatim_tids: list[str] = []
+
+    for c in claims:
+        tid = str(c.get("turn_id", ""))
+        c_text = str(c.get("claim", "")).strip()
+        q_text = str(c.get("quote", "")).strip()
+
+        if ref_pattern.search(c_text):
+            unresolved_tids.append(tid)
+
+        if len(c_text.split()) > 35:
+            compound_tids.append(tid)
+
+        ratio = difflib.SequenceMatcher(None, q_text.lower(), c_text.lower()).ratio()
+        if ratio >= 0.83:
+            near_verbatim_tids.append(tid)
+
+    return {
+        "total_claims": total,
+        "unresolved_referents": {
+            "count": len(unresolved_tids),
+            "rate_pct": round(len(unresolved_tids) / total * 100.0, 1),
+            "turn_ids": unresolved_tids,
+        },
+        "compound_claims": {
+            "count": len(compound_tids),
+            "rate_pct": round(len(compound_tids) / total * 100.0, 1),
+            "turn_ids": compound_tids,
+        },
+        "near_verbatim_quotes": {
+            "count": len(near_verbatim_tids),
+            "rate_pct": round(len(near_verbatim_tids) / total * 100.0, 1),
+            "turn_ids": near_verbatim_tids,
+        },
+    }
+
+
+def generate_episode_axes_report(
+    scored_claims: list[dict[str, Any]],
+    total_turns: int,
+    model_id: str,
+    scoring_model_id: str,
+    episode_id: str = "00251a80c868f535",
+    axes_path: Path = DEFAULT_AXES_PATH,
+    prompt_path: Path = DEFAULT_PROMPT_SCORE_AXES_PATH,
+) -> dict[str, Any]:
+    """Generates the Episode Claim Quality Profile report across 8 axes (§4).
+
+    Strict structural requirements:
+    1. Speaker panel and Extraction panel reported separately, NEVER blended into a composite scalar score.
+    2. Distribution (counts and percentages of 0, 1, 2) reported for each axis.
+    3. Every 0-score resolvable by turn id.
+    4. Mechanical proxies reported beside model Decontextualisation, Granularity and Fidelity scores with overlap.
+    5. Asserts scoring_model_id != model_id (independent scoring model requirement).
+    """
+    if scoring_model_id == model_id:
+        raise ValueError(
+            f"Extraction panel must be scored by an independent model distinct from the extractor. "
+            f"Got scoring_model_id == model_id ({model_id})."
+        )
+
+    claims_count = len(scored_claims)
+    claim_density_pct = round(claims_count / total_turns * 100.0, 1) if total_turns > 0 else 0.0
+
+    # Calculate distributions per axis
+    axis_reports: dict[str, dict[str, Any]] = {}
+    for axis in AXIS_NAMES:
+        scores_list: list[int] = []
+        zeros_tids: list[str] = []
+        for c in scored_claims:
+            tid = str(c.get("turn_id", ""))
+            s = c.get("scores", {}).get(axis)
+            if s is not None:
+                scores_list.append(s)
+                if s == 0:
+                    zeros_tids.append(tid)
+
+        count = len(scores_list)
+        count_0 = sum(1 for s in scores_list if s == 0)
+        count_1 = sum(1 for s in scores_list if s == 1)
+        count_2 = sum(1 for s in scores_list if s == 2)
+        mean_score = round(sum(scores_list) / count, 2) if count > 0 else 0.0
+        pct_0 = round(count_0 / count * 100.0, 1) if count > 0 else 0.0
+        pct_1 = round(count_1 / count * 100.0, 1) if count > 0 else 0.0
+        pct_2 = round(count_2 / count * 100.0, 1) if count > 0 else 0.0
+
+        has_zero_variance = bool(count > 0 and (count_0 == count or count_1 == count or count_2 == count))
+
+        axis_reports[axis] = {
+            "axis": axis,
+            "mean": mean_score,
+            "counts": {"0": count_0, "1": count_1, "2": count_2},
+            "percentages": {"0": pct_0, "1": pct_1, "2": pct_2},
+            "zero_scores_count": len(zeros_tids),
+            "zero_scores_turn_ids": zeros_tids,
+            "has_zero_variance": has_zero_variance,
+        }
+
+    # Mechanical proxies
+    proxies = compute_mechanical_proxies(scored_claims)
+
+    # Overlaps
+    decontext_zeros = set(axis_reports["decontextualisation"]["zero_scores_turn_ids"])
+    proxy_ref_tids = set(proxies["unresolved_referents"]["turn_ids"])
+    ref_overlap = sorted(decontext_zeros & proxy_ref_tids)
+
+    granularity_zeros = set(axis_reports["granularity"]["zero_scores_turn_ids"])
+    proxy_compound_tids = set(proxies["compound_claims"]["turn_ids"])
+    compound_overlap = sorted(granularity_zeros & proxy_compound_tids)
+
+    near_verbatim_tids = proxies["near_verbatim_quotes"]["turn_ids"]
+    fidelity_map: dict[str, int | None] = {}
+    for tid in near_verbatim_tids:
+        sc = next((c for c in scored_claims if c.get("turn_id") == tid), None)
+        fidelity_map[tid] = sc.get("scores", {}).get("fidelity") if sc else None
+
+    # Provenance
+    axes_text = load_axes(axes_path)
+    axes_content_hash = hashlib.sha256(axes_text.encode("utf-8")).hexdigest()
+    axes_commit = get_rubric_commit(axes_path)
+
+    prompt_text = load_prompt_template(prompt_path)
+    prompt_content_hash = hashlib.sha256(prompt_text.encode("utf-8")).hexdigest()
+    prompt_version = f"{prompt_path.stem}:{prompt_content_hash[:12]}"
+
+    speaker_panel = {axis: axis_reports[axis] for axis in SPEAKER_PANEL_AXES}
+    extraction_panel = {axis: axis_reports[axis] for axis in EXTRACTION_PANEL_AXES}
+
+    report = {
+        "episode_id": episode_id,
+        "claims_found": claims_count,
+        "total_turns": total_turns,
+        "claim_density_pct": claim_density_pct,
+        "provenance": {
+            "model_id": model_id,
+            "scoring_model_id": scoring_model_id,
+            "axes_commit": axes_commit,
+            "axes_path": str(axes_path.relative_to(REPO_ROOT)),
+            "axes_content_hash": axes_content_hash,
+            "prompt_version": prompt_version,
+            "prompt_path": str(prompt_path.relative_to(REPO_ROOT)),
+            "prompt_content_hash": prompt_content_hash,
+        },
+        "speaker_panel": speaker_panel,
+        "extraction_panel": extraction_panel,
+        "mechanical_proxies": proxies,
+        "proxy_cross_checks": {
+            "decontextualisation": {
+                "proxy_unresolved_referents_count": proxies["unresolved_referents"]["count"],
+                "proxy_turn_ids": proxies["unresolved_referents"]["turn_ids"],
+                "model_zero_count": len(decontext_zeros),
+                "model_zero_turn_ids": sorted(decontext_zeros),
+                "overlap_count": len(ref_overlap),
+                "overlap_turn_ids": ref_overlap,
+                "overlap_rate_pct": round(len(ref_overlap) / len(proxy_ref_tids) * 100.0, 1) if proxy_ref_tids else 0.0,
+            },
+            "granularity": {
+                "proxy_compound_claims_count": proxies["compound_claims"]["count"],
+                "proxy_turn_ids": proxies["compound_claims"]["turn_ids"],
+                "model_zero_count": len(granularity_zeros),
+                "model_zero_turn_ids": sorted(granularity_zeros),
+                "overlap_count": len(compound_overlap),
+                "overlap_turn_ids": compound_overlap,
+                "overlap_rate_pct": round(len(compound_overlap) / len(proxy_compound_tids) * 100.0, 1) if proxy_compound_tids else 0.0,
+            },
+            "fidelity": {
+                "near_verbatim_quotes_count": proxies["near_verbatim_quotes"]["count"],
+                "near_verbatim_turn_ids": near_verbatim_tids,
+                "fidelity_scores_for_near_verbatim": fidelity_map,
+            },
+        },
+    }
+
+    # Explicit assertion that NO composite scalar score exists
+    assert "composite_score" not in report
+    assert "composite_quality" not in report
+    assert "quality_score" not in report
+
+    return report
 
 
 def parse_model_verdict(
