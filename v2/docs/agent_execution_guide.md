@@ -123,7 +123,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 5 | **B6** | Three local models on the same episode, and what agreement is worth (**036 = A**, **043 = A**, **044 = C**) | C1, C2 | **CLOSED at two labs** (`1c95cbd`). `gemma-4-31b` **28.83% precision / 96.97% recall**, `GLM-4-32B` **31.25% / 75.76%**, against gemma-2-2b's 13.04% / 54.55%. **Capability bought precision and recall; consensus bought +1.6 points of precision for −24 of recall.** Nemotron never ran — 99% unparseable — and is not re-run. |
 | 6 | **C3** | A generation we could not read is not a verdict | none | **NEXT, independent of Issue 044.** The prompt asks every model for an `offset` that `extract.py:248` computes and discards — fatal for a reasoning model. And an unparseable generation is recorded as a gate-1 exclusion, which is how a silent arm came to be reported as scoring 0%. |
 | 7 | **C4** | Score every candidate on the eight axes, and report the episode | C3 | **The flow change.** Finding is solved — 96.97% recall. Judging is not. Two passes: pass 1 finds, pass 2 scores each candidate on `design_claim_axes.md`'s eight axes. **Speaker panel and Extraction panel reported separately**, because a number mixing them cannot tell "the hosts were vague" from "our extractor got worse". |
-| 8 | **C5** | Calibrate the scorer against claims a human scored | C4, **Issue 045** | B2's gold set is binary and cannot validate an axis score. **Nobody has ever labelled Contestability or Voice on a scale.** Issue 045 decides what ground truth we get. |
+| 8 | **C5** | Validate the scorer without human labels (**Issue 045 = B**) | C4 | **Agreement measures consistency, not correctness**, so the item does not rest on it. Three axes are checkable mechanically; all eight get a known answer by **perturbation** — damage a real claim on one axis and assert only that axis falls. Agreement is kept for the one thing it is good at: finding axes whose definitions are ambiguous. |
 | 9 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 10 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
 | 11 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
@@ -620,42 +620,87 @@ pass 2  SCORE  new prompt, one candidate at a time        -> 8 axis scores + one
 
 ---
 
-## 18. C5 — Calibrate the scorer against claims a human scored · *blocked on Issue 045*
+## 18. C5 — Validate the scorer without human labels · *Issue 045 = B*
 
-**Do not start until Issue 045 is answered.** The item's whole content depends on which ground truth Louis chooses.
+**Blocked on C4.** Louis chose cross-model agreement over a hand-labelled calibration set.
 
-**User impact:** without this, the episode score is a number with no way to discover it is wrong.
+**What that buys and what it does not.** Agreement between two models measures *consistency*, not *correctness* — two models given the same rubric share its blind spots, and B6 measured that directly: three labs agreed `t0142` was a claim where the gold set says gate 1. **Agreement alone can produce a confident number with no way to discover it is wrong.**
 
-### The gap
+**So this item does not rest on agreement.** It builds the three checks that *are* sound without human labels, and uses agreement for the one thing it is genuinely good at — finding axes whose definitions are broken. **Tiers 1 and 2 are the item; tier 3 is a diagnostic.**
 
-**B2's gold set is binary and cannot validate an axis.** It still says whether a claim was *found* — the 33 should still be found, and that remains a live recall check — but nobody has ever labelled Contestability or Voice on a scale. **C4 can produce a distribution; only this item can say whether the distribution is right.**
+**User impact:** Louis gets an episode score whose failure modes have been probed, rather than one that merely looks precise.
 
-### Implementation, if Issue 045 = A
+**Contract:** `v2/docs/design_claim_axes.md` · `v2/fixtures/axes/` (new) · `v2/tests/test_c5_scorer.py` (new, committed red) · `v2/artifacts/extraction/`.
 
-**Step 1 — build the labelling set before asking for any labels.** 40 claims from E287, stratified across turn length and across C4's score range so the boundary cases are represented, each presented with its quote and its full turn. Write it as `v2/fixtures/axes/calibration_00251a80c868f535.json` with the model's scores **withheld** from the presentation.
+### Tier 1 — the three axes code can check on its own
 
-> **Verify:** confirm the presented set contains no model score. **A human shown the model's answer agrees with it** — that is not calibration, it is anchoring.
+Three of the eight have mechanical proxies, already measured on `gemma-4-31b`'s 111 claims from E287:
 
-**Step 2 — score the model against the human labels per axis.** Report exact agreement and off-by-one separately; a scorer that is never more than one level out is usable, one that inverts an axis is not.
+| axis | mechanical check | measured today |
+|---|---|---|
+| **Decontextualisation** | standalone claim opens with, or contains, an unbound referent (`it`, `this`, `they`, `the individual`, `the speaker`) | **6 of 111 (5.4%)** |
+| **Granularity** | claim over 35 words, or two independent clauses joined by `and`/`while`/`whereas` | **3 of 111 (2.7%)** |
+| **Fidelity** | claim tokens not present in the quote, as a share of claim tokens | **39 of 111 (35.1%) restate the quote near-verbatim** |
 
-> **Verify:** report per-axis agreement, **not an average across axes.** An average hides a single inverted axis behind seven good ones.
+**These are proxies, not definitions** — a long claim can be atomic, and a near-verbatim claim can be correct when the quote is already standalone. **Do not turn them into the scorer.** Use them as a disagreement detector: where the model scores 2 and the proxy flags a problem, or the reverse, read the claim and say which is right.
 
-**Step 3 — name the axes that do not agree, and say what that means.** An axis the model cannot score is either badly defined in `design_claim_axes.md` or genuinely needs a human. **Both are findings; neither is a reason to quietly drop the axis.**
+> **Verify:** report the confusion between each model score and its proxy, as counts. **If the model's Decontextualisation 0s do not substantially overlap those 6 turn ids, one of the two is wrong and the item must name which** — the six are `t0010`, `t0072`, `t0111`, `t0172`, `t0238` and `t0359`; they are short and resolvable by eye.
+
+### Tier 2 — perturbation, which gives all eight axes a known answer
+
+**This is the part that replaces the calibration set.** Take real, high-scoring claims from E287 and damage them in one known way each. **The correct score is known by construction**, because we broke it on purpose.
+
+| perturbation | axis that must fall | example |
+|---|---|---|
+| replace the claim's subject with an unbound pronoun | Decontextualisation | *"Salesforce was meaningfully oversold"* → *"It was meaningfully oversold"* |
+| concatenate two unrelated claims with "and" | Granularity | two real claims from different turns |
+| replace the claim with an assertion the quote does not support | Fidelity | keep the quote, swap the claim for another turn's |
+| rewrite the claim as a question | Voice + Propositionality | *"The CCP is brilliant at PR"* → *"Is the CCP brilliant at PR?"* |
+| replace with a show-mechanics statement | Target | *"We have a great show today"* |
+| replace with a tautology | Contestability | *"Until string theory is proved, it is unproved"* |
+| replace with a bare topic | Propositionality | *"Enterprise AI deployment"* |
+| replace with conversational filler | Typing | *"I think that's right"* |
+
+**Build 5 perturbations per axis, 40 items, each paired with its unperturbed original.** The assertion is not an absolute score — it is that **the score drops on the targeted axis and does not drop on the others.**
+
+> **Verify (this is the item's `(c)`):** for each of the eight axes, the perturbed item scores strictly lower on that axis than its original, in at least 4 of 5 pairs. **Report the off-target movement too** — a scorer that drops every axis whenever anything changes is not reading axes, it is reading damage.
+
+**State the limitation in the commit body, not only here.** Perturbation proves the scorer is **sensitive** to each axis. It does not prove its absolute level is calibrated: a scorer that drops 2 → 1 where a human would say 0 passes this and is still miscalibrated. **Sensitivity is necessary, not sufficient**, and the remaining gap is exactly what a hand-labelled set would close.
+
+### Tier 3 — agreement, used for what agreement is good for
+
+Score every E287 candidate with **both** `gemma-4-31b` and `GLM-4-32B`.
+
+**Run each model twice: once on the shared scoring prompt, once on a surface-varied prompt** — same axis definitions verbatim, different ordering and phrasing of the instructions around them.
+
+> **Verify:** report same-prompt agreement and varied-prompt agreement side by side, per axis. **The gap between them is how much of the agreement is the prompt rather than the models** — which is the concrete form of the circularity worry, measured instead of asserted.
+
+> **Verify:** report per-axis disagreement rate. **An axis where two capable models disagree often is a badly defined axis**, and that inference does not depend on either being right. Name the worst axis and quote the part of `design_claim_axes.md` that is ambiguous.
+
+### Tier 4 — the floor
+
+Score the same 20 claims twice with one model at temperature 0.7.
+
+> **Verify:** if a model agrees with itself less than the two models agree with each other, **the scores are noise and no tier above means anything.** Report it first, before the other tiers.
 
 ### Validation
 
-- **(c)** — **per-axis exact and off-by-one agreement between the model's scores and 40 human-labelled claims, reported by axis with the disagreements listed by turn id.** *Any aggregate over eight axes can be carried by seven while one is inverted.*
-- The presented labelling set provably excluded model scores.
-- Disagreements listed, not counted.
+- **(c)** — **for each of the eight axes, perturbed items score strictly lower on the targeted axis than their unperturbed originals in at least 4 of 5 pairs, with off-target movement reported.** *Agreement cannot establish correctness and this item does not ask it to. A perturbation has a known answer because we caused it, which is the only ground truth available without Louis.*
+- Tier 1 confusion reported as counts, with disagreements resolved by reading the claim and naming which side is right.
+- Same-prompt and varied-prompt agreement reported per axis, with the gap stated.
+- Self-agreement reported first; if it is below cross-model agreement, the item stops there and says so.
+- `v2/tests/test_c5_scorer.py` committed **red**, `xfail(strict=True)`, asserting the tier-2 sensitivity property — the machinery that worked for B7 and B6. Its marker deletion is the last step.
+- `ruff`, `mypy`, `pytest` clean.
 
-**Falsify.** Re-present **10 of the 40 a second time**, shuffled, and measure the human's agreement with themselves. **If self-agreement is lower than model-human agreement, the axis definitions are ambiguous** and the problem is in `design_claim_axes.md`, not in the model.
+**Falsify.** Score the perturbation set with a **deliberately broken scorer that returns 2 for everything** and confirm the tier-2 assertion fails. **A validation suite that passes against a constant is testing nothing** — and this project has shipped a constant behind a guard twice (traps 31, 80).
 
-**Blast radius.** `v2/fixtures/axes/` (new), `v2/tests/`, and `design_claim_axes.md` if an axis definition proves ambiguous. **No change to the scorer inside this item** — fixing it is the next item, not this one.
+**Blast radius.** `v2/fixtures/axes/` (new), `v2/tests/test_c5_scorer.py` (new), `v2/artifacts/extraction/`. **No change to `design_claim_axes.md` unless tier 3 proves an axis ambiguous** — in which case change it and say so. **No change to the scorer itself in this item**; fixing what this finds is the next item.
 
 ---
 
 ## 19. Standing constraints, carried from V1
 
+- **Agreement between models is a confidence signal, never a correctness one.** Two models given the same rubric share its blind spots — B6 measured three labs agreeing on `t0142`, which the gold set calls an exclusion. **Where no human label exists, get ground truth by construction instead**: damage a known-good item on one axis and assert that axis falls. Agreement's honest use is diagnostic — an axis two capable models disagree on is badly defined.
 - **This is not fact-checking and must never become it.** No axis, gate or score asks whether a claim is *true*. A confident prediction that turns out wrong scores high; an uncontested fact is excluded *because* nobody can change their mind about it. **The product is a record of what someone committed to and whether it held** — see `design_claim_axes.md` §1.
 - **Claim quality and extraction quality are reported separately and never blended into one score.** The Speaker panel says how good the claims were; the Extraction panel says how well we captured them. **They have opposite fixes.**
 - **A generation that could not be parsed is not a verdict.** Count it as `unparseable`, report the rate, exclude it from precision and recall, and fail loudly above ~5%. Nemotron's 401 unreadable generations of 405 were recorded as gate-1 exclusions and reported as 0% recall for the model.
@@ -727,6 +772,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 88. **A field the code overwrites still costs whatever it costs to produce.** The prompt asks for a character `offset` that `extract.py` recomputes and, under C2's guard, can never read. Cheap for most models; for a reasoning model it was fatal — measured, it spent 2,500 tokens counting characters one at a time. **Grep the prompt's output schema against what the parser actually uses**, the same way trap 29 says to grep a parameter against its body.
 89. **A per-turn label and a per-span extraction are different questions, and the metric between them silently measures the difference.** B2 labelled whether a *turn* asserts a claim; the extractor answers whether a turn *contains* one. On short turns they coincide — 1.3% disagreement under 20 words — and on 200+ word turns they disagree 92.9% of the time, with recall unaffected at every length. `t0084` is 310 words of narrative containing *"Salesforce specifically was meaningfully oversold"*: the gold says exclusion, the model is right. **When precision varies monotonically with an input dimension nobody chose, suspect the unit before the model** — and adjudicate a sample before tuning against the target.
 90. **A binary verdict hides quality problems inside the things it accepts.** `t0010` is a claim B2 and `gemma-4-31b` both accept, and its standalone proposition reads *"The individual discussed is more right on the substance of what he is saying than he is wrong."* **It names nobody** — an embedding attractor (trap 42) sitting inside a true positive. Across the 111 emitted claims, 6 carry an unresolved referent, 3 are compound blobs, and 39 restate their quote near-verbatim. **None of that was visible while the output was a yes or a no.** When a metric is binary, ask what it is averaging over.
+91. **A validation suite with no ground truth can still be built, if you make the ground truth yourself.** Axis scoring removed the only labelled set, and cross-model agreement cannot tell consistency from correctness. **A perturbation has a known answer because you caused it** — replace a claim's subject with a pronoun and Decontextualisation must fall, and nothing else should. **This proves sensitivity, not calibration**: a scorer that drops 2 → 1 where a human would say 0 passes and is still wrong. Say which of the two you have measured, every time.
 66. **An item whose effect is to publish must be checked against what it will publish.** D7 was told to make every accepted candidate produce a tension row, and did — publishing six findings that the same guide, two sections below, documented as false. The spec was followed exactly. **Before running an item that writes user-visible output, read what is currently in its input.**
 67. **A judgement gate is scored generously unless the judgement is written down.** Three times now a gate has been recorded as met while an independent reading disagreed — six false pairs "hand-read and verified", a failed (c) recorded verified, and a position test reported at 18/20 that a seeded redraw scores 9–13/20. **Require the artefact, not the count**: paste the two sentences, quote the pair, show the working. A number is not checkable; a sentence is.
 68. **A repair loop that shrinks its subject on every pass is not converging.** Three extraction-form passes took the corpus from 3,669 claims to 1,027 and the candidate set from 0 to 6 to 0. **Track the trajectory across passes, not the delta within one** — each pass improved its own metric and the sequence went nowhere.

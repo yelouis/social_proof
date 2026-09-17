@@ -152,4 +152,8 @@ Episode E287 — claim quality
 
 **Axis scoring replaces the binary claim/not-claim verdict as the pipeline's output.** The four gates of `design_claim_rubric.md` survive as the *definition* and as Axes 1–4; what changes is that a candidate is no longer accepted or rejected, it is scored, and a threshold over the Speaker panel decides what reaches the page.
 
-**B2's gold set is binary and no longer matches this output shape.** It remains valid as a recall check — the 33 turns it marks as claims should still be found — but it cannot validate an axis score, because nobody has labelled an axis. **That gap is Issue 045 and it is Louis's to decide.**
+**B2's gold set is binary and no longer matches this output shape.** It remains valid as a recall check — the 33 turns it marks as claims should still be found — but it cannot validate an axis score, because nobody has labelled an axis.
+
+**Issue 045 = B: no hand-labelled axis set will be produced.** The scorer is validated instead by three mechanical proxies, by **perturbation** — damaging a known-good claim on one axis and asserting only that axis falls — and by cross-model agreement used as a diagnostic rather than as proof (§18 of the execution guide).
+
+> **Know which property you have measured.** Perturbation establishes that the scorer is **sensitive** to each axis. It does not establish that its absolute level matches a human's: a scorer that answers 1 where a careful reader would say 0 passes every check here. **Every episode report must carry that caveat** until a labelled set exists, and no threshold for what reaches the timeline should be set from these numbers alone.

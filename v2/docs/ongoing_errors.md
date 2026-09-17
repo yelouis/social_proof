@@ -8,48 +8,13 @@
 - **Once selected, a decision moves out of §1.** Its consequence is written into the design doc that owns it, and it becomes one row in §1b. The full option text stays in git history — this file is a queue, not an archive.
 - Recommendations are marked. A recommendation is not a decision.
 
-**Status: 2 decisions made in V2 (036 — C then A; 043 — re-run B6 at size; 044 — close B6 at two labs, next cycle on precision), 1 open (Issue 045). 13 parameters measured (034, 035, 037, 038 superseded by 040, 039, 040, 041, 042 superseded by 044, 044).**
+**Status: 2 decisions made in V2 (036 — C then A; 043 — re-run B6 at size; 044 — close B6 at two labs, next cycle on precision; 045 — cross-model agreement, no hand labels), 0 open. 13 parameters measured (034, 035, 037, 038 superseded by 040, 039, 040, 041, 042 superseded by 044, 044).**
 
 ---
 
 ## 1. OPEN — awaiting your selection
 
-*Newest first.*
-
-### Issue 045 — Axis scoring needs ground truth that does not exist yet. How much of your time is it worth?
-
-**The reframe is right and it dissolves a problem we were about to spend a cycle on.** Under binary scoring, `t0084` — Chamath's 310-word turn containing *"Salesforce specifically was meaningfully oversold"* — counts as a false positive, because B2 labelled the **turn** and the model extracted a **span**. Under the axes it scores 2 across the board, which is the right answer. Parameter 048's length gradient (1.3% disagreement under 20 words, 92.9% over 200) was that mismatch showing through, and axis scoring removes it rather than tuning against it.
-
-**But it also removes our only ground truth.** B2's 405 hand-labelled turns are binary. They still tell us whether a claim was *found* — the 33 should still be found — and they say nothing about whether a score of 2 on Contestability is correct. **Nobody has ever labelled an axis.** Building a scorer and reporting per-episode quality without that is the pattern this project has been burned by five times: a clean-looking number nobody can check.
-
-Three mechanical proxies already say the Extraction panel has real signal, measured on `gemma-4-31b`'s 111 claims from E287: **6 (5.4%) carry an unresolved referent** — including `t0010`, which both you and the model called a claim and which reads *"The individual discussed is more right…"* — **3 (2.7%) are compound blobs over 35 words**, and **39 (35.1%) restate their quote almost verbatim**, meaning decontextualisation did no work. Those three are checkable without you. **The Speaker panel — Voice, Target, Propositionality, Contestability, Typing — is not.**
-
----
-
-**Option A — You hand-score a calibration set of 40 claims on all eight axes.** *(recommended)*
-
-Drawn stratified across turn length and across the score range, presented one claim at a time with its quote and its turn.
-
-- **Pro:** the only thing that makes "episode quality" a number you can trust. Every later change — a prompt edit, a new model, a second episode — gets measured against it.
-- **Pro:** bounded and one-off. 40 claims × 8 axes, most of them obvious; realistically **60–90 minutes**, and the boundary cases are where your judgement is actually needed.
-- **Pro:** it doubles as the fix for the `t0010` class — you will see immediately whether a claim naming nobody should count.
-- **Con:** it is your time, and it is the one thing here nobody can do for you.
-
-**Option B — Cross-model agreement as the proxy.** `gemma-4-31b` and `GLM-4-32B` both score every claim; agreement is treated as confidence.
-
-- **Pro:** free, automatic, and extends to every future episode.
-- **Con:** **circular.** B6 measured this directly: majority agreement between these two bought +1.6 points of precision for −24 of recall, and three labs agreeing on `t0142` were agreeing on something your gold set calls an exclusion. **Two models sharing a prompt share its blind spots**, and nothing in an agreement number reveals that.
-
-**Option C — Ship the Extraction panel only, and hold the Speaker panel back until a calibration set exists.**
-
-- **Pro:** honest, immediate, and the three extraction axes are mechanically checkable today.
-- **Con:** the Extraction panel answers *"how good is our pipeline"*, not *"how good are the claims in this episode"* — which is the question you actually asked.
-
----
-
-**My recommendation: A, with B running alongside as a cheap monitor rather than as the validator.** Forty claims is a small, bounded ask and it is the difference between an episode score you can act on and a number that looks precise. **If you would rather not spend the time yet, C is the honest interim** — build the scorer, report only the axes we can check ourselves, and say plainly that the Speaker panel is unvalidated. **B alone is the one I would avoid**, because it produces a confident number with no way to discover it is wrong.
-
-Your selection: _____
+*Newest first. Nothing is open right now.*
 
 ## 1b. Decision record
 
@@ -58,6 +23,7 @@ Your selection: _____
 | **036** | **C then A.** First rewrite the rubric as a positive elicitation and move every prompt into editable Markdown (item C1); then run three bigger local models (item B6). Option B ruled out by the local-only constraint; Option D deferred until A's numbers exist and a second labelled episode makes it honest. **Plus: the prompt must live in a `.md` Louis can read and edit without touching Python.** | `design_claim_rubric.md` · `agent_execution_guide.md` C1, B6 |
 | **043** | **A — re-run B6 with the three models originally specced.** `mlx-community/gemma-4-31b-it-4bit` (18.4 GB), `mlx-community/GLM-4-32B-0414-4bit` (18.3 GB), `mlx-community/NVIDIA-Nemotron-3-Nano-30B-A3B-4bit` (17.8 GB) — all three MLX 4-bit, all three through the existing `mlx_lm` path, 54.5 GB total onto an external SSD. The first pass ran a 2B, a 9B and a 7B vision model and reused C1's artifact as one arm, with every gate green. **The inputs are now asserted in `v2/tests/test_b6_models.py`, committed red.** | `agent_execution_guide.md` §13 · `v2/tests/test_b6_models.py` |
 | **044** | **C — close B6 at two labs and spend the next cycle on precision.** The Nemotron arm is not re-run: it was never measured (401/405 unparseable) and a third lab reversing a −24-point recall cost is not plausible. **C3's two harness fixes land regardless**, and the next item is **C4**, which adjudicates the 79 false positives before anything is tuned. | `agent_execution_guide.md` §13 (B6, closed), §16 (C3), §17 (C4) |
+| **045** | **B — cross-model agreement instead of a hand-labelled calibration set.** No human axis labels will be produced for now. **C5 therefore does not rest on agreement**, which measures consistency rather than correctness: three mechanical proxies check Decontextualisation, Granularity and Fidelity; **perturbation gives all eight axes a known answer by construction**; agreement is kept as a diagnostic for ambiguous axis definitions, and self-agreement as the floor. **The open gap is calibration — sensitivity is proved, absolute level is not** — and a hand-labelled set remains the only thing that closes it. | `agent_execution_guide.md` §18 (C5) · `design_claim_axes.md` §6 |
 
 > **Correction to 036's premise, recorded September 14 2026 after C1's falsification.** The issue was framed — by me — as *"the rubric is an exclusion manual used as the prompt verbatim, and that is the cause of the binary collapse."* **That is false.** A full 405-turn run of the **unchanged** exclusion-manual rubric through C1's new positive template reaches **87.88% recall at 13.94% precision**, against C1's own 81.82% / 15.34% (parameter 039). **The collapse was caused by the prompt template's exclusion-first instruction**, which lived in `extract.py`'s f-string — not by the rubric text. The rubric rewrite is a second-order trade: −6 points of recall for +1.4 of precision. **Option C was still the right call** — it produced the editable prompt that fixed the problem — but for a different reason than the one on the ticket.
 
