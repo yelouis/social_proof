@@ -8,6 +8,8 @@
 
 **If you change this file, the prompt and the labelling instruction change in the same commit.**
 
+> **This file owns what a claim *is*. `design_claim_axes.md` owns how *good* it is.** The four gates below survive as the definition and as Axes 1–4 of that file; what changed in C4 is that a candidate is no longer accepted or rejected — it is scored on eight axes, and the gates are how four of them are judged. **Neither file asks whether a claim is true.**
+
 ---
 ## 1. The primary test
 
