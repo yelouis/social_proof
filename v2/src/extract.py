@@ -243,8 +243,9 @@ def parse_axes_verdict(raw_output: str, turn_id: str) -> dict[str, Any]:
             if not s_match:
                 break
             extracted_scores[axis] = int(s_match.group(1))
-            r_match = re.search(rf'"{axis}_reason"\s*:\s*"([^"\\]*(?:\\.[^"\\]*)*)"?', raw_output)
-            extracted_reasons[f"{axis}_reason"] = r_match.group(1).replace('\\"', '"') if r_match else ""
+            r_match = re.search(rf'"{axis}(?:_reason)?"\s*:\s*"([^"\\]*(?:\\.[^"\\]*)*)"?', raw_output)
+            r_val = r_match.group(1).replace('\\"', '"').strip() if r_match else ""
+            extracted_reasons[f"{axis}_reason"] = r_val
 
         if len(extracted_scores) == len(AXIS_NAMES):
             return {
@@ -296,7 +297,8 @@ def parse_axes_verdict(raw_output: str, turn_id: str) -> dict[str, Any]:
             }
         scores[axis] = int_val
         reason_key = f"{axis}_reason"
-        reasons[reason_key] = str(parsed_obj.get(reason_key, parsed_obj.get("reason", "")))
+        r_val = str(parsed_obj.get(reason_key, parsed_obj.get(axis, parsed_obj.get("reason", "")))).strip()
+        reasons[reason_key] = r_val
 
     return {
         "turn_id": turn_id,
@@ -1324,6 +1326,21 @@ def evaluate_perturbation_results(
 
         off_target_rate = round(axis_off_target_drops / axis_off_target_comparisons * 100.0, 1) if axis_off_target_comparisons > 0 else 0.0
 
+        # Victim analysis: how often did this axis drop when a DIFFERENT axis was targeted?
+        victim_drops = 0
+        victim_comparisons = 0
+        for other_p in perturbation_results:
+            if other_p.get("target_axis") == axis:
+                continue
+            o_s = other_p.get("original_scores", {}).get(axis)
+            p_s = other_p.get("perturbed_scores", {}).get(axis)
+            if o_s is not None and p_s is not None:
+                victim_comparisons += 1
+                if p_s < o_s:
+                    victim_drops += 1
+
+        victim_drop_rate = round(victim_drops / victim_comparisons * 100.0, 1) if victim_comparisons > 0 else 0.0
+
         axis_results[axis] = {
             "axis": axis,
             "total_pairs": total_pairs,
@@ -1333,6 +1350,9 @@ def evaluate_perturbation_results(
             "off_target_drops_count": axis_off_target_drops,
             "off_target_comparisons_count": axis_off_target_comparisons,
             "off_target_drop_rate_pct": off_target_rate,
+            "victim_off_target_drops_count": victim_drops,
+            "victim_off_target_comparisons_count": victim_comparisons,
+            "victim_off_target_drop_rate_pct": victim_drop_rate,
             "pairs": pair_details,
         }
 

@@ -35,40 +35,45 @@ def build_perturbations() -> list[dict[str, str]]:
 
     perturbations: list[dict[str, str]] = []
 
-    # 1. Voice (5 pairs) -> rewritten as interrogative question / reporting
+    # 1. Voice (5 pairs) -> reported / attributed assertion (Voice=0/1 while preserving Target=2, Prop=2)
     voice_tids = [
         (
             "00251a80c868f535_t0030",
-            "Is the Chinese Communist Party brilliant at public relations?",
-            "Is the Chinese Communist Party brilliant at public relations?",
-            "Is the Chinese Communist Party brilliant at public relations? What do you think about that, Chamath?",
+            "Critics and commentators argue that the Chinese Communist Party is brilliant at PR.",
+            "Critics and commentators argue that the Chinese Communist Party is brilliant at PR",
+            "I heard some critics and commentators argue that the Chinese Communist Party is brilliant at PR, but that's just their reporting.",
+            "Attributed to outside critics/commentators without personal speaker endorsement.",
         ),
         (
             "00251a80c868f535_t0053",
-            "Will Tesla's Optimus robot be the best selling product in history?",
-            "Will Tesla's Optimus robot be the best selling product in history?",
-            "Do you really think Optimus will be the best selling product in history, or is it just hype?",
+            "Elon Musk has claimed that Tesla's Optimus robot will be the best selling product in history.",
+            "Elon Musk has claimed that Tesla's Optimus robot will be the best selling product in history",
+            "Well, Elon Musk has claimed that Tesla's Optimus robot will be the best selling product in history, that's his claim.",
+            "Reported claim attributed to an external subject without personal endorsement.",
         ),
         (
             "00251a80c868f535_t0084",
-            "Was Salesforce meaningfully oversold in May?",
-            "Was Salesforce meaningfully oversold in May?",
-            "I wonder, was Salesforce meaningfully oversold back in May?",
+            "Some market analysts reported that Salesforce was meaningfully oversold in May.",
+            "Some market analysts reported that Salesforce was meaningfully oversold in May",
+            "I saw where some market analysts reported that Salesforce was meaningfully oversold in May, according to their notes.",
+            "Reported analysis attributed to external third parties.",
         ),
         (
             "00251a80c868f535_t0101",
-            "Are core systems of record like CRM not going to be replaced?",
-            "Are core systems of record like CRM not going to be replaced?",
-            "Are core systems of record like CRM going to get ripped out, or are they here to stay?",
+            "Industry observers speculate that core systems of record like CRM might eventually be replaced.",
+            "Industry observers speculate that core systems of record like CRM might eventually be replaced",
+            "There are industry observers who speculate that core systems of record like CRM might eventually be replaced, though that is their speculation and not my view.",
+            "Reported third-party speculation without personal speaker endorsement.",
         ),
         (
             "00251a80c868f535_t0154",
-            "Is the United States Congress completely unable to get budget deficits under control?",
-            "Is the United States Congress completely unable to get budget deficits under control?",
-            "Is Congress completely unable to do anything to get these budget deficits under control?",
+            "Television pundits frequently argue that Congress is completely unable to get budget deficits under control.",
+            "Television pundits frequently argue that Congress is completely unable to get budget deficits under control",
+            "Television pundits frequently argue that Congress is completely unable to get budget deficits under control, as they often say on television, but that is their claim, not mine.",
+            "Attributed to television pundits without personal speaker commitment.",
         ),
     ]
-    for idx, (tid, pert_claim, pert_quote, pert_turn) in enumerate(voice_tids, start=1):
+    for idx, (tid, pert_claim, pert_quote, pert_turn, desc) in enumerate(voice_tids, start=1):
         spk, q, orig, txt = get_info(tid)
         perturbations.append({
             "id": f"voice_{idx:02d}",
@@ -81,43 +86,48 @@ def build_perturbations() -> list[dict[str, str]]:
             "perturbed_claim": pert_claim,
             "perturbed_quote": pert_quote,
             "perturbed_turn_text": pert_turn,
-            "perturbation_description": "Rewritten as an interrogative question rather than a speaker-committed assertion.",
+            "perturbation_description": desc,
         })
 
-    # 2. Target (5 pairs) -> podcast show-mechanics statement
+    # 2. Target (5 pairs) -> subjective, contestable own-voice claim about the show itself (Target=0/1, Voice=2, Cont=2)
     target_tids = [
         (
             "00251a80c868f535_t0009",
-            "The All-In podcast has a great episode lined up for all listeners today.",
-            "We have a great episode lined up for all our podcast listeners today",
-            "We have a great episode lined up for all our podcast listeners today. Thanks for tuning into the show.",
+            "The All-In podcast is currently the most insightful technology show in digital media.",
+            "the All-In podcast is currently the most insightful technology show in digital media",
+            "I really believe the All-In podcast is currently the most insightful technology show in digital media, bar none.",
+            "Contestable evaluative claim about the podcast show itself rather than external world dynamics.",
         ),
         (
             "00251a80c868f535_t0015",
-            "David Friedberg is being welcomed back to the podcast discussion.",
-            "Let's welcome David Friedberg back to the podcast discussion",
-            "Let's welcome David Friedberg back to the podcast discussion after his quick break.",
+            "Our podcast panel has analyzed macroeconomic shifts much more accurately than the mainstream financial press.",
+            "our podcast panel has analyzed macroeconomic shifts much more accurately than the mainstream financial press",
+            "I think our podcast panel has analyzed macroeconomic shifts much more accurately than the mainstream financial press over the last two years.",
+            "Contestable comparative claim about the show's panel rather than external entities.",
         ),
         (
             "00251a80c868f535_t0040",
-            "The studio audio engineer fixed the microphone audio levels.",
-            "Thanks to our studio audio engineer for fixing the microphone audio levels",
-            "Thanks to our studio audio engineer for fixing the microphone audio levels so we could start recording.",
+            "The All-In podcast live summit in Los Angeles will be the single most successful live event in the podcast's history.",
+            "the All-In podcast live summit in Los Angeles will be the single most successful live event in the podcast's history",
+            "I guarantee the All-In podcast live summit in Los Angeles will be the single most successful live event in the podcast's history.",
+            "Contestable predictive forecast about the podcast's own upcoming live event.",
         ),
         (
             "00251a80c868f535_t0081",
-            "The podcast is taking a commercial break before the next segment.",
-            "Before we move to our next segment, let's take a quick commercial break",
-            "Before we move to our next segment, let's take a quick commercial break for our sponsors.",
+            "Our podcast discussion today will completely change how venture capitalists evaluate early-stage software startups.",
+            "our podcast discussion today will completely change how venture capitalists evaluate early-stage software startups",
+            "Mark my words, our podcast discussion today will completely change how venture capitalists evaluate early-stage software startups.",
+            "Contestable prediction about the impact of the podcast episode itself.",
         ),
         (
             "00251a80c868f535_t0091",
-            "Listeners can find all show notes and links in the podcast description.",
-            "You can find all of today's show notes and episode links in the podcast description",
-            "You can find all of today's show notes and episode links in the podcast description below.",
+            "This episode of the All-In podcast is the definitive historical breakdown of the Silicon Valley Bank collapse.",
+            "this episode of the All-In podcast is the definitive historical breakdown of the Silicon Valley Bank collapse",
+            "In my opinion, this episode of the All-In podcast is the definitive historical breakdown of the Silicon Valley Bank collapse.",
+            "Contestable evaluative claim about the episode rather than the banking collapse itself.",
         ),
     ]
-    for idx, (tid, pert_claim, pert_quote, pert_turn) in enumerate(target_tids, start=1):
+    for idx, (tid, pert_claim, pert_quote, pert_turn, desc) in enumerate(target_tids, start=1):
         spk, q, orig, txt = get_info(tid)
         perturbations.append({
             "id": f"target_{idx:02d}",
@@ -130,43 +140,48 @@ def build_perturbations() -> list[dict[str, str]]:
             "perturbed_claim": pert_claim,
             "perturbed_quote": pert_quote,
             "perturbed_turn_text": pert_turn,
-            "perturbation_description": "Replaced external world claim with conversational show-mechanics / podcast meta statement.",
+            "perturbation_description": desc,
         })
 
-    # 3. Propositionality (5 pairs) -> bare noun phrase topic devoid of predicate
+    # 3. Propositionality (5 pairs) -> thin assertion with minimal predicate depth (Propositionality=1, Voice=2, Cont=2)
     prop_tids = [
         (
             "00251a80c868f535_t0016",
-            "Enterprise AI deployment and organizational workflow integration.",
-            "enterprise AI deployment and organizational workflow integration",
-            "Next topic on the docket: enterprise AI deployment and organizational workflow integration in enterprises.",
+            "Artificial intelligence is a very big deal in enterprise software.",
+            "artificial intelligence is a very big deal in enterprise software",
+            "In my view, artificial intelligence is a very big deal in enterprise software right now.",
+            "Thin assertion carrying minimal mechanistic predicate, scoring 1 on propositionality.",
         ),
         (
             "00251a80c868f535_t0019",
-            "Academic peer review practices and scientific grant allocation.",
-            "academic peer review practices and scientific grant allocation",
-            "Moving along to academic peer review practices and scientific grant allocation in modern research.",
+            "Academic peer review practices are remarkably important in scientific research.",
+            "academic peer review practices are remarkably important in scientific research",
+            "I maintain that academic peer review practices are remarkably important in scientific research.",
+            "Thin assertion of generic importance lacking a specific predicate mechanism.",
         ),
         (
             "00251a80c868f535_t0055",
-            "Humanoid robotics development challenges in physical environments.",
-            "humanoid robotics development challenges in physical environments",
-            "Now concerning humanoid robotics development challenges in physical environments today.",
+            "Humanoid robotics development is a notable engineering pursuit.",
+            "humanoid robotics development is a notable engineering pursuit",
+            "We all know humanoid robotics development is a notable engineering pursuit today.",
+            "Thin evaluative assertion with low propositional content.",
         ),
         (
             "00251a80c868f535_t0095",
-            "Vertical software market dynamics and cloud infrastructure pricing.",
-            "vertical software market dynamics and cloud infrastructure pricing",
-            "Our next segment: vertical software market dynamics and cloud infrastructure pricing across vendors.",
+            "Vertical software market dynamics matter a lot in modern technology.",
+            "vertical software market dynamics matter a lot in modern technology",
+            "I believe vertical software market dynamics matter a lot in modern technology.",
+            "Thin assertion asserting relevance without a distinct causal relationship.",
         ),
         (
             "00251a80c868f535_t0105",
-            "Autonomous software agents in workflow automation and execution.",
-            "autonomous software agents in workflow automation and execution",
-            "Regarding autonomous software agents in workflow automation and execution across industry domains.",
+            "Autonomous software agents are definitely significant in computer science.",
+            "autonomous software agents are definitely significant in computer science",
+            "There is no doubt autonomous software agents are definitely significant in computer science.",
+            "Thin assertion carrying minimal propositional depth.",
         ),
     ]
-    for idx, (tid, pert_claim, pert_quote, pert_turn) in enumerate(prop_tids, start=1):
+    for idx, (tid, pert_claim, pert_quote, pert_turn, desc) in enumerate(prop_tids, start=1):
         spk, q, orig, txt = get_info(tid)
         perturbations.append({
             "id": f"propositionality_{idx:02d}",
@@ -179,43 +194,48 @@ def build_perturbations() -> list[dict[str, str]]:
             "perturbed_claim": pert_claim,
             "perturbed_quote": pert_quote,
             "perturbed_turn_text": pert_turn,
-            "perturbation_description": "Replaced propositional clause with a bare noun phrase topic devoid of a truth-evaluable predicate.",
+            "perturbation_description": desc,
         })
 
-    # 4. Contestability (5 pairs) -> undisputed tautology / definitional truism
+    # 4. Contestability (5 pairs) -> undisputed empirical fact / date / specification (Contestability=0, Typing=2, Voice=2)
     cont_tids = [
         (
             "00251a80c868f535_t0116",
-            "Until string theory is proven true, it remains unproven.",
-            "until string theory is mathematically proved, it remains unproved",
-            "As everyone knows, until string theory is mathematically proved, it remains unproved. That is simply a logical fact.",
+            "Nvidia announced the Blackwell GPU architecture in March 2024.",
+            "Nvidia announced the Blackwell GPU architecture in March 2024",
+            "Nvidia announced the Blackwell GPU architecture in March 2024 at their GTC conference.",
+            "Undisputed historical announcement date and specification.",
         ),
         (
             "00251a80c868f535_t0122",
-            "If a commercial investment generates profits, then it is profitable.",
-            "if an investment makes a profit, then it is profitable",
-            "By definition, if an investment makes a profit, then it is profitable, obviously.",
+            "The United States declared independence in the year 1776.",
+            "the United States declared independence in the year 1776",
+            "As everyone knows, the United States declared independence in the year 1776.",
+            "Undisputed historical fact and date.",
         ),
         (
             "00251a80c868f535_t0123",
-            "A corporation that operates in business commerce is an enterprise.",
-            "a corporation operating in business is an enterprise",
-            "Well of course, a corporation operating in business is an enterprise by the dictionary definition.",
+            "Apple released the original iPhone in June 2007.",
+            "Apple released the original iPhone in June 2007",
+            "Historically, Apple released the original iPhone in June 2007 to consumers.",
+            "Undisputed product release date and historical record.",
         ),
         (
             "00251a80c868f535_t0125",
-            "Manufactured products that are purchased by customers have buyers.",
-            "products that get bought have buyers",
-            "That's like saying products that get bought have buyers—it is completely obvious.",
+            "Google was founded in Menlo Park, California in September 1998.",
+            "Google was founded in Menlo Park, California in September 1998",
+            "We know Google was founded in Menlo Park, California in September 1998 by Larry Page and Sergey Brin.",
+            "Undisputed corporate founding date and location.",
         ),
         (
             "00251a80c868f535_t0133",
-            "A competitive marketplace consists of market participants who compete.",
-            "a competitive market consists of competitors",
-            "Naturally, a competitive market consists of competitors competing against one another.",
+            "Microsoft acquired LinkedIn in December 2016.",
+            "Microsoft acquired LinkedIn in December 2016",
+            "Factually, Microsoft acquired LinkedIn in December 2016 for approximately twenty-six billion dollars.",
+            "Undisputed corporate acquisition date.",
         ),
     ]
-    for idx, (tid, pert_claim, pert_quote, pert_turn) in enumerate(cont_tids, start=1):
+    for idx, (tid, pert_claim, pert_quote, pert_turn, desc) in enumerate(cont_tids, start=1):
         spk, q, orig, txt = get_info(tid)
         perturbations.append({
             "id": f"contestability_{idx:02d}",
@@ -228,43 +248,48 @@ def build_perturbations() -> list[dict[str, str]]:
             "perturbed_claim": pert_claim,
             "perturbed_quote": pert_quote,
             "perturbed_turn_text": pert_turn,
-            "perturbation_description": "Replaced contestable stance with an undisputed tautology / definitional truism.",
+            "perturbation_description": desc,
         })
 
-    # 5. Typing (5 pairs) -> conversational filler / agreement mush
+    # 5. Typing (5 pairs) -> mushy modality / unclassifiable assertion (Typing=1, Voice=2, Target=2, Prop=2)
     type_tids = [
         (
             "00251a80c868f535_t0138",
-            "I think that is totally right.",
-            "I think that's right",
-            "Yeah, absolutely. I think that's right. I agree with you completely on that.",
+            "There is an unspecified general dynamic occurring across various market entities.",
+            "there is an unspecified general dynamic occurring across various market entities",
+            "There is an unspecified general dynamic occurring across various market entities right now in this economy.",
+            "Assertion with mushy modality that lacks a clear canonical type (position, prediction, causal, evaluative, or contested fact).",
         ),
         (
             "00251a80c868f535_t0140",
-            "Yeah, that is exactly what I was thinking too.",
-            "that is exactly what I was thinking too",
-            "Totally, that is exactly what I was thinking too, 100 percent.",
+            "Tesla and robotics technology share a certain ambiguous relationship in modern manufacturing.",
+            "Tesla and robotics technology share a certain ambiguous relationship in modern manufacturing",
+            "Tesla and robotics technology share a certain ambiguous relationship in modern manufacturing today.",
+            "Vague associative assertion devoid of a clear predictive, causal, normative, or evaluative claim.",
         ),
         (
             "00251a80c868f535_t0141",
-            "A hundred percent, I definitely agree with your point.",
-            "A hundred percent, I definitely agree with your point",
-            "A hundred percent, I definitely agree with your point, man.",
+            "Enterprise software and cloud computing could have some kind of undetermined relationship across industries.",
+            "Enterprise software and cloud computing could have some kind of undetermined relationship across industries",
+            "Enterprise software and cloud computing could have some kind of undetermined relationship across industries right now.",
+            "Broad existential assertion lacking a distinct claim type.",
         ),
         (
             "00251a80c868f535_t0142",
-            "That makes a whole lot of sense to me.",
-            "That makes a whole lot of sense to me",
-            "Yeah, I hear you. That makes a whole lot of sense to me.",
+            "Market valuations and interest rates could perhaps have some kind of undetermined relationship across economic cycles.",
+            "Market valuations and interest rates could perhaps have some kind of undetermined relationship across economic cycles",
+            "Market valuations and interest rates could perhaps have some kind of undetermined relationship across economic cycles across the world.",
+            "Mushy associative observation with no clear empirical or mechanistic commitment.",
         ),
         (
             "00251a80c868f535_t0156",
-            "Right on, I totally see where you are coming from on that.",
-            "I totally see where you are coming from on that",
-            "Right on, I totally see where you are coming from on that, Jason.",
+            "Federal deficit spending and sovereign debt dynamics could possibly have some kind of undetermined relationship in fiscal governance.",
+            "Federal deficit spending and sovereign debt dynamics could possibly have some kind of undetermined relationship in fiscal governance",
+            "Federal deficit spending and sovereign debt dynamics could possibly have some kind of undetermined relationship in fiscal governance across the world.",
+            "Vague consideration claim fitting none of the 5 canonical types cleanly.",
         ),
     ]
-    for idx, (tid, pert_claim, pert_quote, pert_turn) in enumerate(type_tids, start=1):
+    for idx, (tid, pert_claim, pert_quote, pert_turn, desc) in enumerate(type_tids, start=1):
         spk, q, orig, txt = get_info(tid)
         perturbations.append({
             "id": f"typing_{idx:02d}",
@@ -277,16 +302,16 @@ def build_perturbations() -> list[dict[str, str]]:
             "perturbed_claim": pert_claim,
             "perturbed_quote": pert_quote,
             "perturbed_turn_text": pert_turn,
-            "perturbation_description": "Replaced typed stance claim with conversational agreement filler devoid of clear claim type.",
+            "perturbation_description": desc,
         })
 
-    # 6. Decontextualisation (5 pairs) -> replaced subject with unbound pronoun
+    # 6. Decontextualisation (5 pairs) -> replaced subject with unbound pronoun / placeholder
     decontext_tids = [
         ("00251a80c868f535_t0084", "The individual discussed was meaningfully oversold in May."),
-        ("00251a80c868f535_t0053", "They are going to build the best selling product in history."),
+        ("00251a80c868f535_t0053", "The company discussed is going to build the best selling product in history."),
         ("00251a80c868f535_t0160", "They will force this to confront its debt."),
-        ("00251a80c868f535_t0176", "They are going to have to implement this."),
-        ("00251a80c868f535_t0179", "It will not have any money to pay by then."),
+        ("00251a80c868f535_t0176", "The unnamed organization is going to have to implement this."),
+        ("00251a80c868f535_t0179", "The discussed entity will not have any money to pay by then."),
     ]
     for idx, (tid, pert) in enumerate(decontext_tids, start=1):
         spk, q, orig, txt = get_info(tid)
@@ -328,16 +353,41 @@ def build_perturbations() -> list[dict[str, str]]:
             "perturbation_description": "Replaced claim with an assertion about an entirely different topic completely unsupported by quote.",
         })
 
-    # 8. Granularity (5 pairs) -> concatenated two unrelated claims with 'and'
-    granularity_tids = [
-        ("00251a80c868f535_t0104", "David Sacks is one of the most underestimated operators in Silicon Valley, and the Chinese Communist Party is brilliant at public relations."),
-        ("00251a80c868f535_t0109", "Vertical SaaS does not have a proprietary system of record, and Salesforce was meaningfully oversold in May."),
-        ("00251a80c868f535_t0166", "If the 30-year Treasury yield reaches 6%, it is the beginning of the end for sovereign debt, and Tesla's Optimus robot will be the best selling product in history."),
-        ("00251a80c868f535_t0173", "Salesforce was meaningfully oversold in May, and the Chinese Communist Party is brilliant at public relations."),
-        ("00251a80c868f535_t0195", "Tesla Optimus robot will be the best selling product in history, and academic science enforces conformity around mainstream theories."),
+    # 8. Granularity (5 pairs) -> 3 real compound claims from E287 + 2 compound claims
+    granularity_cases = [
+        (
+            "00251a80c868f535_t0016",
+            "Excluding researchers outside the mainstream causes a lack of heterodox thinking in science.",
+            "The lack of heterodox and outside-the-scope thinking, caused by the exclusion of those not part of the mainstream and the requirement for everyone to think in the same way, means that science is no longer pushing the envelope and discovering new things.",
+            "Natural compound claim from E287 embedding multiple causal links and background constraints (42 words).",
+        ),
+        (
+            "00251a80c868f535_t0255",
+            "The heuristic used to treat AI as a standalone intelligence replacement system is inaccurate.",
+            "The heuristic used to treat AI as a standalone intelligence replacement system is not accurate with respect to how humans actually use AI, which is like all other tools, a magnification of human creativity, ingenuity, and potential.",
+            "Natural compound claim from E287 linking heuristic critique with alternative collaborative thesis (37 words).",
+        ),
+        (
+            "00251a80c868f535_t0389",
+            "Neoantigen immunotherapy for cancer should not be patented and charged at half a million dollars for patient treatment.",
+            "The technique for neoantigen immunotherapy for cancer, which was largely developed through decades of research and funded by the NIH and other public funding, should not be patented, FDA approved, and charged at half a million dollars for patient treatment.",
+            "Natural compound claim from E287 embedding decades of NIH funding history, patenting, FDA approval, and pricing (40 words).",
+        ),
+        (
+            "00251a80c868f535_t0109",
+            "Vertical SaaS does not have a system of record.",
+            "Vertical SaaS does not have a proprietary system of record, and Salesforce was meaningfully oversold in May.",
+            "Compound claim concatenating two distinct propositions from different domains with 'and'.",
+        ),
+        (
+            "00251a80c868f535_t0166",
+            "If the 30-year Treasury yield reaches 6%, it is the beginning of the end for sovereign debt.",
+            "If the 30-year Treasury yield reaches 6%, it is the beginning of the end for sovereign debt, and Tesla's Optimus robot will be the best selling product in history.",
+            "Compound claim concatenating sovereign debt mechanics with robotics prediction.",
+        ),
     ]
-    for idx, (tid, pert) in enumerate(granularity_tids, start=1):
-        spk, q, orig, txt = get_info(tid)
+    for idx, (tid, orig_clm, pert_clm, desc) in enumerate(granularity_cases, start=1):
+        spk, q, _, txt = get_info(tid)
         perturbations.append({
             "id": f"granularity_{idx:02d}",
             "target_axis": "granularity",
@@ -345,11 +395,11 @@ def build_perturbations() -> list[dict[str, str]]:
             "speaker": spk,
             "quote": q,
             "turn_text": txt,
-            "original_claim": orig,
-            "perturbed_claim": pert,
+            "original_claim": orig_clm,
+            "perturbed_claim": pert_clm,
             "perturbed_quote": q,
             "perturbed_turn_text": txt,
-            "perturbation_description": "Compound claim concatenating two distinct independent claims from different turns with 'and'.",
+            "perturbation_description": desc,
         })
 
     return perturbations

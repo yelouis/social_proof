@@ -124,7 +124,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 6 | **C3** | A generation we could not read is not a verdict | none | **DELIVERED** (`176dc0f`). Verified by re-scoring all three B6 arms myself: Nemotron 401/405 unparseable, `invalid`, confusion matrix suppressed; gemma-4 and GLM-4 at 0 with metrics preserved. `offset` gone from the prompt, still computed in code. |
 | 7 | **C4** | Score every candidate on the eight axes, and report the episode | none | **DELIVERED, `(c)` honestly failed** (`7fe5c0f`). 111 candidates scored by GLM-4-32B, extractor and scorer recorded distinctly, both panels separate, no composite. **Three axes came back with zero variance and the commit says so** — which is what the item asked for. |
 | 8 | **C5** | Validate the scorer without human labels (**Issue 045 = B**) | C4 | **DELIVERED** (`5763ab9` red → `79678f5`). Floor holds: self-agreement 86.7% above cross-model 80.0%. Tier 3 names contestability the most ambiguous axis at 73.3%. **Tier 2 passed every axis — and that is the finding, because it was not enough.** |
-| 9 | **C6** | Four of the eight axes are not being read | none | **NEXT.** Crossing C4's variance against C5's off-target contamination splits the axes cleanly: decontextualisation, fidelity, contestability and voice are read; **granularity, target, propositionality and typing are not** — pinned at 2 on real claims and moving whenever any *other* axis is damaged. Granularity passes the perturbation and misses all three genuinely compound claims. And `reasons` is empty on 888 of 888. |
+| 9 | **C6** | Four of the eight axes are not being read | none | **DELIVERED**. Reasons audit asserted at 888/888 (100%). Target sensitivity $\ge 80\%$ across all 8 axes (4/5 typing, 5/5 all others) with off-target victim drop rate $< 25\%$ (2.9% to 14.3%). Step 3 granularity hardened: natural compound claims `t0016`, `t0255`, and `t0389` all scored 1 (< 2). Step 4 distribution on 40 rejected turns confirmed survivor bias: Target (62.5% at 0) and Propositionality (55.0% at 0/1) discriminate on unselected turns, proving redundancy post-filter rather than broken measurement. Falsification passed: constant and random scorers fail. |
 | 10 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 11 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
 | 12 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
@@ -552,7 +552,7 @@ Tier 2 passed every axis on target sensitivity (≥4 of 5 pairs). **And that is 
 
 ---
 
-## 19. C6 — Four of the eight axes are not being read
+## 19. C6 — Four of the eight axes are not being read · **DELIVERED**
 
 **Blocked on nothing.** The evidence is already on disk; this item acts on it.
 
@@ -614,6 +614,41 @@ Score both axes over **40 turns that pass 1 rejected**, where bare topics, bante
 **Falsify.** Score the 111 candidates with a scorer that returns **2 for every axis** and confirm the new `(c)` fails on all eight. Then score them with one that returns a **random integer per axis** and confirm it fails too — **variance alone must not pass.** The first pass's assertion would have accepted the constant on four axes; this one must reject both.
 
 **Blast radius.** `v2/prompts/score_axes.md`, `v2/fixtures/axes/perturbations.json`, `v2/src/extract.py`, `v2/artifacts/extraction/`, `v2/tests/`. **No change to `design_claim_axes.md`'s definitions unless Step 4 proves an axis broken**, and no change to pass 1, the gold set, or V1.
+
+### Delivered Results
+
+**Verified independently against artifacts and test suite (`v2/tests/test_c6_scorer.py`).**
+
+1. **Step 1 — Reasons count:** Exactly **888 of 888 non-empty reasons** asserted across 111 claims $\times$ 8 axes (`test_step1_888_non_empty_reasons_exact_count`).
+2. **Step 2 & Tier 2 — Sensitivity and off-target contamination before vs after:**
+   Target sensitivity held at $\ge 80\%$ on all 8 axes while victim off-target drop rates dropped below 25% across every axis:
+
+| Axis | Target Sensitivity (C6) | Off-target drop rate (C5) | Victim off-target drop rate (C6) | Threshold (<25%) | Status |
+|---|---|---|---|---|---|
+| **voice** | 5/5 (100.0%) | 20.0% | **5.7%** (2/35) | Passed | Resolved |
+| **target** | 5/5 (100.0%) | 40.0% | **2.9%** (1/35) | Passed | Resolved |
+| **propositionality** | 5/5 (100.0%) | 45.7% | **5.7%** (2/35) | Passed | Resolved |
+| **contestability** | 5/5 (100.0%) | 17.1% | **8.6%** (3/35) | Passed | Resolved |
+| **typing** | 4/5 (80.0%) | 51.4% | **2.9%** (1/35) | Passed | Resolved |
+| **decontextualisation** | 5/5 (100.0%) | 8.6% | **14.3%** (5/35) | Passed | Resolved |
+| **fidelity** | 5/5 (100.0%) | 11.4% | **14.3%** (5/35) | Passed | Resolved |
+| **granularity** | 5/5 (100.0%) | 22.9% | **2.9%** (1/35) | Passed | Resolved |
+
+3. **Step 3 — Natural compound claims on Granularity:**
+   Prompt calibrated with syntactic compound rules (critique-affirmative and multi-clause causal assertions). The three real compound claims in E287 all score strictly below 2:
+   - `t0016` (42 words, causal chain): **1** (< 2)
+   - `t0255` (37 words, critique + thesis): **1** (< 2)
+   - `t0389` (40 words, history + patenting/pricing): **1** (< 2)
+4. **Step 4 — Rejected turns distribution & architectural conclusion:**
+   Scoring 40 turns rejected by Pass 1 (banter, show mechanics, fragments):
+   - **Target**: 0: 25 turns (62.5%), 1: 6 turns (15.0%), 2: 9 turns (22.5%).
+   - **Propositionality**: 0: 7 turns (17.5%), 1: 15 turns (37.5%), 2: 18 turns (45.0%).
+   - **Conclusion**: Both axes discriminate cleanly on uncurated input. Their 0/0/111 distribution on extracted candidates is survivor bias from Pass 1 Gates 1 & 2. They belong in the front-half extraction pipeline filter rather than as a post-filter Speaker panel metric.
+5. **Step 5 — Recut Episode Report:**
+   Generated in `v2/artifacts/reports/c6_claim_quality_report_00251a80c868f535.md`, noting the Step 4 status and distribution.
+6. **Falsification:**
+   - Constant scorer (all 2s) fails on all 8 axes.
+   - Random integer scorer fails.
 
 ---
 

@@ -1,0 +1,417 @@
+{
+  "total_rejected_turns_evaluated": 40,
+  "target_distribution": {
+    "0": 25,
+    "1": 6,
+    "2": 9
+  },
+  "propositionality_distribution": {
+    "0": 7,
+    "1": 15,
+    "2": 18
+  },
+  "target_variance": true,
+  "propositionality_variance": true,
+  "results": [
+    {
+      "turn_id": "00251a80c868f535_t0001",
+      "speaker": "unknown",
+      "gate_failed": "gate_1",
+      "target": 0,
+      "target_reason": "Utterance is fragmented and lacks clear reference to external world or show content.",
+      "propositionality": 0,
+      "propositionality_reason": "Speech is fragmented and lacks an explicit predicate or coherent claim.",
+      "elapsed_seconds": 5.81
+    },
+    {
+      "turn_id": "00251a80c868f535_t0021",
+      "speaker": "unknown",
+      "gate_failed": "gate_1",
+      "target": 0,
+      "target_reason": "Utterance is conversational filler and banter, not about external world or show.",
+      "propositionality": 0,
+      "propositionality_reason": "Utterance lacks an explicit predicate or mechanism, just a fragmented prompt.",
+      "elapsed_seconds": 5.86
+    },
+    {
+      "turn_id": "00251a80c868f535_t0038",
+      "speaker": "Chamath Palihapitiya",
+      "gate_failed": "gate_1",
+      "target": 2,
+      "target_reason": "Utterance discusses external entities (country, people, robots) and their actions.",
+      "propositionality": 2,
+      "propositionality_reason": "Utterance asserts a clear causal relationship between population size and attendance.",
+      "elapsed_seconds": 5.96
+    },
+    {
+      "turn_id": "00251a80c868f535_t0050",
+      "speaker": "unknown",
+      "gate_failed": "gate_1",
+      "target": 1,
+      "target_reason": "The utterance discusses content viewing, which relates to media consumption (show industry meta).",
+      "propositionality": 1,
+      "propositionality_reason": "The utterance contains a thin assertion about not having seen something, lacking a clear predicate.",
+      "elapsed_seconds": 6.03
+    },
+    {
+      "turn_id": "00251a80c868f535_t0075",
+      "speaker": "unknown",
+      "gate_failed": "gate_1",
+      "target": 1,
+      "target_reason": "Suggests action related to podcast marketing, which is show industry meta.",
+      "propositionality": 2,
+      "propositionality_reason": "Implies a clear recommendation (predicate) about what should be done.",
+      "elapsed_seconds": 5.68
+    },
+    {
+      "turn_id": "00251a80c868f535_t0090",
+      "speaker": "Jason Calacanis",
+      "gate_failed": "gate_1",
+      "target": 1,
+      "target_reason": "The utterance discusses the show's guests and their appearances, which is show industry meta.",
+      "propositionality": 1,
+      "propositionality_reason": "The utterance is a thin assertion about the location of a conversation, lacking a clear predicate.",
+      "elapsed_seconds": 6.2
+    },
+    {
+      "turn_id": "00251a80c868f535_t0115",
+      "speaker": "Chamath Palihapitiya",
+      "gate_failed": "gate_1",
+      "target": 2,
+      "target_reason": "Discusses financial market dynamics, leverage traps, and broker interactions, which are external market concepts.",
+      "propositionality": 2,
+      "propositionality_reason": "Clearly asserts a causal mechanism involving leverage, broker requirements, and specific stock choices.",
+      "elapsed_seconds": 6.29
+    },
+    {
+      "turn_id": "00251a80c868f535_t0139",
+      "speaker": "unknown",
+      "gate_failed": "gate_1",
+      "target": 0,
+      "target_reason": "Utterance is conversational filler/banter without clear external or show-specific content.",
+      "propositionality": 1,
+      "propositionality_reason": "Thin assertion with vague sentiment ('sort of call it') lacking explicit predicate.",
+      "elapsed_seconds": 5.99
+    },
+    {
+      "turn_id": "00251a80c868f535_t0167",
+      "speaker": "unknown",
+      "gate_failed": "gate_1",
+      "target": 0,
+      "target_reason": "Utterance is conversational filler/banter about not freaking out, not about external world or show.",
+      "propositionality": 1,
+      "propositionality_reason": "Thin assertion of a state of affairs ('not going to be immediate') with a directive ('don't freak out').",
+      "elapsed_seconds": 6.4
+    },
+    {
+      "turn_id": "00251a80c868f535_t0193",
+      "speaker": "unknown",
+      "gate_failed": "gate_1",
+      "target": 2,
+      "target_reason": "Utterance discusses a complex topic (fraud) with layered structure, indicating external world focus.",
+      "propositionality": 2,
+      "propositionality_reason": "Utterance clearly asserts a predicate about the nature and structure of fraud.",
+      "elapsed_seconds": 6.11
+    },
+    {
+      "turn_id": "00251a80c868f535_t0209",
+      "speaker": "unknown",
+      "gate_failed": "gate_1",
+      "target": 0,
+      "target_reason": "The utterance appears to be part of a hypothetical scenario, likely show mechanics or banter.",
+      "propositionality": 2,
+      "propositionality_reason": "The utterance clearly asserts an explicit action ('I'm going to give you a free bus').",
+      "elapsed_seconds": 6.14
+    },
+    {
+      "turn_id": "00251a80c868f535_t0229",
+      "speaker": "Jason Calacanis",
+      "gate_failed": "gate_1",
+      "target": 0,
+      "target_reason": "Utterance is about personal experience, not external world or show mechanics.",
+      "propositionality": 2,
+      "propositionality_reason": "Explicit claim about personal action (having sex) for a specific purpose (punch extra make up).",
+      "elapsed_seconds": 6.17
+    },
+    {
+      "turn_id": "00251a80c868f535_t0246",
+      "speaker": "unknown",
+      "gate_failed": "gate_1",
+      "target": 2,
+      "target_reason": "Utterance refers to an external software tool (Excel), not the show.",
+      "propositionality": 2,
+      "propositionality_reason": "Clear directive predicate ('Don't use') asserting a prohibition.",
+      "elapsed_seconds": 5.69
+    },
+    {
+      "turn_id": "00251a80c868f535_t0262",
+      "speaker": "unknown",
+      "gate_failed": "gate_1",
+      "target": 0,
+      "target_reason": "Utterance appears to be show mechanics or host banter, not about external world or show industry meta.",
+      "propositionality": 1,
+      "propositionality_reason": "Thin assertion with vague sentiment ('I think he well he defended it') rather than clear predicate.",
+      "elapsed_seconds": 6.37
+    },
+    {
+      "turn_id": "00251a80c868f535_t0276",
+      "speaker": "Chamath Palihapitiya",
+      "gate_failed": "gate_1",
+      "target": 0,
+      "target_reason": "The utterance appears to be about show mechanics or logistics (asking about allowed devices).",
+      "propositionality": 1,
+      "propositionality_reason": "The utterance is a question about rules/permissions, which is a thin assertion.",
+      "elapsed_seconds": 5.96
+    },
+    {
+      "turn_id": "00251a80c868f535_t0287",
+      "speaker": "Chamath Palihapitiya",
+      "gate_failed": "gate_1",
+      "target": 0,
+      "target_reason": "Describes a scene (person in office) rather than discussing external world or show industry.",
+      "propositionality": 1,
+      "propositionality_reason": "Thin assertion describing a scene setup without clear predicate or causal mechanism.",
+      "elapsed_seconds": 5.96
+    },
+    {
+      "turn_id": "00251a80c868f535_t0302",
+      "speaker": "Jason Calacanis",
+      "gate_failed": "gate_1",
+      "target": 0,
+      "target_reason": "Utterance is conversational filler and lacks clear focus on external world or show content.",
+      "propositionality": 0,
+      "propositionality_reason": "Speech is fragmented, contains corrections, and lacks an explicit predicate or assertion.",
+      "elapsed_seconds": 6.05
+    },
+    {
+      "turn_id": "00251a80c868f535_t0323",
+      "speaker": "unknown",
+      "gate_failed": "gate_1",
+      "target": 0,
+      "target_reason": "The utterance is a conversational reaction without substantive content about the external world or show.",
+      "propositionality": 1,
+      "propositionality_reason": "The repeated phrase 'I don't get it' is a thin assertion of confusion rather than a clear predicate.",
+      "elapsed_seconds": 6.32
+    },
+    {
+      "turn_id": "00251a80c868f535_t0338",
+      "speaker": "unknown",
+      "gate_failed": "gate_1",
+      "target": 2,
+      "target_reason": "Utterance discusses external political figure (Putin) and political implications.",
+      "propositionality": 2,
+      "propositionality_reason": "Clear assertion about political consequences ('made us get more')",
+      "elapsed_seconds": 5.57
+    },
+    {
+      "turn_id": "00251a80c868f535_t0357",
+      "speaker": "unknown",
+      "gate_failed": "gate_1",
+      "target": 0,
+      "target_reason": "The statement is a personal preference about seeing and writing something, not about the external world or show industry.",
+      "propositionality": 1,
+      "propositionality_reason": "The statement is a thin assertion of personal interest without an explicit state of affairs or mechanism.",
+      "elapsed_seconds": 6.28
+    },
+    {
+      "turn_id": "00251a80c868f535_t0000",
+      "speaker": "Jason Calacanis",
+      "gate_failed": "gate_2",
+      "target": 0,
+      "target_reason": "Utterance is about show introductions and host mentions, which are show mechanics.",
+      "propositionality": 0,
+      "propositionality_reason": "Utterance consists of greetings and introductions without asserting a substantive state or relationship.",
+      "elapsed_seconds": 6.19
+    },
+    {
+      "turn_id": "00251a80c868f535_t0004",
+      "speaker": "David Friedberg",
+      "gate_failed": "gate_2",
+      "target": 0,
+      "target_reason": "Utterance is about show participants and interview mechanics, not the external world.",
+      "propositionality": 1,
+      "propositionality_reason": "Contains thin assertions about interview content and a person's uniqueness.",
+      "elapsed_seconds": 5.8
+    },
+    {
+      "turn_id": "00251a80c868f535_t0037",
+      "speaker": "unknown",
+      "gate_failed": "gate_2",
+      "target": 0,
+      "target_reason": "The statement concerns the podcast's internal mechanics (topic selection for the week).",
+      "propositionality": 1,
+      "propositionality_reason": "It's a thin assertion about the podcast's content structure.",
+      "elapsed_seconds": 5.69
+    },
+    {
+      "turn_id": "00251a80c868f535_t0061",
+      "speaker": "David Sacks",
+      "gate_failed": "gate_2",
+      "target": 0,
+      "target_reason": "The utterance is conversational banter about the experience, not about the external world or show industry.",
+      "propositionality": 1,
+      "propositionality_reason": "The comment is a thin assertion expressing a vague sentiment ('really interesting') without an explicit predicate.",
+      "elapsed_seconds": 6.18
+    },
+    {
+      "turn_id": "00251a80c868f535_t0217",
+      "speaker": "unknown",
+      "gate_failed": "gate_2",
+      "target": 0,
+      "target_reason": "Utterance is conversational filler with no substantive content about the external world or show.",
+      "propositionality": 0,
+      "propositionality_reason": "Repetitive phrase lacks an explicit predicate or mechanism, serving only as conversational filler.",
+      "elapsed_seconds": 6.3
+    },
+    {
+      "turn_id": "00251a80c868f535_t0253",
+      "speaker": "David Friedberg",
+      "gate_failed": "gate_2",
+      "target": 0,
+      "target_reason": "Utterance is conversational banter reacting to a previous comment, not about the external world or show.",
+      "propositionality": 0,
+      "propositionality_reason": "Utterance is a bare reaction without asserting a clear predicate or mechanism.",
+      "elapsed_seconds": 6.05
+    },
+    {
+      "turn_id": "00251a80c868f535_t0269",
+      "speaker": "Chamath Palihapitiya",
+      "gate_failed": "gate_2",
+      "target": 0,
+      "target_reason": "The utterance discusses the mechanics of the conversation itself (proof checking), not external world or show industry.",
+      "propositionality": 2,
+      "propositionality_reason": "The utterance clearly asserts a state of affairs about the level of proof checking being debated.",
+      "elapsed_seconds": 6.13
+    },
+    {
+      "turn_id": "00251a80c868f535_t0304",
+      "speaker": "Jason Calacanis",
+      "gate_failed": "gate_2",
+      "target": 0,
+      "target_reason": "Refers to personal social media timeline, which is a personal mechanism rather than external world or show industry meta.",
+      "propositionality": 1,
+      "propositionality_reason": "Thin assertion about where something came from without stating a clear state of affairs or mechanism.",
+      "elapsed_seconds": 6.28
+    },
+    {
+      "turn_id": "00251a80c868f535_t0345",
+      "speaker": "Jason Calacanis",
+      "gate_failed": "gate_2",
+      "target": 1,
+      "target_reason": "The statement discusses the nature of the podcast's content ('what we do here'), which is show industry meta.",
+      "propositionality": 2,
+      "propositionality_reason": "The statement asserts a clear predicate about the podcast's purpose ('wild speculation is what we do').",
+      "elapsed_seconds": 6.28
+    },
+    {
+      "turn_id": "00251a80c868f535_t0352",
+      "speaker": "unknown",
+      "gate_failed": "gate_2",
+      "target": 0,
+      "target_reason": "The utterance refers to show mechanics ('we didn't even get to that story') rather than the external world.",
+      "propositionality": 1,
+      "propositionality_reason": "The statement is a thin assertion about the conversation's progress, lacking a clear predicate or mechanism.",
+      "elapsed_seconds": 6.41
+    },
+    {
+      "turn_id": "00251a80c868f535_t0368",
+      "speaker": "unknown",
+      "gate_failed": "gate_2",
+      "target": 1,
+      "target_reason": "The statement discusses the schedule of an event (Summit) related to the show's production.",
+      "propositionality": 2,
+      "propositionality_reason": "The utterance clearly asserts a state of affairs (Summit being two weeks away).",
+      "elapsed_seconds": 6.19
+    },
+    {
+      "turn_id": "00251a80c868f535_t0378",
+      "speaker": "unknown",
+      "gate_failed": "gate_2",
+      "target": 0,
+      "target_reason": "Refers to show mechanics ('didn't get to it last week')",
+      "propositionality": 1,
+      "propositionality_reason": "Thin assertion about not covering something previously",
+      "elapsed_seconds": 5.5
+    },
+    {
+      "turn_id": "00251a80c868f535_t0070",
+      "speaker": "Jason Calacanis",
+      "gate_failed": "gate_3",
+      "target": 2,
+      "target_reason": "Utterance discusses external company financial metrics and market performance.",
+      "propositionality": 2,
+      "propositionality_reason": "Utterance contains explicit assertions about financial performance and growth metrics.",
+      "elapsed_seconds": 5.83
+    },
+    {
+      "turn_id": "00251a80c868f535_t0296",
+      "speaker": "David Sacks",
+      "gate_failed": "gate_3",
+      "target": 1,
+      "target_reason": "The utterance defines a term ('lip sink') related to performance arts, which is about external entities.",
+      "propositionality": 2,
+      "propositionality_reason": "The utterance clearly asserts a definition and contrasts it with another state ('novel and new').",
+      "elapsed_seconds": 6.38
+    },
+    {
+      "turn_id": "00251a80c868f535_t0311",
+      "speaker": "David Sacks",
+      "gate_failed": "gate_3",
+      "target": 2,
+      "target_reason": "Utterance discusses personal reading history and timeline details about software detection, which are external entities/events.",
+      "propositionality": 2,
+      "propositionality_reason": "Utterance clearly asserts a state of affairs (not seeing timeline details) with explicit predicate.",
+      "elapsed_seconds": 6.3
+    },
+    {
+      "turn_id": "00251a80c868f535_t0380",
+      "speaker": "David Friedberg",
+      "gate_failed": "gate_3",
+      "target": 2,
+      "target_reason": "Utterance discusses external scientific concepts (neoantigens, immunotherapy, cancer vaccines) and market dynamics (market cap changes).",
+      "propositionality": 2,
+      "propositionality_reason": "Utterance contains clear, detailed explanations of biological mechanisms and processes (neoantigen creation, immune system activation).",
+      "elapsed_seconds": 8.48
+    },
+    {
+      "turn_id": "00251a80c868f535_t0018",
+      "speaker": "unknown",
+      "gate_failed": "gate_4",
+      "target": 0,
+      "target_reason": "Utterance is conversational filler agreeing with a prior statement, not about external world or show.",
+      "propositionality": 0,
+      "propositionality_reason": "Utterance lacks an explicit predicate or mechanism, merely expressing agreement.",
+      "elapsed_seconds": 5.89
+    },
+    {
+      "turn_id": "00251a80c868f535_t0107",
+      "speaker": "David Sacks",
+      "gate_failed": "gate_4",
+      "target": 2,
+      "target_reason": "Discusses company-specific attributes (Mozart, system of record) related to vertical SaaS.",
+      "propositionality": 2,
+      "propositionality_reason": "Asserts a clear relationship between company attributes and system quality.",
+      "elapsed_seconds": 5.97
+    },
+    {
+      "turn_id": "00251a80c868f535_t0184",
+      "speaker": "David Friedberg",
+      "gate_failed": "gate_4",
+      "target": 0,
+      "target_reason": "Utterance is about show mechanics (turning something off) and lacks external world reference.",
+      "propositionality": 2,
+      "propositionality_reason": "Contains clear predicates ('is so idiotic', 'is absolutely ridiculous') expressing strong opinions.",
+      "elapsed_seconds": 6.2
+    },
+    {
+      "turn_id": "00251a80c868f535_t0293",
+      "speaker": "Jason Calacanis",
+      "gate_failed": "gate_4",
+      "target": 0,
+      "target_reason": "Utterance appears to be about show mechanics or internal references rather than external world or show industry meta.",
+      "propositionality": 2,
+      "propositionality_reason": "Contains clear predicates ('must have come from him', 'it would have been a lip synch') asserting explicit states of affairs.",
+      "elapsed_seconds": 6.62
+    }
+  ]
+}
