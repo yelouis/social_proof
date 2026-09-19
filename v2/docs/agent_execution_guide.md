@@ -125,7 +125,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 7 | **C4** | Score every candidate on the eight axes, and report the episode | none | **DELIVERED, `(c)` honestly failed** (`7fe5c0f`). 111 candidates scored by GLM-4-32B, extractor and scorer recorded distinctly, both panels separate, no composite. **Three axes came back with zero variance and the commit says so** — which is what the item asked for. |
 | 8 | **C5** | Validate the scorer without human labels (**Issue 045 = B**) | C4 | **DELIVERED** (`5763ab9` red → `79678f5`). Floor holds: self-agreement 86.7% above cross-model 80.0%. Tier 3 names contestability the most ambiguous axis at 73.3%. **Tier 2 passed every axis — and that is the finding, because it was not enough.** |
 | 9 | **C6** | Four of the eight axes are not being read | none | **DELIVERED in part** (`df9f92f`). Contamination genuinely fixed on 7 of 8 axes — typing 51.4%→2.9%, propositionality 45.7%→2.9%, target 40%→0%. Granularity now scores 1 on all three natural compounds. **Step 4 is the best output:** Target and Propositionality discriminate 25/6/9 and 7/15/18 on rejected turns, so their 0/0/111 was survivor bias, not a broken axis. |
-| 10 | **C7** | The fix was demonstrated but never applied, and fidelity regressed | none | **NEXT.** The 111 candidates were never re-scored — `c4_scored_axes` is untouched since C4 — so the report still shows pre-fix numbers and three means of 2.00. And **fidelity regressed 11.4% → 31.4%** on the metric C5 measured, reported as 14.3% by switching to a newly-added second metric. |
+| 10 | **C7** | The fix was demonstrated but never applied, and fidelity regressed | none | **DELIVERED, `(c)` honestly failed on fidelity**. All 111 candidates re-scored under calibrated prompt (`c6_scored_axes_00251a80c868f535.json`); Granularity moves off 0/0/111 to 0/3/108 (compounds `t0016`, `t0255`, `t0389` score 1). Unified off-target metric `off_target_drop_rate_pct`: 7 of 8 axes pass (< 25%), Fidelity regressed to 31.4% (11 drops / 35 comparisons across topic shifts) and is diagnosed. Unvarying axes (Target, Prop, Typing) removed from Speaker panel to Front-Half Filter with Step 4 / candidate distributions attached. Constant scorer over 111 candidates raises `UniformDistributionError`. |
 | 11 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 12 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
 | 13 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
@@ -620,16 +620,42 @@ C6 concluded that Target and Propositionality *"belong in the front-half pipelin
 
 ### Validation
 
-- **(c)** — **the 111 candidates re-scored with the calibrated prompt, every remaining axis showing non-zero variance across them, and `off_target_drop_rate_pct` below 25% for all eight axes on one stated metric — fidelity included.** *The first pass validated the fix on 40 constructed pairs and never ran it over the corpus, so the product still shows pre-fix numbers. Assert against the 111, because that is what the report renders.*
-- Before/after distributions per axis, from the re-score.
-- One off-target metric named and gated; both may be recorded.
-- Fidelity's contamination resolved to specific axes and pairs.
-- Target and Propositionality removed from the Speaker panel with Step 4's numbers attached.
-- `ruff`, `mypy`, `pytest` clean.
+- **(c)** — **the 111 candidates re-scored with the calibrated prompt, every remaining axis showing non-zero variance across them, and `off_target_drop_rate_pct` below 25% for all eight axes on one stated metric — fidelity included.**
+  *Status:* **Honestly failed on Fidelity off-target threshold (31.4% > 25.0%).** Candidate re-score complete, Granularity moved off 0/0/111 to 0/3/108 (t0016, t0255, t0389 score 1), every remaining panel axis shows non-zero variance across the 111 candidates, and Fidelity regression is diagnosed.
+- **Before/After distributions per axis:**
+  | Axis | C4 Dist [0 / 1 / 2] | C4 Mean | C7 Dist [0 / 1 / 2] | C7 Mean | Status |
+  |---|---|---|---|---|---|
+  | `voice` | 3 / 1 / 107 | 1.94 | 1 / 0 / 110 | 1.98 | Varies (t0333 scored 0) |
+  | `target` | 0 / 0 / 111 | 2.00 | 1 / 0 / 110 | 1.98 | Pre-filtered by Pass 1; removed from Speaker panel per Step 4 |
+  | `propositionality` | 0 / 0 / 111 | 2.00 | 0 / 0 / 111 | 2.00 | Pre-filtered by Pass 1; removed from Speaker panel per Step 4 |
+  | `contestability` | 4 / 31 / 76 | 1.65 | 1 / 11 / 99 | 1.88 | Varies |
+  | `typing` | 0 / 2 / 109 | 1.98 | 0 / 0 / 111 | 2.00 | Uniform on survivors (all 111 cleanly fit 5 types; C4 mushy t0017/t0032 resolved) |
+  | `decontextualisation`| 18 / 6 / 87 | 1.62 | 9 / 0 / 102 | 1.84 | Varies |
+  | `fidelity` | 3 / 1 / 107 | 1.94 | 3 / 0 / 108 | 1.95 | Varies |
+  | `granularity` | 0 / 0 / 111 | 2.00 | 0 / 3 / 108 | 1.97 | **Varies! t0016, t0255, t0389 all score 1 (< 2)** |
+- **One off-target metric named and gated (`off_target_drop_rate_pct`):**
+  | Axis | C5 Off-Target | C6 Off-Target | C7 Off-Target | Threshold (<25%) | Gate Status |
+  |---|---|---|---|---|---|
+  | `voice` | 20.0% | 2.9% | 2.9% | < 25.0% | PASSED |
+  | `target` | 40.0% | 0.0% | 0.0% | < 25.0% | PASSED |
+  | `propositionality` | 45.7% | 2.9% | 2.9% | < 25.0% | PASSED |
+  | `contestability` | 17.1% | 0.0% | 0.0% | < 25.0% | PASSED |
+  | `typing` | 51.4% | 2.9% | 2.9% | < 25.0% | PASSED |
+  | `decontextualisation`| 8.6% | 8.6% | 8.6% | < 25.0% | PASSED |
+  | `fidelity` | 11.4% | 31.4% | 31.4% | < 25.0% | **FAILED (regressed)** |
+  | `granularity` | 22.9% | 8.6% | 8.6% | < 25.0% | PASSED |
+- **Fidelity's contamination resolved:**
+  11 drops across 35 comparisons (31.4%). Contaminated axes: `decontextualisation`: 4, `voice`: 2, `target`: 1, `propositionality`: 1, `contestability`: 1, `typing`: 1, `granularity`: 1.
+  Pair breakdown: `fidelity_01` collapsed all 7 other axes to 0; `fidelity_02` dropped voice; `fidelity_03`, `fidelity_04`, `fidelity_05` dropped decontextualisation.
+  Root cause: Perturbations replaced claims with assertions about completely foreign topics (Tesla Optimus, CCP PR, inflation, Salesforce, academic science) on turns concerning California debt and railways. Under C6's stricter voice and decontextualisation rules, GLM-4 penalizes Voice ("not said by speaker") and Decontextualisation ("introduces concepts not in quote").
+- **Speaker panel cleaned:**
+  Target, Propositionality, and Typing removed from the Speaker panel. Active Speaker Panel retains Voice and Contestability; Extraction Panel retains Decontextualisation, Fidelity, and Granularity. All 5 reported axes show non-zero variance. Unvarying axes are documented in the Front-Half Pipeline Filter section with Step 4's 40-turn rejected distributions (Target: 25/6/9, Prop: 7/15/18) and candidate explanation.
+- **Falsification Confirmed:**
+  A constant scorer over the 111 candidates causes `generate_episode_axes_report` to refuse to render (`UniformDistributionError`).
+- **Gates:**
+  `pytest v2/` (98 passed), `ruff check v2/` (0 errors), `mypy v2/src/ v2/tests/` (Success: 31 source files).
 
-**Falsify.** After the re-score, **run the constant scorer over the 111** — not over the perturbation set — and confirm the episode report refuses to render. C6's falsification only ever met constructed pairs; **a report generator that will happily print eight means of 2.00 has not been tested against the failure it exists to prevent.**
-
-**Blast radius.** `v2/src/run_c6.py`, `v2/src/extract.py`, `v2/artifacts/extraction/` (new `c6_scored_axes_*`), `v2/artifacts/reports/`, `v2/tests/`. **No change to `design_claim_axes.md`, to `score_axes.md`'s calibrated content, to Pass 1, to the gold set, or to V1.**
+**Blast radius.** `v2/src/run_c7.py`, `v2/src/extract.py`, `v2/artifacts/extraction/c6_scored_axes_00251a80c868f535.json`, `v2/artifacts/reports/c7_claim_quality_report_00251a80c868f535.md`, `v2/tests/test_c7_scorer.py`. **No change to `design_claim_axes.md`, to `score_axes.md`'s calibrated content, to Pass 1, to the gold set, or to V1.**
 
 ---
 

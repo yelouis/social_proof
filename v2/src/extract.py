@@ -26,6 +26,10 @@ class UnparseableRateError(ValueError):
     """Raised when the rate of unparseable model generations exceeds the allowable threshold."""
 
 
+class UniformDistributionError(ValueError):
+    """Raised when an episode report contains an axis with zero variance / uniform distribution."""
+
+
 ROOT_DIR = Path(__file__).resolve().parent.parent
 REPO_ROOT = ROOT_DIR.parent
 DEFAULT_RUBRIC_PATH = ROOT_DIR / "docs" / "design_claim_rubric.md"
@@ -199,6 +203,17 @@ SPEAKER_PANEL_AXES: list[str] = [
     "target",
     "propositionality",
     "contestability",
+    "typing",
+]
+
+ACTIVE_SPEAKER_PANEL_AXES: list[str] = [
+    "voice",
+    "contestability",
+]
+
+FRONT_HALF_FILTER_AXES: list[str] = [
+    "target",
+    "propositionality",
     "typing",
 ]
 
@@ -377,6 +392,9 @@ def generate_episode_axes_report(
     episode_id: str = "00251a80c868f535",
     axes_path: Path = DEFAULT_AXES_PATH,
     prompt_path: Path = DEFAULT_PROMPT_SCORE_AXES_PATH,
+    speaker_panel_axes: list[str] | None = None,
+    extraction_panel_axes: list[str] | None = None,
+    enforce_non_zero_variance: bool = False,
 ) -> dict[str, Any]:
     """Generates the Episode Claim Quality Profile report across 8 axes (§4).
 
@@ -386,6 +404,8 @@ def generate_episode_axes_report(
     3. Every 0-score resolvable by turn id.
     4. Mechanical proxies reported beside model Decontextualisation, Granularity and Fidelity scores with overlap.
     5. Asserts scoring_model_id != model_id (independent scoring model requirement).
+    6. If enforce_non_zero_variance is True, refuses to render and raises UniformDistributionError
+       if any axis in the reported panels has zero variance (standing constraint §20).
     """
     if scoring_model_id == model_id:
         raise ValueError(
@@ -457,8 +477,20 @@ def generate_episode_axes_report(
     prompt_content_hash = hashlib.sha256(prompt_text.encode("utf-8")).hexdigest()
     prompt_version = f"{prompt_path.stem}:{prompt_content_hash[:12]}"
 
-    speaker_panel = {axis: axis_reports[axis] for axis in SPEAKER_PANEL_AXES}
-    extraction_panel = {axis: axis_reports[axis] for axis in EXTRACTION_PANEL_AXES}
+    sp_axes = speaker_panel_axes if speaker_panel_axes is not None else SPEAKER_PANEL_AXES
+    ex_axes = extraction_panel_axes if extraction_panel_axes is not None else EXTRACTION_PANEL_AXES
+
+    speaker_panel = {axis: axis_reports[axis] for axis in sp_axes}
+    extraction_panel = {axis: axis_reports[axis] for axis in ex_axes}
+
+    if enforce_non_zero_variance:
+        for ax, ax_data in list(speaker_panel.items()) + list(extraction_panel.items()):
+            if ax_data.get("has_zero_variance", False):
+                raise UniformDistributionError(
+                    f"Episode report refuses to render: axis '{ax}' has zero variance "
+                    f"(counts: {ax_data.get('counts')}, mean: {ax_data.get('mean'):.2f}). "
+                    f"Standing constraint (§20) forbids reporting an axis that cannot vary."
+                )
 
     report = {
         "episode_id": episode_id,
