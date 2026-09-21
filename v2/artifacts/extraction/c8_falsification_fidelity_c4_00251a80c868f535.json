@@ -1,0 +1,163 @@
+{
+  "model_id": "mlx-community/GLM-4-32B-0414-4bit",
+  "prompt_template": "v2/prompts/score_axes_c4_uncalibrated.md",
+  "total_pairs": 5,
+  "target_drops_count": 5,
+  "target_sensitivity_rate_pct": 100.0,
+  "off_target_drops_count": 0,
+  "off_target_comparisons_count": 35,
+  "off_target_drop_rate_pct": 0.0,
+  "results": [
+    {
+      "id": "fidelity_01",
+      "turn_id": "00251a80c868f535_t0181",
+      "prompt_template": "v2/prompts/score_axes_c4_uncalibrated.md",
+      "target_axis": "fidelity",
+      "orig_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "target_fell": true,
+      "off_target_drops_count": 0,
+      "off_target_drops": {},
+      "elapsed_seconds": 31.6
+    },
+    {
+      "id": "fidelity_02",
+      "turn_id": "00251a80c868f535_t0183",
+      "prompt_template": "v2/prompts/score_axes_c4_uncalibrated.md",
+      "target_axis": "fidelity",
+      "orig_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "target_fell": true,
+      "off_target_drops_count": 0,
+      "off_target_drops": {},
+      "elapsed_seconds": 28.6
+    },
+    {
+      "id": "fidelity_03",
+      "turn_id": "00251a80c868f535_t0185",
+      "prompt_template": "v2/prompts/score_axes_c4_uncalibrated.md",
+      "target_axis": "fidelity",
+      "orig_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "target_fell": true,
+      "off_target_drops_count": 0,
+      "off_target_drops": {},
+      "elapsed_seconds": 29.4
+    },
+    {
+      "id": "fidelity_04",
+      "turn_id": "00251a80c868f535_t0187",
+      "prompt_template": "v2/prompts/score_axes_c4_uncalibrated.md",
+      "target_axis": "fidelity",
+      "orig_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "target_fell": true,
+      "off_target_drops_count": 0,
+      "off_target_drops": {},
+      "elapsed_seconds": 29.3
+    },
+    {
+      "id": "fidelity_05",
+      "turn_id": "00251a80c868f535_t0192",
+      "prompt_template": "v2/prompts/score_axes_c4_uncalibrated.md",
+      "target_axis": "fidelity",
+      "orig_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "target_fell": true,
+      "off_target_drops_count": 0,
+      "off_target_drops": {},
+      "elapsed_seconds": 29.2
+    }
+  ],
+  "falsification_finding": "Under the uncalibrated C4 scorer, the rebuilt direction-inverting fidelity perturbations score with 5/5 target sensitivity and 0.0% off-target drops (0/35). Unlike topic swaps (which triggered C4's decontextualisation penalty on 4 of 5 pairs in C5), preserving topic, speaker, and entities isolates Fidelity even under the uncalibrated prompt."
+}

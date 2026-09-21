@@ -397,10 +397,10 @@
     "quote": "That would be, a cataclysmic to have to bail out something like California because the obligations on the unfunded pensions in the states are so significant and not to mention just the debts",
     "turn_text": "That would be, a cataclysmic to have to bail out something like California because the obligations on the unfunded pensions in the states are so significant and not to mention just the debts. I mean look California's got tens of billions of dollars it spent on this stupid f*** railway that goes nowhere where there's no f*** tracks and there's a couple of people to even stop that it'll be the easiest in the world. Like just think about the idiocy, like no one is saying we shouldn't do this. Why is no one saying we shouldn't do this?",
     "original_claim": "Bailing out California would be cataclysmic because the obligations on the unfunded pensions in the states are so significant, in addition to the debts.",
-    "perturbed_claim": "Tesla's Optimus robot will be the best selling product in history.",
+    "perturbed_claim": "Bailing out California would be fiscally manageable and straightforward because the state's unfunded pension obligations and debts are negligible.",
     "perturbed_quote": "That would be, a cataclysmic to have to bail out something like California because the obligations on the unfunded pensions in the states are so significant and not to mention just the debts",
     "perturbed_turn_text": "That would be, a cataclysmic to have to bail out something like California because the obligations on the unfunded pensions in the states are so significant and not to mention just the debts. I mean look California's got tens of billions of dollars it spent on this stupid f*** railway that goes nowhere where there's no f*** tracks and there's a couple of people to even stop that it'll be the easiest in the world. Like just think about the idiocy, like no one is saying we shouldn't do this. Why is no one saying we shouldn't do this?",
-    "perturbation_description": "Replaced claim with an assertion about an entirely different topic completely unsupported by quote."
+    "perturbation_description": "Inverts the core thesis: asserts that bailing out California would be manageable and obligations negligible, directly contradicting the quote."
   },
   {
     "id": "fidelity_02",
@@ -410,10 +410,10 @@
     "quote": "Especially if anybody who was in favor of a railway to nowhere should just be shamed out of exists for a train from San Francisco to Fresno that cost more than an airline ticket",
     "turn_text": "Dollars. Especially if anybody who was in favor of a railway to nowhere should just be shamed out of exists for a train from San Francisco to Fresno that cost more than an airline ticket.",
     "original_claim": "Anyone who was in favor of the railway to nowhere, specifically the train from San Francisco to Fresno that cost more than an airline ticket, should be shamed out of existence.",
-    "perturbed_claim": "The Chinese Communist Party is brilliant at public relations.",
+    "perturbed_claim": "Anyone who supported the high-speed rail from San Francisco to Fresno should be celebrated for delivering affordable transit that costs less than an airline ticket.",
     "perturbed_quote": "Especially if anybody who was in favor of a railway to nowhere should just be shamed out of exists for a train from San Francisco to Fresno that cost more than an airline ticket",
     "perturbed_turn_text": "Dollars. Especially if anybody who was in favor of a railway to nowhere should just be shamed out of exists for a train from San Francisco to Fresno that cost more than an airline ticket.",
-    "perturbation_description": "Replaced claim with an assertion about an entirely different topic completely unsupported by quote."
+    "perturbation_description": "Inverts the core evaluation: asserts that proponents should be celebrated and ticket costs are lower than airfare, directly contradicting the quote."
   },
   {
     "id": "fidelity_03",
@@ -423,10 +423,10 @@
     "quote": "private industry would see an opportunity and they would have built it",
     "turn_text": "It tells you everything you need to know private company built a bright line in Florida and they seem to figure out how to do it at a fraction of the price so like what are we even talking about here like private industry if this was a good idea would have built it. Yes, free burn, private industry would see an opportunity and they would have built it.",
     "original_claim": "Private industry would have built the project if there were a profitable opportunity to do so.",
-    "perturbed_claim": "Persistent inflation is caused by excess government money printing.",
+    "perturbed_claim": "Private industry routinely avoids building rail infrastructure even when clear commercial opportunities and profit margins exist.",
     "perturbed_quote": "private industry would see an opportunity and they would have built it",
     "perturbed_turn_text": "It tells you everything you need to know private company built a bright line in Florida and they seem to figure out how to do it at a fraction of the price so like what are we even talking about here like private industry if this was a good idea would have built it. Yes, free burn, private industry would see an opportunity and they would have built it.",
-    "perturbation_description": "Replaced claim with an assertion about an entirely different topic completely unsupported by quote."
+    "perturbation_description": "Inverts the causal thesis: asserts private industry avoids building even when opportunities exist, directly contradicting the quote."
   },
   {
     "id": "fidelity_04",
@@ -436,10 +436,10 @@
     "quote": "These government programs cause more harm than good",
     "turn_text": "These government programs cause more harm than good. When the government intervenes in underwriting student loans and gives everyone a loan, administrative costs one up by 6x and tuition skyrocketed, 8 % a year, compounding for 30 years, because the government said we'll underwrite any student loan. The same with housing and now no young people can afford a house. The same with health care, where they said we'll pay people to stay home and not work to take care of people and we won't. check on whether or not they're actually taking care of people and the cost of health care skyrocketed. You go across every one of these government programs and every one of them has the adverse effect of driving up costs and inflating everything.",
     "original_claim": "Government programs cause more harm than good",
-    "perturbed_claim": "Salesforce was meaningfully oversold in May.",
+    "perturbed_claim": "Federal government intervention in student loan and housing programs produces substantially more societal benefit than harm.",
     "perturbed_quote": "These government programs cause more harm than good",
     "perturbed_turn_text": "These government programs cause more harm than good. When the government intervenes in underwriting student loans and gives everyone a loan, administrative costs one up by 6x and tuition skyrocketed, 8 % a year, compounding for 30 years, because the government said we'll underwrite any student loan. The same with housing and now no young people can afford a house. The same with health care, where they said we'll pay people to stay home and not work to take care of people and we won't. check on whether or not they're actually taking care of people and the cost of health care skyrocketed. You go across every one of these government programs and every one of them has the adverse effect of driving up costs and inflating everything.",
-    "perturbation_description": "Replaced claim with an assertion about an entirely different topic completely unsupported by quote."
+    "perturbation_description": "Inverts the evaluative thesis: asserts government intervention produces more benefit than harm, directly contradicting the quote."
   },
   {
     "id": "fidelity_05",
@@ -449,10 +449,10 @@
     "quote": "this spending, this fraud is not acceptable and we need to send people in to go recapture that money",
     "turn_text": "And we need to have, to your point, about media, sacked. a hundred and surely sixty minutes whoever it is to just say, hey, this spending, this fraud is not acceptable and we need to send people in to go recapture that money. This is like we're burning money that we don't, the fraud is the layer one.",
     "original_claim": "The current spending and fraud are not acceptable and people need to be sent in to recapture that money.",
-    "perturbed_claim": "Much of academic science enforces conformity around mainstream theories.",
+    "perturbed_claim": "Current levels of government spending and associated fraud are an acceptable cost of doing business that does not warrant sending investigators to recapture funds.",
     "perturbed_quote": "this spending, this fraud is not acceptable and we need to send people in to go recapture that money",
     "perturbed_turn_text": "And we need to have, to your point, about media, sacked. a hundred and surely sixty minutes whoever it is to just say, hey, this spending, this fraud is not acceptable and we need to send people in to go recapture that money. This is like we're burning money that we don't, the fraud is the layer one.",
-    "perturbation_description": "Replaced claim with an assertion about an entirely different topic completely unsupported by quote."
+    "perturbation_description": "Inverts the normative thesis: asserts spending and fraud are acceptable and do not warrant recapture, directly contradicting the quote."
   },
   {
     "id": "granularity_01",
