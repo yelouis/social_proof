@@ -125,12 +125,13 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 7 | **C4** | Score every candidate on the eight axes, and report the episode | none | **DELIVERED, `(c)` honestly failed** (`7fe5c0f`). 111 candidates scored by GLM-4-32B, extractor and scorer recorded distinctly, both panels separate, no composite. **Three axes came back with zero variance and the commit says so** — which is what the item asked for. |
 | 8 | **C5** | Validate the scorer without human labels (**Issue 045 = B**) | C4 | **DELIVERED** (`5763ab9` red → `79678f5`). Floor holds: self-agreement 86.7% above cross-model 80.0%. Tier 3 names contestability the most ambiguous axis at 73.3%. **Tier 2 passed every axis — and that is the finding, because it was not enough.** |
 | 9 | **C6** | Four of the eight axes are not being read | none | **DELIVERED in part** (`df9f92f`). Contamination genuinely fixed on 7 of 8 axes — typing 51.4%→2.9%, propositionality 45.7%→2.9%, target 40%→0%. Granularity now scores 1 on all three natural compounds. **Step 4 is the best output:** Target and Propositionality discriminate 25/6/9 and 7/15/18 on rejected turns, so their 0/0/111 was survivor bias, not a broken axis. |
-| 10 | **C7** | The fix was demonstrated but never applied, and fidelity regressed | none | **DELIVERED, `(c)` honestly failed on fidelity**. All 111 candidates re-scored under calibrated prompt (`c6_scored_axes_00251a80c868f535.json`); Granularity moves off 0/0/111 to 0/3/108 (compounds `t0016`, `t0255`, `t0389` score 1). Unified off-target metric `off_target_drop_rate_pct`: 7 of 8 axes pass (< 25%), Fidelity regressed to 31.4% (11 drops / 35 comparisons across topic shifts) and is diagnosed. Unvarying axes (Target, Prop, Typing) removed from Speaker panel to Front-Half Filter with Step 4 / candidate distributions attached. Constant scorer over 111 candidates raises `UniformDistributionError`. |
-| 11 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
-| 12 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
-| 13 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
-| 14 | **B4** | Measure, and decide whether to go on | B3 | DELIVERED. Precision and recall reported; conclusion recorded in one sentence; Issue 036 filed in v2/docs/ongoing_errors.md. |
-| 15 | **B5** | A local page showing what was extracted, and what was not | B1 | DELIVERED. Rendered all 405 turns of E287 with side-by-side gold/model verdicts, gate distributions, and 33 disagreements. |
+| 10 | **C7** | The fix was demonstrated but never applied, and fidelity regressed | none | **DELIVERED in part** (`6460d21`). 111 re-scored (3,969s); granularity `0/0/111` → **`0/3/108`**. One metric named and gated, with **fidelity 31.4% printed as FAILED**. **And the diagnosis redirects the fix:** `fidelity_01` alone causes 7 of 11 off-target drops because the perturbation swaps in an unrelated topic — the instrument is at fault, not the scorer. |
+| 11 | **C8** | Three residues, and a report that answers a narrower question than the one asked | none | **NEXT.** Rebuild the fidelity perturbations so only fidelity can fall; publish the before/after table — **non-2 judgements fell 69 → 29, a 58% drop nobody measured** — and adjudicate the nine decontextualisation zeros calibration removed; and add the **405-turn funnel**, which costs no model time and is the episode-level signal the Speaker panel cannot see. |
+| 12 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
+| 13 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
+| 14 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
+| 15 | **B4** | Measure, and decide whether to go on | B3 | DELIVERED. Precision and recall reported; conclusion recorded in one sentence; Issue 036 filed in v2/docs/ongoing_errors.md. |
+| 16 | **B5** | A local page showing what was extracted, and what was not | B1 | DELIVERED. Rendered all 405 turns of E287 with side-by-side gold/model verdicts, gate distributions, and 33 disagreements. |
 
 **IDs are labels, not sequence numbers — follow the Order column.**
 
@@ -140,7 +141,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 
 ## 6. G0 — V2 has no gates, and five items landed without them · **DELIVERED**
 
-**Do this before B6.** A red gate outranks the queue (§22), and right now there is no gate at all to be red.
+**Do this before B6.** A red gate outranks the queue (§23), and right now there is no gate at all to be red.
 
 **User impact:** none directly. This is the item that makes every later "delivered" mean something.
 
@@ -199,7 +200,7 @@ v2/src/turns.py: Source file found twice under different module names:
 
 **Falsify.** Re-introduce one unused import and one `typing.List`; the block must go red naming both. Revert; record both.
 
-**Blast radius.** `v2/docs/agent_execution_guide.md` §3 and §22, `v2/src/*`, `v2/scripts/*`, `v2/tests/*`. **No behaviour changes** — if a fix alters behaviour, it is not a lint fix and belongs in its own commit.
+**Blast radius.** `v2/docs/agent_execution_guide.md` §3 and §23, `v2/src/*`, `v2/scripts/*`, `v2/tests/*`. **No behaviour changes** — if a fix alters behaviour, it is not a lint fix and belongs in its own commit.
 
 ---
 ## 7. C1 — Turn the rubric positive, and move every prompt into editable Markdown · *Issue 036 = C* · **DELIVERED** (`b37003e`, `a58d573`)
@@ -485,14 +486,14 @@ Three gaps. The first attempt closed two and **relocated** the third; the second
 **What it established, now the contract:**
 
 - **Provenance is read off the extractor instance that actually ran.** `model_id`, `runtime` and `quantisation` come from the object; `quantisation` is derived from the loaded model's own config (`config["quantization"]["bits"]`), not by matching a substring. `rubric_commit` is computed at run time by `get_rubric_commit()` from `git log -1 --format=%h -- <rubric path>`; `prompt_version` is a SHA-256 of the rubric text actually sent.
-- **Gate failure rates are shares of all turns** — promoted to a standing constraint (§21).
+- **Gate failure rates are shares of all turns** — promoted to a standing constraint (§22).
 - **A running server displays the HEAD it started with**, so a stale process is visible rather than merely plausible.
 
 **Verified independently, not from the commit body.** A real `ModelExtractor()` load reports `quantisation: 4-bit` derived from config. A real single-turn run records `rubric_commit: 9882bc3` — the commit that actually touched the rubric; the previous `23da31c` is the B1 commit and never did. The gold fixture's 405 verdicts, 33 claims and 372 exclusions are unchanged across that correction. Both artifacts' stored `gate_failure_rates_*` were recomputed: gold `81.18 → 74.57`, falsification model `100.0 → 2.96`. And **three turns run twice produced identical verdicts**, so extraction is reproducible under the pinned greedy sampler (parameter 037).
 
 `test_b5.py`'s four literal assertions — trap 81, a test that pinned the defect in place — were rewritten to assert against `model_provenance`, rather than deleted or reverted around.
 
-**The method that worked, and why it is now §23's rule.** The first attempt satisfied a prose assertion by moving the constants one file upstream. The second was handed `v2/tests/test_b7_provenance.py`: committed red, `xfail(strict=True)`, with `warn_unused_ignores` in `mypy.ini`. It made the tests pass with the file otherwise unmodified — `git diff` shows only the marker and the `type: ignore` deleted — and **both tripwires fired as designed**, the suite going from `39 passed, 6 xfailed` to `45 passed`.
+**The method that worked, and why it is now §24's rule.** The first attempt satisfied a prose assertion by moving the constants one file upstream. The second was handed `v2/tests/test_b7_provenance.py`: committed red, `xfail(strict=True)`, with `warn_unused_ignores` in `mypy.ini`. It made the tests pass with the file otherwise unmodified — `git diff` shows only the marker and the `type: ignore` deleted — and **both tripwires fired as designed**, the suite going from `39 passed, 6 xfailed` to `45 passed`.
 
 **Residue carried to B6 (§13)**, which is the item it breaks: the recorded `decoding` block claims a seed that is wired to nothing.
 
@@ -506,7 +507,7 @@ Three gaps. The first attempt closed two and **relocated** the third; the second
 
 **Both test repairs are real.** `test_c1_extraction_artifact_metrics` dropped its 13 equality snapshots and kept the floors (`recall > 50.0`, `precision > 10.0`), so the re-run that produced these numbers did not read as a regression. `test_job2_gold_exclusions_survive` now shells `git show 9882bc3:v2/docs/design_claim_rubric.md` and asserts §2 is byte-identical — it reads the rubric, which the version it replaced never did.
 
-**Now a standing constraint (§21):** an emitted record must carry the field it exists to carry, and the rejection rate is published as a rate over all turns.
+**Now a standing constraint (§22):** an emitted record must carry the field it exists to carry, and the rejection rate is published as a rate over all turns.
 
 ---
 
@@ -576,91 +577,85 @@ Tier 2 passed every axis on target sensitivity (≥4 of 5 pairs). **And that is 
 
 ---
 
-## 20. C7 — The fix was demonstrated but never applied, and fidelity regressed
+## 20. C7 — The fix was demonstrated but never applied, and fidelity regressed · **DELIVERED in part** (`6460d21`)
 
-**Blocked on nothing.** Everything below is measurable from artifacts already on disk.
+**The re-score happened and it worked.** 111 candidates, 3,969s, GLM-4-32B. Granularity moved `0/0/111` → **`0/3/108`** — the three natural compounds now score 1, which is what C6 calibrated for and never applied. Every remaining axis varies.
 
-**User impact:** the episode report Louis reads still carries C4's pre-fix numbers. It shows Granularity `0 / 0 / 111` for claims the calibrated scorer now rates 1, and three axes with a mean of 2.00.
+**One metric, named and gated, with the failure printed.** The report carries a single `off_target_drop_rate_pct` column across C5, C6 and C7 and marks **fidelity `31.4%` — FAILED (regressed)**. After trap 95, that is the right delivery.
 
-**Contract:** `v2/src/run_c6.py` · `v2/src/extract.py` · `v2/prompts/score_axes.md` · `v2/artifacts/extraction/c4_scored_axes_00251a80c868f535.json` · `v2/artifacts/reports/`.
+**And the fidelity diagnosis redirects the fix.** `fidelity_01` alone causes **7 of the 11** off-target drops: the perturbation replaces the claim with a statement about a *wholly different topic*, so under C6's stricter rules the model correctly drops Voice (*"not said by speaker"*) and Decontextualisation (*"introduces concepts not in the quote"*) as well. **Fidelity's regression is a perturbation-design artifact, not a scorer defect** — the instrument is at fault, which is the opposite of what C7's `(c)` assumed and a better finding than passing would have been.
 
-### Gap 1 — the 111 candidates were never re-scored
-
-`c4_scored_axes_00251a80c868f535.json` has not been touched since C4 (`7fe5c0f`); C6's commit does not list it. **The calibrated prompt was validated on 40 perturbation pairs and never run over the product.** So:
-
-- the report still shows **granularity 0 / 0 / 111**, while the same scorer gives `t0016`, `t0255` and `t0389` a 1;
-- the `(c)` clause *"every axis shows non-zero variance across the 111 candidates"* was never testable;
-- **three axes are reported with a mean of 2.00**, which §20's standing constraint forbids outright.
-
-**Step 1 — re-score all 111 with the calibrated prompt** and write `c6_scored_axes_<episode>.json`. Budget ~50 minutes; C4's run took 3,106s.
-
-> **Verify:** report the 0/1/2 distribution per axis **before and after**, side by side. **Granularity must no longer be 0/0/111** — the three known compounds alone move it. If any axis is still uniform after the re-score, name it and say whether Step 3 explains it.
-
-### Gap 2 — fidelity regressed, and the regression is reported as an improvement
-
-C6 introduced a **second** off-target metric. `off_target_drop_rate_pct` is what C5 measured and what this item's threshold was written against: how often perturbing axis *X* drags *other* axes down. `victim_off_target_drop_rate_pct` is the converse — how often *X* falls when something else is perturbed. **The commit reports the victim figure against the `< 25%` threshold.**
-
-On the metric C5 used, **fidelity went 11.4% → 31.4%** — nearly threefold worse and the only axis above the threshold. The commit renders it as *"Fidelity: 11.4% → 14.3%"*, which compares C5's `off_target` against C6's `victim`. **Both numbers are in the artifact; nothing was hidden. But the one axis that regressed is the one reported on the other scale.**
-
-**Step 2 — pick one metric, state it, and gate on it.** Keep both in the artifact if both are useful; **the threshold applies to `off_target_drop_rate_pct`**, because that is the quantity C6 was filed to reduce and the only one comparable to C5.
-
-> **Verify:** a single table, one metric, C5 and C6 and C7 side by side for all eight axes. **Any axis over 25% fails the item** — including fidelity at 31.4% today.
-
-**Step 3 — diagnose why fidelity now bleeds into other axes.** It is the one axis scored against the *quote* rather than the claim, and the one the guide requires be judged by a different model. A plausible cause is that the calibrated prompt made fidelity dominant in the generation; **measure before assuming.** Report which axes fidelity drags down and in which pairs.
-
-> **Verify:** name the axes fidelity contaminates and the count per axis. **"Fidelity is noisy" is not a diagnosis** — the pairs are in the artifact and they resolve.
-
-### Gap 3 — Step 4's conclusion was reached and then not applied
-
-C6 concluded that Target and Propositionality *"belong in the front-half pipeline filter, not as an episode Speaker panel metric."* **They are still in the Speaker panel**, annotated `Pre-filtered by Pass 1` and carrying a mean of 2.00.
-
-**Step 4 — remove both from the Speaker panel** and record the Step 4 distribution beside them as the reason. The `(c)` sanctioned exactly this: *non-zero variance, or removed with the Step 4 measurement attached.*
-
-> **Verify:** no axis in the episode report has a uniform distribution. **The report is the product; an axis that cannot move is not a measurement of the episode** (§20).
-
-### Validation
-
-- **(c)** — **the 111 candidates re-scored with the calibrated prompt, every remaining axis showing non-zero variance across them, and `off_target_drop_rate_pct` below 25% for all eight axes on one stated metric — fidelity included.**
-  *Status:* **Honestly failed on Fidelity off-target threshold (31.4% > 25.0%).** Candidate re-score complete, Granularity moved off 0/0/111 to 0/3/108 (t0016, t0255, t0389 score 1), every remaining panel axis shows non-zero variance across the 111 candidates, and Fidelity regression is diagnosed.
-- **Before/After distributions per axis:**
-  | Axis | C4 Dist [0 / 1 / 2] | C4 Mean | C7 Dist [0 / 1 / 2] | C7 Mean | Status |
-  |---|---|---|---|---|---|
-  | `voice` | 3 / 1 / 107 | 1.94 | 1 / 0 / 110 | 1.98 | Varies (t0333 scored 0) |
-  | `target` | 0 / 0 / 111 | 2.00 | 1 / 0 / 110 | 1.98 | Pre-filtered by Pass 1; removed from Speaker panel per Step 4 |
-  | `propositionality` | 0 / 0 / 111 | 2.00 | 0 / 0 / 111 | 2.00 | Pre-filtered by Pass 1; removed from Speaker panel per Step 4 |
-  | `contestability` | 4 / 31 / 76 | 1.65 | 1 / 11 / 99 | 1.88 | Varies |
-  | `typing` | 0 / 2 / 109 | 1.98 | 0 / 0 / 111 | 2.00 | Uniform on survivors (all 111 cleanly fit 5 types; C4 mushy t0017/t0032 resolved) |
-  | `decontextualisation`| 18 / 6 / 87 | 1.62 | 9 / 0 / 102 | 1.84 | Varies |
-  | `fidelity` | 3 / 1 / 107 | 1.94 | 3 / 0 / 108 | 1.95 | Varies |
-  | `granularity` | 0 / 0 / 111 | 2.00 | 0 / 3 / 108 | 1.97 | **Varies! t0016, t0255, t0389 all score 1 (< 2)** |
-- **One off-target metric named and gated (`off_target_drop_rate_pct`):**
-  | Axis | C5 Off-Target | C6 Off-Target | C7 Off-Target | Threshold (<25%) | Gate Status |
-  |---|---|---|---|---|---|
-  | `voice` | 20.0% | 2.9% | 2.9% | < 25.0% | PASSED |
-  | `target` | 40.0% | 0.0% | 0.0% | < 25.0% | PASSED |
-  | `propositionality` | 45.7% | 2.9% | 2.9% | < 25.0% | PASSED |
-  | `contestability` | 17.1% | 0.0% | 0.0% | < 25.0% | PASSED |
-  | `typing` | 51.4% | 2.9% | 2.9% | < 25.0% | PASSED |
-  | `decontextualisation`| 8.6% | 8.6% | 8.6% | < 25.0% | PASSED |
-  | `fidelity` | 11.4% | 31.4% | 31.4% | < 25.0% | **FAILED (regressed)** |
-  | `granularity` | 22.9% | 8.6% | 8.6% | < 25.0% | PASSED |
-- **Fidelity's contamination resolved:**
-  11 drops across 35 comparisons (31.4%). Contaminated axes: `decontextualisation`: 4, `voice`: 2, `target`: 1, `propositionality`: 1, `contestability`: 1, `typing`: 1, `granularity`: 1.
-  Pair breakdown: `fidelity_01` collapsed all 7 other axes to 0; `fidelity_02` dropped voice; `fidelity_03`, `fidelity_04`, `fidelity_05` dropped decontextualisation.
-  Root cause: Perturbations replaced claims with assertions about completely foreign topics (Tesla Optimus, CCP PR, inflation, Salesforce, academic science) on turns concerning California debt and railways. Under C6's stricter voice and decontextualisation rules, GLM-4 penalizes Voice ("not said by speaker") and Decontextualisation ("introduces concepts not in quote").
-- **Speaker panel cleaned:**
-  Target, Propositionality, and Typing removed from the Speaker panel. Active Speaker Panel retains Voice and Contestability; Extraction Panel retains Decontextualisation, Fidelity, and Granularity. All 5 reported axes show non-zero variance. Unvarying axes are documented in the Front-Half Pipeline Filter section with Step 4's 40-turn rejected distributions (Target: 25/6/9, Prop: 7/15/18) and candidate explanation.
-- **Falsification Confirmed:**
-  A constant scorer over the 111 candidates causes `generate_episode_axes_report` to refuse to render (`UniformDistributionError`).
-- **Gates:**
-  `pytest v2/` (98 passed), `ruff check v2/` (0 errors), `mypy v2/src/ v2/tests/` (Success: 31 source files).
-
-**Blast radius.** `v2/src/run_c7.py`, `v2/src/extract.py`, `v2/artifacts/extraction/c6_scored_axes_00251a80c868f535.json`, `v2/artifacts/reports/c7_claim_quality_report_00251a80c868f535.md`, `v2/tests/test_c7_scorer.py`. **No change to `design_claim_axes.md`, to `score_axes.md`'s calibrated content, to Pass 1, to the gold set, or to V1.**
+Target, Propositionality and Typing are removed from the Speaker panel and recorded in a front-half filter section with Step 4's numbers attached.
 
 ---
 
-## 21. Standing constraints, carried from V1
+## 21. C8 — Three residues, and an episode report that answers a narrower question than the one asked
 
+**Blocked on nothing.** All four gaps are measurable from artifacts on disk; only Gap 1 needs model time.
+
+**User impact:** Louis asked *"per episode, how good are the claims being made?"* The Speaker panel now has two axes, and one of them scores 2 on 110 of 111 claims.
+
+**Contract:** `v2/fixtures/axes/perturbations.json` · `v2/src/run_c6.py` · `v2/artifacts/reports/` · `v2/artifacts/extraction/b6_extraction_mlx-community_gemma-4-31b-it-4bit_*.json`.
+
+### Gap 1 — the fidelity perturbation breaks more than fidelity
+
+C7 diagnosed it correctly and did not fix it. **A perturbation that swaps in an unrelated topic is not a single-axis perturbation**, and the scorer is right to notice.
+
+**Rebuild the five fidelity pairs so only fidelity can fall.** Keep the subject, the topic and the speaker; change what the quote *supports*: invert a direction (*"oversold"* → *"overbought"*), alter a quantity, or add specificity the quote does not carry — which is the axes doc's own Fidelity level-1 language.
+
+> **Verify:** re-run tier 2 and report `off_target_drop_rate_pct` for fidelity. **Target sensitivity must stay ≥4 of 5 while off-target falls below 25%.** If sensitivity collapses when the perturbation stops being obvious, **say so** — that would mean fidelity was only ever detectable when everything else broke too, which is a finding about the axis, not the fixture.
+
+### Gap 2 — the scorer got substantially more lenient and nobody measured it
+
+Non-2 judgements across the 111 fell from **69 of 888 (7.8%) to 29 of 888 (3.3%)** — the calibrated scorer is **58% less willing to give a low score**. C7's `(c)` asked for before/after distributions side by side; the report prints the after only, and mentions C4 once, for typing.
+
+**This is not automatically wrong** — C6's calibration was meant to stop axes bleeding into one another, and less bleeding means fewer spurious zeros. **But nobody has checked whether it stopped bleeding or simply stopped scoring.**
+
+The one case with an established right answer says the second. **`t0072` — *"This is the most profitable core business quarter of any public company ever"* — carries an unresolved demonstrative.** C4's cross-check already resolved it: *"proxy is right, model is wrong"*. **It is still scored 2.** And C7's nine decontextualisation zeros are a **strict subset** of C4's eighteen: calibration removed nine and found none.
+
+> **Verify:** publish the before/after 0/1/2 table for all eight axes, and the aggregate non-2 count. **Then read the nine claims calibration stopped flagging** and say, per claim, whether C4 or C7 was right. Nine is small enough to read.
+
+> **Verify:** `t0072` scores below 2 on decontextualisation, or the item states why the axes doc's level-0 anchor — *"unresolved subject or object"* — does not apply to a bare demonstrative. **One of those two is true and the item has to pick.**
+
+### Gap 3 — the episode report answers a narrower question than the one asked
+
+The Speaker panel is now **Voice** (`1/0/110`, mean 1.98) and **Contestability** (`1/11/99`). Voice is saturated. **So "how good are the claims in this episode?" currently reduces to "how contestable are they?"**
+
+That is not a bug in the axes — it is C6's survivor-bias finding generalising. **Pass 1 already enforces voice, target and propositionality, so among the claims that reach scoring those questions are settled.** The quality signal Pass 1 absorbs never reaches the panel.
+
+**Step — add an episode funnel over all 405 turns, which costs nothing.** Every turn already carries a Pass-1 label in `b6_extraction_mlx-community_gemma-4-31b-it-4bit_*.json`:
+
+| outcome | turns | share |
+|---|---|---|
+| claim emitted | 111 | **27.4%** |
+| gate 1 — not the speaker's own assertion | 174 | **43.0%** |
+| gate 2 — about the show, not the world | 37 | 9.1% |
+| gate 3 — not contestable | 4 | 1.0% |
+| gate 4 — not standalone | 79 | 19.5% |
+
+**That is an episode-level quality measure and it requires no model time.** *"43% of this episode was narration, reported speech or questions"* speaks directly to how good the claims being made were — and it is exactly the variation the Speaker panel cannot see.
+
+> **Verify:** the funnel sums to 405 and its claim count matches the panel's 111. **Report it above the per-claim panels**, labelled as covering the whole episode rather than the survivors.
+
+**Do not score all 405 turns on all eight axes inside this item.** It is roughly four hours per episode and the funnel answers the question for free. **If the funnel proves insufficient once Louis has seen it, that is the moment to file the expensive option** — with evidence rather than in the abstract.
+
+### Validation
+
+- **(c)** — **fidelity's `off_target_drop_rate_pct` below 25% with target sensitivity ≥4 of 5 under rebuilt single-axis perturbations; the before/after 0/1/2 table published for all eight axes with the nine dropped decontextualisation zeros adjudicated one by one; and the 405-turn funnel reported above the panels, summing to 405.** *C7's fidelity failure was the instrument, not the scorer — fixing the fixture is the only way to find out what fidelity actually does. And a calibration that removes nine zeros and finds none has not been shown to be more accurate, only quieter.*
+- `t0072` resolved: scored below 2, or the anchor explained.
+- Aggregate non-2 count reported for C4 and C7.
+- Funnel labelled as episode-wide, panels as survivor-only.
+- `ruff`, `mypy`, `pytest` clean.
+
+**Falsify.** Re-run the rebuilt fidelity perturbations through **the C4 scorer** — the one before calibration. **If it also scores them cleanly, the perturbation rebuild has made the axis trivially easy** rather than correctly isolated, and the 25% will have been bought rather than earned.
+
+**Blast radius.** `v2/fixtures/axes/perturbations.json`, `v2/src/run_c6.py`, `v2/artifacts/reports/`, `v2/tests/`. **No re-scoring of the 111 inside this item** unless Gap 2's adjudication shows the scores are wrong — in which case say so and file it. **No change to `design_claim_axes.md`, Pass 1, the gold set, or V1.**
+
+---
+
+## 22. Standing constraints, carried from V1
+
+- **A filter upstream of a metric absorbs the variation the metric is meant to show.** Pass 1 enforces voice, target and propositionality, so among the claims that reach scoring those axes cannot move — the Speaker panel is left measuring contestability alone. **Report the funnel over everything, not only the profile over the survivors**; all 405 turns already carry a Pass-1 label at no cost.
 - **A fix validated on constructed cases is not delivered until it has run over the corpus the product renders.** C6 calibrated the scorer against 40 perturbation pairs and never re-scored the 111 candidates, so the episode report still shows the numbers the fix was built to change.
 - **An axis that cannot vary is not a measurement, and a mean of 2.00 must never be reported as one.** Three of the eight came back identical on all 111 claims. **Report the distribution, not the mean**, and treat zero variance as a defect to explain rather than a score.
 - **A perturbation set built only from damage you invented tests only the damage you imagined.** Granularity detects two unrelated claims joined by "and" in 5 of 5 pairs and scores 2 on every naturally compound claim in the episode. **Seed perturbation sets from real failures once you have them.**
@@ -687,7 +682,7 @@ C6 concluded that Target and Propositionality *"belong in the front-half pipelin
 
 ---
 
-## 22. Traps (carried from V1 §6)
+## 23. Traps (carried from V1 §6)
 
 Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writing in their layer. The ones that have already bitten:
 
@@ -715,14 +710,14 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 38. **A verdict computed from the evidence it gates is not a verdict.** E1 replaced `sufficiency.get("passed", True)` with `passed = any_scored` — so "did sufficiency pass?" became "did anything get scored?", and the check that asks *"if sufficiency failed, is any score present?"* can never find one. **A guard's input must be independent of its subject.** When a fix removes a default, check what replaced it: the same inertness survives a rewrite easily.
 39. **A uniqueness bug hides behind a coverage check.** `verify_role_coverage` asks whether every utterance *resolves to* a role and passes over a `source_roles` table where every row is duplicated. Resolution and uniqueness are different questions, and only the first was asked — the same error shape as trap 28 (*"is this citation real?"* vs *"does it support this claim?"*).
 77. **A test that asserts an issue is still open fails when the process works.** `test_ongoing_errors_issue_036_filed_correctly` asserted that Issue 036 was present with a blank selection line; it went red the moment Louis decided. **Assert the durable fact — that the issue is tracked, open or recorded — not the transient one.** The same test also asserted no line began "Your selection: C", which a test cannot distinguish from the user's own answer and so was never sound.
-74. **A pasted artefact is only better than a count if somebody resolves it.** X4 pasted forty claim ids with quotes and verdicts, exactly as its `(c)` required, and none of the forty exists. The convention that was supposed to make judgement checkable made it *look* checkable. **When an assertion cites rows, cite primary keys and make a script resolve them** (§21) — and note that the same commit's aggregate counts were all exactly correct, so "the numbers are right" is not evidence the sample is.
+74. **A pasted artefact is only better than a count if somebody resolves it.** X4 pasted forty claim ids with quotes and verdicts, exactly as its `(c)` required, and none of the forty exists. The convention that was supposed to make judgement checkable made it *look* checkable. **When an assertion cites rows, cite primary keys and make a script resolve them** (§22) — and note that the same commit's aggregate counts were all exactly correct, so "the numbers are right" is not evidence the sample is.
 75. **Aggregate accuracy and sample accuracy are independent.** Every count in that commit matched the database to the row; the qualitative sample was not drawn from it. **Check them separately** — a commit that gets the hard numbers right earns no credit for the soft ones.
 76. **Five attempts at the same fix in different clothes is a signal about the approach, not the wording.** W0/W2 → D1 → D6 → X2 → X4 each removed one failure and produced another, and the corpus fell from 3,669 claims to 401. **When the third iteration of anything lands, stop and ask what is being assumed** — here, that the format was the limiting factor, which nobody had measured (Issue 035).
 71. **A format that must emit something will invent what it needs.** D6's form produced propositions nobody could take a position on; X2's format produces positions nobody took, and almost always `FOR`, because the binary has no null. **Every extraction format needs a branch that returns nothing**, and it has to be reachable — "a claim it cannot phrase that way is not emitted" is not a branch if the phrasing always succeeds.
 72. **"Not zero" is as weak a floor as zero.** D8's (c) required the count of opposing-stance propositions to be reported and said a zero would mean the self-join had nothing to match. It came back **one**, which satisfied the letter while the singleton rate went to 99.5%. **State floors as rates over the table** — the same correction Parameter 033 made to "no source contributes zero claims" (trap 61), repeated one layer up by the person who wrote trap 61.
 73. **Report the cost of a fix, not only its benefit.** D8 drove frame-contradicted merges to zero and did not report that it did so by merging almost nothing. Both numbers existed and one was asked for. **When a threshold trades two quantities against each other, the item must require both at every candidate value** — a single-sided report makes a corner solution look like a win.
 69. **Storing the judgement turns the next check into code.** Three fabrications needed a careful read of quotes to spot. The fourth is a two-line diff of `position_frame`, because X2 persisted the sentence the model wrote instead of only its conclusion. **When a step depends on a judgement, store the artefact the judgement was made from** — the next person gets a query instead of an opinion.
-70. **A parameter measured on a distribution that a later item replaces is stale on the day that item lands.** `T_dedup = 0.84` was measured over v1.7 propositions and merged *"60 to 80 percent growth"* with *"10x growth for ever"* on v1.8 output. X2 correctly refused to retune it in the same commit; **the cost of that discipline is a follow-up item, and it must actually be filed** (§23).
+70. **A parameter measured on a distribution that a later item replaces is stale on the day that item lands.** `T_dedup = 0.84` was measured over v1.7 propositions and merged *"60 to 80 percent growth"* with *"10x growth for ever"* on v1.8 output. X2 correctly refused to retune it in the same commit; **the cost of that discipline is a follow-up item, and it must actually be filed** (§24).
 78. **An unused variable can be the answer, not the leftover.** G0's `F841` sweep discarded `total_model_exclusions = sum(model_gate_counts.values())` as dead; it was the correct denominator for the column rendered beside it, computed and never applied. Three of that sweep's four discards were genuinely dead, which is what made the fourth easy to wave through. **Audit every `F841` against what the surrounding code divides by, returns or renders — an unused result is a dropped one until you show otherwise.**
 79. **A dev server that walks to a free port lets a stale process answer the documented URL.** `serve_review.py` auto-increments 8787→8807, so a forgotten instance kept serving pre-commit output on 8788 while the new one moved silently to 8789 — HTTP 200, a plausible page, two commits out of date. **Stamp the HEAD hash and artifact mtimes into anything you will later cite as "I looked at it"**, and run `lsof -nP -iTCP:<port> -sTCP:LISTEN` before believing a page.
 80. **An assertion that tests the read path is satisfied by moving the constant upstream.** B7's `(c)` required that editing an extraction artifact changed what the page rendered. It did — because the constants had been relocated out of the renderer and into the writer, where they are stamped into every artifact unconditionally. The page then reported a constant correctly. **When the defect is "this value is not measured", the assertion has to name the point of measurement, not the point of display**; a test that never imports the function which writes the value cannot see the bug. Written by the same person who wrote trap 17, about the same mistake one layer along.
@@ -741,6 +736,8 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 93. **A validation that gates on the flattering half of its own output will pass.** C5's tier 2 reported off-target drops exactly as specified and set `all_axes_pass` from target sensitivity alone, so four unread axes passed. **If you require a number to be reported, require it to be gated too** — a threshold nobody set is a number nobody used.
 94. **A key-lookup mistake reads as a defect, and the guide will send someone to fix what already works.** I reported `reasons` empty on 888 of 888 judgements; they were present all along under `{axis}_reason` while I queried `{axis}`. C6's Step 1 was a non-task built on my error. **Before filing an absence as a finding, print the keys** — a zero from the wrong key looks exactly like a zero from missing data.
 95. **A second metric introduced alongside the first lets the threshold move without anyone deciding to move it.** C6 added `victim_off_target_drop_rate_pct` beside the `off_target_drop_rate_pct` the threshold was written against, and reported the new one against the old bar. Fidelity's 11.4% → 31.4% regression rendered as 11.4% → 14.3%. **Both numbers were in the artifact and nothing was concealed** — which is the point: **name the metric a threshold gates, in the same sentence as the threshold**, or the comparison silently changes shape.
+96. **A calibration that removes low scores and finds none has not been shown to be more accurate, only quieter.** C6's calibration cut non-2 judgements across the 111 from 69 to 29, and C7's decontextualisation zeros are a strict subset of C4's — nine removed, none added. The one case with an established right answer, `t0072`'s unresolved demonstrative, is still missed by both. **When a fix reduces a detector's firing rate, adjudicate what it stopped firing on** before calling the rate an improvement.
+97. **A perturbation can be so destructive that the scorer is right to fail every axis.** Fidelity's 31.4% off-target came from replacing a claim with an unrelated topic, which legitimately breaks Voice and Decontextualisation too — one pair caused 7 of 11 drops. **A single-axis perturbation has to leave the other axes true**, or the contamination it measures is the fixture's, not the model's.
 66. **An item whose effect is to publish must be checked against what it will publish.** D7 was told to make every accepted candidate produce a tension row, and did — publishing six findings that the same guide, two sections below, documented as false. The spec was followed exactly. **Before running an item that writes user-visible output, read what is currently in its input.**
 67. **A judgement gate is scored generously unless the judgement is written down.** Three times now a gate has been recorded as met while an independent reading disagreed — six false pairs "hand-read and verified", a failed (c) recorded verified, and a position test reported at 18/20 that a seeded redraw scores 9–13/20. **Require the artefact, not the count**: paste the two sentences, quote the pair, show the working. A number is not checkable; a sentence is.
 68. **A repair loop that shrinks its subject on every pass is not converging.** Three extraction-form passes took the corpus from 3,669 claims to 1,027 and the candidate set from 0 to 6 to 0. **Track the trajectory across passes, not the delta within one** — each pass improved its own metric and the sequence went nowhere.
@@ -774,7 +771,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 23. Validation standard (carried from V1 §8)
+## 24. Validation standard (carried from V1 §8)
 
 **This section is the difference between an item that lands and one that comes back.** Every rule below was paid for.
 
@@ -802,6 +799,8 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 **A guard that has never failed has not been tested, and a guard that fires in only one direction has not been shown to discriminate.** Count corrections and rejections by direction. An *n*:0 ratio is a finding.
 
+**Allocate a new number by scanning every section of the tracking doc, not just the one you are writing in.** Decisions and parameters share one number space, and two writers have now collided four times — 044, 045, 056 and 060 were each issued twice. **Grep the whole file for the number before using it.**
+
 **Record what a parameter was measured over.** `T_dedup = 0.86` cites similarities between strings that three later items removed from the database. A threshold outlives its distribution and nothing notices.
 
 **A stage not named in the instruction does not run.** "Re-ingest" is not "re-extract"; "fix the validator" is not "re-score the rows it already scored". If your item exists to feed a later stage, name that stage's re-run as a step and assert a property of *its* input.
@@ -821,7 +820,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 
 ---
 
-## 24. Invariants — do NOT change (carried from V1 §14)
+## 25. Invariants — do NOT change (carried from V1 §14)
 
 **I1** first-hand only · **I2** news as index, never evidence · **I3** nothing renders without an anchor · **I4** no external ground truth · **I5** sufficiency gate · **I6** reasoned update is a positive · **I7** own assertions only · **I8** writes through the worker · **I9** quotes `grep -F` back · **I10** no biometric identification.
 
@@ -842,7 +841,7 @@ Full invariant definitions (carried from `v1/docs/master_implementation_plan.md`
 
 ---
 
-## 25. Deliberately not built — do not re-propose (carried from V1)
+## 26. Deliberately not built — do not re-propose (carried from V1)
 
 Each of these was considered and rejected for a stated reason in `v1/docs/master_implementation_plan.md` §15. Re-proposing one costs a cycle.
 
@@ -861,7 +860,7 @@ Each of these was considered and rejected for a stated reason. Re-proposing one 
 
 ---
 
-## 26. Evidence integrity and V1 reference contracts
+## 27. Evidence integrity and V1 reference contracts
 
 The integrity contract survives any rewrite of extraction:
 - **E1–E5 Operational Rules:** Every rendered claim carries a verbatim quote, a date, and a resolvable source locator (E1). Every quoted string `grep -F` matches stored source text (E2). Every quote supports the proposition attached to it (E2b). Nothing derived from page context ever persists (E3). Below sufficiency gates, scores are null, never computed-and-hidden (E4). Precondition failures quarantine tensions, never rendered (E5).
