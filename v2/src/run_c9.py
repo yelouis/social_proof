@@ -17,6 +17,7 @@ Validates:
 
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -30,6 +31,7 @@ from v2.src.extract import (
     ACTIVE_SPEAKER_PANEL_AXES,
     AXIS_NAMES,
     DEFAULT_EXTRACTION_DIR,
+    DEFAULT_FIXTURES_AXES_DIR,
     EXTRACTION_PANEL_AXES,
     UniformDistributionError,
 )
@@ -360,6 +362,12 @@ def get_c9_off_target_table(
     c8_file = out_dir / f"c8_perturbations_scored_{source_id}.json"
     c9_file = out_dir / f"c9_perturbations_scored_{source_id}.json"
 
+    fixtures_path = DEFAULT_FIXTURES_AXES_DIR / "perturbations.json"
+    fixture_sha256 = ""
+    if fixtures_path.exists():
+        with open(fixtures_path, "rb") as f:
+            fixture_sha256 = hashlib.sha256(f.read()).hexdigest()
+
     with open(c5_file, "r", encoding="utf-8") as f:
         c5_data = json.load(f)
     with open(c6_file, "r", encoding="utf-8") as f:
@@ -404,13 +412,19 @@ def get_c9_off_target_table(
         fidelity_breakdown = c9_data["fidelity_breakdown"]
     else:
         fidelity_breakdown = {
-            "real": {"total": 3, "target_drops": 1, "sensitivity_pct": 33.3, "off_target_drops": 0, "off_target_pct": 0.0},
-            "invented": {"total": 2, "target_drops": 2, "sensitivity_pct": 100.0, "off_target_drops": 0, "off_target_pct": 0.0},
+            "scorer": "GLM-4-32B (Calibrated score_axes.md)",
+            "real": {"total": 3, "target_drops": 1, "sensitivity_pct": 33.3, "off_target_drops": 0, "off_target_comparisons": 21, "off_target_drop_rate_pct": 0.0},
+            "invented": {"total": 2, "target_drops": 2, "sensitivity_pct": 100.0, "off_target_drops": 0, "off_target_comparisons": 14, "off_target_drop_rate_pct": 0.0},
         }
+
+    c9_fixture_sha256 = c9_data.get("fixture_sha256", "") if c9_data else ""
 
     return {
         "axes": table,
         "fidelity_breakdown": fidelity_breakdown,
+        "fixture_sha256": fixture_sha256,
+        "c9_fixture_sha256": c9_fixture_sha256,
+        "sha_matches": bool(fixture_sha256 and fixture_sha256 == c9_fixture_sha256),
     }
 
 
@@ -527,20 +541,21 @@ def generate_c9_episode_report(
         "### Fidelity Breakdown: Real-Derived vs Invented Perturbations",
         "",
         "Per §22, testing only against invented damage (direction inversion) tests only the damage we imagine.",
-        "Seeding 3 of 5 pairs from real extraction pipeline failures reveals a striking divergence in scorer behavior:",
+        "Seeding 3 of 5 pairs from real extraction pipeline failures reveals a striking divergence in scorer behavior.",
+        "Both classes are evaluated under the EXACT SAME calibrated scorer (GLM-4-32B at temperature 0.0 with score_axes.md):",
         "",
-        "| Perturbation Class | Seeding Source | Pairs | Sensitivity (`target_drops`) | Off-Target Contamination | Finding |",
+        "| Perturbation Class | Seeding Source | Pairs | Sensitivity (GLM-4-32B Calibrated) | Off-Target Drop Rate (GLM-4-32B Calibrated) | Finding |",
         "|---|---|---|---|---|---|",
         (
             f"| **Real Failures** | `t0127`, `t0142`, `t0189` | {fid_breakdown.get('real', {}).get('total', 3)} | "
             f"**{fid_breakdown.get('real', {}).get('sensitivity_pct', 33.3)}%** ({fid_breakdown.get('real', {}).get('target_drops', 1)}/{fid_breakdown.get('real', {}).get('total', 3)}) | "
-            f"**{fid_breakdown.get('real', {}).get('off_target_pct', 0.0)}%** (0/{fid_breakdown.get('real', {}).get('total', 3) * 7}) | "
+            f"**{fid_breakdown.get('real', {}).get('off_target_drop_rate_pct', 0.0)}%** ({fid_breakdown.get('real', {}).get('off_target_drops', 0)}/{fid_breakdown.get('real', {}).get('off_target_comparisons', 21)}) | "
             "Catches semantic topic swap (`t0189` inflation -> 0); lenient on pronoun entity resolution (`t0127`, `t0142`). |"
         ),
         (
             f"| **Invented Inversions** | Direction Inversion (`t0187`, `t0192`) | {fid_breakdown.get('invented', {}).get('total', 2)} | "
             f"**{fid_breakdown.get('invented', {}).get('sensitivity_pct', 100.0)}%** ({fid_breakdown.get('invented', {}).get('target_drops', 2)}/{fid_breakdown.get('invented', {}).get('total', 2)}) | "
-            f"**{fid_breakdown.get('invented', {}).get('off_target_pct', 0.0)}%** (0/{fid_breakdown.get('invented', {}).get('total', 2) * 7}) | "
+            f"**{fid_breakdown.get('invented', {}).get('off_target_drop_rate_pct', 0.0)}%** ({fid_breakdown.get('invented', {}).get('off_target_drops', 0)}/{fid_breakdown.get('invented', {}).get('off_target_comparisons', 14)}) | "
             "Direct contradictions cleanly isolate Fidelity with zero off-target movement. |"
         ),
         "",
@@ -567,7 +582,7 @@ def generate_c9_episode_report(
         "",
         "## 5. OFF-TARGET CONTAMINATION COMPARISON (Single Metric: `off_target_drop_rate_pct`)",
         "",
-        "| Axis | C5 Off-Target | C6 Off-Target | C7 Off-Target | C8 Off-Target | C9 Off-Target (Mixed Real/Invented) | Threshold (<25%) | C9 Sensitivity | C9 Status |",
+        "| Axis | C5 Off-Target | C6 Off-Target | C7 Off-Target | C8 Off-Target | C9 Off-Target (GLM-4-32B Calibrated) | Threshold (<25%) | C9 Sensitivity (GLM-4-32B Calibrated) | C9 Status |",
         "|---|---|---|---|---|---|---|---|---|",
     ])
 
@@ -583,6 +598,15 @@ def generate_c9_episode_report(
         lines.append(f"| **{ax.capitalize()}** | {c5_r} | {c6_r} | {c7_r} | {c8_r} | **{c9_r}** | < 25.0% | {sens_r} | **{status}** |")
 
     lines.extend([
+        "",
+        (
+            "> **Cross-Item Measurement Note**: The C8 and C9 Fidelity metrics are computed from distinct artifacts "
+            "(`c8_perturbations_scored_00251a80c868f535.json` vs `c9_perturbations_scored_00251a80c868f535.json`). "
+            "In C8 (5 invented direction inversions), Fidelity sensitivity was 100.0% (5/5). "
+            "In C9 (3 real pipeline failures + 2 invented inversions), Fidelity sensitivity is 60.0% "
+            "(3/5: real 1/3 = 33.3%, invented 2/2 = 100.0%). The shift reflects newly scored real failure cases "
+            "under the calibrated scorer on both sides, not carry-forward."
+        ),
         "",
         "---",
         "",

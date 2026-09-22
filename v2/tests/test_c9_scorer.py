@@ -21,6 +21,7 @@ Validates:
 
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 
@@ -81,8 +82,8 @@ def test_c9_fidelity_sensitivity_reported_separately_real_vs_invented() -> None:
 
     # Verify sensitivity and off-target rates
     assert inv_data["sensitivity_pct"] == 100.0, "Invented inversions should have 100% sensitivity"
-    assert inv_data["off_target_pct"] < 25.0, "Invented inversions off-target should be < 25%"
-    assert real_data["off_target_pct"] < 25.0, "Real failures off-target should be < 25%"
+    assert inv_data["off_target_drop_rate_pct"] < 25.0, "Invented inversions off-target should be < 25%"
+    assert real_data["off_target_drop_rate_pct"] < 25.0, "Real failures off-target should be < 25%"
 
     # Key architectural finding: real sensitivity is materially lower than invented
     assert real_data["sensitivity_pct"] < inv_data["sensitivity_pct"], (
@@ -182,3 +183,103 @@ def test_c9_episode_report_structure_and_scope() -> None:
     # Check non-zero variance on active reported panel axes
     for ax in ACTIVE_SPEAKER_PANEL_AXES + EXTRACTION_PANEL_AXES:
         assert f"**{ax.capitalize()}**" in content
+
+
+def test_c9_fixture_sha256_matches_and_both_sides_scored() -> None:
+    """Trap 100: Assert fixture hash is embedded in C9 artifact and matches disk, both sides scored."""
+    c9_file = DEFAULT_EXTRACTION_DIR / f"c9_perturbations_scored_{SOURCE_ID}.json"
+    assert c9_file.exists(), f"C9 perturbations scored artifact missing: {c9_file}"
+
+    with open(c9_file, "r", encoding="utf-8") as f:
+        c9_data = json.load(f)
+
+    # 1. Hash check (Trap 100)
+    pert_file = DEFAULT_FIXTURES_AXES_DIR / "perturbations.json"
+    with open(pert_file, "rb") as f:
+        expected_sha = hashlib.sha256(f.read()).hexdigest()
+
+    assert "fixture_sha256" in c9_data, "fixture_sha256 missing from C9 artifact"
+    assert c9_data["fixture_sha256"] == expected_sha, (
+        f"Fixture SHA256 mismatch: artifact={c9_data['fixture_sha256']} vs disk={expected_sha}"
+    )
+
+    # 2. No stale turns in fidelity pairs
+    pert_results = c9_data.get("perturbation_results", [])
+    assert len(pert_results) == 40
+    fid_results = [p for p in pert_results if p.get("target_axis") == "fidelity"]
+    assert len(fid_results) == 5
+
+    fid_turn_ids = [p["turn_id"] for p in fid_results]
+    expected_fid_turns = {
+        "00251a80c868f535_t0127",
+        "00251a80c868f535_t0142",
+        "00251a80c868f535_t0189",
+        "00251a80c868f535_t0187",
+        "00251a80c868f535_t0192",
+    }
+    stale_fid_turns = {"00251a80c868f535_t0181", "00251a80c868f535_t0183", "00251a80c868f535_t0185"}
+    assert set(fid_turn_ids) == expected_fid_turns, f"Fidelity turns mismatch: {fid_turn_ids}"
+    assert not set(fid_turn_ids).intersection(stale_fid_turns), f"Stale turns found: {fid_turn_ids}"
+
+    # 3. Both sides scored (original_scores and perturbed_scores both populated)
+    for p in fid_results:
+        orig_s = p.get("original_scores")
+        pert_s = p.get("perturbed_scores")
+        assert orig_s is not None and isinstance(orig_s, dict) and len(orig_s) == 8, (
+            f"original_scores missing or incomplete for {p['id']}: {orig_s}"
+        )
+        assert pert_s is not None and isinstance(pert_s, dict) and len(pert_s) == 8, (
+            f"perturbed_scores missing or incomplete for {p['id']}: {pert_s}"
+        )
+
+
+def test_c9_cross_item_table_c8_and_c9_distinct_measurements() -> None:
+    """Step 2 & Trap 101: Fidelity's C8 and C9 cells are distinct measurements from different artifacts."""
+    off_target_info = get_c9_off_target_table(SOURCE_ID)
+    axes_table = off_target_info["axes"]
+    fid_row = axes_table["fidelity"]
+
+    # C8 had 100.0% sensitivity (5/5 invented direction inversions)
+    # C9 has 60.0% sensitivity (3/5: real 1/3 = 33.3%, invented 2/2 = 100.0%)
+    assert fid_row["c8_off_target_pct"] == 0.0
+    assert fid_row["c9_off_target_pct"] == 0.0
+    assert fid_row["c9_sensitivity_pct"] == 60.0, f"Expected 60.0% C9 sensitivity, got {fid_row['c9_sensitivity_pct']}"
+
+    c8_file = DEFAULT_EXTRACTION_DIR / f"c8_perturbations_scored_{SOURCE_ID}.json"
+    with open(c8_file, "r", encoding="utf-8") as f:
+        c8_data = json.load(f)
+    c8_fid_sens = c8_data["evaluation"]["axes"]["fidelity"]["target_sensitivity_rate_pct"]
+    assert c8_fid_sens == 100.0
+
+    # Ensure C8 and C9 figures are distinct and not carried forward
+    assert fid_row["c9_sensitivity_pct"] != c8_fid_sens
+
+
+def test_c9_falsification_fidelity_block_not_byte_identical_to_c8() -> None:
+    """Falsification: Verify C9 fidelity block is not byte-identical to C8 (generator reads new pairs)."""
+    c8_file = DEFAULT_EXTRACTION_DIR / f"c8_perturbations_scored_{SOURCE_ID}.json"
+    c9_file = DEFAULT_EXTRACTION_DIR / f"c9_perturbations_scored_{SOURCE_ID}.json"
+
+    with open(c8_file, "r", encoding="utf-8") as f:
+        c8_data = json.load(f)
+    with open(c9_file, "r", encoding="utf-8") as f:
+        c9_data = json.load(f)
+
+    c8_fid = [p for p in c8_data.get("perturbation_results", []) if p.get("target_axis") == "fidelity"]
+    c9_fid = [p for p in c9_data.get("perturbation_results", []) if p.get("target_axis") == "fidelity"]
+
+    c8_fid_bytes = json.dumps(c8_fid, sort_keys=True).encode("utf-8")
+    c9_fid_bytes = json.dumps(c9_fid, sort_keys=True).encode("utf-8")
+
+    # The fidelity blocks must NOT be identical (Trap 100)
+    assert c8_fid_bytes != c9_fid_bytes, "C9 fidelity block is byte-identical to C8 (stale generator)"
+
+    # C8 had 5 invented turns; C9 has 3 real failure turns (t0127, t0142, t0189)
+    c8_turns = {p["turn_id"] for p in c8_fid}
+    c9_turns = {p["turn_id"] for p in c9_fid}
+    assert c8_turns != c9_turns
+    assert "00251a80c868f535_t0181" in c8_turns
+    assert "00251a80c868f535_t0181" not in c9_turns
+    assert "00251a80c868f535_t0127" in c9_turns
+
+

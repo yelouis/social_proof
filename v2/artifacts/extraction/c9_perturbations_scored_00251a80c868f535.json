@@ -1,8 +1,11 @@
 {
   "model_id": "mlx-community/GLM-4-32B-0414-4bit",
+  "prompt_template": "v2/prompts/score_axes.md",
+  "fixture_path": "v2/fixtures/axes/perturbations.json",
+  "fixture_sha256": "e35af234247fb65b2b10872cb6a1829b23738355e6372dc18e09f2db3122b173",
   "total_pairs": 40,
   "evaluation": {
-    "all_axes_pass": true,
+    "all_axes_pass": false,
     "axes": {
       "voice": {
         "axis": "voice",
@@ -463,9 +466,9 @@
         "off_target_drops_count": 0,
         "off_target_comparisons_count": 35,
         "off_target_drop_rate_pct": 0.0,
-        "victim_off_target_drops_count": 0,
+        "victim_off_target_drops_count": 5,
         "victim_off_target_comparisons_count": 35,
-        "victim_off_target_drop_rate_pct": 0.0,
+        "victim_off_target_drop_rate_pct": 14.3,
         "pairs": [
           {
             "id": "fidelity_01",
@@ -482,8 +485,8 @@
             "id": "fidelity_02",
             "turn_id": "00251a80c868f535_t0142",
             "target_axis": "fidelity",
-            "orig_target_score": 2,
-            "pert_target_score": 2,
+            "orig_target_score": 0,
+            "pert_target_score": 0,
             "target_fell": false,
             "target_delta": 0,
             "off_target_drops_count": 0,
@@ -613,6 +616,43 @@
     "total_off_target_drops": 9,
     "total_off_target_comparisons": 280,
     "overall_off_target_drop_rate_pct": 3.2
+  },
+  "fidelity_breakdown": {
+    "scorer": "GLM-4-32B (Calibrated score_axes.md)",
+    "real": {
+      "total": 3,
+      "target_drops": 1,
+      "sensitivity_pct": 33.3,
+      "off_target_drops": 0,
+      "off_target_comparisons": 21,
+      "off_target_drop_rate_pct": 0.0,
+      "pairs": [
+        "fidelity_01",
+        "fidelity_02",
+        "fidelity_03"
+      ],
+      "turn_ids": [
+        "00251a80c868f535_t0127",
+        "00251a80c868f535_t0142",
+        "00251a80c868f535_t0189"
+      ]
+    },
+    "invented": {
+      "total": 2,
+      "target_drops": 2,
+      "sensitivity_pct": 100.0,
+      "off_target_drops": 0,
+      "off_target_comparisons": 14,
+      "off_target_drop_rate_pct": 0.0,
+      "pairs": [
+        "fidelity_04",
+        "fidelity_05"
+      ],
+      "turn_ids": [
+        "00251a80c868f535_t0187",
+        "00251a80c868f535_t0192"
+      ]
+    }
   },
   "perturbation_results": [
     {
@@ -2416,266 +2456,6 @@
       "elapsed_seconds": 37.19
     },
     {
-      "id": "fidelity_01",
-      "target_axis": "fidelity",
-      "turn_id": "00251a80c868f535_t0181",
-      "speaker": "David Friedberg",
-      "quote": "That would be, a cataclysmic to have to bail out something like California because the obligations on the unfunded pensions in the states are so significant and not to mention just the debts",
-      "original_claim": "Bailing out California would be cataclysmic because the obligations on the unfunded pensions in the states are so significant, in addition to the debts.",
-      "perturbed_claim": "Bailing out California would be fiscally manageable and straightforward because the state's unfunded pension obligations and debts are negligible.",
-      "perturbation_description": "Inverts the core thesis: asserts that bailing out California would be manageable and obligations negligible, directly contradicting the quote.",
-      "original_scores": {
-        "voice": 2,
-        "target": 2,
-        "propositionality": 2,
-        "contestability": 2,
-        "typing": 2,
-        "decontextualisation": 2,
-        "fidelity": 2,
-        "granularity": 2
-      },
-      "original_reasons": {
-        "voice_reason": "Speaker David Friedberg asserts in own voice with strong conviction (cataclysmic, idiocy, f*** railway)",
-        "target_reason": "About external entities (California, pensions, debts, railway) outside the recording",
-        "propositionality_reason": "Explicit predicate: bailing out California would be cataclysmic due to significant pension obligations and debts",
-        "contestability_reason": "Genuinely disputed claim about financial impact of California's obligations that experts could reasonably disagree on",
-        "typing_reason": "Clean causal claim: bailing out California would be cataclysmic because of pension obligations and debts",
-        "decontextualisation_reason": "All pronouns and indexicals resolved in standalone claim (California, pensions, debts)",
-        "fidelity_reason": "Standalone claim strictly entails the quote's core proposition about bailing out California",
-        "granularity_reason": "Single atomic claim about the financial impact of California's obligations"
-      },
-      "perturbed_scores": {
-        "voice": 2,
-        "target": 2,
-        "propositionality": 2,
-        "contestability": 2,
-        "typing": 2,
-        "decontextualisation": 2,
-        "fidelity": 0,
-        "granularity": 2
-      },
-      "perturbed_reasons": {
-        "voice_reason": "Speaker David Friedberg makes an assertive statement in his own voice about California's financial situation.",
-        "target_reason": "The claim is about California's financial obligations and debts, which are external entities outside the show.",
-        "propositionality_reason": "The claim asserts a clear predicate relationship between bailing out California and the state's significant unfunded pension obligations and debts.",
-        "contestability_reason": "A well-informed person could genuinely dispute whether bailing out California would be manageable given the state's financial obligations.",
-        "typing_reason": "The claim fits cleanly into the type of a contested fact (disputed empirical fact about California's financial situation).",
-        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals, standing completely on its own without relying on the quote or turn text.",
-        "fidelity_reason": "The standalone claim asserts that bailing out California would be 'fiscally manageable and straightforward because the state's unfunded pension obligations and debts are negligible,' which is the opposite of what the quote says.",
-        "granularity_reason": "The claim is a single atomic proposition about the financial implications of bailing out California, without secondary descriptive or relative clauses."
-      },
-      "perturbed_parse_status": "ok",
-      "elapsed_seconds": 39.4
-    },
-    {
-      "id": "fidelity_02",
-      "target_axis": "fidelity",
-      "turn_id": "00251a80c868f535_t0183",
-      "speaker": "Jason Calacanis",
-      "quote": "Especially if anybody who was in favor of a railway to nowhere should just be shamed out of exists for a train from San Francisco to Fresno that cost more than an airline ticket",
-      "original_claim": "Anyone who was in favor of the railway to nowhere, specifically the train from San Francisco to Fresno that cost more than an airline ticket, should be shamed out of existence.",
-      "perturbed_claim": "Anyone who supported the high-speed rail from San Francisco to Fresno should be celebrated for delivering affordable transit that costs less than an airline ticket.",
-      "perturbation_description": "Inverts the core evaluation: asserts that proponents should be celebrated and ticket costs are lower than airfare, directly contradicting the quote.",
-      "original_scores": {
-        "voice": 2,
-        "target": 2,
-        "propositionality": 2,
-        "contestability": 2,
-        "typing": 2,
-        "decontextualisation": 2,
-        "fidelity": 2,
-        "granularity": 2
-      },
-      "original_reasons": {
-        "voice_reason": "Asserted in the speaker's own voice with strong commitment (shaming)",
-        "target_reason": "About external entities (railway project) and events (cost comparison)",
-        "propositionality_reason": "Clear predicate: 'should be shamed out of existence' relates to the subject",
-        "contestability_reason": "Genuinely disputed: assigning moral judgment to political decisions is highly contestable",
-        "typing_reason": "Clean fit as a position (normative judgment about political spending)",
-        "decontextualisation_reason": "All indexicals resolved: 'railway to nowhere', 'train from San Francisco to Fresno' are made explicit",
-        "fidelity_reason": "Standalone claim strictly entails the original quote's meaning",
-        "granularity_reason": "Single atomic claim about shaming proponents of a specific project"
-      },
-      "perturbed_scores": {
-        "voice": 2,
-        "target": 2,
-        "propositionality": 2,
-        "contestability": 2,
-        "typing": 2,
-        "decontextualisation": 2,
-        "fidelity": 0,
-        "granularity": 2
-      },
-      "perturbed_reasons": {
-        "voice_reason": "Jason Calacanis speaks in his own voice with clear epistemic commitment",
-        "target_reason": "The claim concerns a real-world infrastructure project (San Francisco to Fresno high-speed rail)",
-        "propositionality_reason": "The claim asserts a clear relationship between the rail project and its cost comparison to airline tickets",
-        "contestability_reason": "A well-informed opponent could dispute the claim's assessment of the rail project",
-        "typing_reason": "The claim is a clear evaluative judgment about the rail project",
-        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals, standing completely on its own",
-        "fidelity_reason": "The standalone claim asserts the opposite of what the quote says (celebrated vs. shamed)",
-        "granularity_reason": "The claim is a single atomic proposition without secondary descriptive or relative clauses"
-      },
-      "perturbed_parse_status": "ok",
-      "elapsed_seconds": 34.8
-    },
-    {
-      "id": "fidelity_03",
-      "target_axis": "fidelity",
-      "turn_id": "00251a80c868f535_t0185",
-      "speaker": "Jason Calacanis",
-      "quote": "private industry would see an opportunity and they would have built it",
-      "original_claim": "Private industry would have built the project if there were a profitable opportunity to do so.",
-      "perturbed_claim": "Private industry routinely avoids building rail infrastructure even when clear commercial opportunities and profit margins exist.",
-      "perturbation_description": "Inverts the causal thesis: asserts private industry avoids building even when opportunities exist, directly contradicting the quote.",
-      "original_scores": {
-        "voice": 2,
-        "target": 2,
-        "propositionality": 2,
-        "contestability": 2,
-        "typing": 2,
-        "decontextualisation": 2,
-        "fidelity": 2,
-        "granularity": 2
-      },
-      "original_reasons": {
-        "voice_reason": "Asserted in the speaker's own voice, making a clear commitment about private industry's behavior.",
-        "target_reason": "About external entities (private industry) and their behavior, not about the show itself.",
-        "propositionality_reason": "Explicit predicate relating concepts: private industry would have built the project if profitable.",
-        "contestability_reason": "Genuinely disputed claim about economic behavior that could be challenged by different economic theories.",
-        "typing_reason": "Clean fit as a causal claim about economic behavior and market dynamics.",
-        "decontextualisation_reason": "Fully resolved standalone claim with no pronouns or indexicals that need resolution.",
-        "fidelity_reason": "The standalone claim strictly entails the quote's meaning about private industry's potential action.",
-        "granularity_reason": "Atomic claim about private industry's hypothetical behavior in response to opportunity."
-      },
-      "perturbed_scores": {
-        "voice": 2,
-        "target": 2,
-        "propositionality": 2,
-        "contestability": 2,
-        "typing": 2,
-        "decontextualisation": 2,
-        "fidelity": 0,
-        "granularity": 2
-      },
-      "perturbed_reasons": {
-        "voice_reason": "Asserted in the speaker's own voice, unhedged and committed.",
-        "target_reason": "About external entities (private industry) and dynamics (building rail infrastructure), not the show.",
-        "propositionality_reason": "Explicit predicate relating concepts: 'private industry' relates to 'building rail infrastructure' via 'would see an opportunity and would have built it'.",
-        "contestability_reason": "Genuinely disputed: A well-informed opponent could argue that private industry does not always act on clear commercial opportunities or that this specific case had unique barriers.",
-        "typing_reason": "Clean fit into one type: position (normative/recommendation) suggesting how private industry should behave.",
-        "decontextualisation_reason": "Fully resolved standalone claim; all pronouns and indexicals are resolved in the standalone claim.",
-        "fidelity_reason": "The standalone claim asserts something not in the quote: the quote does not mention 'routinely avoids' or 'clear commercial opportunities and profit margins'.",
-        "granularity_reason": "Atomic single proposition without secondary descriptive/relative clauses."
-      },
-      "perturbed_parse_status": "ok",
-      "elapsed_seconds": 36.7
-    },
-    {
-      "id": "fidelity_04",
-      "target_axis": "fidelity",
-      "turn_id": "00251a80c868f535_t0187",
-      "speaker": "David Friedberg",
-      "quote": "These government programs cause more harm than good",
-      "original_claim": "Government programs cause more harm than good",
-      "perturbed_claim": "Federal government intervention in student loan and housing programs produces substantially more societal benefit than harm.",
-      "perturbation_description": "Inverts the evaluative thesis: asserts government intervention produces more benefit than harm, directly contradicting the quote.",
-      "original_scores": {
-        "voice": 2,
-        "target": 2,
-        "propositionality": 2,
-        "contestability": 2,
-        "typing": 2,
-        "decontextualisation": 2,
-        "fidelity": 2,
-        "granularity": 2
-      },
-      "original_reasons": {
-        "voice_reason": "Speaker asserts claim in own voice with conviction",
-        "target_reason": "Claim concerns government programs and their effects on society",
-        "propositionality_reason": "Explicit predicate stating causal relationship between government programs and negative outcomes",
-        "contestability_reason": "Genuinely disputed claim about government policy effectiveness",
-        "typing_reason": "Clean fit as a causal claim about government policy effects",
-        "decontextualisation_reason": "Standalone claim resolves all pronouns and indexicals",
-        "fidelity_reason": "Standalone claim is strictly entailed by the quote",
-        "granularity_reason": "Single atomic claim about government programs"
-      },
-      "perturbed_scores": {
-        "voice": 2,
-        "target": 2,
-        "propositionality": 2,
-        "contestability": 2,
-        "typing": 2,
-        "decontextualisation": 2,
-        "fidelity": 0,
-        "granularity": 2
-      },
-      "perturbed_reasons": {
-        "voice_reason": "Speaker David Friedberg asserts his own opinion in own voice without hedging.",
-        "target_reason": "Claim concerns government programs and their societal effects, external to the show.",
-        "propositionality_reason": "Explicit predicate stating government programs cause more harm than good, relating concepts clearly.",
-        "contestability_reason": "Genuinely disputed claim about government policy effects that a well-informed opponent could disagree with.",
-        "typing_reason": "Clean fit into 'position' type (normative claim about government policy effects).",
-        "decontextualisation_reason": "Standalone claim 'Federal government intervention in student loan and housing programs produces substantially more societal benefit than harm' resolves all pronouns and indexicals, standing alone.",
-        "fidelity_reason": "Standalone claim asserts 'more benefit than harm' which is the opposite of the original quote's 'more harm than good'.",
-        "granularity_reason": "Standalone claim is a single atomic proposition without secondary descriptive/relative clauses."
-      },
-      "perturbed_parse_status": "ok",
-      "elapsed_seconds": 36.1
-    },
-    {
-      "id": "fidelity_05",
-      "target_axis": "fidelity",
-      "turn_id": "00251a80c868f535_t0192",
-      "speaker": "Jason Calacanis",
-      "quote": "this spending, this fraud is not acceptable and we need to send people in to go recapture that money",
-      "original_claim": "The current spending and fraud are not acceptable and people need to be sent in to recapture that money.",
-      "perturbed_claim": "Current levels of government spending and associated fraud are an acceptable cost of doing business that does not warrant sending investigators to recapture funds.",
-      "perturbation_description": "Inverts the normative thesis: asserts spending and fraud are acceptable and do not warrant recapture, directly contradicting the quote.",
-      "original_scores": {
-        "voice": 2,
-        "target": 2,
-        "propositionality": 2,
-        "contestability": 2,
-        "typing": 2,
-        "decontextualisation": 2,
-        "fidelity": 2,
-        "granularity": 2
-      },
-      "original_reasons": {
-        "voice_reason": "Asserted in the speaker's own voice with clear commitment to the statement.",
-        "target_reason": "About external entities (spending, fraud) and actions, not show mechanics.",
-        "propositionality_reason": "Explicit predicate stating that spending and fraud are unacceptable and people need to be sent to recapture money.",
-        "contestability_reason": "Genuinely disputed as it makes a strong normative claim about acceptable behavior that could be challenged.",
-        "typing_reason": "Clean fit as an evaluative claim making a normative judgment about spending and fraud.",
-        "decontextualisation_reason": "All pronouns and indexicals resolved in the standalone claim (e.g., 'this spending' becomes 'The current spending').",
-        "fidelity_reason": "The standalone claim strictly entails the quote without adding specificity not present in the original.",
-        "granularity_reason": "Atomic claim expressing a single evaluative judgment about spending and fraud."
-      },
-      "perturbed_scores": {
-        "voice": 2,
-        "target": 2,
-        "propositionality": 2,
-        "contestability": 2,
-        "typing": 2,
-        "decontextualisation": 2,
-        "fidelity": 0,
-        "granularity": 2
-      },
-      "perturbed_reasons": {
-        "voice_reason": "Jason Calacanis speaks in his own voice with clear commitment to the claim about government spending and fraud.",
-        "target_reason": "The claim concerns government spending and fraud, which are external political and economic issues, not show mechanics or meta-discussion.",
-        "propositionality_reason": "The claim asserts a clear predicate relationship: that current levels of government spending and fraud are an acceptable cost, warranting action to recapture funds.",
-        "contestability_reason": "A well-informed opponent could dispute this claim regarding the acceptability of government spending and fraud, making it genuinely contestable.",
-        "typing_reason": "The claim fits cleanly into the 'position' type, expressing a normative judgment about government spending and fraud.",
-        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals, standing completely on its own without relying on the quote or turn text.",
-        "fidelity_reason": "The standalone claim asserts that current levels of government spending and fraud are an acceptable cost, which is not entailed by the quote. The quote actually expresses the opposite sentiment.",
-        "granularity_reason": "The claim is a single atomic proposition without secondary descriptive or relative clauses, asserting one point about the acceptability of government spending and fraud."
-      },
-      "perturbed_parse_status": "ok",
-      "elapsed_seconds": 38.1
-    },
-    {
       "id": "granularity_01",
       "target_axis": "granularity",
       "turn_id": "00251a80c868f535_t0016",
@@ -2974,33 +2754,271 @@
       },
       "perturbed_parse_status": "ok",
       "elapsed_seconds": 42.82
-    }
-  ],
-  "fidelity_breakdown": {
-    "real": {
-      "total": 3,
-      "target_drops": 1,
-      "sensitivity_pct": 33.3,
-      "off_target_drops": 0,
-      "off_target_comparisons": 21,
-      "off_target_pct": 0.0,
-      "pairs": [
-        "fidelity_01",
-        "fidelity_02",
-        "fidelity_03"
-      ]
     },
-    "invented": {
-      "total": 2,
-      "target_drops": 2,
-      "sensitivity_pct": 100.0,
-      "off_target_drops": 0,
-      "off_target_comparisons": 14,
-      "off_target_pct": 0.0,
-      "pairs": [
-        "fidelity_04",
-        "fidelity_05"
-      ]
+    {
+      "id": "fidelity_01",
+      "target_axis": "fidelity",
+      "turn_id": "00251a80c868f535_t0127",
+      "speaker": "Jason Calacanis",
+      "quote": "He is going to own open source",
+      "original_claim": "He is going to own open source.",
+      "perturbed_claim": "Elon Musk is going to own open source.",
+      "perturbation_description": "Real extraction failure (t0127): Standalone claim substitutes 'Elon Musk' for the ungrounded pronoun 'He' in the quote, introducing external entity attribution not entailed by the quote.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Jason Calacanis makes an assertive prediction in his own voice about 'He' (implied subject) owning open source.",
+        "target_reason": "The claim concerns external entities (open source, Hugging Face, the subject 'He') and their future relationship, not the show itself.",
+        "propositionality_reason": "The claim asserts a clear future state ('is going to own') relating the subject 'He' to the object 'open source'.",
+        "contestability_reason": "A well-informed opponent could dispute whether the subject 'He' will indeed achieve ownership of open source.",
+        "typing_reason": "The claim is a clear prediction about a future state or outcome.",
+        "decontextualisation_reason": "The standalone claim 'He is going to own open source' uses the pronoun 'He' without identifying who 'He' is, making it unresolved.",
+        "fidelity_reason": "The standalone claim 'He is going to own open source' is strictly entailed by the quote 'He is going to own open source.'",
+        "granularity_reason": "The claim is a single, atomic prediction without secondary clauses or bundled points."
+      },
+      "original_parse_status": "ok",
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Jason Calacanis makes an assertive prediction in his own voice about Elon Musk.",
+        "target_reason": "The claim concerns external entities (Elon Musk, open source) and their relationship, not the show itself.",
+        "propositionality_reason": "The claim asserts a clear future relationship (ownership) between Elon Musk and open source.",
+        "contestability_reason": "A well-informed person could reasonably dispute whether Elon Musk will actually 'own' open source.",
+        "typing_reason": "The claim is a clear prediction about a future state of affairs.",
+        "decontextualisation_reason": "The standalone claim 'Elon Musk is going to own open source' resolves all pronouns and is fully understandable on its own.",
+        "fidelity_reason": "The standalone claim 'Elon Musk is going to own open source' is strictly entailed by the quote 'He is going to own open source' (with the pronoun 'He' clearly referring to Elon Musk in context).",
+        "granularity_reason": "The claim is a single, atomic prediction without secondary descriptive or relative clauses."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 77.05
+    },
+    {
+      "id": "fidelity_02",
+      "target_axis": "fidelity",
+      "turn_id": "00251a80c868f535_t0142",
+      "speaker": "David Friedberg",
+      "quote": "Brooks drugs note is coverage for best and at a pointing responsibility back to Congress back to the president to say guys We have to solve this deficit problem",
+      "original_claim": "The note written by Brooks Drug is providing coverage by pointing responsibility back to Congress and the president to solve the deficit problem.",
+      "perturbed_claim": "The note written by Brooks is providing cover for Treasury Secretary Janet Yellen by pointing the responsibility for solving the deficit problem back to Congress and the president.",
+      "perturbation_description": "Real extraction failure (t0142): Injects 'Treasury Secretary Janet Yellen' as the entity being covered, which is not entailed by the quote.",
+      "original_scores": {
+        "voice": 0,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "The claim reports what Brooks Drugs note is doing, not the speaker's own commitment.",
+        "target_reason": "The claim is about the financial market and government response to deficits, external to the show.",
+        "propositionality_reason": "The claim asserts a clear causal relationship between the note's coverage and pointing responsibility to Congress and the president.",
+        "contestability_reason": "A well-informed opponent could dispute the effectiveness or interpretation of the note's role.",
+        "typing_reason": "The claim is a clear causal theory about financial market dynamics.",
+        "decontextualisation_reason": "The standalone claim refers to 'Brooks drugs note' and 'best' without naming the specific entities, making it unresolved.",
+        "fidelity_reason": "The standalone claim misrepresents the quote by attributing a specific function to the note that is not explicitly stated in the quote.",
+        "granularity_reason": "The claim is a single atomic proposition about the note's function."
+      },
+      "original_parse_status": "ok",
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker David Friedberg makes an assertive statement in his own voice about Treasury Secretary Janet Yellen.",
+        "target_reason": "The claim concerns external entities (Treasury Secretary, Congress, President) and the US financial system, not the show itself.",
+        "propositionality_reason": "The claim asserts a clear predicate relationship: the note provides cover for Treasury Secretary by pointing responsibility back to Congress and the president.",
+        "contestability_reason": "A well-informed opponent could dispute the interpretation of the note's purpose and whether it truly provides cover for the Treasury Secretary.",
+        "typing_reason": "The claim is a clear empirical fact (describing the purpose and effect of a specific note).",
+        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals, naming the Treasury Secretary (Janet Yellen) and the entities (Congress, President) explicitly.",
+        "fidelity_reason": "The standalone claim asserts that 'The note written by Brooks is providing cover for Treasury Secretary Janet Yellen by pointing the responsibility...' which is not entailed by the quote. The quote does not state or imply that the note provides cover or points responsibility.",
+        "granularity_reason": "The claim is a single atomic proposition without secondary descriptive or relative clauses."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 76.62
+    },
+    {
+      "id": "fidelity_03",
+      "target_axis": "fidelity",
+      "turn_id": "00251a80c868f535_t0189",
+      "speaker": "David Friedberg",
+      "quote": "The core root of it is government spending and the reason we are going to end up becoming a socialist country is because we aren't raining in the government spending",
+      "original_claim": "The core root of America becoming a socialist country is the failure to rein in government spending.",
+      "perturbed_claim": "The core root of inflation is government spending.",
+      "perturbation_description": "Real extraction failure (t0189): Standalone claim substitutes 'inflation' as the subject/consequence, which is not mentioned in the quote, rather than the entailed consequence of becoming a socialist country.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Friedberg makes an assertive claim in his own voice about government spending and socialism.",
+        "target_reason": "The claim discusses government spending and the potential outcome of becoming a socialist country, which are external political dynamics.",
+        "propositionality_reason": "The claim asserts a clear causal relationship: government spending is the root cause of becoming a socialist country.",
+        "contestability_reason": "The claim is highly contestable as it presents a specific causal explanation for a complex political outcome that could be disputed by various political and economic theories.",
+        "typing_reason": "The claim is a clear causal explanation (mechanism) linking government spending to becoming a socialist country.",
+        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals. It clearly states 'America' as the subject and 'government spending' as the cause, making it fully understandable without the original quote.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote. It captures the core causal relationship presented in the original text without adding any new information.",
+        "granularity_reason": "The claim is a single atomic proposition stating a causal relationship between government spending and becoming a socialist country, without bundling multiple distinct points."
+      },
+      "original_parse_status": "ok",
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker David Friedberg makes an assertive claim in his own voice about government spending and socialism.",
+        "target_reason": "The claim discusses government spending and socialism, which are external political/economic dynamics, not show-specific.",
+        "propositionality_reason": "The claim asserts a clear causal relationship: government spending is the root cause of becoming a socialist country.",
+        "contestability_reason": "The claim is highly contestable as it presents a specific causal explanation for a complex political outcome that could be disputed by various political/economic theories.",
+        "typing_reason": "The claim fits cleanly into the causal type, explaining a mechanism (government spending) leading to an outcome (becoming socialist).",
+        "decontextualisation_reason": "The standalone claim 'The core root of inflation is government spending' resolves all pronouns and indexicals, standing completely on its own without relying on the quote or turn text.",
+        "fidelity_reason": "The standalone claim 'The core root of inflation is government spending' asserts something not in the quote (it changes 'it' to 'inflation' and omits the second part about 'raining in spending').",
+        "granularity_reason": "The standalone claim is a single atomic proposition without secondary descriptive or relative clauses."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 77.26
+    },
+    {
+      "id": "fidelity_04",
+      "target_axis": "fidelity",
+      "turn_id": "00251a80c868f535_t0187",
+      "speaker": "David Friedberg",
+      "quote": "These government programs cause more harm than good",
+      "original_claim": "Government programs cause more harm than good",
+      "perturbed_claim": "Federal government intervention in student loan and housing programs produces substantially more societal benefit than harm.",
+      "perturbation_description": "Inverts the evaluative thesis: asserts government intervention produces more benefit than harm, directly contradicting the quote.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker David Friedberg asserts his own opinion in own voice without hedging.",
+        "target_reason": "Claim concerns government programs and their effects on society, external to the show.",
+        "propositionality_reason": "Explicit predicate 'cause more harm than good' relates 'government programs' to their negative consequences.",
+        "contestability_reason": "Genuinely disputed claim; opponents could argue government programs cause net benefit.",
+        "typing_reason": "Clean fit as a position/normative claim evaluating government programs.",
+        "decontextualisation_reason": "Standalone claim 'Government programs cause more harm than good' resolves all pronouns and indexicals.",
+        "fidelity_reason": "Standalone claim 'Government programs cause more harm than good' is strictly entailed by the quote.",
+        "granularity_reason": "Single atomic claim about the net effect of government programs."
+      },
+      "original_parse_status": "ok",
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker David Friedberg asserts in own voice with clear commitment about government programs.",
+        "target_reason": "Claim concerns government programs and their societal effects, external to the show.",
+        "propositionality_reason": "Explicit predicate stating government programs cause more harm than good, relating concepts clearly.",
+        "contestability_reason": "Genuinely disputed claim that could be opposed by those who believe government programs provide net benefit.",
+        "typing_reason": "Clean fit as a position/normative claim evaluating government programs.",
+        "decontextualisation_reason": "Standalone claim resolves all pronouns and indexicals, standing completely on its own.",
+        "fidelity_reason": "Standalone claim asserts 'Federal government intervention in student loan and housing programs produces substantially more societal benefit than harm,' which contradicts the original quote's assertion that these programs cause more harm than good.",
+        "granularity_reason": "Single atomic claim about the net effect of government programs without secondary descriptive/relative clauses."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 72.23
+    },
+    {
+      "id": "fidelity_05",
+      "target_axis": "fidelity",
+      "turn_id": "00251a80c868f535_t0192",
+      "speaker": "Jason Calacanis",
+      "quote": "this spending, this fraud is not acceptable and we need to send people in to go recapture that money",
+      "original_claim": "The current spending and fraud are not acceptable and people need to be sent in to recapture that money.",
+      "perturbed_claim": "Current levels of government spending and associated fraud are an acceptable cost of doing business that does not warrant sending investigators to recapture funds.",
+      "perturbation_description": "Inverts the normative thesis: asserts spending and fraud are acceptable and do not warrant recapture, directly contradicting the quote.",
+      "original_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "original_reasons": {
+        "voice_reason": "Speaker Jason Calacanis makes an assertive statement in his own voice about spending and fraud.",
+        "target_reason": "The claim concerns external entities (spending, fraud) and actions (recapturing money), not the show itself.",
+        "propositionality_reason": "The claim asserts a clear predicate relationship: spending and fraud are unacceptable, and people need to be sent to recapture money.",
+        "contestability_reason": "A well-informed person could reasonably disagree about the acceptability of the spending and fraud, and the necessity of recapturing the money.",
+        "typing_reason": "The claim fits cleanly into the 'position' type, expressing a normative judgment about the acceptability of spending and fraud.",
+        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals, standing completely on its own without relying on the quote or turn text.",
+        "fidelity_reason": "The standalone claim is strictly entailed by the quote, capturing the core assertion without adding or omitting significant details.",
+        "granularity_reason": "The claim is a single atomic proposition without secondary descriptive or relative clauses, asserting only one point."
+      },
+      "original_parse_status": "ok",
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "perturbed_reasons": {
+        "voice_reason": "Speaker Jason Calacanis makes an assertive statement in his own voice about government spending and fraud.",
+        "target_reason": "The claim concerns government spending and fraud, which are external political and economic issues, not show mechanics.",
+        "propositionality_reason": "The claim asserts a clear predicate relationship: that current levels of government spending and fraud are an acceptable cost, and that sending investigators to recapture funds is warranted.",
+        "contestability_reason": "A well-informed opponent could reasonably dispute this claim regarding the acceptability of government spending and fraud and the necessity of sending investigators.",
+        "typing_reason": "The claim fits cleanly into the position type (normative/recommendation) as it makes a value judgment about the acceptability of government spending and fraud.",
+        "decontextualisation_reason": "The standalone claim resolves all pronouns and indexicals, standing completely on its own without relying on the quote or turn text.",
+        "fidelity_reason": "The standalone claim asserts that 'Current levels of government spending and associated fraud are an acceptable cost of doing business that does not warrant sending investigators to recapture funds,' which is the opposite of what the quote says. The quote asserts that the fraud is not acceptable and that sending investigators to recapture funds is warranted.",
+        "granularity_reason": "The claim is a single atomic proposition without secondary descriptive or relative clauses, asserting only one point about the acceptability of government spending and fraud and the necessity of sending investigators."
+      },
+      "perturbed_parse_status": "ok",
+      "elapsed_seconds": 78.59
     }
-  }
+  ]
 }

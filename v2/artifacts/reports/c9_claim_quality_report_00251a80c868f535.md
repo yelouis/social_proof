@@ -45,9 +45,10 @@
 ### Fidelity Breakdown: Real-Derived vs Invented Perturbations
 
 Per §22, testing only against invented damage (direction inversion) tests only the damage we imagine.
-Seeding 3 of 5 pairs from real extraction pipeline failures reveals a striking divergence in scorer behavior:
+Seeding 3 of 5 pairs from real extraction pipeline failures reveals a striking divergence in scorer behavior.
+Both classes are evaluated under the EXACT SAME calibrated scorer (GLM-4-32B at temperature 0.0 with score_axes.md):
 
-| Perturbation Class | Seeding Source | Pairs | Sensitivity (`target_drops`) | Off-Target Contamination | Finding |
+| Perturbation Class | Seeding Source | Pairs | Sensitivity (GLM-4-32B Calibrated) | Off-Target Drop Rate (GLM-4-32B Calibrated) | Finding |
 |---|---|---|---|---|---|
 | **Real Failures** | `t0127`, `t0142`, `t0189` | 3 | **33.3%** (1/3) | **0.0%** (0/21) | Catches semantic topic swap (`t0189` inflation -> 0); lenient on pronoun entity resolution (`t0127`, `t0142`). |
 | **Invented Inversions** | Direction Inversion (`t0187`, `t0192`) | 2 | **100.0%** (2/2) | **0.0%** (0/14) | Direct contradictions cleanly isolate Fidelity with zero off-target movement. |
@@ -68,7 +69,7 @@ Target, Propositionality, and Typing showed zero or near-zero variance across th
 
 ## 5. OFF-TARGET CONTAMINATION COMPARISON (Single Metric: `off_target_drop_rate_pct`)
 
-| Axis | C5 Off-Target | C6 Off-Target | C7 Off-Target | C8 Off-Target | C9 Off-Target (Mixed Real/Invented) | Threshold (<25%) | C9 Sensitivity | C9 Status |
+| Axis | C5 Off-Target | C6 Off-Target | C7 Off-Target | C8 Off-Target | C9 Off-Target (GLM-4-32B Calibrated) | Threshold (<25%) | C9 Sensitivity (GLM-4-32B Calibrated) | C9 Status |
 |---|---|---|---|---|---|---|---|---|
 | **Voice** | 20.0% | 2.9% | 2.9% | 2.9% | **2.9%** | < 25.0% | 100.0% | **PASSED** |
 | **Target** | 40.0% | 0.0% | 0.0% | 0.0% | **0.0%** | < 25.0% | 100.0% | **PASSED** |
@@ -78,6 +79,8 @@ Target, Propositionality, and Typing showed zero or near-zero variance across th
 | **Decontextualisation** | 8.6% | 8.6% | 8.6% | 8.6% | **8.6%** | < 25.0% | 100.0% | **PASSED** |
 | **Fidelity** | 11.4% | 31.4% | 31.4% | 0.0% | **0.0%** | < 25.0% | 60.0% | **PASSED** |
 | **Granularity** | 22.9% | 8.6% | 8.6% | 8.6% | **8.6%** | < 25.0% | 100.0% | **PASSED** |
+
+> **Cross-Item Measurement Note**: The C8 and C9 Fidelity metrics are computed from distinct artifacts (`c8_perturbations_scored_00251a80c868f535.json` vs `c9_perturbations_scored_00251a80c868f535.json`). In C8 (5 invented direction inversions), Fidelity sensitivity was 100.0% (5/5). In C9 (3 real pipeline failures + 2 invented inversions), Fidelity sensitivity is 60.0% (3/5: real 1/3 = 33.3%, invented 2/2 = 100.0%). The shift reflects newly scored real failure cases under the calibrated scorer on both sides, not carry-forward.
 
 ---
 
