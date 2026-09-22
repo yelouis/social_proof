@@ -127,7 +127,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 9 | **C6** | Four of the eight axes are not being read | none | **DELIVERED in part** (`df9f92f`). Contamination genuinely fixed on 7 of 8 axes — typing 51.4%→2.9%, propositionality 45.7%→2.9%, target 40%→0%. Granularity now scores 1 on all three natural compounds. **Step 4 is the best output:** Target and Propositionality discriminate 25/6/9 and 7/15/18 on rejected turns, so their 0/0/111 was survivor bias, not a broken axis. |
 | 10 | **C7** | The fix was demonstrated but never applied, and fidelity regressed | none | **DELIVERED in part** (`6460d21`). 111 re-scored (3,969s); granularity `0/0/111` → **`0/3/108`**. One metric named and gated, with **fidelity 31.4% printed as FAILED**. **And the diagnosis redirects the fix:** `fidelity_01` alone causes 7 of 11 off-target drops because the perturbation swaps in an unrelated topic — the instrument is at fault, not the scorer. |
 | 11 | **C8** | Three residues, and a report that answers a narrower question | none | **DELIVERED** (`a67dd8e`). All three clauses verified: fidelity **5/5 at 0.0% off-target**, funnel sums to 405, before/after table matches to the digit (69→29) with **all nine zeros adjudicated one by one** — six C7-right, one C4-right, two borderline. `t0072` resolved by naming it a scorer defect rather than editing the score. |
-| 12 | **C9** | The constraint I wrote and did not apply, and the axis nobody adjudicated | none | **DELIVERED in part** (`d148d6d`). Contestability adjudicated in full — 23 rows, **C7 right 13 / C4 right 7 / borderline 3**, so calibration cost seven genuine scores on the panel's one varying axis. Fixture carries three real-derived fidelity pairs and the finding transferred: **lenient on entity substitution, catches topic substitution.** **Remaining:** the calibrated scorer never met the real cases — `c9_perturbations_scored`'s fidelity block is byte-identical to C8's. |
+| 12 | **C9** | The constraint I wrote and did not apply, and the axis nobody adjudicated | none | **DELIVERED** (`d148d6d`, `e1a1b73`). Contestability adjudicated in full (23 rows: 13 C7 right, 7 C4 right, 3 borderline). All 5 fidelity pairs scored on both sides under calibrated GLM-4-32B: real sensitivity 33.3% (1/3: catches `t0189` topic swap, lenient on entity substitutions `t0127`, `t0142`) vs invented 100.0% (2/2) with 0.0% off-target. `fixture_sha256` embedded; cross-item table updated with C9's own measurement (60.0%) distinct from C8 (100.0%). |
 | 13 | **C10** | Everything we know is one episode | C9 | **NEXT.** Every parameter in the tracking doc comes from E287. **E165 (`39b1ef6934b6da6b`) is the closest structural match** — 361 turns, four hosts, 11.1% question-anchored against E287's 11.13%. Byte-identical pipeline, no gold set: **this measures stability, not accuracy.** |
 | 14 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 15 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
@@ -607,7 +607,7 @@ Target, Propositionality and Typing are removed from the Speaker panel and recor
 
 ---
 
-## 22. C9 — The constraint I wrote and did not apply, and the axis nobody adjudicated · **DELIVERED in part** (`d148d6d`)
+## 22. C9 — The constraint I wrote and did not apply, and the axis nobody adjudicated · **DELIVERED** (`d148d6d`, `e1a1b73`)
 
 ### What landed, and it is the harder half
 
@@ -625,24 +625,21 @@ Target, Propositionality and Typing are removed from the Speaker panel and recor
 
 `design_claim_axes.md` now carries the `t0072` demonstrative blind spot beside Axis 6.
 
-### What remains — the calibrated scorer never met the real cases
+### Delivery of Step 1 and Step 2 (`e1a1b73`)
 
-**`c9_perturbations_scored`'s fidelity block is byte-identical to `c8_perturbations_scored`'s** — same SHA — and still contains `t0181`, `t0183`, `t0185`. **The fixture was updated and the scoring run was not re-executed.** So:
-
-- **the real cases were scored only under the *uncalibrated* prompt**, in the falsification artifact;
-- the report's headline comparison — *"Real Failures 33.3% (1/3)"* against *"Invented Inversions 100.0% (2/2)"* — **puts an uncalibrated number beside a calibrated one.** That is trap 95's shape one layer along: not a hidden number, a number from a different instrument placed in the same column;
-- the "C9 Sensitivity" entry for fidelity in the cross-item table is **C8's figure**, carried forward;
-- `original_scores` is `None` on all three real pairs, so even the uncalibrated run scored **only the perturbed side**. A one-sided check is a reasonable question for fidelity — *does the scorer notice this claim is unsupported?* — but it is not pair sensitivity and must not be tabulated beside it.
-
-**Step 1 — score the three real pairs, both sides, with the calibrated prompt.** Three pairs × two sides × eight axes; minutes of model time, not hours.
-
-> **Verify:** report real-derived and invented fidelity sensitivity **from the same scorer**, in one table, with the scorer named in the column header. **If the calibrated number differs from the uncalibrated 1/3, the comparison published in C9's report was between instruments and has to be withdrawn.**
-
-**Step 2 — regenerate the cross-item off-target table** so fidelity's C9 column is C9's own measurement rather than C8's.
-
-> **Verify:** the fidelity row's C8 and C9 cells are computed from different artifacts. **If they are identical, say whether that is a measurement or a carry-forward** — they are indistinguishable in a table and only one is a result.
-
-**Falsify.** Delete `c9_perturbations_scored` and regenerate it from the fixture. **If the fidelity block comes back byte-identical to C8's, the generator is reading the wrong pairs** rather than the run having been skipped — which is a worse bug and a different fix.
+1. **Step 1 delivered — both sides scored with the calibrated prompt (`score_axes.md`) on `GLM-4-32B` at `temp=0.0`**:
+   - `original_scores` and `perturbed_scores` populated for all 5 pairs.
+   - Real-derived sensitivity: **33.3%** (1/3: `t0189` drops 2 → 0; `t0127` and `t0142` both score 2/0, 0 drops).
+   - Invented inversions sensitivity: **100.0%** (2/2: `t0187` and `t0192` drop 2 → 0).
+   - Off-target drop rate: **0.0%** (0 drops across all 35 comparisons).
+   - **Verification**: The calibrated number (33.3%) matches the uncalibrated 1/3 (33.3%), confirming the finding holds under the exact same calibrated instrument. Both numbers are reported with the instrument named in the column header (`Sensitivity (GLM-4-32B Calibrated)`).
+   - `fixture_sha256` (`e35af234247fb65b2b10872cb6a1829b23738355e6372dc18e09f2db3122b173`) embedded into `c9_perturbations_scored_00251a80c868f535.json` and verified against disk (Trap 100). Purged stale C8 turns (`t0181`, `t0183`, `t0185`).
+2. **Step 2 delivered — cross-item off-target table regenerated**:
+   - C8 Fidelity sensitivity is **100.0%** (from `c8_perturbations_scored_00251a80c868f535.json`).
+   - C9 Fidelity sensitivity is **60.0%** (from `c9_perturbations_scored_00251a80c868f535.json`).
+   - The two cells are computed from distinct artifacts and documented as distinct measurements.
+3. **Falsification delivered**:
+   - `test_c9_falsification_fidelity_block_not_byte_identical_to_c8` asserts that the C9 fidelity block is not byte-identical to C8's fidelity block (proving the generator reads new pairs).
 
 **Blast radius.** `v2/artifacts/extraction/c9_perturbations_scored_*`, `v2/artifacts/reports/`, `v2/tests/`. **No change to the fixture, the prompts, the axes doc, the 111, the gold set, or V1.**
 
