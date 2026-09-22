@@ -1,0 +1,94 @@
+{
+  "model_id": "mlx-community/GLM-4-32B-0414-4bit",
+  "prompt_template": "v2/prompts/score_axes_c4_uncalibrated.md",
+  "total_pairs": 3,
+  "target_drops_count": 1,
+  "target_sensitivity_rate_pct": 33.3,
+  "off_target_drops_count": 0,
+  "off_target_comparisons_count": 21,
+  "off_target_drop_rate_pct": 0.0,
+  "results": [
+    {
+      "id": "fidelity_01",
+      "turn_id": "00251a80c868f535_t0127",
+      "target_axis": "fidelity",
+      "orig_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "target_fell": false,
+      "off_target_drops_count": 0
+    },
+    {
+      "id": "fidelity_02",
+      "turn_id": "00251a80c868f535_t0142",
+      "target_axis": "fidelity",
+      "orig_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "target_fell": false,
+      "off_target_drops_count": 0
+    },
+    {
+      "id": "fidelity_03",
+      "turn_id": "00251a80c868f535_t0189",
+      "target_axis": "fidelity",
+      "orig_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 2,
+        "fidelity": 2,
+        "granularity": 2
+      },
+      "perturbed_scores": {
+        "voice": 2,
+        "target": 2,
+        "propositionality": 2,
+        "contestability": 2,
+        "typing": 2,
+        "decontextualisation": 0,
+        "fidelity": 0,
+        "granularity": 2
+      },
+      "target_fell": true,
+      "off_target_drops_count": 0
+    }
+  ],
+  "falsification_finding": "Testing real failure cases against the uncalibrated C4 prompt template demonstrates that the uncalibrated scorer exhibits the identical entity-resolution leniency on t0127 and t0142 (scoring both Fidelity 2) while catching topic substitution on t0189 (Fidelity 0). Calibration did not trade fidelity real-world recall for perturbation score; both scorers suffer from the same prompt-based blind spot on entity substitution."
+}

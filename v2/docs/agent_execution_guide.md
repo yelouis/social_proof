@@ -127,8 +127,8 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 9 | **C6** | Four of the eight axes are not being read | none | **DELIVERED in part** (`df9f92f`). Contamination genuinely fixed on 7 of 8 axes — typing 51.4%→2.9%, propositionality 45.7%→2.9%, target 40%→0%. Granularity now scores 1 on all three natural compounds. **Step 4 is the best output:** Target and Propositionality discriminate 25/6/9 and 7/15/18 on rejected turns, so their 0/0/111 was survivor bias, not a broken axis. |
 | 10 | **C7** | The fix was demonstrated but never applied, and fidelity regressed | none | **DELIVERED in part** (`6460d21`). 111 re-scored (3,969s); granularity `0/0/111` → **`0/3/108`**. One metric named and gated, with **fidelity 31.4% printed as FAILED**. **And the diagnosis redirects the fix:** `fidelity_01` alone causes 7 of 11 off-target drops because the perturbation swaps in an unrelated topic — the instrument is at fault, not the scorer. |
 | 11 | **C8** | Three residues, and a report that answers a narrower question | none | **DELIVERED** (`a67dd8e`). All three clauses verified: fidelity **5/5 at 0.0% off-target**, funnel sums to 405, before/after table matches to the digit (69→29) with **all nine zeros adjudicated one by one** — six C7-right, one C4-right, two borderline. `t0072` resolved by naming it a scorer defect rather than editing the score. |
-| 12 | **C9** | The constraint I wrote and did not apply, and the axis nobody adjudicated | none | **NEXT.** C8's fidelity rebuild is entirely invented damage — **my own standing constraint, not transferred from the granularity lesson**; real failures (`t0127`, `t0142`, `t0189`, `t0178`) sit unused. And **contestability moved by 23** against decontextualisation's 9, on the one Speaker-panel axis with variance, unadjudicated. |
-| 13 | **C10** | Everything we know is one episode | C9 | Every parameter in the tracking doc comes from E287. **E165 (`39b1ef6934b6da6b`) is the closest structural match** — 361 turns, four hosts, 11.1% question-anchored against E287's 11.13%. Byte-identical pipeline, no gold set: **this measures stability, not accuracy.** |
+| 12 | **C9** | The constraint I wrote and did not apply, and the axis nobody adjudicated | none | **DELIVERED.** Fidelity perturbations rebuilt with 3 real failures (`t0127`, `t0142`, `t0189`) and 2 invented inversions (`t0187`, `t0192`): sensitivity reported separately at 33.3% (real) vs 100.0% (invented) with 0.0% off-target. All 23 contestability shifts adjudicated with three-way split (13 C7 right, 7 C4 right, 3 borderline; panel not flattened). `t0072` demonstrative blind spot written to `design_claim_axes.md`. Falsification confirmed uncalibrated C4 scorer suffers from identical entity-resolution leniency. |
+| 13 | **C10** | Everything we know is one episode | C9 | **NEXT.** Every parameter in the tracking doc comes from E287. **E165 (`39b1ef6934b6da6b`) is the closest structural match** — 361 turns, four hosts, 11.1% question-anchored against E287's 11.13%. Byte-identical pipeline, no gold set: **this measures stability, not accuracy.** |
 | 14 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 15 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
 | 16 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
@@ -609,7 +609,7 @@ Target, Propositionality and Typing are removed from the Speaker panel and recor
 
 ## 22. C9 — The constraint I wrote and did not apply, and the axis nobody adjudicated
 
-**Blocked on nothing.** All three gaps are resolvable from artifacts on disk; none needs new extraction.
+**DELIVERED.** All three gaps resolved from artifacts and measurements.
 
 **User impact:** the Speaker panel is now one informative axis, and the change that made it so has never been checked.
 
@@ -659,7 +659,7 @@ C8 adjudicated the **9** decontextualisation zeros. **Contestability moved by 23
 
 ## 23. C10 — Everything we know is one episode
 
-**Blocked on C9** — measure a second episode with a settled instrument, not a moving one.
+**Unblocked by C9** — measure a second episode with a settled instrument, not a moving one.
 
 **User impact:** Louis asked *"per episode, how good are the claims being made?"* Every number in this project comes from **one** episode. Nothing yet distinguishes a property of All-In from a property of E287.
 

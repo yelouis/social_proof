@@ -90,6 +90,9 @@ Every pronoun, indexical and temporal anchor resolved, without semantic drift. U
 | **1** | one minor unresolved anchor (a date, a vague "recently") |
 | **0** | unresolved subject or object — *"It is very hard to control government spending"*, *"This is the most profitable quarter of any public company ever"* |
 
+> **Demonstrative blind spot (t0072):** LLM scorers exhibit systematic leniency toward demonstrative-initial copular sentences (*"This is the most profitable core business quarter of any public company ever"*), treating *"This is..."* as a legitimate deictic topic header rather than an unbound indexical and scoring it 2 despite violating the Level-0 anchor. A mechanical regex proxy (flagging leading demonstratives and pronouns without antecedent) catches this class immediately; prompt-only LLM scoring misses it. The mechanical proxy serves as the active check for this failure mode.
+
+
 #### Axis 7 · Fidelity — *is the claim entailed by the quote?*
 Trap 28: a real quote does not make a real claim. The pipeline has already shipped genuine quotes carrying invented propositions.
 
