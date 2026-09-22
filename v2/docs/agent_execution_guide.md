@@ -127,7 +127,7 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 9 | **C6** | Four of the eight axes are not being read | none | **DELIVERED in part** (`df9f92f`). Contamination genuinely fixed on 7 of 8 axes — typing 51.4%→2.9%, propositionality 45.7%→2.9%, target 40%→0%. Granularity now scores 1 on all three natural compounds. **Step 4 is the best output:** Target and Propositionality discriminate 25/6/9 and 7/15/18 on rejected turns, so their 0/0/111 was survivor bias, not a broken axis. |
 | 10 | **C7** | The fix was demonstrated but never applied, and fidelity regressed | none | **DELIVERED in part** (`6460d21`). 111 re-scored (3,969s); granularity `0/0/111` → **`0/3/108`**. One metric named and gated, with **fidelity 31.4% printed as FAILED**. **And the diagnosis redirects the fix:** `fidelity_01` alone causes 7 of 11 off-target drops because the perturbation swaps in an unrelated topic — the instrument is at fault, not the scorer. |
 | 11 | **C8** | Three residues, and a report that answers a narrower question | none | **DELIVERED** (`a67dd8e`). All three clauses verified: fidelity **5/5 at 0.0% off-target**, funnel sums to 405, before/after table matches to the digit (69→29) with **all nine zeros adjudicated one by one** — six C7-right, one C4-right, two borderline. `t0072` resolved by naming it a scorer defect rather than editing the score. |
-| 12 | **C9** | The constraint I wrote and did not apply, and the axis nobody adjudicated | none | **DELIVERED.** Fidelity perturbations rebuilt with 3 real failures (`t0127`, `t0142`, `t0189`) and 2 invented inversions (`t0187`, `t0192`): sensitivity reported separately at 33.3% (real) vs 100.0% (invented) with 0.0% off-target. All 23 contestability shifts adjudicated with three-way split (13 C7 right, 7 C4 right, 3 borderline; panel not flattened). `t0072` demonstrative blind spot written to `design_claim_axes.md`. Falsification confirmed uncalibrated C4 scorer suffers from identical entity-resolution leniency. |
+| 12 | **C9** | The constraint I wrote and did not apply, and the axis nobody adjudicated | none | **DELIVERED in part** (`d148d6d`). Contestability adjudicated in full — 23 rows, **C7 right 13 / C4 right 7 / borderline 3**, so calibration cost seven genuine scores on the panel's one varying axis. Fixture carries three real-derived fidelity pairs and the finding transferred: **lenient on entity substitution, catches topic substitution.** **Remaining:** the calibrated scorer never met the real cases — `c9_perturbations_scored`'s fidelity block is byte-identical to C8's. |
 | 13 | **C10** | Everything we know is one episode | C9 | **NEXT.** Every parameter in the tracking doc comes from E287. **E165 (`39b1ef6934b6da6b`) is the closest structural match** — 361 turns, four hosts, 11.1% question-anchored against E287's 11.13%. Byte-identical pipeline, no gold set: **this measures stability, not accuracy.** |
 | 14 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 15 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
@@ -607,53 +607,44 @@ Target, Propositionality and Typing are removed from the Speaker panel and recor
 
 ---
 
-## 22. C9 — The constraint I wrote and did not apply, and the axis nobody adjudicated
+## 22. C9 — The constraint I wrote and did not apply, and the axis nobody adjudicated · **DELIVERED in part** (`d148d6d`)
 
-**DELIVERED.** All three gaps resolved from artifacts and measurements.
+### What landed, and it is the harder half
 
-**User impact:** the Speaker panel is now one informative axis, and the change that made it so has never been checked.
+**Contestability is adjudicated in full.** All 23 changes published by turn id with a three-way split: **C7 right 13 (56.5%), C4 right 7 (30.4%), borderline 3 (13.0%).** Set against decontextualisation's 1-of-9, **calibration cost seven genuine non-2 scores on the one Speaker-panel axis with variance.** That is the real price of the 69 → 29 shift and it is now on the record.
 
-**Contract:** `v2/fixtures/axes/perturbations.json` · `v2/artifacts/extraction/c6_scored_axes_*` and `c4_scored_axes_*` · `v2/docs/design_claim_axes.md`.
+**The fixture carries three well-formed real-derived fidelity pairs**, each with an original and a perturbation drawn from an actual pipeline failure:
 
-### Gap 1 — fidelity is still tested only against damage we invented
-
-§22 carries a standing constraint I wrote after C6: *"a perturbation set built only from damage you invented tests only the damage you imagined."* **C8's fidelity rebuild is entirely invented** — five direction inversions — and **C8's spec, which I wrote, never required otherwise.** The granularity lesson was learned and then not transferred.
-
-**Real fidelity failures exist and are unused:**
-
-| source | cases |
+| pair | original → perturbed |
 |---|---|
-| C7's scoring of the 111 | `t0127`, `t0142`, `t0189` — fidelity scored below 2 |
-| the C2 quote guard on the gemma-4 run | `t0178` — rejected `non_verbatim` |
-| the C2 guard on the gemma-2-2b run | 14 `non_verbatim` plus 1 `context_leak` |
+| `t0127` | *"He is going to own open source"* → *"**Elon Musk** is going to own open source"* |
+| `t0142` | → injects *"**Treasury Secretary Janet Yellen**"* as the entity covered |
+| `t0189` | *"the core root of America becoming a socialist country"* → *"the core root of **inflation**"* |
 
-**Seed at least three of the five fidelity pairs from these**, exactly as C6 did for granularity with `t0016`, `t0255` and `t0389`.
+**And the finding is the one the item was filed to look for.** The scorer catches **topic substitution** (`t0189` → 0) and is **lenient on entity substitution** (`t0127`, `t0142` both scored 2). **This is C6's granularity lesson transferring exactly as predicted** — the axis detects the damage we imagine better than the failures the pipeline actually produces. The falsification settles the cause: the uncalibrated C4 scorer has the **same** blind spot, so calibration did not create it.
 
-> **Verify:** report fidelity's sensitivity and off-target on a set containing both invented and real cases, **and report them separately.** **If sensitivity on the real cases is materially below the invented ones, the axis detects only the damage we imagine** — which is what C6 found for granularity and the reason this constraint exists.
+`design_claim_axes.md` now carries the `t0072` demonstrative blind spot beside Axis 6.
 
-### Gap 2 — the larger leniency change was never adjudicated, and it is on the axis that carries the panel
+### What remains — the calibrated scorer never met the real cases
 
-C8 adjudicated the **9** decontextualisation zeros. **Contestability moved by 23** — from `4/31/76` to `1/11/99`, non-2 falling 35 → 12 — which is the biggest change in the table and sits on **the only Speaker-panel axis with real variance.** Voice is `1/0/110`; contestability *is* the answer to *"how good are the claims in this episode?"*
+**`c9_perturbations_scored`'s fidelity block is byte-identical to `c8_perturbations_scored`'s** — same SHA — and still contains `t0181`, `t0183`, `t0185`. **The fixture was updated and the scoring run was not re-executed.** So:
 
-**Adjudicate the 23 the same way**, one by one: was the claim genuinely contestable and C4 right, or was C4 over-firing and C7 right?
+- **the real cases were scored only under the *uncalibrated* prompt**, in the falsification artifact;
+- the report's headline comparison — *"Real Failures 33.3% (1/3)"* against *"Invented Inversions 100.0% (2/2)"* — **puts an uncalibrated number beside a calibrated one.** That is trap 95's shape one layer along: not a hidden number, a number from a different instrument placed in the same column;
+- the "C9 Sensitivity" entry for fidelity in the cross-item table is **C8's figure**, carried forward;
+- `original_scores` is `None` on all three real pairs, so even the uncalibrated run scored **only the perturbed side**. A one-sided check is a reasonable question for fidelity — *does the scorer notice this claim is unsupported?* — but it is not pair sensitivity and must not be tabulated beside it.
 
-> **Verify:** publish all 23 by turn id with a verdict and a one-line reason, and give the three-way split. **If most are "C4 was right", the panel's single informative axis has been flattened** and the episode profile is measuring less than it appears to. Say so plainly — that is a finding about the product, not a defect to patch.
+**Step 1 — score the three real pairs, both sides, with the calibrated prompt.** Three pairs × two sides × eight axes; minutes of model time, not hours.
 
-### Gap 3 — a known scorer blind spot lives only in a report
+> **Verify:** report real-derived and invented fidelity sensitivity **from the same scorer**, in one table, with the scorer named in the column header. **If the calibrated number differs from the uncalibrated 1/3, the comparison published in C9's report was between instruments and has to be withdrawn.**
 
-`t0072`'s finding — LLM scorers are lenient toward demonstrative-initial copular sentences, while a mechanical regex catches them immediately — is recorded in C8's report and nowhere durable.
+**Step 2 — regenerate the cross-item off-target table** so fidelity's C9 column is C9's own measurement rather than C8's.
 
-**Write it into `design_claim_axes.md` beside Axis 6**, with `t0072` as the worked example and the note that the mechanical proxy is the check for this class. **A blind spot documented only in a report is rediscovered.**
+> **Verify:** the fidelity row's C8 and C9 cells are computed from different artifacts. **If they are identical, say whether that is a measurement or a carry-forward** — they are indistinguishable in a table and only one is a result.
 
-### Validation
+**Falsify.** Delete `c9_perturbations_scored` and regenerate it from the fixture. **If the fidelity block comes back byte-identical to C8's, the generator is reading the wrong pairs** rather than the run having been skipped — which is a worse bug and a different fix.
 
-- **(c)** — **fidelity sensitivity and off-target reported separately for invented and real-derived perturbations, with at least three pairs seeded from `t0127`, `t0142`, `t0189`, `t0178` or the C2 guard's rejections; and all 23 contestability changes adjudicated by turn id with a three-way split.** *C8 passed fidelity against a fixture built entirely from imagined damage, and adjudicated the smaller of the two leniency changes. Both gaps are in the spec I wrote, not in the work that answered it.*
-- `design_claim_axes.md` carries the demonstrative blind spot beside Axis 6.
-- `ruff`, `mypy`, `pytest` clean.
-
-**Falsify.** Score the real-derived fidelity cases with the **uncalibrated C4 prompt** as well. **If the uncalibrated scorer catches the real failures and the calibrated one does not, calibration traded fidelity's real-world recall for its perturbation score** — the same shape as the granularity finding, one axis along.
-
-**Blast radius.** `v2/fixtures/axes/perturbations.json`, `v2/artifacts/reports/`, `v2/docs/design_claim_axes.md`, `v2/tests/`. **No re-scoring of the 111, no change to the prompts, the gold set, Pass 1 or V1.**
+**Blast radius.** `v2/artifacts/extraction/c9_perturbations_scored_*`, `v2/artifacts/reports/`, `v2/tests/`. **No change to the fixture, the prompts, the axes doc, the 111, the gold set, or V1.**
 
 ---
 
@@ -788,6 +779,8 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 97. **A perturbation can be so destructive that the scorer is right to fail every axis.** Fidelity's 31.4% off-target came from replacing a claim with an unrelated topic, which legitimately breaks Voice and Decontextualisation too — one pair caused 7 of 11 drops. **A single-axis perturbation has to leave the other axes true**, or the contamination it measures is the fixture's, not the model's.
 98. **A lesson learned on one axis does not transfer itself to the next.** After granularity passed an invented perturbation and missed every real compound, I wrote the standing constraint that a perturbation set built only from imagined damage tests only what you imagined — and then wrote C8's fidelity spec without requiring a single real case. **When you add a standing constraint, grep the open queue for the items it now binds** and amend them in the same commit, or it applies only to the item that produced it.
 99. **Adjudicate the biggest change, not the one the spec happened to name.** C8 read all nine dropped decontextualisation zeros because the `(c)` said nine. Contestability moved by twenty-three in the same table, on the only Speaker-panel axis with variance. **A spec that names a number freezes attention on it** — say "the largest movement in the table" when that is what you mean.
+100. **A fixture updated is not a measurement taken.** C9 rewrote three fidelity perturbations from real pipeline failures and the scored artifact's fidelity block came back byte-identical to C8's — same SHA, same three old turns. The run was never re-executed against the new fixture. **Hash the input fixture into the output artifact**, and assert the two agree, or a stale result and a fresh one are indistinguishable.
+101. **Two numbers in one column must come from one instrument.** C9's report puts *real 33.3%* beside *invented 100%*; the first was scored by the uncalibrated prompt and the second by the calibrated one. Nothing was hidden — both artifacts are on disk and named. **Put the instrument in the column header**, not in a paragraph below the table, whenever a table spans more than one run.
 66. **An item whose effect is to publish must be checked against what it will publish.** D7 was told to make every accepted candidate produce a tension row, and did — publishing six findings that the same guide, two sections below, documented as false. The spec was followed exactly. **Before running an item that writes user-visible output, read what is currently in its input.**
 67. **A judgement gate is scored generously unless the judgement is written down.** Three times now a gate has been recorded as met while an independent reading disagreed — six false pairs "hand-read and verified", a failed (c) recorded verified, and a position test reported at 18/20 that a seeded redraw scores 9–13/20. **Require the artefact, not the count**: paste the two sentences, quote the pair, show the working. A number is not checkable; a sentence is.
 68. **A repair loop that shrinks its subject on every pass is not converging.** Three extraction-form passes took the corpus from 3,669 claims to 1,027 and the candidate set from 0 to 6 to 0. **Track the trajectory across passes, not the delta within one** — each pass improved its own metric and the sequence went nowhere.
