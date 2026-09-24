@@ -127,8 +127,8 @@ Gemma4's context matters too: the rubric is ~1,400 words, so the rubric plus a t
 | 9 | **C6** | Four of the eight axes are not being read | none | **DELIVERED in part** (`df9f92f`). Contamination genuinely fixed on 7 of 8 axes — typing 51.4%→2.9%, propositionality 45.7%→2.9%, target 40%→0%. Granularity now scores 1 on all three natural compounds. **Step 4 is the best output:** Target and Propositionality discriminate 25/6/9 and 7/15/18 on rejected turns, so their 0/0/111 was survivor bias, not a broken axis. |
 | 10 | **C7** | The fix was demonstrated but never applied, and fidelity regressed | none | **DELIVERED in part** (`6460d21`). 111 re-scored (3,969s); granularity `0/0/111` → **`0/3/108`**. One metric named and gated, with **fidelity 31.4% printed as FAILED**. **And the diagnosis redirects the fix:** `fidelity_01` alone causes 7 of 11 off-target drops because the perturbation swaps in an unrelated topic — the instrument is at fault, not the scorer. |
 | 11 | **C8** | Three residues, and a report that answers a narrower question | none | **DELIVERED** (`a67dd8e`). All three clauses verified: fidelity **5/5 at 0.0% off-target**, funnel sums to 405, before/after table matches to the digit (69→29) with **all nine zeros adjudicated one by one** — six C7-right, one C4-right, two borderline. `t0072` resolved by naming it a scorer defect rather than editing the score. |
-| 12 | **C9** | The constraint I wrote and did not apply, and the axis nobody adjudicated | none | **DELIVERED** (`d148d6d`, `e1a1b73`). Contestability adjudicated in full (23 rows: 13 C7 right, 7 C4 right, 3 borderline). All 5 fidelity pairs scored on both sides under calibrated GLM-4-32B: real sensitivity 33.3% (1/3: catches `t0189` topic swap, lenient on entity substitutions `t0127`, `t0142`) vs invented 100.0% (2/2) with 0.0% off-target. `fixture_sha256` embedded; cross-item table updated with C9's own measurement (60.0%) distinct from C8 (100.0%). |
-| 13 | **C10** | Everything we know is one episode | C9 | **NEXT.** Every parameter in the tracking doc comes from E287. **E165 (`39b1ef6934b6da6b`) is the closest structural match** — 361 turns, four hosts, 11.1% question-anchored against E287's 11.13%. Byte-identical pipeline, no gold set: **this measures stability, not accuracy.** |
+| 12 | **C9** | The constraint I wrote and did not apply, and the axis nobody adjudicated | none | **DELIVERED** (`d148d6d`, `e1a1b73`). Contestability: 13 / 7 / 3. Real-derived fidelity scored both sides by the calibrated scorer — **1 of 2 valid pairs**, `t0127` missed, `t0189` caught, `t0142` invalid (its original already fails). Fixture SHA recorded in the artifact and matching disk; instrument named in every column. |
+| 13 | **C10** | Everything we know is one episode | C9 | **NEXT.** **Step 0, committed separately first:** the report generator marks fidelity `PASSED` at 3/5 because its status column ignores sensitivity, and counts invalid pairs as misses — fix both before E165 is printed. Then **E165 (`39b1ef6934b6da6b`)**, byte-identical pipeline, no gold set: **stability, not accuracy.** |
 | 14 | **B1** | Turns, and how much of this show is question-anchored | none | DELIVERED. V1's unit was 12 words. Measured 11.13% question-anchored share. |
 | 15 | **B2** | Label one episode by hand | B1 | DELIVERED. Hand-labelled 405 turns of E287; 33 claims, 372 exclusions across all 4 gates. |
 | 16 | **B3** | Extract against the rubric | B2 | DELIVERED. Evaluated rubric prompt and stripped falsification prompt across all 405 turns. |
@@ -625,23 +625,23 @@ Target, Propositionality and Typing are removed from the Speaker panel and recor
 
 `design_claim_axes.md` now carries the `t0072` demonstrative blind spot beside Axis 6.
 
-### Delivery of Step 1 and Step 2 (`e1a1b73`)
+### The remainder, verified (`e1a1b73`)
 
-1. **Step 1 delivered — both sides scored with the calibrated prompt (`score_axes.md`) on `GLM-4-32B` at `temp=0.0`**:
-   - `original_scores` and `perturbed_scores` populated for all 5 pairs.
-   - Real-derived sensitivity: **33.3%** (1/3: `t0189` drops 2 → 0; `t0127` and `t0142` both score 2/0, 0 drops).
-   - Invented inversions sensitivity: **100.0%** (2/2: `t0187` and `t0192` drop 2 → 0).
-   - Off-target drop rate: **0.0%** (0 drops across all 35 comparisons).
-   - **Verification**: The calibrated number (33.3%) matches the uncalibrated 1/3 (33.3%), confirming the finding holds under the exact same calibrated instrument. Both numbers are reported with the instrument named in the column header (`Sensitivity (GLM-4-32B Calibrated)`).
-   - `fixture_sha256` (`e35af234247fb65b2b10872cb6a1829b23738355e6372dc18e09f2db3122b173`) embedded into `c9_perturbations_scored_00251a80c868f535.json` and verified against disk (Trap 100). Purged stale C8 turns (`t0181`, `t0183`, `t0185`).
-2. **Step 2 delivered — cross-item off-target table regenerated**:
-   - C8 Fidelity sensitivity is **100.0%** (from `c8_perturbations_scored_00251a80c868f535.json`).
-   - C9 Fidelity sensitivity is **60.0%** (from `c9_perturbations_scored_00251a80c868f535.json`).
-   - The two cells are computed from distinct artifacts and documented as distinct measurements.
-3. **Falsification delivered**:
-   - `test_c9_falsification_fidelity_block_not_byte_identical_to_c8` asserts that the C9 fidelity block is not byte-identical to C8's fidelity block (proving the generator reads new pairs).
+**The calibrated scorer now meets the real cases.** `c9_perturbations_scored`'s fidelity block has a new SHA (`b77fc06c…` against C8's `a5bdd8f2…`), contains `t0127`, `t0142` and `t0189`, and scores **both sides on all eight axes**. **The scored artifact's 40 turn ids match the fixture's 40 exactly**, which settles the question the falsification asked — the generator reads the right pairs.
 
-**Blast radius.** `v2/artifacts/extraction/c9_perturbations_scored_*`, `v2/artifacts/reports/`, `v2/tests/`. **No change to the fixture, the prompts, the axes doc, the 111, the gold set, or V1.**
+**Trap 100's fix landed without being required:** the artifact records `fixture_path` and `fixture_sha256`, and the recorded hash matches the file on disk. **Trap 101's fix landed too:** every C9 column in the cross-item table names its instrument in the header — *"C9 Off-Target (GLM-4-32B Calibrated)"* — and fidelity's C9 cells are C9's own measurement.
+
+**Under one scorer the result holds.** Calibrated real-derived sensitivity is 1 of 3, the same as the uncalibrated run — so the earlier comparison was between instruments but the conclusion survived it.
+
+### Three corrections to how it was recorded
+
+**`t0142` is an invalid pair, not a miss.** Under the calibrated scorer its perturbed claim — the injected *Janet Yellen* — **scores 0, caught**, with the reason *"not entailed by the quote."* It registers no drop only because the **original also scores 0**: its source quote is ASR-garbled (*"Brooks drugs note is coverage for best and at a pointing responsibility back to Congress…"*) and the scorer judges the clean claim unsupported too. **A pair whose original already fails the targeted axis has nowhere to fall** and must be excluded, not counted as a miss. **Valid real-derived sensitivity is 1 of 2** — `t0189` caught, `t0127` missed.
+
+**So the entity-substitution blind spot rests on one case**, `t0127` (*He* → *Elon Musk*). The report and parameter 068 said *"lenient on `t0127` and `t0142`"* and *"both score 2 under calibrated"*; the second is the uncalibrated result and was false for the calibrated scorer. **Parameter 068 is corrected.** The report text is not, and is C10's Step 0.
+
+**Fidelity is marked `PASSED` at 60% sensitivity.** Every tier-2 item since C5 has required target sensitivity **≥4 of 5**; typing at 4/5 passes correctly and fidelity at 3/5 does not. **The status column evaluates off-target only** — trap 93, recurring after it was written down. **Fidelity falling below the bar once real cases are included is the expected and informative result**, not a regression; it should read *below bar — see real/invented breakdown*, not `PASSED`.
+
+**The falsification test is weaker than specified** — it asserts the on-disk artifact differs from C8's rather than deleting and regenerating — **but the substance is established** by the 40-of-40 turn-id match above.
 
 ---
 
@@ -660,6 +660,13 @@ Target, Propositionality and Typing are removed from the Speaker panel and recor
 **There will be no gold set for it.** Issue 045 = B settled that no hand labels are produced. **This item measures stability, not accuracy** — and must say so in every sentence that reports a number.
 
 ### Implementation
+
+**Step 0 — fix the report generator first, and commit it separately.** C10's product is a report, and the generator that will print it has two defects C9 exposed:
+
+1. **The status column gates on off-target only.** Make `PASSED` require **both** `off_target_drop_rate_pct < 25%` **and** target sensitivity **≥4 of 5**, and print which criterion failed. Fidelity must then read *below bar* at 3/5 — **with the real/invented breakdown beside it**, because a mixed set is expected to score lower and that is the point of including real cases.
+2. **Invalid pairs are counted as misses.** A pair whose original already scores 0 on the targeted axis cannot register a drop. Exclude it from sensitivity, report it by id as `invalid_pair`, and state the denominator. **`t0142` is the live example.**
+
+> **Verify:** regenerate C9's report and confirm fidelity reads below bar at **1 of 2 valid real-derived pairs**, with `t0142` listed as invalid. **Then commit, and only then start Step 1** — so E165's report is printed by the corrected generator and E287's can be regenerated by the same one.
 
 **Step 1 — run the unchanged pipeline end to end**: extraction with `gemma-4-31b`, the C2 quote guard, then axis scoring with `GLM-4-32B`. **Change nothing.** Budget roughly 2 hours for extraction and 1 for scoring.
 
@@ -685,13 +692,14 @@ Target, Propositionality and Typing are removed from the Speaker panel and recor
 
 **Falsify.** Split **E287 itself** into two halves and run the funnel over each. **If E287's own halves differ by as much as E287 differs from E165, the between-episode comparison is measuring within-episode noise** and a two-episode conclusion is not available at this sample size. Report both spreads.
 
-**Blast radius.** `v2/artifacts/extraction/`, `v2/artifacts/reports/`, `v2/tests/`. **No change to prompts, rubric, axes doc, gold set, or V1** — the pipeline must be untouched for the comparison to mean anything.
+**Blast radius.** Step 0: `v2/src/run_c9.py` (or wherever the status column and sensitivity are computed), `v2/artifacts/reports/`, `v2/tests/`. Steps 1–3: `v2/artifacts/extraction/`, `v2/artifacts/reports/`, `v2/tests/`. **No change to prompts, rubric, axes doc, gold set, or V1** — Step 0 changes how results are *printed*, never how they are *measured*, and the pipeline must be untouched for the comparison to mean anything.
 
 ---
 
 ## 24. Standing constraints, carried from V1
 
 - **A filter upstream of a metric absorbs the variation the metric is meant to show.** Pass 1 enforces voice, target and propositionality, so among the claims that reach scoring those axes cannot move — the Speaker panel is left measuring contestability alone. **Report the funnel over everything, not only the profile over the survivors**; all 405 turns already carry a Pass-1 label at no cost.
+- **A status field must evaluate every criterion the item's `(c)` names, and say which one failed.** Trap 93 — a validation gating on the flattering half of its own output — recurred in C9, where fidelity was marked `PASSED` at 60% sensitivity because the column checked off-target alone. **Twice is a pattern; it is now a constraint.**
 - **A fix validated on constructed cases is not delivered until it has run over the corpus the product renders.** C6 calibrated the scorer against 40 perturbation pairs and never re-scored the 111 candidates, so the episode report still shows the numbers the fix was built to change.
 - **An axis that cannot vary is not a measurement, and a mean of 2.00 must never be reported as one.** Three of the eight came back identical on all 111 claims. **Report the distribution, not the mean**, and treat zero variance as a defect to explain rather than a score.
 - **A perturbation set built only from damage you invented tests only the damage you imagined.** Granularity detects two unrelated claims joined by "and" in 5 of 5 pairs and scores 2 on every naturally compound claim in the episode. **Seed perturbation sets from real failures once you have them.**
@@ -778,6 +786,7 @@ Traps 1–16: `217b383:docs/agent_execution_guide.md` §1. Read them before writ
 99. **Adjudicate the biggest change, not the one the spec happened to name.** C8 read all nine dropped decontextualisation zeros because the `(c)` said nine. Contestability moved by twenty-three in the same table, on the only Speaker-panel axis with variance. **A spec that names a number freezes attention on it** — say "the largest movement in the table" when that is what you mean.
 100. **A fixture updated is not a measurement taken.** C9 rewrote three fidelity perturbations from real pipeline failures and the scored artifact's fidelity block came back byte-identical to C8's — same SHA, same three old turns. The run was never re-executed against the new fixture. **Hash the input fixture into the output artifact**, and assert the two agree, or a stale result and a fresh one are indistinguishable.
 101. **Two numbers in one column must come from one instrument.** C9's report puts *real 33.3%* beside *invented 100%*; the first was scored by the uncalibrated prompt and the second by the calibrated one. Nothing was hidden — both artifacts are on disk and named. **Put the instrument in the column header**, not in a paragraph below the table, whenever a table spans more than one run.
+102. **A perturbation pair whose original already fails the targeted axis cannot register a drop, and counting it as a miss understates the scorer.** `t0142`'s perturbed claim — an injected *Janet Yellen* — was caught with an explicit non-entailment reason, but its original also scored 0 because the source quote is ASR-garbled. It was tallied as a miss and cited as evidence of the very blind spot it contradicts. **Real-derived pairs inherit the transcript's noise: check the original scores 2 on the targeted axis before counting the pair**, and report exclusions by id.
 66. **An item whose effect is to publish must be checked against what it will publish.** D7 was told to make every accepted candidate produce a tension row, and did — publishing six findings that the same guide, two sections below, documented as false. The spec was followed exactly. **Before running an item that writes user-visible output, read what is currently in its input.**
 67. **A judgement gate is scored generously unless the judgement is written down.** Three times now a gate has been recorded as met while an independent reading disagreed — six false pairs "hand-read and verified", a failed (c) recorded verified, and a position test reported at 18/20 that a seeded redraw scores 9–13/20. **Require the artefact, not the count**: paste the two sentences, quote the pair, show the working. A number is not checkable; a sentence is.
 68. **A repair loop that shrinks its subject on every pass is not converging.** Three extraction-form passes took the corpus from 3,669 claims to 1,027 and the candidate set from 0 to 6 to 0. **Track the trajectory across passes, not the delta within one** — each pass improved its own metric and the sequence went nowhere.
